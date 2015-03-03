@@ -1,0 +1,30 @@
+<div id="titulos">
+    <h2>Desembarque->Pesqueiro</h2>
+    <h3>Novo</h3>
+</div>
+
+
+
+<form action="<?= $this->url(array("controller" => "pesqueiro", "action" => "criar"), null, true) ?>" method="post">
+    <fieldset id="dadosDesembarque">
+        <div class="esquerda">
+            <div class="form-esq">
+                <label for="id">ID do Pesqueiro:</label>
+                <input type="text" disabled="true" name="inputIDPesqueiro" id="id_pesqueiro" placeholder="ID"/><br />
+            </div>
+            <div class="form-esq">     
+                <label for="tipo">Nome:</label>
+                <input type="text" id="nome_pesqueiro" name="inputNomePesqueiro" placeholder="Pesqueiro"/><br />
+            </div>     
+
+
+            <div class="Submit">
+                <a href="<?= $this->url(array("controller" => "pesqueiro", "action" => "index"), null, true) ?>" id="botao-ancora">Voltar</a>
+                <input type="submit" value="Cadastrar" />
+            </div>
+
+
+        </div>
+    </fieldset>
+
+</form>

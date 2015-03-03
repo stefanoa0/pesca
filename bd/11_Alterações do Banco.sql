@@ -1,0 +1,279 @@
+-- --Já está no servidor
+-- Create or Replace View v_entrevistas As
+-- SELECT 'Arrasto-Fundo' as artepesca,t_arrastofundo.af_id as id, t_pescador.tp_nome, t_barco.bar_nome, 
+--     t_monitoramento.mnt_id, t_ficha_diaria.fd_id, t_pescador.tp_apelido
+--    FROM t_arrastofundo
+--    LEFT JOIN t_pescador ON t_arrastofundo.tp_id_entrevistado = t_pescador.tp_id
+--    LEFT JOIN t_barco ON t_arrastofundo.bar_id = t_barco.bar_id
+--    LEFT JOIN t_monitoramento ON t_arrastofundo.mnt_id = t_monitoramento.mnt_id
+--    LEFT JOIN t_ficha_diaria ON t_monitoramento.fd_id = t_ficha_diaria.fd_id
+-- Union All
+-- SELECT 'Calão',t_calao.cal_id, t_pescador.tp_nome, t_barco.bar_nome, 
+--     t_monitoramento.mnt_id, t_ficha_diaria.fd_id, t_pescador.tp_apelido
+--    FROM t_calao
+--    LEFT JOIN t_pescador ON t_calao.tp_id_entrevistado = t_pescador.tp_id
+--    LEFT JOIN t_barco ON t_calao.bar_id = t_barco.bar_id
+--    LEFT JOIN t_monitoramento ON t_calao.mnt_id = t_monitoramento.mnt_id
+--    LEFT JOIN t_ficha_diaria ON t_monitoramento.fd_id = t_ficha_diaria.fd_id
+-- Union All
+-- SELECT 'Coleta Manual',t_coletamanual.cml_id, t_pescador.tp_nome, t_barco.bar_nome, 
+--     t_monitoramento.mnt_id, t_ficha_diaria.fd_id, t_pescador.tp_apelido
+--    FROM t_coletamanual
+--    LEFT JOIN t_pescador ON t_coletamanual.tp_id_entrevistado = t_pescador.tp_id
+--    LEFT JOIN t_barco ON t_coletamanual.bar_id = t_barco.bar_id
+--    LEFT JOIN t_monitoramento ON t_coletamanual.mnt_id = t_monitoramento.mnt_id
+--    LEFT JOIN t_ficha_diaria ON t_monitoramento.fd_id = t_ficha_diaria.fd_id
+-- Union All
+-- SELECT 'Emalhe', t_emalhe.em_id, t_pescador.tp_nome, t_barco.bar_nome, 
+--     t_monitoramento.mnt_id, t_ficha_diaria.fd_id, t_pescador.tp_apelido
+--    FROM t_emalhe
+--    LEFT JOIN t_pescador ON t_emalhe.tp_id_entrevistado = t_pescador.tp_id
+--    LEFT JOIN t_barco ON t_emalhe.bar_id = t_barco.bar_id
+--    LEFT JOIN t_monitoramento ON t_emalhe.mnt_id = t_monitoramento.mnt_id
+--    LEFT JOIN t_ficha_diaria ON t_monitoramento.fd_id = t_ficha_diaria.fd_id
+-- Union All
+-- SELECT 'Espinhel/Groseira',t_grosseira.grs_id, t_pescador.tp_nome, t_barco.bar_nome, 
+--     t_monitoramento.mnt_id, t_ficha_diaria.fd_id, t_pescador.tp_apelido
+--    FROM t_grosseira
+--    LEFT JOIN t_pescador ON t_grosseira.tp_id_entrevistado = t_pescador.tp_id
+--    LEFT JOIN t_barco ON t_grosseira.bar_id = t_barco.bar_id
+--    LEFT JOIN t_monitoramento ON t_grosseira.mnt_id = t_monitoramento.mnt_id
+--    LEFT JOIN t_ficha_diaria ON t_monitoramento.fd_id = t_ficha_diaria.fd_id
+-- Union All
+-- SELECT 'Jereré',t_jerere.jre_id, t_pescador.tp_nome, t_barco.bar_nome, 
+--     t_monitoramento.mnt_id, t_ficha_diaria.fd_id, t_pescador.tp_apelido
+--    FROM t_jerere
+--    LEFT JOIN t_pescador ON t_jerere.tp_id_entrevistado = t_pescador.tp_id
+--    LEFT JOIN t_barco ON t_jerere.bar_id = t_barco.bar_id
+--    LEFT JOIN t_monitoramento ON t_jerere.mnt_id = t_monitoramento.mnt_id
+--    LEFT JOIN t_ficha_diaria ON t_monitoramento.fd_id = t_ficha_diaria.fd_id
+-- Union All
+-- SELECT 'Pesca de Linha',t_linha.lin_id, t_pescador.tp_nome, t_barco.bar_nome, 
+--     t_monitoramento.mnt_id, t_ficha_diaria.fd_id, t_pescador.tp_apelido
+--    FROM t_linha
+--    LEFT JOIN t_pescador ON t_linha.tp_id_entrevistado = t_pescador.tp_id
+--    LEFT JOIN t_barco ON t_linha.bar_id = t_barco.bar_id
+--    LEFT JOIN t_monitoramento ON t_linha.mnt_id = t_monitoramento.mnt_id
+--    LEFT JOIN t_ficha_diaria ON t_monitoramento.fd_id = t_ficha_diaria.fd_id
+-- Union All
+-- SELECT 'Linha de Fundo',t_linhafundo.lf_id, t_pescador.tp_nome, t_barco.bar_nome, 
+--     t_monitoramento.mnt_id, t_ficha_diaria.fd_id, t_pescador.tp_apelido
+--    FROM t_linhafundo
+--    LEFT JOIN t_pescador ON t_linhafundo.tp_id_entrevistado = t_pescador.tp_id
+--    LEFT JOIN t_barco ON t_linhafundo.bar_id = t_barco.bar_id
+--    LEFT JOIN t_monitoramento ON t_linhafundo.mnt_id = t_monitoramento.mnt_id
+--    LEFT JOIN t_ficha_diaria ON t_monitoramento.fd_id = t_ficha_diaria.fd_id
+-- Union All
+-- SELECT 'Manzuá',t_manzua.man_id, t_pescador.tp_nome, t_barco.bar_nome, 
+--     t_monitoramento.mnt_id, t_ficha_diaria.fd_id, t_pescador.tp_apelido
+--    FROM t_manzua
+--    LEFT JOIN t_pescador ON t_manzua.tp_id_entrevistado = t_pescador.tp_id
+--    LEFT JOIN t_barco ON t_manzua.bar_id = t_barco.bar_id
+--    LEFT JOIN t_monitoramento ON t_manzua.mnt_id = t_monitoramento.mnt_id
+--    LEFT JOIN t_ficha_diaria ON t_monitoramento.fd_id = t_ficha_diaria.fd_id
+-- Union All
+-- SELECT 'Mergulho',t_mergulho.mer_id, t_pescador.tp_nome, t_barco.bar_nome, 
+--     t_monitoramento.mnt_id, t_ficha_diaria.fd_id, t_pescador.tp_apelido
+--    FROM t_mergulho
+--    LEFT JOIN t_pescador ON t_mergulho.tp_id_entrevistado = t_pescador.tp_id
+--    LEFT JOIN t_barco ON t_mergulho.bar_id = t_barco.bar_id
+--    LEFT JOIN t_monitoramento ON t_mergulho.mnt_id = t_monitoramento.mnt_id
+--    LEFT JOIN t_ficha_diaria ON t_monitoramento.fd_id = t_ficha_diaria.fd_id
+-- Union All
+--  SELECT 'Ratoeira',t_ratoeira.rat_id, t_pescador.tp_nome, t_barco.bar_nome, 
+--     t_monitoramento.mnt_id, t_ficha_diaria.fd_id, t_pescador.tp_apelido
+--    FROM t_ratoeira
+--    LEFT JOIN t_pescador ON t_ratoeira.tp_id_entrevistado = t_pescador.tp_id
+--    LEFT JOIN t_barco ON t_ratoeira.bar_id = t_barco.bar_id
+--    LEFT JOIN t_monitoramento ON t_ratoeira.mnt_id = t_monitoramento.mnt_id
+--    LEFT JOIN t_ficha_diaria ON t_monitoramento.fd_id = t_ficha_diaria.fd_id
+-- Union All
+-- SELECT 'Siripóia',t_siripoia.sir_id, t_pescador.tp_nome, t_barco.bar_nome, 
+--     t_monitoramento.mnt_id, t_ficha_diaria.fd_id, t_pescador.tp_apelido
+--    FROM t_siripoia
+--    LEFT JOIN t_pescador ON t_siripoia.tp_id_entrevistado = t_pescador.tp_id
+--    LEFT JOIN t_barco ON t_siripoia.bar_id = t_barco.bar_id
+--    LEFT JOIN t_monitoramento ON t_siripoia.mnt_id = t_monitoramento.mnt_id
+--    LEFT JOIN t_ficha_diaria ON t_monitoramento.fd_id = t_ficha_diaria.fd_id
+-- Union All
+-- SELECT 'Tarrafa',t_tarrafa.tar_id, t_pescador.tp_nome, t_barco.bar_nome, 
+--     t_monitoramento.mnt_id, t_ficha_diaria.fd_id, t_pescador.tp_apelido
+--    FROM t_tarrafa
+--    LEFT JOIN t_pescador ON t_tarrafa.tp_id_entrevistado = t_pescador.tp_id
+--    LEFT JOIN t_barco ON t_tarrafa.bar_id = t_barco.bar_id
+--    LEFT JOIN t_monitoramento ON t_tarrafa.mnt_id = t_monitoramento.mnt_id
+--    LEFT JOIN t_ficha_diaria ON t_monitoramento.fd_id = t_ficha_diaria.fd_id
+-- Union All
+--  SELECT 'Vara de Pesca',t_varapesca.vp_id, t_pescador.tp_nome, t_barco.bar_nome, 
+--     t_monitoramento.mnt_id, t_ficha_diaria.fd_id, t_pescador.tp_apelido
+--    FROM t_varapesca
+--    LEFT JOIN t_pescador ON t_varapesca.tp_id_entrevistado = t_pescador.tp_id
+--    LEFT JOIN t_barco ON t_varapesca.bar_id = t_barco.bar_id
+--    LEFT JOIN t_monitoramento ON t_varapesca.mnt_id = t_monitoramento.mnt_id
+--    LEFT JOIN t_ficha_diaria ON t_monitoramento.fd_id = t_ficha_diaria.fd_id;
+-- 
+-- Create or Replace View v_consultas_padrao As
+-- Select 'Arrasto de Fundo' as consulta,count(t_arrastofundo.af_id) as quantidade, t_porto.pto_nome From t_arrastofundo 
+-- Inner Join t_monitoramento on t_arrastofundo.mnt_id = t_monitoramento.mnt_id 
+-- Inner Join t_ficha_diaria On t_monitoramento.fd_id = t_ficha_diaria.fd_id 
+-- Right Join t_porto On t_ficha_diaria.pto_id = t_porto.pto_id
+-- Group by t_porto.pto_nome
+-- Union ALL
+-- 
+-- Select 'Calão',count(t_calao.cal_id), t_porto.pto_nome From t_calao 
+-- Inner Join t_monitoramento on t_calao.mnt_id = t_monitoramento.mnt_id 
+-- Inner Join t_ficha_diaria On t_monitoramento.fd_id = t_ficha_diaria.fd_id 
+-- Right Join t_porto On t_ficha_diaria.pto_id = t_porto.pto_id
+-- Group by t_porto.pto_nome
+-- Union ALL
+-- Select 'Coleta Manual',count(t_coletamanual.cml_id), t_porto.pto_nome From t_coletamanual 
+-- Inner Join t_monitoramento on t_coletamanual.mnt_id = t_monitoramento.mnt_id 
+-- Inner Join t_ficha_diaria On t_monitoramento.fd_id = t_ficha_diaria.fd_id 
+-- Right Join t_porto On t_ficha_diaria.pto_id = t_porto.pto_id
+-- Group by t_porto.pto_nome
+-- Union ALL
+-- Select 'Emalhe',count(t_emalhe.em_id), t_porto.pto_nome From t_emalhe 
+-- Inner Join t_monitoramento on t_emalhe.mnt_id = t_monitoramento.mnt_id 
+-- Inner Join t_ficha_diaria On t_monitoramento.fd_id = t_ficha_diaria.fd_id 
+-- Right Join t_porto On t_ficha_diaria.pto_id = t_porto.pto_id
+-- Group by t_porto.pto_nome
+-- Union ALL
+-- Select 'Grosseira',count(t_grosseira.grs_id), t_porto.pto_nome From t_grosseira
+-- Inner Join t_monitoramento on t_grosseira.mnt_id = t_monitoramento.mnt_id 
+-- Inner Join t_ficha_diaria On t_monitoramento.fd_id = t_ficha_diaria.fd_id 
+-- Right Join t_porto On t_ficha_diaria.pto_id = t_porto.pto_id
+-- Group by t_porto.pto_nome
+-- Union ALL
+-- Select 'Jereré',count(t_jerere.jre_id), t_porto.pto_nome From t_jerere
+-- Inner Join t_monitoramento on t_jerere.mnt_id = t_monitoramento.mnt_id 
+-- Inner Join t_ficha_diaria On t_monitoramento.fd_id = t_ficha_diaria.fd_id 
+-- Right Join t_porto On t_ficha_diaria.pto_id = t_porto.pto_id
+-- Group by t_porto.pto_nome
+-- Union ALL
+-- Select 'Linha',count(t_linha.lin_id), t_porto.pto_nome From t_linha
+-- Inner Join t_monitoramento on t_linha.mnt_id = t_monitoramento.mnt_id 
+-- Inner Join t_ficha_diaria On t_monitoramento.fd_id = t_ficha_diaria.fd_id 
+-- Right Join t_porto On t_ficha_diaria.pto_id = t_porto.pto_id
+-- Group by t_porto.pto_nome 
+-- Union ALL
+-- Select 'Linha de Fundo',count(t_linhafundo.lf_id), t_porto.pto_nome From t_linhafundo
+-- Inner Join t_monitoramento on t_linhafundo.mnt_id = t_monitoramento.mnt_id 
+-- Inner Join t_ficha_diaria On t_monitoramento.fd_id = t_ficha_diaria.fd_id 
+-- Right Join t_porto On t_ficha_diaria.pto_id = t_porto.pto_id
+-- Group by t_porto.pto_nome 
+-- Union ALL
+-- Select 'Manzuá',count(t_manzua.man_id), t_porto.pto_nome From t_manzua
+-- Inner Join t_monitoramento on t_manzua.mnt_id = t_monitoramento.mnt_id 
+-- Inner Join t_ficha_diaria On t_monitoramento.fd_id = t_ficha_diaria.fd_id 
+-- Right Join t_porto On t_ficha_diaria.pto_id = t_porto.pto_id
+-- Group by t_porto.pto_nome
+-- Union ALL
+-- Select 'Mergulho',count(t_mergulho.mer_id), t_porto.pto_nome From t_mergulho
+-- Inner Join t_monitoramento on t_mergulho.mnt_id = t_monitoramento.mnt_id 
+-- Inner Join t_ficha_diaria On t_monitoramento.fd_id = t_ficha_diaria.fd_id 
+-- Right Join t_porto On t_ficha_diaria.pto_id = t_porto.pto_id
+-- Group by t_porto.pto_nome
+-- Union ALL
+-- Select 'Ratoeira',count(t_ratoeira.rat_id), t_porto.pto_nome From t_ratoeira
+-- Inner Join t_monitoramento on t_ratoeira.mnt_id = t_monitoramento.mnt_id 
+-- Inner Join t_ficha_diaria On t_monitoramento.fd_id = t_ficha_diaria.fd_id 
+-- Right Join t_porto On t_ficha_diaria.pto_id = t_porto.pto_id
+-- Group by t_porto.pto_nome
+-- Union ALL
+-- Select 'Siripóia',count(t_siripoia.sir_id), t_porto.pto_nome From t_siripoia
+-- Inner Join t_monitoramento on t_siripoia.mnt_id = t_monitoramento.mnt_id 
+-- Inner Join t_ficha_diaria On t_monitoramento.fd_id = t_ficha_diaria.fd_id 
+-- Right Join t_porto On t_ficha_diaria.pto_id = t_porto.pto_id
+-- Group by t_porto.pto_nome
+-- Union ALL
+-- Select 'Tarrafa',count(t_tarrafa.tar_id), t_porto.pto_nome From t_tarrafa
+-- Inner Join t_monitoramento on t_tarrafa.mnt_id = t_monitoramento.mnt_id 
+-- Inner Join t_ficha_diaria On t_monitoramento.fd_id = t_ficha_diaria.fd_id 
+-- Right Join t_porto On t_ficha_diaria.pto_id = t_porto.pto_id
+-- Group by t_porto.pto_nome
+-- Union ALL
+-- Select 'Vara de Pesca',count(t_varapesca.vp_id), t_porto.pto_nome From t_varapesca
+-- Inner Join t_monitoramento on t_varapesca.mnt_id = t_monitoramento.mnt_id 
+-- Inner Join t_ficha_diaria On t_monitoramento.fd_id = t_ficha_diaria.fd_id 
+-- Right Join t_porto On t_ficha_diaria.pto_id = t_porto.pto_id
+-- Group by t_porto.pto_nome
+-- Union All
+-- Select 'Monitoradas',sum(mnt_quantidade), NULL From t_monitoramento Where mnt_monitorado = TRUE
+-- Union All
+-- --Quantidade de monitoramentos não monitorados total
+-- Select 'Não monitorados',sum(mnt_quantidade), NULL From t_monitoramento Where mnt_monitorado = FALSE
+-- Union All
+-- --Quantidade de Subamostras
+-- Select 'Subamostras',count(sa_id), NULL From t_subamostra
+-- Union all
+-- Select 'Quantidade de Fichas',count(t_ficha_diaria.fd_data), t_porto.pto_nome from t_ficha_diaria 
+-- Inner join t_porto On t_ficha_diaria.pto_id = t_porto.pto_id group by t_porto.pto_nome;
+
+
+-- CREATE TABLE t_projeto
+-- (
+-- 	tpr_id serial,
+-- 	tpr_descricao character(40) Not Null,
+--         Primary Key (tpr_id)
+-- );
+-- 
+-- INSERT INTO t_projeto(tpr_id, tpr_descricao)
+--     VALUES (1, 'Não Declarado');
+-- 
+-- 
+-- INSERT INTO t_projeto(tpr_id, tpr_descricao)
+--     VALUES (2, 'Perfil Social');
+-- 
+-- INSERT INTO t_projeto(tpr_id, tpr_descricao)
+--     VALUES (3, 'Desembarque');
+-- 
+-- ALTER TABLE t_pescador
+-- ADD tpr_id integer, Add Foreign Key (tpr_id)
+-- References t_projeto (tpr_id) match Simple ON UPDATE NO ACTION ON DELETE NO ACTION;
+-- 
+-- --Valor padrão de Não Declarado
+-- UPDATE t_pescador
+--    SET tpr_id=1;
+
+-- Alter table t_pescador
+-- Add tp_pescadordeletado boolean;
+-- 
+-- update t_pescador
+-- set tp_pescadordeletado = false;
+-- --Adicionar o campo tpr_id e tpd_descricao
+-- DROP VIEW IF EXISTS v_pescador;
+-- 
+-- CREATE OR REPLACE VIEW v_pescador AS 
+--  SELECT tp.tp_id, tp.tp_nome, tp.tp_sexo, tp.tp_matricula, tp.tp_apelido, 
+--     tp.tp_filiacaopai, tp.tp_filiacaomae, tp.tp_ctps, tp.tp_pis, tp.tp_inss, 
+--     tp.tp_nit_cei, tp.tp_rg, tp.tp_cma, tp.tp_rgb_maa_ibama, 
+--     tp.tp_cir_cap_porto, tp.tp_cpf, tp.tp_datanasc, tp.tp_dta_cad, 
+--     tp.tp_especificidade, tp.esc_id, tesc.esc_nivel, tp.tmun_id_natural, 
+--     tm.tmun_municipio AS munnat, tm.tuf_sigla AS signat, tp.te_id, 
+--     te.te_logradouro, te.te_numero, te.te_comp, te.te_bairro, te.te_cep, 
+--     te.tmun_id, tmi.tmun_municipio, tmi.tuf_sigla, tp.tp_resp_lan, 
+--     tlan.tu_nome AS tu_nome_lan, tp.tp_resp_cad, tcad.tu_nome AS tu_nome_cad, 
+--     tp.tp_obs, col.tc_id, tc.tc_nome, tcom.tcom_id, tcom.tcom_nome, tp.tpr_id, 
+--     tpr.tpr_descricao, tp.tp_pescadordeletado
+--    FROM t_pescador tp
+--    LEFT JOIN t_municipio tm ON tp.tmun_id_natural = tm.tmun_id
+--    LEFT JOIN t_endereco te ON tp.te_id = te.te_id
+--    LEFT JOIN t_escolaridade tesc ON tp.esc_id = tesc.esc_id
+--    LEFT JOIN t_usuario tlan ON tp.tp_resp_lan = tlan.tu_id
+--    LEFT JOIN t_usuario tcad ON tp.tp_resp_cad = tcad.tu_id
+--    LEFT JOIN t_pescador_has_t_comunidade com ON com.tp_id = tp.tp_id
+--    LEFT JOIN t_comunidade tcom ON tcom.tcom_id = com.tcom_id
+--    LEFT JOIN t_pescador_has_t_colonia col ON col.tp_id = tp.tp_id
+--    LEFT JOIN t_municipio tmi ON te.tmun_id = tmi.tmun_id
+--    LEFT JOIN t_colonia tc ON tc.tc_id = col.tc_id
+--    LEFT JOIN t_projeto tpr ON tp.tpr_id = tpr.tpr_id
+--    Where tp.tp_pescadordeletado = false;
+--Já está no servidor
+-- CREATE OR REPLACE VIEW v_pescador_porto AS 
+--  SELECT tp.tp_id, tp.tp_nome, tp.tp_sexo, tp.tpr_id, 
+--     tpr.tpr_descricao, tp.tp_pescadordeletado, pto.pto_nome
+--    FROM t_pescador tp
+--    LEFT JOIN t_projeto tpr ON tp.tpr_id = tpr.tpr_id
+--    LEFT JOIN t_pescador_has_t_porto tppto ON tppto.tp_id = tp.tp_id
+--    LEFT JOIN t_porto pto ON tppto.pto_id = pto.pto_id
+--   WHERE tp.tp_pescadordeletado = false;

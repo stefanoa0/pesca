@@ -1,0 +1,37 @@
+<h2>Pescador Especialista -> Durante o Seg. Defeso</h2>
+<form method="post">
+<fieldset id="Especialista"></fieldset>
+
+    <a id="ancora_no-seguro-defeso"></a>
+    <fieldset class="noEditable"><legend>Durante o Seg. Defeso:</legend>
+        <fieldset class="noEditable"><legend>Adicionar Durante o Seg. Defeso:</legend>
+            <div id="base">
+                <input type="button" name="Add" class="button-confirm" onclick="jsInsertDynamic(this.form, '<?= $this->url(array("controller" => "no-seguro-defeso", "action" => "insert"), null, true) ?>', '<?= $this->url(array("controller" => "no-seguro-defeso", "action" => "update"), null, true) ?>')">
+                <input type="button" name="Reload" class="button-clear" onclick="jsReloadDynamic(this.form)">
+
+                <input type="text" name="input_valor" placeholder="Companhia de Pesca" size="40"  />
+                <input readonly="" type="text" name="input_id" />
+            </div>
+        </fieldset>
+        <br>
+
+        <table id="tblPerfil">
+            <tr>
+                <th width="15%">ID </th>
+                <th width="65%">Durante o Seg. Defeso</th>
+            </tr>
+            <?php foreach ($this->assignNoSeguroDefeso as $key => $dadosNoSeguroDefeso): ?>
+                <tr id="rowNumPeril<?= $key ?>">
+                    <td><?= $dadosNoSeguroDefeso['tns_id'] ?></td>
+                    <td><?= $dadosNoSeguroDefeso['tns_situacao'] ?></td>
+                    <td><input type="button" class="button-edit" width="5%" onclick="jsUpdateDynamic('<?= $dadosNoSeguroDefeso['tns_id'] ?>', '<?= $dadosNoSeguroDefeso['tns_situacao'] ?>', this.form)"></td>
+                    <td><input type="button" class="button-del" width="5%" onclick="jsDeleteDynamic(<?= $dadosNoSeguroDefeso['tns_id'] ?>, '<?= $this->url(array("controller" => "no-seguro-defeso", "action" => "delete"), null, true) ?>')"></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </fieldset>
+    <fieldset class="noBorder">
+        <br><input type="button" class="button-up" width="5%" onclick="scrollTo('top')">
+        <a href="<?= $this->url(array("controller" => "no-seguro-defeso", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório - Lista</a>
+    </fieldset>
+</form>

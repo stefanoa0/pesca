@@ -1,0 +1,18 @@
+<div id="titulos">
+    <h2>Desembarque->Tempo</h2>
+    <h3>Novo</h3>
+</div>
+<form action="<?=$this->url(array("controller"=>"tempo","action"=>"criar"),null,true)?>" method="post">
+    <fieldset id="dadosDesembarque">
+       <div class="esquerda"> 
+        <div class="form-esq">
+            <label>Tempo: </label>
+            <input type="text" name="tempo" placeholder="Tempo"/><br />
+        </div>
+        <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"tempo","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a>
+            <input type="submit" value="Cadastrar" />
+        </div>
+       </div>     
+    </fieldset>
+</form>

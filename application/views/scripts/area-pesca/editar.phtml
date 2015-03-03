@@ -1,0 +1,22 @@
+<div id="titulos">
+    <h2>Perfil dadosSocial->Área de Pesca</h2>
+    <h3>Editar</h3>
+</div>
+
+<form action="<?=$this->url(array("controller"=>"area-pesca","action"=>"atualizar"),null,true)?>" method="post">
+    <fieldset id="dadosSocial">
+        <div class="esquerda">
+            <input type="hidden" name="idAreaPesca" value="<?=$this->areaPesca['tareap_id']?>" />
+            <div class="form-esq">
+                <label>Área de Pesca: </label>
+                <input type="text" name="areaPesca" placeholder="Área de Pesca" value="<?=$this->areaPesca['tareap_areapesca']?>"/> <br />
+            </div>
+            
+        <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"area-pesca","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a> 
+            <input type="submit" value="Atualizar" />
+        </div>
+            
+        </div>
+    <fieldset>
+</form>

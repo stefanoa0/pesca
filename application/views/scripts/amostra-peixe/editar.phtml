@@ -1,0 +1,126 @@
+<div id="titulos">
+    <h2>Desembarque->Amostragem de Peixes</h2>
+    <h3>Editar</h3>
+</div>
+
+
+<form id="formulario" action="<?= $this->url(array("controller" => "amostra-peixe", "action" => "atualizar"), null, true) ?>" method="post">
+    <fieldset id="Desembarque">
+        <div class="esquerda">
+            <div class="form-esq">
+                <label for="id">ID:</label>
+                <input type="text" name="id_amostra" placeholder="Id" id="id_ficha" value="<?= $this->amostragem['tamp_id']?>"/><br />
+            </div>
+
+            <div class="form-esq">
+                <label for="tipo">Estagiário:</label>
+                <select name="select_nome_estagiario" >
+
+                    <option nome="nome_estagiario" value="<?= $this->usuario['tu_id'] ?>"><?= $this->usuario['tu_nome']  ?></option>
+
+
+                </select></br>
+            </div>
+
+            <div class="form-esq">
+                <label for="tipo">Monitor:</label>
+                <select name="select_nome_monitor" >
+                    <?php
+                    foreach ($this->users as $key => $monitor):
+                        ?>
+
+                        <option nome="nome_monitor" value="<?= $monitor['tu_id'] ; ?>" <?= ($monitor['tu_id'] == $this->amostragem['tu_id_monitor']) ? 'selected="selected"' : ''?>><?= $monitor['tu_nome'] ?></option>
+
+                        <?php
+                    endforeach;
+                    ?>
+                </select></br>
+            </div>
+            <div class="form-esq">  
+                <label for="tipo">Porto:</label>
+                <select name="select_nome_porto" >
+                    <?php
+                    foreach ($this->dados_porto as $key => $porto):
+                        ?>
+
+                        <option nome="nome_porto" value="<?= $porto['pto_id'] ?>" <?= ($porto['pto_id'] == $this->amostragem['pto_id']) ? 'selected="selected"' : ''?>><?= $porto['pto_nome'] ?></option>
+
+                        <?php
+                    endforeach;
+                    ?>
+                </select></br>
+            </div>   
+            <div class="form-esq">
+                <label for="tipo">Id Subamostra:</label>
+                <select name="subamostra_id"/>
+                    <?php foreach ($this->subamostras as $key => $subamostra): ?>
+                        <option value="<?= $subamostra['sa_id']; ?>" <?= ($subamostra['sa_id'] == $this->amostragem['sa_id']) ? 'selected="selected"' : ''?>><?= $subamostra['tp_nome'].'-'.$subamostra['sa_id']; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <input type="hidden" name="id_amostra" value="<?= $this->amostragem['tamp_id']?>"/><br />
+            <div class="Submit">
+                <input type="submit" value="Salvar Alterações" /> 
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+<form>
+  <fieldset class="noEditable"><legend>Amostras de Peixes:</legend>
+        <fieldset class="noEditable"><legend>Dados das Amostras:</legend>
+
+            <div id="base">
+                <input onclick="jsInsertAmostraPeixe(this.form, '<?= $this->url(array("controller" => "amostra-peixe", "action" => "insertunidade"), null, true) ?>','<?=$this->amostragem['tamp_id']?>')" type="button" value="Adicionar" />
+                
+                <select style="float:left;" name="SelectEspecie">
+                    <?php foreach ($this->especies as $key => $especie): ?>
+                        <option value="<?= $especie['esp_id']; ?>"><?= $especie['esp_nome_comum']; ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <input style="float:left;" type="text" name="comprimento" placeholder="Comprimento" size="10px">
+
+                <select style="float:left;" class="amostragem" name="SelectSexo" style="width:5px">
+                    <option value="M">Macho</option>
+                    <option value="F">Fêmea</option>
+                    <option value="I">Indefinido</option>
+                </select>
+                
+                <input style="float:left;" type="text" name="peso" placeholder="Peso" size="10px">
+
+                <input type="hidden" name="id_amostragem"  value="<?=$this->amostragem['tamp_id']?>"/>
+
+            </div>
+
+        </fieldset>
+        <br>
+         <fieldset class="noEditable" id="itemArteTipoRows"><legend>Dados Cadastrados:</legend>
+                <table id="especiesCapturadas">
+                    <tr>
+                        
+                        <th width="20%">Id Amostra</th>
+                        <th width="20%">Espécie</th>
+                        <th width="20%">Comprimento</th>
+                        <th width="10%">Sexo</th>
+                        <th width="20%">Peso</th>
+                    </tr>
+                    <?php
+                    foreach ($this->unidadePeixe as $key => $unidadePeixe):
+                        ?>
+                        <tr id="itemEmbarcacoesRows">
+                            
+                            <td name="inputAmostra"> <?= $unidadePeixe['tup_id'] ?> </td>
+                            <td name="inputMaturidade"> <?= $unidadePeixe['esp_nome_comum'] ?> </td>
+                            <td name="inputComp.Cabeca"> <?= $unidadePeixe['tup_comprimento'] ?> </td>
+                            <td name="inputSexo"> <?= $unidadePeixe['tup_sexo'] ?> </td>
+                            <td name="inputPeso"> <?= $unidadePeixe['tup_peso'] ?> </td>
+                            <td><input type="button" class="button-del" width="5%" onclick="jsDeleteUnidade(<?= $this->amostragem['tamp_id'] ?>, '<?= $this->url(array("controller" => "amostra-peixe", "action" => "deleteunidade"), null, true) ?>', <?= $unidadePeixe['tup_id'] ?>)"></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            </fieldset>
+</fieldset>
+</form>
+<div class="Submit">
+    <a href="<?= $this->url(array("controller" => "amostra-peixe", "action" => "index"), null, true) ?>" id="botao-ancora">Voltar</a>           
+</div>  

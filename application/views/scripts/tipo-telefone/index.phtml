@@ -1,0 +1,39 @@
+
+    <h2>Perfil Social->Tipo Telefone</h2>
+
+    <a href="<?= $this->url(array("controller" => "tipo-telefone", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
+    <fieldset id="dadosSocial"></fieldset>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Tipo Telefone</th>
+        </tr>
+
+        <?php foreach ($this->assignTipoTelefone as $key => $dadosTipoTelefone): ?>
+            <tr>
+                <td><?= $dadosTipoTelefone['ttel_id'] ?></td>
+                <td><?= $dadosTipoTelefone['ttel_desc'] ?></td>
+
+                <td class="td-botao">
+                    <a href="<?= $this->url(array("controller" => "tipo-telefone", "action" => "editar", "id" => $dadosTipoTelefone['ttel_id']), null, true) ?>">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                        </ul>
+                    </a>
+                </td>
+
+                <td class="td-botao">
+                    <a value="Excluir" onclick="beforeDelete('<?= $this->url(array("controller" => "tipo-telefone", "action" => "excluir", "id" => $dadosTipoTelefone['ttel_id']), null, true) ?>')">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                        </ul>
+                    </a> 
+                
+                </td>
+
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <br/><br/>
+    <a href="<?= $this->url(array("controller" => "tipo-telefone", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório</a>
+</html>

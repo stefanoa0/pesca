@@ -1,0 +1,46 @@
+<div id="titulos">
+    <h2>Desembarque->Monitoramento</h2>
+    <h3>Editar</h3>
+</div>
+
+
+<form action="<?=$this->url(array("controller"=>"ficha-diaria","action"=>"editarmonitoramento"),null,true)?>" method="post">
+    <fieldset id="dadosSocial">
+    <div class="esquerda">
+        <div class="form-esq">
+            <label>Id Monitoramento:</label> 
+            <input type="text" name="id_monitoramento" disabled value="<?=$this->monitoramento['mnt_id']?>"/> <br />
+            <input type="hidden" name="id_mnt" value="<?=$this->monitoramento['mnt_id']?>"/>
+
+        </div>
+        <div class="form-esq">
+            <label>Id Ficha-Diária:</label> 
+            <input type="text" name="id" disabled value="<?=$this->fichadiaria?>"/> <br />
+            <input type="hidden" name="id_ficha" value="<?=$this->fichadiaria?>"/> <br />
+        </div>
+        <div class="form-esq">
+            <label>Monitorado:</label>
+            <select name="monitorado">
+                <option value="1" <?php if($this->monitoramento == '1'){ echo 'selected'; } else{ echo '';} ?>>Sim</option>
+                <option value="0" <?php if($this->monitoramento == '0'){ echo 'selected'; } else{ echo '';} ?>>Não</option>
+            </select>
+        </div>
+        <div class="form-esq">
+            <label>Arte de Pesca:</label> 
+            <select name="artePesca">
+                <?php foreach($this->artepesca as $key => $arte): ?> 
+                <option value="<?= $arte['tap_id']?>" <?php if($arte['tap_id'] == $this->monitoramento['mnt_arte']){ echo 'selected';} ?> ><?=$arte['tap_arteficha']?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="form-esq">
+            <label>Quantidade:</label> 
+            <input type="text" name="quantidade"  value="<?=$this->monitoramento['mnt_quantidade']?>"/> <br />
+        </div>
+        <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"ficha-diaria","action"=>"editar", "id" => $this->fichadiaria),null,true)?>" id="botao-ancora">Voltar</a>
+            <input type="submit" value="Atualizar" />
+        </div> 
+    </div>
+    </fieldset>
+</form>

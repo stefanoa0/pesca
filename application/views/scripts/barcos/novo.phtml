@@ -1,0 +1,577 @@
+<div id="titulos">
+    <h2>Desembarque->Embarcações Detalhadas</h2>
+    <h3>Novo</h3>
+</div>
+<script>
+        function buscar_cidades(){
+            //var mestre = $('#mestre').val();
+            var proprietario = document.getElementById("propri").selectedIndex;
+            var propMestre = $('#propMestre').val();
+            if(propMestre === '2'){
+              document.getElementById("mestre").selectedIndex = proprietario;
+            }
+        }
+</script>
+
+<form action="<?=$this->url(array("controller"=>"barcos","action"=>"embarcacaodetalhada"),null,true)?>" method="post">
+    
+    <fieldset id="Desembarque"><h2>Embarcação</h2>
+<!--1. -------------------------------------------------------------->        
+        <div class="form-dir">
+            <label>Embarcação:</label> 
+            <select name="embarcacao" required/>
+                <?php foreach ($this->assignBarco as $key => $barco):?>
+                        <option value="<?= $barco['bar_id'] ?>" selected><?= $barco['bar_nome'] ?></option>
+                <?php endforeach;?>
+            </select>
+        </div>
+<!--2. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Porto de Desembarque:</label>
+            <select name="portoDesembarque" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignPortos as $key => $porto):?>
+                        <option value="<?= $porto['pto_id'] ?>"><?= $porto['pto_nome'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+<!--3. -------------------------------------------------------------->       
+        <div class="form-dir">
+            <label>Proprietário:</label>
+            <select name="proprietario" required id="propri"/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignPescadores as $key => $pescador):?>
+                        <option value="<?= $pescador['tp_id'] ?>"><?= $pescador['tp_nome'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+<!--4. -------------------------------------------------------------->       
+        <div class="form-dir">
+            <label>O proprietário é mestre do barco?:</label>
+            <select name="proprietarioMestre" id ="propMestre" onchange="buscar_cidades()" required/>
+                <option value="" selected></option>
+                <option value="2">Sim</option>
+                <option value="1">Não</option>
+            </select>
+        </div>   
+<!--5. -------------------------------------------------------------->
+        
+        <div class="form-dir">
+            <label>Mestre:</label>
+            <select name="mestre" required id="mestre" onchange="buscar_cidades()"/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignPescadores as $key => $pescador):?>
+                        <option value="<?= $pescador['tp_id'] ?>"><?= $pescador['tp_nome'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+        
+<!--6. -------------------------------------------------------------->       
+        <div class="form-dir">
+            <label>Possui outras embarcações? Quantas?</label> 
+            <input type="text" name="quantEmbarcacao" placeholder="Outras Embarcações"/> <br />
+        </div>
+<!--7. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Número máximo de tripulantes:</label> 
+            <input type="text" name="quantTripulantes" placeholder="Maximo de Tripulantes"/> <br />
+        </div>
+<!--8. -------------------------------------------------------------->       
+        <div class="form-dir">
+            <label>Tripulação:</label>
+            <select name="tripulacao" required/>
+                <option value="" selected></option>
+                <option value="1">Variável</option>
+                <option value="2">Fixa</option>
+                <option value="0">Não Respondeu</option>
+            </select>
+        </div>
+<!--9. -------------------------------------------------------------->       
+        <div class="form-dir">
+            <label>Há cozinheiro?</label>
+            <select name="cozinheiro" required/>
+                <option value="" selected></option>
+                <option value="2">Sim</option>
+                <option value="1">Não</option>
+                <option value="0">Não Respondeu</option>
+            </select>
+        </div>   
+<!--10. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Estado de conservação:</label>
+            <select name="estadoConservacao" required/>
+                <option value="" selected></option>
+                <option value="1">Bom</option>
+                <option value="2">Ruim</option>
+                <option value="3">Péssimo</option>
+                <option value="0">Não Respondeu</option>
+            </select>
+        </div>
+<!--11. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Tipo de Barco:</label>
+            <select name="tipoBarco" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignTipoBarcos as $key => $tipobarco):?>
+                        <option value="<?= $tipobarco['tte_id'] ?>"><?= $tipobarco['tte_tipoembarcacao'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+<!--12. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Comprimento total:</label> 
+            <input type="text" name="comprimentoTotal" placeholder="Comprimento total"/> <br />
+        </div>
+<!--13. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Comprimento da Boca:</label> 
+            <input type="text" name="comprimentoBoca" placeholder="Comprimento da Boca"/> <br />
+        </div>
+<!--14. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Altura do Calado:</label> 
+            <input type="text" name="alturaCalado" placeholder="Altura do Calado"/> <br />
+        </div>
+<!--15. -------------------------------------------------------------->       
+        <div class="form-dir">
+            <label>Arqueadura Bruta:</label> 
+            <input type="text" name="arqueaduraBruta" placeholder="Arqueadura Bruta"/> <br />
+        </div>
+<!--16. -------------------------------------------------------------->       
+        <div class="form-dir">
+            <label>Número de Registro:</label> 
+            <input type="text" name="numRegistro" placeholder="Número de Registro"/> <br />
+        </div>
+<!--17. -------------------------------------------------------------->       
+        <div class="form-dir">
+            <label>Porto de Origem:</label>
+            <select name="portoOrigem" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignPortos as $key => $porto):?>
+                        <option value="<?= $porto['pto_id'] ?>"><?= $porto['pto_nome'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+<!--18. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Tipo de Casco:</label>
+            <select name="tipoCasco" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignTipoCasco as $key => $tipocasco):?>
+                        <option value="<?= $tipocasco['tcas_id'] ?>"><?= $tipocasco['tcas_tipo'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+<!--19. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Ano da Compra:</label> 
+            <input type="text" name="anoCompra" placeholder="Ano da Compra"/> <br />
+        </div>
+<!--20. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Estado da embarcação?</label>
+            <select name="estadoEmbarcacao" required/>
+                <option value="" selected></option>
+                <option value="2">Nova</option>
+                <option value="1">Usada</option>
+                <option value="0">Não Informado</option>
+            </select>
+        </div>
+<!--21. -------------------------------------------------------------->       
+        <div class="form-dir">
+            <label>Já está paga?</label>
+            <select name="jaPaga" required/>
+                <option value="" selected></option>
+                <option value="2">Sim</option>
+                <option value="1">Não</option>
+                <option value="0">Não Informado</option>
+            </select>
+        </div> 
+<!--22. -------------------------------------------------------------->       
+        <div class="form-dir">
+            <label>Como foi o Pagamento:</label>
+            <select name="tipoPagamentoBarco" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignTipoPagamento as $key => $tipopagamento):?>
+                        <option value="<?= $tipopagamento['tpg_id'] ?>"><?= $tipopagamento['tpg_pagamento'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+<!--23. -------------------------------------------------------------->       
+        <div class="form-dir">
+            <label>Se financiado, por onde?</label>
+            <select name="financiadorBarco" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignFinanciador as $key => $financiador):?>
+                        <option value="<?= $financiador['tfin_id'] ?>"><?= $financiador['tfin_financiador'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+<!--24. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Ano da Construção:</label> 
+            <input type="text" name="anoConstrucao" placeholder="Ano da Construção"/> <br />
+        </div>
+<!--25. -------------------------------------------------------------->       
+        <div class="form-dir">
+            <label>Tipo de Propulsão:</label>
+            <select name="tipoPropulsao" required/>
+                <option value="" selected></option>
+                <option value="1">Sem Propulsão</option>
+                <option value="2">Motor</option>
+                <option value="3">Remo</option>
+                <option value="0">Não Informado</option>
+            </select>
+        </div>
+
+        <br/>
+        <br/>
+        <h2>Motor da Embarcação</h2>
+<!--26. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Tipo de Motor:</label>
+            <select name="tipoMotor" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignTipoMotor as $key => $motor):?>
+                        <option value="<?= $motor['tmot_id'] ?>"><?= $motor['tmot_tipo'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+<!--27. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Modelo:</label>
+            <select name="modelo" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignModelos as $key => $modelos):?>
+                        <option value="<?= $modelos['tmod_id'] ?>"><?= $modelos['tmod_modelo'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+<!--28. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Marca:</label>
+            <select name="marca" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignMarcas as $key => $marca):?>
+                        <option value="<?= $marca['tmar_id'] ?>"><?= $marca['tmar_marca'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+<!--29. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Potência:</label> 
+            <input type="text" name="potenciaMotor" placeholder="Potência"/> <br />
+        </div>
+<!--30. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Tipo de Combustível:</label>
+            <select name="tipoCombustivel" required/>
+                <option value="" selected></option>
+                <option value="1">Gasolina</option>
+                <option value="2">Diesel</option>
+                <option value="0">Não informado</option>
+            </select>
+        </div>
+<!--31. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Capacidade de combustível:</label> 
+            <input type="text" name="capacidadeCombustivel" placeholder="Capacidade de combustível"/> <br />
+        </div>
+<!--32. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Onde Compra o combustível:</label>
+            <select name="postoCombustivel" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignPostosCombustivel as $key => $posto):?>
+                        <option value="<?= $posto['tpc_id'] ?>"><?= $posto['tpc_posto'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+<!--33. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Ano da compra:</label> 
+            <input type="text" name="anoCompraMotor" placeholder="Ano da Compra"/> <br />
+        </div>
+<!--33.1. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Estado do Motor:</label>
+            <select name="estadoMotor" required/>
+                <option value="" selected></option>
+                <option value="2">Novo</option>
+                <option value="1">Usado</option>
+                <option value="0">Não Informado</option>
+            </select>
+        </div> 
+<!--34. -------------------------------------------------------------->               
+        <div class="form-dir">
+            <label>Já está paga?</label>
+            <select name="jaPagoMotor" required/>
+                <option value="" selected></option>
+                <option value="2">Sim</option>
+                <option value="1">Não</option>
+                <option value="0">Não Informado</option>
+            </select>
+        </div> 
+ <!--35. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Tipo de Pagamento:</label>
+            <select name="tipoPagamentoMotor" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignTipoPagamento as $key => $tipopagamentoMotor):?>
+                        <option value="<?= $tipopagamentoMotor['tpg_id'] ?>"><?= $tipopagamentoMotor['tpg_pagamento'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+ <!--36. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Se financiado, por onde?</label>
+            <select name="financiadorMotor" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignFinanciador as $key => $financiador):?>
+                        <option value="<?= $financiador['tfin_id'] ?>"><?= $financiador['tfin_financiador'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+ <!--37. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Ano da Fabricação:</label> 
+            <input type="text" name="anoFabricacao" placeholder="Ano da Fabricação do Motor"/> <br />
+        </div>
+ <!--38. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Obs:</label> 
+            <input type="text" name="obs" placeholder="Observação"/> <br />
+        </div>
+ <!--39. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Gasto mensal com Manutenção ($):</label> 
+            <input type="text" name="gastoMensalMotor" placeholder="Gasto Mensal"/> <br />
+        </div>
+        <br/>
+        <br/>
+        
+        <h2>Atuação da Embarcação</h2>
+ <!--40. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Atuação Batimétrica:</label> 
+            <input type="text" name="atuacaoBatimetrica" placeholder="Atuação Batimétrica"/> <br />
+        </div>
+ <!--41. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Autonomia no mar:</label> 
+            <input type="text" name="autonomiaMar" placeholder="Autonomia no Mar"/> <br />
+        </div>
+ <!--42. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Frequencia da Pesca:</label>
+            <select name="frequenciaPesca" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignFrequenciaPesca as $key => $frequenciapesca):?>
+                        <option value="<?= $frequenciapesca['tfp_id'] ?>"><?= $frequenciapesca['tfp_frequencia'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+ <!--43. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Horário da Pesca:</label>
+            <select name="horarioPesca" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignHorarioPesca as $key => $horariopesca):?>
+                        <option value="<?= $horariopesca['thp_id'] ?>"><?= $horariopesca['thp_horario'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+ <!--44. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Capacidade de Armazenamento do pescado:</label> 
+            <input type="text" name="capacidadeArmazenamento" placeholder="Capacidade de Armazenamento"/> <br />
+        </div>
+ <!--45. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Conservação da Pesca:</label>
+            <select name="conservacaoPescado" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignConservacaoPescado as $key => $conservacao):?>
+                        <option value="<?= $conservacao['tcp_id'] ?>"><?= $conservacao['tcp_conserva'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+ <!--46. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Onde adquire:</label>
+            <input type="text" name="ondeAdquire" placeholder="Onde adquire"/><br />
+        </div>
+ <!--47. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Como é feita a divisão do pescado?</label> 
+            <input type="text" name="divisaoPescado" placeholder="Divisão do Pescado"/> <br />
+        </div>
+ <!--48. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Destino do pescado:</label>
+            <select name="destinoPescado" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignDestinoPescado as $key => $destinoPesca):?>
+                        <option value="<?= $destinoPesca['dp_id'] ?>"><?= $destinoPesca['dp_destino'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+ <!--49. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Comprador do pescado:</label>
+            <select name="compradorPescado" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignDestinoPescado as $key => $destinoPesca):?>
+                        <option value="<?= $destinoPesca['dp_id'] ?>"><?= $destinoPesca['dp_destino'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+        
+ <!--50. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label><b>Maior</b> quantidade de pescado:</label>
+            <select name="maiorQuantidade" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignEstacaoAno as $key => $estacaoAno):?>
+                        <option value="<?= $estacaoAno['tea_id'] ?>"><?= $estacaoAno['tea_estacao'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+ <!--51. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label><b>Menor</b> quantidade de pescado:</label>
+            <select name="menorQuantidade" required/>
+             <option value="" selected></option>
+                <?php
+                    foreach ($this->assignEstacaoAno as $key => $estacaoAno):?>
+                        <option value="<?= $estacaoAno['tea_id'] ?>"><?= $estacaoAno['tea_estacao'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+ <!--52. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Outra atividade além da pesca:</label>
+            <select name="outraAtividade" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignOutraAtividade as $key => $outraAtividade):?>
+                        <option value="<?= $outraAtividade['ttr_id'] ?>"><?= $outraAtividade['ttr_descricao'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+        
+        
+        
+ <!--53. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Há competição entre os pescadores?</label>
+            <select name="competicaoPescadores" required/>
+                <option value="" selected></option>
+                <option value="2">Sim</option>
+                <option value="1">Não</option>
+                <option value="0">Não Respondido</option>
+            </select>
+        </div> 
+ <!--54. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Há quanto tempo atua na pesca?</label> 
+            <input type="text" name="tempoAtuacao" placeholder="Tempo de Atuação"/> <br />
+        </div>
+ <!--55. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Data da entrevista:</label> 
+            <input type="date" name="dataEntrevista" placeholder="Data"/> <br />
+        </div>
+ <!--56. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Responsável pelo Lançamento:</label>
+            <select name="entrevistador" required/>
+                <option value="<?= $this->usuario['tu_id']; ?>"><?=$this->usuario['tu_nome']; ?></option>
+            </select>
+        </div>
+ <!--57. -------------------------------------------------------------->              
+        <div class="form-dir">
+            <label>Responsável pela Entrevista:</label>
+            <select name="lancador" required/>
+                <option value="" selected></option>
+                <?php
+                    foreach ($this->assignUsuarios as $key => $usuario):?>
+                        <option value="<?= $usuario['tu_id'] ?>"><?= $usuario['tu_nome'] ?></option>
+                <?php
+                     endforeach;
+                ?>
+            </select>
+        </div>
+ 
+ 
+        <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"arte-pesca","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a>
+            <input type="submit" value="Cadastrar" />
+        </div> 
+    
+    </fieldset>
+</form>

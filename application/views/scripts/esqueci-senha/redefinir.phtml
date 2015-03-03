@@ -1,0 +1,15 @@
+<h2>Esqueceu sua senha?</h2>
+
+<?php 
+if ( isset($this->mensagem) ):
+    echo '<p>' . $this->mensagem . '</p>';
+else:
+?>
+<form action="<?=$this->url(array("controller"=>"esqueci-senha","action"=>"atualizar"),null,true)?>" method="post">
+    <input type="hidden" name="login" value="<?= $this->login ?>" />
+    <input type="hidden" name="token" value="<?= $this->token ?>" />
+    <label>Nova senha: <input type="password" name="senha1" /></label><br />
+    <label>Repita a senha: <input type="password" name="senha2" /></label>
+    <input type="submit" value="Alterar" />
+</form>
+<?php endif; ?>

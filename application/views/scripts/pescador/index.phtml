@@ -1,0 +1,100 @@
+<fieldset id="Social"></fieldset>
+    <form name="indexPescador" method="post">
+
+        <h2>Perfil Social->Pescador (lista limitada em 20)</h2>
+
+            <a href="<?= $this->url(array("controller" => "pescador", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
+                
+            <input type="button" value="Limpar" onClick="jsClearBusca('<?= $this->url(array("controller" => "pescador", "action" => "index"), null, true) ?>')"/>
+            <input type="button" value="Buscar" onClick="jsBuscaPescador(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "index"), null, true) ?>')"/>
+            <select name="tipoBusca">
+                <option value="1">Por Nome</option>
+                <option value="2">Por Id</option>
+                <option value="3">Por Apelido</option>
+                <option value="4">Todos os Pescadores</option>
+                <option value="5">Por Especialistas</option>
+            </select>
+            <input id="busca" name="buscaPescador" placeholder="Busca Pescador"/><br/>
+        <br/>
+            <div id="buscaInicial">
+                <label>Busca pela Inicial:</label>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'A'), null, true) ?>">A</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'B'), null, true) ?>">B</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'C'), null, true) ?>">C</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'D'), null, true) ?>">D</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'E'), null, true) ?>">E</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'F'), null, true) ?>">F</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'G'), null, true) ?>">G</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'H'), null, true) ?>">H</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'I'), null, true) ?>">I</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'J'), null, true) ?>">J</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'K'), null, true) ?>">K</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'L'), null, true) ?>">L</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'M'), null, true) ?>">M</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'N'), null, true) ?>">N</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'O'), null, true) ?>">O</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'P'), null, true) ?>">P</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'Q'), null, true) ?>">Q</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'R'), null, true) ?>">R</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'S'), null, true) ?>">S</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'T'), null, true) ?>">T</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'U'), null, true) ?>">U</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'V'), null, true) ?>">V</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'W'), null, true) ?>">W</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'X'), null, true) ?>">X</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'Y'), null, true) ?>">Y</a>
+                <a name="linkLetra" href="<?= $this->url(array("controller" => "pescador", "action" => "index", "tp_letra" => 'Z'), null, true) ?>">Z</a>
+            </div>    
+            
+        <br/>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Apelido</th>
+                <th width="20%">Projeto Cadastrado</th>
+                <th width="20%">Porto</th>
+            </tr>
+
+            <?php foreach ($this->dados as $key => $pescador): ?>
+                <tr>
+                    <td><?= $pescador['tp_id'] ?></td>
+                    <td><?= $pescador['tp_nome']?></td>
+                     <td><?= $pescador['tp_apelido'] ?></td>
+                     <td><?= $pescador['tpr_descricao'] ?></td>
+                     <td><?= $pescador['pto_nome'] ?></td>
+
+                    <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "pescador", "action" => "editar", "id" => $pescador['tp_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+                    <td class="td-botao">
+                        <a  name="Excluir"  onclick="beforeDelete('<?= $this->url(array("controller" => "pescador", "action" => "excluir", "id" => $pescador['tp_id']), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Imprimir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+                    <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirpescadorid", "id_pescador" => $pescador['tp_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Imprimir"><span class="ui-icon ui-icon-print"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+                    <td class="td-botao">
+                        <input type="button" name="Especialista" class="button-especialista" title="Especialista" <?php if(empty($pescador['tp_especialidade'])){ echo "disabled='True'";} ?>onclick="jsRedirectEspecialista('<?= $this->url(array("controller" => "pescador", "action" => "editar", "id" => $pescador['tp_id']), null, true) ?>', '#pescador_especialista')">
+                    </td>
+
+
+                    </a>
+
+                </tr>
+            <?php endforeach; ?>
+        </table>
+        <br/><br/>
+        </form>
+</html>

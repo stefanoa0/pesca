@@ -1,0 +1,73 @@
+<?php
+$this->headScript()->appendFile('/js/jquery.maskedinput.min.js');
+$this->headScript()->appendFile('/js/mascaras.js');
+?>
+<div id="titulos">
+    <h2>Perfil Social->Colônia</h2>
+    <h3>Novo</h3>
+</div>
+
+
+<form action="<?=$this->url(array("controller"=>"colonia","action"=>"criar"),null,true)?>" method="post">
+ <fieldset id="dadosSocial">
+     <div class="esquerda">
+        <input type="hidden" name="idColonia" />
+        <input type="hidden" name="idEndereco" />
+        <div class="form-esq">
+            <label>Colônia: </label>
+            <input type="text" name="nomeColonia" placeholder="Colônia"/><br/>
+        </div>
+        <div class="form-esq">
+            <label>Comunidade: </label>
+            <select name="comunidade">
+                <?php foreach ($this->comunidades as $key => $comunidade): ?>
+                <option value="<?= $comunidade['tcom_id']; ?>" <?=($comunidade['tcom_id'] == $this->colonia['tcom_id']) ? 'selected="selected"' : '';?>><?= $comunidade['tcom_nome']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="form-esq">
+            <label>Especificidade: </label>
+            <input type="text" name="especificidade" placeholder="Especificidade" /> <br/>
+        </div>
+        <div class="form-esq">
+            <label>Logradouro: </label> 
+            <input type="text" name="logradouro" placeholder="Logradouro" /><br />
+        </div>
+
+        <div class="form-esq">
+            <label>Número: </label>
+            <input type="text" name="numero" placeholder="Número" /><br />
+        </div>
+
+        <div class="form-esq">
+            <label>Bairro: </label>
+            <input type="text" name="bairro" placeholder="Bairro" /><br/>
+        </div>
+        
+        <div class="form-esq">    
+            <label>Municipio:</label>
+                <select name="municipio">
+                    <?php foreach ($this->municipios as $key => $municipio): ?>
+                    <option value="<?= $municipio['tmun_id']; ?>"><?= $municipio['tuf_sigla'], ' ',$municipio['tmun_municipio']; ?></option>
+                    <?php endforeach; ?>
+                </select> 
+        </div>
+
+        <div class="form-esq">
+            <label>CEP: </label>
+            <input type="text" name="cep" placeholder="CEP" id="cep"/> <br />
+        </div>
+        
+        <div class="form-esq">           
+            <label>Complemento: </label>
+            <input type="text" name="complemento" placeholder="Complemento" /> <br />
+        </div>
+        <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"colonia","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a>
+            <input type="submit" value="Cadastrar" />
+        </div>
+     </div>
+    </fieldset>
+
+</form>

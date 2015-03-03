@@ -1,0 +1,36 @@
+<div id="titulos">
+    <h2>Filogenia->Gênero</h2>
+    <h3>Novo</h3>
+</div>
+
+
+<form id="genero" action="<?=$this->url(array("controller"=>"genero","action"=>"criar"),null,true)?>">
+	<fieldset id="Filogenia">
+		<div class="esquerda">
+		<div class="form-esq">
+			  <label for="id">ID:</label>
+			  <input type="text" name="id_genero" id="id_genero" placeholder="Id"/><br />
+		  </div>
+		<div class="form-esq">    
+			  <label for="tipo">Nome:</label>
+			  <input type="text" id="nome_genero" name="nome_genero" placeholder="Nome"/><br />
+		</div>
+		
+		
+		<div class="form-esq">
+		  <label for="tipo">Família:</label>
+		  <select name="familia_genero" id="familia_genero">
+		  <?php foreach ($this->dados as $key => $familia): ?>
+			<option nome="familia_genero" value="<?=$familia['fam_id']?>"><?= $familia['fam_nome']?></option>
+			<?php endforeach; ?>
+		  </select><br/>
+		</div>
+		
+		<div class="Submit">
+			<a href="<?=$this->url(array("controller"=>"genero","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a>
+			<input type="submit" value="Cadastrar" />
+		</div> 
+	  </div>
+	</fieldset>
+			  
+</form>

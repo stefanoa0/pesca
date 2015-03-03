@@ -1,0 +1,28 @@
+<div id="titulos">
+    <h2>Perfil Social->Tipo Telefone</h2>
+    <h3>Editar</h3>
+</div>
+
+<form action="<?= $this->url(array("controller" => "tipo-telefone", "action" => "atualizar"), null, true) ?>" method="post">
+
+    <fieldset id="dadosSocial" name="novoTipoTelefone">
+        <div class="esquerda">   
+
+            <div class="form-esq"> 
+                <label>Código: </label>
+                <input type="text" readonly="" size="5" name="idTipoTelefone" value="<?= $this->assignTipoTelefone['ttel_id'] ?>" />
+            </div>
+
+            <div class="form-esq"> 
+                <label>Tipo Telefone: </label>
+                <input type="text" required=""  name="tipoTelefone" value="<?= $this->assignTipoTelefone['ttel_desc'] ?>"/> <br />
+            </div>
+
+
+            <div class="Submit">
+                <a href="<?= $this->url(array("controller" => "tipo-telefone", "action" => "index"), null, true) ?>" id="botao-ancora">Voltar</a> 
+                <input type="submit" value="Atualizar" />
+            </div>
+        </div> 
+    </fieldset>
+</form>

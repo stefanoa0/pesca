@@ -1,0 +1,30 @@
+<div id="titulos">
+    <h2>Desembarque->Pesqueiro</h2>
+    <h3>Editar</h3>
+</div>
+
+
+
+<form action="<?= $this->url(array("controller" => "pesqueiro", "action" => "atualizar"), null, true) ?>" method="post">
+    <fieldset id="dadosDesembarque">
+        <div class="esquerda">
+            <div class="form-esq">
+                <label for="id">ID do Pesqueiro:</label>
+                <input type="text"  name="inputIDPesqueiro" id="id_pesqueiro" value="<?= $this->dadosPesqueiros['paf_id']?>"/><br />
+            </div>
+            <div class="form-esq">     
+                <label for="tipo">Nome:</label>
+                <input type="text" id="nome_pesqueiro" name="inputNomePesqueiro" value="<?= $this->dadosPesqueiros['paf_pesqueiro']?>"/><br />
+            </div>     
+
+
+            <div class="Submit">
+                <a href="<?= $this->url(array("controller" => "pesqueiro", "action" => "index"), null, true) ?>" id="botao-ancora">Voltar</a>
+                <input type="submit" value="Atualizar" />
+            </div>
+
+
+        </div>
+    </fieldset>
+
+</form>

@@ -1,0 +1,38 @@
+
+
+    <h2>Desembarque->Porto</h2>
+
+    <a href="<?= $this->url(array("controller" => "porto", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
+    <fieldset id="dadosDesembarque"></fieldset>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Local</th>
+        </tr>
+
+        <?php
+        foreach ($this->dados as $key => $porto):
+            ?>
+            <tr>
+                <td><?= $porto['pto_id'] ?></td>
+                <td><?= $porto['pto_nome'] ?></td>
+                <td><?= $porto['pto_local'] ?></td>
+
+                <td class="td-botao">
+                    <a href="<?= $this->url(array("controller" => "porto", "action" => "editar", "id" => $porto['pto_id']), null, true) ?>">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                        </ul>
+                    </a>
+                </td>
+
+                <td class="td-botao">
+                    <input type="button" value="Excluir" onclick="beforeDelete('<?= $this->url(array("controller" => "porto", "action" => "excluir", "id" => $porto['pto_id']), null, true) ?>')">
+                </td>
+
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <br/><br/>
+    <a href="<?= $this->url(array("controller" => "porto", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório</a>

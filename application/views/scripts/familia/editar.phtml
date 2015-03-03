@@ -1,0 +1,51 @@
+<div id="titulos">
+    <h2>Filogenia->Família</h2>
+    <h3>Editar</h3>
+</div>
+
+<form id="familia" action="<?=$this->url(array("controller"=>"familia","action"=>"atualizar"),null,true)?>" method="post">
+      <fieldset id="Filogenia">
+         <div class="esquerda"> 
+          
+          <div class="form-esq">
+              <label for="id">ID:</label>
+              <input type="text" name="id_familia" value="<?=$this->familia["fam_id"]?>"/><br />
+          </div>
+          
+          <div class="form-esq">
+              <label for="tipo">Nome:</label>
+              <input type="text" name="nome_familia" value="<?=$this->familia["fam_nome"]?>"/><br/>
+          </div>
+          
+          <div class="form-esq">
+              <label for="tipo">Tipo:</label>
+              <input type="text" name="tipo_familia"  value="<?=$this->familia["fam_tipo"]?>"/><br />
+          </div>
+          
+          <div class="form-esq">
+              <label for="tipo">Característica:</label>
+              <input type="text" name="caracteristica_familia" value="<?=$this->familia["fam_caracteristica"]?>"/><br />
+          </div>
+          
+          <div class="form-esq">
+              <label for="tipo">Ordem Filogenética:</label>
+              <input type="text" name="ordem_filogenetica" value="<?=$this->familia["fam_ordem_filogenetica"]?>"/><br />
+          </div>
+          
+        
+        <div class="form-esq">
+            <label>Ordem: </label>
+            <select name="ordem_familia">
+                <?php foreach ($this->dados as $key => $ordem): ?>
+                <option value="<?= $ordem['ord_id']; ?>" <?=($ordem['ord_id'] == $this->familia['ord_id']) ? 'selected="selected"' : '';?>><?= $ordem['ord_nome']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"familia","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a> 
+            <input type="submit" value="Atualizar" />
+        </div>
+         </div>    
+      </fieldset>              
+</form>

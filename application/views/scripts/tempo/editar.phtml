@@ -1,0 +1,20 @@
+<div id="titulos">
+    <h2>Desembarque->Tempo</h2>
+    <h3>Editar</h3>
+</div>
+
+<form action="<?=$this->url(array("controller"=>"tempo","action"=>"atualizar"),null,true)?>" method="post">
+    <fieldset id="dadosDesembarque">
+       <div class="esquerda">  
+        <input type="hidden" name="idTempo" value="<?=$this->tempo['tmp_id']?>" />
+        <div class="form-esq">
+            <label>Tempo: </label>
+            <input type="text" name="tempo" value="<?=$this->tempo['tmp_estado']?>"/><br />
+        </div>
+        <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"tempo","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a> 
+            <input type="submit" value="Atualizar" />
+        </div>
+       </div>  
+    </fieldset>
+</form>

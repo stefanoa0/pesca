@@ -1,0 +1,65 @@
+<h2>Relatório->ConsultaPadrão</h2>
+
+<table>
+    <tr>
+        <th>Arte de Pesca</th>
+        <th>Quantidade</th>
+        <th>Porto</th>
+    </tr>
+
+    <?php foreach ($this->selectConsulta as $key => $entrevista): ?>
+        <tr>
+            <td><?= $entrevista['consulta'] ?></td>
+            <td><?= $entrevista['quantidade'] ?></td>
+            <td><?= $entrevista['pto_nome'] ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+<br/>
+<br/>
+
+<table>
+    <tr>
+        <th>Monitoramentos</th>
+        <th>Quantidade</th>
+    </tr>
+
+    <?php foreach ($this->selectMonitoramentos as $key => $entrevista): ?>
+        <tr>
+            <td><?= $entrevista['consulta'] ?></td>
+            <td><?= $entrevista['quantidade'] ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+<br/>
+<br/>
+
+<table>
+    <tr>
+        <th>Porto</th>
+        <th>Quantidade de Fichas</th>
+    </tr>
+
+    <?php foreach ($this->selectFichas as $key => $entrevista): ?>
+        <tr>
+            <td><?= $entrevista['pto_nome'] ?></td>
+            <td><?= $entrevista['quantidade'] ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+<br/>
+<br/>
+
+<table>
+    <tr>
+        <th>Subamostra</th>
+        <th>Quantidade</th>
+    </tr>
+
+    <?php foreach ($this->selectSubamostras as $key => $entrevista): ?>
+        <tr>
+            <td><?= $entrevista['consulta'] ?></td>
+            <td><?= $entrevista['quantidade'] ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>

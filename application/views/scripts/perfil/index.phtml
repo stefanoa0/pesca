@@ -1,0 +1,39 @@
+<h2>Perfil de Usuários</h2>
+<form method="post">
+<fieldset id="Especialista"></fieldset>
+
+    <a id="ancora_perfil"></a>
+    <fieldset class="noEditable"><legend>Perfil:</legend>
+        <fieldset class="noEditable"><legend>Adicionar Perfil:</legend>
+            <div id="base">
+                <input type="button" name="Add" class="button-confirm" onclick="jsInsertPerfil(this.form, '<?= $this->url(array("controller" => "perfil", "action" => "insert"), null, true) ?>')">
+                <input type="button" name="Reload" class="button-clear" onclick="jsReloadPerfil(this.form)">
+
+                <input type="text" name="inputTP_Perfil" placeholder="Perfil" size="40"  />
+                <input readonly="" type="text" name="inputTP_ID" />
+            </div>
+        </fieldset>
+        <br>
+
+        <table id="tblPerfil">
+            <tr>
+                <th width="15%">ID </th>
+                <th width="65%">Perfil</th>
+                <th width="5%"></th>
+                <th width="5%"></th>
+            </tr>
+            <?php foreach ($this->assignPerfil as $key => $dadosPerfil): ?>
+                <tr id="rowNumPeril<?= $key ?>">
+                    <td><?= $dadosPerfil['tp_id'] ?></td>
+                    <td><?= $dadosPerfil['tp_perfil'] ?></td>
+                    <td><input type="button" class="button-edit" width="5%" onclick="jsUpdatePerfil('<?= $dadosPerfil['tp_id'] ?>', '<?= $dadosPerfil['tp_perfil'] ?>', this.form)"></td>
+                    <td><input type="button" class="button-del" width="5%" onclick="jsDeletePerfil(<?= $dadosPerfil['tp_id'] ?>, '<?= $this->url(array("controller" => "perfil", "action" => "delete"), null, true) ?>')"></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </fieldset>
+    <fieldset class="noBorder">
+        <br><input type="button" class="button-up" width="5%" onclick="scrollTo('top')">
+        <a href="<?= $this->url(array("controller" => "perfil", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório - Lista</a>
+    </fieldset>
+</form>

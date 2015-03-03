@@ -1,0 +1,31 @@
+<div id="titulos">
+    <h2>Perfil Social->Municipio</h2>
+    <h3>Novo</h3>
+</div>
+
+
+
+<form action="<?=$this->url(array("controller"=>"municipio","action"=>"criar"),null,true)?>" method="post">
+    <fieldset id="dadosSocial">
+       <div class="esquerda"> 
+        <input type="hidden" name="idMunicipio" />
+        <div class="form-esq">
+            <label>Municipio: </label>
+            <input type="text" name="municipio" value="<?=$this->municipio['tmun_municipio']?>"/> <br/>
+        </div>
+        
+        <div class="form-esq">
+            <label>Estado: </label>
+            <select name="estado">
+                <?php foreach ($this->estados as $estado): ?>
+                <option value="<?= $estado; ?>" <?=($estado == $this->municipio['tuf_sigla']) ? 'selected="selected"' : '';?>><?= $estado; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"municipio","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a>
+            <input type="submit" value="Cadastrar" />
+        </div>
+       </div>
+    </fieldset>
+</form>

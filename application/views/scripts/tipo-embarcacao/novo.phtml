@@ -1,0 +1,19 @@
+<div id="titulos">
+    <h2>Perfil Social->Tipo de Embarcação</h2>
+    <h3>Novo</h3>
+</div>
+
+<form class="pure-form pure-form-aligned" id="cadastro-usuario" action="<?=$this->url(array("controller"=>"tipo-embarcacao","action"=>"criar"),null,true)?>" method="post">
+    <fieldset id="dadosSocial">
+        <div class="esquerda">
+            <div class="form-esq">
+                <label for="tipoEmbarcacao">Tipo Embarcação</label>
+                <input type="text" name="tipoEmbarcacao" id="tipoEmbarcacao" placeholder="Tipo de Embarcação"/>
+            </div>
+            <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"tipo-embarcacao","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a>
+            <input type="submit" value="Cadastrar" />
+        </div>
+        </div>
+    </fieldset>
+</form>

@@ -1,0 +1,204 @@
+<?php
+$this->headScript()->appendFile('/js/jquery.maskedinput.min.js');
+$this->headScript()->appendFile('/js/mascaras.js');
+?>
+
+
+    <div id="titulos">
+        <h2>Perfil Social->Pescador</h2>
+        <h3>Novo</h3><br>
+    </div>
+
+    <form  id="cadastro-usuario" action="<?= $this->url(array("controller" => "pescador", "action" => "criar"), null, true) ?>" method="post">
+        <fieldset id="Social" >
+
+            <input type="hidden" name="idEndereco" value="<?= $this->pescador['te_id'] ?>" />
+
+            <div class="esquerda">
+                <div class="form-dir">
+                    <label for="idPescador">Código</label>
+                    <input readonly="" type="text" name="idPescador" value="<?= $this->pescador['tp_id'] ?>" />
+                </div>
+
+                <div class="form-dir">
+                    <label for="nome">Nome</label>
+                    <input type="text" name="nome" id="nome" placeholder="Nome" required="" /><br/>
+                </div>
+                <div class="form-dir">
+                    <label for="sexo">Sexo</label>
+                    <select name="sexo" id="selec-form" >
+                        <option value="M">Masculino</option>
+                        <option value="F">Feminino</option>
+                    </select>
+                </div>
+
+                <div class="form-dir">
+                    <label for="matricula">Matricula</label>
+                    <input type="text" name="matricula" id="matricula" placeholder="Matricula"/>
+                </div>
+
+                <div class="form-dir">
+                    <label for="apelido">Apelido</label>
+                    <input type="text" name="apelido" id="apelido" placeholder="Apelido" />
+                </div>
+
+                <div class="form-dir">
+                    <label for="filiacaoPai">Nome do Pai</label>
+                    <input type="text" name="filiacaoPai" id="filiacaoPai" placeholder="Nome do Pai"/>
+                </div>
+
+                <div class="form-dir">
+                    <label for="filiacaoMae">Nome da Mãe</label>
+                    <input type="text" name="filiacaoMae" id="filiacaoMae" placeholder="Nome da Mãe" />
+                </div>
+
+                <div class="form-dir">
+                    <label for="rg">RG</label>
+                    <input type="text" name="rg" id="rg" placeholder="RG" />
+                </div>
+
+                <div class="form-dir">
+                    <label for="cpf">CPF</label>
+                    <input type="text" name="cpf" id="cpf" placeholder="CPF" />
+                </div>
+
+                <div class="form-dir">
+                    <label for="dataNasc">Data Nascimento</label>
+                    <input type="date" name="dataNasc" placeholder="Data Nascimento" />
+                </div>
+
+                <div class="form-dir">
+                    <label for="municipioNat">Naturalidade</label>
+                    <select name="municipioNat" id="municipioNat">
+                        <option value="0" selected> Não Declarado-BA</option>
+                        <?php foreach ($this->municipios as $key => $municipio): ?>
+                            <option value="<?= $municipio['tmun_id']; ?>"><?=$municipio['tmun_municipio'],'-', $municipio['tuf_sigla']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="form-dir">
+                    <label for="ctps">CTPS</label>
+                    <input type="text" name="ctps" id="ctps" placeholder="CTPS" "/>
+                </div>
+                
+                <div class="form-dir">
+                    <label for="respLancamento">Responsável Lançamento</label>
+                    <select name="respLancamento" id="respLancamentoID" required="">
+                            <option value="<?= $this->usuario['tu_id']; ?>"><?=$this->usuario['tu_nome']; ?></option>
+                    </select>
+                </div>
+                <div class="form-dir">
+                    <label for="respCadastro">Responsável Cadastro</label>
+                    <select name="respCadastro" id="respCadastroID" required="">
+                        <?php foreach ($this->assignUser as $key => $respCad): ?>
+                            <option value="<?= $respCad['tu_id']; ?>"><?=$respCad['tu_nome']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-dir">
+                    <label for="Observacoes">Observações</label>
+                    <input type="text" name="obs" id="obs" placeholder="Observações" />
+                </div>
+
+            </div>
+
+            <div class="direita">
+                <div class="form-dir">
+                    <label for="logradouro">Logradouro</label>
+                    <input type="text" name="logradouro" id="logradouro" placeholder="Logradouro" required="" value="<?= $this->pescador['te_logradouro'] ?>"/>
+                </div>
+
+                <div class="form-dir">
+                    <label for="numero">Número</label>
+                    <input type="text" name="numero" id="numero" placeholder="Número" value="<?= $this->pescador['te_numero'] ?>"/>
+                </div>
+
+                <div class="form-dir">
+                    <label for="bairro">Bairro</label>
+                    <input type="text" name="bairro" id="bairro" placeholder="Bairro" />
+                </div>
+
+                <div class="form-dir">
+                    <label for="municipio">Município</label>
+                    <select name="municipio" id="municipio" required="">
+                        <option value="0" selected> Não Declarado-BA</option>
+                        <?php foreach ($this->municipios as $key => $municipio): ?>
+                            <option value="<?= $municipio['tmun_id']; ?>"><?=$municipio['tmun_municipio'], '-', $municipio['tuf_sigla']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="form-dir">
+                    <label for="cep">CEP</label>
+                    <input type="text" name="cep" id="cep" placeholder="CEP" />
+                </div>
+
+                <div class="form-dir">
+                    <label for="complemento">Complemento</label>
+                    <input type="text" name="complemento" id="complemento" placeholder="Complemento" />
+                </div>
+
+                <div class="form-dir">
+                    <label for="pis">PIS</label>
+                    <input type="text" name="pis" id="pis" placeholder="PIS" />
+                </div>
+
+                <div class="form-dir">
+                    <label for="inss">INSS</label>
+                    <input type="text" name="inss" id="inss" placeholder="INSS" />
+                </div>
+
+                <div class="form-dir">
+                    <label for="nit_cei">NIT CEI</label>
+                    <input type="text" name="nit_cei" id="nit_cei" placeholder="NIT CEI" />
+                </div>
+
+                <div class="form-dir">
+                    <label for="cma">CMA</label>
+                    <input type="text" name="cma" id="cma" placeholder="CMA" />
+                </div>
+
+                <div class="form-dir">
+                    <label for="rgb_maa_ibama">RGP MAA IBAMA</label>
+                    <input type="text" name="rgb_maa_ibama" id="rgb_maa_ibama" placeholder="RGP MAA IBAMA" />
+                </div>
+
+                <div class="form-dir">
+                    <label for="cap_porto">CIR Cap. Porto</label>
+                    <input type="text" name="cir_cap_porto" id="cir_cap_porto" placeholder="CIR Cap. Portos"/>
+                </div>
+
+                <!--/_/_/_/_/_/_/_/_/_/_/_/_/_/ Escolaridade /_/_/_/_/_/_/_/_/_/_/_/_/_/-->
+                <div class="form-dir">
+                    <label for="selectEscolaridade">Escolaridade</label>
+                    <select name="selectEscolaridade" id="selectEscolaridadeId">
+                        <option value="0" selected> Não Declarado</option>
+                        <?php foreach ($this->assignEscolaridades as $key => $localEscolaridade): ?>
+                            <option value="<?= $localEscolaridade['esc_id']; ?>"><?= $localEscolaridade['esc_nivel']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-dir">
+                    <label for="Projeto">Projeto</label>
+                    <select name="selectProjeto" id="selectProjetoId">
+                        
+                        <?php foreach ($this->assignProjetos as $key => $localProjetos): ?>
+                            <option value="<?= $localProjetos['tpr_id']; ?>"><?= $localProjetos['tpr_descricao']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+        </fieldset>
+
+
+        <fieldset class="noBorder">
+            <div class="Submit">
+                <table id="tabelaSemEstilo">
+                    <td><a href="<?= $this->url(array("controller" => "pescador", "action" => "index"), null, true) ?>" id="botao-ancora">Voltar</a></td>
+                    
+                    <td><input type="button" size="50" value="Salvar e Continuar" class="button-confirmText" onclick="jsInsertPescadorEndereco(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorendereco"), null, true) ?>')"></td>
+                </table>
+            </div>
+        </fieldset>
+    </form>

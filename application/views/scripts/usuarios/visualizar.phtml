@@ -1,0 +1,42 @@
+<h2>Visualizar Usuário</h2>
+
+<a href="<?=$this->url(array("controller"=>"usuarios","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a>
+
+<table>
+    <tr>
+        <th>Nome</th>
+        <th>Login</th>
+        <th>Perfil</th>
+        <th>E-mail</th>
+        <th>Sexo</th>
+        <th>RG</th>
+        <th>CPF</th>
+        <th>Telefone Residencial</th>
+        <th>Telefone Celular</th>
+        <th>Logradouro</th>
+        <th>Número</th>
+        <th>Bairro</th>
+        <th>Cidade</th>
+        <th>Estado</th>
+        <th>CEP</th>
+        <th>Complemento</th>     
+    </tr>
+    <tr>
+        <td><?= $this->usuario['TU_Nome'] ?></td>
+        <td><?= $this->usuario['TL_Login'] ?></td>
+        <td><?= $this->usuario['TP_Perfil'] ?></td>
+        <td><?= $this->usuario['TU_Email'] ?></td>
+        <td><?= $this->usuario['TU_Sexo'] ?></td>
+        <td><?= $this->usuario['TU_RG'] ?></td>
+        <td><?= $this->usuario['TU_CPF'] ?></td>
+        <td><?= $this->telefoneResidencial['TTCont_DDD'] . $this->telefoneResidencial['TTCont_Telefone'] ?></td>
+        <td><?= $this->telefoneCelular['TTCont_DDD'] . $this->telefoneCelular['TTCont_Telefone'] ?></td>
+        <td><?= $this->usuario['TE_Logradouro'] ?></td>
+        <td><?= $this->usuario['TE_Numero'] ?></td>
+        <td><?= $this->usuario['TE_Bairro'] ?></td>
+        <td><?= $this->usuario['TMun_Municipio'] ?></td>
+        <td><?= $this->usuario['TUF_Sigla'] ?></td>
+        <td><?= $this->usuario['TE_CEP'] ?></td>
+        <td><?= $this->usuario['TE_Comp'] ?></td>
+    </tr>
+</table>

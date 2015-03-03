@@ -1,0 +1,24 @@
+
+
+<div id="programadadosSocial">
+    <h2>dadosSocial->Programa dadosSocial</h2>
+    <h3>Novo</h3>
+</div>
+
+<form action="<?=$this->url(array("controller"=>"programa-social","action"=>"criar"),null,true)?>" method="post">
+   <input type="hidden" name="idRenda" placeholder="ID" />
+   <fieldset id="dadosSocial">
+      <div class="esquerda">
+      
+        <div class="form-esq"> 
+            <label>Programa: </label>
+            <input type="text" name="nomeProgramadadosSocial" placeholder="Programa dadosSocial"/> <br />
+        </div>
+
+          <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"programa-social","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a>
+            <input type="submit" value="Cadastrar" />
+        </div>
+      </div>   
+    </fieldset>
+</form>

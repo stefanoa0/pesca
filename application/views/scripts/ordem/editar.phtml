@@ -1,0 +1,41 @@
+<div id="titulos">
+    <h2>Filogenia->Ordem</h2>
+    <h3>Editar</h3>
+</div>
+
+ <form action="<?=$this->url(array("controller"=>"ordem","action"=>"atualizar"),null,true)?>" method="post">
+    <fieldset id="Filogenia">
+      <div class="esquerda">  
+        <div class="form-esq">
+              <label for="id">ID:</label>
+              <input type="text" name="id_ordem" value="<?=$this->ordem['ord_id']?>"/><br />
+        </div>
+        <div class="form-esq"> 
+              <label for="tipo">Nome:</label>
+              <input type="text" name="nome_ordem" value="<?=$this->ordem['ord_nome']?>"/><br />
+        </div>
+        <div class="form-esq">   
+              <label for="tipo">Característica:</label>
+              <input type="text" name="caracteristica_ordem" value="<?=$this->ordem['ord_caracteristica']?>"/><br />
+        </div>
+        
+                <div class="form-esq">
+            <label>Grupo: </label>
+            <select name="grupo_ordem">
+                <?php foreach ($this->grupos as $key => $grupo): ?>
+                <option value="<?= $grupo['grp_id']; ?>" <?=($grupo['grp_id'] == $this->ordem['grp_id']) ? 'selected="selected"' : '';?>><?= $grupo['grp_nome']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        
+      
+
+        
+        <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"ordem","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a> 
+            <input type="submit" value="Atualizar" />
+        </div>
+      </div>        
+    </fieldset>
+              
+</form>

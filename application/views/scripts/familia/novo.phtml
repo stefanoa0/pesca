@@ -1,0 +1,42 @@
+<div id="titulos">
+    <h2>Filogenia->Família</h2>
+    <h3>Novo</h3>
+</div>
+
+<form id="familia" action="<?=$this->url(array("controller"=>"familia","action"=>"criar"),null,true)?>">
+	  <fieldset id="Filogenia">
+		  <div class="esquerda">
+		  <div class="form-esq">
+			  <label for="id">ID:</label>
+			  <input type="text" name="id_familia" placeholder="ID" id="id_familia" /><br />
+		  </div>
+		  <div class="form-esq">
+			  <label for="tipo">Nome:</label>
+			  <input type="text" id="nome_familia" placeholder="Nome" name="nome_familia"/><br/>
+		  </div>
+		  <div class="form-esq">
+			  <label for="tipo">Tipo:</label>
+			  <input type="text" id="tipo_familia" placeholder="Tipo" name="tipo_familia"/><br />
+		  </div>
+		  <div class="form-esq">
+			  <label for="tipo">Característica:</label>
+			  <input type="text" id="caracteristica_familia" placeholder="Característica" name="caracteristica_familia"/><br />
+		  </div>
+		  
+		<div class="form-esq">
+		  <label for="tipo">Ordem:</label>
+		  <select name="ordem_familia" id="ordem_familia">
+		  <?php foreach ($this->dados as $key => $ordem): ?>
+			<option nome="ordem_familia" value="<?=$ordem['ord_id']?>"><?= $ordem['ord_nome']?></option>
+			<?php endforeach; ?>
+		  </select><br/>
+		</div>
+
+
+		<div class="Submit">
+			<a href="<?=$this->url(array("controller"=>"familia","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a>
+			<input type="submit" value="Cadastrar" />
+		</div>
+		  </div>
+	  </fieldset>
+</form>

@@ -1,0 +1,56 @@
+<fieldset id="Entrevista"></fieldset>
+    <form name="arrasto-fundo" method="post">
+
+        <h2>Todas Entrevistas Cadastradas - Limite(50)</h2>
+             
+            <input type="button" value="Limpar" onClick="jsClearBusca('<?= $this->url(array("controller" => "entrevista-pescador", "action" => "index"), null, true) ?>')"/>
+            <input type="button" value="Buscar" onClick="jsBuscaTodasEntrevistas(this.form, '<?= $this->url(array("controller" => "entrevista-pescador", "action" => "index"), null, true) ?>')"/>
+            <select name="tipoBusca">
+                <option value="1">Por Data</option>
+                <option value="2">Por Pescador</option>
+                <option value="3">Por Barco</option>
+                <option value="4">Por Apelido</option>
+                <option value="5">Por Porto</option>
+                <option value="6">Listar Todas</option>
+            </select>
+            <input id="busca" name="buscaEntrevistas" placeholder="Buscar Entrevista"/><br/>
+        <table>
+            <tr>
+                <th>Arte de Pesca</th>
+                <th>Entrevista</th>
+                <th>Pescador</th>
+                <th>Apelido</th>
+                <th>Barco</th>
+                <th>Porto</th>
+                <th>Data</th>
+            </tr>
+
+            <?php foreach ($this->dados as $key => $entrevista): ?>
+                <tr>
+                    <td><b><?= $entrevista['artepesca']?></b></td>
+                    <td><?= $entrevista['id'] ?></td>
+                    <td><?= $entrevista['tp_nome'] ?></td>
+                    <td><?= $entrevista['tp_apelido'] ?></td>
+                    <td><?= $entrevista['bar_nome'] ?></td>
+                    <td><?= $entrevista['pto_nome'] ?></td>
+                    <td><?= date("d-m-Y", strtotime($entrevista['data']))  ?></td>
+
+                    <td>
+                        <a value="Editar" id="abas" href="javascript:onclick=jsEditarEntrevistas('<?= $entrevista['artepesca']?>',<?= $entrevista['id'] ?>)">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Entrevista"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                            
+                        </a>    
+                    </td>
+
+                    
+         
+
+                    </a>
+
+                </tr>
+            <?php endforeach; ?>
+        </table>
+        <br/><br/>
+    </form>

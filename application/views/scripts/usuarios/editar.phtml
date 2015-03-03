@@ -1,0 +1,122 @@
+<?php
+$this->headScript()->appendFile('/js/jquery.maskedinput.min.js');
+$this->headScript()->appendFile('/js/mascaras.js');
+?>
+<div id="titulos">
+    <h2>Usuário</h2>
+    <h3>Editar</h3>
+</div>
+
+
+<form id="cadastro-usuario" action="<?= $this->url(array("controller" => "usuarios", "action" => "atualizar"), null, true) ?>" method="post">
+    <input type="hidden" name="idUsuario" value="<?= $this->usuario['tu_id'] ?>" />
+    <input type="hidden" name="idEndereco" value="<?= $this->usuario['te_id'] ?>" />
+    <fieldset id="Usuarios">
+
+
+        <div class="esquerda">
+            <div class="form-esq">
+                <label>Código: </label>
+                <input type="text" readonly="" size="5" name="idUsuario" value="<?= $this->usuario['tu_id'] ?>" />
+            </div>
+
+            <div class="form-esq">
+                <label for="nome">Nome</label>
+                <input type="text" required="" name="nome" id="nome" placeholder="Nome" value="<?= $this->usuario['tu_nome']; ?>"/>
+            </div>
+
+            <div class="form-esq">
+                <label for="login-form">Login</label>
+                <input type="text" required="" name="login" id="login-form" placeholder="Login" value="<?= $this->usuario['tl_login']; ?>"/>
+            </div>
+
+            <div class="form-esq">
+                <label for="perfil">Perfil</label>
+                <select name="perfil" id="perfil">
+                    <?php foreach ($this->perfis as $key => $perfil): ?>
+                        <option value="<?= $perfil['tp_id']; ?>" <?= ($perfil['tp_perfil'] == $this->usuario['tp_perfil']) ? 'selected="selected"' : ''; ?>><?= $perfil['tp_perfil']; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+
+            <div class="form-esq">
+                <label for="sexo">Sexo</label>
+                <select name="sexo" id="sexo">
+                    <option value="M" <?= ( "M" == $this->usuario['tu_sexo']) ? 'selected="selected"' : ''; ?>><?= "Masculino"; ?></option>
+                    <option value="F" <?= ( "F" == $this->usuario['tu_sexo']) ? 'selected="selected"' : ''; ?>><?= "Feminino"; ?></option>
+                </select>
+            </div>
+
+            <div class="form-esq">
+                <label for="email">E-mail</label>
+                <input type="text" required="" name="email" id="email" placeholder="E-mail" value="<?= $this->usuario['tu_email']; ?>"/>
+            </div>
+
+            <div class="form-esq">
+                <label for="rg">RG</label>
+                <input type="text" required="" name="rg" id="rg" placeholder="RG" value="<?= $this->usuario['tu_rg']; ?>"/>
+            </div>
+
+            <div class="form-esq">
+                <label for="cpf">CPF</label>
+                <input type="text" required="" name="cpf" id="cpf" placeholder="CPF" value="<?= $this->usuario['tu_cpf']; ?>"/>
+            </div>
+
+            <div class="form-esq">
+                <label for="telefoneResidencial">Tel. Residencial</label>
+                <input type="text" name="telefoneResidencial" id="telefoneResidencial" placeholder="Tel. Residencial" class="telefone" value="<?= $this->usuario['tu_telres']; ?>" />
+            </div>
+
+            <div class="form-esq">
+                <label for="telefoneCelular">Tel. Celular</label>
+                <input type="text" name="telefoneCelular" id="telefoneCelular" placeholder="Tel. Celular" class="telefone" value="<?= $this->usuario['tu_telcel']; ?>" />
+            </div>
+
+
+        </div>
+
+        <div class="direita">
+            <div class="form-esq">
+                <label for="logradouro">Logradouro</label>
+                <input type="text" required="" name="logradouro" id="logradouro" placeholder="Logradouro" value="<?= $this->usuario['te_logradouro']; ?>"/>
+            </div>
+
+            <div class="form-esq">
+                <label for="numero">Número</label>
+                <input type="text" name="numero" id="numero" placeholder="Número" value="<?= $this->usuario['te_numero']; ?>"/>
+            </div>
+
+            <div class="form-esq">
+                <label for="bairro">Bairro</label>
+                <input type="text" name="bairro" id="bairro" placeholder="Bairro" value="<?= $this->usuario['te_bairro']; ?>"/>
+            </div>
+
+
+            <div class="form-esq">
+                <label for="municipio">Município</label>
+                <select name="municipio" id="municipio">
+                    <?php foreach ($this->municipios as $key => $municipio): ?>
+                        <option value="<?= $municipio['tmun_id']; ?>" <?= ($municipio['tmun_id'] == $this->usuario['tmun_id']) ? 'selected="selected"' : ''; ?>><?= $municipio['tmun_municipio'],' - ',$municipio['tuf_sigla']; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+
+            <div class="form-esq">
+                <label for="cep">CEP</label>
+                <input type="text" name="cep" id="cep" placeholder="CEP" value="<?= $this->usuario['te_cep']; ?>"/>
+            </div>
+
+            <div class="form-esq">
+                <label for="complemento">Complemento</label>
+                <input type="text" name="complemento" id="complemento" placeholder="Complemento" value="<?= $this->usuario['te_comp']; ?>"/>
+            </div>
+        </div>
+
+    </fieldset>
+    <div class="Submit">
+        <a href="<?= $this->url(array("controller" => "usuarios", "action" => "index"), null, true) ?>" id="botao-ancora">Voltar</a>
+        <input type="submit" value="Atualizar" />
+    </div>
+</form>

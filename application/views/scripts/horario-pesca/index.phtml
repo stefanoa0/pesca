@@ -1,0 +1,37 @@
+<h2>Pescador Especialista -> Horário de Pesca</h2>
+<form method="post">
+<fieldset id="Especialista"></fieldset>
+
+    <a id="ancora_horario-pesca"></a>
+    <fieldset class="noEditable"><legend>Horário de Pesca:</legend>
+        <fieldset class="noEditable"><legend>Adicionar Horário de Pesca:</legend>
+            <div id="base">
+                <input type="button" name="Add" class="button-confirm" onclick="jsInsertDynamic(this.form, '<?= $this->url(array("controller" => "horario-pesca", "action" => "insert"), null, true) ?>', '<?= $this->url(array("controller" => "horario-pesca", "action" => "update"), null, true) ?>')">
+                <input type="button" name="Reload" class="button-clear" onclick="jsReloadDynamic(this.form)">
+
+                <input type="text" name="input_valor" placeholder="Companhia de Pesca" size="40"  />
+                <input readonly="" type="text" name="input_id" />
+            </div>
+        </fieldset>
+        <br>
+
+        <table id="tblPerfil">
+            <tr>
+                <th width="15%">ID </th>
+                <th width="65%">Horário de Pesca</th>
+            </tr>
+            <?php foreach ($this->assignHorarioPesca as $key => $dadosHorarioPesca): ?>
+                <tr id="rowNumPeril<?= $key ?>">
+                    <td><?= $dadosHorarioPesca['thp_id'] ?></td>
+                    <td><?= $dadosHorarioPesca['thp_horario'] ?></td>
+                    <td><input type="button" class="button-edit" width="5%" onclick="jsUpdateDynamic('<?= $dadosHorarioPesca['thp_id'] ?>', '<?= $dadosHorarioPesca['thp_horario'] ?>', this.form)"></td>
+                    <td><input type="button" class="button-del" width="5%" onclick="jsDeleteDynamic(<?= $dadosHorarioPesca['thp_id'] ?>, '<?= $this->url(array("controller" => "horario-pesca", "action" => "delete"), null, true) ?>')"></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </fieldset>
+    <fieldset class="noBorder">
+        <br><input type="button" class="button-up" width="5%" onclick="scrollTo('top')">
+        <a href="<?= $this->url(array("controller" => "horario-pesca", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório - Lista</a>
+    </fieldset>
+</form>

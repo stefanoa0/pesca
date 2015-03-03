@@ -1,0 +1,42 @@
+
+    <h2>Perfil Social->Município</h2>
+
+    <a href="<?= $this->url(array("controller" => "municipio", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
+    <fieldset id="dadosSocial"></fieldset>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Municipio</th>
+            <th>Estado</th>
+        </tr>
+
+        <?php
+        foreach ($this->dados as $key => $municipio):
+            ?>
+            <tr>
+                <td><?= $municipio['tmun_id'] ?></td>
+                <td><?= $municipio['tmun_municipio'] ?></td>
+                <td><?= $municipio['tuf_sigla'] ?></td>
+
+                <td class="td-botao">
+                    <a href="<?= $this->url(array("controller" => "municipio", "action" => "editar", "id" => $municipio['tmun_id']), null, true) ?>">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                        </ul>
+                    </a>
+                </td>
+
+                <td class="td-botao">
+                    <a value="Excluir" onclick="beforeDelete('<?= $this->url(array("controller" => "municipio", "action" => "excluir", "id" => $municipio['tmun_id']), null, true) ?>')">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                        </ul>
+                    </a> 
+                
+                </td>
+
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <br/><br/>
+    <a href="<?= $this->url(array("controller" => "municipio", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório</a>

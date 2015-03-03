@@ -1,0 +1,26 @@
+<div id="tipoDependnete">
+    <h2>Perfil Social->Tipo Telefone</h2>
+    <h3>Novo</h3>
+</div>
+
+<form action="<?= $this->url(array("controller" => "tipo-telefone", "action" => "criar"), null, true) ?>" method="post">
+    <fieldset id="dadosSocial" name="novoTipoTelefone">
+        <div class="esquerda">
+
+            <div class="form-esq"> 
+                <label>Código: </label>
+                <input type="text" readonly="" size="5" name="idTipoTelefone" placeholder="Código Telefone (Automático)"/>
+            </div>
+
+            <div class="form-esq">
+                <label>Tipo Telefone: </label>
+                <input type="text" required=""  name="tipoTelefone" placeholder="Tipo Telefone"/> <br />
+            </div>
+
+            <div class="Submit">
+                <a href="<?= $this->url(array("controller" => "tipo-telefone", "action" => "index"), null, true) ?>" id="botao-ancora">Voltar</a>
+                <input type="submit" value="Cadastrar" />
+            </div>
+        </div>
+    </fieldset>
+</form>

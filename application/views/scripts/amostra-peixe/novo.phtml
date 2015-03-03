@@ -1,0 +1,66 @@
+<div id="titulos">
+    <h2>Desembarque->Amostragem de Peixes</h2>
+    <h3>Novo</h3>
+</div>
+
+
+<form id="formulario" action="<?= $this->url(array("controller" => "amostra-peixe", "action" => "criar"), null, true) ?>" method="post">
+    <fieldset id="Desembarque">
+        <div class="esquerda">
+            <div class="form-esq">
+                <label for="id">ID:</label>
+                <input type="text" name="id_amostra" placeholder="Id" id="id_ficha" /><br />
+            </div>
+
+            <div class="form-esq">
+                <label for="tipo">Estagiário:</label>
+                <select name="select_nome_estagiario" >
+
+                    <option nome="nome_estagiario" value="<?= $this->usuario['tu_id'] ?>"><?= $this->usuario['tu_nome']  ?></option>
+
+
+                </select></br>
+            </div>
+
+            <div class="form-esq">
+                <label for="tipo">Monitor:</label>
+                <select name="select_nome_monitor" >
+                    <?php
+                    foreach ($this->users as $key => $monitor):
+                        ?>
+
+                        <option nome="nome_monitor" value="<?= $monitor['tu_id'] ; ?>"><?= $monitor['tu_nome'] ?></option>
+
+                        <?php
+                    endforeach;
+                    ?>
+                </select></br>
+            </div>
+            <div class="form-esq">  
+                <label for="tipo">Porto:</label>
+                <select name="select_nome_porto" >
+                    <?php
+                    foreach ($this->dados_porto as $key => $porto):
+                        ?>
+
+                        <option nome="nome_porto" value="<?= $porto['pto_id'] ?>"><?= $porto['pto_nome'] ?></option>
+
+                        <?php
+                    endforeach;
+                    ?>
+                </select></br>
+            </div>   
+            <div class="form-esq">
+                <label for="tipo">Id Subamostra:</label>
+                <select name="subamostra_id"/>
+                    <?php foreach ($this->subamostras as $key => $subamostra): ?>
+                        <option value="<?= $subamostra['sa_id']; ?>"><?= $subamostra['tp_nome'].'-'.$subamostra['sa_id']; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="Submit">
+                <input type="submit" value="Salvar Amostragem" /> 
+            </div>
+        </div>
+    </fieldset>
+</form>

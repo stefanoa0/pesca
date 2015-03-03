@@ -1,0 +1,40 @@
+<h2>Desembarque->Pesqueiro</h2>
+
+<a href="<?=$this->url(array("controller"=>"pesqueiro","action"=>"novo"),null,true)?>" id="botao-ancora">Novo</a>
+<fieldset id="dadosDesembarque"></fieldset>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+    </tr>
+    
+    <?php foreach ($this->dadosPesqueiros as $key => $pesqueiro): ?>
+    <tr>
+        <td><?= $pesqueiro['paf_id'] ?></td>
+        <td><?= $pesqueiro['paf_pesqueiro'] ?></td>
+        <td class="td-botao">
+            <a href="<?=$this->url(array("controller"=>"pesqueiro","action"=>"visualizar", "id" => $pesqueiro['paf_id']),null,true)?>">
+                <ul id="icons" class="ui-widget ui-helper-clearfix">
+                    <li class="ui-state-default ui-corner-all" title="Visualizar"><span class="ui-icon ui-icon-search"></span></li>
+                </ul>
+            </a>
+        </td>
+        <td class="td-botao">
+            <a href="<?=$this->url(array("controller"=>"pesqueiro","action"=>"editar", "id" => $pesqueiro['paf_id']),null,true)?>">
+                <ul id="icons" class="ui-widget ui-helper-clearfix">
+                    <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                </ul>
+            </a>
+        </td>
+        <td class="td-botao">
+            <a href="<?=$this->url(array("controller"=>"pesqueiro","action"=>"excluir", "id" => $pesqueiro['paf_id']),null,true)?>">
+                <ul id="icons" class="ui-widget ui-helper-clearfix">
+                    <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-trash"></span></li>
+                </ul>
+            </a>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+</table>
+<br/><br/>
+<a href="<?=$this->url(array("controller"=>"pesqueiro","action"=>"relatorio"),null,true)?>" id="botao-ancora" target="_blank">Gerar Relatório</a>

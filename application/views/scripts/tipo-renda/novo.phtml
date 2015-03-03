@@ -1,0 +1,26 @@
+
+<div id="tipoRenda">
+    <h2>Perfil Social->Tipo Renda</h2>
+    <h3>Novo</h3>
+</div>
+
+<form action="<?= $this->url(array("controller" => "tipo-renda", "action" => "criar"), null, true) ?>" method="post">
+    <fieldset id="dadosSocial">
+        <div class="esquerda">
+            <div class="form-esq">
+                <label>Código Renda: </label>
+                <input type="text" disabled="" name="idTipoRenda" value="<?= $this->assignTipoRenda['ttr_id'] ?>" />
+            </div>
+
+            <div class="form-esq">
+                <label>Tipo Renda: </label>
+                <input type="text" name="inputTipoRenda" placeholder="Tipo de Renda" required="" /> <br />
+            </div>
+
+            <div class="Submit">
+                <a href="<?= $this->url(array("controller" => "tipo-renda", "action" => "index"), null, true) ?>" id="botao-ancora">Voltar</a>
+                <input type="submit" value="Cadastrar" />
+            </div>
+        </div>
+    </fieldset>
+</form>

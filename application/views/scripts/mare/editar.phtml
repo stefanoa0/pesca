@@ -1,0 +1,20 @@
+<div id="titulos">
+    <h2>Desembarque->Área de Pesca</h2>
+    <h3>Editar</h3>
+</div>
+
+<form action="<?=$this->url(array("controller"=>"mare","action"=>"atualizar"),null,true)?>" method="post">
+    <fieldset id="dadosDesembarque">
+        <input type="hidden" placeholder="Tipo de Maré" name="id_mare" value="<?= $this->mare['mre_id'] ?>"/> <br/>
+        <div class="esquerda">
+            <div class="form-esq">
+                <label>Tipo de Maré: </label>
+                <input type="text" placeholder="Tipo de Maré" name="mare" value="<?= $this->mare['mre_tipo'] ?>"/> <br/>
+            </div>
+        <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"mare","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a>
+            <input type="submit" value="Atualizar" />
+        </div> 
+        </div>
+    </fieldset>
+</form>

@@ -1,0 +1,21 @@
+<h2>Desembarque->Subamostra</h2>
+
+
+<fieldset id="Desembarque"></fieldset>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Pescador</th>
+            <th>Data</th>
+        </tr>
+
+        <?php foreach ($this->subamostras as $key => $subamostra): ?>
+            <tr>
+                <td><?= $subamostra['sa_id'] ?></td>
+                <td><?= $subamostra['tp_nome'] ?></td>
+                <td><?= $subamostra['sa_datachegada'] ?></td>
+
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <br/><br/>

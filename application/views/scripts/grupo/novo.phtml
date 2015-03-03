@@ -1,0 +1,25 @@
+<div id="titulos">
+    <h2>Filogenia->Grupo</h2>
+    <h3>Novo</h3>
+</div>
+
+<form id="grupo" action="<?=$this->url(array("controller"=>"grupo","action"=>"criar"),null,true)?>" method="post">
+     <fieldset id="Filogenia">    
+       <div class="esquerda">
+        <div class="form-esq">   
+            <label for="id">ID:</label>
+            <input type="text" name="id_grupo" placeholder="Id" id="id_grupo" /><br />
+        </div>
+        
+        <div class="form-esq">
+              <label for="tipo">Nome:</label>
+              <input type="text" id="nome_grupo" placeholder="Nome" name="nome_grupo"  /><br />
+        </div>
+        <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"grupo","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a>
+            <input type="submit" value="Cadastrar" />
+        </div>
+       </div> 
+    </fieldset>
+              
+</form>

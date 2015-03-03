@@ -1,0 +1,8 @@
+<h2>Esqueceu sua senha?</h2>
+
+<p>Para redefinir sua senha, digite o seu endereço de e-mail.</p>
+
+<form action="<?=$this->url(array("controller"=>"esqueci-senha","action"=>"solicitar"),null,true)?>" method="post">
+    <label>E-mail: <input type="text" name="email" /></label>
+    <input type="submit" value="Enviar" />
+</form>

@@ -1,0 +1,38 @@
+<div id="titulos">
+    <h2>Desembarque->Porto</h2>
+    <h3>Editar</h3>
+</div>
+
+<form action="<?=$this->url(array("controller"=>"porto","action"=>"atualizar"),null,true)?>" method="post">
+   <input type="hidden" name="idPorto" value="<?= $this->porto['pto_id'] ?>" />
+   <fieldset id="dadosDesembarque">
+     <div class="esquerda">   
+       <div class="form-esq"> 
+            <label>Nome: </label>
+            <input type="text" name="nome" value="<?= $this->porto['pto_nome'] ?>"/> <br />
+        </div>
+        
+        <div class="form-esq">
+            <label>Local: </label> 
+            <input type="text" name="local" value="<?=$this->porto['pto_local'];?>" /><br/>
+        </div>
+
+        
+        <div class="form-esq">
+            <label for="municipio">Município</label>
+            <select name="municipio" id="municipio">
+                <?php foreach ($this->municipios as $key => $municipio): ?>
+                <option value="<?= $municipio['tmun_id']; ?>" <?= ($municipio['tmun_id'] == $this->porto['tmun_id']) ? 'selected="selected"' : '';?>><?= $municipio['tmun_municipio'],' - ',$municipio['tuf_sigla']; ?></option>
+                <?php endforeach; ?>
+            </select>            
+        </div>
+        
+        
+        
+         <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"porto","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a> 
+            <input type="submit" value="Atualizar" />
+        </div>
+      </div> 
+    </fieldset>
+</form>

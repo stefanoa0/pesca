@@ -1,0 +1,37 @@
+
+<div id="titulos">
+    <h2>Desembarque->Porto</h2>
+    <h3>Novo</h3>
+</div>
+
+<form action="<?=$this->url(array("controller"=>"porto","action"=>"criar"),null,true)?>" method="post">
+   <input type="hidden" name="idPorto" placeholder="ID" />
+   <fieldset id="dadosDesembarque">
+      <div class="esquerda">
+      
+        <div class="form-esq"> 
+            <label>Nome: </label>
+            <input type="text" name="nome" placeholder="Nome"/> <br />
+        </div>
+
+        <div class="form-esq"> 
+            <label>Local: </label>
+            <input type="text" name="local" placeholder="Local"/> <br />
+        </div>
+
+        <div class="form-dir">
+            <label for="municipio">Município</label>
+            <select name="municipio" id="municipio">
+                <?php foreach ($this->municipios as $key => $municipio): ?>
+                <option value="<?= $municipio['tmun_id']; ?>"><?= $municipio['tmun_municipio'],' - ',$municipio['tuf_sigla']; ?></option>
+                <?php endforeach; ?>
+            </select>            
+        </div>
+        
+          <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"porto","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a>
+            <input type="submit" value="Cadastrar" />
+        </div>
+      </div>   
+    </fieldset>
+</form>

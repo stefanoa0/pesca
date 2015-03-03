@@ -1,0 +1,31 @@
+<div id="titulos">
+    <h2>Relatórios->PDF</h2>
+</div>
+<form action="<?= $this->url(array("controller" => "pescador", "action" => "gerar"), null, true) ?>">
+ <div class="esquerda">
+     <div class="form-esq">
+         <label>Relatório:</label>
+    <select name="tipoRelatorio" required>
+            <option value="" selected></option>
+            <option value="1">Pescadores</option>
+    </select>
+     </div>
+     <div class="form-esq">
+         <label>Por:</label>
+            <select name="porRelatorio">
+                    <option value="0" selected>Geral</option>
+                    <option value="1">Colônias</option>
+                    <option value="2">Comunidades</option>
+                    <option value="3">Portos</option>
+            </select>
+     </div>
+     <div class="form-esq">
+         <label>Qual:</label>
+         <input type="text" name="tipoConsulta" placeholder="Deixar em branco para todos(as)">
+     </div>
+
+     
+    <div class="form-esq">     
+        <input type="submit" value="Relatório"/>
+    </div>
+ </div>

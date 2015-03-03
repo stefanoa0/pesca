@@ -1,0 +1,44 @@
+
+    <h2>Filogenia->Família</h2>
+
+    <a href="<?= $this->url(array("controller" => "familia", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
+    <fieldset id="Filogenia"></fieldset>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Família</th>
+            <th>Tipo</th>
+            <th>Característica</th>
+            <th>Ordem</th>
+        </tr>
+
+        <?php
+        foreach ($this->dados as $key => $familia):
+            ?>
+            <tr>
+                <td><?= $familia['fam_id'] ?></td>
+                <td><?= $familia['fam_nome'] ?></td>
+                <td><?= $familia['fam_tipo'] ?></td>
+                <td><?= $familia['fam_caracteristica'] ?></td>
+                <td><?= $familia['ord_id'] ?></td>
+
+                <td class="td-botao">
+                    <a href="<?= $this->url(array("controller" => "familia", "action" => "editar", "id" => $familia['fam_id']), null, true) ?>">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                        </ul>
+                    </a>
+                </td>
+
+                <td class="td-botao">
+                    <input type="button" value="Excluir" onclick="beforeDelete('<?= $this->url(array("controller" => "familia", "action" => "excluir", "id" => $familia['fam_id']), null, true) ?>')">
+                </td>
+
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <br/><br/>
+    <a href="<?= $this->url(array("controller" => "familia", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório</a>
+    <a href="<?= $this->url(array("controller" => "familia", "action" => "relatoriolista"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório - Lista</a>
+</html>

@@ -1,0 +1,26 @@
+
+
+<div id="titulos">
+    <h2>Perfil Social->Porte Embarcação</h2>
+    <h3>Editar</h3>
+</div>
+
+<form action="<?=$this->url(array("controller"=>"porte-embarcacao","action"=>"atualizar"),null,true)?>" method="post">
+    <fieldset id="dadosSocial">
+        
+        <div class="esquerda">
+            <input type="hidden" name="idPorteEmb" value="<?=$this->porteEmbarcacao['tpe_id']?>" />
+            
+            <div class="form-esq">
+                <label>Porte: </label>
+                <input type="text" name="porteEmb" placeholder="Porte Embarcação" value="<?=$this->porteEmbarcacao['tpe_porte']?>"/> <br />
+            </div>
+            
+        <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"porte-embarcacao","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a> 
+            <input type="submit" value="Atualizar" />
+        </div>
+            
+        </div>
+    <fieldset>
+</form>

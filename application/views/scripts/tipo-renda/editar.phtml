@@ -1,0 +1,27 @@
+<div id="titulos">
+    <h2>Perfil Social->Tipo Renda</h2>
+    <h3>Editar</h3>
+</div>
+
+<form action="<?= $this->url(array("controller" => "tipo-renda", "action" => "atualizar"), null, true) ?>" method="post">
+
+    <fieldset id="dadosSocial">
+        <div class="esquerda">
+            <div class="form-esq">
+                <label>Código Renda: </label>
+                <input type="text" disabled="" name="idTipoRenda" value="<?= $this->assignTipoRenda['ttr_id'] ?>" />
+            </div>
+
+            <div class="form-esq">
+                <label>Tipo Renda: </label>
+                <input type="text" name="inputTipoRenda" required="" value="<?= $this->assignTipoRenda['ttr_descricao'] ?>"/> <br />
+            </div>
+
+
+            <div class="Submit">
+                <a href="<?= $this->url(array("controller" => "tipo-renda", "action" => "index"), null, true) ?>" id="botao-ancora">Voltar</a>
+                <input type="submit" value="Atualizar" />
+            </div>
+        </div>
+    </fieldset>
+</form>

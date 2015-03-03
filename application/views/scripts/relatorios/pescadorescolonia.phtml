@@ -1,0 +1,38 @@
+
+
+<div id="titulos">
+    <h2>Relatórios->Pescadores Por Colônias</h2>
+</div> 
+<script src="js/Chart.min.js"></script>
+<script type="text/javascript">
+
+    var options = {
+        responsive:true,
+
+    };
+
+    var data = {
+        labels: <?= $this->array_colonia ?>,
+        datasets: [
+            {
+                label: "Pescadores",
+                fillColor: "rgba(200,200,200,0.2)",
+                strokeColor: "rgba(200,200,200,1)",
+                pointColor: "rgba(200,200,200,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: <?= $this->array_quantidade ?>
+            }
+
+        ]
+    };
+    window.onload = function(){
+        var ctx = document.getElementById("GraficoLine").getContext("2d");
+        var LineChart = new Chart(ctx).Bar(data, options);
+        var LineChart2 = new Chart(ctx).Line(data, options);
+    };
+</script>
+<div class="box-chart">
+  <canvas id="GraficoLine" style="width:100%;"></canvas>
+</div>

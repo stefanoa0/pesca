@@ -1,0 +1,145 @@
+<div id="titulos">
+    <h2>Desembarque->Pesca de Tarrafa</h2>
+    <h3>Entrevista</h3>
+</div>
+
+<div class="esquerda-entrevista">
+    <form  action="<?= $this->url(array("controller" => "tarrafa", "action" => "criar"), null, true) ?>" name="entrevista" onSubmit="return verificaData()">
+        <fieldset id="Entrevista">
+            <div class="esquerda">
+                <div class="form-esq">
+                    <label>ID da ficha diária:</label>
+                    <input type="text" name="id_fichaDiaria" placeholder="ID" disabled="true" value="<?= $this->fichaDiaria['fd_id'] ?>" /><br />
+                </div>
+                <div class="form-esq">
+                    <label>ID monitoramento:</label>
+                    <input type="text" name="id_monitoramento" placeholder="ID"  value="<?= $this->monitoramento['mnt_id'] ?>" /><br />
+                </div>
+                <div class="form-esq">
+                    <label for="tipo">ID Entrevista:</label>
+                    <input type="text" placeholder = "ID" name="id_entrevista" disabled="true"/><br />
+                </div>
+            </div>
+            <br/>
+            <div class="esquerda">
+                <legend><h4>Embarcação:</h4></legend>
+                <div class="form-esq">
+                    <label>Utilizou Barco?</label>
+                    <input type="checkbox" id="nome" name="embarcada" /><br />
+                </div>
+                <div class="form-esq">
+                    <label>Motor?</label>
+                    <input type="checkbox"  name="motor"/><br />
+                </div>
+                <div class="form-esq">
+                    <label>Barco:</label>
+                    <select name="nomeBarco" required>
+                    <option value="" selected></option>
+                    <?php
+                    foreach ($this->barcos as $key => $barco):
+                        ?>
+                        <option value="<?= $barco['bar_id'] ?>"><?= $barco['bar_nome'] ?></option>
+                        <?php
+                    endforeach;
+                    ?>
+                    </select>
+
+                </div>
+                <div class="form-esq">
+                    <label>Tipo de Barco:</label>
+                    <select name="tipoBarco" required>
+                    <option value="" selected></option>
+                    <?php
+                    foreach ($this->tipoEmbarcacoes as $key => $tipoEmbarcacao):
+                        ?>
+                        <option value="<?= $tipoEmbarcacao['tte_id'] ?>"><?= $tipoEmbarcacao['tte_tipoembarcacao'] ?></option>
+                        <?php
+                    endforeach;
+                    ?>
+                    </select>
+
+                </div>
+
+            </div>
+            <div class="direita-entrevista">
+                <div class="form-esq">    
+                    <label>Pescador Entrevistado:</label>
+                    <select name="pescadorEntrevistado" required>
+                    <option value="" selected></option>
+                    <?php
+                    foreach ($this->pescadores as $key => $pescador):
+                        ?>
+                        <option value="<?= $pescador['tp_id'] ?>"><?= $pescador['tp_nome'] .' ( '. $pescador['tp_apelido']. ' )' ?></option>
+                        <?php
+                    endforeach;
+                    ?>
+                    </select><br />
+                </div>
+                <div class="form-esq">
+                    <label>Quant. de Pescadores:</label>
+                    <input type="text"  name="numPescadores" min="1" placeholder="Quantidade de Pescadores" required/><br />
+                </div>
+            </div>
+            <div class="esquerda">
+                <legend><h4>Tempo:</h4></legend>
+                <div class="form-esq">
+                    <label>Data:</label>
+                    <input type="date" min="2013-11-01" name="data" required/>
+                </div>
+                <div class="form-esq">
+                    <label>Tempo Gasto:</label>
+                    <input type="time" name="tempoGasto" required/>
+                </div>
+            </div>
+            <br/>
+            <div class="esquerda">
+                <div class="form-esq">
+                    <legend><h4>Esforço:</h4></legend>
+                    <label>Roda(m):</label>
+                    <input type="text"  name="roda" placeholder="Roda"/>
+                </div>
+                <div class="form-dir">    
+                    <label>Altura(m):</label>
+                    <input type="text"  name="altura" placeholder="Altura"/><br />
+                </div>
+            </div>
+            <div class="direita-entrevista">
+                <div class="form-dir">    
+                    <label>Número de Lances:</label>
+                    <input type="text"  name="numLances" placeholder="Lances"/><br />
+                </div>
+                <div class="form-dir">    
+                    <label>Malha:</label>
+                    <input type="text"  name="malha" placeholder="malha"/><br />
+                </div>
+            </div><br/>
+            <div class="esquerda">
+                <legend><h4>Outros dados:</h4></legend>
+                <div class="form-esq">    
+                    <label>Destino do Pescado:</label>
+                    <select name="destinoPescado" required>
+                    <option value="" selected></option>
+                    <?php
+                    foreach ($this->destinos as $key => $destino):
+                        ?>
+                        <option value="<?= $destino['dp_id'] ?>"><?= $destino['dp_destino'] ?></option>
+                        <?php
+                    endforeach;
+                    ?>
+                    </select>
+                </div>
+                <div class="form-esq">
+                    <label for="tipo">Subamostra?:</label>
+                    <input type="checkbox" name="subamostra" /><br />
+                </div>
+                <div class="form-esq">
+                    <label for="tipo">Observação:</label>
+                    <input type="text" name="observacao" placeholder="Observação" /><br />
+                </div>
+                <div class="Submit">
+                    <input type="submit" value="Enviar"/>
+                </div>
+            </div>
+        
+</form>
+</div>

@@ -1,0 +1,26 @@
+<div id="escolaridade">
+    <h2>Perfil Social->Escolaridade</h2>
+    <h3>Novo</h3>
+</div>
+
+<form action="<?= $this->url(array("controller" => "escolaridade", "action" => "criar"), null, true) ?>" method="post">
+    <fieldset id="dadosSocial">
+        <div class="esquerda">
+
+            <div class="form-esq"> 
+                <label>Código: </label>
+                <input type="text" readonly="" size="5" name="idEscolaridade" placeholder="Código Escolaridade (Automático)"/>
+            </div>
+
+            <div class="form-esq"> 
+                <label>Dependente: </label>
+                <input type="text" required="" name="nivelEscolaridade" placeholder="Nivel Escolaridade"/> <br />
+            </div>
+
+            <div class="Submit">
+                <a href="<?= $this->url(array("controller" => "escolaridade", "action" => "index"), null, true) ?>" id="botao-ancora">Voltar</a>
+                <input type="submit" value="Cadastrar" />
+            </div>
+        </div>   
+    </fieldset>
+</form>

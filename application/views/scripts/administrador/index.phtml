@@ -1,0 +1,38 @@
+    <table>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Id do pescador</th>
+            </tr>
+
+            <?php foreach ($this->pescadorDeletado as $key => $pescador): ?>
+                <tr>
+                    <td><?= $pescador['tp_id'] ?></td>
+                    <td><?= $pescador['tp_nome'] ?></td>
+                     <td><?= $pescador['tp_obs'] ?></td>
+
+                    <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "pescador", "action" => "editar", "id" => $pescador['tp_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+                    <td class="td-botao">
+                        <input type="button" name="Excluir" class="button-del" onclick="beforeDelete('<?= $this->url(array("controller" => "administrador", "action" => "delete", "id" => $pescador['tp_id'], "idMantido" => $pescador['tp_obs']), null, true) ?>')">
+                    </td>
+                    <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirpescadorid", "id_pescador" => $pescador['tp_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Imprimir"><span class="ui-icon ui-icon-print"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+
+
+                    </a>
+
+                </tr>
+            <?php endforeach; ?>
+        </table>
+            <br/><br/>

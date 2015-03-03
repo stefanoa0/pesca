@@ -1,0 +1,51 @@
+
+    <h2>Usuários</h2>
+
+    <a href="<?= $this->url(array("controller" => "usuarios", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>E-mail</th>
+        </tr>
+
+        <?php
+        foreach ($this->dados as $key => $usuario):
+            ?>
+            <tr>
+                <td><?= $usuario['tu_id'] ?></td>
+                <td><?= $usuario['tu_nome'] ?></td>
+                <td><?= $usuario['tu_email'] ?></td>
+
+                <td class="td-botao">
+                    <a href="<?= $this->url(array("controller" => "usuarios", "action" => "visualizar", "id" => $usuario['tu_id']), null, true) ?>">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Visualizar"><span class="ui-icon ui-icon-search"></span></li>
+                        </ul>
+                    </a>
+                </td>
+
+                <td class="td-botao">
+                    <a href="<?= $this->url(array("controller" => "usuarios", "action" => "editar", "id" => $usuario['tu_id']), null, true) ?>">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                        </ul>
+                    </a>
+                </td>
+
+                <td class="td-botao">
+                    <a href="<?= $this->url(array("controller" => "usuarios", "action" => "excluir", "id" => $usuario['tu_id']), null, true) ?>">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-close"></span></li>
+                        </ul>
+                    </a>
+                </td>
+
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <br/><br/>
+    <a href="<?= $this->url(array("controller" => "usuarios", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório</a>
+    <a href="<?= $this->url(array("controller" => "usuarios", "action" => "relatoriocompleto"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório Completo</a>
+    <a href="<?= $this->url(array("controller" => "usuarios", "action" => "senha", "id" => $this->usuario['tl_id']), null, true) ?>" id="botao-ancora">Alterar Senha</a>

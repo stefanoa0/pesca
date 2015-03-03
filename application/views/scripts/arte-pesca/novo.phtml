@@ -1,0 +1,21 @@
+<div id="titulos">
+    <h2>Perfil Social->Arte de Pesca</h2>
+    <h3>Novo</h3>
+</div>
+
+
+<form action="<?=$this->url(array("controller"=>"arte-pesca","action"=>"criar"),null,true)?>" method="post">
+    <fieldset id="dadosSocial">
+    <div class="esquerda">
+        <div class="form-esq">
+
+            <label>Arte de Pesca:</label> 
+            <input type="text" name="artePesca" placeholder="Arte de Pesca" accept=""value="<?=$this->artePesca['tap_artepesca']?>"/> <br />
+        </div>
+        <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"arte-pesca","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a>
+            <input type="submit" value="Cadastrar" />
+        </div> 
+    </div>
+    </fieldset>
+</form>

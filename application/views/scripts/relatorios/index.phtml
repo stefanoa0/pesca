@@ -1,0 +1,86 @@
+<div id="titulos">
+    <h2>Relatórios->EXCEL</h2>
+</div>
+<form action="<?= $this->url(array("controller" => "relatorios", "action" => "gerar"), null, true) ?>">
+    <div class="esquerda">
+    <fieldset>
+        
+            <div class="form-esq">
+                <label>Relatório:</label>
+                <select name="artePesca" required>
+                    <option value="" selected></option>
+                    <option value="1">Arrasto de Fundo</option>
+                    <option value="2">Calão</option>
+                    <option value="3">Coleta Manual</option>
+                    <option value="4">Emalhe</option>
+                    <option value="5">Groseira</option>
+                    <option value="6">Jereré</option>
+                    <option value="7">Pesca Linha</option>
+                    <option value="8">Linha de Fundo</option>
+                    <option value="9">Manzuá</option>
+                    <option value="10">Mergulho</option>
+                    <option value="11">Ratoeira</option>
+                    <option value="12">Siripoia</option>
+                    <option value="13">Tarrafa</option>
+                    <option value="14">Vara de Pesca</option>
+                    <option value="15">Entrevistas (completo)</option>
+
+                </select>
+            </div>
+            <div class="form-esq">
+                <label>Tipo de Saída:</label>
+                <select name="tipoRelatorio">
+                    <option value="0" selected>Padrão</option>
+                    <option value="1">Peso</option>
+                    <option value="2">Quantidade</option>
+                    <option value="3">Preço</option>
+                </select>
+            </div>
+            <div class="form-esq">
+                <label>Data inicial:</label>
+                <div class="forDate">
+                    <input type="number" placeholder="dia" max="31" min="1" name="dia_ini" class="data"/>
+                    <input type="number" placeholder="mes" max="12" min="1" name="mes_ini" class="data"/>
+                    <input type="number" placeholder="ano" max="2015" min="2013" name="ano_ini" class="data"/>
+                </div>
+            </div>
+            <div class="form-esq">
+                <label>Data final:</label>
+                <div class="forDate">
+                    <input type="number" placeholder="dia" max="31" min="1" name="dia_fim" class="data"/>
+                    <input type="number" placeholder="mes" max="12" min="1" name="mes_fim" class="data"/>
+                    <input type="number" placeholder="ano" max="2015" min="2013" name="ano_fim" class="data"/>
+                </div>
+            </div>
+            <div class="form-esq">     
+                <input type="submit" value="Relatório"/>
+            </div>
+    </fieldset>
+    </div>
+    
+</form>     
+<form action="<?= $this->url(array("controller" => "relatorios", "action" => "outrosrelatorios"), null, true) ?>">
+    <fieldset> 
+        <div class="form-esq">
+            <label>Outros Relatórios:</label>
+            <select name="relatorios" required>
+                <option value="" selected></option>
+                <option value="1">Monitoramentos</option>
+                <option value="2">Espécies Capturadas</option>
+                <option value="3">Espécies Capturadas(Mês)</option>
+                <option value="4">Pescadores</option>       
+                <option value="5">Pescadores Especialistas</option>
+                <option value="6">Avistamentos</option>
+                <option value="7">Valor das Espécies</option>
+            </select>
+            
+        </div>              
+            <br/>
+            <div class="form-esq">     
+                <input type="submit" value="Relatórios"/>
+            </div>
+            <br/>
+            
+           
+    </fieldset>
+</form>    

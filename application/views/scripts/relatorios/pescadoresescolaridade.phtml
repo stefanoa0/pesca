@@ -1,0 +1,50 @@
+
+<head>
+        
+        <?php
+        $this->headLink()->prependStylesheet('../css/basic.css');
+
+
+        echo $this->headLink() . "\n";
+        echo $this->headScript() . "\n";
+        ?>
+	<script type="text/javascript" src="http://filamentgroup.github.com/EnhanceJS/enhance.js"></script>
+        <script type="text/javascript">
+		// Run capabilities test
+		enhance({
+			loadScripts: [
+				{src: 'js/excanvas.js', iecondition: 'all'},
+				'js/jquery.js',
+				'js/visualize.jQuery.js',
+				'js/example.js'
+			],
+			loadStyles: [
+				'css/visualize.css',
+				'css/visualize-light.css'
+			]	
+		});   
+        </script>
+        
+</head>
+<div id="titulos">
+    <h2>Relatórios->Pescadores Por Escolaridade</h2>
+</div>
+
+
+<table >
+
+	<thead>
+		<tr>
+                    <td scope="col">Escolaridade</td>
+                    <th scope="col">Pescadores</th>
+		</tr>
+	</thead>
+	<tbody>
+            <?php foreach ($this->escolaridades as $key => $escolaridade): ?>
+		<tr>
+			<th scope="row"><?= $escolaridade['esc_nivel']?></th>
+			<td><?= $escolaridade['count']?></td>
+		</tr>
+            <?php endforeach;?>
+	</tbody>
+</table>

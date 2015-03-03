@@ -1,0 +1,26 @@
+<div id="titulos">
+    <h2>Perfil Social->Escolaridade</h2>
+    <h3>Editar</h3>
+</div>
+
+<form action="<?= $this->url(array("controller" => "escolaridade", "action" => "atualizar"), null, true) ?>" method="post">
+    <fieldset id="dadosSocial">
+        <div class="esquerda">   
+
+            <div class="form-esq"> 
+                <label>Código: </label>
+                <input type="text" readonly="" size="5" name="idEscolaridade" value="<?= $this->escolaridades['esc_id'] ?>" />
+            </div>
+
+            <div class="form-esq"> 
+                <label>Dependente: </label>
+                <input type="text" required=""  name="nivelEscolaridade" value="<?= $this->escolaridades['esc_nivel'] ?>"/> <br />
+            </div>
+
+            <div class="Submit">
+                <a href="<?= $this->url(array("controller" => "escolaridade", "action" => "index"), null, true) ?>" id="botao-ancora">Voltar</a> 
+                <input type="submit" value="Atualizar" />
+            </div>
+        </div> 
+    </fieldset>
+</form>

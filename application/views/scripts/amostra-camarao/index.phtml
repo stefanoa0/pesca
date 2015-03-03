@@ -1,0 +1,44 @@
+<h2>Desembarque->Amostragem de Camarão</h2>
+
+    <a href="<?= $this->url(array("controller" => "amostra-camarao", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
+    <fieldset id="Desembarque"></fieldset>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Estagiário</th>
+            <th>Monitor</th>
+            <th>Porto</th>
+            <th>Pesqueiro</th>
+            <th>Camarão</th>
+            <th>Captura total</th>
+        </tr>
+
+        <?php
+        foreach ($this->vAmostraCamarao as $key => $vAmostra):
+            ?>
+            <tr>
+                <td><?= $vAmostra['tamc_id'] ?></td>
+                <td><?= $vAmostra['tu_nome'] ?></td>
+                <td><?= $vAmostra['tmonitor'] ?></td>
+                <td><?= $vAmostra['pto_nome'] ?></td>
+                <td><?= $vAmostra['paf_pesqueiro'] ?></td>
+                <td><?= $vAmostra['esp_nome_comum'] ?></td>
+                <td><?= $vAmostra['tamc_captura_total'] ?></td>
+
+                <td class="td-botao">
+                    <a href="<?= $this->url(array("controller" => "amostra-camarao", "action" => "editar", "id" => $vAmostra['tamc_id']), null, true) ?>">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                        </ul>
+                    </a>
+                </td>
+
+                <td class="td-botao">
+                    <input type="button" value="Excluir" onclick="beforeDelete('<?= $this->url(array("controller" => "amostra-camarao", "action" => "delete", "id" => $vAmostra['tamc_id']), null, true) ?>')">
+                </td>
+
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <br/><br/>
+ 

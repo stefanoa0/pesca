@@ -1,0 +1,29 @@
+<!--<br /><br />
+<div id="view-content">
+	<p>View script for controller <b>TipoCapturada</b> and script/action name <b>editar</b></p>
+</div>-->
+
+<div id="titulos">
+    <h2>Perfil Social->Tipo Capturada</h2>
+    <h3>Editar</h3>
+</div>
+
+<form action="<?=$this->url(array("controller"=>"tipo-capturada","action"=>"atualizar"),null,true)?>" method="post">
+    <fieldset id="dadosSocial">
+        
+        <div class="esquerda">
+            <input type="hidden" name="idTipoCapturada" value="<?=$this->tipoCapturada['itc_id']?>" />
+            
+            <div class="form-esq">
+                <label>Porte: </label>
+                <input type="text" name="tipoCapturada" placeholder="Tipo Capturada" value="<?=$this->tipoCapturada['itc_tipo']?>"/> <br />
+            </div>
+            
+        <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"tipo-capturada","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a> 
+            <input type="submit" value="Atualizar" />
+        </div>
+            
+        </div>
+    <fieldset>
+</form>

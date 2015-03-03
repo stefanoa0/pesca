@@ -1,0 +1,19 @@
+<div id="titulos">
+    <h2>Perfil dadosSocial->Área de Pesca</h2>
+    <h3>Novo</h3>
+</div>
+
+<form action="<?=$this->url(array("controller"=>"area-pesca","action"=>"criar"),null,true)?>" method="post">
+    <fieldset id="dadosSocial">
+        <div class="esquerda">
+            <div class="form-esq">
+                <label>Área de Pesca: </label>
+                <input type="text" placeholder="Área de Pesca" name="areaPesca" /> <br/>
+            </div>
+        <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"area-pesca","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a>
+            <input type="submit" value="Cadastrar" />
+        </div> 
+        </div>
+    </fieldset>
+</form>

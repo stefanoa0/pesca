@@ -1,0 +1,21 @@
+<div id="titulos">
+    <h2>Desembarque->Vento</h2>
+    <h3>Editar</h3>
+</div>
+
+
+<form action="<?=$this->url(array("controller"=>"vento","action"=>"atualizar"),null,true)?>" method="post">
+    <fieldset id="dadosDesembarque">
+      <div class="esquerda">  
+        <div class="form-esq">  
+          <input type="hidden" name="idVento" value="<?=$this->vento['vnt_id']?>" />
+          <label>Vento: </label>
+          <input type="text" name="vento" value="<?=$this->vento['vnt_forca']?>"/> <br />
+        </div>
+          <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"vento","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a> 
+            <input type="submit" value="Atualizar" />
+        </div>
+      </div>     
+    </fieldset>
+</form>

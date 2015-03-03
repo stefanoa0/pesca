@@ -1,0 +1,71 @@
+<?php
+$this->headScript()->appendFile('/js/jquery.maskedinput.min.js');
+$this->headScript()->appendFile('/js/mascaras.js');
+?>
+<div id="titulos">
+    <h2>Perfil Social->Colônia</h2>
+    <h3>Editar</h3>
+</div>
+
+<form action="<?=$this->url(array("controller"=>"colonia","action"=>"atualizar"),null,true)?>" method="post">
+    <fieldset id="dadosSocial">
+        <div class="esquerda">
+        <input type="hidden" name="idColonia" value="<?=$this->colonia['tc_id']?>" />
+        <input type="hidden" name="idEndereco" value="<?=$this->colonia['te_id']?>" />
+        <div class="form-esq">
+            <label>Colônia: </label>
+            <input type="text" name="nomeColonia" placeholder="Colônia" value="<?=$this->colonia['tc_nome']?>"/><br/>
+        </div>
+        <div class="form-esq">
+            <label>Comunidade: </label>
+            <select name="comunidade">
+                <?php foreach ($this->comunidades as $key => $comunidade): ?>
+                <option value="<?= $comunidade['tcom_id']; ?>" <?=($comunidade['tcom_id'] == $this->colonia['tcom_id']) ? 'selected="selected"' : '';?>><?= $comunidade['tcom_nome']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="form-esq">
+            <label>Especificidade: </label>
+            <input type="text" name="especificidade" placeholder="Especificidade" value="<?=$this->colonia['tc_especificidade']?>"/><br/>
+        </div>
+        <div class="form-esq">
+            <label>Logradouro: </label>
+            <input type="text" name="logradouro" placeholder="Logradouro" value="<?=$this->colonia['te_logradouro']?>" /><br/>
+        </div>
+
+        <div class="form-esq">
+            <label>Número: </label>
+            <input type="text" name="numero" placeholder="Número" value="<?=$this->colonia['te_numero'];?>" /><br />
+        </div>
+
+        <div class="form-esq">
+            <label>Bairro: </label> 
+            <input type="text" name="bairro" placeholder="Bairro" value="<?=$this->colonia['te_bairro'];?>" /><br/>
+        </div>
+        
+        <div class="form-esq">
+            <label for="municipio">Município</label>
+            <select name="municipio" id="municipio">
+                <?php foreach ($this->municipios as $key => $municipio): ?>
+                <option value="<?= $municipio['tmun_id']; ?>" <?= ($municipio['tmun_municipio'] == $this->colonia['tmun_municipio']) ? 'selected="selected"' : '';?>><?= $municipio['tuf_sigla'], ' ',$municipio['tmun_municipio']; ?></option>
+                <?php endforeach; ?>
+            </select>            
+        </div>
+        
+        <div class="form-esq">
+            <label>CEP: </label> 
+            <input type="text" name="cep" placeholder="CEP" id="cep" value="<?=$this->colonia['te_cep'];?>" /> <br />
+        </div>
+        
+        <div class="form-esq">           
+            <label>Complemento: </label>
+            <input type="text" name="complemento" placeholder="Complemento" value = "<?=$this->colonia['te_comp'];?>" /> <br />
+        </div>
+        <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"colonia","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a> 
+            <input type="submit" value="Atualizar" />
+        </div>
+      </div>
+  </fieldset>
+</form>

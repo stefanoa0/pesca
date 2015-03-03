@@ -1,0 +1,39 @@
+<h2>Desembarque -> Tipos de Pagamentos</h2>
+<form method="post">
+<fieldset id="dadosEmbarcacao"></fieldset>
+
+    <a id="ancora_tipo-pagamento"></a>
+    <fieldset class="noEditable"><legend>Tipos de Pagamentos:</legend>
+        <fieldset class="noEditable"><legend>Adicionar Tipos de Pagamentos:</legend>
+            <div id="base">
+                <input type="button" name="Add" class="button-confirm" onclick="jsInsertDynamic(this.form, '<?= $this->url(array("controller" => "tipo-pagamento", "action" => "insert"), null, true) ?>', '<?= $this->url(array("controller" => "tipo-pagamento", "action" => "update"), null, true) ?>')">
+                <input type="button" name="Reload" class="button-clear" onclick="jsReloadDynamic(this.form)">
+
+                <input type="text" name="input_valor" placeholder="Pagamento" size="40"  />
+                <input readonly="" type="text" name="input_id" />
+            </div>
+        </fieldset>
+        <br>
+
+        <table id="tblPerfil">
+            <tr>
+                <th width="15%">ID </th>
+                <th width="65%">Pagamento</th>
+                <th width="5%"></th>
+                <th width="5%"></th>
+            </tr>
+            <?php foreach ($this->assignTipoPagamento as $key => $dados): ?>
+                <tr id="rowNumPeril<?= $key ?>">
+                    <td><?= $dados['tpg_id'] ?></td>
+                    <td><?= $dados['tpg_pagamento'] ?></td>
+                    <td><input type="button" class="button-edit" width="5%" onclick="jsUpdateDynamic('<?= $dados['tpg_id'] ?>', '<?= $dados['tpg_pagamento'] ?>', this.form)"></td>
+                    <td><input type="button" class="button-del" width="5%" onclick="jsDeleteDynamic(<?= $dados['tpg_id'] ?>, '<?= $this->url(array("controller" => "tipo-pagamento", "action" => "delete"), null, true) ?>')"></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </fieldset>
+    <fieldset class="noBorder">
+        <br><input type="button" class="button-up" width="5%" onclick="scrollTo('top')">
+        <a href="<?= $this->url(array("controller" => "tipo-pagamento", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório - Lista</a>
+    </fieldset>
+</form>

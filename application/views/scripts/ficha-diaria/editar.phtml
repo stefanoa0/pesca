@@ -1,0 +1,621 @@
+<?php
+//$this->headScript()->appendFile('/js/jquery.maskedinput.min.js');
+//$this->headScript()->appendFile('/js/mascaras.js');
+?>
+
+<div id="titulos">
+    <h2>Desembarque->Ficha Diária</h2>
+    <h3>Editar</h3>
+</div>
+
+<form action="<?= $this->url(array("controller" => "ficha-diaria", "action" => "atualizar"), null, true) ?>" method="post">
+<fieldset id="Desembarque">
+    <div class="esquerda">
+        <div class="form-esq">
+            <label for="id">ID:</label>
+            <input type="text" name="id_fichaDiaria"  value="<?= $this->fichadiaria['fd_id'] ?>" disabled="true"/><br />
+        </div>
+
+        <div class="form-esq">
+            <label for="tipo">Estagiário:</label>
+            <select name="select_nome_estagiario" >
+                <?php
+                foreach ($this->users as $key => $estagiario):
+                    ?>
+
+                    <option nome="nome_estagiario" value="<?= $estagiario['tu_id']; ?>"<?= ($estagiario['tu_id'] == $this->fichadiaria['t_estagiario_tu_id']) ? 'selected="selected"' : '' ?>><?= $estagiario['tu_nome'] ?></option>
+
+                    <?php
+                endforeach;
+                ?>
+
+            </select></br>
+        </div>
+
+        <div class="form-esq">
+            <label for="tipo">Monitor:</label>
+            <select name="select_nome_monitor" >
+                <?php
+                foreach ($this->users as $key => $monitor):
+                    ?>
+
+                    <option nome="nome_monitor" value="<?= $monitor['tu_id']; ?>"<?= ($monitor['tu_id'] == $this->fichadiaria['t_monitor_tu_id1']) ? 'selected="selected"' : '' ?>><?= $monitor['tu_nome'] ?></option>
+
+                    <?php
+                endforeach;
+                ?>
+            </select></br>
+        </div>
+
+        <div class="form-esq">
+            <label for="tipo">Data:</label>
+            <input type="date" id="data_Viagem" placeholder="Data" name="data_ficha" value="<?= $this->fichadiaria['fd_data'] ?>"/><br />
+        </div>
+
+        <div class="form-esq">
+            <label for="tipo">Turno:</label>
+            <select name="select_turno" value="<?= $this->fichadiaria['fd_turno']?>">
+                <?php
+                    if($this->fichadiaria['fd_turno'] == "Matutino"){
+                        echo '<option nome="turno" value="Matutino" selected>Matutino</option>';
+                        echo '<option nome="turno" value="Vespertino">Vespertino</option>';
+                        echo '<option name="turno" value="Matutino/Vespertino">Matutino/Vespertino</option>';
+                    }
+                    else if($this->fichadiaria['fd_turno'] == "Vespertino") {
+                        echo '<option nome="turno" value="Matutino" >Matutino</option>';
+                        echo '<option nome="turno" value="Vespertino" selected>Vespertino</option>';
+                        echo '<option name="turno" value="Matutino/Vespertino">Matutino/Vespertino</option>';
+                    }
+                    else{
+                        echo '<option nome="turno" value="Matutino">Matutino</option>';
+                        echo '<option nome="turno" value="Vespertino">Vespertino</option>';
+                        echo '<option name="turno" value="Matutino/Vespertino" selected>Matutino/Vespertino</option>';
+                    }
+                ?>
+            </select>
+        </div>
+
+
+        <div class="form-esq">
+            <label for="tipo">Porto:</label>
+            <select name="select_nome_porto" >
+                <?php
+                foreach ($this->dados_porto as $key => $porto):
+                    ?>
+
+                    <option nome="nome_porto" value="<?= $porto['pto_id'] ?>"<?= ($porto['pto_id'] == $this->fichadiaria['pto_id']) ? 'selected ="selected"' : '' ?> ><?= $porto['pto_nome'] ?></option>
+
+                    <?php
+                endforeach;
+                ?>
+            </select></br>
+        </div>
+
+        <div class="form-esq">
+            <label for="tipo">Tempo: </label>
+            <select name="select_tempo" >
+                <?php
+                foreach ($this->dados_tempo as $key => $tempo):
+                    ?>
+
+                    <option nome="tempo" value="<?= $tempo['tmp_id'] ?>"<?= ($tempo['tmp_id'] == $this->fichadiaria['tmp_id']) ? 'selected ="selected"' : '' ?> ><?= $tempo['tmp_estado'] ?></option>
+
+                    <?php
+                endforeach;
+                ?>
+            </select><br/>
+        </div>
+
+        <div class="form-esq">
+            <label>Vento:</label>
+            <select name="select_vento" >
+                <?php
+                foreach ($this->dados_vento as $key => $vento):
+                    ?>
+
+                    <option nome="tempo" value="<?= $vento['vnt_id'] ?>"<?= ($vento['vnt_id'] == $this->fichadiaria['vnt_id']) ? 'selected ="selected"' : '' ?> ><?= $vento['vnt_forca'] ?></option>
+
+                    <?php
+                endforeach;
+                ?>
+
+            </select><br/><br/>
+        </div>
+
+        <div class="form-esq">
+            <label for="tipo">Observação:</label>
+            <input type="text" id="obs" name="obs"  value="<?= $this->fichadiaria['obs'] ?>"/><br />
+            <br/>
+        </div>
+        <input type="hidden" name="id_fichaDiaria"  value="<?= $this->fichadiaria['fd_id'] ?>"/><br />
+        <div class="Submit">
+            <input type="submit" value="Salvar Alterações"/><br />
+            <br/>
+        </div>
+    </div>
+
+    <br/>
+    <br/>
+
+</fieldset>
+</form>
+<form id="formulario" action="<?= $this->url(array("controller" => "ficha-diaria", "action" => "atualizar"), null, true) ?>" method="post">
+    <fieldset class="noEditable"><legend>Monitoramento:</legend>
+        <fieldset class="noEditable"><legend>Artes de Pesca e quantidade de embarcacoes:</legend>
+
+            <div id="base">
+
+                <input onclick="jsInsertMonitoramento(this.form, '<?= $this->url(array("controller" => "ficha-diaria", "action" => "insertmonitoramento"), null, true) ?>')" type="button" value="Adicionar" />
+
+                <select class="tam_medio" name="SelectMonitorada" style="float:left">
+                    <option   value="TRUE" selected="selected">Monitorada</option>
+                    <option   value="FALSE">Não Monitorada</option>
+                </select>
+
+                <input type="number" name="QuantidadeEmbarcacoes" placeholder="Quantidade" size="10px">
+
+                <input type="hidden" name="id_fichaDiaria"  value="<?= $this->fichadiaria['fd_id'] ?>"/>
+                <select name="SelectArtePesca" id="artePesca">
+                    <?php foreach ($this->artesPesca as $key => $artePesca): 
+                        if($artePesca['tap_arteficha'] != ""){?>
+                       
+                        <option value="<?= $artePesca['tap_id']; ?>"><?= $artePesca['tap_arteficha']; ?></option>
+                        <?php }endforeach; ?>
+                </select>
+            </div>
+
+        </fieldset>
+        <br>
+        <fieldset class="noEditable" id="itemArteTipoRows"><legend>Monitoramentos:</legend>
+            <table id="monitoramento">
+                <tr>
+                    <th width="5%">Id_Ficha</th>
+                    <th width="5%">Id_Monitoramento</th>
+                    <th width="30%">Monitorada?</th>
+                    <th width="20%">Arte de Pesca</th>
+                    <th width="30%">Quantidade</th>
+                    
+                </tr>
+                <?php
+                foreach ($this->vMonitoramento as $key => $vMonitoramento):
+                    if ($vMonitoramento['mnt_monitorado'] == 1) {
+                        $vMonitoramento['mnt_monitorado'] = "Sim";
+                    } else {
+                        $vMonitoramento['mnt_monitorado'] = "Não";
+                    }
+                    ?>
+                    <tr id="itemEmbarcacoesRows<?= $key ?>">
+                        <td name="inputIdFicha"> <?= $vMonitoramento['fd_id'] ?> </td>
+                        <td name="inputIdMonitoramento"> <?= $vMonitoramento['mnt_id'] ?> </td>
+                        <td name="inputMonitorada" > <?= $vMonitoramento['mnt_monitorado'] ?> </td>
+                        <td name="inputArtedePesca"> <?= $vMonitoramento['tap_artepesca'] ?> </td>
+                        <td name="inputQuantidade" > <?= $vMonitoramento['mnt_quantidade'] ?> </td>
+                        <td width="10%" class="td-botao">
+                            <a href="<?=$this->url(array("controller"=>"ficha-diaria","action"=>"monitoramento", "id" => $vMonitoramento['fd_id'], "idmnt" => $vMonitoramento['mnt_id']),null,true)?>">
+                                <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                    <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                                </ul>
+                            </a>
+                        </td>
+                        <td>
+                            <a  onclick="jsDeleteMonitoramento(<?= $vMonitoramento['mnt_id'] ?>, this.form, '<?= $this->url(array("controller" => "ficha-diaria", "action" => "deletmonitoramento"), null, true) ?>', <?= $vMonitoramento['fd_id'] ?>)">
+                                <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                    <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                </ul>
+                            </a>
+                        </td>
+                        <td><input type="button" width="10%" target="_blank" value ="Nova Entrevista" onclick="jsEntrevista('<?= $vMonitoramento['tap_artepesca'] ?>', <?= $vMonitoramento['mnt_id'] ?>, <?= $vMonitoramento['fd_id'] ?>)" <?php if($vMonitoramento['mnt_monitorado']== 'Não'){ echo "disabled='True'";} ?>/></td>
+
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        </fieldset>
+
+    </fieldset>
+    <br/>
+    <fieldset class="noEditable">
+    <table>
+        <legend> Entrevistas </legend>
+            <tr>
+                <th>Arte de pesca</th>
+                <th>Monitoramento</th>
+                <th>Entrevista</th>
+                <th>Pescador</th>
+                <th>Barco</th>
+            </tr>
+            
+            <?php foreach ($this->arrastofundo as $key => $entrevistaArrasto): ?>
+                <tr>
+                    <td>Arrasto de Fundo</td>
+                    <td><?= $entrevistaArrasto['mnt_id'] ?></td>
+                    <td><?= $entrevistaArrasto['af_id'] ?></td>
+                    <td><?= $entrevistaArrasto['tp_nome'] ?></td>
+                    <td><?= $entrevistaArrasto['bar_nome'] ?></td>
+                    
+                    <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "arrasto-fundo", "action" => "editar", "id" => $entrevistaArrasto['af_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+
+                    <td class="td-botao">
+                        <a name="Excluir" class="button-del" onclick="beforeDelete('<?= $this->url(array("controller" => "arrasto-fundo", "action" => "excluir", "id" => $entrevistaArrasto['af_id'],"id_ficha" => $this->fichadiaria['fd_id']), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a>    
+                    </td>
+
+                    </a>
+
+                </tr>
+            <?php endforeach; ?>
+            <?php foreach($this->calao as $key => $entrevistaCalao): ?>
+                <tr>
+                    <td>Calão</td>
+                    <td><?= $entrevistaCalao['mnt_id'] ?></td>
+                    <td><?= $entrevistaCalao['cal_id'] ?></td>
+                    <td><?= $entrevistaCalao['tp_nome'] ?></td>
+                    <td><?= $entrevistaCalao['bar_nome'] ?></td>
+                    
+                    <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "calao", "action" => "editar", "id" => $entrevistaCalao['cal_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+
+                    <td class="td-botao">
+                        <a name="Excluir" class="button-del" onclick="beforeDelete('<?= $this->url(array("controller" => "calao", "action" => "excluir", "id" => $entrevistaCalao['cal_id'], "id_ficha" => $this->fichadiaria['fd_id']), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a> 
+                    </td>
+
+                    </a>
+
+                </tr>
+            <?php endforeach; ?>
+             <?php foreach($this->coletamanual as $key => $entrevistaColetaManual): ?>
+                <tr>
+                    <td>Coleta Manual</td>
+                    <td><?= $entrevistaColetaManual['mnt_id'] ?></td>
+                    <td><?= $entrevistaColetaManual['cml_id'] ?></td>
+                    <td><?= $entrevistaColetaManual['tp_nome'] ?></td>
+                    <td><?= $entrevistaColetaManual['bar_nome'] ?></td>
+                    
+                    <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "coleta-manual", "action" => "editar", "id" => $entrevistaColetaManual['cml_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+
+                    <td class="td-botao">
+                        <a name="Excluir" class="button-del" onclick="beforeDelete('<?= $this->url(array("controller" => "coleta-manual", "action" => "excluir", "id" => $entrevistaColetaManual['cml_id'],"id_ficha" => $this->fichadiaria['fd_id']), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a> 
+                    </td>
+
+                    </a>
+
+                </tr>
+            <?php endforeach; ?>
+            <?php foreach($this->emalhe as $key => $entrevistaEmalhe): ?>
+                <tr>
+                    <td>Emalhe</td>
+                    <td><?= $entrevistaEmalhe['mnt_id'] ?></td>
+                    <td><?= $entrevistaEmalhe['em_id'] ?></td>
+                    <td><?= $entrevistaEmalhe['tp_nome'] ?></td>
+                    <td><?= $entrevistaEmalhe['bar_nome'] ?></td>
+                    
+                    <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "emalhe", "action" => "editar", "id" => $entrevistaEmalhe['em_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+
+                    <td class="td-botao">
+                        <a name="Excluir" class="button-del" onclick="beforeDelete('<?= $this->url(array("controller" => "emalhe", "action" => "excluir", "id" => $entrevistaEmalhe['em_id'],"id_ficha" => $this->fichadiaria['fd_id']), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a> 
+                    </td>
+
+                    </a>
+
+                </tr>
+            <?php endforeach; ?>
+            <?php foreach($this->grosseira as $key => $entrevistaGrosseira): ?>
+                <tr>
+                    <td>Groseira/Espinhel</td>
+                    <td><?= $entrevistaGrosseira['mnt_id'] ?></td>
+                    <td><?= $entrevistaGrosseira['grs_id'] ?></td>
+                    <td><?= $entrevistaGrosseira['tp_nome'] ?></td>
+                    <td><?= $entrevistaGrosseira['bar_nome'] ?></td>
+                    
+                    <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "grosseira", "action" => "editar", "id" => $entrevistaGrosseira['grs_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+
+                    <td class="td-botao">
+                        <a name="Excluir" class="button-del" onclick="beforeDelete('<?= $this->url(array("controller" => "grosseira", "action" => "excluir", "id" => $entrevistaGrosseira['grs_id'],"id_ficha" => $this->fichadiaria['fd_id']), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a> 
+                    </td>
+
+                    </a>
+
+                </tr>
+            <?php endforeach; ?>
+            <?php foreach($this->jerere as $key => $entrevistaJerere): ?>
+                <tr>
+                    <td>Jereré</td>
+                    <td><?= $entrevistaJerere['mnt_id'] ?></td>
+                    <td><?= $entrevistaJerere['jre_id'] ?></td>
+                    <td><?= $entrevistaJerere['tp_nome'] ?></td>
+                    <td><?= $entrevistaJerere['bar_nome'] ?></td>
+                    
+                    <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "jerere", "action" => "editar", "id" => $entrevistaJerere['jre_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+
+                    <td class="td-botao">
+                        <a name="Excluir" class="button-del" onclick="beforeDelete('<?= $this->url(array("controller" => "jerere", "action" => "excluir", "id" => $entrevistaJerere['jre_id'],"id_ficha" => $this->fichadiaria['fd_id']), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a> 
+                    </td>
+
+                    </a>
+
+                </tr>
+            <?php endforeach; ?>
+            <?php foreach($this->linha as $key => $entrevistaLinha): ?>
+                <tr>
+                    <td>Pesca de Linha</td>
+                    <td><?= $entrevistaLinha['mnt_id'] ?></td>
+                    <td><?= $entrevistaLinha['lin_id'] ?></td>
+                    <td><?= $entrevistaLinha['tp_nome'] ?></td>
+                    <td><?= $entrevistaLinha['bar_nome'] ?></td>
+                    
+                    <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "linha", "action" => "editar", "id" => $entrevistaLinha['lin_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+
+                    <td class="td-botao">
+                        <a name="Excluir" class="button-del" onclick="beforeDelete('<?= $this->url(array("controller" => "linha", "action" => "excluir", "id" => $entrevistaLinha['lin_id'],"id_ficha" => $this->fichadiaria['fd_id']), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a> 
+                    </td>
+
+                    </a>
+
+                </tr>
+            <?php endforeach; ?>
+            <?php foreach($this->linhafundo as $key => $entrevistaLinhaFundo): ?>
+                <tr>
+                    <td>Linha de Fundo</td>
+                    <td><?= $entrevistaLinhaFundo['mnt_id'] ?></td>
+                    <td><?= $entrevistaLinhaFundo['lf_id'] ?></td>
+                    <td><?= $entrevistaLinhaFundo['tp_nome'] ?></td>
+                    <td><?= $entrevistaLinhaFundo['bar_nome'] ?></td>
+                    
+                    <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "linha-fundo", "action" => "editar", "id" => $entrevistaLinhaFundo['lf_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+
+                    <td class="td-botao">
+                        <a name="Excluir" class="button-del" onclick="beforeDelete('<?= $this->url(array("controller" => "linha-fundo", "action" => "excluir", "id" => $entrevistaLinhaFundo['lf_id'],"id_ficha" => $this->fichadiaria['fd_id']), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a> 
+                    </td>
+
+                    </a>
+
+                </tr>
+            <?php endforeach; ?>
+            <?php foreach($this->manzua as $key => $entrevistaManzua): ?>
+                <tr>
+                    <td>Manzuá</td>
+                    <td><?= $entrevistaManzua['mnt_id'] ?></td>
+                    <td><?= $entrevistaManzua['man_id'] ?></td>
+                    <td><?= $entrevistaManzua['tp_nome'] ?></td>
+                    <td><?= $entrevistaManzua['bar_nome'] ?></td>
+                    
+                    <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "manzua", "action" => "editar", "id" => $entrevistaManzua['man_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+
+                    <td class="td-botao">
+                        <a name="Excluir" class="button-del" onclick="beforeDelete('<?= $this->url(array("controller" => "manzua", "action" => "excluir", "id" => $entrevistaManzua['man_id'],"id_ficha" => $this->fichadiaria['fd_id']), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a> 
+                    </td>
+
+                    </a>
+
+                </tr>
+            <?php endforeach; ?>
+            <?php foreach($this->mergulho as $key => $entrevistaMergulho): ?>
+                <tr>
+                    <td>Mergulho</td>
+                    <td><?= $entrevistaMergulho['mnt_id'] ?></td>
+                    <td><?= $entrevistaMergulho['mer_id'] ?></td>
+                    <td><?= $entrevistaMergulho['tp_nome'] ?></td>
+                    <td><?= $entrevistaMergulho['bar_nome'] ?></td>
+                    
+                    <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "mergulho", "action" => "editar", "id" => $entrevistaMergulho['mer_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+
+                    <td class="td-botao">
+                        <a name="Excluir" class="button-del" onclick="beforeDelete('<?= $this->url(array("controller" => "mergulho", "action" => "excluir", "id" => $entrevistaMergulho['mer_id'],"id_ficha" => $this->fichadiaria['fd_id']), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a> 
+                    </td>
+
+                    </a>
+
+                </tr>
+            <?php endforeach; ?>
+            <?php foreach($this->ratoeira as $key => $entrevistaRatoeira): ?>
+                <tr>
+                    <td>Ratoeira</td>
+                    <td><?= $entrevistaRatoeira['mnt_id'] ?></td>
+                    <td><?= $entrevistaRatoeira['rat_id'] ?></td>
+                    <td><?= $entrevistaRatoeira['tp_nome'] ?></td>
+                    <td><?= $entrevistaRatoeira['bar_nome'] ?></td>
+                    
+                    <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "ratoeira", "action" => "editar", "id" => $entrevistaRatoeira['rat_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+
+                    <td class="td-botao">
+                        <a name="Excluir" class="button-del" onclick="beforeDelete('<?= $this->url(array("controller" => "ratoeira", "action" => "excluir", "id" => $entrevistaRatoeira['rat_id'],"id_ficha" => $this->fichadiaria['fd_id']), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a> 
+                    </td>
+
+                    </a>
+
+                </tr>
+            <?php endforeach; ?>
+            <?php foreach($this->siripoia as $key => $entrevistaSiripoia): ?>
+                <tr>
+                    <td>Siripóia</td>
+                    <td><?= $entrevistaSiripoia['mnt_id'] ?></td>
+                    <td><?= $entrevistaSiripoia['sir_id'] ?></td>
+                    <td><?= $entrevistaSiripoia['tp_nome'] ?></td>
+                    <td><?= $entrevistaSiripoia['bar_nome'] ?></td>
+                    
+                    <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "siripoia", "action" => "editar", "id" => $entrevistaSiripoia['sir_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+
+                    <td class="td-botao">
+                        <a name="Excluir" class="button-del" onclick="beforeDelete('<?= $this->url(array("controller" => "siripoia", "action" => "excluir", "id" => $entrevistaSiripoia['sir_id'],"id_ficha" => $this->fichadiaria['fd_id']), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a> 
+                    </td>
+
+                    </a>
+
+                </tr>
+            <?php endforeach; ?>
+            <?php foreach($this->tarrafa as $key => $entrevistaTarrafa): ?>
+                <tr>
+                    <td>Tarrafa</td>
+                    <td><?= $entrevistaTarrafa['mnt_id'] ?></td>
+                    <td><?= $entrevistaTarrafa['tar_id'] ?></td>
+                    <td><?= $entrevistaTarrafa['tp_nome'] ?></td>
+                    <td><?= $entrevistaTarrafa['bar_nome'] ?></td>
+                    
+                    <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "tarrafa", "action" => "editar", "id" => $entrevistaTarrafa['tar_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+
+                    <td class="td-botao">
+                        <a name="Excluir" class="button-del" onclick="beforeDelete('<?= $this->url(array("controller" => "tarrafa", "action" => "excluir", "id" => $entrevistaTarrafa['tar_id'],"id_ficha" => $this->fichadiaria['fd_id']), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a> 
+                    </td>
+
+                    </a>
+
+                </tr>
+            <?php endforeach; ?>
+            <?php foreach($this->varapesca as $key => $entrevistaVaraPesca): ?>
+                <tr>
+                    <td>Vara de Pesca</td>
+                    <td><?= $entrevistaVaraPesca['mnt_id'] ?></td>
+                    <td><?= $entrevistaVaraPesca['vp_id'] ?></td>
+                    <td><?= $entrevistaVaraPesca['tp_nome'] ?></td>
+                    <td><?= $entrevistaVaraPesca['bar_nome'] ?></td>
+                    
+                    <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "vara-pesca", "action" => "editar", "id" => $entrevistaVaraPesca['vp_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+
+                    <td class="td-botao">
+                        <a name="Excluir" class="button-del" onclick="beforeDelete('<?= $this->url(array("controller" => "vara-pesca", "action" => "excluir", "id" => $entrevistaVaraPesca['vp_id'],"id_ficha" => $this->fichadiaria['fd_id']), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a> 
+                    </td>
+
+                    </a>
+
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </fieldset>
+</form>

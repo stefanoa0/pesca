@@ -1,0 +1,128 @@
+<?php
+$this->headScript()->appendFile('/js/jquery.maskedinput.min.js');
+$this->headScript()->appendFile('/js/mascaras.js');
+?>
+
+    
+<div id="titulos">
+    <h2>Desembarque->Ficha Diária</h2>
+    <h3>Novo</h3>
+</div>
+
+
+<form id="formulario" action="<?=$this->url(array("controller"=>"ficha-diaria","action"=>"criar"),null,true)?>" method="post">
+   <fieldset id="Desembarque">
+      <div class="esquerda">
+       <div class="form-esq">
+         <label for="id">ID:</label>
+         <input type="text" name="id_fichaDiaria" placeholder="Id" id="id_ficha" /><br />
+       </div>
+       
+       <div class="form-esq">
+         <label for="tipo">Estagiário:</label>
+         <select name="select_nome_estagiario" >
+              
+		<option nome="nome_estagiario" value="<?=$this->usuario['tu_id']?>"><?= $this->usuario['tu_nome']?></option>
+              
+               
+          </select></br>
+        </div>
+       
+         <div class="form-esq">
+            <label for="tipo">Monitor:</label>
+            <select name="select_nome_monitor" required>
+                <option value=""></option>
+                 <?php
+                       foreach ($this->users as $key => $monitor):
+                  ?>
+
+                   <option nome="nome_monitor" value="<?=$monitor['tu_id']?>"><?= $monitor['tu_nome']?></option>
+
+                 <?php
+                   endforeach;
+                 ?>
+            </select></br>
+         </div>
+       
+       <div class="form-esq">
+         <label for="tipo">Data:</label>
+         <input type="date"  placeholder="Data" name="data_ficha" required/><br />
+       </div>
+       
+       <div class="form-esq">
+         <label for="tipo">Turno:</label>
+         <select name="select_turno" required>
+                <option value=""></option>
+		<option name="turno" value="Matutino">Matutino</option>
+                <option name="turno" value="Vespertino">Vespertino</option>
+                <option name="turno" value="Matutino/Vespertino">Matutino/Vespertino</option>
+         </select></br>
+       </div>
+       
+       
+       <div class="form-esq">  
+         <label for="tipo">Porto:</label>
+         <select name="select_nome_porto" required>
+             <option value=""></option>
+              <?php
+                    foreach ($this->dados_porto as $key => $porto):
+               ?>
+              
+		<option nome="nome_porto" value="<?=$porto['pto_id']?>"><?=$porto['pto_nome']?></option>
+              
+              <?php
+                endforeach;
+              ?>
+         </select></br>
+       </div>   
+      
+      <div class="form-esq">        
+          <label for="tipo">Tempo: </label>
+         <select name="select_tempo" required>
+             <option value=""></option>
+             <?php
+                  foreach ($this->dados_tempo as $key => $tempo):
+               ?>
+              
+		<option nome="tempo" value="<?=$tempo['tmp_id']?>"><?=$tempo['tmp_estado']?></option>
+              
+              <?php
+                endforeach;
+              ?>
+         </select><br/>
+      </div>   
+         
+       <div class="form-esq"> 
+         <label>Vento:</label> 
+         <select name="select_vento" id="ficha_diaria_vento" required>
+             <option value=""></option>
+             <?php
+                  foreach ($this->dados_vento as $key => $vento):
+               ?>
+              
+		<option nome="tempo" value="<?=$vento['vnt_id']?>"><?= $vento['vnt_forca']?></option>
+              
+              <?php
+                endforeach;
+              ?>
+             
+         </select><br/><br/>  
+       </div>
+       
+       <div class="form-esq">  
+         <label for="tipo">Observação:</label>
+         <input type="text" id="estado_tempo" name="obs" /><br />
+         <br/>
+       </div>
+       <div class="Submit">
+            <input type="submit" value="SalvarFicha" />           
+       </div>
+   </div>
+       <br/>
+       
+       <div class="Submit">
+            <a href="<?=$this->url(array("controller"=>"ficha-diaria","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a>           
+       </div>
+         
+   </fieldset>
+</form> 

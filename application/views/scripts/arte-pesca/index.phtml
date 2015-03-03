@@ -1,0 +1,40 @@
+
+
+    <h2>Perfil-Social->Artes de Pesca</h2>
+
+    <a href="<?= $this->url(array("controller" => "arte-pesca", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
+    <fieldset id="dadosSocial"></fieldset>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Arte de Pesca</th>
+        </tr>
+
+        <?php
+        foreach ($this->dados as $key => $artePesca):
+            ?>
+            <tr>
+                <td><?= $artePesca['tap_id'] ?></td>
+                <td><?= $artePesca['tap_artepesca'] ?></td>
+
+                <td class="td-botao">
+                    <a href="<?= $this->url(array("controller" => "arte-pesca", "action" => "editar", "id" => $artePesca['tap_id']), null, true) ?>">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                        </ul>
+                    </a>
+                </td>
+
+                <td class="td-botao">
+                    <a  value="Excluir" onclick="beforeDelete('<?= $this->url(array("controller" => "arte-pesca", "action" => "excluir", "id" => $artePesca['tap_id']), null, true) ?>')">
+                       <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                       </ul>
+                    </a>
+                </td>
+
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <br/><br/>
+    <a href="<?= $this->url(array("controller" => "arte-pesca", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório</a>

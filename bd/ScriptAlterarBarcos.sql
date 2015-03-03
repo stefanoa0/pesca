@@ -1,0 +1,49 @@
+ 
+UPDATE t_arrastofundo
+   SET bar_id=?
+ WHERE bar_id=!;
+ UPDATE t_calao
+   SET bar_id=?
+ WHERE bar_id=!;
+ UPDATE t_coletamanual
+   SET bar_id=?
+ WHERE bar_id=!;
+ UPDATE t_emalhe
+   SET bar_id=?
+ WHERE bar_id=!;
+ UPDATE t_grosseira
+   SET bar_id=?
+ WHERE bar_id=!;
+ UPDATE t_jerere
+   SET bar_id=?
+ WHERE bar_id=!;
+ UPDATE t_linha
+   SET bar_id=?
+ WHERE bar_id=!;
+ UPDATE t_linhafundo
+   SET bar_id=?
+ WHERE bar_id=!;
+ UPDATE t_manzua
+   SET bar_id=?
+ WHERE bar_id=!;
+ UPDATE t_mergulho
+   SET bar_id=?
+ WHERE bar_id=!;
+UPDATE t_ratoeira
+   SET bar_id=?
+ WHERE bar_id=!;
+ UPDATE t_siripoia
+   SET bar_id=?
+ WHERE bar_id=!;
+ UPDATE t_tarrafa
+   SET bar_id=?
+ WHERE bar_id=!;
+ UPDATE t_varapesca
+   SET bar_id=?
+ WHERE bar_id=!;
+UPDATE t_amostra_camarao
+   SET bar_id=?
+ WHERE bar_id=!;
+ Delete From t_barco WHERE bar_id = !;
+
+
