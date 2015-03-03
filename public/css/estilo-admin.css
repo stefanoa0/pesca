@@ -1,0 +1,619 @@
+body{
+    font-family: "Bitstream Charter",sans-serif;
+    background: #f8f8ff;
+}
+
+#geral {
+    font-size: 85%;
+    margin: 0 auto;
+    width: 100%;
+    background: #f8f8ff;
+}
+
+#topo {
+    height: 100px;
+    background: #f8f8ff;
+}
+#topoLeft
+{
+	height: 100px;
+	width: 350px;
+	background-image: url('../img/Rachycentronlogo.png');
+	background-repeat: no-repeat;
+	float: left;
+}
+#topoRight
+{
+	height: 100px;
+	width: 150px;
+	background-image: url('../img/mpesca.png');
+	background-repeat: no-repeat;
+	float: right;
+}
+
+#menu{
+    float: left;
+    width: 100%;
+    background: #5F302B;//#8B8386;
+    min-height: 45px;
+}
+
+#menu ul
+{
+    margin: 0;
+    padding: 0;
+}
+
+#menu ul li
+{
+    list-style-type: none;
+    display: inline;
+}
+
+#menu li a
+{
+    display: block;
+    float: left;
+    margin: 10px 0;
+    padding: 5px 10px;
+    font-size: 100%;
+    color: #fff;
+    text-decoration: none;
+    border-right: 1px solid #fff;
+}
+
+#menu li a:hover { background: #462420;}//#4F4F4F; }
+
+#login
+{
+	float: right;
+	margin-top: 5px;
+        margin-left: 500px;
+	color: #fff;
+}
+#login p{
+    float: right;
+}
+
+#usuario {
+    color: white;
+}
+#login #sair { margin: 0 500px 0; }
+
+#login .login {	width: 10em; }
+
+#login a
+{
+    color: #fff;
+    text-decoration: none;
+}
+
+#login a:hover { background: #462420; }
+
+#conteudo-geral
+{
+    float: left;
+    width: 100%;
+    background: #f8f8ff;
+}
+
+#conteudo
+{
+    min-height: 350px;
+    float: right;
+    width: 79%;
+    display: inline;
+    text-align: justify;
+}
+
+
+
+#titulos{
+    width: 350px;
+    height: auto;
+}
+#titulos h3{
+    color: gray;
+    margin: -35px;
+    float: right;
+}
+#conteudo ul{
+    list-style-type: none;
+}
+
+#conteudo h2 {
+    margin-top: 10px;
+    padding: 0;
+}
+
+
+#menu-lateral
+{
+    float: left;
+    width: 18%;
+    margin: 0px;
+}
+
+#menu-lateral ul {
+    margin: 15px 0;
+    padding-left: 8px;
+}
+
+#menu-lateral li {
+    background: #5F302B;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #CCC;
+    text-align: left;
+    list-style-type: none;
+}
+
+#menu-lateral ul li ul li a{
+    background: black;
+
+}
+#Social li, #Dsbq li, #Relatorio li{
+    background: #90544D;//#9C9698;
+}
+
+#menu-lateral a{
+    color: #fff;
+    text-decoration: none;
+    padding: 8px;
+    margin: 0;
+    display: block;
+}
+
+#menu-lateral a:hover { background: #462420;}//#4F4F4F; }
+
+
+
+#rodape 
+{
+    clear: both;
+    background: #f8f8ff;
+    height: 70px;
+}
+
+#parceiros 
+{
+    width: 100%;
+    height: 70px;
+    background: #f8f8ff;
+}
+
+#parceiros ul 
+{
+    list-style: none;
+}
+
+#parceiros ul li 
+{
+    display: inline;
+    width: 100%;
+    margin-left: 12%;
+}
+
+#icons {
+    margin: 0;
+    padding: 0;
+}
+#icons li {
+    margin: 2px;
+    position: relative;
+    padding: 4px 0;
+    cursor: pointer;
+    float: left;
+    list-style: none;
+}
+#icons span.ui-icon {
+    float: left;
+    margin: 0 4px;
+}
+
+#botao-ancora, input[type=submit]{
+    font-size: 11px;
+    margin-bottom: 10px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 95%;
+}
+
+tr th{
+    background-color: #5F302B;
+    color: white;
+}
+
+th, td {
+    padding: 0.25em;
+    text-align: left;
+    border: 1px solid #ccc;
+}
+
+tbody tr:nth-child(odd) {
+    background: #F9F2F1;
+}
+
+.td-botao {
+    width: 3px;
+    height: 3px;
+    padding: 0;
+    border: 0px;
+    background: #f8f8ff;
+}
+
+#esquerda_base{
+    float: left;
+    padding: 0;
+    width: 50%;
+    height: auto;
+}
+
+.esquerda{
+    //float: left;
+
+    width: 48%;
+    height: auto;
+}
+
+.direita{
+    float: right;
+    padding: 0;
+    width: 48%;
+    height: auto;
+    margin-top: -450px;
+}
+.esquerda-entrevista{
+    float: left;
+    padding: 0;
+    width: 80%;
+    height: auto;
+}
+
+.direita-entrevista{
+    float: right;
+    margin-left: 30px;
+    width: 50%;
+    height: auto;
+    margin-top: -7%;
+}
+
+.Submit{
+    width: 100%;
+    float: right;
+    padding-top: 30px;
+}
+
+.Submit input{
+    height: 25px;
+}
+
+
+.tam_medio{
+    width: 120px;
+
+}
+
+#pescador_especialista{
+    float: left;
+    padding: 0;
+    width: 90%;
+    height: auto;
+}
+#pescador_especialista input{
+    width: 250px;
+}
+#pescador_especialista select{
+    width: 255px;
+}
+#pescador_especialista .button-confirm, .button-del{
+    width: 30px;
+}
+
+#small{
+    width: 160px;
+}
+
+
+select{
+    width: 245px;
+    height: 25px;
+    background: white;
+    float: right;
+}
+select.espc{
+    width: 120px;
+}
+select.amostragem{
+    width: 80px;
+}
+.form-dir, .form-esq{
+    padding: 8px;
+    padding-left: 0px;
+}
+.responsivo{
+    width: 15%;
+}
+input {
+    float: right;
+    width: 240px;
+    height: 22px;
+    border-radius: 3px;
+    border-color:#8b8386;
+}
+.forDate{
+    float: right;
+}
+.data{
+    float: none;
+    height: 22px;
+    border-radius: 3px;
+    border-color:#8b8386;
+}
+input.tamanho{
+    width: 50px;
+}
+input:focus{
+    border-color: #af3333;
+}
+tr td input{
+    float: right;
+}
+
+label {
+    text-align: left;
+    width: 125px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+fieldset {
+    border: none;
+}
+
+br {
+    clear: left;
+}
+
+fieldset.noBorder {
+    border: none;
+}
+
+
+fieldset.noEditable {
+    padding: 1em;
+    /*font:80%/1 sans-serif;*/
+    border: 2px #af3333 solid;
+    border-radius: 5px;
+}
+
+fieldset.noEditable label {
+    text-align: inherit;
+    width: 125px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+fieldset.noEditable input[type="text"] {
+    /*width: 100%;*/
+    /*height: 30px;*/
+    /*line-height: 30px;*/
+    /*border: none;*/
+    background-color: transparent;
+    border-radius: 0;
+}
+
+fieldset.noEditable base{
+    float: right;
+    padding: 0;
+    width: 100%;
+    height: auto;
+}
+
+.confirm{
+    float:right;
+}
+input.button-edit {
+    background-image: url('../img/trash.png');  //16px x 16px
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border: none;           /* assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 16px;           /* make this the size of your image */
+    padding-left: 16px;     /* make text start to the right of the image */
+    vertical-align: middle; /* align the text vertically centered */
+}
+
+input.button-del {
+    background-image: url(../img/delete_red.png);
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border: none;            /*assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 16px;           /* make this the size of your image */
+    padding-left: 16px;     /* make text start to the right of the image */
+    vertical-align: middle; /* align the text vertically centered */
+}
+
+input.button-confirm {
+    background-image: url(../img/edit-validated-icon.png);
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border: none;            /*assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 24px;           /* make this the size of your image */
+    padding-left: 16px;     /* make text start to the right of the image */
+    vertical-align: middle; /* align the text vertically centered */
+}
+
+input.button-edit {
+    background-image: url(../img/edit-icon.png);
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border: none;            /*assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 22px;           /* make this the size of your image */
+    padding-left: 16px;     /* make text start to the right of the image */
+    vertical-align: middle; /* align the text vertically centered */
+}
+
+input.button-clear {
+    background-image: url(../img/Actions-edit-clear-icon.png);
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border: none;            /*assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 22px;           /* make this the size of your image */
+    padding-left: 16px;     /* make text start to the right of the image */
+    vertical-align: middle; /* align the text vertically centered */
+}
+
+input.button-up {
+    background-image: url(../img/Actions-green-arrow-up-top-icon.png);
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border: none;            /*assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 22px;           /* make this the size of your image */
+    padding-left: 16px;     /* make text start to the right of the image */
+    vertical-align: middle; /* align the text vertically centered */
+}
+input.button-confirmText {
+    color:#555555;
+    background-image: url(../img/edit-validated-icon.png);
+    background-color:#e6e6e6; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border-color: #CCC;            /*assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 30px;
+    width: 150px;
+    padding-left: 22px;
+    vertical-align: middle; /* align the text vertically centered */
+}
+input.button-especialista{
+    background-image: url(../img/fish_icon.png);
+    background-color:#e6e6e6; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border-color: #CCC;            /*assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    width: 30px;
+    padding-left: 22px;
+    vertical-align: middle; /* align the text vertically centered */
+}
+input.button-especialista:disabled{
+    background-image: url(../img/fish_icon.png);
+    background-color: white; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border-color: white;            /*assuming we don't want any borders */
+    cursor:default;        /* make the cursor like hovering over an <a> element */
+    padding-left: 22px;
+    vertical-align: middle; /* align the text vertically centered */
+}
+
+input.button-relatorio {
+    background-image: url(../img/icon_relatorio.png);
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border: none;            /*assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 20px;           /* make this the size of your image */
+    padding-left: 16px;     /* make text start to the right of the image */
+    vertical-align: middle; /* align the text vertically centered */
+}
+h4,h5{
+    color: #462420;
+}
+.imgefeito { 
+    margin-left: 10px;  
+    float: right; 
+    position: relative; 
+} 
+.imgefeito a { 
+    text-decoration: none; 
+    float: left;
+} 
+.imgefeito a:hover { 
+    cursor: pointer;
+}
+.imgefeito img{
+    margin-bottom: 10px;
+}
+#titulo-img{
+    color: #5F302B;
+    font-size: 10px;
+}
+
+#buscaInicial{
+    font-size: 16px;
+    cursor:default;
+}
+#buscaInicial a{
+    text-decoration: none;
+    color: #5F302B;
+    padding-left: 3px;
+}
+#buscaInicial a:hover{
+    color: #000;
+    cursor: pointer;
+}
+#buscaInicial a:visited{
+    color: #5F302B;
+}
+
+#tabelaSemEstilo tr td{
+    border: none;
+    background-color: #f8f8ff;
+}
+
+legend{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#tabs ul{
+    height: 20px;
+}
+#tabs ul li{
+    color: #555;
+    font-size: 12px;
+    display: inline;
+    padding: 10px;
+}
+
+#for_tabs-2{
+    color: red;
+}
+
+#abas a{
+    background: #e6e6e6 url(../smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding: 8px;
+}
+#abas a:hover{
+    background: #8b8386 url(../smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+    border-color: #555;
+    cursor: pointer;
+}
+
+#tabs-2 div{
+    margin-bottom: 8px;
+}
+
+#dynamicInput select input{
+    float: left;
+}

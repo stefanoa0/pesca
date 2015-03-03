@@ -1,0 +1,269 @@
+body
+{
+    font-family: "Bitstream Charter",sans-serif;
+    background: #f8f8ff;
+}
+#geral
+{   
+        font-size: 90%;
+	margin: 0 auto;
+	width: 100%;
+	background: #f8f8ff;
+}
+
+#topo
+{
+	height: 100px;
+}
+#topoLeft
+{
+	height: 100px;
+	width: 350px;
+	background-image: url('img/Rachycentronlogo.png');
+	background-repeat: no-repeat;
+	float: left;
+}
+#topoRight
+{
+	height: 100px;
+	width: 150px;
+	background-image: url('img/mpesca.png');
+	background-repeat: no-repeat;
+	float: right;
+}
+
+
+#menu
+{
+        font-size: 0.8em;
+	float: left;
+	width: 100%;
+	background: #5F302B;
+	min-height: 45px;
+}
+
+#menu ul
+{
+	margin: 0;
+	padding: 0;
+}
+
+#menu ul li
+{
+	list-style-type: none;
+	display: inline;
+}
+
+#menu li a
+{
+	display: block;
+	float: left;
+	margin: 10px 0;
+	padding: 5px 10px;
+	font-size: 15px;
+	color: #fff;
+	text-decoration: none;
+	border-right: 1px solid #fff;
+}
+
+#menu li a:hover 
+{ 
+    background: #462420; 
+}
+
+#login
+{
+	float: right;
+	margin: 5px 0;
+}
+
+#login form 
+{ 
+    margin: 0 5px 2px 0; 
+}
+
+#login .login 
+{	
+    width: 10em; 
+}
+
+#login a
+{
+	color: #fff;
+	text-decoration: none;
+}
+
+#login a:hover 
+{ 
+    background: #462420; 
+}
+
+#conteudo-geral
+{
+	float: left;
+	width: 100%;
+	background: #f8f8ff;
+}
+
+#conteudo
+{
+	width: 100%;
+	min-height: 350px;
+	padding: 20px 0;
+	text-align: justify;
+}
+
+#conteudo p
+{
+	margin-left: 130px;
+	margin-right: 130px;
+}
+
+#conteudo ul
+{
+    padding: 0;
+	margin-left: 130px;
+	margin-right: 130px;
+}
+
+#conteudo h2 {
+	margin: 0 0 0 130px;
+	padding: 0;
+}
+
+#conteudo ul{
+	list-style-type: none;
+}
+
+#conteudo table, th, td
+{
+	border: 1px solid black;
+	border-collapse:collapse;
+}
+
+#conteudo tr th
+{
+	background-color: #5F302B;
+}
+
+#conteudo table
+{
+	width: 100%;
+}
+
+#label
+{	
+    width: 150px; 
+}
+
+#input
+{
+	margin-left: 150px;
+	margin-top: -129px;
+	float: left;
+}
+
+#menu-lateral
+{
+	float: left;
+	width: 190px;
+	padding: 0;
+	margin: 0;
+}
+
+#menu-lateral ul 
+{
+	margin: 20px 0;
+	padding: 0;
+}
+
+#menu-lateral li 
+{
+	margin: 0;
+	padding: 0;
+	border-bottom: 1px solid #CCC;
+	text-align: left;
+	list-style-type: none;
+}
+
+#menu-lateral a
+{
+	text-decoration: none;
+	color: #fff;
+}
+
+#menu-lateral a:link 
+{
+	background: #5F302B;
+	color: #fff;
+	text-decoration: none;
+	padding: 8px;
+	margin: 0;
+	display: block;
+}
+
+#menu-lateral a:hover 
+{ 
+    background: #462420; 
+}
+
+#rodape 
+{
+    clear: both;
+    background: #f8f8ff;
+    height: 70px;
+}
+
+#parceiros 
+{
+    width: 100%;
+    height: 70px;
+    background: #f8f8ff;
+}
+
+#parceiros ul 
+{
+    list-style: none;
+}
+
+#parceiros ul li 
+{
+    display: inline;
+    width: 100%;
+    margin-left: 12%;
+}
+
+input[type=submit]
+{
+    font-size: 0.9em;
+}
+
+.imgefeito 
+{ 
+    margin-left: 10px;  
+    float: right; 
+    position: relative; 
+} 
+.imgefeito a 
+{ 
+    text-decoration: none; 
+    float: left;
+} 
+.imgefeito a:hover 
+{ 
+    cursor: pointer;
+}
+.imgefeito img
+{
+    margin-bottom: 10px;
+}
+h4,h5
+{
+    margin-left: 130px;
+    color: #462420;
+}
+#titulo-img
+{
+    color: #5F302B;
+    font-size: 0.7em;
+}

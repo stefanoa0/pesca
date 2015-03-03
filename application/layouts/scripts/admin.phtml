@@ -1,0 +1,291 @@
+<?= $this->doctype('XHTML1_TRANSITIONAL') ?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <base href="http://<?= $_SERVER['HTTP_HOST'] . $this->baseUrl() ?>/" />
+        <?php
+        $this->headLink()->prependStylesheet('css/estilo-admin.css');
+        $this->headLink()->appendStylesheet('css/smoothness/jquery-ui-1.10.3.custom.min.css');
+        $this->headScript()->prependFile('js/jquery-1.10.2.min.js');
+        $this->headScript()->appendFile('js/jquery-ui-1.10.3.custom.min.js');
+        $this->headScript()->appendFile('js/jquery-ui-functions.js');
+        $this->headScript()->appendFile('js/funcoesJquery.js');
+        $this->headScript()->appendFile('js/formValidation.js');
+        echo $this->headLink() . "\n";
+        echo $this->headScript() . "\n";
+        ?>
+	
+        <title>
+                Programa de Monitoramento da Atividade Pesqueira
+            </title>
+        <link rel="shortcut icon" href="img/rachy.png" />
+    </head>
+    <body>
+        <div id="geral">
+            <div id="topo">
+                <div id="topoLeft"></div>
+                <div id="topoRight"></div>
+            </div>
+            <div id="menu">
+                <ul>
+                    <li><a href="<?= $this->url(array("controller" => "index", "action" => "index"), null, true) ?>">Página Inicial</a></li>
+                    <li><a href="<?= $this->url(array("controller" => "noticias", "action" => "index"), null, true) ?>">Monitoramento</a></li>
+                    <li><a href="<?= $this->url(array("controller" => "instituicoes", "action" => "index"), null, true) ?>">Instituições</a></li>
+                    <li><a href="<?= $this->url(array("controller" => "equipe", "action" => "index"), null, true) ?>">Equipe</a></li>
+                    <li><a href="<?= $this->url(array("controller" => "novidades", "action" => "index"), null, true) ?>">Novidades</a></li>
+                    <li><a href="<?= $this->url(array("controller" => "passos", "action" => "index"), null, true) ?>">Passo a Passo</a></li>
+                    <li><a href="<?= $this->url(array("controller" => "contato", "action" => "index"), null, true) ?>">Contato</a></li>
+                    <li><a href="<?= $this->url(array("controller" => "sobre", "action" => "index"), null, true) ?>">Sobre</a></li>
+                </ul>
+                <div id="login">
+                    <p>
+                        <label id="usuario">Olá, <?= $this->usuario['tu_nome'] ?></label>
+                        <a href="<?= $this->url(array("controller" => "autenticacao", "action" => "logout"), null, true) ?>">Sair</a>
+                    </p>
+                </div>
+            </div>
+            <div id="conteudo-geral">
+                <div id="menu-lateral">
+                    <ul>
+                        <li><a id="for-Social">Perfil Social</a></li>
+                        <ul id="Social">
+                            <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "index"), null, true) ?>">Pescadores</a></li>
+                            <li><a id="for-dadosSocial">Dados do Pescador</a></li>
+                            <ul id="dadosSocial">
+                                <li><a href="<?= $this->url(array("controller" => "arte-pesca", "action" => "index"), null, true) ?>">Artes de pesca</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "area-pesca", "action" => "index"), null, true) ?>">Áreas de pesca</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "tipo-embarcacao", "action" => "index"), null, true) ?>">Tipos de embarcações</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "porte-embarcacao", "action" => "index"), null, true) ?>">Porte Embarcações</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "tipo-capturada", "action" => "index"), null, true) ?>">Tipo Capturadas</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "comunidade", "action" => "index"), null, true) ?>">Comunidades</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "colonia", "action" => "index"), null, true) ?>">Colônias</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "municipio", "action" => "index"), null, true) ?>">Municipios</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "renda", "action" => "index"), null, true) ?>">Renda</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "tipo-renda", "action" => "index"), null, true) ?>">Tipo Renda</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "programa-social", "action" => "index"), null, true) ?>">Programa Social</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "escolaridade", "action" => "index"), null, true) ?>">Escolaridade</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "tipo-dependente", "action" => "index"), null, true) ?>">Tipo Dependente</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "tipo-telefone", "action" => "index"), null, true) ?>">Tipo Telefone</a></li>
+                            </ul>
+                            <li><a id="for-Especialista">Dados do Pescador Especialista</a></li>
+                            <ul id="Especialista">
+                                <li><a href="<?= $this->url(array("controller" => "acompanhado", "action" => "index"), null, true) ?>">Acompanhamento</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "associacao-pesca", "action" => "index"), null, true) ?>">Associacao de Pesca</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "dificuldades", "action" => "index"), null, true) ?>">Dificuldades</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "estacao-ano", "action" => "index"), null, true) ?>">Estação do Ano</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "estado-civil", "action" => "index"), null, true) ?>">Estado Civil</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "estrutura-residencia", "action" => "index"), null, true) ?>">Estrutura Residencial</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "fornecedor-insumos", "action" => "index"), null, true) ?>">Fornecedor de Insumos</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "frequencia-pesca", "action" => "index"), null, true) ?>">Frequência da Pesca</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "horario-pesca", "action" => "index"), null, true) ?>">Horário da Pesca</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "insumos", "action" => "index"), null, true) ?>">Insumos</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "local-tratamento", "action" => "index"), null, true) ?>">Local de Tratamento</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "motivo-pesca", "action" => "index"), null, true) ?>">Motivo da Pesca</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "no-seguro-defeso", "action" => "index"), null, true) ?>">Durante o Seg. Defeso</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "orgao-rgp", "action" => "index"), null, true) ?>">Órgão do RGP</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "recursos", "action" => "index"), null, true) ?>">Recursos</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "residencia", "action" => "index"), null, true) ?>">Tipo de Residência</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "seguro-defeso", "action" => "index"), null, true) ?>">Seguro defeso</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "sobra-pesca", "action" => "index"), null, true) ?>">Sobras de Pesca</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "tipo-transporte", "action" => "index"), null, true) ?>">Meios de Transporte</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "ultima-pesca", "action" => "index"), null, true) ?>">Ultima Pesca</a></li>
+                                
+                            </ul>
+                        
+                        </ul>
+                        <li><a id="for-Dsbq">Controle de Desembarque</a></li>
+                        <ul id="Dsbq">
+                            <li><a href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index"), null, true) ?>">Ficha Diária</a></li>
+                            <li><a id="for-Filo">Filogenia</a></li>
+                            <ul id="Filo">
+                                <li><a href="<?= $this->url(array("controller" => "grupo", "action" => "index"), null, true) ?>">Grupo</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "ordem", "action" => "index"), null, true) ?>">Ordem</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "familia", "action" => "index"), null, true) ?>">Família</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "genero", "action" => "index"), null, true) ?>">Genero</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "especie", "action" => "index"), null, true) ?>">Espécie</a></li>
+                            </ul>
+                            <li><a id="for-dadosDesembarque">Dados do Desembarque</a></li>
+                            <ul id="dadosDesembarque">
+                                <li><a href="<?= $this->url(array("controller" => "porto", "action" => "index"), null, true) ?>">Porto</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "pesqueiro", "action" => "index"), null, true) ?>">Pesqueiro</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "vento", "action" => "index"), null, true) ?>">Vento</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "tempo", "action" => "index"), null, true) ?>">Tempo</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "mare", "action" => "index"), null, true) ?>">Maré</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "destino-pescado", "action" => "index"), null, true) ?>">Destino do Pescado</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "isca", "action" => "index"), null, true) ?>">Iscas</a></li>
+                            </ul>
+                            <li><a href="<?= $this->url(array("controller" => "barcos", "action" => "index"), null, true) ?>">Embarcações</a></li>
+                            <li><a id="for-dadosEmbarcacao">Dados da Embarcação</a></li>
+                            <ul id="dadosEmbarcacao">
+                                <li><a href="<?= $this->url(array("controller" => "conservacao-pescado", "action" => "index"), null, true) ?>">Conservação Pescado</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "cor", "action" => "index"), null, true) ?>">Cores</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "equipamento", "action" => "index"), null, true) ?>">Equipamentos</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "financiador", "action" => "index"), null, true) ?>">Financiadores</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "marca", "action" => "index"), null, true) ?>">Marcas</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "material", "action" => "index"), null, true) ?>">Materiais</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "modelo", "action" => "index"), null, true) ?>">Modelos</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "posto-combustivel", "action" => "index"), null, true) ?>">Postos de Combustível</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "savatagem", "action" => "index"), null, true) ?>">Savatagem</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "tipo-casco", "action" => "index"), null, true) ?>">Tipos de Casco</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "tipo-motor", "action" => "index"), null, true) ?>">Tipos de Motor</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "tipo-pagamento", "action" => "index"), null, true) ?>">Tipos de Pagamento</a></li>
+                            </ul>
+                            <li><a id="for-Amostra">Amostragem</a></li>
+                            <ul id="Amostras">
+                                <li><a href="<?= $this->url(array("controller" => "amostra-camarao", "action" => "index"), null, true) ?>">Camarão</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "amostra-peixe", "action" => "index"), null, true) ?>">Peixe</a></li>
+                            </ul>
+                            <li><a id="for-Entrevista">Entrevistas</a></li>
+                            <ul id="Entrevista">
+                                <li><a href="<?= $this->url(array("controller" => "arrasto-fundo", "action" => "visualizar"), null, true) ?>">Arrasto de Fundo</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "calao", "action" => "visualizar"), null, true) ?>">Calão</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "coleta-manual", "action" => "visualizar"), null, true) ?>">Coleta Manual</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "emalhe", "action" => "visualizar"), null, true) ?>">Emalhe</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "grosseira", "action" => "visualizar"), null, true) ?>">Espinhel/Groseira</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "jerere", "action" => "visualizar"), null, true) ?>">Jereré</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "linha", "action" => "visualizar"), null, true) ?>">Pesca de Linha</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "linha-fundo", "action" => "visualizar"), null, true) ?>">Linha de Fundo</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "manzua", "action" => "visualizar"), null, true) ?>">Manzuá</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "mergulho", "action" => "visualizar"), null, true) ?>">Mergulho</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "ratoeira", "action" => "visualizar"), null, true) ?>">Ratoeira</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "siripoia", "action" => "visualizar"), null, true) ?>">Siripóia</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "tarrafa", "action" => "visualizar"), null, true) ?>">Tarrafa</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "vara-pesca", "action" => "visualizar"), null, true) ?>">Vara de Pesca</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "entrevista-pescador", "action" => "index"), null, true) ?>">Todas Entrevistas</a></li>
+                            </ul>
+                        </ul>
+                        <li><a id="for-Relatorio">Relatórios</a></li>
+                        <ul id="Relatorio">
+                            <li><a href="<?= $this->url(array("controller" => "relatorios", "action" => "index"), null, true) ?>">Relatorios</a></li>
+                            <li><a id="for-RelListas">Listas</a></li>
+                            <ul id="RelListas">
+                                <li><a id="for-RelPescador">Pescador</a></li>
+                                <ul id="RelPescador">
+                                    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirlistacodigo"), null, true) ?>"target="_blank">Pescador (Código)</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirlistanome"), null, true) ?>"target="_blank">Pescador (Nome)</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirlistacomunidade"), null, true) ?>"target="_blank">Pescador (Comunidade)</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirlistacolonia"), null, true) ?>"target="_blank">Pescador (Colônia)</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirpescadordesembarque"), null, true) ?>"target="_blank">Pescadores - Desembarque</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirpescadortodos"), null, true) ?>"target="_blank">Pescadores - Todos</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirtodospescadores"), null, true) ?>" target="_blank">Pescadores Detalhados - Social</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirtodospescadores2"), null, true) ?>" target="_blank">Pescadores Detalhados - Todos</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "relatoriopescadorporto"), null, true) ?>" target="_blank">Pescadores por porto - Todos</a></li>
+                                
+                                </ul>
+                                <li><a id="for-RelPerfilSocial">Social</a></li>
+                                <ul id="RelPerfilSocial">
+                                    <li><a href="<?= $this->url(array("controller" => "arte-pesca", "action" => "relatorio"), null, true) ?>"target="_blank">Arte de Pesca</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "area-pesca", "action" => "relatorio"), null, true) ?>"target="_blank">Area de Pesca</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "tipo-embarcacao", "action" => "relatorio"), null, true) ?>"target="_blank">Tipo Embarcações</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "porte-embarcacao", "action" => "relatorio"), null, true) ?>"target="_blank">Porte Embarcações</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "tipo-capturada", "action" => "relatorio"), null, true) ?>"target="_blank">Tipo Capturada</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "comunidade", "action" => "relatorio"), null, true) ?>"target="_blank">Comunidades</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "colonia", "action" => "relatorio"), null, true) ?>"target="_blank">Colônias</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "municipio", "action" => "relatorio"), null, true) ?>"target="_blank">Municípios</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "renda", "action" => "relatorio"), null, true) ?>"target="_blank">Renda</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "renda", "action" => "relatoriofator"), null, true) ?>"target="_blank">Renda com Fatores</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "tipo-renda", "action" => "relatorio"), null, true) ?>"target="_blank">Tipo de Renda</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "programa-social", "action" => "relatorio"), null, true) ?>"target="_blank">Programa Social</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "escolaridade", "action" => "relatorio"), null, true) ?>"target="_blank">Escolaridade</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "tipo-dependente", "action" => "relatorio"), null, true) ?>"target="_blank">Tipo Dependente</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "tipo-telefone", "action" => "relatorio"), null, true) ?>"target="_blank">Tipo Telefone</a></li>
+                                </ul>
+                                <li><a id="for-RelDesembarque">Desembarque</a></li>
+                                <ul id="RelDesembarque">
+                                    <li><a href="<?= $this->url(array("controller" => "porto", "action" => "relatorio"), null, true) ?>"target="_blank">Porto</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "grupo", "action" => "relatorio"), null, true) ?>"target="_blank">Filogenia - Grupo</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "ordem", "action" => "relatoriolista"), null, true) ?>"target="_blank">Filogenia - Ordem</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "familia", "action" => "relatoriolista"), null, true) ?>"target="_blank">Filogenia - Família</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "genero", "action" => "relatoriolista"), null, true) ?>"target="_blank">Filogenia - Género</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "especie", "action" => "relatoriolista"), null, true) ?>"target="_blank">Filogenia - Espécie</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "pesqueiro", "action" => "relatorio"), null, true) ?>"target="_blank">Pesqueiro</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "vento", "action" => "relatorio"), null, true) ?>"target="_blank">Vento</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "Tempo", "action" => "relatorio"), null, true) ?>"target="_blank">Tempo</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "barcos", "action" => "relatorio"), null, true) ?>"target="_blank">Embarcações</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "mare", "action" => "relatorio"), null, true) ?>"target="_blank">Maré</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "destino-pescado", "action" => "relatorio"), null, true) ?>"target="_blank">Destino do Pescado</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "isca", "action" => "relatoriolista"), null, true) ?>"target="_blank">Iscas</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "arrasto-fundo", "action" => "relatoriolista"), null, true) ?>"target="_blank">Entrevistas - Arrasto de Fundo</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "calao", "action" => "relatoriolista"), null, true) ?>"target="_blank">Entrevistas - Calão</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "coleta-manual", "action" => "relatoriolista"), null, true) ?>"target="_blank">Entrevistas - Coleta Manual</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "emalhe", "action" => "relatoriolista"), null, true) ?>"target="_blank">Entrevistas - Emalhe</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "grosseira", "action" => "relatoriolista"), null, true) ?>"target="_blank">Entrevistas - Espinhel/Grosseira</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "jerere", "action" => "relatoriolista"), null, true) ?>"target="_blank">Entrevistas - Jereré</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "linha", "action" => "relatoriolista"), null, true) ?>"target="_blank">Entrevistas - Linha</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "linha-fundo", "action" => "relatoriolista"), null, true) ?>"target="_blank">Entrevistas - Linha de Fundo</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "manzua", "action" => "relatoriolista"), null, true) ?>"target="_blank">Entrevistas - Manzuá</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "Mergulho", "action" => "relatoriolista"), null, true) ?>"target="_blank">Entrevistas - Mergulho</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "ratoeira", "action" => "relatoriolista"), null, true) ?>"target="_blank">Entrevistas - Ratoeira</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "siripoia", "action" => "relatoriolista"), null, true) ?>"target="_blank">Entrevistas - Siripóia</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "tarrafa", "action" => "relatoriolista"), null, true) ?>"target="_blank">Entrevistas - Tarrafa</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "vara-pesca", "action" => "relatoriolista"), null, true) ?>"target="_blank">Entrevistas - Vara de Pesca</a></li>
+                                </ul>
+                            </ul>
+
+                            <li><a id="for-RelConsolidados">Consolidados</a></li>
+                            <ul id="RelConsolidados">
+                                <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "relatoriopescadorgroupcomunidade"), NULL, true) ?>"target="_blank">Pescador-Comunidade</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "relatoriopescadorgroupcolonia"), NULL, true) ?>"target="_blank">Pescador-Colônia</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "grupo", "action" => "relatorio"), null, true) ?>"target="_blank">Filogenia - Grupo</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "ordem", "action" => "relatorio"), null, true) ?>"target="_blank">Filogenia - Ordem</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "familia", "action" => "relatorio"), null, true) ?>"target="_blank">Filogenia - Família</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "genero", "action" => "relatorio"), null, true) ?>"target="_blank">Filogenia - Género</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "especie", "action" => "relatorio"), null, true) ?>"target="_blank">Filogenia - Espécie</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "consulta-padrao", "action" => "filogenia"), null, true) ?>"target="_blank">Filogenia Completa</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "arrasto-fundo", "action" => "relatorio"), null, true) ?>"target="_blank">Entrevistas - Arrasto de Fundo</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "calao", "action" => "relatorio"), null, true) ?>"target="_blank">Entrevistas - Calão</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "coleta-manual", "action" => "relatorio"), null, true) ?>"target="_blank">Entrevistas - Coleta Manual</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "emalhe", "action" => "relatorio"), null, true) ?>"target="_blank">Entrevistas - Emalhe</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "grosseira", "action" => "relatorio"), null, true) ?>"target="_blank">Entrevistas - Espinhel/Grosseira</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "jerere", "action" => "relatorio"), null, true) ?>"target="_blank">Entrevistas - Jereré</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "linha", "action" => "relatorio"), null, true) ?>"target="_blank">Entrevistas - Linha</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "linha-fundo", "action" => "relatorio"), null, true) ?>"target="_blank">Entrevistas - Linha de Fundo</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "manzua", "action" => "relatorio"), null, true) ?>"target="_blank">Entrevistas - Manzuá</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "Mergulho", "action" => "relatorio"), null, true) ?>"target="_blank">Entrevistas - Mergulho</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "ratoeira", "action" => "relatorio"), null, true) ?>"target="_blank">Entrevistas - Ratoeira</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "siripoia", "action" => "relatorio"), null, true) ?>"target="_blank">Entrevistas - Siripóia</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "tarrafa", "action" => "relatorio"), null, true) ?>"target="_blank">Entrevistas - Tarrafa</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "vara-pesca", "action" => "relatorio"), null, true) ?>"target="_blank">Entrevistas - Vara de Pesca</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "arrasto-fundo", "action" => "relatoriogroupespeciecapturada"), null, true) ?>"target="_blank">Arrasto de Fundo - Espécie</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "arrasto-fundo", "action" => "relatoriogroupesqueiro"), null, true) ?>"target="_blank">Arrasto de Fundo - Pesqueiro</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "consulta-padrao", "action" => "relatorio"), null, true) ?>"target="_blank">Consulta Padrão</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "consulta-padrao", "action" => "relatorioxls"), null, true) ?>"target="_blank">Consulta Padrão - EXCEL</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "consulta-padrao", "action" => "relatoriomensalxls"), null, true) ?>"target="_blank">Relatorio Mensal - EXCEL</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "consulta-padrao", "action" => "entrevistapesqueiro"), null, true) ?>"target="_blank">Pesqueiro/Porto por Entrevista</a></li>
+                                <li><a href="<?= $this->url(array("controller" => "consulta-padrao", "action" => "entrevistasbyhora"), null, true) ?>"target="_blank">Entrevistas por hora de chegada</a></li>
+                            </ul>
+                            <li><a href="<?= $this->url(array("controller" => "relatorios", "action" => "graficos"), null, true) ?>">Gráficos</a></li>
+                        </ul>
+                    </ul>
+                    <div id="admin">
+                        <ul>
+                            <li><a  href="<?= $this->url(array("controller" => "administrador", "action" => "index"), null, true) ?>">Administrador</a></li>
+                            <li><a href="<?= $this->url(array("controller" => "usuarios", "action" => "index"), null, true) ?>">Usuários</a></li>
+                            <li><a href="<?= $this->url(array("controller" => "perfil", "action" => "index"), null, true) ?>">Perfil</a></li>
+                           <!--<li><a href="<?= $this->url(array("controller" => "esqueci-senha", "action" => "redefinir"), null, true) ?>">Usuários</a></li>-->
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div id="conteudo">
+                    <?php echo $this->layout()->content; ?>
+                </div>
+            </div>
+            <br/><br/><br/>
+            <div id="rodape">
+                <div id="parceiros">
+                    <ul>
+                        <li><a href="http://www.uesc.br/" target="_blank"><img class="imgparc" src="img/logo_uesc_transp.png" title="UESC" /></a></li>
+                        <li><a href="http://nbcgib.uesc.br/nbcgib" target="_blank"><img class="imgparc" src="img/nbcgib.gif" title="NBCGIB" /></a></li>
+                        <li><a href="#" target="_blank"><img class="imgparc" src="img/iSus.png" title="iSUS" /></a></li>
+                        <li><a href="http://www.bamin.com.br/" target="_blank"><img class="imgparc" src="img/bamin.png" title="Bamin" /></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+
+

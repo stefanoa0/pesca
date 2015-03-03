@@ -1,0 +1,66 @@
+<?= $this->doctype('XHTML1_TRANSITIONAL') ?>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+            <base href="http://<?= $_SERVER['HTTP_HOST'] . $this->baseUrl() ?>/" />
+            <?php
+                $this->headLink()->prependStylesheet('css/estilo.css');
+                $this->headLink()->appendStylesheet('css/smoothness/jquery-ui-1.10.3.custom.min.css');
+
+
+                echo $this->headLink() . "\n";
+            ?>
+
+            <title>
+                Programa de Monitoramento da Atividade Pesqueira
+            </title>
+            <link rel="shortcut icon" href="img/rachy.png" />
+    </head>
+    <body>
+        <div id="geral">
+            
+            <div id="topo">
+                <div id="topoLeft"></div>
+                <div id="topoRight"></div>
+            </div>
+            
+            <div id="menu">
+                <ul>
+                    <li><a href="<?= $this->url(array("controller" => "index", "action" => "index"), null, true) ?>">Página Inicial</a></li>
+                    <li><a href="<?= $this->url(array("controller" => "noticias", "action" => "index"), null, true) ?>">Monitoramento</a></li>
+                    <li><a href="<?= $this->url(array("controller" => "instituicoes", "action" => "index"), null, true) ?>">Instituições</a></li>
+                    <li><a href="<?= $this->url(array("controller" => "equipe", "action" => "index"), null, true) ?>">Equipe</a></li>
+                    <li><a href="<?= $this->url(array("controller" => "contato", "action" => "index"), null, true) ?>">Contato</a></li>
+                    <li><a href="<?= $this->url(array("controller" => "sobre", "action" => "index"), null, true) ?>">Sobre</a></li>
+                </ul>
+                <div id="login">
+                    <form method="post" action="<?= $this->url(array('controller' => 'autenticacao', 'action' => 'login'), null, true) ?>" >
+                        <input type="text" name="login" class="login" PlaceHolder="Usuário" id="user" required>
+                        <input type="password" name="senha" class="login" PlaceHolder="Senha" id="senha" required>
+                        <input type="submit" value="Entrar" />
+                    </form>
+                    <a href="<?= $this->url(array("controller" => "esqueci-senha", "action" => "index"), null, true) ?>">Esqueceu sua senha?</a>
+                </div>
+            </div>
+            
+            <div id="conteudo-geral">
+                <div id="conteudo">
+                    <?php echo $this->layout()->content; ?>
+                </div>
+            </div>
+            <br/><br/><br/>
+            <div id="rodape">
+                <div id="parceiros">
+                    <ul>
+                        <li><a href="http://www.uesc.br/" target="_blank"><img class="imgparc" src="img/logo_uesc_transp.png" title="UESC" /></a></li>
+                        <li><a href="http://nbcgib.uesc.br/nbcgib" target="_blank"><img class="imgparc" src="img/nbcgib.gif" title="NBCGIB" /></a></li>
+                        <li><a href="#" target="_blank"><img class="imgparc" src="img/iSus.png" title="iSUS" /></a></li>
+                        <li><a href="http://www.bamin.com.br/" target="_blank"><img class="imgparc" src="img/bamin.png" title="Bamin" /></a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </body>
+</html>

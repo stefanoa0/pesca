@@ -1,0 +1,158 @@
+body{
+	background-color: #F8F8FF;
+}
+
+#principal{
+	border: 2px solid gray;
+	width: 900px;
+	min-height: 780px;
+	margin: 0 15%;
+	height: auto;
+	}
+
+#topo{
+	border-bottom: 2px solid;
+	width: 900px;
+	height: 160px;
+	margin: 0px 0;
+	background-image: url('img/PMAP.png');
+}
+
+#menu a.recupSenha{
+	font-size: 12px;
+	margin-left: 650px;
+}
+
+#menu{
+	border-bottom: 1px solid gray;
+	margin: -16px 0;
+	background-color:white;
+	width: 900px;
+	height: 50px;
+}
+
+#menu ul{
+	height: 40px;
+	list-style-type: none;
+	color: gray;
+	height: 40px;
+}
+
+#menu li{
+	display:inline;
+	padding: 0 5px;
+	height: 40px;
+	color: gray;
+	margin: 15px 5px 0;
+	
+}
+
+#menu form{
+    display: inline;
+	margin: -20px 10px 0;
+}
+
+#menu ul  a:hover{
+	color: #191970;
+	border-bottom:2px solid #191970;
+}
+
+#menu a{
+	text-decoration:none;
+	color: black;
+	font-size: 23px;
+}
+
+#lateral{
+	background: #F8F8FF;
+	min-height: 560px;
+	height: auto;
+	width: 150px;
+	position: absolute;
+	border-right: 1px solid gray;
+}
+
+#lateral ul{
+	height: 40px;
+	list-style-type: none;
+	color: gray;
+	height: 40px;
+}
+
+#lateral a{
+	text-decoration:none;
+	color: black;
+	font-size: 20px;
+}
+
+#lateral li{
+	padding: 3px 0;
+	height: 40px;
+	margin: 5px 5px 0;
+	
+}
+
+#lateral ul  a:hover{
+	color: #4169E1;
+	border-bottom:1px solid #4169E1;
+}
+
+#conteudo{
+	margin: 16px 0;
+	background-color: white;
+	width: 900px;
+	height: auto;
+	min-height: 560px;
+	text-align: justify;
+	
+}
+
+#conteudo p{
+	margin: 0 160px;
+	display: block;
+}
+
+#conteudo ul{
+	margin: 0 120px;
+	display: block;
+	list-style-type: none;
+}
+
+#conteudo h2{
+	margin: 0 160px;
+	display: block;
+}
+
+#conteudo legend{
+	margin: 0 -160px;
+}
+
+#conteudo fieldset{
+	margin: 0 160px;
+}
+
+#conteudo label{
+	text-align: justify;
+	width: 35px;
+}
+
+#conteudo input{
+	display: inline;
+}
+
+#rodape{
+	width: 900px;
+	height: 80px;
+	margin: 0px 15%;
+	color:gray;
+	position:relative;
+	font-size: 12px;
+	background: #F8F8FF;
+}
+
+#nbcgib{
+	width: 160px;
+	height: 70px;
+	margin: -90px 70%;
+	position: relative;
+}
