@@ -101,8 +101,7 @@ private $dbTableBarcos;
             'ted_pagamento' => $request['jaPaga'],
             'tpg_id' => $request['tipoPagamentoBarco'],
             'ted_financiamento' => $request['financiadorBarco'],
-            'ted_ano_construcao' => $request['anoConstrucao'],
-            'ted_propulsao'=>$request['tipoPropulsao']
+            'ted_ano_construcao' => $request['anoConstrucao']            
     
         );
         
@@ -113,6 +112,7 @@ private $dbTableBarcos;
             'tmot_id'=>$request['tipoMotor'],
             'tmod_id'=>$request['modelo'],
             'tmar_id'=>$request['marca'],
+            'tme_propulsao'=>$request['tipoPropulsao'],
             'tme_potencia'=>$request['potenciaMotor'],
             'tme_combustivel'=>$request['tipoCombustivel'],
             'tme_armazenamento'=>$request['capacidadeCombustivel'],
@@ -130,14 +130,14 @@ private $dbTableBarcos;
         
         $this->dbTableMotor->insert($dadosMotor);
         
-        $dadosAtuacao = array('ted_id'=>$idEmbarcacao,
+        $dadosAtuacao = array(
+            'ted_id'=>$idEmbarcacao,
             'tae_atuacao_batimatrica'=>$request['atuacaoBatimetrica'],
             'tae_autonomia'=>$request['autonomiaMar'],
             'tfp_id_pesca'=>$request['frequenciaPesca'],
             'thp_id_pesca'=>$request['horarioPesca'],
             'tae_capacidade'=>$request['capacidadeArmazenamento'],
             'tcp_id_pescado'=>$request['conservacaoPescado'],
-            'tae_onde_adquire'=>$request['ondeAdquire'],
             'dp_id'=>$request['destinoPescado'],
             'dp_id_venda'=>$request['compradorPescado'],
             'ttr_id_renda'=>$request['outraAtividade'],
@@ -147,12 +147,100 @@ private $dbTableBarcos;
             'tae_tempo_atividade'=>$request['tempoAtuacao'],
             'tae_data'=>$request['dataEntrevista'],
             'tu_entrevistador'=>$request['entrevistador'],
-            'tu_digitador'=>$request['lancador'],
-            'tae_divisao_pescado'=>$request['divisaoPescado']
+            'tu_digitador'=>$request['lancador']
         );
         
-        $this->dbTableAtuacao->insert($dadosAtuacao);
+         $this->dbTableAtuacao->insert($dadosAtuacao);
+         
+         return $request['embarcacao'];
     }
+    
+    public function updateEmbarcacao(array $request){
+        
+        $this->dbTableBarcos = new Application_Model_DbTable_EmbarcacaoDetalhada();
+        $this->dbTableMotor = new Application_Model_DbTable_MotorEmbarcacao();
+        $this->dbTableAtuacao = new Application_Model_DbTable_AtuacaoEmbarcacao();
+        
+        $idEmbarcacaoDetalhada = $request['idEmbarcacao'];
+        $whereEmbarcacao = $this->dbTableBarcos->getAdapter()->quoteInto('"ted_id" = ?', $idEmbarcacaoDetalhada);
+        
+        $dadosEmbarcacao = array (
+            'pto_id_desembarque' => $request['portoDesembarque'],
+            'tp_id_proprietario' => $request['proprietario'],
+            'tp_id_mestre' => $request['mestre'],
+            'bar_id' => $request['embarcacao'],
+            'ted_quant_embarcacoes' => $request['quantEmbarcacao'],
+            'ted_max_tripulantes' => $request['quantTripulantes'],
+            'ted_tripulacao' => $request['tripulacao'],
+            'ted_cozinheiro' => $request['cozinheiro'],
+            'ted_estado_conservacao' => $request['estadoConservacao'],
+            'tte_id_tipobarco' => $request['tipoBarco'],
+            'ted_comp_total' => $request['comprimentoTotal'],
+            'ted_comp_boca' => $request['comprimentoBoca'],
+            'ted_altura_calado' => $request['alturaCalado'],
+            'ted_arqueadura' => $request['arqueaduraBruta'],
+            'ted_num_registro' => $request['numRegistro'],
+            'pto_id_origem' => $request['portoOrigem'],
+            'tcas_id' => $request['tipoCasco'],
+            'ted_ano_compra' => $request['anoCompra'],
+            'ted_estado' => $request['estadoEmbarcacao'],
+            'ted_pagamento' => $request['jaPaga'],
+            'tpg_id' => $request['tipoPagamentoBarco'],
+            'ted_financiamento' => $request['financiadorBarco'],
+            'ted_ano_construcao' => $request['anoConstrucao']            
+    
+        );
+        
+        $this->dbTableBarcos->update($dadosEmbarcacao, $whereEmbarcacao);
+        
+        $dadosMotor = array(
+            'tmot_id'=>$request['tipoMotor'],
+            'tmod_id'=>$request['modelo'],
+            'tmar_id'=>$request['marca'],
+            'tme_propulsao'=>$request['tipoPropulsao'],
+            'tme_potencia'=>$request['potenciaMotor'],
+            'tme_combustivel'=>$request['tipoCombustivel'],
+            'tme_armazenamento'=>$request['capacidadeCombustivel'],
+            'tpc_id'=>$request['postoCombustivel'],
+            'tme_ano_motor'=>$request['anoCompraMotor'],
+            'tme_estado_motor'=>$request['estadoMotor'],
+            'tme_pagamento_motor'=>$request['jaPagoMotor'],
+            'tpg_id_motor'=>$request['tipoPagamentoMotor'],
+            'tfin_id'=>$request['financiadorMotor'],
+            'tme_ano_motor_fabricacao'=>$request['anoFabricacao'],
+            'tme_obs'=>$request['obs'],
+            'tme_gasto_mensal'=>$request['gastoMensalMotor']
 
+        );
+        $idMotor = $request['idMotor'];
+        $whereMotor = $this->dbTableMotor->getAdapter()->quoteInto('"tme_id" = ?',$idMotor);
+        $this->dbTableMotor->update($dadosMotor, $whereMotor);
+        
+        $dadosAtuacao = array(
+            'tae_atuacao_batimatrica'=>$request['atuacaoBatimetrica'],
+            'tae_autonomia'=>$request['autonomiaMar'],
+            'tfp_id_pesca'=>$request['frequenciaPesca'],
+            'thp_id_pesca'=>$request['horarioPesca'],
+            'tae_capacidade'=>$request['capacidadeArmazenamento'],
+            'tcp_id_pescado'=>$request['conservacaoPescado'],
+            'dp_id'=>$request['destinoPescado'],
+            'dp_id_venda'=>$request['compradorPescado'],
+            'ttr_id_renda'=>$request['outraAtividade'],
+            'tea_id_maior'=>$request['maiorQuantidade'],
+            'tea_id_menor'=>$request['menorQuantidade'],
+            'tae_concorrencia'=>$request['competicaoPescadores'],
+            'tae_tempo_atividade'=>$request['tempoAtuacao'],
+            'tae_data'=>$request['dataEntrevista'],
+            'tu_entrevistador'=>$request['entrevistador'],
+            'tu_digitador'=>$request['lancador']
+        );
+         $idAtuacao = $request['idAtuacao'];
+         $whereAtuacao = $this->dbTableMotor->getAdapter()->quoteInto('"tae_id" = ?',$idAtuacao);
+         $this->dbTableAtuacao->update($dadosAtuacao, $whereAtuacao);
+         
+         return $request['embarcacao'];
+        
+        
+    }
 }
 

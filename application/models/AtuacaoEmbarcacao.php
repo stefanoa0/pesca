@@ -54,9 +54,65 @@ public function select($where = null, $order = null, $limit = null) {
 
         $dadosAtEmbarcacaoHasAreaPesca = array(
             'tae_id' => $idEmbarcacao,
-            'tfp_id' => $idAreaPesca
+            'tap_id_atuacao' => $idAreaPesca
         );
         $dbTable_AtEmbarcacaoHasAreaPesca->insert($dadosAtEmbarcacaoHasAreaPesca);
+
+        return;
+    }
+    public function insertAtEmbarcacaoHasArtePesca($idAtuacao, $idArtePesca) {
+        $dbTable_AtEmbarcacaoHasArtePesca = new Application_Model_DbTable_AtuacaoEmbarcacaoHasArtePesca();
+
+        $dadosAtEmbarcacaoHasArtePesca = array(
+            'tae_id' => $idAtuacao,
+            'tap_id' => $idArtePesca
+        );
+        $dbTable_AtEmbarcacaoHasArtePesca->insert($dadosAtEmbarcacaoHasArtePesca);
+
+        return;
+    }
+    public function insertAtEmbarcacaoHasFornecedorPetrechos($idAtuacao, $idFornecedorPetrechos) {
+        $dbTable_AtEmbarcacaoHasFornecedorPetrechos = new Application_Model_DbTable_AtuacaoEmbarcacaoHasFornecedorPetrechos();
+
+        $dadosAtEmbarcacaoHasFornecedorPetrechos = array(
+            'tae_id' => $idAtuacao,
+            'tfp_id' => $idFornecedorPetrechos
+        );
+        $dbTable_AtEmbarcacaoHasFornecedorPetrechos->insert($dadosAtEmbarcacaoHasFornecedorPetrechos);
+
+        return;
+    }
+    
+    public function deleteAtEmbarcacaoHasAreaPesca($idAtuacao, $idAreaPesca) {
+        $dbTable_AtEmbarcacaoHasAreaPesca = new Application_Model_DbTable_AtuacaoEmbarcacaoHasAreaPesca();
+
+        $dadosAtEmbarcacaoHasAreaPesca = array(
+            'tae_id = ?' => $idAtuacao,
+            'tap_id_atuacao = ?' => $idAreaPesca
+        );
+        $dbTable_AtEmbarcacaoHasAreaPesca->delete($dadosAtEmbarcacaoHasAreaPesca);
+
+        return;
+    }
+    public function deleteAtEmbarcacaoHasArtePesca($idAtuacao, $idArtePesca) {
+        $dbTable_AtEmbarcacaoHasArtePesca = new Application_Model_DbTable_AtuacaoEmbarcacaoHasArtePesca();
+
+        $dadosAtEmbarcacaoHasArtePesca = array(
+            'tae_id = ?' => $idAtuacao,
+            'tap_id = ?' => $idArtePesca
+        );
+        $dbTable_AtEmbarcacaoHasArtePesca->delete($dadosAtEmbarcacaoHasArtePesca);
+
+        return;
+    }
+    public function deleteAtEmbarcacaoHasFornecedorPetrechos($idAtuacao, $idFornecedorPetrechos) {
+        $dbTable_AtEmbarcacaoHasFornecedorPetrechos = new Application_Model_DbTable_AtuacaoEmbarcacaoHasFornecedorPetrechos();
+
+        $dadosAtEmbarcacaoHasFornecedorPetrechos = array(
+            'tae_id = ?' => $idAtuacao,
+            'tfp_id = ?' => $idFornecedorPetrechos
+        );
+        $dbTable_AtEmbarcacaoHasFornecedorPetrechos->delete($dadosAtEmbarcacaoHasFornecedorPetrechos);
 
         return;
     }

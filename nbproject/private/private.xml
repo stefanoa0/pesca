@@ -16,6 +16,11 @@
             <file>file:/C:/xampp/htdocs/pesca/application/views/scripts/usuarios/novo.phtml</file>
             <file>file:/C:/xampp/htdocs/pesca/application/models/Login.php</file>
             <file>file:/C:/xampp/htdocs/pesca/application/models/HistoricoLogin.php</file>
+            <file>file:/C:/xampp/htdocs/pesca/application/controllers/BarcosController.php</file>
+            <file>file:/C:/xampp/htdocs/pesca/application/models/ArtePesca.php</file>
+            <file>file:/C:/xampp/htdocs/pesca/application/models/Barcos.php</file>
+            <file>file:/C:/xampp/htdocs/pesca/application/views/scripts/barcos/novo.phtml</file>
+            <file>file:/C:/xampp/htdocs/pesca/application/views/scripts/barcos/editar.phtml</file>
         </group>
     </open-files>
 </project-private>
