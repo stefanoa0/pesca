@@ -12,14 +12,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/pesca/application/models/EmbarcacaoDetalhada.php</file>
             <file>file:/C:/xampp/htdocs/pesca/public/css/estilo-admin.css</file>
-            <file>file:/C:/xampp/htdocs/pesca/public/css/estilo.css</file>
-            <file>file:/C:/xampp/htdocs/pesca/application/models/MotorEmbarcacao.php</file>
-            <file>file:/C:/xampp/htdocs/pesca/application/models/AtuacaoEmbarcacao.php</file>
-            <file>file:/C:/xampp/htdocs/pesca/application/layouts/scripts/admin.phtml</file>
-            <file>file:/C:/xampp/htdocs/pesca/application/views/scripts/barcos/novo.phtml</file>
-            <file>file:/C:/xampp/htdocs/pesca/application/views/scripts/barcos/editar.phtml</file>
+            <file>file:/C:/xampp/htdocs/pesca/application/views/scripts/usuarios/novo.phtml</file>
+            <file>file:/C:/xampp/htdocs/pesca/application/models/Login.php</file>
+            <file>file:/C:/xampp/htdocs/pesca/application/models/HistoricoLogin.php</file>
         </group>
     </open-files>
 </project-private>
