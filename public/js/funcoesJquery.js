@@ -13,7 +13,6 @@ $(document).ready(function() {
         $("#RelPescador").hide();
         $("#RelPerfilSocial").hide();
         $("#RelDesembarque").hide();
-        $("#Amostras").hide();
         $("#Especialista").hide();
         $("#dadosEmbarcacao").hide();
     }
@@ -30,7 +29,6 @@ $(document).ready(function() {
         $("#RelPescador").hide();
         $("#RelPerfilSocial").hide();
         $("#RelDesembarque").hide();
-        $("#Amostras").hide();
         $("#Especialista").hide();
         $("#dadosEmbarcacao").hide();
     }
@@ -47,7 +45,6 @@ $(document).ready(function() {
         $("#RelPescador").hide();
         $("#RelPerfilSocial").hide();
         $("#RelDesembarque").hide();
-        $("#Amostras").hide();
         $("#Especialista").hide();
         $("#dadosEmbarcacao").hide();
     }
@@ -64,7 +61,6 @@ $(document).ready(function() {
         $("#RelPescador").hide();
         $("#RelPerfilSocial").hide();
         $("#RelDesembarque").hide();
-        $("#Amostras").hide();
         $("#Especialista").hide();
         $("#dadosEmbarcacao").hide();
     }
@@ -81,7 +77,6 @@ $(document).ready(function() {
         $("#RelPescador").hide();
         $("#RelPerfilSocial").hide();
         $("#RelDesembarque").hide();
-        $("#Amostras").hide();
         $("#Especialista").hide();
         $("#dadosEmbarcacao").hide();
     }
@@ -98,7 +93,6 @@ $(document).ready(function() {
         $("#RelPescador").hide();
         $("#RelPerfilSocial").hide();
         $("#RelDesembarque").hide();
-        $("#Amostras").hide();
         $("#Especialista").hide();
         $("#dadosEmbarcacao").hide();
     }
@@ -115,7 +109,6 @@ $(document).ready(function() {
         $("#RelPescador").hide();
         $("#RelPerfilSocial").hide();
         $("#RelDesembarque").hide();
-        $("#Amostras").hide();
         $("#Especialista").hide();
         $("#dadosEmbarcacao").hide();
     }
@@ -132,7 +125,6 @@ $(document).ready(function() {
         $("#RelPescador").hide();
         $("#RelPerfilSocial").hide();
         $("#RelDesembarque").hide();
-        $("#Amostras").hide();
         $("#Especialista").hide();
         $("#dadosEmbarcacao").hide();
     }
@@ -149,26 +141,10 @@ $(document).ready(function() {
         $("#RelPescador").hide();
         $("#RelPerfilSocial").hide();
         $("#RelDesembarque").hide();
-        $("#Amostras").hide();
         $("#Especialista").hide();
         $("#dadosEmbarcacao").hide();
     }
-    else if($("fieldset").attr('id') === "Amostras"){
-        $("#Entrevista").hide();
-        $("#Dsbq").hide();
-        $("#Filo").hide();
-        $("#Social").hide();
-        $("#dadosSocial").hide();
-        $("#dadosDesembarque").hide();
-        $("#Relatorio").hide();
-        $("#RelListas").hide();
-        $("#RelConsolidados").hide();
-        $("#RelPescador").hide();
-        $("#RelPerfilSocial").hide();
-        $("#RelDesembarque").hide();
-        $("#Amostras").show();
-        $("#Especialista").hide();
-    }
+
     else if($("fieldset").attr('id') === "Especialista"){
         $("#Entrevista").hide();
         $("#Dsbq").hide();
@@ -182,7 +158,6 @@ $(document).ready(function() {
         $("#RelPescador").hide();
         $("#RelPerfilSocial").hide();
         $("#RelDesembarque").hide();
-        $("#Amostras").hide();
         $("#Especialista").show();
         $("#dadosEmbarcacao").hide();
     }
@@ -199,7 +174,6 @@ $(document).ready(function() {
         $("#RelPescador").hide();
         $("#RelPerfilSocial").hide();
         $("#RelDesembarque").hide();
-        $("#Amostras").hide();
         $("#Especialista").hide();
         $("#dadosEmbarcacao").show();
     }
@@ -216,7 +190,6 @@ $(document).ready(function() {
         $("#RelPescador").hide();
         $("#RelPerfilSocial").hide();
         $("#RelDesembarque").hide();
-        $("#Amostras").hide();
         $("#Especialista").hide();
         $("#dadosEmbarcacao").hide();
     }
@@ -1470,3 +1443,103 @@ function jsClearBusca( pag ){
         location.replace( pag );
 }
 
+//EMBARCAÇÃO DETALHADA - DADOS ////////////////////////////////////////////////////////////////////////////////
+
+
+function jsInsertEmbarcacaoHasCor(frm, pag){
+    
+    var id = frm.idEmbarcacao.value;
+    var barco = frm.embarcacao.value;
+    
+    var tmpUpdate = (pag + '/id/'+id+'/valor/' + frm.selectCor.value +'/back_url/' + barco);
+    
+    location.replace(tmpUpdate);
+    
+}
+
+function jsInsertEmbarcacaoHasLicencaCaptura(frm, pag){
+    
+    var id = frm.idEmbarcacao.value;
+    var barco = frm.embarcacao.value;
+    
+    var tmpUpdate = (pag + '/id/'+id+'/valor/' + frm.selectSeguroDefeso.value +'/back_url/' + barco);
+    
+    location.replace(tmpUpdate);
+    
+}
+
+function jsInsertEmbarcacaoHasMaterial(frm, pag){
+    
+    var id = frm.idEmbarcacao.value;
+    var barco = frm.embarcacao.value;
+    
+    var tmpUpdate = (pag + '/id/'+id+'/valor/' + frm.selectMaterial.value +'/back_url/' + barco);
+    
+    location.replace(tmpUpdate);
+    
+}
+
+function jsInsertEmbarcacaoHasEquipamento(frm, pag){
+    
+    var id = frm.idEmbarcacao.value;
+    var barco = frm.embarcacao.value;
+    
+    var tmpUpdate = (pag + '/id/'+id+'/valor/' + frm.selectEquipamento.value +'/back_url/' + barco);
+    
+    location.replace(tmpUpdate);
+    
+}
+
+function jsInsertEmbarcacaoHasSavatagem(frm, pag){
+    
+    var id = frm.idEmbarcacao.value;
+    var barco = frm.embarcacao.value;
+    
+    var tmpUpdate = (pag + '/id/'+id+'/valor/' + frm.selectSavatagem.value +'/back_url/' + barco);
+    
+    location.replace(tmpUpdate);
+    
+}
+
+function jsInsertMotorHasManutencao(frm, pag){
+    
+    var id = frm.idMotor.value;
+    var barco = frm.embarcacao.value;
+    
+    var tmpUpdate = (pag + '/id/'+id+'/valor/' + frm.selectFrequenciaManutencao.value +'/back_url/' + barco);
+    
+    location.replace(tmpUpdate);
+    
+}
+
+
+function jsInsertAtuacaoHasAreaPesca(frm, pag){
+    
+    var id = frm.idAtuacao.value;
+    var barco = frm.embarcacao.value;
+    
+    var tmpUpdate = (pag + '/id/'+id+'/valor/' + frm.selectAreaPesca.value +'/back_url/' + barco);
+    
+    location.replace(tmpUpdate);
+    
+}
+function jsInsertAtuacaoHasArtePesca(frm, pag){
+    
+    var id = frm.idAtuacao.value;
+    var barco = frm.embarcacao.value;
+    
+    var tmpUpdate = (pag + '/id/'+id+'/valor/' + frm.selectArtePesca.value +'/back_url/' + barco);
+    
+    location.replace(tmpUpdate);
+    
+}
+function jsInsertAtuacaoHasFornecedorPetrechos(frm, pag){
+    
+    var id = frm.idAtuacao.value;
+    var barco = frm.embarcacao.value;
+    
+    var tmpUpdate = (pag + '/id/'+id+'/valor/' + frm.selectFornecedorPetrecho.value +'/back_url/' + barco);
+    
+    location.replace(tmpUpdate);
+    
+}

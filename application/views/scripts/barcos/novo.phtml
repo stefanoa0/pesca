@@ -54,7 +54,7 @@
 <!--4. -------------------------------------------------------------->       
         <div class="form-dir">
             <label>O proprietário é mestre do barco?:</label>
-            <select name="proprietarioMestre" id ="propMestre" onchange="buscar_cidades()" required/>
+            <select name="proprietarioMestre" id ="propMestre" onchange="buscar_cidades()"/>
                 <option value="" selected></option>
                 <option value="2">Sim</option>
                 <option value="1">Não</option>
@@ -303,6 +303,7 @@
                 <option value="1">Gasolina</option>
                 <option value="2">Diesel</option>
                 <option value="0">Não informado</option>
+                <option value="3">Sem Motor</option>
             </select>
         </div>
 <!--31. -------------------------------------------------------------->               
@@ -336,6 +337,7 @@
                 <option value="2">Novo</option>
                 <option value="1">Usado</option>
                 <option value="0">Não Informado</option>
+                <option value="3">Sem Motor</option>
             </select>
         </div> 
 <!--34. -------------------------------------------------------------->               
@@ -346,6 +348,7 @@
                 <option value="2">Sim</option>
                 <option value="1">Não</option>
                 <option value="0">Não Informado</option>
+                <option value="3">Sem Motor</option>
             </select>
         </div> 
  <!--35. -------------------------------------------------------------->              
@@ -529,12 +532,7 @@
  <!--53. -------------------------------------------------------------->              
         <div class="form-dir">
             <label>Há competição entre os pescadores?</label>
-            <select name="competicaoPescadores" required/>
-                <option value="" selected></option>
-                <option value="2">Sim</option>
-                <option value="1">Não</option>
-                <option value="0">Não Respondido</option>
-            </select>
+            <input type="text" name="competicaoPescadores" />
         </div> 
  <!--54. -------------------------------------------------------------->              
         <div class="form-dir">

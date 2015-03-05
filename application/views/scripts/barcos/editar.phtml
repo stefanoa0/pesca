@@ -13,7 +13,7 @@
         }
 </script>
 
-<form action="<?=$this->url(array("controller"=>"barcos","action"=>"embarcacaodetalhada"),null,true)?>" method="post">
+<form action="<?=$this->url(array("controller"=>"barcos","action"=>"updatedetalhada"),null,true)?>" method="post">
     
     <fieldset id="Desembarque"><h2>Embarcação</h2>
 <!--1. -------------------------------------------------------------->        
@@ -56,7 +56,7 @@
 <!--4. -------------------------------------------------------------->       
         <div class="form-dir">
             <label>O proprietário é mestre do barco?:</label>
-            <select name="proprietarioMestre" id ="propMestre" onchange="buscar_cidades()" required/>
+            <select name="proprietarioMestre" id ="propMestre" onchange="buscar_cidades()"/>
                 <option value="" selected></option>
                 <option value="2">Sim</option>
                 <option value="1">Não</option>
@@ -66,7 +66,8 @@
         
         <div class="form-dir">
             <label>Mestre:</label>
-            <select name="mestre" required id="mestre" onchange="buscar_cidades()"/>
+            <select name="mestre" required id="mestre"/>
+            <option value="" selected></option>
                 <?php
                     foreach ($this->assignPescadores as $key => $pescador):?>
                         <option value="<?= $pescador['tp_id'] ?>"<?=( $pescador['tp_id'] == $this->assignEmbarcacaoDetalhada['tp_id_mestre'])? 'selected="selected"': '';?>><?= $pescador['tp_nome'] ?></option>
@@ -167,18 +168,18 @@
         </div>
         <br/>
 <!--10.1 -------------------------------------------------------------->  
+    <input type="hidden" name="idEmbarcacao" value="<?= $this->assignEmbarcacaoDetalhada['ted_id'] ?>"/>
         <a id="ancora_dependentes"></a>
             <fieldset class="noEditable"><legend>Cores do barco:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Cor:</legend>
+                    
                     <div id="base">
-                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertPescadorHasDependente(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasdependente"), null, true) ?>')">
+                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertEmbarcacaoHasCor(this.form, '<?= $this->url(array("controller" => "barcos", "action" => "insertcor"), null, true) ?>')">
 
-                        <input type="number" required min="1" name="inputQuantidadeDependente" placeholder="Número de dependentes" size="20"  />
-
-                        <select name="SelectDependente" id="Dependente">
-                            <?php foreach ($this->assignTipoDependentes as $key => $localTipoDependente): ?>
-                                <option value="<?= $localTipoDependente['ttd_id']; ?>">
-                                    <?= $localTipoDependente['ttd_tipodependente']; ?></option><?php endforeach; ?>
+                        <select name="selectCor" id="cor">
+                            <?php foreach ($this->assignCores as $key => $cor): ?>
+                                <option value="<?= $cor['tcor_id']; ?>">
+                                    <?= $cor['tcor_cor']; ?></option><?php endforeach; ?>
                         </select>
                     </div>
                 </fieldset>
@@ -187,15 +188,13 @@
                 <table id="tblDependentes">
                     <tr>
                         <th width="15%">ID </th>
-                        <th width="65%">Dependente</th>
-                        <th>Familiares</th>
+                        <th width="65%">Cor da Embarcação</th>
                         <th width="5%"></th>
                     </tr>
-                    <?php foreach ($this->assign_vPescadorDependente as $key => $vPescadorHasDependente): ?>
+                    <?php foreach ($this->assignEmbarcacaoCor as $key => $EmbarcacaoCor): ?>
                         <tr id="rowNumDependente<?= $key ?>">
-                            <td name="inputTipoDependenteID[]"> <?= $vPescadorHasDependente['ttd_id'] ?> </td>
-                            <td name="inputTipoDependente[]" > <?= $vPescadorHasDependente['ttd_tipodependente'] ?> </td>
-                            <td name="inputQuantidadeDependente[]" > <?= $vPescadorHasDependente['tptd_quantidade'] ?> </td>
+                            <td name="input[]"> <?= $EmbarcacaoCor['tcor_id'] ?> </td>
+                            <td name="input[]" > <?= $EmbarcacaoCor['tcor_cor'] ?> </td>
                             <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasdependente"), null, true) ?>')"></td>
                         </tr>
                     <?php endforeach; ?>
@@ -244,13 +243,12 @@
             <fieldset class="noEditable"><legend>Licença de Captura:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Captura:</legend>
                     <div id="base">
-                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertPescadorHasDependente(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasdependente"), null, true) ?>')">
+                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertEmbarcacaoHasLicencaCaptura(this.form, '<?= $this->url(array("controller" => "barcos", "action" => "insertlicencacaptura"), null, true) ?>')">
 
-                        <input type="number" required min="1" name="inputQuantidadeDependente" placeholder="Número de dependentes" size="20"  />
-
-                        <select name="SelectDependente" id="Dependente">
-                            <?php foreach ($this->assignTipoDependentes as $key => $localTipoDependente): ?>
-                                <option value="<?= $localTipoDependente['ttd_id']; ?>"><?= $localTipoDependente['ttd_tipodependente']; ?></option><?php endforeach; ?>
+                        
+                        <select name="selectSeguroDefeso" id="Dependente">
+                            <?php foreach ($this->assignSeguroDefeso as $key => $seguroDefeso): ?>
+                                <option value="<?= $seguroDefeso['tsd_id']; ?>"><?= $seguroDefeso['tsd_seguro']; ?></option><?php endforeach; ?>
                         </select>
                     </div>
                 </fieldset>
@@ -259,16 +257,14 @@
                 <table id="tblDependentes">
                     <tr>
                         <th width="15%">ID </th>
-                        <th width="65%">Dependente</th>
-                        <th>Familiares</th>
+                        <th width="65%">Licenças de Captura</th>
                         <th width="5%"></th>
                     </tr>
-                    <?php foreach ($this->assign_vPescadorDependente as $key => $vPescadorHasDependente): ?>
+                    <?php foreach ($this->assignEmbarcacaoSeguroDefeso as $key => $seguroDefeso): ?>
                         <tr id="rowNumDependente<?= $key ?>">
-                            <td name="inputTipoDependenteID[]"> <?= $vPescadorHasDependente['ttd_id'] ?> </td>
-                            <td name="inputTipoDependente[]" > <?= $vPescadorHasDependente['ttd_tipodependente'] ?> </td>
-                            <td name="inputQuantidadeDependente[]" > <?= $vPescadorHasDependente['tptd_quantidade'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasdependente"), null, true) ?>')"></td>
+                            <td name="input[]"> <?= $seguroDefeso['tsd_id_licenca'] ?> </td>
+                            <td name="input[]" > <?= $seguroDefeso['tsd_seguro'] ?> </td>
+                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "barcos", "action" => "deletepescadorhasdependente"), null, true) ?>')"></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
@@ -292,14 +288,12 @@
             <fieldset class="noEditable"><legend>Materiais da Embarcação:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Material:</legend>
                     <div id="base">
-                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertPescadorHasDependente(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasdependente"), null, true) ?>')">
+                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertEmbarcacaoHasMaterial(this.form, '<?= $this->url(array("controller" => "barcos", "action" => "insertmaterial"), null, true) ?>')">
 
-                        <input type="number" required min="1" name="inputQuantidadeDependente" placeholder="Número de dependentes" size="20"  />
-
-                        <select name="SelectDependente" id="Dependente">
-                            <?php foreach ($this->assignTipoDependentes as $key => $localTipoDependente): ?>
-                                <option value="<?= $localTipoDependente['ttd_id']; ?>">
-                                    <?= $localTipoDependente['ttd_tipodependente']; ?></option><?php endforeach; ?>
+                        <select name="selectMaterial" id="material">
+                            <?php foreach ($this->assignMaterial as $key => $material): ?>
+                                <option value="<?= $material['tmt_id']; ?>">
+                                    <?= $material['tmt_material']; ?></option><?php endforeach; ?>
                         </select>
                     </div>
                 </fieldset>
@@ -308,15 +302,13 @@
                 <table id="tblDependentes">
                     <tr>
                         <th width="15%">ID </th>
-                        <th width="65%">Dependente</th>
-                        <th>Familiares</th>
+                        <th width="65%">Materiais</th>
                         <th width="5%"></th>
                     </tr>
-                    <?php foreach ($this->assign_vPescadorDependente as $key => $vPescadorHasDependente): ?>
+                    <?php foreach ($this->assignEmbarcacaoMaterial as $key => $material): ?>
                         <tr id="rowNumDependente<?= $key ?>">
-                            <td name="inputTipoDependenteID[]"> <?= $vPescadorHasDependente['ttd_id'] ?> </td>
-                            <td name="inputTipoDependente[]" > <?= $vPescadorHasDependente['ttd_tipodependente'] ?> </td>
-                            <td name="inputQuantidadeDependente[]" > <?= $vPescadorHasDependente['tptd_quantidade'] ?> </td>
+                            <td name="input[]"> <?= $material['tmt_id'] ?> </td>
+                            <td name="input[]" > <?= $material['tmt_material'] ?> </td>
                             <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasdependente"), null, true) ?>')"></td>
                         </tr>
                     <?php endforeach; ?>
@@ -418,51 +410,20 @@
             <input type="text" name="anoConstrucao" placeholder="Ano da Construção" value="<?= $this->assignEmbarcacaoDetalhada['ted_ano_construcao'] ?>"/> <br />
         </div>
 <!--25. -------------------------------------------------------------->       
-        <div class="form-dir">
-            <label>Tipo de Propulsão:</label>
-            <select name="tipoPropulsao" required/>
-                 <?php
-                    if($this->assignEmbarcacaoDetalhada['ted_propulsao'] == 1){
-                        echo '<option value="1" selected>Sem Propulsão</option>'.
-                             '<option value="2">Motor</option>'.
-                             '<option value="3">Remo</option>'.
-                            '<option value="0">Não Respondeu</option>';
-                    }
-                    else if($this->assignEmbarcacaoDetalhada['ted_estado_conservacao'] == 2){
-                        echo '<option value="1" >Sem Propulsão</option>'.
-                             '<option value="2" selected>Motor</option>'.
-                             '<option value="3">Remo</option>'.
-                            '<option value="0">Não Respondeu</option>';
-                    }
-                    else if($this->assignEmbarcacaoDetalhada['ted_estado_conservacao'] == 0){
-                        echo '<option value="1">Sem Propulsão</option>'.
-                             '<option value="2">Motor</option>'.
-                             '<option value="3">Remo</option>'.
-                            '<option value="0" selected>Não Respondeu</option>';
-                    }
-                    else if($this->assignEmbarcacaoDetalhada['ted_estado_conservacao'] == 3){
-                        echo '<option value="1">Sem Propulsão</option>'.
-                             '<option value="2">Motor</option>'.
-                             '<option value="3" selected>Remo</option>'.
-                            '<option value="0">Não Respondeu</option>';
-                    }
-                 ?>
-            </select>
-        </div>
+        
         <br/>
 <!--25.1 -------------------------------------------------------------->  
         <a id="ancora_dependentes"></a>
             <fieldset class="noEditable"><legend>Equipamentos da Embarcação:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Equipamento:</legend>
                     <div id="base">
-                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertPescadorHasDependente(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasdependente"), null, true) ?>')">
+                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertEmbarcacaoHasEquipamento(this.form, '<?= $this->url(array("controller" => "barcos", "action" => "insertequipamento"), null, true) ?>')">
 
-                        <input type="number" required min="1" name="inputQuantidadeDependente" placeholder="Número de dependentes" size="20"  />
-
-                        <select name="SelectDependente" id="Dependente">
-                            <?php foreach ($this->assignTipoDependentes as $key => $localTipoDependente): ?>
-                                <option value="<?= $localTipoDependente['ttd_id']; ?>">
-                                    <?= $localTipoDependente['ttd_tipodependente']; ?></option><?php endforeach; ?>
+                       
+                        <select name="selectEquipamento" id="equipamentos">
+                            <?php foreach ($this->assignEquipamento as $key => $equipamento): ?>
+                                <option value="<?= $equipamento['teq_id']; ?>">
+                                    <?= $equipamento['teq_equipamento']; ?></option><?php endforeach; ?>
                         </select>
                     </div>
                 </fieldset>
@@ -471,15 +432,14 @@
                 <table id="tblDependentes">
                     <tr>
                         <th width="15%">ID </th>
-                        <th width="65%">Dependente</th>
-                        <th>Familiares</th>
+                        <th width="65%">Equipamentos</th>
                         <th width="5%"></th>
                     </tr>
-                    <?php foreach ($this->assign_vPescadorDependente as $key => $vPescadorHasDependente): ?>
+                    <?php foreach ($this->assignEmbarcacaoEquipamento as $key => $embEquipamento): ?>
                         <tr id="rowNumDependente<?= $key ?>">
-                            <td name="inputTipoDependenteID[]"> <?= $vPescadorHasDependente['ttd_id'] ?> </td>
-                            <td name="inputTipoDependente[]" > <?= $vPescadorHasDependente['ttd_tipodependente'] ?> </td>
-                            <td name="inputQuantidadeDependente[]" > <?= $vPescadorHasDependente['tptd_quantidade'] ?> </td>
+                            <td name="input[]"> <?= $embEquipamento['teq_id'] ?> </td>
+                            <td name="input[]" > <?= $embEquipamento['teq_equipamento'] ?> </td>
+                            
                             <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasdependente"), null, true) ?>')"></td>
                         </tr>
                     <?php endforeach; ?>
@@ -491,14 +451,13 @@
             <fieldset class="noEditable"><legend>Savatagem da Embarcação:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Savatagem:</legend>
                     <div id="base">
-                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertPescadorHasDependente(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasdependente"), null, true) ?>')">
+                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertEmbarcacaoHasSavatagem(this.form, '<?= $this->url(array("controller" => "barcos", "action" => "insertsavatagem"), null, true) ?>')">
 
-                        <input type="number" required min="1" name="inputQuantidadeDependente" placeholder="Número de dependentes" size="20"  />
-
-                        <select name="SelectDependente" id="Dependente">
-                            <?php foreach ($this->assignTipoDependentes as $key => $localTipoDependente): ?>
-                                <option value="<?= $localTipoDependente['ttd_id']; ?>">
-                                    <?= $localTipoDependente['ttd_tipodependente']; ?></option><?php endforeach; ?>
+                        
+                        <select name="selectSavatagem" id="savatagem">
+                            <?php foreach ($this->assignSavatagem as $key => $savatagem): ?>
+                                <option value="<?= $savatagem['tsav_id']; ?>">
+                                    <?= $savatagem['tsav_savatagem']; ?></option><?php endforeach; ?>
                         </select>
                     </div>
                 </fieldset>
@@ -507,15 +466,13 @@
                 <table id="tblDependentes">
                     <tr>
                         <th width="15%">ID </th>
-                        <th width="65%">Dependente</th>
-                        <th>Familiares</th>
+                        <th width="65%">Equipamentos de Savatagem</th>
                         <th width="5%"></th>
                     </tr>
-                    <?php foreach ($this->assign_vPescadorDependente as $key => $vPescadorHasDependente): ?>
+                    <?php foreach ($this->assignEmbarcacaoSavatagem as $key => $savatagem): ?>
                         <tr id="rowNumDependente<?= $key ?>">
-                            <td name="inputTipoDependenteID[]"> <?= $vPescadorHasDependente['ttd_id'] ?> </td>
-                            <td name="inputTipoDependente[]" > <?= $vPescadorHasDependente['ttd_tipodependente'] ?> </td>
-                            <td name="inputQuantidadeDependente[]" > <?= $vPescadorHasDependente['tptd_quantidade'] ?> </td>
+                            <td name="input[]"> <?= $savatagem['tsav_id'] ?> </td>
+                            <td name="input[]" > <?= $savatagem['tsav_savatagem'] ?> </td>
                             <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasdependente"), null, true) ?>')"></td>
                         </tr>
                     <?php endforeach; ?>
@@ -525,7 +482,8 @@
         <br/>
         <br/>
         <h2>Motor da Embarcação</h2>
-<!--26. -------------------------------------------------------------->               
+<!--26. -------------------------------------------------------------->
+    <input type="hidden" name="idMotor" value="<?= $this->assignMotorEmbarcacao['tme_id'] ?>">
         <div class="form-dir">
             <label>Tipo de Motor:</label>
             <select name="tipoMotor" required/>
@@ -536,6 +494,37 @@
                 <?php
                      endforeach;
                 ?>
+            </select>
+        </div>
+        <div class="form-dir">
+            <label>Tipo de Propulsão:</label>
+            <select name="tipoPropulsao" required/>
+                 <?php
+                    if($this->assignMotorEmbarcacao['tme_propulsao'] == 1){
+                        echo '<option value="1" selected>Sem Propulsão</option>'.
+                             '<option value="2">Motor</option>'.
+                             '<option value="3">Remo</option>'.
+                            '<option value="0">Não Respondeu</option>';
+                    }
+                    else if($this->assignMotorEmbarcacao['tme_estado_conservacao'] == 2){
+                        echo '<option value="1" >Sem Propulsão</option>'.
+                             '<option value="2" selected>Motor</option>'.
+                             '<option value="3">Remo</option>'.
+                            '<option value="0">Não Respondeu</option>';
+                    }
+                    else if($this->assignMotorEmbarcacao['tme_estado_conservacao'] == 0){
+                        echo '<option value="1">Sem Propulsão</option>'.
+                             '<option value="2">Motor</option>'.
+                             '<option value="3">Remo</option>'.
+                            '<option value="0" selected>Não Respondeu</option>';
+                    }
+                    else if($this->assignMotorEmbarcacao['tme_estado_conservacao'] == 3){
+                        echo '<option value="1">Sem Propulsão</option>'.
+                             '<option value="2">Motor</option>'.
+                             '<option value="3" selected>Remo</option>'.
+                            '<option value="0">Não Respondeu</option>';
+                    }
+                 ?>
             </select>
         </div>
 <!--27. -------------------------------------------------------------->               
@@ -577,17 +566,26 @@
                     if($this->assignMotorEmbarcacao['tme_combustivel'] == 2){
                         echo '<option value="2" selected>Gasolina</option>'.
                              '<option value="1">Diesel</option>'.
-                             '<option value="0">Não Respondeu</option>';
+                             '<option value="0">Não Respondeu</option>'.
+                             '<option value="3">Sem motor</option>';
                     }
                     else if($this->assignMotorEmbarcacao['tme_combustivel'] == 1){
                         echo '<option value="2">Gasolina</option>'.
                              '<option value="1" selected>Diesel</option>'.
-                             '<option value="0">Não Respondeu</option>';
+                             '<option value="0">Não Respondeu</option>'.
+                             '<option value="3">Sem motor</option>';
                     }
                     else if($this->assignMotorEmbarcacao['tme_combustivel'] == 0){
                         echo '<option value="2">Gasolina</option>'.
                              '<option value="1">Diesel</option>'.
-                             '<option value="0" selected>Não Respondeu</option>';
+                             '<option value="0" selected>Não Respondeu</option>'.
+                              '<option value="3">Sem motor</option>';   
+                    }
+                    else {
+                        echo '<option value="2">Gasolina</option>'.
+                             '<option value="1">Diesel</option>'.
+                             '<option value="0" >Não Respondeu</option>'.
+                             '<option value="3" selected>Sem motor</option>';   
                     }
                 ?>
 
@@ -624,40 +622,58 @@
                     if($this->assignMotorEmbarcacao['tme_estado_motor'] == 2){
                         echo '<option value="2" selected>Novo</option>'.
                              '<option value="1">Usado</option>'.
-                             '<option value="0">Não Informado</option>';
+                             '<option value="0">Não Informado</option>'.
+                             '<option value="3" selected>Sem motor</option>'; 
                     }
                     else if($this->assignMotorEmbarcacao['tme_estado_motor'] == 1){
                         echo '<option value="2">Novo</option>'.
                              '<option value="1" selected>Usado</option>'.
-                             '<option value="0">Não Informado</option>';
+                             '<option value="0">Não Informado</option>'.
+                             '<option value="3">Sem motor</option>';    
+                    }
+                    else if($this->assignMotorEmbarcacao['tme_estado_motor'] == 0) {
+                        echo '<option value="2">Novo</option>'.
+                             '<option value="1">Usado</option>'.
+                             '<option value="0" selected>Não Informado</option>'.
+                             '<option value="3">Sem motor</option>';   
                     }
                     else {
                         echo '<option value="2">Novo</option>'.
                              '<option value="1">Usado</option>'.
-                             '<option value="0" selected>Não Informado</option>';
+                             '<option value="0">Não Informado</option>'.
+                             '<option value="3" selected>Sem motor</option>';   
                     }
             ?>
             </select>
         </div> 
 <!--34. -------------------------------------------------------------->               
         <div class="form-dir">
-            <label>Já está paga?</label>
+            <label>Já está pago?</label>
             <select name="jaPagoMotor" required/>
                  <?php
                 if($this->assignMotorEmbarcacao['tme_pagamento_motor'] == 2){
                     echo '<option value="2" selected>Sim</option>'.
                          '<option value="1">Não</option>'.
-                         '<option value="0">Não Respondeu</option>';
+                         '<option value="0">Não Respondeu</option>'.
+                         '<option value="3" selected>Sem motor</option>';   
                 }
                 else if($this->assignMotorEmbarcacao['tme_pagamento_motor'] == 1){
                     echo '<option value="2">Sim</option>'.
                          '<option value="1" selected>Não</option>'.
-                         '<option value="0">Não Respondeu</option>';
+                         '<option value="0">Não Respondeu</option>'.
+                         '<option value="3">Sem motor</option>'; 
                 }
                 else if($this->assignMotorEmbarcacao['tme_pagamento_motor'] == 0){
                     echo '<option value="2">Sim</option>'.
                          '<option value="1">Não</option>'.
-                         '<option value="0" selected>Não Respondeu</option>';
+                         '<option value="0" selected>Não Respondeu</option>'.
+                         '<option value="3">Sem motor</option>'; 
+                }
+                else{
+                    echo '<option value="2">Sim</option>'.
+                         '<option value="1">Não</option>'.
+                         '<option value="0">Não Respondeu</option>'.
+                         '<option value="3"  selected>Sem motor</option>'; 
                 }
              ?>
             </select>
@@ -698,15 +714,13 @@
         <a id="ancora_dependentes"></a>
             <fieldset class="noEditable"><legend>Frequência de Manutenção do Motor:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Manutenção:</legend>
-                    <div id="base">
-                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertPescadorHasDependente(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasdependente"), null, true) ?>')">
+                    <div id="base-manutencao">
+                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertMotorHasManutencao(this.form, '<?= $this->url(array("controller" => "barcos", "action" => "insertfrequenciamanutencao"), null, true) ?>')">
 
-                        <input type="number" required min="1" name="inputQuantidadeDependente" placeholder="Número de dependentes" size="20"  />
-
-                        <select name="SelectDependente" id="Dependente">
-                            <?php foreach ($this->assignTipoDependentes as $key => $localTipoDependente): ?>
-                                <option value="<?= $localTipoDependente['ttd_id']; ?>">
-                                    <?= $localTipoDependente['ttd_tipodependente']; ?></option><?php endforeach; ?>
+                        <select name="selectFrequenciaManutencao" id="savatagem">
+                            <?php foreach ($this->assignFrequenciaPesca as $key => $frequencia): ?>
+                                <option value="<?= $frequencia['tfp_id']; ?>">
+                                    <?= $frequencia['tfp_frequencia']; ?></option><?php endforeach; ?>
                         </select>
                     </div>
                 </fieldset>
@@ -716,14 +730,12 @@
                     <tr>
                         <th width="15%">ID </th>
                         <th width="65%">Dependente</th>
-                        <th>Familiares</th>
                         <th width="5%"></th>
                     </tr>
-                    <?php foreach ($this->assign_vPescadorDependente as $key => $vPescadorHasDependente): ?>
+                    <?php foreach ($this->assignMotorFrequencia as $key => $frequencia): ?>
                         <tr id="rowNumDependente<?= $key ?>">
-                            <td name="inputTipoDependenteID[]"> <?= $vPescadorHasDependente['ttd_id'] ?> </td>
-                            <td name="inputTipoDependente[]" > <?= $vPescadorHasDependente['ttd_tipodependente'] ?> </td>
-                            <td name="inputQuantidadeDependente[]" > <?= $vPescadorHasDependente['tptd_quantidade'] ?> </td>
+                            <td name="inputTipoDependenteID[]"> <?= $frequencia['tfp_id'] ?> </td>
+                            <td name="inputTipoDependente[]" > <?= $frequencia['tfp_frequencia'] ?> </td>
                             <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasdependente"), null, true) ?>')"></td>
                         </tr>
                     <?php endforeach; ?>
@@ -746,18 +758,18 @@
 
 <br/>
 <!--25.2 -------------------------------------------------------------->  
+    <input type="hidden" name="idAtuacao" value="<?= $this->assignAtuacao['tae_id'] ?>">
         <a id="ancora_dependentes"></a>
             <fieldset class="noEditable"><legend>Área de Atuação - Navegação:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Área de Atuação:</legend>
-                    <div id="base">
-                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertPescadorHasDependente(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasdependente"), null, true) ?>')">
+                    <div id="base-area">
+                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertAtuacaoHasAreaPesca(this.form, '<?= $this->url(array("controller" => "barcos", "action" => "insertareapesca"), null, true) ?>')">
 
-                        <input type="number" required min="1" name="inputQuantidadeDependente" placeholder="Número de dependentes" size="20"  />
 
-                        <select name="SelectDependente" id="Dependente">
-                            <?php foreach ($this->assignTipoDependentes as $key => $localTipoDependente): ?>
-                                <option value="<?= $localTipoDependente['ttd_id']; ?>">
-                                    <?= $localTipoDependente['ttd_tipodependente']; ?></option><?php endforeach; ?>
+                        <select name="selectAreaPesca" id="area">
+                            <?php foreach ($this->assignAreaPesca as $key => $areaPesca): ?>
+                                <option value="<?= $areaPesca['tareap_id']; ?>">
+                                    <?= $areaPesca['tareap_areapesca']; ?></option><?php endforeach; ?>
                         </select>
                     </div>
                 </fieldset>
@@ -766,15 +778,13 @@
                 <table id="tblDependentes">
                     <tr>
                         <th width="15%">ID </th>
-                        <th width="65%">Dependente</th>
-                        <th>Familiares</th>
+                        <th width="65%">Área de Navegação</th>
                         <th width="5%"></th>
                     </tr>
-                    <?php foreach ($this->assign_vPescadorDependente as $key => $vPescadorHasDependente): ?>
+                    <?php foreach ($this->assignAtuacaoAreaPesca as $key => $areaPesca): ?>
                         <tr id="rowNumDependente<?= $key ?>">
-                            <td name="inputTipoDependenteID[]"> <?= $vPescadorHasDependente['ttd_id'] ?> </td>
-                            <td name="inputTipoDependente[]" > <?= $vPescadorHasDependente['ttd_tipodependente'] ?> </td>
-                            <td name="inputQuantidadeDependente[]" > <?= $vPescadorHasDependente['tptd_quantidade'] ?> </td>
+                            <td name="input[]"> <?= $areaPesca['tap_id_atuacao'] ?> </td>
+                            <td name="input[]" > <?= $areaPesca['tareap_areapesca'] ?> </td>
                             <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasdependente"), null, true) ?>')"></td>
                         </tr>
                     <?php endforeach; ?>
@@ -903,15 +913,14 @@
         <a id="ancora_dependentes"></a>
             <fieldset class="noEditable"><legend>Artes de pesca:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Artes de Pesca:</legend>
-                    <div id="base">
-                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertPescadorHasDependente(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasdependente"), null, true) ?>')">
+                    <div id="base-arte">
+                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertAtuacaoHasArtePesca(this.form, '<?= $this->url(array("controller" => "barcos", "action" => "insertartepesca"), null, true) ?>')">
 
-                        <input type="number" required min="1" name="inputQuantidadeDependente" placeholder="Número de dependentes" size="20"  />
 
-                        <select name="SelectDependente" id="Dependente">
-                            <?php foreach ($this->assignTipoDependentes as $key => $localTipoDependente): ?>
-                                <option value="<?= $localTipoDependente['ttd_id']; ?>">
-                                    <?= $localTipoDependente['ttd_tipodependente']; ?></option><?php endforeach; ?>
+                        <select name="selectArtePesca" id="Dependente">
+                            <?php foreach ($this->assignArtePesca as $key => $artepesca): ?>
+                                <option value="<?= $artepesca['tap_id']; ?>">
+                                    <?= $artepesca['tap_artepesca']; ?></option><?php endforeach; ?>
                         </select>
                     </div>
                 </fieldset>
@@ -920,15 +929,13 @@
                 <table id="tblDependentes">
                     <tr>
                         <th width="15%">ID </th>
-                        <th width="65%">Dependente</th>
-                        <th>Familiares</th>
+                        <th width="65%">Artes de Pesca</th>
                         <th width="5%"></th>
                     </tr>
-                    <?php foreach ($this->assign_vPescadorDependente as $key => $vPescadorHasDependente): ?>
+                    <?php foreach ($this->assignAtuacaoArtePesca as $key => $artePesca): ?>
                         <tr id="rowNumDependente<?= $key ?>">
-                            <td name="inputTipoDependenteID[]"> <?= $vPescadorHasDependente['ttd_id'] ?> </td>
-                            <td name="inputTipoDependente[]" > <?= $vPescadorHasDependente['ttd_tipodependente'] ?> </td>
-                            <td name="inputQuantidadeDependente[]" > <?= $vPescadorHasDependente['tptd_quantidade'] ?> </td>
+                            <td name="input[]"> <?= $artePesca['tap_id'] ?> </td>
+                            <td name="input[]" > <?= $artePesca['tap_artepesca'] ?> </td>
                             <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasdependente"), null, true) ?>')"></td>
                         </tr>
                     <?php endforeach; ?>
@@ -964,13 +971,45 @@
                 <option value="" selected></option>
                 <?php
                     foreach ($this->assignUsuarios as $key => $usuario):?>
-                        <option value="<?= $this->assignAtuacao['tu_entrevistador']?>" <?=( $usuario['tu_id'] == $this->assignAtuacao['tu_entrevistador'])? 'selected="selected"': '';?>><?= $usuario['tu_nome'] ?></option>
+                        <option value="<?= $usuario['tu_id']?>" <?=( $usuario['tu_id'] == $this->assignAtuacao['tu_entrevistador'])? 'selected="selected"': '';?>><?= $usuario['tu_nome'] ?></option>
                 <?php
                      endforeach;
                 ?>
             </select>
         </div>
- 
+        <br/>
+        <a id="ancora_dependentes"></a>
+            <fieldset class="noEditable"><legend>Fornecedor dos Petrechos:</legend>
+                <fieldset class="noEditable"><legend>Adicionar Fornecedor:</legend>
+                    <div id="base-fornecedor">
+                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertAtuacaoHasFornecedorPetrechos(this.form, '<?= $this->url(array("controller" => "barcos", "action" => "insertfornecedor"), null, true) ?>')">
+
+
+                        <select name="selectFornecedorPetrecho" id="Dependente">
+                            <?php foreach ($this->assignFornecedores as $key => $fornecedor): ?>
+                                <option value="<?= $fornecedor['tfi_id']; ?>">
+                                    <?= $fornecedor['tfi_fornecedor']; ?></option><?php endforeach; ?>
+                        </select>
+                    </div>
+                </fieldset>
+                <br/>
+
+                <table id="tblDependentes">
+                    <tr>
+                        <th width="15%">ID </th>
+                        <th width="65%">Fornecedor</th>
+                        <th width="5%"></th>
+                    </tr>
+                    <?php foreach ($this->assignAtuacaoFornecedorPetrechos as $key => $atuacaoFornecedor): ?>
+                        <tr id="rowNumDependente<?= $key ?>">
+                            <td name="input[]"> <?= $atuacaoFornecedor['tfp_id'] ?> </td>
+                            <td name="input[]" > <?= $atuacaoFornecedor['tfi_fornecedor'] ?> </td>
+                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasdependente"), null, true) ?>')"></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            </fieldset>
+        <br/>
  
         <div class="Submit">
             <a href="<?=$this->url(array("controller"=>"arte-pesca","action"=>"index"),null,true)?>" id="botao-ancora">Voltar</a>

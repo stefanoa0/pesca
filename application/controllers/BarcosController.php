@@ -226,6 +226,10 @@ class BarcosController extends Zend_Controller_Action
         $segurodefeso = $this->modelSeguroDefeso->select(null, 'tsd_seguro');
         $this->view->assign("assignSeguroDefeso", $segurodefeso);
         
+        $this->modelSavatagem = new Application_Model_Savatagem();
+        $savatagem = $this->modelSavatagem->select(null, 'tsav_savatagem');
+        $this->view->assign("assignSavatagem", $savatagem);
+        
         $this->modelMaterial = new Application_Model_Material();
         $material = $this->modelMaterial->select(null, 'tmt_material');
         $this->view->assign("assignMaterial", $material);
@@ -274,6 +278,14 @@ class BarcosController extends Zend_Controller_Action
         $horariopesca = $this->modelHorarioPesca->select(null, 'thp_horario');
         $this->view->assign("assignHorarioPesca", $horariopesca);
         
+        $this->modelAreaPesca = new Application_Model_AreaPesca();
+        $areapesca = $this->modelAreaPesca->select(null, 'tareap_areapesca');
+        $this->view->assign("assignAreaPesca", $areapesca);
+        
+        $this->modelArtePesca = new Application_Model_ArtePesca();
+        $artepesca = $this->modelArtePesca->select(null, 'tap_artepesca');
+        $this->view->assign("assignArtePesca", $artepesca);
+        
         $this->modelColonia = new Application_Model_Colonia();
         $colonia = $this->modelColonia->select(null, 'tc_nome');
         $this->view->assign("assignColonia", $colonia);
@@ -297,13 +309,186 @@ class BarcosController extends Zend_Controller_Action
         $this->modelUsuarios = new Application_Model_Usuario();
         $usuarios = $this->modelUsuarios->select(null, 'tu_nome');
         $this->view->assign("assignUsuarios", $usuarios);
+        
+        $this->modelFornecedor = new Application_Model_FornecedorInsumos();
+        $fornecedor = $this->modelFornecedor->select(null, 'tfi_fornecedor');
+        $this->view->assign("assignFornecedores", $fornecedor);
+//Views --------------------------------------------------------------------
+        
+        $embarcacaoCor = $this->modelEmbarcacaoDetalhada->selectVEmbarcacaoDetalhadaHasTCor('ted_id = '.$embarcacaoDetalhada[0]['ted_id']);
+        $this->view->assign("assignEmbarcacaoCor", $embarcacaoCor);
+        
+        $embarcacaoEquipamento = $this->modelEmbarcacaoDetalhada->selectVEmbarcacaoDetalhadaHasTEquipamento('ted_id = '.$embarcacaoDetalhada[0]['ted_id']);
+        $this->view->assign("assignEmbarcacaoEquipamento", $embarcacaoEquipamento);
+        
+        $embarcacaoMaterial = $this->modelEmbarcacaoDetalhada->selectVEmbarcacaoDetalhadaHasTMaterial('ted_id = '.$embarcacaoDetalhada[0]['ted_id']);
+        $this->view->assign("assignEmbarcacaoMaterial", $embarcacaoMaterial);
+        
+        $embarcacaoSavatagem = $this->modelEmbarcacaoDetalhada->selectVEmbarcacaoDetalhadaHasTSavatagem('ted_id = '.$embarcacaoDetalhada[0]['ted_id']);
+        $this->view->assign("assignEmbarcacaoSavatagem", $embarcacaoSavatagem);
+        
+        $embarcacaoSeguroDefeso = $this->modelEmbarcacaoDetalhada->selectVEmbarcacaoDetalhadaHasTSeguroDefeso('ted_id = '.$embarcacaoDetalhada[0]['ted_id']);
+        $this->view->assign("assignEmbarcacaoSeguroDefeso", $embarcacaoSeguroDefeso);
+        
+        
+        $atuacaoAreaPesca = $this->modelEmbarcacaoDetalhada->selectVAtuacaoEmbarcacaoHasTAreaPesca('tae_id = '.$atuacao[0]['tae_id']);
+        $this->view->assign("assignAtuacaoAreaPesca", $atuacaoAreaPesca);
+        
+        $atuacaoArtePesca = $this->modelEmbarcacaoDetalhada->selectVAtuacaoEmbarcacaoHasTArtePesca('tae_id = '.$atuacao[0]['tae_id']);
+        $this->view->assign("assignAtuacaoArtePesca", $atuacaoArtePesca);
+        
+        $atuacaoFornecedorPetrechos = $this->modelEmbarcacaoDetalhada->selectVAtuacaoEmbarcacaoHasTFornecedorPetrechos('tae_id = '.$atuacao[0]['tae_id']);
+        $this->view->assign("assignAtuacaoFornecedorPetrechos", $atuacaoFornecedorPetrechos);
+        
+        $motorFrequencia = $this->modelEmbarcacaoDetalhada->selectVMotorEmbarcacaoHasTFrequenciaManutencao('tme_id = '.$motorEmbarcacao[0]['tme_id']);
+        $this->view->assign("assignMotorFrequencia", $motorFrequencia);
+        
     }
     
     public function embarcacaodetalhadaAction(){
         
         $idBarco = $this->modelBarcos->insertEmbarcacao($this->_getAllParams());
         
-        $this->_redirect('barcos/editar/'.$idBarco);
+        $this->_redirect('barcos/editar/id/'.$idBarco);
+    }
+    public function updatedetalhadaAction(){
+        $idBarco = $this->modelBarcos->updateEmbarcacao($this->_getAllParams());
+        
+        $this->_redirect('barcos/editar/id/'.$idBarco);
+    }
+    public function insertcorAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $this->modelEmbarcacaoDetalhada = new Application_Model_EmbarcacaoDetalhada();
+        
+        $idEmbarcacao = $this->_getParam("id");
+        $idCor = $this->_getParam("valor");
+        $idBarco = $this->_getParam("back_url");
+        
+        $this->modelEmbarcacaoDetalhada->insertEmbDetalhadaHasCor($idEmbarcacao, $idCor);
+        
+        $this->_redirect('barcos/editar/id/'.$idBarco);
+    }
+    
+    public function insertlicencacapturaAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $this->modelEmbarcacaoDetalhada = new Application_Model_EmbarcacaoDetalhada();
+        
+        $idEmbarcacao = $this->_getParam("id");
+        $idSeguro = $this->_getParam("valor");
+        $idBarco = $this->_getParam("back_url");
+        
+        $this->modelEmbarcacaoDetalhada->insertEmbDetalhadaHasSeguroDefeso($idEmbarcacao, $idSeguro);
+        
+        $this->_redirect('barcos/editar/id/'.$idBarco);
+    }
+    
+   public function insertmaterialAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $this->modelEmbarcacaoDetalhada = new Application_Model_EmbarcacaoDetalhada();
+        
+        $idEmbarcacao = $this->_getParam("id");
+        $idMaterial = $this->_getParam("valor");
+        $idBarco = $this->_getParam("back_url");
+        
+        $this->modelEmbarcacaoDetalhada->insertEmbDetalhadaHasMaterial($idEmbarcacao, $idMaterial);
+        
+        $this->_redirect('barcos/editar/id/'.$idBarco);
+    }
+    
+    public function insertequipamentoAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $this->modelEmbarcacaoDetalhada = new Application_Model_EmbarcacaoDetalhada();
+        
+        $idEmbarcacao = $this->_getParam("id");
+        $idEquipamento = $this->_getParam("valor");
+        $idBarco = $this->_getParam("back_url");
+        
+        $this->modelEmbarcacaoDetalhada->insertEmbDetalhadaHasEquipamento($idEmbarcacao, $idEquipamento);
+        
+        $this->_redirect('barcos/editar/id/'.$idBarco);
+    }
+    
+    public function insertsavatagemAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $this->modelEmbarcacaoDetalhada = new Application_Model_EmbarcacaoDetalhada();
+        
+        $idEmbarcacao = $this->_getParam("id");
+        $idSavatagem = $this->_getParam("valor");
+        $idBarco = $this->_getParam("back_url");
+        
+        $this->modelEmbarcacaoDetalhada->insertEmbDetalhadaHasSavatagem($idEmbarcacao, $idSavatagem);
+        
+        $this->_redirect('barcos/editar/id/'.$idBarco);
+    }
+    
+    public function insertfrequenciamanutencaoAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $this->modelMotorEmbarcacao = new Application_Model_MotorEmbarcacao();
+        
+        $idMotor = $this->_getParam("id");
+        $idFrequencia = $this->_getParam("valor");
+        $idBarco = $this->_getParam("back_url");
+        
+        $this->modelMotorEmbarcacao->insertMotEmbarcacaoHasFrequenciaManutencao($idMotor, $idFrequencia);
+        
+        $this->_redirect('barcos/editar/id/'.$idBarco);
+    }
+    
+    public function insertareapescaAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $this->modelAtuacaoEmbarcacao = new Application_Model_AtuacaoEmbarcacao();
+        
+        $idAtuacao = $this->_getParam("id");
+        $idArea = $this->_getParam("valor");
+        $idBarco = $this->_getParam("back_url");
+        
+        $this->modelAtuacaoEmbarcacao->insertAtEmbarcacaoHasAreaPesca($idAtuacao, $idArea);
+        
+        $this->_redirect('barcos/editar/id/'.$idBarco);
+    }
+    
+    public function insertartepescaAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $this->modelAtuacaoEmbarcacao = new Application_Model_AtuacaoEmbarcacao();
+        
+        $idAtuacao = $this->_getParam("id");
+        $idArte = $this->_getParam("valor");
+        $idBarco = $this->_getParam("back_url");
+        
+        $this->modelAtuacaoEmbarcacao->insertAtEmbarcacaoHasArtePesca($idAtuacao, $idArte);
+        
+        $this->_redirect('barcos/editar/id/'.$idBarco);
+    }
+    
+    public function insertfornecedorAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $this->modelAtuacaoEmbarcacao = new Application_Model_AtuacaoEmbarcacao();
+        
+        $idAtuacao = $this->_getParam("id");
+        $idFornecedor = $this->_getParam("valor");
+        $idBarco = $this->_getParam("back_url");
+        
+        $this->modelAtuacaoEmbarcacao->insertAtEmbarcacaoHasFornecedorPetrechos($idAtuacao, $idFornecedor);
+        
+        $this->_redirect('barcos/editar/id/'.$idBarco);
     }
     
     public function relatorioAction() {

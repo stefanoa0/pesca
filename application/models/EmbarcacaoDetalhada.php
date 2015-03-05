@@ -97,12 +97,176 @@ class Application_Model_EmbarcacaoDetalhada
 
         $dadosEmbDetalhadaHasSeguroDefeso = array(
             'ted_id' => $idEmbarcacao,
-            'tsv_id' => $idSeguroDefeso
+            'tsd_id_licenca' => $idSeguroDefeso
         );
         $dbTable_EmbDetalhadaHasSeguroDefeso->insert($dadosEmbDetalhadaHasSeguroDefeso);
 
         return;
     }
+    public function deleteEmbDetalhadaHasCor($idEmbarcacao, $idCor) {
+        $dbTable_EmbDetalhadaHasCor = new Application_Model_DbTable_EmbarcacaoDetalhadaHasCor();
+
+        $dadosEmbDetalhadaHasCor = array(
+            'ted_id = ?' => $idEmbarcacao,
+            'tcor_id  = ?' => $idCor,
+        );
+        $dbTable_EmbDetalhadaHasCor->delete($dadosEmbDetalhadaHasCor);
+
+        return;
+    }
     
+    public function deleteEmbDetalhadaHasEquipamento($idEmbarcacao, $idEquipamento) {
+        $dbTable_EmbDetalhadaHasEquipamento = new Application_Model_DbTable_EmbarcacaoDetalhadaHasEquipamento();
+
+        $dadosEmbDetalhadaHasEquipamento = array(
+            'ted_id = ?' => $idEmbarcacao,
+            'teq_id  = ?' => $idEquipamento,
+        );
+        $dbTable_EmbDetalhadaHasEquipamento->delete($dadosEmbDetalhadaHasEquipamento);
+
+        return;
+    }
+    
+    public function deleteEmbDetalhadaHasMaterial($idEmbarcacao, $idMaterial) {
+        $dbTable_EmbDetalhadaHasMaterial = new Application_Model_DbTable_EmbarcacaoDetalhadaHasMaterial();
+
+        $dadosEmbDetalhadaHasMaterial = array(
+            'ted_id = ?' => $idEmbarcacao,
+            'tmt_id  = ?' => $idMaterial,
+        );
+        $dbTable_EmbDetalhadaHasMaterial->delete($dadosEmbDetalhadaHasMaterial);
+
+        return;
+    }
+    
+    public function deleteEmbDetalhadaHasSavatagem($idEmbarcacao, $idSavatagem) {
+        $dbTable_EmbDetalhadaHasSavatagem = new Application_Model_DbTable_EmbarcacaoDetalhadaHasSavatagem();
+
+        $dadosEmbDetalhadaHasSavatagem = array(
+            'ted_id = ?' => $idEmbarcacao,
+            'tsav_id  = ?' => $idSavatagem,
+        );
+        $dbTable_EmbDetalhadaHasSavatagem->delete($dadosEmbDetalhadaHasSavatagem);
+
+        return;
+    }
+    public function deleteEmbDetalhadaHasSeguroDefeso($idEmbarcacao, $idSeguroDefeso) {
+        $dbTable_EmbDetalhadaHasSeguroDefeso = new Application_Model_DbTable_EmbarcacaoDetalhadaHasSeguroDefeso();
+
+        $dadosEmbDetalhadaHasSeguroDefeso = array(
+            'ted_id = ?' => $idEmbarcacao,
+            'tsd_id  = ?' => $idSeguroDefeso,
+        );
+        $dbTable_EmbDetalhadaHasSeguroDefeso->delete($dadosEmbDetalhadaHasSeguroDefeso);
+
+        return;
+    }
+    
+    public function selectVEmbarcacaoDetalhadaHasTCor($where = null, $order = null, $limit = null){
+        $this->dbTable = new Application_Model_DbTable_VEmbarcacaoDetalhadaHasTCor();
+        $select = $this->dbTable->select()
+                ->from($this->dbTable)->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTable->fetchAll($select)->toArray();
+    }
+    public function selectVEmbarcacaoDetalhadaHasTEquipamento($where = null, $order = null, $limit = null){
+        $this->dbTable = new Application_Model_DbTable_VEmbarcacaoDetalhadaHasTEquipamento();
+        $select = $this->dbTable->select()
+                ->from($this->dbTable)->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTable->fetchAll($select)->toArray();
+    }
+
+    public function selectVEmbarcacaoDetalhadaHasTMaterial($where = null, $order = null, $limit = null){
+        $this->dbTable = new Application_Model_DbTable_VEmbarcacaoDetalhadaHasTMaterial();
+        $select = $this->dbTable->select()
+                ->from($this->dbTable)->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTable->fetchAll($select)->toArray();
+    }
+    
+    public function selectVEmbarcacaoDetalhadaHasTSavatagem($where = null, $order = null, $limit = null){
+        $this->dbTable = new Application_Model_DbTable_VEmbarcacaoDetalhadaHasTSavatagem();
+        $select = $this->dbTable->select()
+                ->from($this->dbTable)->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTable->fetchAll($select)->toArray();
+    }
+    
+    public function selectVEmbarcacaoDetalhadaHasTSeguroDefeso($where = null, $order = null, $limit = null){
+        $this->dbTable = new Application_Model_DbTable_VEmbarcacaoDetalhadaHasTSeguroDefeso();
+        $select = $this->dbTable->select()
+                ->from($this->dbTable)->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTable->fetchAll($select)->toArray();
+    }
+    
+    public function selectVAtuacaoEmbarcacaoHasTAreaPesca($where = null, $order = null, $limit = null){
+        $this->dbTable = new Application_Model_DbTable_VAtuacaoEmbarcacaoHasTAreaPesca();
+        $select = $this->dbTable->select()
+                ->from($this->dbTable)->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTable->fetchAll($select)->toArray();
+    }
+    
+    public function selectVAtuacaoEmbarcacaoHasTArtePesca($where = null, $order = null, $limit = null){
+        $this->dbTable = new Application_Model_DbTable_VAtuacaoEmbarcacaoHasTArtePesca();
+        $select = $this->dbTable->select()
+                ->from($this->dbTable)->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTable->fetchAll($select)->toArray();
+    }
+    
+    public function selectVAtuacaoEmbarcacaoHasTFornecedorPetrechos($where = null, $order = null, $limit = null){
+        $this->dbTable = new Application_Model_DbTable_VAtuacaoEmbarcacaoHasTFornecedorPetrechos();
+        $select = $this->dbTable->select()
+                ->from($this->dbTable)->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTable->fetchAll($select)->toArray();
+    }
+    
+    public function selectVMotorEmbarcacaoHasTFrequenciaManutencao($where = null, $order = null, $limit = null){
+        $this->dbTable = new Application_Model_DbTable_VMotorEmbarcacaoHasTFrequenciaManutencao();
+        $select = $this->dbTable->select()
+                ->from($this->dbTable)->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTable->fetchAll($select)->toArray();
+    }
 }
 

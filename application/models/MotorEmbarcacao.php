@@ -48,18 +48,28 @@ public function select($where = null, $order = null, $limit = null) {
         $this->dbTableMotorEmbarcacao->delete($whereMotorEmbarcacao);
     }
     
-    public function insertMotEmbarcacaoHasFrequenciaManutencao($idEmbarcacao, $idFrequencia) {
+    public function insertMotEmbarcacaoHasFrequenciaManutencao($idMotor, $idFrequencia) {
         $dbTable_MotEmbarcacaoHasFrequenciaManutencao = new Application_Model_DbTable_MotorEmbarcacaoHasFrequenciaManutencao();
 
         $dadosMotEmbarcacaoHasFrequenciaManutencao = array(
-            'tme_id' => $idEmbarcacao,
+            'tme_id' => $idMotor,
             'tfp_id' => $idFrequencia
         );
         $dbTable_MotEmbarcacaoHasFrequenciaManutencao->insert($dadosMotEmbarcacaoHasFrequenciaManutencao);
 
         return;
     }
-    
+    public function deleteMotEmbarcacaoHasFrequenciaManutencao($idMotor, $idSeguroDefeso) {
+        $dbTable_MotEmbarcacaoHasFrequenciaManutencao = new Application_Model_DbTable_MotorEmbarcacaoHasFrequenciaManutencao();
+
+        $dadosMotEmbarcacaoHasFrequenciaManutencao = array(
+            'tme_id = ?' => $idMotor,
+            'tfp_id  = ?' => $idSeguroDefeso,
+        );
+        $dbTable_MotEmbarcacaoHasFrequenciaManutencao->delete($dadosMotEmbarcacaoHasFrequenciaManutencao);
+
+        return;
+    }
 
 }
 
