@@ -30,7 +30,7 @@ class RelatoriosController extends Zend_Controller_Action
     public function indexAction(){
         
         $this->modelPortos = new Application_Model_Porto();
-        $portos = $this->modelPortos->select(null, 'pto_porto');
+        $portos = $this->modelPortos->select(null, 'pto_nome');
         
         $this->view->assign("portos", $portos);
 
