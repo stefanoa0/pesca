@@ -12,11 +12,8 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/pesca/application/controllers/BarcosController.php</file>
-            <file>file:/C:/xampp/htdocs/pesca/application/models/ArtePesca.php</file>
-            <file>file:/C:/xampp/htdocs/pesca/application/models/Barcos.php</file>
-            <file>file:/C:/xampp/htdocs/pesca/application/views/scripts/barcos/novo.phtml</file>
-            <file>file:/C:/xampp/htdocs/pesca/application/views/scripts/barcos/editar.phtml</file>
+            <file>file:/C:/xampp/htdocs/pesca/public/js/funcoesJquery.js</file>
+            <file>file:/C:/xampp/htdocs/pesca/application/layouts/scripts/admin.phtml</file>
         </group>
     </open-files>
 </project-private>
