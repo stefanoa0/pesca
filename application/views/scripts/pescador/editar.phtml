@@ -130,7 +130,7 @@ $(function() {
 
                 </div>
 
-                <div class="direita">
+                <div class="direita-pescador-social">
                     <div class="form-dir">
                         <label for="logradouro">Logradouro</label>
                         <input type="text" name="logradouro" id="logradouro" placeholder="Logradouro" value="<?= $this->pescador['te_logradouro'] ?>"/>
@@ -622,23 +622,23 @@ $(function() {
                     <div id="base">
                         <input type="button" class="button-confirm" onclick="jsInsertPescadorHasEmbarcacoes(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasembarcacoes"), null, true) ?>')">
 
-                        <select name="selectMotorEmbarcacao" id="motorEmbarcacao">
+                        <select name="selectMotorEmbarcacao" id="motorEmbarcacao" class="embarcacoes">
                             <option value="0" >Sem motor</option>
                             <option value="1" >Com motor</option>
                         </select>
 
-                        <select name="selectPorteEmbarcacao" id="porteEmbarcacao">
+                        <select name="selectPorteEmbarcacao" id="porteEmbarcacao" class="embarcacoes">
                             <?php foreach ($this->portesEmbarcacao as $key => $porteEmbarcacao): ?>
                                 <option value="<?= $porteEmbarcacao['tpe_id']; ?>"><?= $porteEmbarcacao['tpe_porte']; ?></option>
                             <?php endforeach; ?>
                         </select>
 
-                        <select name="selectTipoEmbarcacao" id="tipoEmbarcacao">
+                        <select name="selectTipoEmbarcacao" id="tipoEmbarcacao" class="embarcacoes">
                             <?php foreach ($this->tiposEmbarcacao as $key => $tipoEmbarcacao): ?>
                                 <option value="<?= $tipoEmbarcacao['tte_id']; ?>"><?= $tipoEmbarcacao['tte_tipoembarcacao']; ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <select name="selectDonoEmbarcacao" id="donoEmbarcacao">
+                        <select name="selectDonoEmbarcacao" id="donoEmbarcacao" class="embarcacoes">
                             <option value="0" >Usuário</option>
                             <option value="1" >Proprietário</option>
                         </select>

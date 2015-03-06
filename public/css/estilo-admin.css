@@ -115,6 +115,7 @@ body{
 #titulos h3{
     color: gray;
     margin: -35px;
+    margin-right: -70px;
     float: right;
 }
 #conteudo ul{
@@ -281,6 +282,37 @@ tbody tr:nth-child(odd) {
     margin-top: -7%;
 }
 
+.esquerda-usuario{
+    //float: left;
+
+    width: 48%;
+    height: auto;
+}
+
+.direita-usuario{
+    float: right;
+    padding: 0;
+    width: 48%;
+    height: auto;
+    margin-top: -312px;
+}
+
+.direita-relatorios{
+    float: right;
+    padding: 0;
+    width: 48%;
+    height: auto;
+    margin-top: -176px;
+}
+
+.direita-pescador-social{
+    float: right;
+    padding: 0;
+    width: 48%;
+    height: auto;
+    margin-top: -464px;
+}
+
 .Submit{
     width: 100%;
     float: right;
@@ -330,9 +362,13 @@ select.espc{
 select.amostragem{
     width: 80px;
 }
+select.embarcacoes{
+    width: 229px;
+}
 .form-dir, .form-esq{
     padding: 8px;
     padding-left: 0px;
+    font-size: 1.0em;
 }
 .responsivo{
     width: 15%;
@@ -346,6 +382,9 @@ input {
 }
 .forDate{
     float: right;
+}
+.forDate input{
+    width: 60px;
 }
 .data{
     float: none;
@@ -361,6 +400,9 @@ input:focus{
 }
 tr td input{
     float: right;
+}
+.campo-responsivo{
+    width: 60%;
 }
 
 label {
@@ -450,6 +492,7 @@ input.button-confirm {
     height: 24px;           /* make this the size of your image */
     padding-left: 16px;     /* make text start to the right of the image */
     vertical-align: middle; /* align the text vertically centered */
+    width: 50px;
 }
 
 input.button-edit {

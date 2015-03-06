@@ -11,26 +11,26 @@ $this->headScript()->appendFile('/js/mascaras.js');
 <form id="cadastro-usuario" action="<?= $this->url(array("controller" => "usuarios", "action" => "criar"), null, true) ?>" method="post">
     <fieldset id="Usuarios">
 
-        <div class="esquerda">
+        <div class="esquerda-usuario">
 
             <div class="form-esq">
                 <label>Código: </label>
-                <input type="text" readonly="" size="5" name="idUsuario" value="<?= $this->usuario['tu_id'] ?>" />
+                <input class="campo-responsivo" type="text" readonly="" size="5" name="idUsuario" value="<?= $this->usuario['tu_id'] ?>" />
             </div>
 
             <div class="form-esq">
                 <label for="nome">Nome</label>
-                <input type="text" required="" name="nome" id="nome" placeholder="Nome"/>
+                <input class="campo-responsivo" type="text" required="" name="nome" id="nome" placeholder="Nome"/>
             </div>
 
             <div class="form-esq">
                 <label for="login-form">Login</label>
-                <input type="text" required="" name="login" id="login-form" placeholder="Login"/>
+                <input class="campo-responsivo" type="text" required="" name="login" id="login-form" placeholder="Login"/>
             </div>
 
             <div class="form-esq">
                 <label for="perfil">Perfil</label>
-                <select name="perfil" id="perfil">
+                <select class="campo-responsivo" name="perfil" id="perfil" >
                     <?php foreach ($this->perfis as $key => $perfil): ?>
                         <option value="<?= $perfil['tp_id']; ?>"><?= $perfil['tp_perfil']; ?></option>
                     <?php endforeach; ?>
@@ -39,7 +39,7 @@ $this->headScript()->appendFile('/js/mascaras.js');
 
             <div class="form-esq">
                 <label for="sexo">Sexo</label>
-                <select name="sexo" id="sexo">
+                <select class="campo-responsivo" name="sexo" id="sexo">
                     <option value="M">Masculino</option>
                     <option value="F">Feminino</option>
                 </select>
@@ -47,49 +47,49 @@ $this->headScript()->appendFile('/js/mascaras.js');
 
             <div class="form-esq">
                 <label for="email">E-mail</label>
-                <input type="text" required="" name="email" id="email" placeholder="E-mail"/>
+                <input class="campo-responsivo" type="text" required="" name="email" id="email" placeholder="E-mail"/>
             </div>
 
             <div class="form-esq">
                 <label for="rg">RG</label>
-                <input type="text" required="" name="rg" id="rg" placeholder="RG"/>
+                <input class="campo-responsivo" type="text" required="" name="rg" id="rg" placeholder="RG"/>
             </div>
 
             <div class="form-esq">
                 <label for="cpf">CPF</label>
-                <input type="text" required="" name="cpf" id="cpf" placeholder="CPF"/>
+                <input class="campo-responsivo" type="text" required="" name="cpf" id="cpf" placeholder="CPF"/>
             </div>
 
             <div class="form-esq">
                 <label for="telefoneResidencial">Tel. Residencial</label>
-                <input type="text" name="telefoneResidencial" id="telefoneResidencial" class="telefone" placeholder="Tel. Residencial"/>
+                <input class="campo-responsivo" type="text" name="telefoneResidencial" id="telefoneResidencial" class="telefone" placeholder="Tel. Residencial"/>
             </div>
 
             <div class="form-esq">
                 <label for="telefoneCelular">Tel. Celular</label>
-                <input type="text" name="telefoneCelular" id="telefoneCelular" class="telefone" placeholder="Tel. Celular"/>
+                <input class="campo-responsivo" type="text" name="telefoneCelular" id="telefoneCelular" class="telefone" placeholder="Tel. Celular"/>
             </div>
         </div>
 
-        <div class="direita">
+        <div class="direita-usuario">
             <div class="form-dir">
                 <label for="logradouro">Logradouro</label>
-                <input type="text" required="" name="logradouro" id="logradouro" placeholder="Logradouro"/>
+                <input class="campo-responsivo" type="text" required="" name="logradouro" id="logradouro" placeholder="Logradouro"/>
             </div>
 
             <div class="form-dir">
                 <label for="numero">Número</label>
-                <input type="text" name="numero" id="numero" placeholder="Número"/>
+                <input class="campo-responsivo" type="text" name="numero" id="numero" placeholder="Número"/>
             </div>
 
             <div class="form-dir">
                 <label for="bairro">Bairro</label>
-                <input type="text" name="bairro" id="bairro" placeholder="Bairro"/>
+                <input class="campo-responsivo" type="text" name="bairro" id="bairro" placeholder="Bairro"/>
             </div>
 
             <div class="form-dir">
                 <label for="municipio">Município</label>
-                <select name="municipio" id="municipio">
+                <select class="campo-responsivo" name="municipio" id="municipio">
                     <?php foreach ($this->municipios as $key => $municipio): ?>
                         <option value="<?= $municipio['tmun_id']; ?>"><?= $municipio['tmun_municipio'],' - ',$municipio['tuf_sigla']; ?></option>
                     <?php endforeach; ?>
@@ -98,12 +98,12 @@ $this->headScript()->appendFile('/js/mascaras.js');
 
             <div class="form-dir">
                 <label for="cep">CEP</label>
-                <input type="text" name="cep" id="cep" placeholder="CEP"/>
+                <input class="campo-responsivo" type="text" name="cep" id="cep" placeholder="CEP"/>
             </div>
 
             <div class="form-dir">
                 <label for="complemento">Complemento</label>
-                <input type="text" name="complemento" id="complemento" placeholder="Complemento"/>
+                <input class="campo-responsivo" type="text" name="complemento" id="complemento" placeholder="Complemento"/>
             </div>
         </div>
 
