@@ -282,6 +282,16 @@ tbody tr:nth-child(odd) {
     margin-top: -7%;
 }
 
+.direita-entrevista input{
+    margin-top: -2%;
+    width: 55%;
+}
+
+.direita-entrevista select{
+    margin-top: -1%;
+    width: 56%;
+}
+
 .esquerda-usuario{
     //float: left;
 
@@ -659,4 +669,28 @@ legend{
 
 #dynamicInput select input{
     float: left;
+}
+
+#base select {
+    width: 18%;
+}
+
+#base input {
+    width: 19.8%;
+}
+
+#base_peixe select {
+    width: 19%;
+}
+
+#base_peixe input {
+    width: 20%;
+}
+
+#base_camarao select {
+    width: 16%;
+}
+
+#base_camarao input {
+    width: 16.7%;
 }
