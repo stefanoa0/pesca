@@ -204,7 +204,7 @@
                                 </ul>
                             </a>
                         </td>
-                        <td><input type="button" width="10%" target="_blank" value ="Nova Entrevista" onclick="jsEntrevista('<?= $vMonitoramento['tap_artepesca'] ?>', <?= $vMonitoramento['mnt_id'] ?>, <?= $vMonitoramento['fd_id'] ?>)" <?php if($vMonitoramento['mnt_monitorado']== 'Não'){ echo "disabled='True'";} ?>/></td>
+                        <td><input class="busca" type="button" width="10%" target="_blank" value="Nova Entrevista" onclick="jsEntrevista('<?= $vMonitoramento['tap_artepesca'] ?>', <?= $vMonitoramento['mnt_id'] ?>, <?= $vMonitoramento['fd_id'] ?>)" <?php if($vMonitoramento['mnt_monitorado']== 'Não'){ echo "disabled='True'";} ?>/></td>
 
                     </tr>
                 <?php endforeach; ?>
