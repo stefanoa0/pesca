@@ -3,9 +3,9 @@
 
         <h2>Todas Entrevistas Cadastradas - Limite(50)</h2>
              
-            <input type="button" value="Limpar" onClick="jsClearBusca('<?= $this->url(array("controller" => "entrevista-pescador", "action" => "index"), null, true) ?>')"/>
-            <input type="button" value="Buscar" onClick="jsBuscaTodasEntrevistas(this.form, '<?= $this->url(array("controller" => "entrevista-pescador", "action" => "index"), null, true) ?>')"/>
-            <select name="tipoBusca">
+            <input type="button" class="busca" value="Limpar" onClick="jsClearBusca('<?= $this->url(array("controller" => "entrevista-pescador", "action" => "index"), null, true) ?>')"/>
+            <input type="button" class="busca" value="Buscar" onClick="jsBuscaTodasEntrevistas(this.form, '<?= $this->url(array("controller" => "entrevista-pescador", "action" => "index"), null, true) ?>')"/>
+            <select class="busca" name="tipoBusca">
                 <option value="1">Por Data</option>
                 <option value="2">Por Pescador</option>
                 <option value="3">Por Barco</option>
@@ -13,7 +13,7 @@
                 <option value="5">Por Porto</option>
                 <option value="6">Listar Todas</option>
             </select>
-            <input id="busca" name="buscaEntrevistas" placeholder="Buscar Entrevista"/><br/>
+            <input class="busca" name="buscaEntrevistas" placeholder="Buscar Entrevista"/><br/>
         <table>
             <tr>
                 <th>Arte de Pesca</th>

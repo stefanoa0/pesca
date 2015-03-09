@@ -5,16 +5,16 @@
 
             <a href="<?= $this->url(array("controller" => "pescador", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
                 
-            <input type="button" value="Limpar" onClick="jsClearBusca('<?= $this->url(array("controller" => "pescador", "action" => "index"), null, true) ?>')"/>
-            <input type="button" value="Buscar" onClick="jsBuscaPescador(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "index"), null, true) ?>')"/>
-            <select name="tipoBusca">
+            <input type="button" class="busca" value="Limpar" onClick="jsClearBusca('<?= $this->url(array("controller" => "pescador", "action" => "index"), null, true) ?>')"/>
+            <input type="button" class="busca" value="Buscar" onClick="jsBuscaPescador(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "index"), null, true) ?>')"/>
+            <select class="busca" name="tipoBusca">
                 <option value="1">Por Nome</option>
                 <option value="2">Por Id</option>
                 <option value="3">Por Apelido</option>
                 <option value="4">Todos os Pescadores</option>
                 <option value="5">Por Especialistas</option>
             </select>
-            <input id="busca" name="buscaPescador" placeholder="Busca Pescador"/><br/>
+            <input class="busca" name="buscaPescador" placeholder="Busca Pescador"/><br/>
         <br/>
             <div id="buscaInicial">
                 <label>Busca pela Inicial:</label>

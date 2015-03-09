@@ -7,14 +7,14 @@
         
      <input type="button" class="tam_medio" value="Limpar" onClick="jsClearBusca('<?= $this->url(array("controller" => "ficha-diaria", "action" => "index"), null, true) ?>')"/>
      <input type="button" class="tam_medio" value="Buscar" onClick="jsBuscaFichaDiaria(this.form, '<?= $this->url(array("controller" => "ficha-diaria", "action" => "index"), null, true) ?>')"/>
-     <select name="tipoBusca">
+     <select class="busca" name="tipoBusca">
         <option value="1">Por ID</option>
         <option value="2">Por Data</option>
         <option value="4">Por Porto</option>
         <option value="5">Por Estagiário</option>
         <option value="6">Por Monitor</option>
      </select>
-            <input id="busca"  name="buscaFicha" placeholder="Buscar Ficha Diária"/><br/>
+            <input class="busca"  name="buscaFicha" placeholder="Buscar Ficha Diária"/><br/>
 <table id="tabelaComEstilo">
     <tr>
         <th>ID</th>

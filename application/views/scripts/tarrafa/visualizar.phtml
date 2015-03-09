@@ -3,16 +3,16 @@
 
         <h2>Entrevistas Cadastradas->Pesca de Tarrafa (lista limitada em 20)</h2>
 
-         <input type="button" value="Limpar" onClick="jsClearBusca('<?= $this->url(array("controller" => "tarrafa", "action" => "visualizar"), null, true) ?>')"/>
-            <input type="button" value="Buscar" onClick="jsBuscaEntrevistas(this.form, '<?= $this->url(array("controller" => "tarrafa", "action" => "visualizar"), null, true) ?>')"/>
-            <select name="tipoBusca">
+         <input type="button" class="busca" value="Limpar" onClick="jsClearBusca('<?= $this->url(array("controller" => "tarrafa", "action" => "visualizar"), null, true) ?>')"/>
+            <input type="button" class="busca" value="Buscar" onClick="jsBuscaEntrevistas(this.form, '<?= $this->url(array("controller" => "tarrafa", "action" => "visualizar"), null, true) ?>')"/>
+            <select class="busca" name="tipoBusca">
                 <option value="1">Por ID</option>
                 <option value="2">Por Pescador</option>
                 <option value="3">Por Barco</option>
                 <option value="4">Por Apelido</option>
                 <option value="6">Listar Todas</option>
             </select>
-            <input id="busca" name="buscaEntrevistas" placeholder="Buscar Entrevista"/><br/>
+            <input class="busca" name="buscaEntrevistas" placeholder="Buscar Entrevista"/><br/>
         <table>
             <tr>
                 <th>Ficha Diária</th>
