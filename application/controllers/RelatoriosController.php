@@ -179,7 +179,7 @@ class RelatoriosController extends Zend_Controller_Action
             
             case 1: $this->_redirect("/relatorios/relatoriocompletoarrasto".$data.$datafim.$porto);break;
             case 2:$this->_redirect("/relatorios/relatoriocompletocalao/".$rel.$data.$datafim.$porto);break;
-            case 3:$this->_redirect("/relatorios/relatoriocompletocoletamanual/".$rel.$data.$datafim);break;
+            case 3:$this->_redirect("/relatorios/relatoriocompletocoletamanual/".$rel.$data.$datafim.$porto);break;
             case 4:$this->_redirect("/relatorios/relatoriocompletoemalhe/".$rel.$data.$datafim.$porto);break;
             case 5:$this->_redirect("/relatorios/relatoriocompletogroseira/".$rel.$data.$datafim.$porto);break;
             case 6:$this->_redirect("/relatorios/relatoriocompletojerere/".$rel.$data.$datafim.$porto);break;
@@ -274,6 +274,9 @@ class RelatoriosController extends Zend_Controller_Action
         
         $data = $this->dataInicial($date);
         $datafim = $this->dataFinal($datend);
+        
+        
+        
         $this->modelRelatorios = new Application_Model_Relatorios();
 
         require_once "../library/Classes/PHPExcel.php";
@@ -314,8 +317,14 @@ class RelatoriosController extends Zend_Controller_Action
         endforeach;
         $lastcolumn = $coluna;
         
-        $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."'");
-        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         $linha = 2;
         $coluna= 0;
         
@@ -445,8 +454,14 @@ class RelatoriosController extends Zend_Controller_Action
         endforeach;
         $lastcolumn = $coluna;
         
-        $relatorioArrasto = $this->modelRelatorios->selectColetaManual("dvolta between '". $data."'"." and '".$datafim."'");
-
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioArrasto = $this->modelRelatorios->selectColetaManual("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioArrasto = $this->modelRelatorios->selectColetaManual("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         $linha = 2;
         $coluna= 0;
 
@@ -581,7 +596,16 @@ class RelatoriosController extends Zend_Controller_Action
         $lastcolumn = $coluna;
         $linha = 2;
         $coluna= 0;
-        $relatorioCalao = $this->modelRelatorios->selectCalao("cal_data between '". $data."'"." and '".$datafim."'");
+        
+        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioArrasto = $this->modelRelatorios->selectCalao("cal_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioArrasto = $this->modelRelatorios->selectCalao("cal_data between '". $data."'"." and '".$datafim."'");
+        }
 
         foreach ( $relatorioCalao as $key => $consulta ):
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
@@ -711,8 +735,14 @@ class RelatoriosController extends Zend_Controller_Action
         endforeach;
         $lastcolumn = $coluna;
 
-        $relatorioArrasto = $this->modelRelatorios->selectEmalhe("drecolhimento between '". $data."'"." and '".$datafim."'");
-        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioArrasto = $this->modelRelatorios->selectEmalhe("drecolhimento between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioArrasto = $this->modelRelatorios->selectEmalhe("drecolhimento between '". $data."'"." and '".$datafim."'");
+        }
         $linha = 2;
         $coluna= 0;
 
@@ -846,8 +876,14 @@ class RelatoriosController extends Zend_Controller_Action
         endforeach;
         $lastcolumn = $coluna;
 
-        $relatorioArrasto = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."'");
-        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioArrasto = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioArrasto = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         $linha = 2;
         $coluna= 0;
 
@@ -981,8 +1017,16 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha,$especie['esp_nome_comum']);
         endforeach;
         $lastcolumn = $coluna;
-        $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."'");
-
+        
+        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioArrasto = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioArrasto = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         
         $linha = 2;
         $coluna= 0;
@@ -1116,8 +1160,17 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha,$especie['esp_nome_comum']);
         endforeach;
         $lastcolumn = $coluna;
-        $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."'");
-      
+        
+        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioArrasto = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioArrasto = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."'");
+        }
+        
         $linha = 2;
         $coluna= 0;
 
@@ -1251,8 +1304,16 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha,$especie['esp_nome_comum']);
         endforeach;
         $lastcolumn = $coluna;
-        $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."'");
-      
+       
+        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioArrasto = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioArrasto = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         $linha = 2;
         $coluna= 0;
 
@@ -1384,7 +1445,15 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha,$especie['esp_nome_comum']);
         endforeach;
         $lastcolumn = $coluna;
-        $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."'");
+        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioArrasto = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioArrasto = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         
         $linha = 2;
         $coluna= 0;
@@ -1516,7 +1585,16 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha,$especie['esp_nome_comum']);
         endforeach;
         $lastcolumn = $coluna;
-        $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."'");
+        
+        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioArrasto = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioArrasto = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         
         $linha = 2;
         $coluna= 0;
@@ -1649,7 +1727,17 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha,$especie['esp_nome_comum']);
         endforeach;
         $lastcolumn = $coluna;
-        $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."'");
+        
+        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioArrasto = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioArrasto = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."'");
+        }
+        
         $linha = 2;
         $coluna= 0;
 
@@ -1780,8 +1868,16 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha,$especie['esp_nome_comum']);
         endforeach;
         $lastcolumn = $coluna;
-        $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."'");
         
+        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioArrasto = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioArrasto = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         $linha = 2;
         $coluna= 0;
 
@@ -1908,8 +2004,15 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha,$especie['esp_nome_comum']);
         endforeach;
         $lastcolumn = $coluna;
-        $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."'");
         
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioArrasto = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioArrasto = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."'");
+        }
         $linha = 2;
         $coluna= 0;
 
@@ -2041,8 +2144,15 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha,$especie['esp_nome_comum']);
         endforeach;
         $lastcolumn = $coluna;
-        $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."'");
         
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioArrasto = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioArrasto = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         $linha = 2;
         $coluna= 0;
 
@@ -2198,8 +2308,15 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha,$especie['esp_nome_comum']);
         endforeach;
         $lastcolumn = $coluna;
-        $relatorioCalao = $this->modelRelatorios->selectCalao("cal_data between '". $data."'"." and '".$datafim."'");
         
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioCalao = $this->modelRelatorios->selectCalao("cal_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioCalao = $this->modelRelatorios->selectCalao("cal_data between '". $data."'"." and '".$datafim."'");
+        }
         $linha = 2;
         $coluna= 0;
 
@@ -2269,8 +2386,14 @@ class RelatoriosController extends Zend_Controller_Action
             $linha++;
         endforeach;
 
-        $relatorioColeta = $this->modelRelatorios->selectColetaManual("dvolta between '". $data."'"." and '".$datafim."'");
-
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioColeta = $this->modelRelatorios->selectColetaManual("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioColeta = $this->modelRelatorios->selectColetaManual("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         foreach ( $relatorioColeta as $key => $consulta ):
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -2344,8 +2467,14 @@ class RelatoriosController extends Zend_Controller_Action
             $linha++;
         endforeach;
         
-        $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("fd_data between '". $data."'"." and '".$datafim."'");
-        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         foreach($relatorioEmalhe as $key=> $consulta):
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
@@ -2414,8 +2543,14 @@ class RelatoriosController extends Zend_Controller_Action
             $linha++;
         endforeach;
         
-        $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."'");
-        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         foreach ( $relatorioGrosseira as $key => $consulta ):
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -2487,8 +2622,14 @@ class RelatoriosController extends Zend_Controller_Action
             $linha++;
         endforeach;
         
-        $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."'");
-        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         foreach ( $relatorioJerere as $key => $consulta ):
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -2561,8 +2702,14 @@ class RelatoriosController extends Zend_Controller_Action
             $linha++;
         endforeach;
         
-        $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."'");
-        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         foreach ( $relatorioLinha as $key => $consulta ):
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -2638,8 +2785,14 @@ class RelatoriosController extends Zend_Controller_Action
             $linha++;
         endforeach;
         
-        $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."'");
-        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         foreach ( $relatorioLinhaFundo as $key => $consulta ):
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -2713,8 +2866,14 @@ class RelatoriosController extends Zend_Controller_Action
             $linha++;
         endforeach;
         
-        $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."'");
-        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         foreach ( $relatorioManzua as $key => $consulta ):
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -2787,8 +2946,14 @@ class RelatoriosController extends Zend_Controller_Action
             $linha++;
         endforeach;
         
-        $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."'");
-        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         foreach ( $relatorioMergulho as $key => $consulta ):
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -2862,8 +3027,14 @@ class RelatoriosController extends Zend_Controller_Action
             $linha++;
         endforeach;
         
-        $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."'");
-        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         foreach ( $relatorioRatoeira as $key => $consulta ):
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -2936,8 +3107,14 @@ class RelatoriosController extends Zend_Controller_Action
             $linha++;
         endforeach;
         
-        $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."'");
-        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         foreach ( $relatorioSiripoia as $key => $consulta ):
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -3011,8 +3188,14 @@ class RelatoriosController extends Zend_Controller_Action
             $linha++;
         endforeach;
         
-        $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."'");
-        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."'");
+        }
         foreach ( $relatorioTarrafa as $key => $consulta ):
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -3083,8 +3266,14 @@ class RelatoriosController extends Zend_Controller_Action
             $linha++;
         endforeach;
         
-        $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."'");
-        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto = $this->verifporto($porto);
+            $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+        }
+        else{
+            $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."'");
+        }
         foreach ( $relatorioVaraPesca as $key => $consulta ):
             
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
@@ -3710,6 +3899,19 @@ class RelatoriosController extends Zend_Controller_Action
         }
          else{
              $arrasto = $modelArrasto->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+             $calao =$modelCalao->selectVBioPeixe("cal_data between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+            $coletamanual =$modelColetaManual->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+            $emalhe =$modelEmalhe->selectVBioPeixe("drecolhimento between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+            $grosseira =$modelGrosseira->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+            $jerere =$modelJerere->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+            $pescalinha =$modelLinha->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+            $linhafundo =$modelLinhaFundo->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+            $manzua =$modelManzua->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+            $mergulho =$modelMergulho->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+            $ratoeira =$modelRatoeira->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+            $siripoia =$modelSiripoia->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+            $tarrafa =$modelTarrafa->selectVBioPeixe("tar_data between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+            $varapesca =$modelVaraPesca->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
          }  
         
                 
