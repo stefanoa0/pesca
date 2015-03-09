@@ -29,10 +29,11 @@ class RelatoriosController extends Zend_Controller_Action
 
     public function indexAction(){
         
-        $this->modelPortos = new Application_Model_Porto();
-        $portos = $this->modelPortos->select(null, 'pto_nome');
+        $modelPorto = new Application_Model_Porto();
         
-        $this->view->assign("portos", $portos);
+        $porto = $modelPorto->select(null, 'pto_nome');
+        
+        $this->view->assign("portos", $porto);
 
     }
     public function graficosAction(){
@@ -168,29 +169,32 @@ class RelatoriosController extends Zend_Controller_Action
         $datafim = $anofim.'-'.$mesfim.'-'.$diafim;
         
         $datafim = '/datafim/'.$datafim;
+        
+        
+        $porto = $valueRelatorio['porto'];
+        
+        $porto = '/porto/'.$porto;
+        
         switch($valueRelatorio['artePesca']){
             
-            case 1: $this->_redirect("/relatorios/relatoriocompletoarrasto".$data.$datafim);break;
-            case 2:$this->_redirect("/relatorios/relatoriocompletocalao/".$rel.$data.$datafim);break;
+            case 1: $this->_redirect("/relatorios/relatoriocompletoarrasto".$data.$datafim.$porto);break;
+            case 2:$this->_redirect("/relatorios/relatoriocompletocalao/".$rel.$data.$datafim.$porto);break;
             case 3:$this->_redirect("/relatorios/relatoriocompletocoletamanual/".$rel.$data.$datafim);break;
-            case 4:$this->_redirect("/relatorios/relatoriocompletoemalhe/".$rel.$data.$datafim);break;
-            case 5:$this->_redirect("/relatorios/relatoriocompletogroseira/".$rel.$data.$datafim);break;
-            case 6:$this->_redirect("/relatorios/relatoriocompletojerere/".$rel.$data.$datafim);break;
-            case 7:$this->_redirect("/relatorios/relatoriocompletolinha/".$rel.$data.$datafim);break;
-            case 8:$this->_redirect("/relatorios/relatoriocompletolinhafundo/".$rel.$data.$datafim);break;
-            case 9:$this->_redirect("/relatorios/relatoriocompletomanzua/".$rel.$data.$datafim);break;
-            case 10:$this->_redirect("/relatorios/relatoriocompletomergulho/".$rel.$data.$datafim);break;
-            case 11:$this->_redirect("/relatorios/relatoriocompletoratoeira/".$rel.$data.$datafim);break;
-            case 12:$this->_redirect("/relatorios/relatoriocompletosiripoia/".$rel.$data.$datafim);break;
-            case 13:$this->_redirect("/relatorios/relatoriocompletotarrafa/".$rel.$data.$datafim);break;
-            case 14:$this->_redirect("/relatorios/relatoriocompletovarapesca/".$rel.$data.$datafim);break;
-            case 15:$this->_redirect("/relatorios/relatoriocompleto/".$rel.$data.$datafim);break;
-            case 16:$this->_redirect("/relatorios/relatoriocompletomonitoramentos");break;
-            case 17:$this->_redirect("/relatorios/relatoriocompletoespecies");break;
-            case 18:$this->_redirect("/relatorios/relatoriocompletoespeciesmes");break;
-            case 19:$this->_redirect("/relatorios/relatoriocompletopescadores");break;
-            case 20:$this->_redirect("/pescador/relatorioespecialista");break;
-            case 21:$this->_redirect("/consulta-padrao/avistamentos");break;
+            case 4:$this->_redirect("/relatorios/relatoriocompletoemalhe/".$rel.$data.$datafim.$porto);break;
+            case 5:$this->_redirect("/relatorios/relatoriocompletogroseira/".$rel.$data.$datafim.$porto);break;
+            case 6:$this->_redirect("/relatorios/relatoriocompletojerere/".$rel.$data.$datafim.$porto);break;
+            case 7:$this->_redirect("/relatorios/relatoriocompletolinha/".$rel.$data.$datafim.$porto);break;
+            case 8:$this->_redirect("/relatorios/relatoriocompletolinhafundo/".$rel.$data.$datafim.$porto);break;
+            case 9:$this->_redirect("/relatorios/relatoriocompletomanzua/".$rel.$data.$datafim.$porto);break;
+            case 10:$this->_redirect("/relatorios/relatoriocompletomergulho/".$rel.$data.$datafim.$porto);break;
+            case 11:$this->_redirect("/relatorios/relatoriocompletoratoeira/".$rel.$data.$datafim.$porto);break;
+            case 12:$this->_redirect("/relatorios/relatoriocompletosiripoia/".$rel.$data.$datafim.$porto);break;
+            case 13:$this->_redirect("/relatorios/relatoriocompletotarrafa/".$rel.$data.$datafim.$porto);break;
+            case 14:$this->_redirect("/relatorios/relatoriocompletovarapesca/".$rel.$data.$datafim.$porto);break;
+            case 15:$this->_redirect("/relatorios/relatoriocompleto/".$rel.$data.$datafim.$porto);break;
+            case 16:$this->_redirect("/relatorios/biometriascamarao".$data.$datafim.$porto);break;
+            case 17:$this->_redirect("/relatorios/biometriaspeixe".$data.$datafim.$porto);break;
+
         }
     }
     public function outrosrelatoriosAction(){
@@ -3555,8 +3559,20 @@ class RelatoriosController extends Zend_Controller_Action
         $objWriter->save('php://output');
     }
     
+    public function verifporto($porto=null){
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $modelPorto = new Application_Model_Porto();
+        
+        $verificaPorto = $modelPorto->select('pto_id = '.$porto);
+        
+        return $verificaPorto[0]['pto_nome'];
+    }
+    
     public function biometriascamaraoAction(){
-        set_time_limit(300);
+        set_time_limit(0);
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
         }
@@ -3565,11 +3581,22 @@ class RelatoriosController extends Zend_Controller_Action
         
         
         $modelArrasto =    new Application_Model_ArrastoFundo;
-
         
-        $arrasto = $modelArrasto->selectVBioCamarao(null, 'esp_nome_comum');
-
-                
+        $date =  $this->_getParam('data');
+        $datend = $this->_getParam('datafim');
+        
+        $data = $this->dataInicial($date);
+        $datafim = $this->dataFinal($datend);
+        
+        $porto = $this->_getParam('porto');
+        
+        if($porto != '999'){
+        $nomePorto = $this->verifporto($porto);
+        $arrasto = $modelArrasto->selectVBioCamarao("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+        }
+         else{
+             $arrasto = $modelArrasto->selectVBioCamarao("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+         }       
         require_once "../library/Classes/PHPExcel.php";
 
         $objPHPExcel = new PHPExcel();
@@ -3577,7 +3604,8 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna = 0;
         $linha = 1;
         
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Local');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Arrasto de Fundo');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Local');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Entrevista');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Pesqueiro');
@@ -3587,6 +3615,7 @@ class RelatoriosController extends Zend_Controller_Action
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Maturidade');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Comprimento da Carapaça');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Peso');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data da Entrevista');
 
         
         $coluna= 0;
@@ -3598,15 +3627,21 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_id']);
-            foreach($pesqueiroArrasto as $key => $pesqueiro):
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
-            endforeach;
+            if(empty($pesqueiroArrasto)){
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+                }
+            else{
+                foreach($pesqueiroArrasto as $key => $pesqueiro):
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
+                endforeach;
+            }
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbc_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tmat_tipo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbc_comprimento_cabeca']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbc_peso']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
             $coluna=0;
             $linha++;
         endforeach; 
@@ -3648,7 +3683,34 @@ class RelatoriosController extends Zend_Controller_Action
         $modelTarrafa=     new Application_Model_Tarrafa;
         $modelVaraPesca =  new Application_Model_VaraPesca;
         
-        $arrasto = $modelArrasto->selectVBioPeixe(null, 'esp_nome_comum');
+         $date =  $this->_getParam('data');
+        $datend = $this->_getParam('datafim');
+        
+        $data = $this->dataInicial($date);
+        $datafim = $this->dataFinal($datend);
+        
+        $porto = $this->_getParam('porto');
+        
+        if($porto != '999'){
+            $nomePorto = $this->verifporto($porto);
+            $arrasto = $modelArrasto->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+            $calao =$modelCalao->selectVBioPeixe("cal_data between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+            $coletamanual =$modelColetaManual->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+            $emalhe =$modelEmalhe->selectVBioPeixe("drecolhimento between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+            $grosseira =$modelGrosseira->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+            $jerere =$modelJerere->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+            $pescalinha =$modelLinha->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+            $linhafundo =$modelLinhaFundo->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+            $manzua =$modelManzua->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+            $mergulho =$modelMergulho->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+            $ratoeira =$modelRatoeira->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+            $siripoia =$modelSiripoia->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+            $tarrafa =$modelTarrafa->selectVBioPeixe("tar_data between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+            $varapesca =$modelVaraPesca->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+        }
+         else{
+             $arrasto = $modelArrasto->selectVBioPeixe("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+         }  
         
                 
         require_once "../library/Classes/PHPExcel.php";
@@ -3658,6 +3720,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna = 0;
         $linha = 1;
         
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Arte de Pesca');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Local');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Entrevista');
@@ -3691,11 +3754,13 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            
             $coluna=0;
             $linha++;
         endforeach; 
         
-        $calao =$modelCalao->selectVBioPeixe(null, 'esp_nome_comum');
+        
         
         foreach ( $calao as $key => $consulta ):
             $pesqueirocalao = $modelCalao->selectCalaoHasPesqueiro('cal_id = '.$consulta['cal_id'],null, 1);
@@ -3716,12 +3781,13 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_data']);
             $coluna=0;
             $linha++;
         endforeach; 
 		
 		
-        $coletamanual =$modelColetaManual->selectVBioPeixe(null, 'esp_nome_comum');
+        
         
         foreach ( $coletamanual as $key => $consulta ):
             $pesqueirocoletamanual = $modelColetaManual->selectColetaManualHasPesqueiro('cml_id = '.$consulta['cml_id'],null, 1);
@@ -3742,6 +3808,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
             $coluna=0;
             $linha++;
         endforeach; 
@@ -3749,7 +3816,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         
         
-        $emalhe =$modelEmalhe->selectVBioPeixe(null, 'esp_nome_comum');
+        
         
         foreach ( $emalhe as $key => $consulta ):
             $pesqueiroemalhe = $modelEmalhe->selectEmalheHasPesqueiro('em_id = '.$consulta['em_id'],null, 1);
@@ -3770,11 +3837,12 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['drecolhimento']);
             $coluna=0;
             $linha++;
         endforeach; 
         
-        $grosseira =$modelGrosseira->selectVBioPeixe(null, 'esp_nome_comum');
+        
         
         foreach ( $grosseira as $key => $consulta ):
             $pesqueirogrosseira = $modelGrosseira->selectGrosseiraHasPesqueiro('grs_id = '.$consulta['grs_id'],null, 1);
@@ -3795,11 +3863,12 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
             $coluna=0;
             $linha++;
         endforeach; 
         
-        $jerere =$modelJerere->selectVBioPeixe(null, 'esp_nome_comum');
+        
         
         foreach ( $jerere as $key => $consulta ):
             $pesqueirojerere = $modelJerere->selectJerereHasPesqueiro('jre_id = '.$consulta['jre_id'],null, 1);
@@ -3820,11 +3889,12 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
             $coluna=0;
             $linha++;
         endforeach; 
         
-        $pescalinha =$modelLinha->selectVBioPeixe(null, 'esp_nome_comum');
+        
         
         foreach ( $pescalinha as $key => $consulta ):
             $pesqueirolinha = $modelLinha->selectLinhaHasPesqueiro('lin_id = '.$consulta['lin_id'],null, 1);
@@ -3845,11 +3915,12 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
             $coluna=0;
             $linha++;
         endforeach; 
         
-        $linhafundo =$modelLinhaFundo->selectVBioPeixe(null, 'esp_nome_comum');
+        
         
         foreach ( $linhafundo as $key => $consulta ):
             $pesqueirolinhafundo = $modelLinhaFundo->selectLinhaFundoHasPesqueiro('lf_id = '.$consulta['lf_id'],null, 1);
@@ -3870,12 +3941,13 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
             $coluna=0;
             $linhafundo++;
         endforeach; 
         
         
-        $manzua =$modelManzua->selectVBioPeixe(null, 'esp_nome_comum');
+        
         
         foreach ( $manzua as $key => $consulta ):
             $pesqueiromanzua = $modelManzua->selectManzuaHasPesqueiro('man_id = '.$consulta['man_id'],null, 1);
@@ -3896,11 +3968,12 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
             $coluna=0;
             $manzua++;
         endforeach; 
         
-        $mergulho =$modelMergulho->selectVBioPeixe(null, 'esp_nome_comum');
+        
         
         foreach ( $mergulho as $key => $consulta ):
             $pesqueiromergulho = $modelMergulho->selectMergulhoHasPesqueiro('mer_id = '.$consulta['mer_id'],null, 1);
@@ -3921,11 +3994,12 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
             $coluna=0;
             $mergulho++;
         endforeach; 
         
-        $ratoeira =$modelRatoeira->selectVBioPeixe(null, 'esp_nome_comum');
+        
         
         foreach ( $ratoeira as $key => $consulta ):
             $pesqueiroratoeira = $modelRatoeira->selectRatoeiraHasPesqueiro('rat_id = '.$consulta['rat_id'],null, 1);
@@ -3946,11 +4020,12 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
             $coluna=0;
             $ratoeira++;
         endforeach; 
         
-        $siripoia =$modelSiripoia->selectVBioPeixe(null, 'esp_nome_comum');
+        
         
         foreach ( $siripoia as $key => $consulta ):
             $pesqueirosiripoia = $modelSiripoia->selectSiripoiaHasPesqueiro('sir_id = '.$consulta['sir_id'],null, 1);
@@ -3971,11 +4046,12 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
             $coluna=0;
             $siripoia++;
         endforeach; 
         
-        $tarrafa =$modelTarrafa->selectVBioPeixe(null, 'esp_nome_comum');
+        
         
         foreach ( $tarrafa as $key => $consulta ):
             $pesqueirotarrafa = $modelTarrafa->selectTarrafaHasPesqueiro('tar_id = '.$consulta['tar_id'],null, 1);
@@ -3996,11 +4072,12 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_data']);
             $coluna=0;
             $tarrafa++;
         endforeach; 
         
-        $varapesca =$modelVaraPesca->selectVBioPeixe(null, 'esp_nome_comum');
+        
         
         foreach ( $varapesca as $key => $consulta ):
             $pesqueirovarapesca = $modelVaraPesca->selectVaraPescaHasPesqueiro('vp_id = '.$consulta['vp_id'],null, 1);
@@ -4021,6 +4098,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
             $coluna=0;
             $varapesca++;
         endforeach; 

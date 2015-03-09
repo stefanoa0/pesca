@@ -24,7 +24,8 @@
                     <option value="13">Tarrafa</option>
                     <option value="14">Vara de Pesca</option>
                     <option value="15">Entrevistas (completo)</option>
-
+                    <option value="16">Biometrias de Camarão</option>
+                    <option value="17">Biometrias de Peixes</option>
                 </select>
             </div>
             <div class="form-esq">
@@ -52,6 +53,23 @@
                     <input type="number" placeholder="ano" max="2015" min="2013" name="ano_fim" class="data"/>
                 </div>
             </div>
+            <div class="form-esq">
+                <label for="tipo">Porto:</label>
+                <select name="porto" >
+                    
+                    <option value="999" selected>Todos</option>
+                    <?php
+                    foreach ($this->portos as $key => $porto):
+                        ?>
+
+                        <option nome="nome_porto" value="<?= $porto['pto_id'] ?>"><?= $porto['pto_nome'] ?></option>
+
+                        <?php
+                    endforeach;
+                    ?>
+                </select>
+            </div>
+        
             <div class="form-esq">     
                 <input type="submit" value="Relatório"/>
             </div>
