@@ -444,4 +444,14 @@ class Application_Model_ArrastoFundo
 
         return $db->fetchAll($select)->toArray();
     }
+    
+    public function selectPescadoresByPorto(){
+        $dbTable = new Application_Model_DbTable_VEntrevistaArrasto();
+        $select = $dbTable->select()->
+                from('v_entrevista_arrasto', array('pto_nome', 'count(tp_nome)'))->
+                group(array('pto_nome'));
+        
+        return $dbTable->fetchAll($select)->toArray();
+        
+    }
 }

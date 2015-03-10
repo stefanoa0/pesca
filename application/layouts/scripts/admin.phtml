@@ -217,8 +217,15 @@
                                     <li><a href="<?= $this->url(array("controller" => "vara-pesca", "action" => "relatoriolista"), null, true) ?>"target="_blank">Entrevistas - Vara de Pesca</a></li>
                                 </ul>
                             </ul>
-
-                            <li><a id="for-RelConsolidados">Consolidados</a></li>
+                            <li><a id="for-Estatistica">Estatísticos</a></li>
+                                <ul>
+                                    <li><a href="<?= $this->url(array("controller" => "estatistica", "action" => "pescador"), null, true) ?>">Pescadores</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "estatistica", "action" => "barco"), null, true) ?>">Embarcações</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "estatistica", "action" => "entrevista"), null, true) ?>">Artes de Pesca - Entrevistas</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "estatistica", "action" => "captura"), null, true) ?>">Captura</a></li>
+                                    <li><a href="<?= $this->url(array("controller" => "estatistica", "action" => "avistamento"), null, true) ?>">Avistamentos</a></li>
+                                </ul>    
+                            <li><a id="for-RelConsolidados">Tabelas Conjuntas</a></li>
                             <ul id="RelConsolidados">
                                 <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "relatoriopescadorgroupcomunidade"), NULL, true) ?>"target="_blank">Pescador-Comunidade</a></li>
                                 <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "relatoriopescadorgroupcolonia"), NULL, true) ?>"target="_blank">Pescador-Colônia</a></li>
@@ -244,12 +251,7 @@
                                 <li><a href="<?= $this->url(array("controller" => "vara-pesca", "action" => "relatorio"), null, true) ?>"target="_blank">Entrevistas - Vara de Pesca</a></li>
                                 <li><a href="<?= $this->url(array("controller" => "arrasto-fundo", "action" => "relatoriogroupespeciecapturada"), null, true) ?>"target="_blank">Arrasto de Fundo - Espécie</a></li>
                                 <li><a href="<?= $this->url(array("controller" => "arrasto-fundo", "action" => "relatoriogroupesqueiro"), null, true) ?>"target="_blank">Arrasto de Fundo - Pesqueiro</a></li>
-                                <li><a href="<?= $this->url(array("controller" => "consulta-padrao", "action" => "relatorio"), null, true) ?>"target="_blank">Consulta Padrão</a></li>
-                                <li><a href="<?= $this->url(array("controller" => "consulta-padrao", "action" => "relatorioxls"), null, true) ?>"target="_blank">Consulta Padrão - EXCEL</a></li>
-                                <li><a href="<?= $this->url(array("controller" => "consulta-padrao", "action" => "relatoriomensalxls"), null, true) ?>"target="_blank">Relatorio Mensal - EXCEL</a></li>
-                                <li><a href="<?= $this->url(array("controller" => "consulta-padrao", "action" => "entrevistapesqueiro"), null, true) ?>"target="_blank">Pesqueiro/Porto por Entrevista</a></li>
-                                <li><a href="<?= $this->url(array("controller" => "consulta-padrao", "action" => "entrevistasbyhora"), null, true) ?>"target="_blank">Entrevistas por hora de chegada</a></li>
-                            </ul>
+                                </ul>
                             <li><a href="<?= $this->url(array("controller" => "relatorios", "action" => "graficos"), null, true) ?>">Gráficos</a></li>
                         </ul>
                     </ul>

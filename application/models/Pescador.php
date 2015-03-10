@@ -508,7 +508,22 @@ class Application_Model_Pescador {
 
         return $dao->fetchAll($select)->toArray();
     }
-    
+    public function selectPescadorBySexo(){
+        $db = new Application_Model_DbTable_VPescador();
+        
+        $selectMasc = $db->select()->
+                from('v_pescador', array('count(*) as masculino'))->
+                where("tp_sexo = 'M'");
+        $selectFemi = $db->select()->
+                from('v_pescador', array('count(*) as feminino'))->
+                where("tp_sexo = 'F'");
+        
+        $masc = $db->fetchAll($selectMasc)->toArray();
+        $femi = $db->fetchAll($selectFemi)->toArray();
+        
+        $consult = array_merge($masc[0], $femi[0]);
+        return $consult;
+    }
     
     
     

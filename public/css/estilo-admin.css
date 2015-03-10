@@ -390,18 +390,17 @@ input {
     border-radius: 3px;
     border-color:#8b8386;
 }
-.busca{
-    width: 180px;
+.busca, input[type="button"]{
+    width: 170px;
 }
 .forDate{
     float: right;
 }
-.forDate input{
-    width: 55%;
-}
+
 .data{
     float: none;
     height: 22px;
+    width: 20%;
     border-radius: 3px;
     border-color:#8b8386;
 }
@@ -696,4 +695,15 @@ legend{
 
 #base_camarao input {
     width: 16.7%;
+}
+
+
+.relatorio{
+    font-size: 1.2em;
+    color: #90544D;
+    text-decoration: none;
+}
+
+.relatorio:hover{
+    color: #5F302B;
 }

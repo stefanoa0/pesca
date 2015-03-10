@@ -55,7 +55,7 @@ class AutenticacaoController extends Zend_Controller_Action {
                 $idUsuario = $this->modelUsuario->selectLogin($idLogin['tl_id']);
                 $this->idHistorico = $this->modelUsuario->insertLogin($idUsuario['tu_id']);
                 //
-                $this->_redirect('index');
+                $this->_redirect('index-admin/index');
             } else {
                 $this->_redirect('falha');
             }

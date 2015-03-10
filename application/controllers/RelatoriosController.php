@@ -197,21 +197,7 @@ class RelatoriosController extends Zend_Controller_Action
 
         }
     }
-    public function outrosrelatoriosAction(){
-        $valueRelatorio = $this->_getAllParams();
-        
-        
-        switch($valueRelatorio['relatorios']){
-            case 1:$this->_redirect("/relatorios/relatoriocompletomonitoramentos");break;
-            case 2:$this->_redirect("/relatorios/relatoriocompletoespecies");break;
-            case 3:$this->_redirect("/relatorios/relatoriocompletoespeciesmes");break;
-            case 4:$this->_redirect("/relatorios/relatoriocompletopescadores");break;
-            case 5:$this->_redirect("/pescador/relatorioespecialista");break;
-            case 6:$this->_redirect("/consulta-padrao/avistamentos");break;
-            case 7:$this->_redirect("/relatorios/valorespecies");break;
-        }
-        
-    }
+    
     public function verificaRelatorio($var){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
