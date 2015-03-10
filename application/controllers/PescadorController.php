@@ -105,6 +105,10 @@ class PescadorController extends Zend_Controller_Action {
 
         $this->_redirect('pescador/index');
     }
+
+    public function relatorioAction() {
+
+    }
     
     public function toerror($var){
         if(empty($var)){

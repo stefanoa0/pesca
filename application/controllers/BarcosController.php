@@ -491,6 +491,10 @@ class BarcosController extends Zend_Controller_Action
         $this->_redirect('barcos/editar/id/'.$idBarco);
     }
     
+    public function indexrelatorioAction() {
+
+    }
+    
     public function relatorioAction() {
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
