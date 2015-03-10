@@ -126,6 +126,10 @@ private $usuario;
         $this->_redirect('especie/index');
         }
     }
+    
+    public function indexrelatorioAction() {
+
+    }
 
 	public function relatorioAction() {
             if($this->usuario['tp_id']==5){

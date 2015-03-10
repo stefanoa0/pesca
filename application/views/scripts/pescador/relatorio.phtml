@@ -1,0 +1,18 @@
+<div id="titulos">
+    <h2>Relatórios</h2>
+    <h3>Pescadores</h3>
+</div>
+
+<ul class="">
+    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirlistacodigo"), null, true) ?>"target="_blank" class="relatorio">Pescador (Código)</a></li>
+    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirlistanome"), null, true) ?>"target="_blank" class="relatorio">Pescador (Nome)</a></li>
+    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirlistacomunidade"), null, true) ?>"target="_blank" class="relatorio">Pescador (Comunidade)</a></li>
+    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirlistacolonia"), null, true) ?>"target="_blank" class="relatorio">Pescador (Colônia)</a></li>
+    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirpescadordesembarque"), null, true) ?>"target="_blank" class="relatorio">Pescadores - Desembarque</a></li>
+    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirpescadortodos"), null, true) ?>"target="_blank" class="relatorio">Pescadores - Todos</a></li>
+    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirtodospescadores"), null, true) ?>" target="_blank" class="relatorio">Pescadores Detalhados - Social</a></li>
+    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirtodospescadores2"), null, true) ?>" target="_blank" class="relatorio">Pescadores Detalhados - Todos</a></li>
+    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "relatoriopescadorporto"), null, true) ?>" target="_blank" class="relatorio">Pescadores por porto - Todos</a></li>
+    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "relatoriopescadorgroupcomunidade"), NULL, true) ?>"target="_blank" class="relatorio">Pescador-Comunidade</a></li>
+    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "relatoriopescadorgroupcolonia"), NULL, true) ?>"target="_blank" class="relatorio">Pescador-Colônia</a></li>
+</ul>
