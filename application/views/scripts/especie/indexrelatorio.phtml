@@ -3,20 +3,29 @@
     <h3>Espécies</h3>
 </div>
 
-<h3>Desembarque</h3>
+<legend>Listagem</legend>
 <ul>
-    <li><a href="<?= $this->url(array("controller" => "grupo", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Grupo</a></li>
-    <li><a href="<?= $this->url(array("controller" => "ordem", "action" => "relatoriolista"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Ordem</a></li>
-    <li><a href="<?= $this->url(array("controller" => "familia", "action" => "relatoriolista"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Família</a></li>
-    <li><a href="<?= $this->url(array("controller" => "genero", "action" => "relatoriolista"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Género</a></li>
-    <li><a href="<?= $this->url(array("controller" => "especie", "action" => "relatoriolista"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Espécie</a></li>
+<li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "grupo", "action" => "relatorio"), null, true) ?>"target="_blank">Filogenia - Grupo</a></li>
+    <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "ordem", "action" => "relatoriolista"), null, true) ?>"target="_blank">Filogenia - Ordem</a></li>
+    <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "familia", "action" => "relatoriolista"), null, true) ?>"target="_blank">Filogenia - Família</a></li>
+    <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "genero", "action" => "relatoriolista"), null, true) ?>"target="_blank">Filogenia - Género</a></li>
+    <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "especie", "action" => "relatoriolista"), null, true) ?>"target="_blank">Filogenia - Espécie</a></li>
 </ul>
 
-<h3>Tabelas conjuntas</h3>
+<legend>Tabelas conjuntas</legend>
 <ul>
-    <li><a href="<?= $this->url(array("controller" => "grupo", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Grupo</a></li>
-    <li><a href="<?= $this->url(array("controller" => "ordem", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Ordem</a></li>
-    <li><a href="<?= $this->url(array("controller" => "familia", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Família</a></li>
-    <li><a href="<?= $this->url(array("controller" => "genero", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Género</a></li>
-    <li><a href="<?= $this->url(array("controller" => "especie", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Espécie</a></li>
+    <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "grupo", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Grupo</a></li>
+    <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "ordem", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Ordem</a></li>
+    <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "familia", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Família</a></li>
+    <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "genero", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Género</a></li>
+    <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "especie", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Espécie</a></li>
+    <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "relatorios", "action" => "relatoriocompletoespecies"), null, true) ?>"target="_blank">Espécies Capturadas</a></li>
+    <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "relatorios", "action" => "relatoriocompletoespeciesmes"), null, true) ?>"target="_blank">Espécies Capturadas(Mês)</a></li>
 </ul>
+
+<div id="obs">
+    <p>Obs:</p>
+    <p><span> Os relatórios com o ícone </span><img src="img/pdf-icon.png" class="icon-relatorios"/> <span>estão no formato PDF.</span></p>
+    <p><span> Os relatórios com o ícone </span><img src="img/xls-icon.png" class="icon-relatorios"/> <span>estão no formato XLS (EXCEL).</span></p>
+    <p><span>Alguns relatórios possuem consultas complexas, demorando assim de serem gerados.</span></p>
+</div>

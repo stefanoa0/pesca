@@ -3,16 +3,49 @@
     <h3>Pescadores</h3>
 </div>
 
-<ul class="">
-    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirlistacodigo"), null, true) ?>"target="_blank" class="relatorio">Pescador (Código)</a></li>
-    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirlistanome"), null, true) ?>"target="_blank" class="relatorio">Pescador (Nome)</a></li>
-    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirlistacomunidade"), null, true) ?>"target="_blank" class="relatorio">Pescador (Comunidade)</a></li>
-    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirlistacolonia"), null, true) ?>"target="_blank" class="relatorio">Pescador (Colônia)</a></li>
-    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirpescadordesembarque"), null, true) ?>"target="_blank" class="relatorio">Pescadores - Desembarque</a></li>
-    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirpescadortodos"), null, true) ?>"target="_blank" class="relatorio">Pescadores - Todos</a></li>
-    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirtodospescadores"), null, true) ?>" target="_blank" class="relatorio">Pescadores Detalhados - Social</a></li>
-    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirtodospescadores2"), null, true) ?>" target="_blank" class="relatorio">Pescadores Detalhados - Todos</a></li>
-    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "relatoriopescadorporto"), null, true) ?>" target="_blank" class="relatorio">Pescadores por porto - Todos</a></li>
-    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "relatoriopescadorgroupcomunidade"), NULL, true) ?>"target="_blank" class="relatorio">Pescador-Comunidade</a></li>
-    <li><a href="<?= $this->url(array("controller" => "pescador", "action" => "relatoriopescadorgroupcolonia"), NULL, true) ?>"target="_blank" class="relatorio">Pescador-Colônia</a></li>
-</ul>
+<fieldset>
+    <legend>Dados do pescador</legend>
+        <ul class="pescador">
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirlistacodigo"), null, true) ?>"target="_blank" class="relatorio">Pescador (Código)</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirlistanome"), null, true) ?>"target="_blank" class="relatorio">Pescador (Nome)</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirlistacomunidade"), null, true) ?>"target="_blank" class="relatorio">Pescador (Comunidade)</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirlistacolonia"), null, true) ?>"target="_blank" class="relatorio">Pescador (Colônia)</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirpescadordesembarque"), null, true) ?>"target="_blank" class="relatorio">Pescadores - Desembarque</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirpescadortodos"), null, true) ?>"target="_blank" class="relatorio">Pescadores - Todos</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirtodospescadores"), null, true) ?>" target="_blank" class="relatorio">Pescadores Detalhados - Social</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a href="<?= $this->url(array("controller" => "pescador", "action" => "imprimirtodospescadores2"), null, true) ?>" target="_blank" class="relatorio">Pescadores Detalhados - Todos</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a href="<?= $this->url(array("controller" => "pescador", "action" => "relatoriopescadorporto"), null, true) ?>" target="_blank" class="relatorio">Pescadores por porto - Todos</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a href="<?= $this->url(array("controller" => "pescador", "action" => "relatoriopescadorgroupcomunidade"), NULL, true) ?>"target="_blank" class="relatorio">Pescador-Comunidade</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a href="<?= $this->url(array("controller" => "pescador", "action" => "relatoriopescadorgroupcolonia"), NULL, true) ?>"target="_blank" class="relatorio">Pescador-Colônia</a></li>
+            <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "relatorios", "action" => "relatoriocompletopescadores"), null, true) ?>"target="_blank" class="relatorio">Pescadores</a></li>      
+            <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "relatorios", "action" => "relatorioespecialista"), null, true) ?>"target="_blank" class="relatorio">Pescadores Especialistas</a></li>
+        </ul>
+</fieldset>
+
+<fieldset>
+    <legend>Variáveis do Perfil Social</legend>
+    <ul class="social">
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "arte-pesca", "action" => "relatorio"), null, true) ?>"target="_blank">Arte de Pesca</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "area-pesca", "action" => "relatorio"), null, true) ?>"target="_blank">Area de Pesca</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "tipo-embarcacao", "action" => "relatorio"), null, true) ?>"target="_blank">Tipo Embarcações</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "porte-embarcacao", "action" => "relatorio"), null, true) ?>"target="_blank">Porte Embarcações</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "tipo-capturada", "action" => "relatorio"), null, true) ?>"target="_blank">Tipo Capturada</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "comunidade", "action" => "relatorio"), null, true) ?>"target="_blank">Comunidades</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "colonia", "action" => "relatorio"), null, true) ?>"target="_blank">Colônias</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "municipio", "action" => "relatorio"), null, true) ?>"target="_blank">Municípios</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "renda", "action" => "relatorio"), null, true) ?>"target="_blank">Renda</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "renda", "action" => "relatoriofator"), null, true) ?>"target="_blank">Renda com Fatores</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "tipo-renda", "action" => "relatorio"), null, true) ?>"target="_blank">Tipo de Renda</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "programa-social", "action" => "relatorio"), null, true) ?>"target="_blank">Programa Social</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "escolaridade", "action" => "relatorio"), null, true) ?>"target="_blank">Escolaridade</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "tipo-dependente", "action" => "relatorio"), null, true) ?>"target="_blank">Tipo Dependente</a></li>
+            <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "tipo-telefone", "action" => "relatorio"), null, true) ?>"target="_blank">Tipo Telefone</a></li>
+    </ul>
+</fieldset>
+
+<div id="obs">
+    <p>Obs:</p>
+    <p><span> Os relatórios com o ícone </span><img src="img/pdf-icon.png" class="icon-relatorios"/> <span>estão no formato PDF.</span></p>
+    <p><span> Os relatórios com o ícone </span><img src="img/xls-icon.png" class="icon-relatorios"/> <span>estão no formato XLS (EXCEL).</span></p>
+    <p><span>Alguns relatórios possuem consultas complexas, demorando assim de serem gerados.</span></p>
+</div>

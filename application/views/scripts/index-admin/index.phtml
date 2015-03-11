@@ -1,14 +1,14 @@
-<h3>Relatórios</h3>
+<h3>Relatórios -> Principais:</h3>
 
 <div class="menu-relatorios">
-    <a class="link-rel" href="#">
+    <a class="link-rel" href="<?= $this->url(array("controller" => "pescador", "action" => "relatorio"), null, true) ?>">
         <img src="img/pescador-icon.jpg"/><br/>
         <span class="legenda">Pescadores  </span>
     </a>
 </div>
 
 <div class="menu-relatorios">
-    <a class="link-rel" href="#">
+    <a class="link-rel" href="<?= $this->url(array("controller" => "especie", "action" => "indexrelatorio"), null, true) ?>">
         <img src="img/peixe-icon.jpg"/> <br/>
         <span class="legenda">Espécies</span>
     </a>
@@ -22,7 +22,7 @@
 </div>
 
 <div class="menu-relatorios">
-    <a class="link-rel" href="#">
+    <a class="link-rel" href="<?= $this->url(array("controller" => "relatorios", "action" => "index"), null, true) ?>">
         <img src="img/entrevista-icon.jpg"/><br/>
         <span class="legenda">Entrevistas</span>
     </a>

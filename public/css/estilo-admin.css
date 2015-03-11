@@ -709,8 +709,8 @@ legend{
 }
 
 .menu-relatorios{
-    width: 140px;
-    height: 145px;
+    width: 120px;
+    height: 125px;
     float: left;
     margin-top: 30px;
     margin-left: 25px;
@@ -721,9 +721,11 @@ legend{
     border-color: #5F302B;
     
 }
-
+.menu-relatorios img{
+    margin-left: 10%;
+}
 .legenda{
-    margin-left: 20%;
+    margin-left: 15%;
     color: #90544D;
 
     
@@ -734,4 +736,13 @@ legend{
 
 .link-rel:hover{
     color: #5F302B;
+}
+
+.icon-relatorios{
+    width:20px;
+    height:20px;
+}
+
+#obs{
+    font-size: 0.8em;
 }
