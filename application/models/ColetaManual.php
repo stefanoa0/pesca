@@ -381,5 +381,15 @@ private $dbTableColetaManual;
         $this->dbTableTColetaManualHasBioPeixe->delete($whereColetaManualHasBiometria);
         
     }
+    
+    public function selectPescadoresByPorto(){
+        $dbTable = new Application_Model_DbTable_VEntrevistaColetaManual();
+        $select = $dbTable->select()->
+                from('v_entrevista_coletamanual', array('pto_nome', 'count(tp_nome)'))->
+                group(array('pto_nome'));
+        
+        return $dbTable->fetchAll($select)->toArray();
+        
+    }
 }
 

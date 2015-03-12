@@ -439,5 +439,15 @@ class Application_Model_VaraPesca
         $this->dbTableTVaraPescaHasBioPeixe->delete($whereVaraPescaHasBiometria);
         
     }
+    
+    public function selectPescadoresByPorto(){
+        $dbTable = new Application_Model_DbTable_VEntrevistaVaraPesca();
+        $select = $dbTable->select()->
+                from('v_entrevista_varapesca', array('pto_nome', 'count(tp_nome)'))->
+                group(array('pto_nome'));
+        
+        return $dbTable->fetchAll($select)->toArray();
+        
+    }
 }
 

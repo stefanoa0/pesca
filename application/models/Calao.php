@@ -419,7 +419,15 @@ class Application_Model_Calao
         $this->dbTableTCalaoHasBioPeixe->delete($whereCalaoHasBiometria);
         
     }
-
     
+    public function selectPescadoresByPorto(){
+        $dbTable = new Application_Model_DbTable_VEntrevistaCalao();
+        $select = $dbTable->select()->
+                from('v_entrevista_calao', array('pto_nome', 'count(tp_nome)'))->
+                group(array('pto_nome'));
+        
+        return $dbTable->fetchAll($select)->toArray();
+        
+    }
 }
 

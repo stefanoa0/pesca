@@ -442,5 +442,15 @@ class Application_Model_LinhaFundo
         $this->dbTableTLinhaFundoHasBioPeixe->delete($whereLinhaFundoHasBiometria);
         
     }
+    
+    public function selectPescadoresByPorto(){
+        $dbTable = new Application_Model_DbTable_VEntrevistaLinhaFundo();
+        $select = $dbTable->select()->
+                from('v_entrevista_linhafundo', array('pto_nome', 'count(tp_nome)'))->
+                group(array('pto_nome'));
+        
+        return $dbTable->fetchAll($select)->toArray();
+        
+    }
 }
 

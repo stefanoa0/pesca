@@ -385,6 +385,16 @@ class Application_Model_Ratoeira
         $this->dbTableTRatoeiraHasBioPeixe->delete($whereRatoeiraHasBiometria);
         
     }
+    
+    public function selectPescadoresByPorto(){
+        $dbTable = new Application_Model_DbTable_VEntrevistaRatoeira();
+        $select = $dbTable->select()->
+                from('v_entrevista_ratoeira', array('pto_nome', 'count(tp_nome)'))->
+                group(array('pto_nome'));
+        
+        return $dbTable->fetchAll($select)->toArray();
+        
+    }
 }
 
 
