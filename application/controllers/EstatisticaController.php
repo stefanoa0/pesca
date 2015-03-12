@@ -109,6 +109,14 @@ class EstatisticaController extends Zend_Controller_Action
         //VaraPesca
         $varaPescaPescadoresPorto = $this->modelVaraPesca->selectPescadoresByPorto();
         $this->view->assign("varaPescaPescadoresPorto", $varaPescaPescadoresPorto);
+        
+        //Comunidade
+        $comunidadePescadores = $this->modelPescador->select_Pescador_group_comunidade();
+        $this->view->assign("comunidadePescadores", $comunidadePescadores);
+        
+        //Colonia
+        $coloniaPescadores = $this->modelPescador->select_Pescador_group_colonia();
+        $this->view->assign("coloniaPescadores", $coloniaPescadores);
     }
     
     public function barcoAction()
