@@ -1009,5 +1009,43 @@ class Application_Model_Relatorios
         return $this->selectEntrevista->fetchAll($select)->toArray();
     }
     
+    public function selectEmbarcacaoDetalhada($where = null, $order = null, $limit = null){
+        $this->selectEmbarcacao = new Application_Model_DbTable_VEmbarcacaoDetalhada();
+
+        $select = $this->selectEmbarcacao->select()
+                ->from($this->selectEmbarcacao)->
+                order($order)->limit($limit);
+
+         if (!is_null($where)) {
+            $select->where($where);
+        }
+        return $this->selectEmbarcacao->fetchAll($select)->toArray();
+    }
+    
+    public function selectMotorEmbarcacao($where = null, $order = null, $limit = null){
+        $this->selectEmbarcacao = new Application_Model_DbTable_VMotorEmbarcacao();
+
+        $select = $this->selectEmbarcacao->select()
+                ->from($this->selectEmbarcacao)->
+                order($order)->limit($limit);
+
+         if (!is_null($where)) {
+            $select->where($where);
+        }
+        return $this->selectEmbarcacao->fetchAll($select)->toArray();
+    }
+    public function selectAtuacaoEmbarcacao($where = null, $order = null, $limit = null){
+        $this->selectEmbarcacao = new Application_Model_DbTable_VAtuacaoEmbarcacao();
+
+        $select = $this->selectEmbarcacao->select()
+                ->from($this->selectEmbarcacao)->
+                order($order)->limit($limit);
+
+         if (!is_null($where)) {
+            $select->where($where);
+        }
+        
+        return $this->selectEmbarcacao->fetchAll($select)->toArray();
+    }
 }
 

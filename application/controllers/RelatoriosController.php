@@ -4301,5 +4301,215 @@ class RelatoriosController extends Zend_Controller_Action
         ob_end_clean();
         $objWriter->save('php://output');
     }
+    
+    public function embarcacaodetalhadaAction(){
+        set_time_limit(0);
+        if($this->usuario['tp_id']==5){
+            $this->_redirect('index');
+        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        
+        $modelRelatorios = new Application_Model_Relatorios();
+        
+//        $date =  $this->_getParam('data');
+//        $datend = $this->_getParam('datafim');
+//        
+//        $data = $this->dataInicial($date);
+//        $datafim = $this->dataFinal($datend);
+//        
+//        $porto = $this->_getParam('porto');
+//        
+//        if($porto != '999'){
+//        $nomePorto = $this->verifporto($porto);
+//        $arrasto = $modelArrasto->selectVBioCamarao("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+//        }
+//         else{
+//             $arrasto = $modelArrasto->selectVBioCamarao("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+//         }       
+       require_once "../library/Classes/PHPExcel.php";
+
+        $embarcacao = $modelRelatorios->selectEmbarcacaoDetalhada(null, 'bar_nome');
+        
+        
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->setActiveSheetIndex(0);
+        $coluna = 0;
+        $linha = 1;
+        
+         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'ID Embarcacao');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Proprietario');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Possui Outras Embarcacoes?');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Maximo de Tripulantes');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tripulacao');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Cozinheiro?');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Comprimento Total');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Comprimento da Boca');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Comprimento do Calado');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arqueadura');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Registro');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto de Origem');
+	$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Casco');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano de Compra');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado de Conservação');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado da Embarcacao');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Está Paga?');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Como foi o Pagamento');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Financiador');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano da Construção');
+        
+        
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Propulsao');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Modelo do Motor');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Marca do Motor');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Potencia');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Combustivel');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Capacidade de Armazenamento');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Posto de Combustivel');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Pagamento do Motor');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Finaciador');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano de Fabricacao do Motor');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Gasto Mensal com Manutencao');
+        
+        
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Atuacao Batimetrica');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Autonomia no Mar');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Frequencia de Pesca');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Horario de Pesca');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Capacidade de Armazenamento');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Conservacao do Pescado');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Colonia');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino do Pescado');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Outra Renda');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Estação que mais pesca');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Estação que menos pesca');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Concorrência');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo de Atividade');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data da entrevista');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado do Motor');
+        
+        
+        $coluna= 0;
+        $linha++;
+        
+        foreach ( $embarcacao as $key => $consulta ):
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['bar_id']);
+            //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['pto_id_desembarque']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+            //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_id_proprietario']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['proprietario']);
+            //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_id_mestre']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mestre']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_quant_embarcacoes']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_max_tripulantes']);
+            if($consulta['ted_tripulacao'] == '0'){
+                $consulta['ted_tripulacao'] = 'Não Informado';
+            }
+            else if($consulta['ted_tripulacao'] == '1'){
+                $consulta['ted_tripulacao'] = 'Variável';
+            }
+            else if($consulta['ted_tripulacao'] == '2'){
+                $consulta['ted_tripulacao'] = 'Fixa';
+            }
+            
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_tripulacao']);
+            if($consulta['ted_cozinheiro'] == '0'){
+                $consulta['ted_cozinheiro'] = 'Não Informado';
+            }
+            else if($consulta['ted_cozinheiro'] == '1'){
+                $consulta['ted_cozinheiro'] = 'Não';
+            }
+            else if($consulta['ted_cozinheiro'] == '2'){
+                $consulta['ted_cozinheiro'] = 'Sim';
+            }
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_cozinheiro']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_comp_total']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_comp_boca']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_altura_calado']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_arqueadura']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_num_registro']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_id_origem']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tcas_tipo']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_ano_compra']);
+            if($consulta['ted_estado_conservacao'] == '0'){
+                $consulta['ted_estado_conservacao'] = 'Não Informado';
+            }
+            else if($consulta['ted_estado_conservacao'] == '1'){
+                $consulta['ted_estado_conservacao'] = 'Nova';
+            }
+            else if($consulta['ted_estado_conservacao'] == '2'){
+                $consulta['ted_estado_conservacao'] = 'Usada';
+            }
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_estado_conservacao']);
+            if($consulta['ted_estado'] == '0'){
+                $consulta['ted_estado'] = 'Não Informado';
+            }
+            else if($consulta['ted_estado'] == '1'){
+                $consulta['ted_estado'] = 'Bom';
+            }
+            else if($consulta['ted_estado'] == '2'){
+                $consulta['ted_estado'] = 'Ruim';
+            }
+            else if($consulta['ted_estado'] == '3'){
+                $consulta['ted_estado'] = 'Péssimo';
+            }
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_estado']);
+            if($consulta['ted_pagamento'] == '0'){
+                $consulta['ted_pagamento'] = 'Não Informado';
+            }
+            else if($consulta['ted_pagamento'] == '1'){
+                $consulta['ted_pagamento'] = 'Não';
+            }
+            else if($consulta['ted_pagamento'] == '2'){
+                $consulta['ted_pagamento'] = 'Sim';
+            }
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_pagamento']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tpg_pagamento']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tfin_financiador']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_ano_construcao']);
+            
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tme_propulsao']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tmot_tipo']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tmod_modelo']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tmar_marca']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tme_potencia']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tme_combustivel']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tme_armazenamento']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tpc_posto']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tme_ano_motor']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tme_estado_motor']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tme_pagamento_motor']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tpg_pagamento']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tfin_financiador']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tme_ano_motor_fabricacao']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tme_obs']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tme_gasto_mensal']);
+
+
+
+            $coluna=0;
+            $linha++;
+        endforeach; 
+        
+        
+        
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        ob_end_clean();
+
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="Embarcaçoes Detalhadas.xls"');
+        header('Cache-Control: max-age=0');
+
+        ob_end_clean();
+        $objWriter->save('php://output');
+    }
 }
 
