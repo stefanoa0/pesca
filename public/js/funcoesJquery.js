@@ -177,6 +177,23 @@ $(document).ready(function() {
         $("#Especialista").hide();
         $("#dadosEmbarcacao").show();
     }
+    else if($("fieldset").attr('id') === "Estatistica"){
+        $("#Entrevista").hide();
+        $("#Dsbq").hide();
+        $("#Filo").hide();
+        $("#dadosSocial").hide();
+        $("#dadosDesembarque").hide();
+        $("#Social").hide();
+        $("#Relatorio").show();
+        $("#RelListas").hide();
+        $("#RelConsolidados").hide();
+        $("#RelPescador").hide();
+        $("#RelPerfilSocial").hide();
+        $("#RelDesembarque").hide();
+        $("#Especialista").hide();
+        $("#Estatistica").show();
+        $("#dadosEmbarcacao").hide();
+    }
     else {
         $("#Entrevista").hide();
         $("#dadosSocial").hide();
@@ -238,6 +255,9 @@ $(document).ready(function() {
     });
     $("#for-dadosEmbarcacao").click(function(){
         $("#dadosEmbarcacao").slideToggle();
+    });
+    $("#for-Estatistica").click(function(){
+        $("#Estatistica").slideToggle();
     });
     //funcoes para menu
 
