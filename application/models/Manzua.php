@@ -385,6 +385,15 @@ class Application_Model_Manzua
         $this->dbTableTManzuaHasBioPeixe->delete($whereManzuaHasBiometria);
         
     }
-
+    
+    public function selectPescadoresByPorto(){
+        $dbTable = new Application_Model_DbTable_VEntrevistaManzua();
+        $select = $dbTable->select()->
+                from('v_entrevista_manzua', array('pto_nome', 'count(tp_nome)'))->
+                group(array('pto_nome'));
+        
+        return $dbTable->fetchAll($select)->toArray();
+        
+    }
 }
 

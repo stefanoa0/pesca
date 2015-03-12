@@ -442,5 +442,15 @@ private $dbTableLinha;
         $this->dbTableTLinhaHasBioPeixe->delete($whereLinhaHasBiometria);
         
     }
+    
+    public function selectPescadoresByPorto(){
+        $dbTable = new Application_Model_DbTable_VEntrevistaLinha();
+        $select = $dbTable->select()->
+                from('v_entrevista_linha', array('pto_nome', 'count(tp_nome)'))->
+                group(array('pto_nome'));
+        
+        return $dbTable->fetchAll($select)->toArray();
+        
+    }
 }
 

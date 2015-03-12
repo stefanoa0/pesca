@@ -454,4 +454,15 @@ class Application_Model_ArrastoFundo
         return $dbTable->fetchAll($select)->toArray();
         
     }
+    /*
+    public function selectPescadoresByColonia(){
+        $dbTable = new Application_Model_DbTable_VEntrevistaArrasto();
+        $select = $dbTable->select()->
+                from('v_entrevista_arrasto', array('pto_nome', 'count(tp_nome)'))->
+                group(array('pto_nome'));
+        
+        return $dbTable->fetchAll($select)->toArray();
+        
+    }
+     */
 }

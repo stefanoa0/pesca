@@ -451,6 +451,16 @@ class Application_Model_Emalhe
         $this->dbTableTEmalheHasBioPeixe->delete($whereEmalheHasBiometria);
         
     }
+    
+    public function selectPescadoresByPorto(){
+        $dbTable = new Application_Model_DbTable_VEntrevistaEmalhe();
+        $select = $dbTable->select()->
+                from('v_entrevista_emalhe', array('pto_nome', 'count(tp_nome)'))->
+                group(array('pto_nome'));
+        
+        return $dbTable->fetchAll($select)->toArray();
+        
+    }
 
 }
 

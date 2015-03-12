@@ -384,5 +384,15 @@ class Application_Model_Siripoia
         $this->dbTableTSiripoiaHasBioPeixe->delete($whereSiripoiaHasBiometria);
         
     }
+    
+    public function selectPescadoresByPorto(){
+        $dbTable = new Application_Model_DbTable_VEntrevistaTarrafa();
+        $select = $dbTable->select()->
+                from('v_entrevista_tarrafa', array('pto_nome', 'count(tp_nome)'))->
+                group(array('pto_nome'));
+        
+        return $dbTable->fetchAll($select)->toArray();
+        
+    }
 }
 

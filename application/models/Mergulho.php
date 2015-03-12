@@ -391,4 +391,14 @@ private $dbTableMergulho;
         $this->dbTableTMergulhoHasBioPeixe->delete($whereMergulhoHasBiometria);
         
     }
+    
+    public function selectPescadoresByPorto(){
+        $dbTable = new Application_Model_DbTable_VEntrevistaMergulho();
+        $select = $dbTable->select()->
+                from('v_entrevista_mergulho', array('pto_nome', 'count(tp_nome)'))->
+                group(array('pto_nome'));
+        
+        return $dbTable->fetchAll($select)->toArray();
+        
+    }
 }

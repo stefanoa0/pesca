@@ -400,5 +400,15 @@ class Application_Model_Jerere
         $this->dbTableTJerereHasBioPeixe->delete($whereJerereHasBiometria);
         
     }
+    
+    public function selectPescadoresByPorto(){
+        $dbTable = new Application_Model_DbTable_VEntrevistaJerere();
+        $select = $dbTable->select()->
+                from('v_entrevista_jerere', array('pto_nome', 'count(tp_nome)'))->
+                group(array('pto_nome'));
+        
+        return $dbTable->fetchAll($select)->toArray();
+        
+    }
 }
 
