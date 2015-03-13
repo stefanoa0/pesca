@@ -201,6 +201,7 @@ class BarcosController extends Zend_Controller_Action
         $this->modelEmbarcacaoDetalhada = new Application_Model_EmbarcacaoDetalhada();
         $embarcacaoDetalhada = $this->modelEmbarcacaoDetalhada->select('bar_id = '.$idBarco);
         $this->view->assign("assignEmbarcacaoDetalhada", $embarcacaoDetalhada[0]);
+        print_r($embarcacaoDetalhada[0]['ted_id']);
         
         $this->modelMotor = new Application_Model_MotorEmbarcacao();
         $motorEmbarcacao = $this->modelMotor->select('ted_id = '.$embarcacaoDetalhada[0]['ted_id']);
@@ -368,7 +369,7 @@ class BarcosController extends Zend_Controller_Action
         
         $this->modelEmbarcacaoDetalhada->insertEmbDetalhadaHasCor($idEmbarcacao, $idCor);
         
-        $this->_redirect('barcos/editar/id/'.$idBarco);
+        $this->_redirect('barcos/editar/id/'.$idBarco.'#anchcor');
     }
     
     public function insertlicencacapturaAction(){
@@ -383,7 +384,7 @@ class BarcosController extends Zend_Controller_Action
         
         $this->modelEmbarcacaoDetalhada->insertEmbDetalhadaHasSeguroDefeso($idEmbarcacao, $idSeguro);
         
-        $this->_redirect('barcos/editar/id/'.$idBarco);
+        $this->_redirect('barcos/editar/id/'.$idBarco.'#anchcaptura');
     }
     
    public function insertmaterialAction(){
@@ -398,7 +399,7 @@ class BarcosController extends Zend_Controller_Action
         
         $this->modelEmbarcacaoDetalhada->insertEmbDetalhadaHasMaterial($idEmbarcacao, $idMaterial);
         
-        $this->_redirect('barcos/editar/id/'.$idBarco);
+        $this->_redirect('barcos/editar/id/'.$idBarco.'#anchmaterial');
     }
     
     public function insertequipamentoAction(){
@@ -413,7 +414,7 @@ class BarcosController extends Zend_Controller_Action
         
         $this->modelEmbarcacaoDetalhada->insertEmbDetalhadaHasEquipamento($idEmbarcacao, $idEquipamento);
         
-        $this->_redirect('barcos/editar/id/'.$idBarco);
+        $this->_redirect('barcos/editar/id/'.$idBarco.'#anchequipamento');
     }
     
     public function insertsavatagemAction(){
@@ -428,7 +429,7 @@ class BarcosController extends Zend_Controller_Action
         
         $this->modelEmbarcacaoDetalhada->insertEmbDetalhadaHasSavatagem($idEmbarcacao, $idSavatagem);
         
-        $this->_redirect('barcos/editar/id/'.$idBarco);
+        $this->_redirect('barcos/editar/id/'.$idBarco.'#anchsavatagem');
     }
     
     public function insertfrequenciamanutencaoAction(){
@@ -443,7 +444,7 @@ class BarcosController extends Zend_Controller_Action
         
         $this->modelMotorEmbarcacao->insertMotEmbarcacaoHasFrequenciaManutencao($idMotor, $idFrequencia);
         
-        $this->_redirect('barcos/editar/id/'.$idBarco);
+        $this->_redirect('barcos/editar/id/'.$idBarco.'#anchfrequencia');
     }
     
     public function insertareapescaAction(){
@@ -458,7 +459,7 @@ class BarcosController extends Zend_Controller_Action
         
         $this->modelAtuacaoEmbarcacao->insertAtEmbarcacaoHasAreaPesca($idAtuacao, $idArea);
         
-        $this->_redirect('barcos/editar/id/'.$idBarco);
+        $this->_redirect('barcos/editar/id/'.$idBarco.'#anchatuacao');
     }
     
     public function insertartepescaAction(){
@@ -473,7 +474,7 @@ class BarcosController extends Zend_Controller_Action
         
         $this->modelAtuacaoEmbarcacao->insertAtEmbarcacaoHasArtePesca($idAtuacao, $idArte);
         
-        $this->_redirect('barcos/editar/id/'.$idBarco);
+        $this->_redirect('barcos/editar/id/'.$idBarco.'#ancharte');
     }
     
     public function insertfornecedorAction(){
@@ -488,13 +489,146 @@ class BarcosController extends Zend_Controller_Action
         
         $this->modelAtuacaoEmbarcacao->insertAtEmbarcacaoHasFornecedorPetrechos($idAtuacao, $idFornecedor);
         
-        $this->_redirect('barcos/editar/id/'.$idBarco);
+        $this->_redirect('barcos/editar/id/'.$idBarco.'#anchfornecedor');
     }
     
     public function indexrelatorioAction() {
 
     }
+    public function deletecorAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $this->modelEmbarcacaoDetalhada = new Application_Model_EmbarcacaoDetalhada();
+        
+        $idEmbarcacao = $this->_getParam("id");
+        $idCor = $this->_getParam("valor");
+        $idBarco = $this->_getParam("back_url");
+        
+        $this->modelEmbarcacaoDetalhada->deleteEmbDetalhadaHasCor($idEmbarcacao, $idCor);
+        
+        $this->_redirect('barcos/editar/id/'.$idBarco.'#anchcor');
+    }
     
+    public function deletelicencacapturaAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $this->modelEmbarcacaoDetalhada = new Application_Model_EmbarcacaoDetalhada();
+        
+        $idEmbarcacao = $this->_getParam("id");
+        $idSeguro = $this->_getParam("valor");
+        $idBarco = $this->_getParam("back_url");
+        
+        $this->modelEmbarcacaoDetalhada->deleteEmbDetalhadaHasSeguroDefeso($idEmbarcacao, $idSeguro);
+        
+        $this->_redirect('barcos/editar/id/'.$idBarco.'#anchcaptura');
+    }
+    
+   public function deletematerialAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $this->modelEmbarcacaoDetalhada = new Application_Model_EmbarcacaoDetalhada();
+        
+        $idEmbarcacao = $this->_getParam("id");
+        $idMaterial = $this->_getParam("valor");
+        $idBarco = $this->_getParam("back_url");
+        
+        $this->modelEmbarcacaoDetalhada->deleteEmbDetalhadaHasMaterial($idEmbarcacao, $idMaterial);
+        
+        $this->_redirect('barcos/editar/id/'.$idBarco.'#anchmaterial');
+    }
+    
+    public function deleteequipamentoAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $this->modelEmbarcacaoDetalhada = new Application_Model_EmbarcacaoDetalhada();
+        
+        $idEmbarcacao = $this->_getParam("id");
+        $idEquipamento = $this->_getParam("valor");
+        $idBarco = $this->_getParam("back_url");
+        
+        $this->modelEmbarcacaoDetalhada->deleteEmbDetalhadaHasEquipamento($idEmbarcacao, $idEquipamento);
+        
+        $this->_redirect('barcos/editar/id/'.$idBarco.'#anchequipamento');
+    }
+    
+    public function deletesavatagemAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $this->modelEmbarcacaoDetalhada = new Application_Model_EmbarcacaoDetalhada();
+        
+        $idEmbarcacao = $this->_getParam("id");
+        $idSavatagem = $this->_getParam("valor");
+        $idBarco = $this->_getParam("back_url");
+        
+        $this->modelEmbarcacaoDetalhada->deleteEmbDetalhadaHasSavatagem($idEmbarcacao, $idSavatagem);
+        
+        $this->_redirect('barcos/editar/id/'.$idBarco.'#anchsavatagem');
+    }
+    
+    public function deletefrequenciamanutencaoAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $this->modelMotorEmbarcacao = new Application_Model_MotorEmbarcacao();
+        
+        $idMotor = $this->_getParam("id");
+        $idFrequencia = $this->_getParam("valor");
+        $idBarco = $this->_getParam("back_url");
+        
+        $this->modelMotorEmbarcacao->deleteMotEmbarcacaoHasFrequenciaManutencao($idMotor, $idFrequencia);
+        
+        $this->_redirect('barcos/editar/id/'.$idBarco.'#anchfrequencia');
+    }
+    
+    public function deleteareapescaAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $this->modelAtuacaoEmbarcacao = new Application_Model_AtuacaoEmbarcacao();
+        
+        $idAtuacao = $this->_getParam("id");
+        $idArea = $this->_getParam("valor");
+        $idBarco = $this->_getParam("back_url");
+        
+        $this->modelAtuacaoEmbarcacao->deleteAtEmbarcacaoHasAreaPesca($idAtuacao, $idArea);
+        
+        $this->_redirect('barcos/editar/id/'.$idBarco.'#anchatuacao');
+    }
+    
+    public function deleteartepescaAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $this->modelAtuacaoEmbarcacao = new Application_Model_AtuacaoEmbarcacao();
+        
+        $idAtuacao = $this->_getParam("id");
+        $idArte = $this->_getParam("valor");
+        $idBarco = $this->_getParam("back_url");
+        
+        $this->modelAtuacaoEmbarcacao->deleteAtEmbarcacaoHasArtePesca($idAtuacao, $idArte);
+        
+        $this->_redirect('barcos/editar/id/'.$idBarco.'#ancharte');
+    }
+    
+    public function deletefornecedorAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $this->modelAtuacaoEmbarcacao = new Application_Model_AtuacaoEmbarcacao();
+        
+        $idAtuacao = $this->_getParam("id");
+        $idFornecedor = $this->_getParam("valor");
+        $idBarco = $this->_getParam("back_url");
+        
+        $this->modelAtuacaoEmbarcacao->deleteAtEmbarcacaoHasFornecedorPetrechos($idAtuacao, $idFornecedor);
+        
+        $this->_redirect('barcos/editar/id/'.$idBarco.'#anchfornecedor');
+    }
     public function relatorioAction() {
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');

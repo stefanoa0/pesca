@@ -1563,3 +1563,15 @@ function jsInsertAtuacaoHasFornecedorPetrechos(frm, pag){
     location.replace(tmpUpdate);
     
 }
+
+
+function jsDeleteDynamicEmbarcacao(id,Barco, pag, idBack)
+{
+    var back_url = idBack;
+    if (confirm("Realmente deseja excluir este item?")) {
+        
+        var tmpUpdate = (pag + '/id/' + id + '/valor/' + Barco + '/back_url/' +back_url);
+        
+        location.replace(tmpUpdate);
+    }
+}

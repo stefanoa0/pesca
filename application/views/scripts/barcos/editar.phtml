@@ -169,7 +169,7 @@
         <br/>
 <!--10.1 -------------------------------------------------------------->  
     <input type="hidden" name="idEmbarcacao" value="<?= $this->assignEmbarcacaoDetalhada['ted_id'] ?>"/>
-        <a id="ancora_dependentes"></a>
+        <a id="anchcor"></a>
             <fieldset class="noEditable"><legend>Cores do barco:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Cor:</legend>
                     
@@ -195,7 +195,7 @@
                         <tr id="rowNumDependente<?= $key ?>">
                             <td name="input[]"> <?= $EmbarcacaoCor['tcor_id'] ?> </td>
                             <td name="input[]" > <?= $EmbarcacaoCor['tcor_cor'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasdependente"), null, true) ?>')"></td>
+                            <td><input type="button" class="button-del" width="5%" onclick="jsDeleteDynamicEmbarcacao(<?= $this->assignEmbarcacaoDetalhada['ted_id']?>,<?= $EmbarcacaoCor['tcor_id'] ?>, '<?= $this->url(array("controller" => "barcos", "action" => "deletecor"), null, true) ?>', <?= $this->assignBarco[0]['bar_id'] ?>)"></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
@@ -239,7 +239,7 @@
         </div>
         <br/>
 <!--16.1 -------------------------------------------------------------->  
-        <a id="ancora_dependentes"></a>
+        <a id="anchcaptura"></a>
             <fieldset class="noEditable"><legend>Licença de Captura:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Captura:</legend>
                     <div id="base">
@@ -264,7 +264,7 @@
                         <tr id="rowNumDependente<?= $key ?>">
                             <td name="input[]"> <?= $seguroDefeso['tsd_id_licenca'] ?> </td>
                             <td name="input[]" > <?= $seguroDefeso['tsd_seguro'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "barcos", "action" => "deletepescadorhasdependente"), null, true) ?>')"></td>
+                            <td><input type="button" class="button-del" width="5%" onclick="jsDeleteDynamicEmbarcacao(<?= $this->assignEmbarcacaoDetalhada['ted_id']?>,<?= $seguroDefeso['tsd_id_licenca'] ?>, '<?= $this->url(array("controller" => "barcos", "action" => "deletelicencacaptura"), null, true) ?>', <?= $this->assignBarco[0]['bar_id'] ?>)"></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
@@ -272,19 +272,11 @@
 <!--17. -------------------------------------------------------------->       
         <div class="form-dir">
             <label>Porto de Origem:</label>
-            <select name="portoOrigem" required/>
-                <option value="" selected></option>
-                <?php
-                    foreach ($this->assignPortos as $key => $porto):?>
-                        <option value="<?= $porto['pto_id'] ?>" <?=( $porto['pto_id'] == $this->assignEmbarcacaoDetalhada['pto_id_origem'])? 'selected="selected"': '';?>><?= $porto['pto_nome'] ?></option>
-                <?php
-                     endforeach;
-                ?>
-            </select>
+            <input type="text" name="portoOrigem" placeholder="Porto de Origem"/>
         </div>
         <br/>
 <!--17.1 -------------------------------------------------------------->  
-        <a id="ancora_dependentes"></a>
+        <a id="anchmaterial"></a>
             <fieldset class="noEditable"><legend>Materiais da Embarcação:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Material:</legend>
                     <div id="base">
@@ -309,7 +301,7 @@
                         <tr id="rowNumDependente<?= $key ?>">
                             <td name="input[]"> <?= $material['tmt_id'] ?> </td>
                             <td name="input[]" > <?= $material['tmt_material'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasdependente"), null, true) ?>')"></td>
+                            <td><input type="button" class="button-del" width="5%" onclick="jsDeleteDynamicEmbarcacao(<?= $this->assignEmbarcacaoDetalhada['ted_id']?>,<?= $material['tmt_id'] ?>, '<?= $this->url(array("controller" => "barcos", "action" => "deletematerial"), null, true) ?>', <?= $this->assignBarco[0]['bar_id'] ?>)"></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
@@ -413,7 +405,7 @@
         
         <br/>
 <!--25.1 -------------------------------------------------------------->  
-        <a id="ancora_dependentes"></a>
+        <a id="anchequipamento"></a>
             <fieldset class="noEditable"><legend>Equipamentos da Embarcação:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Equipamento:</legend>
                     <div id="base">
@@ -440,14 +432,14 @@
                             <td name="input[]"> <?= $embEquipamento['teq_id'] ?> </td>
                             <td name="input[]" > <?= $embEquipamento['teq_equipamento'] ?> </td>
                             
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasdependente"), null, true) ?>')"></td>
+                            <td><input type="button" class="button-del" width="5%" onclick="jsDeleteDynamicEmbarcacao(<?= $this->assignEmbarcacaoDetalhada['ted_id']?>,<?= $embEquipamento['teq_id'] ?>, '<?= $this->url(array("controller" => "barcos", "action" => "deleteequipamento"), null, true) ?>', <?= $this->assignBarco[0]['bar_id'] ?>)"></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
             </fieldset>
         <br/>
 <!--25.2 -------------------------------------------------------------->  
-        <a id="ancora_dependentes"></a>
+        <a id="anchsavatagem"></a>
             <fieldset class="noEditable"><legend>Savatagem da Embarcação:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Savatagem:</legend>
                     <div id="base">
@@ -473,7 +465,7 @@
                         <tr id="rowNumDependente<?= $key ?>">
                             <td name="input[]"> <?= $savatagem['tsav_id'] ?> </td>
                             <td name="input[]" > <?= $savatagem['tsav_savatagem'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasdependente"), null, true) ?>')"></td>
+                            <td><input type="button" class="button-del" width="5%" onclick="jsDeleteDynamicEmbarcacao(<?= $this->assignEmbarcacaoDetalhada['ted_id']?>,<?= $savatagem['tsav_id'] ?>, '<?= $this->url(array("controller" => "barcos", "action" => "deletesavatagem"), null, true) ?>', <?= $this->assignBarco[0]['bar_id'] ?>)"></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
@@ -711,7 +703,7 @@
         </div>
  <br/>
 <!--37.1 -------------------------------------------------------------->  
-        <a id="ancora_dependentes"></a>
+        <a id="anchmotor"></a>
             <fieldset class="noEditable"><legend>Frequência de Manutenção do Motor:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Manutenção:</legend>
                     <div id="base-manutencao">
@@ -736,7 +728,7 @@
                         <tr id="rowNumDependente<?= $key ?>">
                             <td name="inputTipoDependenteID[]"> <?= $frequencia['tfp_id'] ?> </td>
                             <td name="inputTipoDependente[]" > <?= $frequencia['tfp_frequencia'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasdependente"), null, true) ?>')"></td>
+                            <td><input type="button" class="button-del" width="5%" onclick="jsDeleteDynamicEmbarcacao(<?= $this->assignEmbarcacaoDetalhada['ted_id']?>,<?= $frequencia['tfp_id'] ?>, '<?= $this->url(array("controller" => "barcos", "action" => "deletefrequenciamanutencao"), null, true) ?>', <?= $this->assignBarco[0]['bar_id'] ?>)"></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
@@ -759,7 +751,7 @@
 <br/>
 <!--25.2 -------------------------------------------------------------->  
     <input type="hidden" name="idAtuacao" value="<?= $this->assignAtuacao['tae_id'] ?>">
-        <a id="ancora_dependentes"></a>
+        <a id="anchnavegacao"></a>
             <fieldset class="noEditable"><legend>Área de Atuação - Navegação:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Área de Atuação:</legend>
                     <div id="base-area">
@@ -785,7 +777,7 @@
                         <tr id="rowNumDependente<?= $key ?>">
                             <td name="input[]"> <?= $areaPesca['tap_id_atuacao'] ?> </td>
                             <td name="input[]" > <?= $areaPesca['tareap_areapesca'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasdependente"), null, true) ?>')"></td>
+                            <td><input type="button" class="button-del" width="5%" onclick="jsDeleteDynamicEmbarcacao(<?= $this->assignEmbarcacaoDetalhada['ted_id']?>,<?= $areaPesca['tap_id_atuacao'] ?>, '<?= $this->url(array("controller" => "barcos", "action" => "deleteareapesca"), null, true) ?>', <?= $this->assignBarco[0]['bar_id'] ?>)"></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
@@ -910,7 +902,7 @@
         
         <br/>
 <!--53 -------------------------------------------------------------->  
-        <a id="ancora_dependentes"></a>
+        <a id="ancharte"></a>
             <fieldset class="noEditable"><legend>Artes de pesca:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Artes de Pesca:</legend>
                     <div id="base-arte">
@@ -936,7 +928,7 @@
                         <tr id="rowNumDependente<?= $key ?>">
                             <td name="input[]"> <?= $artePesca['tap_id'] ?> </td>
                             <td name="input[]" > <?= $artePesca['tap_artepesca'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasdependente"), null, true) ?>')"></td>
+                            <td><input type="button" class="button-del" width="5%" onclick="jsDeleteDynamicEmbarcacao(<?= $this->assignEmbarcacaoDetalhada['ted_id']?>,<?= $artePesca['tap_id'] ?>, '<?= $this->url(array("controller" => "barcos", "action" => "deleteartepesca"), null, true) ?>', <?= $this->assignBarco[0]['bar_id'] ?>)"></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
@@ -978,7 +970,7 @@
             </select>
         </div>
         <br/>
-        <a id="ancora_dependentes"></a>
+        <a id="anchfornecedor"></a>
             <fieldset class="noEditable"><legend>Fornecedor dos Petrechos:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Fornecedor:</legend>
                     <div id="base-fornecedor">
@@ -1004,7 +996,7 @@
                         <tr id="rowNumDependente<?= $key ?>">
                             <td name="input[]"> <?= $atuacaoFornecedor['tfp_id'] ?> </td>
                             <td name="input[]" > <?= $atuacaoFornecedor['tfi_fornecedor'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasdependente"), null, true) ?>')"></td>
+                            <td><input type="button" class="button-del" width="5%" onclick="jsDeleteDynamicEmbarcacao(<?= $this->assignEmbarcacaoDetalhada['ted_id']?>,<?= $atuacaoFornecedor['tfp_id'] ?>, '<?= $this->url(array("controller" => "barcos", "action" => "deletefornecedor"), null, true) ?>', <?= $this->assignBarco[0]['bar_id'] ?>)"></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
