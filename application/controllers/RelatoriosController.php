@@ -1859,10 +1859,10 @@ class RelatoriosController extends Zend_Controller_Action
         $porto = $this->_getParam('porto');
         if($porto != '999'){
             $porto = $this->verifporto($porto);
-            $relatorioSiripoia = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
         }
         else{
-            $relatorioSiripoia = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."'");
+            $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."'");
         }
         $linha = 2;
         $coluna= 0;
