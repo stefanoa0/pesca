@@ -173,7 +173,8 @@
                     <th width="5%">Id_Monitoramento</th>
                     <th width="30%">Monitorada?</th>
                     <th width="20%">Arte de Pesca</th>
-                    <th width="30%">Quantidade</th>
+                    <th width="15%">Quantidade</th>
+                    <th width="15%">Quant. Digitada</th>
                     
                 </tr>
                 <?php
@@ -184,12 +185,13 @@
                         $vMonitoramento['mnt_monitorado'] = "Não";
                     }
                     ?>
-                    <tr id="itemEmbarcacoesRows<?= $key ?>">
+                    <tr id="itemEmbarcacoesRows<?= $key ?>" <?php if($vMonitoramento['mnt_monitorado'] == "Sim" && $vMonitoramento['mnt_quantidade'] !=  $vMonitoramento['quantfichas']){ echo 'style="background-color:red"';} ?>>
                         <td name="inputIdFicha"> <?= $vMonitoramento['fd_id'] ?> </td>
                         <td name="inputIdMonitoramento"> <?= $vMonitoramento['mnt_id'] ?> </td>
                         <td name="inputMonitorada" > <?= $vMonitoramento['mnt_monitorado'] ?> </td>
                         <td name="inputArtedePesca"> <?= $vMonitoramento['tap_artepesca'] ?> </td>
                         <td name="inputQuantidade" > <?= $vMonitoramento['mnt_quantidade'] ?> </td>
+                        <td name="inputEntrevistas"> <?= $vMonitoramento['quantfichas']?> </td>
                         <td width="10%" class="td-botao">
                             <a href="<?=$this->url(array("controller"=>"ficha-diaria","action"=>"monitoramento", "id" => $vMonitoramento['fd_id'], "idmnt" => $vMonitoramento['mnt_id']),null,true)?>">
                                 <ul id="icons" class="ui-widget ui-helper-clearfix">
@@ -205,7 +207,7 @@
                             </a>
                         </td>
                         <td><input class="busca" type="button" width="10%" target="_blank" value="Nova Entrevista" onclick="jsEntrevista('<?= $vMonitoramento['tap_artepesca'] ?>', <?= $vMonitoramento['mnt_id'] ?>, <?= $vMonitoramento['fd_id'] ?>)" <?php if($vMonitoramento['mnt_monitorado']== 'Não'){ echo "disabled='True'";} ?>/></td>
-
+                        
                     </tr>
                 <?php endforeach; ?>
             </table>

@@ -82,7 +82,7 @@
         <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "relatorios", "action" => "relatoriocompletomonitoramentos"), null, true) ?>"target="_blank">Monitoramentos</a></li>
         <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "relatorios", "action" => "relatoriocompletoespecies"), null, true) ?>"target="_blank">Espécies Capturadas</a></li>
         <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "relatorios", "action" => "relatoriocompletoespeciesmes"), null, true) ?>"target="_blank">Espécies Capturadas(Mês)</a></li>
-        <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "relatorios", "action" => "avistamentos"), null, true) ?>"target="_blank">Avistamentos</a></li>
+        <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "consulta-padrao", "action" => "avistamentos"), null, true) ?>"target="_blank">Avistamentos</a></li>
         <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "relatorios", "action" => "valorespecies"), null, true) ?>"target="_blank">Valor das Espécies</a></li>
         <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "consulta-padrao", "action" => "relatorio"), null, true) ?>"target="_blank">Consulta de Atividades</a></li>
         <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "consulta-padrao", "action" => "relatorioxls"), null, true) ?>"target="_blank">Consulta de Atividades</a></li>
@@ -90,7 +90,7 @@
         <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "consulta-padrao", "action" => "entrevistapesqueiro"), null, true) ?>"target="_blank">Pesqueiro/Porto por Entrevista</a></li>
         <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "consulta-padrao", "action" => "entrevistasbyhora"), null, true) ?>"target="_blank">Entrevistas por hora de chegada</a></li>
         <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "relatorios", "action" => "relatoriocompletopescadores"), null, true) ?>"target="_blank" class="relatorio">Pescadores</a></li>      
-        <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "relatorios", "action" => "relatorioespecialista"), null, true) ?>"target="_blank" class="relatorio">Pescadores Especialistas</a></li>
+        <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "pescador", "action" => "relatorioespecialista"), null, true) ?>"target="_blank" class="relatorio">Pescadores Especialistas</a></li>
     </ul>               
 </fieldset>
 
@@ -98,7 +98,6 @@
 <legend>Variáveis do Desembarque</legend>
 <ul>
     <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "porto", "action" => "relatorio"), null, true) ?>"target="_blank">Porto</a></li>
-    
     <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "pesqueiro", "action" => "relatorio"), null, true) ?>"target="_blank">Pesqueiro</a></li>
     <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "vento", "action" => "relatorio"), null, true) ?>"target="_blank">Vento</a></li>
     <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "Tempo", "action" => "relatorio"), null, true) ?>"target="_blank">Tempo</a></li>

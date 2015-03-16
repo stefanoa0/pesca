@@ -89,8 +89,10 @@ class FichaDiariaController extends Zend_Controller_Action {
         }
         
         
+        
         $dadosPorto = $this->modelPorto->select();
-
+        
+        
         $this->view->assign("assignDadosPorto", $dadosPorto);
         $this->view->assign("dados", $dados);
     }

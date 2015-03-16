@@ -157,7 +157,7 @@ class Application_Model_EmbarcacaoDetalhada
 
         $dadosEmbDetalhadaHasSeguroDefeso = array(
             'ted_id = ?' => $idEmbarcacao,
-            'tsd_id  = ?' => $idSeguroDefeso,
+            'tsd_id_licenca  = ?' => $idSeguroDefeso,
         );
         $dbTable_EmbDetalhadaHasSeguroDefeso->delete($dadosEmbDetalhadaHasSeguroDefeso);
 
