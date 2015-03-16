@@ -23,6 +23,13 @@
             <file>file:/C:/xampp/htdocs/pesca/application/layouts/scripts/admin.phtml</file>
             <file>file:/C:/xampp/htdocs/pesca/application/models/Pescador.php</file>
             <file>file:/C:/xampp/htdocs/pesca/application/controllers/EspecieController.php</file>
+            <file>file:/C:/xampp/htdocs/pesca/application/models/EmbarcacaoDetalhada.php</file>
+            <file>file:/C:/xampp/htdocs/pesca/public/js/funcoesJquery.js</file>
+            <file>file:/C:/xampp/htdocs/pesca/application/views/scripts/barcos/index.phtml</file>
+            <file>file:/C:/xampp/htdocs/pesca/application/models/Relatorios.php</file>
+            <file>file:/C:/xampp/htdocs/pesca/application/controllers/RelatoriosController.php</file>
+            <file>file:/C:/xampp/htdocs/pesca/application/views/scripts/barcos/novo.phtml</file>
+            <file>file:/C:/xampp/htdocs/pesca/application/views/scripts/barcos/editar.phtml</file>
         </group>
     </open-files>
 </project-private>

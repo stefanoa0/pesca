@@ -157,15 +157,7 @@
 <!--17. -------------------------------------------------------------->       
         <div class="form-dir">
             <label>Porto de Origem:</label>
-            <select name="portoOrigem" required/>
-                <option value="" selected></option>
-                <?php
-                    foreach ($this->assignPortos as $key => $porto):?>
-                        <option value="<?= $porto['pto_id'] ?>"><?= $porto['pto_nome'] ?></option>
-                <?php
-                     endforeach;
-                ?>
-            </select>
+            <input type="text" name="portoOrigem" placeholder="Porto de Origem"/>
         </div>
 <!--18. -------------------------------------------------------------->               
         <div class="form-dir">
@@ -236,6 +228,12 @@
             <label>Ano da Construção:</label> 
             <input type="text" name="anoConstrucao" placeholder="Ano da Construção"/> <br />
         </div>
+
+
+        <br/>
+        <br/>
+        <h2>Motor da Embarcação</h2>
+		
 <!--25. -------------------------------------------------------------->       
         <div class="form-dir">
             <label>Tipo de Propulsão:</label>
@@ -247,10 +245,6 @@
                 <option value="0">Não Informado</option>
             </select>
         </div>
-
-        <br/>
-        <br/>
-        <h2>Motor da Embarcação</h2>
 <!--26. -------------------------------------------------------------->               
         <div class="form-dir">
             <label>Tipo de Motor:</label>
@@ -451,15 +445,15 @@
             </select>
         </div>
  <!--46. -------------------------------------------------------------->              
-        <div class="form-dir">
+<!--        <div class="form-dir">
             <label>Onde adquire:</label>
             <input type="text" name="ondeAdquire" placeholder="Onde adquire"/><br />
         </div>
- <!--47. -------------------------------------------------------------->              
+ 47. ------------------------------------------------------------              
         <div class="form-dir">
             <label>Como é feita a divisão do pescado?</label> 
             <input type="text" name="divisaoPescado" placeholder="Divisão do Pescado"/> <br />
-        </div>
+        </div>-->
  <!--48. -------------------------------------------------------------->              
         <div class="form-dir">
             <label>Destino do pescado:</label>
@@ -476,15 +470,8 @@
  <!--49. -------------------------------------------------------------->              
         <div class="form-dir">
             <label>Comprador do pescado:</label>
-            <select name="compradorPescado" required/>
-                <option value="" selected></option>
-                <?php
-                    foreach ($this->assignDestinoPescado as $key => $destinoPesca):?>
-                        <option value="<?= $destinoPesca['dp_id'] ?>"><?= $destinoPesca['dp_destino'] ?></option>
-                <?php
-                     endforeach;
-                ?>
-            </select>
+            <input type="text name="compradorPescado" placeholder="Comprador"/>
+
         </div>
         
  <!--50. -------------------------------------------------------------->              
@@ -547,14 +534,14 @@
  <!--56. -------------------------------------------------------------->              
         <div class="form-dir">
             <label>Responsável pelo Lançamento:</label>
-            <select name="entrevistador" required/>
+            <select name="lancador" required/>
                 <option value="<?= $this->usuario['tu_id']; ?>"><?=$this->usuario['tu_nome']; ?></option>
             </select>
         </div>
  <!--57. -------------------------------------------------------------->              
         <div class="form-dir">
             <label>Responsável pela Entrevista:</label>
-            <select name="lancador" required/>
+            <select name="entrevistador" required/>
                 <option value="" selected></option>
                 <?php
                     foreach ($this->assignUsuarios as $key => $usuario):?>

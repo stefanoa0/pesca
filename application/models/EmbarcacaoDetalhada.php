@@ -103,6 +103,8 @@ class Application_Model_EmbarcacaoDetalhada
 
         return;
     }
+    
+    ///DELETES EMBARCACAO
     public function deleteEmbDetalhadaHasCor($idEmbarcacao, $idCor) {
         $dbTable_EmbDetalhadaHasCor = new Application_Model_DbTable_EmbarcacaoDetalhadaHasCor();
 

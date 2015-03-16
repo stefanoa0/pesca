@@ -46,7 +46,7 @@ $this->headScript()->appendFile('/js/mascaras.js');
        
        <div class="form-esq">
          <label for="tipo">Data:</label>
-         <input type="date"  placeholder="Data" name="data_ficha" required/><br />
+         <input type="date"  placeholder="Data" name="data_ficha" required min="2013-01-01" max = "<?= date("Y-m-d"); ?>"/><br />
        </div>
        
        <div class="form-esq">

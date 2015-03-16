@@ -372,6 +372,9 @@
           <dbTableFile dbTableName="VEmbarcacaoDetalhadaHasTSavatagem"/>
           <dbTableFile dbTableName="VEmbarcacaoDetalhadaHasTSeguroDefeso"/>
           <dbTableFile dbTableName="VMotorEmbarcacaoHasTFrequenciaManutencao"/>
+          <dbTableFile dbTableName="TEmbarcacaoDetalhada"/>
+          <dbTableFile dbTableName="VMotorEmbarcacao"/>
+          <dbTableFile dbTableName="VAtuacaoEmbarcacao"/>
         </dbTableDirectory>
         <modelFile modelName="Usuario"/>
         <modelFile modelName="Perfil"/>
