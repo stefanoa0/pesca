@@ -23,7 +23,6 @@ class IndexController extends Zend_Controller_Action
           $identity = $auth->getIdentity();
           //Converte do objeto para um array (tem que ser feito)
           $identity2 = get_object_vars($identity);
-
         }
         $this->modelUsuario = new Application_Model_Usuario();
         //Busca o usuário no banco pelo id do login
