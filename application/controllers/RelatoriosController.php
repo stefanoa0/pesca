@@ -177,7 +177,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         switch($valueRelatorio['artePesca']){
             
-            case 1: $this->_redirect("/relatorios/relatoriocompletoarrasto".$data.$datafim.$porto);break;
+            case 1: $this->_redirect("/relatorios/relatoriocompletoarrasto/".$rel.$data.$datafim.$porto);break;
             case 2:$this->_redirect("/relatorios/relatoriocompletocalao/".$rel.$data.$datafim.$porto);break;
             case 3:$this->_redirect("/relatorios/relatoriocompletocoletamanual/".$rel.$data.$datafim.$porto);break;
             case 4:$this->_redirect("/relatorios/relatoriocompletoemalhe/".$rel.$data.$datafim.$porto);break;
@@ -254,6 +254,8 @@ class RelatoriosController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
+        $var =  $this->_getParam('id');
+        $tipoRel = $this->verificaRelatorio($var);
         
         $date =  $this->_getParam('data');
         $datend = $this->_getParam('datafim');
@@ -356,7 +358,7 @@ class RelatoriosController extends Zend_Controller_Action
             foreach($relatorioEspecies as $key => $especie):
                    foreach($Relesp as $key => $esp):
                         if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $esp['spc_peso_kg']);
+                            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $esp[$tipoRel]);
                         }
                    endforeach;
                     if($coluna < $lastcolumn){
