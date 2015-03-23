@@ -177,7 +177,17 @@ class ArrastoFundoController extends Zend_Controller_Action {
         }
 
     }
-
+    public function tablepesqueiroAction(){//Action para tablepesqueiro
+        //IMPORTANTE TER!!
+        
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelArrastoFundo->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vArrastoFundo = $this->modelArrastoFundo->selectArrastoHasPesqueiro('af_id=' . $idEntrevista);
+        $this->view->assign('vArrastoFundo', $vArrastoFundo);
+    }
     public function insertpesqueiroAction() {
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
@@ -191,11 +201,10 @@ class ArrastoFundoController extends Zend_Controller_Action {
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
 
         $this->modelArrastoFundo->insertPesqueiro($idEntrevista, $pesqueiro, $tempopesqueiro);
 
-        $this->redirect("/arrasto-fundo/editar/id/" . $backUrl);
+        $this->redirect("/arrasto-fundo/tablepesqueiro/id/" . $idEntrevista);
     }
     public function insertbiocamaraoAction() {
         if($this->usuario['tp_id']==5){
@@ -292,7 +301,20 @@ class ArrastoFundoController extends Zend_Controller_Action {
         $this->redirect("/arrasto-fundo/editar/id/" . $backUrl);
     }
     
-
+    public function tableespcapturaAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelArrastoFundo->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vEspecieCapturadas = $this->modelArrastoFundo->selectArrastoHasEspCapturadas('af_id=' . $idEntrevista);
+    
+        $this->view->assign('vEspecieCapturadas', $vEspecieCapturadas);
+    }
+    
+    
     public function insertespeciecapturadaAction() {
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
@@ -310,11 +332,11 @@ class ArrastoFundoController extends Zend_Controller_Action {
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
         $this->modelArrastoFundo->insertEspCapturada($idEntrevista, $especie, $quantidade, $peso, $preco);
 
-        $this->redirect("/arrasto-fundo/editar/id/" . $backUrl);
+        $this->redirect("/arrasto-fundo/tableespcaptura/id/" . $idEntrevista);
     }
 
     public function deletespecieAction() {

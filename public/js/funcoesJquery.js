@@ -1602,4 +1602,62 @@ function ajax_monitoramento(form, url){
                 // Send the data to PHP now... and wait for response to update the status div
             hr.send(vars); // Actually execute the request
             document.getElementById("monitoramentos").innerHTML = "processing...";
-     }         
+     }
+     
+function ajax_esp_capturada(form, url, id_entrevista){ //url é o link do controller destino
+            // Create our XMLHttpRequest object
+            var hr = new XMLHttpRequest();
+            // Create some variables we need to send to our PHP file
+            var url = url;
+            var especie = form.selectEspecie.value;
+            var quant = form.quantidade.value;
+            var peso = form.peso.value;
+            var preco = form.precokg.value;
+            var id_entrevista = id_entrevista;
+            
+            
+            //var ln = document.getElementById("last_name").value;
+            var vars = "selectEspecie="+especie+"&quantidade="+quant+
+                    "&peso="+peso+"&precokg="+preco+"&id_entrevista="+id_entrevista;
+            hr.open("POST", url, true);
+            // Set content type header information for sending url encoded variables in the request
+            hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            // Access the onreadystatechange event for the XMLHttpRequest object
+            hr.onreadystatechange = function() {
+                    if(hr.readyState === 4 && hr.status === 200) {
+                    var return_data = hr.responseText;
+                        document.getElementById("especie").innerHTML = return_data;
+                    }
+            };
+                // Send the data to PHP now... and wait for response to update the status div
+            hr.send(vars); // Actually execute the request
+            document.getElementById("especie").innerHTML = "processing...";
+     }  
+     
+function ajax_pesqueiro_arrasto(form, url, id_entrevista){ //url é o link do controller destino
+            // Create our XMLHttpRequest object
+            var hr = new XMLHttpRequest();
+            // Create some variables we need to send to our PHP file
+            var url = url;
+            var pesqueiro = form.nomePesqueiro.value;
+            var tempo = form.tempoPesqueiro.value;
+            var id_entrevista = id_entrevista;
+            
+            
+            //var ln = document.getElementById("last_name").value;
+            var vars = "nomePesqueiro="+pesqueiro+"&tempoPesqueiro="+tempo+
+                    "&id_entrevista="+id_entrevista;
+            hr.open("POST", url, true);
+            // Set content type header information for sending url encoded variables in the request
+            hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            // Access the onreadystatechange event for the XMLHttpRequest object
+            hr.onreadystatechange = function() {
+                    if(hr.readyState === 4 && hr.status === 200) {
+                    var return_data = hr.responseText;
+                        document.getElementById("pesqueiro").innerHTML = return_data;
+                    }
+            };
+                // Send the data to PHP now... and wait for response to update the status div
+            hr.send(vars); // Actually execute the request
+            document.getElementById("pesqueiro").innerHTML = "processing...";
+}  

@@ -1,0 +1,22 @@
+
+<div id="pesqueiro">
+    <fieldset class="noEditable" id="itemArteTipoRows"><legend>Pesqueiros:</legend>
+                <table id="pesqueiros">
+                    <tr>
+                        <th width="5%">Id Entrevista</th>
+                        <th width="50%">Pesqueiro</th>
+                        <th width="30%">Tempo no Pesqueiro</th>
+                    </tr>
+                    <?php
+                    foreach ($this->vArrastoFundo as $key => $vArrastoFundo):
+                        ?>
+                        <tr id="itemArrastoRows">
+                            <td name="inputIdEntrevista"> <?= $vArrastoFundo['af_id'] ?> </td>
+                            <td name="inputPesqueiro" > <?= $vArrastoFundo['paf_pesqueiro'] ?> </td>
+                            <td name="inputTempoaPesqueiro"> <?= $vArrastoFundo['t_tempopesqueiro'] ?> </td>
+                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePesqueiro(<?= $this->entrevista['af_id'] ?>, '<?= $this->url(array("controller" => "arrasto-fundo", "action" => "deletepesqueiro"), null, true) ?>', <?= $vArrastoFundo['af_paf_id'] ?>)"></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+    </fieldset>
+</div>
