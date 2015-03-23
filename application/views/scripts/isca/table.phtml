@@ -1,0 +1,22 @@
+<div id="status">   
+            <table >
+                <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                </tr>
+
+                <?php foreach ($this->dadosIscas as $key => $isca): ?>
+                    <tr>
+                    <td><?= $isca['isc_id'] ?></td>
+                    <td><?= $isca['isc_tipo'] ?></td>
+                    <td class="td-botao">
+                        <input type="button" name="Excluir" class="button-del" onclick="jsDeleteIsca(<?= $isca['isc_id'] ?>,'<?= $this->url(array("controller" => "isca", "action" => "delete"), null, true) ?>')">
+
+                    </td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+            <br/><br/>
+            
+            <a id="last" href="<?= $this->url(array("controller" => "isca", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório</a>
+</div>

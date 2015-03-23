@@ -1,0 +1,48 @@
+<div id="monitoramentos">
+<fieldset class="noEditable" id="itemArteTipoRows"><legend>Monitoramentos:</legend>
+<table>
+                <tr>
+                    <th width="5%">Id_Ficha</th>
+                    <th width="5%">Id_Monitoramento</th>
+                    <th width="30%">Monitorada?</th>
+                    <th width="20%">Arte de Pesca</th>
+                    <th width="15%">Quantidade</th>
+                    <th width="15%">Quant. Digitada</th>
+                    
+                </tr>
+                <?php
+                foreach ($this->vMonitoramento as $key => $vMonitoramento):
+                    if ($vMonitoramento['mnt_monitorado'] == 1) {
+                        $vMonitoramento['mnt_monitorado'] = "Sim";
+                    } else {
+                        $vMonitoramento['mnt_monitorado'] = "Não";
+                    }
+                    ?>
+                    <tr id="itemEmbarcacoesRows<?= $key ?>" <?php if($vMonitoramento['mnt_monitorado'] == "Sim" && $vMonitoramento['mnt_quantidade'] !=  $vMonitoramento['quantfichas']){ echo 'style="background-color:red"';} ?>>
+                        <td name="inputIdFicha"> <?= $vMonitoramento['fd_id'] ?> </td>
+                        <td name="inputIdMonitoramento"> <?= $vMonitoramento['mnt_id'] ?> </td>
+                        <td name="inputMonitorada" > <?= $vMonitoramento['mnt_monitorado'] ?> </td>
+                        <td name="inputArtedePesca"> <?= $vMonitoramento['tap_artepesca'] ?> </td>
+                        <td name="inputQuantidade" > <?= $vMonitoramento['mnt_quantidade'] ?> </td>
+                        <td name="inputEntrevistas"> <?= $vMonitoramento['quantfichas']?> </td>
+                        <td width="10%" class="td-botao">
+                            <a href="<?=$this->url(array("controller"=>"ficha-diaria","action"=>"monitoramento", "id" => $vMonitoramento['fd_id'], "idmnt" => $vMonitoramento['mnt_id']),null,true)?>">
+                                <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                    <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                                </ul>
+                            </a>
+                        </td>
+                        <td>
+                            <a  onclick="jsDeleteMonitoramento(<?= $vMonitoramento['mnt_id'] ?>, this.form, '<?= $this->url(array("controller" => "ficha-diaria", "action" => "deletmonitoramento"), null, true) ?>', <?= $vMonitoramento['fd_id'] ?>)">
+                                <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                    <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                </ul>
+                            </a>
+                        </td>
+                        <td><input class="busca" type="button" width="10%" target="_blank" value="Nova Entrevista" onclick="jsEntrevista('<?= $vMonitoramento['tap_artepesca'] ?>', <?= $vMonitoramento['mnt_id'] ?>, <?= $vMonitoramento['fd_id'] ?>)" <?php if($vMonitoramento['mnt_monitorado']== 'Não'){ echo "disabled='True'";} ?>/></td>
+                        
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+</fieldset>
+</div>

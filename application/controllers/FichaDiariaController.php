@@ -178,52 +178,52 @@ class FichaDiariaController extends Zend_Controller_Action {
         $this->view->assign("users", $usuario);
         //--------------------------------------------
         
-        $idFicha = $this->_getParam('id');
+        $this->idFicha = $this->_getParam('id');
         
         $modelMonitoramentoByFichaDiaria = new Application_Model_Monitoramento();
-        $vMonitoramento = $modelMonitoramentoByFichaDiaria->select("fd_id=". $idFicha, "mnt_id", null);
+        $vMonitoramento = $modelMonitoramentoByFichaDiaria->select("fd_id=". $this->idFicha, "mnt_id", null);
         $this->view->assign("vMonitoramento", $vMonitoramento);
         //--------------------------------------------------------------------------------------------
-        $ArrastoFicha = $this->modelArrastoFundo->selectEntrevistaArrasto('fd_id='.$idFicha);
+        $ArrastoFicha = $this->modelArrastoFundo->selectEntrevistaArrasto('fd_id='.$this->idFicha);
         $this->view->assign("arrastofundo", $ArrastoFicha);
         //--------------------------------------------------------------------------------------------
-        $CalaoFicha = $this->modelCalao->selectEntrevistaCalao('fd_id='.$idFicha);
+        $CalaoFicha = $this->modelCalao->selectEntrevistaCalao('fd_id='.$this->idFicha);
         $this->view->assign("calao", $CalaoFicha);
         //--------------------------------------------------------------------------------------------
-        $ColetaManualFicha = $this->modelColetaManual->selectEntrevistaColetaManual('fd_id='.$idFicha);
+        $ColetaManualFicha = $this->modelColetaManual->selectEntrevistaColetaManual('fd_id='.$this->idFicha);
         $this->view->assign("coletamanual", $ColetaManualFicha);
         //--------------------------------------------------------------------------------------------
-        $EmalheFicha = $this->modelEmalhe->selectEntrevistaEmalhe('fd_id='.$idFicha);
+        $EmalheFicha = $this->modelEmalhe->selectEntrevistaEmalhe('fd_id='.$this->idFicha);
         $this->view->assign("emalhe", $EmalheFicha);
         //--------------------------------------------------------------------------------------------
-        $GrosseiraFicha = $this->modelGrosseira->selectEntrevistaGrosseira('fd_id='.$idFicha);
+        $GrosseiraFicha = $this->modelGrosseira->selectEntrevistaGrosseira('fd_id='.$this->idFicha);
         $this->view->assign("grosseira", $GrosseiraFicha);
         //--------------------------------------------------------------------------------------------
-        $JerereFicha = $this->modelJerere->selectEntrevistaJerere('fd_id='.$idFicha);
+        $JerereFicha = $this->modelJerere->selectEntrevistaJerere('fd_id='.$this->idFicha);
         $this->view->assign("jerere", $JerereFicha);
         //--------------------------------------------------------------------------------------------
-        $LinhaFicha = $this->modelLinha->selectEntrevistaLinha('fd_id='.$idFicha);
+        $LinhaFicha = $this->modelLinha->selectEntrevistaLinha('fd_id='.$this->idFicha);
         $this->view->assign("linha", $LinhaFicha);
         //--------------------------------------------------------------------------------------------
-        $LinhaFundoFicha = $this->modelLinhaFundo->selectEntrevistaLinhaFundo('fd_id='.$idFicha);
+        $LinhaFundoFicha = $this->modelLinhaFundo->selectEntrevistaLinhaFundo('fd_id='.$this->idFicha);
         $this->view->assign("linhafundo", $LinhaFundoFicha);
          //--------------------------------------------------------------------------------------------
-        $ManzuaFicha = $this->modelManzua->selectEntrevistaManzua('fd_id='.$idFicha);
+        $ManzuaFicha = $this->modelManzua->selectEntrevistaManzua('fd_id='.$this->idFicha);
         $this->view->assign("manzua", $ManzuaFicha);
          //--------------------------------------------------------------------------------------------
-        $MergulhoFicha = $this->modelMergulho->selectEntrevistaMergulho('fd_id='.$idFicha);
+        $MergulhoFicha = $this->modelMergulho->selectEntrevistaMergulho('fd_id='.$this->idFicha);
         $this->view->assign("mergulho", $MergulhoFicha);
          //--------------------------------------------------------------------------------------------
-        $RatoeiraFicha = $this->modelRatoeira->selectEntrevistaRatoeira('fd_id='.$idFicha);
+        $RatoeiraFicha = $this->modelRatoeira->selectEntrevistaRatoeira('fd_id='.$this->idFicha);
         $this->view->assign("ratoeira", $RatoeiraFicha);
          //--------------------------------------------------------------------------------------------
-        $SiripoiaFicha = $this->modelSiripoia->selectEntrevistaSiripoia('fd_id='.$idFicha);
+        $SiripoiaFicha = $this->modelSiripoia->selectEntrevistaSiripoia('fd_id='.$this->idFicha);
         $this->view->assign("siripoia", $SiripoiaFicha);
          //--------------------------------------------------------------------------------------------
-        $TarrafaFicha = $this->modelTarrafa->selectEntrevistaTarrafa('fd_id='.$idFicha);
+        $TarrafaFicha = $this->modelTarrafa->selectEntrevistaTarrafa('fd_id='.$this->idFicha);
         $this->view->assign("tarrafa", $TarrafaFicha);
          //--------------------------------------------------------------------------------------------
-        $VaraPescaFicha = $this->modelVaraPesca->selectEntrevistaVaraPesca('fd_id='.$idFicha);
+        $VaraPescaFicha = $this->modelVaraPesca->selectEntrevistaVaraPesca('fd_id='.$this->idFicha);
         $this->view->assign("varapesca", $VaraPescaFicha);
         
     }
@@ -243,6 +243,58 @@ class FichaDiariaController extends Zend_Controller_Action {
         
     }
     
+    public function tablemonitoramentoAction(){
+        $this->_helper->layout->disableLayout();
+        //$this->_helper->viewRenderer->setNoRender(true);
+        
+        $this->idFicha = $this->_getParam('id');
+        $modelMonitoramentoByFichaDiaria = new Application_Model_Monitoramento();
+        $vMonitoramento = $modelMonitoramentoByFichaDiaria->select("fd_id=". $this->idFicha, "mnt_id", null);
+        $this->view->assign("vMonitoramento", $vMonitoramento);
+        //--------------------------------------------------------------------------------------------
+        $ArrastoFicha = $this->modelArrastoFundo->selectEntrevistaArrasto('fd_id='.$this->idFicha);
+        $this->view->assign("arrastofundo", $ArrastoFicha);
+        //--------------------------------------------------------------------------------------------
+        $CalaoFicha = $this->modelCalao->selectEntrevistaCalao('fd_id='.$this->idFicha);
+        $this->view->assign("calao", $CalaoFicha);
+        //--------------------------------------------------------------------------------------------
+        $ColetaManualFicha = $this->modelColetaManual->selectEntrevistaColetaManual('fd_id='.$this->idFicha);
+        $this->view->assign("coletamanual", $ColetaManualFicha);
+        //--------------------------------------------------------------------------------------------
+        $EmalheFicha = $this->modelEmalhe->selectEntrevistaEmalhe('fd_id='.$this->idFicha);
+        $this->view->assign("emalhe", $EmalheFicha);
+        //--------------------------------------------------------------------------------------------
+        $GrosseiraFicha = $this->modelGrosseira->selectEntrevistaGrosseira('fd_id='.$this->idFicha);
+        $this->view->assign("grosseira", $GrosseiraFicha);
+        //--------------------------------------------------------------------------------------------
+        $JerereFicha = $this->modelJerere->selectEntrevistaJerere('fd_id='.$this->idFicha);
+        $this->view->assign("jerere", $JerereFicha);
+        //--------------------------------------------------------------------------------------------
+        $LinhaFicha = $this->modelLinha->selectEntrevistaLinha('fd_id='.$this->idFicha);
+        $this->view->assign("linha", $LinhaFicha);
+        //--------------------------------------------------------------------------------------------
+        $LinhaFundoFicha = $this->modelLinhaFundo->selectEntrevistaLinhaFundo('fd_id='.$this->idFicha);
+        $this->view->assign("linhafundo", $LinhaFundoFicha);
+         //--------------------------------------------------------------------------------------------
+        $ManzuaFicha = $this->modelManzua->selectEntrevistaManzua('fd_id='.$this->idFicha);
+        $this->view->assign("manzua", $ManzuaFicha);
+         //--------------------------------------------------------------------------------------------
+        $MergulhoFicha = $this->modelMergulho->selectEntrevistaMergulho('fd_id='.$this->idFicha);
+        $this->view->assign("mergulho", $MergulhoFicha);
+         //--------------------------------------------------------------------------------------------
+        $RatoeiraFicha = $this->modelRatoeira->selectEntrevistaRatoeira('fd_id='.$this->idFicha);
+        $this->view->assign("ratoeira", $RatoeiraFicha);
+         //--------------------------------------------------------------------------------------------
+        $SiripoiaFicha = $this->modelSiripoia->selectEntrevistaSiripoia('fd_id='.$this->idFicha);
+        $this->view->assign("siripoia", $SiripoiaFicha);
+         //--------------------------------------------------------------------------------------------
+        $TarrafaFicha = $this->modelTarrafa->selectEntrevistaTarrafa('fd_id='.$this->idFicha);
+        $this->view->assign("tarrafa", $TarrafaFicha);
+         //--------------------------------------------------------------------------------------------
+        $VaraPescaFicha = $this->modelVaraPesca->selectEntrevistaVaraPesca('fd_id='.$this->idFicha);
+        $this->view->assign("varapesca", $VaraPescaFicha);
+        
+    }
     public function insertmonitoramentoAction() {
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
@@ -259,12 +311,11 @@ class FichaDiariaController extends Zend_Controller_Action {
         
         $idFicha = $this->_getParam("id_fichaDiaria");
         
-        $backUrl = $this->_getParam("back_url");
-       
-        
+        //$backUrl = $this->_getParam("back_url");
+         
         $this->modelMonitoramento->insert($idFicha, $idArtePesca, $mnt_quantidade, $Monitorada);
 
-        $this->redirect("/ficha-diaria/editar/id/" . $backUrl);
+        $this->_redirect("ficha-diaria/tablemonitoramento/id/".$idFicha);
 
         return;
     }

@@ -1,3 +1,28 @@
+<script>
+            function ajax_post(){
+            // Create our XMLHttpRequest object
+            var hr = new XMLHttpRequest();
+            // Create some variables we need to send to our PHP file
+            var url = "<?= $this->url(array("controller" => "isca", "action" => "insert"), null, true) ?>";
+            var fn = document.getElementById("inputIsc_tipo").value;
+            //var ln = document.getElementById("last_name").value;
+            var vars = "isc_tipo="+fn;//"&lastname="+ln;
+            hr.open("POST", url, true);
+            // Set content type header information for sending url encoded variables in the request
+            hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            // Access the onreadystatechange event for the XMLHttpRequest object
+            hr.onreadystatechange = function() {
+                    if(hr.readyState === 4 && hr.status === 200) {
+                    var return_data = hr.responseText;
+                        document.getElementById("status").innerHTML = return_data;
+            }
+                }
+                // Send the data to PHP now... and wait for response to update the status div
+                hr.send(vars); // Actually execute the request
+                document.getElementById("status").innerHTML = "processing...";
+            }
+        </script>
+
 <h2>Desembarque->Iscas</h2>
 
 <fieldset id="dadosDesembarque"></fieldset>
@@ -6,34 +31,15 @@
     <fieldset class="noEditable"><legend>Iscas:</legend>
         <fieldset class="noEditable"><legend>Adicionar Isca:</legend>
             <div id="base">
-                <input type="button" name="Add" class="button-confirm" onclick="jsInsertIsca(this.form, '<?= $this->url(array("controller" => "isca", "action" => "insert"), null, true) ?>')">
+                <input type="button" name="Add" id="add" class="button-confirm" onclick="ajax_post();">
                 <input type="button" name="Reload" class="button-clear" onclick="jsReloadIsca(this.form)">
 
-                <input type="text" name="inputIsc_tipo" placehol    der="Tipo de isca" size="40"  />
+                <input type="text" name="inputIsc_tipo" id="inputIsc_tipo" placeholder="Tipo de isca" size="40"  />
                 <input readonly="" type="text" name="inputIsc_id" />
             </div>
         </fieldset>
         <br>
-
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Nome</th>
-    </tr>
-    
-    <?php foreach ($this->dadosIscas as $key => $isca): ?>
-    <tr>
-        <td><?= $isca['isc_id'] ?></td>
-        <td><?= $isca['isc_tipo'] ?></td>
-        <td class="td-botao">
-            <input type="button" name="Excluir" class="button-del" onclick="jsDeleteIsca(<?=$isca['isc_id']?>,'<?= $this->url(array("controller" => "isca", "action" => "delete"), null, true) ?>')">
-
-        </td>
-    </tr>
-    <?php endforeach; ?>
-</table>
-<br/><br/>
-<a href="<?=$this->url(array("controller"=>"isca","action"=>"relatorio"),null,true)?>" id="botao-ancora" target="_blank">Gerar Relatório</a>
-
-</fieldset>
+        
+        <?php include('table.phtml'); ?>
+    </fieldset>
 </form>
