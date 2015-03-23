@@ -1,0 +1,23 @@
+<div id="pesqueiro">
+    <fieldset class="noEditable" id="itemArteTipoRows"><legend>Pesqueiros:</legend>
+        <table id="pesqueiros">
+            <tr>
+            <th width="5%">Id Entrevista</th>
+            <th width="50%">Pesqueiro</th>
+            <th width="30%">Tempo até o Pesqueiro</th>
+            <th width="30%">Distância até o Pesqueiro</th>
+            </tr>
+            <?php
+            foreach ($this->vColetaManual as $key => $vColetaManual):
+                ?>
+                <tr id="itemArrastoRows">
+                <td name="inputIdEntrevista"> <?= $vColetaManual['cml_id'] ?> </td>
+                <td name="inputPesqueiro" > <?= $vColetaManual['paf_pesqueiro'] ?> </td>
+                <td name="inputTempoaPesqueiro"> <?= $vColetaManual['t_tempoapesqueiro'] ?> </td>
+                <td name="inputTempoaPesqueiro"> <?= $vColetaManual['t_distapesqueiro'] ?> </td>
+                <td><input type="button" class="button-del" width="5%" onclick="jsDeletePesqueiro(<?= $this->entrevista['cml_id'] ?>, '<?= $this->url(array("controller" => "coleta-manual", "action" => "deletepesqueiro"), null, true) ?>', <?= $vColetaManual['cml_paf_id'] ?>)"></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </fieldset>
+</div>

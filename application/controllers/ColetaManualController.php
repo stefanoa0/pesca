@@ -191,6 +191,18 @@ class ColetaManualController extends Zend_Controller_Action
         }
 
     }
+    
+    public function tablepesqueiroAction(){//Action para tablepesqueiro
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelColetaManual->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vColetaManual = $this->modelCalao->selectColetaManualHasPesqueiro('cml_id=' . $idEntrevista);
+        $this->view->assign('vColetaManual', $vColetaManual);
+    }
+    
     public function insertpesqueiroAction(){
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
@@ -207,12 +219,12 @@ class ColetaManualController extends Zend_Controller_Action
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
 
         $this->modelColetaManual->insertPesqueiro($idEntrevista, $pesqueiro, $tempoapesqueiro, $distanciapesqueiro);
 
-        $this->redirect("/coleta-manual/editar/id/" . $backUrl);
+        $this->redirect("/coleta-manual/tablepesqueiro/id/" . $idEntrevista);
     }
     public function deletepesqueiroAction(){
 
@@ -227,6 +239,19 @@ class ColetaManualController extends Zend_Controller_Action
 
         $this->redirect("/coleta-manual/editar/id/" . $backUrl);
     }
+    public function tableespcapturaAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelColetaManual->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vEspecieCapturadas = $this->modelColetaManual->selectColetaManualHasEspCapturadas('cml_id=' . $idEntrevista);
+    
+        $this->view->assign('vEspecieCapturadas', $vEspecieCapturadas);
+    }
+    
+    
     public function insertespeciecapturadaAction(){
  
         $this->_helper->layout->disableLayout();
@@ -249,7 +274,7 @@ class ColetaManualController extends Zend_Controller_Action
 
         $this->modelColetaManual->insertEspCapturada($idEntrevista, $especie, $quantidade, $peso, $preco, $idTipoVenda);
 
-        $this->redirect("/coleta-manual/editar/id/" . $backUrl);
+        $this->redirect("/coleta-manual/tableespcaptura/id/" . $idEntrevista);
     }
     public function deletespecieAction(){
         $this->_helper->layout->disableLayout();

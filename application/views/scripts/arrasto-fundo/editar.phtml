@@ -168,7 +168,7 @@
     <fieldset class="noEditable"><legend>Pesqueiro:</legend>
         <fieldset class="noEditable"><legend>Pesqueiro e tempo no pesqueiro:</legend>
             <div id="base">
-                <input class="responsivo" onclick="ajax_pesqueiro_arrasto(this.form, '<?= $this->url(array("controller" => "arrasto-fundo", "action" => "insertpesqueiro"), null, true) ?>', '<?=$this->entrevista['af_id']?>')" type="button" value="Adicionar" />
+                <input class="responsivo" onclick="ajax_pesqueiro(this.form, '<?= $this->url(array("controller" => "arrasto-fundo", "action" => "insertpesqueiro"), null, true) ?>', '<?=$this->entrevista['af_id']?>', 'tempo')" type="button" value="Adicionar" />
                 <select class="responsivo" style="float:left;" name="nomePesqueiro">
                     <option value="" selected></option>
                     <?php foreach ($this->pesqueiros as $key => $pesqueiro): ?>
@@ -189,7 +189,7 @@
         <fieldset class="noEditable"><legend>Dados das Espécies Capturadas:</legend>
 
             <div id="base">
-                <input class="responsivo" onclick="ajax_esp_capturada(this.form, '<?= $this->url(array("controller" => "arrasto-fundo", "action" => "insertespeciecapturada"), null, true) ?>', <?= $this->entrevista['af_id'] ?>)" type="button" value="Adicionar" />
+                <input class="responsivo" onclick="ajax_esp_capturada(this.form, '<?= $this->url(array("controller" => "arrasto-fundo", "action" => "insertespeciecapturada"), null, true) ?>', <?= $this->entrevista['af_id'] ?>, '')" type="button" value="Adicionar" />
                 <select class="responsivo" style="float:left;" name="selectEspecie">
                     <option value="" selected></option>
                     <?php foreach ($this->especies as $key => $especie): ?>

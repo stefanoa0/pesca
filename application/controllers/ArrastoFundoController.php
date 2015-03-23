@@ -179,7 +179,6 @@ class ArrastoFundoController extends Zend_Controller_Action {
     }
     public function tablepesqueiroAction(){//Action para tablepesqueiro
         //IMPORTANTE TER!!
-        
         $this->_helper->layout->disableLayout();
         
         $idEntrevista = $this->_getParam('id');
