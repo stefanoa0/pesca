@@ -195,6 +195,16 @@ class VaraPescaController extends Zend_Controller_Action
             $this->_redirect('ficha-diaria/editar/id/'.$idFicha);
         }
     }
+    public function tablepesqueiroAction(){//Action para tablepesqueiro
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelVaraPesca->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vVaraPesca = $this->modelVaraPesca->selectVaraPescaHasPesqueiro('vp_id=' . $idEntrevista);
+        $this->view->assign('vVaraPesca', $vVaraPesca);
+    }
     public function insertpesqueiroAction(){
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
@@ -211,12 +221,12 @@ class VaraPescaController extends Zend_Controller_Action
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
 
         $this->modelVaraPesca->insertPesqueiro($idEntrevista, $pesqueiro, $tempoapesqueiro, $distanciapesqueiro);
 
-        $this->redirect("/vara-pesca/editar/id/" . $backUrl);
+        $this->redirect("/vara-pesca/tablepesqueiro/id/" . $idEntrevista);
     }
     public function deletepesqueiroAction(){
         if($this->usuario['tp_id']==5){
@@ -233,7 +243,17 @@ class VaraPescaController extends Zend_Controller_Action
 
         $this->redirect("/vara-pesca/editar/id/" . $backUrl);
     }
-
+    public function tableespcapturaAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelVaraPesca->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vEspecieCapturadas = $this->modelVaraPesca->selectVaraPescaHasEspCapturadas('vp_id=' . $idEntrevista);
+    
+        $this->view->assign('vEspecieCapturadas', $vEspecieCapturadas);
+    }
     public function insertespeciecapturadaAction(){
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
@@ -254,12 +274,12 @@ class VaraPescaController extends Zend_Controller_Action
 
         $idTipoVenda =  $this->_getParam("id_tipovenda");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
 
         $this->modelVaraPesca->insertEspCapturada($idEntrevista, $especie, $quantidade, $peso, $preco, $idTipoVenda);
 
-        $this->redirect("/vara-pesca/editar/id/" . $backUrl);
+        $this->redirect("/vara-pesca/tableespcaptura/id/" . $idEntrevista);
     }
     public function deletespecieAction(){
         if($this->usuario['tp_id']==5){

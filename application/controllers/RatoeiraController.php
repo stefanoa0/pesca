@@ -188,6 +188,16 @@ private $usuario;
             $this->_redirect('ficha-diaria/editar/id/'.$idFicha);
         }
     }
+    public function tablepesqueiroAction(){//Action para tablepesqueiro
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelRatoeira->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vRatoeira = $this->modelRatoeira->selectRatoeiraHasPesqueiro('rat_id=' . $idEntrevista);
+        $this->view->assign('vRatoeira', $vRatoeira);
+    }
     public function insertpesqueiroAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -201,12 +211,12 @@ private $usuario;
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
 
         $this->modelRatoeira->insertPesqueiro($idEntrevista, $pesqueiro, $tempoapesqueiro, $distanciapesqueiro);
 
-        $this->redirect("/ratoeira/editar/id/" . $backUrl);
+        $this->redirect("/ratoeira/tablepesqueiro/id/" . $idEntrevista);
     }
     public function deletepesqueiroAction(){
         $this->_helper->layout->disableLayout();
@@ -219,6 +229,17 @@ private $usuario;
         $this->modelRatoeira->deletePesqueiro($idEntrevistaHasPesqueiro);
 
         $this->redirect("/ratoeira/editar/id/" . $backUrl);
+    }
+    public function tableespcapturaAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelRatoeira->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vEspecieCapturadas = $this->modelRatoeira->selectRatoeiraHasEspCapturadas('rat_id=' . $idEntrevista);
+    
+        $this->view->assign('vEspecieCapturadas', $vEspecieCapturadas);
     }
     public function insertespeciecapturadaAction(){
         $this->_helper->layout->disableLayout();
@@ -235,13 +256,13 @@ private $usuario;
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
         $idTipoVenda =  $this->_getParam("id_tipovenda");
 
         $this->modelRatoeira->insertEspCapturada($idEntrevista, $especie, $quantidade, $peso, $preco, $idTipoVenda);
 
-        $this->redirect("/ratoeira/editar/id/" . $backUrl);
+        $this->redirect("/ratoeira/tableespcaptura/id/" . $idEntrevista);
     }
     public function deletespecieAction(){
         $this->_helper->layout->disableLayout();

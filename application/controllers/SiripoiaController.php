@@ -193,6 +193,16 @@ class SiripoiaController extends Zend_Controller_Action
             $this->_redirect('ficha-diaria/editar/id/'.$idFicha);
         }
     }
+    public function tablepesqueiroAction(){//Action para tablepesqueiro
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelSiripoia->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vSiripoia = $this->modelSiripoia->selectSiripoiaHasPesqueiro('sir_id=' . $idEntrevista);
+        $this->view->assign('vSiripoia', $vSiripoia);
+    }
      public function insertpesqueiroAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -206,12 +216,12 @@ class SiripoiaController extends Zend_Controller_Action
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
 
         $this->modelSiripoia->insertPesqueiro($idEntrevista, $pesqueiro, $tempoapesqueiro, $distanciapesqueiro);
 
-        $this->redirect("/siripoia/editar/id/" . $backUrl);
+        $this->redirect("/siripoia/tablepesqueiro/id/" . $idEntrevista);
     }
     public function deletepesqueiroAction(){
         $this->_helper->layout->disableLayout();
@@ -224,6 +234,17 @@ class SiripoiaController extends Zend_Controller_Action
         $this->modelSiripoia->deletePesqueiro($idEntrevistaHasPesqueiro);
 
         $this->redirect("/siripoia/editar/id/" . $backUrl);
+    }
+    public function tableespcapturaAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelSiripoia->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vEspecieCapturadas = $this->modelSiripoia->selectSiripoiaHasEspCapturadas('sir_id=' . $idEntrevista);
+    
+        $this->view->assign('vEspecieCapturadas', $vEspecieCapturadas);
     }
     public function insertespeciecapturadaAction(){
         $this->_helper->layout->disableLayout();
@@ -240,13 +261,13 @@ class SiripoiaController extends Zend_Controller_Action
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
         $idTipoVenda =  $this->_getParam("id_tipovenda");
 
         $this->modelSiripoia->insertEspCapturada($idEntrevista, $especie, $quantidade, $peso, $preco, $idTipoVenda);
 
-        $this->redirect("/siripoia/editar/id/" . $backUrl);
+        $this->redirect("/siripoia/tableespcaptura/id/" . $idEntrevista);
     }
     public function deletespecieAction(){
         $this->_helper->layout->disableLayout();

@@ -183,6 +183,16 @@ public function visualizarAction() {
             $this->_redirect('ficha-diaria/editar/id/'.$idFicha);
         }
     }
+    public function tablepesqueiroAction(){//Action para tablepesqueiro
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelManzua->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vManzua = $this->modelManzua->selectManzuaHasPesqueiro('man_id=' . $idEntrevista);
+        $this->view->assign('vManzua', $vManzua);
+    }
     public function insertpesqueiroAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -196,12 +206,12 @@ public function visualizarAction() {
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
 
         $this->modelManzua->insertPesqueiro($idEntrevista, $pesqueiro, $tempoapesqueiro, $distanciapesqueiro);
 
-        $this->redirect("/manzua/editar/id/" . $backUrl);
+        $this->redirect("/manzua/tablepesqueiro/id/" . $idEntrevista);
     }
     public function deletepesqueiroAction(){
         $this->_helper->layout->disableLayout();
@@ -214,6 +224,18 @@ public function visualizarAction() {
         $this->modelManzua->deletePesqueiro($idEntrevistaHasPesqueiro);
 
         $this->redirect("/manzua/editar/id/" . $backUrl);
+    }
+    
+    public function tableespcapturaAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelManzua->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vEspecieCapturadas = $this->modelManzua->selectManzuaHasEspCapturadas('man_id=' . $idEntrevista);
+    
+        $this->view->assign('vEspecieCapturadas', $vEspecieCapturadas);
     }
     public function insertespeciecapturadaAction(){
         $this->_helper->layout->disableLayout();
@@ -230,13 +252,13 @@ public function visualizarAction() {
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
         $idTipoVenda =  $this->_getParam("id_tipovenda");
 
         $this->modelManzua->insertEspCapturada($idEntrevista, $especie, $quantidade, $peso, $preco, $idTipoVenda);
 
-        $this->redirect("/manzua/editar/id/" . $backUrl);
+        $this->redirect("/manzua/tableespcaptura/id/" . $idEntrevista);
     }
     public function deletespecieAction(){
         $this->_helper->layout->disableLayout();
