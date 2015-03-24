@@ -25,7 +25,7 @@
                         <td name="inputArtedePesca"> <?= $vMonitoramento['tap_artepesca'] ?> </td>
                         <td name="inputQuantidade" > <?= $vMonitoramento['mnt_quantidade'] ?> </td>
                         <td name="inputEntrevistas"> <?= $vMonitoramento['quantfichas']?> </td>
-                        <td width="10%" class="td-botao">
+                        <td >
                             <a href="<?=$this->url(array("controller"=>"ficha-diaria","action"=>"monitoramento", "id" => $vMonitoramento['fd_id'], "idmnt" => $vMonitoramento['mnt_id']),null,true)?>">
                                 <ul id="icons" class="ui-widget ui-helper-clearfix">
                                     <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>

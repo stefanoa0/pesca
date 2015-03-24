@@ -1582,38 +1582,42 @@ function ajax_pesqueiro(form, url, id_entrevista, tipo_entrevista){
             
             var id_entrevista = id_entrevista;
             
-            var vars;
-            if(tipo_entrevista === 'tempo'){
-                var tempo = form.tempoPesqueiro.value;
-                vars = "nomePesqueiro="+pesqueiro+"&tempoPesqueiro="+tempo+
-                    "&id_entrevista="+id_entrevista;
-            }
-            else if(tipo_entrevista === 'distancia'){
-                var tempo = form.tempoAPesqueiro.value;
-                var distancia = form.distAPesqueiro.value;
-                
-                vars = "nomePesqueiro="+pesqueiro+"&tempoAPesqueiro="+tempo+"&distAPesqueiro="+distancia+
-                    "&id_entrevista="+id_entrevista;
+            if(pesqueiro === ""){
+                alert("Escolha um pesqueiro");
             }
             else{
-            //var ln = document.getElementById("last_name").value;
-                    vars = "nomePesqueiro="+pesqueiro+
-                    "&id_entrevista="+id_entrevista;
+                var vars;
+                if(tipo_entrevista === 'tempo'){
+                    var tempo = form.tempoPesqueiro.value;
+                    vars = "nomePesqueiro="+pesqueiro+"&tempoPesqueiro="+tempo+
+                        "&id_entrevista="+id_entrevista;
+                }
+                else if(tipo_entrevista === 'distancia'){
+                    var tempo = form.tempoAPesqueiro.value;
+                    var distancia = form.distAPesqueiro.value;
+
+                    vars = "nomePesqueiro="+pesqueiro+"&tempoAPesqueiro="+tempo+"&distAPesqueiro="+distancia+
+                        "&id_entrevista="+id_entrevista;
+                }
+                else{
+                //var ln = document.getElementById("last_name").value;
+                        vars = "nomePesqueiro="+pesqueiro+
+                        "&id_entrevista="+id_entrevista;
+                }
+                hr.open("POST", url, true);
+                // Set content type header information for sending url encoded variables in the request
+                hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                // Access the onreadystatechange event for the XMLHttpRequest object
+                hr.onreadystatechange = function() {
+                        if(hr.readyState === 4 && hr.status === 200) {
+                        var return_data = hr.responseText;
+                            document.getElementById("pesqueiro").innerHTML = return_data;
+                        }
+                };
+                    // Send the data to PHP now... and wait for response to update the status div
+                hr.send(vars); // Actually execute the request
+                document.getElementById("pesqueiro").innerHTML = "processing...";
             }
-            hr.open("POST", url, true);
-            // Set content type header information for sending url encoded variables in the request
-            hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            // Access the onreadystatechange event for the XMLHttpRequest object
-            hr.onreadystatechange = function() {
-                    if(hr.readyState === 4 && hr.status === 200) {
-                    var return_data = hr.responseText;
-                        document.getElementById("pesqueiro").innerHTML = return_data;
-                    }
-            };
-                // Send the data to PHP now... and wait for response to update the status div
-            hr.send(vars); // Actually execute the request
-            document.getElementById("pesqueiro").innerHTML = "processing...";
-    
 }
 
 //DELETAR DEPOIS

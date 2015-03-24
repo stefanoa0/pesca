@@ -35,7 +35,8 @@
                 </div>
                 <div class="form-esq">
                     <label>Barco:</label>
-                    <select name="nomeBarco" placeholder="Nome do Barco" />
+                    <select name="nomeBarco" required/>
+                    <option value=" " selected></option>
                     <?php
                     foreach ($this->barcos as $key => $barco):
                         ?>

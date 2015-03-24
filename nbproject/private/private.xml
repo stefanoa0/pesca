@@ -3,10 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/tarrafa/editar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/siripoia/editar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/mergulho/editar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/manzua/editar.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/calao/editar.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/linha/editar.phtml</file>
+            <file>file:/C:/wamp/www/pesca/public/js/funcoesJquery.js</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/grosseira/editar.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/ficha-diaria/editar.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/emalhe/editar.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/jerere/editar.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/linha-fundo/editar.phtml</file>
+            <file>file:/C:/wamp/www/pesca/public/css/estilo-admin.css</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/arrasto-fundo/editar.phtml</file>
         </group>
     </open-files>
 </project-private>
