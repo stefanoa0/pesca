@@ -256,9 +256,9 @@
                         <tr id="itemEmbarcacoesRows">
                             <td name="inputEntrevista"> <?= $vEspecieCapturada['jre_id'] ?> </td>
                             <td name="inputEspecie" > <?= $vEspecieCapturada['esp_nome_comum'] ?> </td>
-                            <td name="inputQuantidade"> <?= $vEspecieCapturada['spc_quantidade'] ?> </td>
-                            <td name="inputPeso"> <?= $vEspecieCapturada['spc_peso_kg'] ?> </td>
-                            <td name="inputPreco"> <?= $vEspecieCapturada['spc_preco'] ?> </td>
+                            <td name="inputQuantidade"> <?= $vEspecieCapturada['spc_quantidade'].' Unidades' ?> </td>
+                            <td name="inputPeso"> <?= $vEspecieCapturada['spc_peso_kg'].' kg' ?> </td>
+                            <td name="inputPreco"> <?= 'R$ '.$vEspecieCapturada['spc_preco'] ?> </td>
                             <td><input type="button" class="button-del" width="5%" onclick="jsDeleteEspecieCapturada(<?= $this->entrevista['jre_id'] ?>, '<?= $this->url(array("controller" => "jerere", "action" => "deletespecie"), null, true) ?>', <?= $vEspecieCapturada['spc_jre_id'] ?>)"></td>
                         </tr>
                     <?php endforeach; ?>

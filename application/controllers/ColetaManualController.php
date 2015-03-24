@@ -199,7 +199,7 @@ class ColetaManualController extends Zend_Controller_Action
         $idEntrevista = $this->_getParam('id');
         $entrevista = $this->modelColetaManual->find($idEntrevista);
         $this->view->assign("entrevista", $entrevista);
-        $vColetaManual = $this->modelCalao->selectColetaManualHasPesqueiro('cml_id=' . $idEntrevista);
+        $vColetaManual = $this->modelColetaManual->selectColetaManualHasPesqueiro('cml_id=' . $idEntrevista);
         $this->view->assign('vColetaManual', $vColetaManual);
     }
     

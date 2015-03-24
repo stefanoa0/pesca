@@ -1,0 +1,19 @@
+<div id="pesqueiro">
+    <fieldset class="noEditable" id="itemArteTipoRows"><legend>Pesqueiros:</legend>
+        <table id="pesqueiros">
+            <tr>
+            <th width="5%">Id Entrevista</th>
+            <th width="50%">Pesqueiro</th>
+            </tr>
+            <?php
+            foreach ($this->vEmalhe as $key => $vEmalhe):
+                ?>
+                <tr id="itemEmalheRows">
+                <td name="inputIdEntrevista"> <?= $vEmalhe['em_id'] ?> </td>
+                <td name="inputPesqueiro"> <?= $vEmalhe['paf_pesqueiro'] ?> </td>
+                <td><input type="button" class="button-del" width="5%" onclick="jsDeletePesqueiro(<?= $this->entrevista['em_id'] ?>, '<?= $this->url(array("controller" => "emalhe", "action" => "deletepesqueiro"), null, true) ?>', <?= $vEmalhe['em_paf_id'] ?>)"></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </fieldset>
+</div>

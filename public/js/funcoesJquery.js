@@ -1638,7 +1638,7 @@ function ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista){ //url é
             };
                 // Send the data to PHP now... and wait for response to update the status div
             hr.send(vars); // Actually execute the request
-            document.getElementById("especie").innerHTML = "processing...";
+            document.getElementById("especie").innerHTML = "processando...";
      }  
 
 
@@ -1662,7 +1662,7 @@ function ajax_pesqueiro(form, url, id_entrevista, tipo_entrevista){
                 var tempo = form.tempoAPesqueiro.value;
                 var distancia = form.distAPesqueiro.value;
                 
-                vars = "nomePesqueiro="+pesqueiro+"&tempoPesqueiro="+tempo+"&distancia="+distancia+
+                vars = "nomePesqueiro="+pesqueiro+"&tempoAPesqueiro="+tempo+"&distAPesqueiro="+distancia+
                     "&id_entrevista="+id_entrevista;
             }
             else{

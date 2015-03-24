@@ -383,6 +383,10 @@ select.embarcacoes{
 .responsivo{
     width: 15%;
 }
+.responsivo-esp{
+    width: 16%;
+    float: left;
+}
 input {
     float: right;
     width: 55%;

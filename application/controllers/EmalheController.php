@@ -180,6 +180,17 @@ class EmalheController extends Zend_Controller_Action
             $this->_redirect('ficha-diaria/editar/id/'.$idFicha);
         }
     }
+    public function tablepesqueiroAction(){//Action para tablepesqueiro
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelEmalhe->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vEmalhe = $this->modelEmalhe->selectEmalheHasPesqueiro('em_id=' . $idEntrevista);
+        $this->view->assign('vEmalhe', $vEmalhe);
+    }
+    
     public function insertpesqueiroAction(){
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
@@ -192,12 +203,12 @@ class EmalheController extends Zend_Controller_Action
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
 
         $this->modelEmalhe->insertPesqueiro($idEntrevista, $pesqueiro);
 
-        $this->redirect("/emalhe/editar/id/" . $backUrl);
+        $this->redirect("/emalhe/tablepesqueiro/id/" . $idEntrevista);
     }
     public function deletepesqueiroAction(){
         if($this->usuario['tp_id']==5){
@@ -214,6 +225,18 @@ class EmalheController extends Zend_Controller_Action
 
         $this->redirect("/emalhe/editar/id/" . $backUrl);
     }
+    public function tableespcapturaAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelEmalhe->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vEspecieCapturadas = $this->modelEmalhe->selectEmalheHasEspCapturadas('em_id=' . $idEntrevista);
+    
+        $this->view->assign('vEspecieCapturadas', $vEspecieCapturadas);
+    }
+    
     public function insertespeciecapturadaAction(){
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
@@ -232,12 +255,12 @@ class EmalheController extends Zend_Controller_Action
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
 
         $this->modelEmalhe->insertEspCapturada($idEntrevista, $especie, $quantidade, $peso, $preco);
 
-        $this->redirect("/emalhe/editar/id/" . $backUrl);
+        $this->redirect("/emalhe/tableespcaptura/id/" . $idEntrevista);
     }
     public function deletespecieAction(){
         if($this->usuario['tp_id']==5){
