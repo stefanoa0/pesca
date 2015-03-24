@@ -749,89 +749,16 @@ function jsDeletePesqueiro(fichaId,pag, idEntHasPesqueiro) {
         location.replace(tmpUpdate);
     }
 }
-function jsInsertPesqueiro(frm, pag, entrevista) {
-
-        var TmpUrl = (entrevista + '#base');
-        if(frm.nomePesqueiro.value === ""){
-            alert("Selecione um pesqueiro!");
-        }
-        else{
-            var tmpUpdate = (pag + '/nomePesqueiro/' + frm.nomePesqueiro.value + '/tempoPesqueiro/' + frm.tempoPesqueiro.value + '/id_entrevista/' + entrevista + '/back_url/' + TmpUrl);
-
-            location.replace(tmpUpdate);
-        }
-}
-
-function jsInsertPesqueiroWithoutTime(frm, pag, entrevista) {
-
-        var TmpUrl = (entrevista + '#base');
-        if(frm.nomePesqueiro.value === ""){
-            alert("Selecione um pesqueiro!");
-        }
-        else{
-            var tmpUpdate = (pag + '/nomePesqueiro/' + frm.nomePesqueiro.value + '/id_entrevista/' + entrevista + '/back_url/' + TmpUrl);
-
-            location.replace(tmpUpdate);
-        }
-}
 
 
-function jsInsertPesqueiroWithTime(frm, pag, entrevista) {
 
-        var TmpUrl = (entrevista + '#base');
-        if(frm.nomePesqueiro.value === ""){
-            alert("Selecione um pesqueiro!");
-        }
-        else{
-            var tmpUpdate = (pag + '/nomePesqueiro/' + frm.nomePesqueiro.value + '/tempoAPesqueiro/' + frm.tempoAPesqueiro.value +'/id_entrevista/' + entrevista + '/back_url/' + TmpUrl);
 
-            location.replace(tmpUpdate);
-        }
-}
 
-function jsInsertPesqueiroWithTimeAndRange(frm, pag, entrevista) {
 
-        var TmpUrl = (entrevista + '#base');
-        if(frm.nomePesqueiro.value === ""){
-            alert("Selecione um pesqueiro!");
-        }
-        else{
-            var tmpUpdate = (pag + '/nomePesqueiro/' + frm.nomePesqueiro.value + '/tempoAPesqueiro/' + frm.tempoAPesqueiro.value +'/distAPesqueiro/'+ frm.distAPesqueiro.value + '/id_entrevista/' + entrevista + '/back_url/' + TmpUrl);
 
-            location.replace(tmpUpdate);
-        }
-}
 
-function jsInsertEspecieCapturadaTipoVenda(frm, pag, entrevista){
-    
-    var TmpUrl  = (entrevista+ '#base');
-    if(frm.SelectEspecie.value === ""){
-        alert("Selecione uma espécie!");
-    }
-    else if(frm.quantidade.value === "" && frm.peso.value === ""){
-        alert("A Quantidade e o Peso não podem ser vazios, por favor insira um deles!");
-    }
-    else{
-        var tmpUpdate = (pag + '/selectEspecie/' + frm.SelectEspecie.value + '/quantidade/' + frm.quantidade.value + '/peso/' + frm.peso.value + '/precokg/' + frm.precokg.value + '/id_entrevista/' + entrevista + '/id_tipovenda/'+frm.tipoVenda.value+'/back_url/' + TmpUrl);
-        
-        location.replace(tmpUpdate);
-    }
-}
-function jsInsertEspecieCapturada(frm, pag, entrevista){
-    
-    var TmpUrl  = (entrevista+ '#base');
-    if(frm.SelectEspecie.value === ""){
-        alert("Selecione uma espécie!");
-    }
-    else if(frm.quantidade.value === "" && frm.peso.value === ""){
-        alert("A Quantidade e o Peso não podem ser vazios, por favor insira um deles!");
-    }
-    else{
-        var tmpUpdate = (pag + '/selectEspecie/' + frm.SelectEspecie.value + '/quantidade/' + frm.quantidade.value + '/peso/' + frm.peso.value + '/precokg/' + frm.precokg.value + '/id_entrevista/' + entrevista +'/back_url/' + TmpUrl);
 
-        location.replace(tmpUpdate);
-    }
-}
+
 
 
 function jsDeleteEspecieCapturada(fichaId, pag, idEntHasEspecie) {
@@ -926,16 +853,6 @@ function jsDeleteMonitoramento(idMnt, frm, pag, fichaId) {
             }
 }
 
-        function jsInsertMonitoramento(frm, pag)
-        {
-            if (frm.QuantidadeEmbarcacoes.value) {
-                var TmpUrl = (+frm.id_fichaDiaria.value + '#base');
-
-                var tmpUpdate = (pag + '/SelectArtePesca/' + frm.SelectArtePesca.value + '/SelectMonitorada/' + frm.SelectMonitorada.value + '/QuantidadeEmbarcacoes/' + frm.QuantidadeEmbarcacoes.value + '/id_fichaDiaria/' + frm.id_fichaDiaria.value + '/back_url/' + TmpUrl);
-
-                window.location.replace(tmpUpdate);
-            }
-        }
 
 function jsInsertIsca( frm, pag )
 {
@@ -1586,22 +1503,28 @@ function ajax_monitoramento(form, url){
             var quantEmb = form.QuantidadeEmbarcacoes.value;
             var idFicha = form.id_fichaDiaria.value;
             var arte = form.SelectArtePesca.value;
-            //var ln = document.getElementById("last_name").value;
-            var vars = "SelectMonitorada="+monitorada+"&QuantidadeEmbarcacoes="+quantEmb+
-                    "&id_fichaDiaria="+idFicha+"&SelectArtePesca="+arte;
-            hr.open("POST", url, true);
-            // Set content type header information for sending url encoded variables in the request
-            hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            // Access the onreadystatechange event for the XMLHttpRequest object
-            hr.onreadystatechange = function() {
-                    if(hr.readyState === 4 && hr.status === 200) {
-                    var return_data = hr.responseText;
-                        document.getElementById("monitoramentos").innerHTML = return_data;
-                    }
-            };
-                // Send the data to PHP now... and wait for response to update the status div
-            hr.send(vars); // Actually execute the request
-            document.getElementById("monitoramentos").innerHTML = "processing...";
+            
+            if(quantEmb === ""){
+                alert("Digite a quantidade de Embarcações")
+            }
+            else{
+                //var ln = document.getElementById("last_name").value;
+                var vars = "SelectMonitorada="+monitorada+"&QuantidadeEmbarcacoes="+quantEmb+
+                        "&id_fichaDiaria="+idFicha+"&SelectArtePesca="+arte;
+                hr.open("POST", url, true);
+                // Set content type header information for sending url encoded variables in the request
+                hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                // Access the onreadystatechange event for the XMLHttpRequest object
+                hr.onreadystatechange = function() {
+                        if(hr.readyState === 4 && hr.status === 200) {
+                        var return_data = hr.responseText;
+                            document.getElementById("monitoramentos").innerHTML = return_data;
+                        }
+                };
+                    // Send the data to PHP now... and wait for response to update the status div
+                hr.send(vars); // Actually execute the request
+                document.getElementById("monitoramentos").innerHTML = "processing...";
+            }
      }
      
 function ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista){ //url é o link do controller destino
@@ -1614,31 +1537,38 @@ function ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista){ //url é
             var peso = form.peso.value;
             var preco = form.precokg.value;
             var id_entrevista = id_entrevista;
-            
-            var vars;
-            //var ln = document.getElementById("last_name").value;
-            if(tipo_entrevista === 'venda'){
-                var tipo_venda = form.tipoVenda.value;
-                vars = "selectEspecie="+especie+"&quantidade="+quant+"&id_tipovenda="+tipo_venda+
-                    "&peso="+peso+"&precokg="+preco+"&id_entrevista="+id_entrevista;
-            }   
-            else{
-                vars = "selectEspecie="+especie+"&quantidade="+quant+
-                    "&peso="+peso+"&precokg="+preco+"&id_entrevista="+id_entrevista;
+            if(especie === ""){
+                alert("Selecione uma espécie!");
             }
-            hr.open("POST", url, true);
-            // Set content type header information for sending url encoded variables in the request
-            hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            // Access the onreadystatechange event for the XMLHttpRequest object
-            hr.onreadystatechange = function() {
-                    if(hr.readyState === 4 && hr.status === 200) {
-                    var return_data = hr.responseText;
-                        document.getElementById("especie").innerHTML = return_data;
-                    }
-            };
-                // Send the data to PHP now... and wait for response to update the status div
-            hr.send(vars); // Actually execute the request
-            document.getElementById("especie").innerHTML = "processando...";
+            else if(quant === "" && peso === ""){
+                alert("A Quantidade e o Peso não podem ser vazios, por favor insira um deles!");
+            }
+            else{
+                var vars;
+                //var ln = document.getElementById("last_name").value;
+                if(tipo_entrevista === 'venda'){
+                    var tipo_venda = form.tipoVenda.value;
+                    vars = "selectEspecie="+especie+"&quantidade="+quant+"&id_tipovenda="+tipo_venda+
+                        "&peso="+peso+"&precokg="+preco+"&id_entrevista="+id_entrevista;
+                }   
+                else{
+                    vars = "selectEspecie="+especie+"&quantidade="+quant+
+                        "&peso="+peso+"&precokg="+preco+"&id_entrevista="+id_entrevista;
+                }
+                hr.open("POST", url, true);
+                // Set content type header information for sending url encoded variables in the request
+                hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                // Access the onreadystatechange event for the XMLHttpRequest object
+                hr.onreadystatechange = function() {
+                        if(hr.readyState === 4 && hr.status === 200) {
+                        var return_data = hr.responseText;
+                            document.getElementById("especie").innerHTML = return_data;
+                        }
+                };
+                    // Send the data to PHP now... and wait for response to update the status div
+                hr.send(vars); // Actually execute the request
+                document.getElementById("especie").innerHTML = "processando...";
+            }
      }  
 
 
