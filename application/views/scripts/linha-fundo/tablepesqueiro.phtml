@@ -1,0 +1,25 @@
+<div id="pesqueiro">
+    <fieldset class="noEditable" id="itemArteTipoRows"><legend>Pesqueiros:</legend>
+        <table id="pesqueiros">
+            <tr>
+            <th width="5%">Id Entrevista</th>
+            <th width="50%">Pesqueiro</th>
+            <th width="30%">Tempo até o Pesqueiro</th>
+            <th width="30%">Distância até o Pesqueiro</th>
+            </tr>
+            <?php
+            foreach ($this->vLinhaFundo as $key => $vLinhaFundo):
+                ?>
+                <tr id="itemLinhaFundoRows">
+                <td name="inputIdEntrevista"> <?= $vLinhaFundo['lf_id'] ?> </td>
+                <td name="inputPesqueiro" > <?= $vLinhaFundo['paf_pesqueiro'] ?> </td>
+                <td name="inputTempoaPesqueiro"> <?= $vLinhaFundo['t_tempoapesqueiro'] ?> </td>
+                <td name="inputTempoaPesqueiro"> <?= $vLinhaFundo['t_distapesqueiro'] ?> </td>
+                <td><input type="button" class="button-del" width="5%" onclick="jsDeletePesqueiro(<?= $this->entrevista['lf_id'] ?>, '<?= $this->url(array("controller" => "linha-fundo", "action" => "deletepesqueiro"), null, true) ?>', <?= $vLinhaFundo['lf_paf_id'] ?>)"></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </fieldset>
+
+
+</div>

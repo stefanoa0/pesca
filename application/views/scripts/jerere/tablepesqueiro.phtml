@@ -1,0 +1,23 @@
+<div id="pesqueiro">
+<fieldset class="noEditable" id="itemArteTipoRows"><legend>Pesqueiros:</legend>
+    <table id="pesqueiros">
+        <tr>
+        <th width="5%">Id Entrevista</th>
+        <th width="50%">Pesqueiro</th>
+        <th width="30%">Tempo até o Pesqueiro</th>
+        <th width="30%">Distância até o Pesqueiro</th>
+        </tr>
+        <?php
+        foreach ($this->vJerere as $key => $vJerere):
+            ?>
+            <tr id="itemJerereRows">
+            <td name="inputIdEntrevista"> <?= $vJerere['jre_id'] ?> </td>
+            <td name="inputPesqueiro" > <?= $vJerere['paf_pesqueiro'] ?> </td>
+            <td name="inputTempoaPesqueiro"> <?= $vJerere['t_tempoapesqueiro'] ?> </td>
+            <td name="inputTempoaPesqueiro"> <?= $vJerere['t_distapesqueiro'] ?> </td>
+            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePesqueiro(<?= $this->entrevista['jre_id'] ?>, '<?= $this->url(array("controller" => "jerere", "action" => "deletepesqueiro"), null, true) ?>', <?= $vJerere['jre_paf_id'] ?>)"></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+</fieldset>
+</div>

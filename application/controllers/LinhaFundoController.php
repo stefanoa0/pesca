@@ -193,6 +193,17 @@ class LinhaFundoController extends Zend_Controller_Action
             $this->_redirect('ficha-diaria/editar/id/'.$idFicha);
         }
     }
+    
+    public function tablepesqueiroAction(){//Action para tablepesqueiro
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelLinhaFundo->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vLinhaFundo = $this->modelLinhaFundo->selectLinhaFundoHasPesqueiro('lf_id=' . $idEntrevista);
+        $this->view->assign('vLinhaFundo', $vLinhaFundo);
+    }
     public function insertpesqueiroAction(){
         if($this->usuario['tp_id'] == 5){
             $this->_redirect('index');
@@ -209,12 +220,10 @@ class LinhaFundoController extends Zend_Controller_Action
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
-
-
+        //$backUrl = $this->_getParam("back_url");
         $this->modelLinhaFundo->insertPesqueiro($idEntrevista, $pesqueiro, $tempoapesqueiro, $distanciapesqueiro);
 
-        $this->redirect("/linha-fundo/editar/id/" . $backUrl);
+        $this->redirect("/linha-fundo/tablepesqueiro/id/" . $idEntrevista);
     }
     public function deletepesqueiroAction(){
         if($this->usuario['tp_id'] == 5){
@@ -231,7 +240,18 @@ class LinhaFundoController extends Zend_Controller_Action
 
         $this->redirect("/linha-fundo/editar/id/" . $backUrl);
     }
-
+    
+    public function tableespcapturaAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelLinhaFundo->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vEspecieCapturadas = $this->modelLinhaFundo->selectLinhaFundoHasEspCapturadas('lf_id=' . $idEntrevista);
+    
+        $this->view->assign('vEspecieCapturadas', $vEspecieCapturadas);
+    }
     public function insertespeciecapturadaAction(){
         if($this->usuario['tp_id'] == 5){
             $this->_redirect('index');
@@ -250,13 +270,13 @@ class LinhaFundoController extends Zend_Controller_Action
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
         $idTipoVenda =  $this->_getParam("id_tipovenda");
         
         $this->modelLinhaFundo->insertEspCapturada($idEntrevista, $especie, $quantidade, $peso, $preco, $idTipoVenda);
 
-        $this->redirect("/linha-fundo/editar/id/" . $backUrl);
+        $this->redirect("/linha-fundo/tableespcaptura/id/" . $idEntrevista);
     }
     public function deletespecieAction(){
         if($this->usuario['tp_id'] == 5){

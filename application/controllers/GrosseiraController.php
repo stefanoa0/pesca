@@ -182,6 +182,17 @@ private $usuario;
             $this->_redirect('ficha-diaria/editar/id/'.$idFicha);
         }
     }
+    
+     public function tablepesqueiroAction(){//Action para tablepesqueiro
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelGrosseira->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vGrosseira = $this->modelGrosseira->selectGrosseiraHasPesqueiro('grs_id=' . $idEntrevista);
+        $this->view->assign('vGrosseira', $vGrosseira);
+    }
     public function insertpesqueiroAction(){
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
@@ -192,16 +203,16 @@ private $usuario;
 
         $pesqueiro = $this->_getParam("nomePesqueiro");
 
-        $tempoapesqueiro = $this->_getParam("tempoAPesqueiro");
+        $tempoapesqueiro = $this->_getParam("tempoPesqueiro");
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
 
         $this->modelGrosseira->insertPesqueiro($idEntrevista, $pesqueiro, $tempoapesqueiro);
 
-        $this->redirect("/grosseira/editar/id/" . $backUrl);
+        $this->redirect("/grosseira/tablepesqueiro/id/" . $idEntrevista);
     }
     public function deletepesqueiroAction(){
         if($this->usuario['tp_id']==5){
@@ -217,6 +228,18 @@ private $usuario;
         $this->modelGrosseira->deletePesqueiro($idEntrevistaHasPesqueiro);
 
         $this->redirect("/grosseira/editar/id/" . $backUrl);
+    }
+    
+    public function tableespcapturaAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelGrosseira->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vEspecieCapturadas = $this->modelGrosseira->selectGrosseiraHasEspCapturadas('grs_id=' . $idEntrevista);
+    
+        $this->view->assign('vEspecieCapturadas', $vEspecieCapturadas);
     }
     public function insertespeciecapturadaAction(){
         if($this->usuario['tp_id']==5){
@@ -236,12 +259,12 @@ private $usuario;
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
 
         $this->modelGrosseira->insertEspCapturada($idEntrevista, $especie, $quantidade, $peso, $preco);
 
-        $this->redirect("/grosseira/editar/id/" . $backUrl);
+        $this->redirect("/grosseira/tableespcaptura/id/" . $idEntrevista);
     }
     public function deletespecieAction(){
         if($this->usuario['tp_id']==5){

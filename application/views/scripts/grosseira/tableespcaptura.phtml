@@ -1,0 +1,25 @@
+<div id="especie">
+    <fieldset class="noEditable" id="itemArteTipoRows"><legend>Espécies Capturadas:</legend>
+        <table id="especiesCapturadas">
+            <tr>
+            <th width="20%">Id Entrevista</th>
+            <th width="30%">Espécie Capturada</th>
+            <th width="20%">Quantidade</th>
+            <th width="20%">Peso (kg)</th>
+            <th width="20%">Preço por kg</th>
+            </tr>
+            <?php
+            foreach ($this->vEspecieCapturadas as $key => $vEspecieCapturada):
+                ?>
+                <tr id="itemEmbarcacoesRows">
+                <td name="inputEntrevista"> <?= $vEspecieCapturada['grs_id'] ?> </td>
+                <td name="inputEspecie" > <?= $vEspecieCapturada['esp_nome_comum'] ?> </td>
+                <td name="inputQuantidade"> <?= $vEspecieCapturada['spc_quantidade'] . ' Unidades' ?> </td>
+                <td name="inputPeso"> <?= $vEspecieCapturada['spc_peso_kg'] . ' kg' ?> </td>
+                <td name="inputPreco"> <?= 'R$ ' . $vEspecieCapturada['spc_preco'] ?> </td>
+                <td><input type="button" class="button-del" width="5%" onclick="jsDeleteEspecieCapturada(<?= $this->entrevista['grs_id'] ?>, '<?= $this->url(array("controller" => "grosseira", "action" => "deletespecie"), null, true) ?>', <?= $vEspecieCapturada['spc_grs_id'] ?>)"></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </fieldset>
+</div>
