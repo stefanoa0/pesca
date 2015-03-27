@@ -10,7 +10,9 @@ and open the template in the editor.
 a, input[type=button]{
     display:none;
 }
-
+fieldset{
+    border: none;
+}
 #menu, #login, #menu-lateral, #rodape, #buscaInicial{
     display: none;
 }
@@ -19,7 +21,6 @@ a, input[type=button]{
 }
 #topo {
     height: 2cm;
-    background: #f8f8ff;
 }
 #topoLeft
 {
