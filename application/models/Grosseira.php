@@ -251,7 +251,7 @@ private $dbTableGrosseira;
         
         $dadosPesqueiro = array(
             'grs_id' => $idEntrevista,
-            'paf_id' => $pesqueiro,
+            'pgrs_id' => $pesqueiro,
             't_tempoapesqueiro' => $tempoAPesqueiro
         );
         
@@ -262,7 +262,7 @@ private $dbTableGrosseira;
         $this->dbTableTGrosseiraHasPesqueiro = new Application_Model_DbTable_GrosseiraHasPesqueiro();       
                 
         $whereGrosseiraHasPesqueiro = $this->dbTableTGrosseiraHasPesqueiro->getAdapter()
-                ->quoteInto('"grs_paf_id" = ?', $idPesqueiro);
+                ->quoteInto('"grs_pgrs_id" = ?', $idPesqueiro);
         
         $this->dbTableTGrosseiraHasPesqueiro->delete($whereGrosseiraHasPesqueiro);
         
@@ -443,14 +443,39 @@ private $dbTableGrosseira;
         
     }
     
-    public function selectPescadoresByPorto(){
+    public function selectPescadoresByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaGrosseira();
         $select = $dbTable->select()->
                 from('v_entrevista_grosseira', array('pto_nome', 'count(tp_nome)'))->
                 group(array('pto_nome'));
-        
+        if(!is_null($where)){
+            $select->where($where);
+        }
         return $dbTable->fetchAll($select)->toArray();
+    }
+    public function selectBarcosByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaGrosseira();
+        $select = $dbTable->select()->
+                from('v_entrevista_grosseira', array('pto_nome', 'count(bar_nome)'))->
+                group(array('pto_nome'));
         
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
+        public function selectCapturaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaGrosseira();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_grosseira', 'v_entrevista_grosseira.pto_nome')->joinLeft('v_grosseira_has_t_especie_capturada', 'v_entrevista_grosseira.grs_id = v_grosseira_has_t_especie_capturada.grs_id',
+                        array('sum(v_grosseira_has_t_especie_capturada.spc_quantidade) as quant','sum(v_grosseira_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('pto_nome'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
     }
 }
 

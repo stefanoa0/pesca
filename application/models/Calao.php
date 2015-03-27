@@ -245,7 +245,7 @@ class Application_Model_Calao
         
         $dadosPesqueiro = array(
             'cal_id' => $idEntrevista,
-            'paf_id' => $pesqueiro,
+            'pcal_id' => $pesqueiro,
         );
         
         $this->dbTableTCalao->insert($dadosPesqueiro);
@@ -255,7 +255,7 @@ class Application_Model_Calao
         $this->dbTableTCalao = new Application_Model_DbTable_CalaoHasPesqueiro();       
                 
         $whereCalaoHasPesqueiro = $this->dbTableTCalao->getAdapter()
-                ->quoteInto('"cal_paf_id" = ?', $idPesqueiro);
+                ->quoteInto('"cal_pcal_id" = ?', $idPesqueiro);
         
         $this->dbTableTCalao->delete($whereCalaoHasPesqueiro);
         
@@ -420,14 +420,39 @@ class Application_Model_Calao
         
     }
     
-    public function selectPescadoresByPorto(){
+   public function selectPescadoresByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaCalao();
         $select = $dbTable->select()->
                 from('v_entrevista_calao', array('pto_nome', 'count(tp_nome)'))->
                 group(array('pto_nome'));
-        
+        if(!is_null($where)){
+            $select->where($where);
+        }
         return $dbTable->fetchAll($select)->toArray();
+    }
+    public function selectBarcosByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaCalao();
+        $select = $dbTable->select()->
+                from('v_entrevista_calao', array('pto_nome', 'count(bar_nome)'))->
+                group(array('pto_nome'));
         
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
+        public function selectCapturaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaCalao();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_calao', 'v_entrevista_calao.pto_nome')->joinLeft('v_calao_has_t_especie_capturada', 'v_entrevista_calao.cal_id = v_calao_has_t_especie_capturada.cal_id',
+                        array('sum(v_calao_has_t_especie_capturada.spc_quantidade) as quant','sum(v_calao_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('pto_nome'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
     }
 }
 

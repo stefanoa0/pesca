@@ -192,7 +192,7 @@ class Application_Model_Manzua
         }
         $dadosPesqueiro = array(
             'man_id' => $idEntrevista,
-            'paf_id' => $pesqueiro,
+            'pman_id' => $pesqueiro,
             't_tempoapesqueiro' => $tempoAPesqueiro,
             't_distapesqueiro' => $distAPesqueiro
         );
@@ -204,7 +204,7 @@ class Application_Model_Manzua
         $this->dbTableTManzuaHasPesqueiro = new Application_Model_DbTable_ManzuaHasPesqueiro();       
                 
         $whereManzuaHasPesqueiro = $this->dbTableTManzuaHasPesqueiro->getAdapter()
-                ->quoteInto('"man_paf_id" = ?', $idPesqueiro);
+                ->quoteInto('"man_pman_id" = ?', $idPesqueiro);
         
         $this->dbTableTManzuaHasPesqueiro->delete($whereManzuaHasPesqueiro);
         
@@ -386,14 +386,38 @@ class Application_Model_Manzua
         
     }
     
-    public function selectPescadoresByPorto(){
+    public function selectPescadoresByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaManzua();
         $select = $dbTable->select()->
                 from('v_entrevista_manzua', array('pto_nome', 'count(tp_nome)'))->
                 group(array('pto_nome'));
-        
+        if(!is_null($where)){
+            $select->where($where);
+        }
         return $dbTable->fetchAll($select)->toArray();
+    }
+    public function selectBarcosByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaManzua();
+        $select = $dbTable->select()->
+                from('v_entrevista_manzua', array('pto_nome', 'count(bar_nome)'))->
+                group(array('pto_nome'));
         
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+        public function selectCapturaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaManzua();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_manzua', 'v_entrevista_manzua.pto_nome')->joinLeft('v_manzua_has_t_especie_capturada', 'v_entrevista_manzua.man_id = v_manzua_has_t_especie_capturada.man_id',
+                        array('sum(v_manzua_has_t_especie_capturada.spc_quantidade) as quant','sum(v_manzua_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('pto_nome'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
     }
 }
 

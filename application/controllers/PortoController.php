@@ -30,7 +30,7 @@ class PortoController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $dados = $this->modelPorto->select();
+        $dados = $this->modelPorto->select(null, 'pto_prioridade');
 
         $this->view->assign("dados", $dados);
     }
@@ -98,7 +98,37 @@ class PortoController extends Zend_Controller_Action
         $this->_redirect('porto/index');
         }
     }
+    public function relatorioindexAction(){
+        $modelArrasto = new Application_Model_ArrastoFundo();
+        $modelCalao= new Application_Model_Calao();
+        $modelColeta= new Application_Model_ColetaManual();
+        $modelEmalhe= new Application_Model_Emalhe();
+        $modelGrosseira= new Application_Model_Grosseira();
+        $modelJerere= new Application_Model_Jerere();
+        $modelLinha= new Application_Model_Linha();
+        $modelLinhaFundo= new Application_Model_LinhaFundo();
+        $modelManzua= new Application_Model_Manzua();
+        $modelMergulho= new Application_Model_Mergulho();
+        $modelRatoeira= new Application_Model_Ratoeira();
+        $modelSiripoia= new Application_Model_Siripoia();
+        $modelTarrafa= new Application_Model_Tarrafa();
+        $modelVaraPesca =  new Application_Model_VaraPesca();
 
+        $captura = $modelArrasto   ->selectCapturaByPorto();
+        $captura = $modelCalao     ->selectCapturaByPorto();
+        $captura = $modelColeta    ->selectCapturaByPorto();
+        $captura = $modelEmalhe    ->selectCapturaByPorto();
+        $captura = $modelGrosseira ->selectCapturaByPorto();
+        $captura = $modelJerere    ->selectCapturaByPorto();
+        $captura = $modelLinha     ->selectCapturaByPorto();
+        $captura = $modelLinhaFundo->selectCapturaByPorto();
+        $captura = $modelManzua    ->selectCapturaByPorto();
+        $captura = $modelMergulho  ->selectCapturaByPorto();
+        $captura = $modelRatoeira  ->selectCapturaByPorto();
+        $captura = $modelSiripoia  ->selectCapturaByPorto();
+        $captura = $modelVaraPesca ->selectCapturaByPorto();
+        print_r($captura);
+    }
 
 	public function relatorioAction() {
             if($this->usuario['tp_id']==5){

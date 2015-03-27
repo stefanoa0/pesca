@@ -262,7 +262,7 @@ class Application_Model_Emalhe
         
         $dadosPesqueiro = array(
             'em_id' => $idEntrevista,
-            'paf_id' => $pesqueiro,
+            'pem_id' => $pesqueiro,
         );
         
         $this->dbTableTEmalhe->insert($dadosPesqueiro);
@@ -272,7 +272,7 @@ class Application_Model_Emalhe
         $this->dbTableTEmalhe = new Application_Model_DbTable_EmalheHasPesqueiro();       
                 
         $whereEmalheHasPesqueiro = $this->dbTableTEmalhe->getAdapter()
-                ->quoteInto('"em_paf_id" = ?', $idPesqueiro);
+                ->quoteInto('"em_pem_id" = ?', $idPesqueiro);
         
         $this->dbTableTEmalhe->delete($whereEmalheHasPesqueiro);
         
@@ -452,14 +452,38 @@ class Application_Model_Emalhe
         
     }
     
-    public function selectPescadoresByPorto(){
+   public function selectPescadoresByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaEmalhe();
         $select = $dbTable->select()->
                 from('v_entrevista_emalhe', array('pto_nome', 'count(tp_nome)'))->
                 group(array('pto_nome'));
-        
+        if(!is_null($where)){
+            $select->where($where);
+        }
         return $dbTable->fetchAll($select)->toArray();
+    }
+    public function selectBarcosByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaEmalhe();
+        $select = $dbTable->select()->
+                from('v_entrevista_emalhe', array('pto_nome', 'count(bar_nome)'))->
+                group(array('pto_nome'));
         
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+        public function selectCapturaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaEmalhe();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_emalhe', 'v_entrevista_emalhe.pto_nome')->joinLeft('v_emalhe_has_t_especie_capturada', 'v_entrevista_emalhe.em_id = v_emalhe_has_t_especie_capturada.em_id',
+                        array('sum(v_emalhe_has_t_especie_capturada.spc_quantidade) as quant','sum(v_emalhe_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('pto_nome'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
     }
 
 }

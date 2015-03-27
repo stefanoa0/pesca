@@ -252,7 +252,7 @@ private $dbTableLinha;
         
         $dadosPesqueiro = array(
             'lin_id' => $idEntrevista,
-            'paf_id' => $pesqueiro,
+            'plin_id' => $pesqueiro,
             't_tempoapesqueiro' => $tempoAPesqueiro
         );
         
@@ -263,7 +263,7 @@ private $dbTableLinha;
         $this->dbTableTLinhaHasPesqueiro = new Application_Model_DbTable_LinhaHasPesqueiro();       
                 
         $whereLinhaHasPesqueiro = $this->dbTableTLinhaHasPesqueiro->getAdapter()
-                ->quoteInto('"lin_paf_id" = ?', $idPesqueiro);
+                ->quoteInto('"lin_plin_id" = ?', $idPesqueiro);
         
         $this->dbTableTLinhaHasPesqueiro->delete($whereLinhaHasPesqueiro);
         
@@ -443,14 +443,39 @@ private $dbTableLinha;
         
     }
     
-    public function selectPescadoresByPorto(){
+    public function selectPescadoresByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaLinha();
         $select = $dbTable->select()->
                 from('v_entrevista_linha', array('pto_nome', 'count(tp_nome)'))->
                 group(array('pto_nome'));
-        
+        if(!is_null($where)){
+            $select->where($where);
+        }
         return $dbTable->fetchAll($select)->toArray();
+    }
+    public function selectBarcosByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaLinha();
+        $select = $dbTable->select()->
+                from('v_entrevista_linha', array('pto_nome', 'count(bar_nome)'))->
+                group(array('pto_nome'));
         
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
+        public function selectCapturaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaLinha();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_linha', 'v_entrevista_linha.pto_nome')->joinLeft('v_linha_has_t_especie_capturada', 'v_entrevista_linha.lin_id = v_linha_has_t_especie_capturada.lin_id',
+                        array('sum(v_linha_has_t_especie_capturada.spc_quantidade) as quant','sum(v_linha_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('pto_nome'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
     }
 }
 

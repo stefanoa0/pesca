@@ -244,7 +244,7 @@ class Application_Model_VaraPesca
         
         $dadosPesqueiro = array(
             'vp_id' => $idEntrevista,
-            'paf_id' => $pesqueiro,
+            'pvp_id' => $pesqueiro,
             't_tempoapesqueiro' => $tempoAPesqueiro,
             't_distapesqueiro' => $distAPesqueiro
         );
@@ -256,11 +256,11 @@ class Application_Model_VaraPesca
         $this->dbTableTVaraPescaHasPesqueiro = new Application_Model_DbTable_VaraPescaHasPesqueiro();       
         if(empty($idEntrevista)){
             $whereVaraPescaHasPesqueiro = $this->dbTableTVaraPescaHasPesqueiro->getAdapter()
-                ->quoteInto('"vp_paf_id" = ?', $idPesqueiro);
+                ->quoteInto('"vp_pvp_id" = ?', $idPesqueiro);
         }
         else{
             $whereVaraPescaHasPesqueiro = $this->dbTableTVaraPescaHasPesqueiro->getAdapter()
-                ->quoteInto('"af_id" = ?', $idEntrevista);
+                ->quoteInto('"vp_id" = ?', $idEntrevista);
         }
         $this->dbTableTVaraPescaHasPesqueiro->delete($whereVaraPescaHasPesqueiro);
     }
@@ -440,14 +440,39 @@ class Application_Model_VaraPesca
         
     }
     
-    public function selectPescadoresByPorto(){
+    public function selectPescadoresByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaVaraPesca();
         $select = $dbTable->select()->
                 from('v_entrevista_varapesca', array('pto_nome', 'count(tp_nome)'))->
                 group(array('pto_nome'));
-        
+        if(!is_null($where)){
+            $select->where($where);
+        }
         return $dbTable->fetchAll($select)->toArray();
+    }
+    public function selectBarcosByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaVaraPesca();
+        $select = $dbTable->select()->
+                from('v_entrevista_varapesca', array('pto_nome', 'count(bar_nome)'))->
+                group(array('pto_nome'));
         
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
+        public function selectCapturaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaVaraPesca();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_varapesca', 'v_entrevista_varapesca.pto_nome')->joinLeft('v_varapesca_has_t_especie_capturada', 'v_entrevista_varapesca.vp_id = v_varapesca_has_t_especie_capturada.vp_id',
+                        array('sum(v_varapesca_has_t_especie_capturada.spc_quantidade) as quant','sum(v_varapesca_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('pto_nome'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
     }
 }
 

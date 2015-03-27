@@ -195,7 +195,7 @@ class Application_Model_Ratoeira
        
         $dadosPesqueiro = array(
             'rat_id' => $idEntrevista,
-            'paf_id' => $pesqueiro,
+            'prat_id' => $pesqueiro,
             't_tempoapesqueiro' => $tempoAPesqueiro,
             't_distapesqueiro' => $distAPesqueiro
         );
@@ -207,7 +207,7 @@ class Application_Model_Ratoeira
         $this->dbTableTRatoeiraHasPesqueiro = new Application_Model_DbTable_RatoeiraHasPesqueiro();       
                 
         $whereRatoeiraHasPesqueiro = $this->dbTableTRatoeiraHasPesqueiro->getAdapter()
-                ->quoteInto('"rat_paf_id" = ?', $idPesqueiro);
+                ->quoteInto('"rat_prat_id" = ?', $idPesqueiro);
         
         $this->dbTableTRatoeiraHasPesqueiro->delete($whereRatoeiraHasPesqueiro);
         
@@ -386,14 +386,39 @@ class Application_Model_Ratoeira
         
     }
     
-    public function selectPescadoresByPorto(){
+    public function selectPescadoresByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaRatoeira();
         $select = $dbTable->select()->
                 from('v_entrevista_ratoeira', array('pto_nome', 'count(tp_nome)'))->
                 group(array('pto_nome'));
-        
+        if(!is_null($where)){
+            $select->where($where);
+        }
         return $dbTable->fetchAll($select)->toArray();
+    }
+    public function selectBarcosByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaRatoeira();
+        $select = $dbTable->select()->
+                from('v_entrevista_ratoeira', array('pto_nome', 'count(bar_nome)'))->
+                group(array('pto_nome'));
         
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
+        public function selectCapturaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaRatoeira();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_ratoeira', 'v_entrevista_ratoeira.pto_nome')->joinLeft('v_ratoeira_has_t_especie_capturada', 'v_entrevista_ratoeira.rat_id = v_ratoeira_has_t_especie_capturada.rat_id',
+                        array('sum(v_ratoeira_has_t_especie_capturada.spc_quantidade) as quant','sum(v_ratoeira_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('pto_nome'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
     }
 }
 

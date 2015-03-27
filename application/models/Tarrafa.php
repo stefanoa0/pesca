@@ -198,7 +198,7 @@ class Application_Model_Tarrafa
 
         $dadosPesqueiro = array(
             'tar_id' => $idEntrevista,
-            'paf_id' => $pesqueiro,
+            'ptar_id' => $pesqueiro,
         );
 
         $this->dbTableTTarrafa->insert($dadosPesqueiro);
@@ -208,7 +208,7 @@ class Application_Model_Tarrafa
         $this->dbTableTTarrafa = new Application_Model_DbTable_TarrafaHasPesqueiro();
 
         $whereTarrafaHasPesqueiro = $this->dbTableTTarrafa->getAdapter()
-                ->quoteInto('"tar_paf_id" = ?', $idPesqueiro);
+                ->quoteInto('"tar_ptar_id" = ?', $idPesqueiro);
 
         $this->dbTableTTarrafa->delete($whereTarrafaHasPesqueiro);
     }
@@ -384,6 +384,39 @@ class Application_Model_Tarrafa
 
         $this->dbTableTTarrafaHasBioPeixe->delete($whereTarrafaHasBiometria);
         
+    }
+    public function selectPescadoresByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaTarrafa();
+        $select = $dbTable->select()->
+                from('v_entrevista_tarrafa', array('pto_nome', 'count(tp_nome)'))->
+                group(array('pto_nome'));
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    public function selectBarcosByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaTarrafa();
+        $select = $dbTable->select()->
+                from('v_entrevista_tarrafa', array('pto_nome', 'count(bar_nome)'))->
+                group(array('pto_nome'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+        public function selectCapturaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaTarrafa();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_tarrafa', 'v_entrevista_tarrafa.pto_nome')->joinLeft('v_tarrafa_has_t_especie_capturada', 'v_entrevista_tarrafa.tar_id = v_tarrafa_has_t_especie_capturada.tar_id',
+                        array('sum(v_tarrafa_has_t_especie_capturada.spc_quantidade) as quant','sum(v_tarrafa_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('pto_nome'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
     }
 
 }

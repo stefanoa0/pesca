@@ -200,7 +200,7 @@ private $dbTableMergulho;
         }
         $dadosPesqueiro = array(
             'mer_id' => $idEntrevista,
-            'paf_id' => $pesqueiro,
+            'pmer_id' => $pesqueiro,
             't_tempoapesqueiro' => $tempoAPesqueiro,
             't_distapesqueiro' => $distAPesqueiro
         );
@@ -212,7 +212,7 @@ private $dbTableMergulho;
         $this->dbTableTMergulhoHasPesqueiro = new Application_Model_DbTable_MergulhoHasPesqueiro();       
                 
         $whereMergulhoHasPesqueiro = $this->dbTableTMergulhoHasPesqueiro->getAdapter()
-                ->quoteInto('"mer_paf_id" = ?', $idPesqueiro);
+                ->quoteInto('"mer_pmer_id" = ?', $idPesqueiro);
         
         $this->dbTableTMergulhoHasPesqueiro->delete($whereMergulhoHasPesqueiro);
         
@@ -392,13 +392,38 @@ private $dbTableMergulho;
         
     }
     
-    public function selectPescadoresByPorto(){
+    public function selectPescadoresByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaMergulho();
         $select = $dbTable->select()->
                 from('v_entrevista_mergulho', array('pto_nome', 'count(tp_nome)'))->
                 group(array('pto_nome'));
-        
+        if(!is_null($where)){
+            $select->where($where);
+        }
         return $dbTable->fetchAll($select)->toArray();
+    }
+    public function selectBarcosByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaMergulho();
+        $select = $dbTable->select()->
+                from('v_entrevista_mergulho', array('pto_nome', 'count(bar_nome)'))->
+                group(array('pto_nome'));
         
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
+        public function selectCapturaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaMergulho();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_mergulho', 'v_entrevista_mergulho.pto_nome')->joinLeft('v_mergulho_has_t_especie_capturada', 'v_entrevista_mergulho.mer_id = v_mergulho_has_t_especie_capturada.mer_id',
+                        array('sum(v_mergulho_has_t_especie_capturada.spc_quantidade) as quant','sum(v_mergulho_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('pto_nome'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
     }
 }

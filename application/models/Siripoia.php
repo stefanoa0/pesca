@@ -193,7 +193,7 @@ class Application_Model_Siripoia
         
         $dadosPesqueiro = array(
             'sir_id' => $idEntrevista,
-            'paf_id' => $pesqueiro,
+            'psir_id' => $pesqueiro,
             't_tempoapesqueiro' => $tempoAPesqueiro,
             't_distapesqueiro' => $distAPesqueiro
         );
@@ -205,7 +205,7 @@ class Application_Model_Siripoia
         $this->dbTableTSiripoiaHasPesqueiro = new Application_Model_DbTable_SiripoiaHasPesqueiro();       
                 
         $whereSiripoiaHasPesqueiro = $this->dbTableTSiripoiaHasPesqueiro->getAdapter()
-                ->quoteInto('"sir_paf_id" = ?', $idPesqueiro);
+                ->quoteInto('"sir_psir_id" = ?', $idPesqueiro);
         
         $this->dbTableTSiripoiaHasPesqueiro->delete($whereSiripoiaHasPesqueiro);
         
@@ -385,14 +385,38 @@ class Application_Model_Siripoia
         
     }
     
-    public function selectPescadoresByPorto(){
-        $dbTable = new Application_Model_DbTable_VEntrevistaTarrafa();
+    public function selectPescadoresByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaSiripoia();
         $select = $dbTable->select()->
-                from('v_entrevista_tarrafa', array('pto_nome', 'count(tp_nome)'))->
+                from('v_entrevista_siripoia', array('pto_nome', 'count(tp_nome)'))->
+                group(array('pto_nome'));
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    public function selectBarcosByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaSiripoia();
+        $select = $dbTable->select()->
+                from('v_entrevista_siripoia', array('pto_nome', 'count(bar_nome)'))->
                 group(array('pto_nome'));
         
+        if(!is_null($where)){
+            $select->where($where);
+        }
         return $dbTable->fetchAll($select)->toArray();
+    }
+        public function selectCapturaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaSiripoia();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_siripoia', 'v_entrevista_siripoia.pto_nome')->joinLeft('v_siripoia_has_t_especie_capturada', 'v_entrevista_siripoia.sir_id = v_siripoia_has_t_especie_capturada.sir_id',
+                        array('sum(v_siripoia_has_t_especie_capturada.spc_quantidade) as quant','sum(v_siripoia_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('pto_nome'));
         
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
     }
 }
 
