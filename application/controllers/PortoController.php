@@ -114,20 +114,23 @@ class PortoController extends Zend_Controller_Action
         $modelTarrafa= new Application_Model_Tarrafa();
         $modelVaraPesca =  new Application_Model_VaraPesca();
 
-        $captura = $modelArrasto   ->selectCapturaByPorto();
-        $captura = $modelCalao     ->selectCapturaByPorto();
-        $captura = $modelColeta    ->selectCapturaByPorto();
-        $captura = $modelEmalhe    ->selectCapturaByPorto();
-        $captura = $modelGrosseira ->selectCapturaByPorto();
-        $captura = $modelJerere    ->selectCapturaByPorto();
-        $captura = $modelLinha     ->selectCapturaByPorto();
-        $captura = $modelLinhaFundo->selectCapturaByPorto();
-        $captura = $modelManzua    ->selectCapturaByPorto();
-        $captura = $modelMergulho  ->selectCapturaByPorto();
-        $captura = $modelRatoeira  ->selectCapturaByPorto();
-        $captura = $modelSiripoia  ->selectCapturaByPorto();
-        $captura = $modelVaraPesca ->selectCapturaByPorto();
-        print_r($captura);
+        $capturaArrasto    = $modelArrasto   ->selectCapturaByPorto();
+        $capturaCalao      = $modelCalao     ->selectCapturaByPorto();
+        $capturaColeta     = $modelColeta    ->selectCapturaByPorto();
+        $capturaEmalhe     = $modelEmalhe    ->selectCapturaByPorto();
+        $capturaGrosseira  = $modelGrosseira ->selectCapturaByPorto();
+        $capturaJerere     = $modelJerere    ->selectCapturaByPorto();
+        $capturaLinha      = $modelLinha     ->selectCapturaByPorto();
+        $capturaLinhaFundo = $modelLinhaFundo->selectCapturaByPorto();
+        $capturaManzua     = $modelManzua    ->selectCapturaByPorto();
+        $capturaMergulho   = $modelMergulho  ->selectCapturaByPorto();
+        $capturaRatoeira   = $modelRatoeira  ->selectCapturaByPorto();
+        $capturaSiripoia   = $modelSiripoia  ->selectCapturaByPorto();
+        $capturaTarrafa    = $modelTarrafa   ->selectCapturaByPorto();
+        $capturaVaraPesca  = $modelVaraPesca ->selectCapturaByPorto();
+        
+        $barcos = $modelArrasto->selectCountEntrevistasByPorto("pto_nome = 'Pontal'");
+        print_r($barcos);
     }
 
 	public function relatorioAction() {
