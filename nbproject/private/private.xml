@@ -3,11 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/pescador/index.phtml</file>
-            <file>file:/C:/wamp/www/pesca/public/css/print.css</file>
-            <file>file:/C:/wamp/www/pesca/application/layouts/scripts/admin.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/arte-pesca/index.phtml</file>
-            <file>file:/C:/wamp/www/pesca/public/css/estilo-admin.css</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/amendoeira.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/PortoController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/relatorioindex.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/ficha-diaria/editar.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/index.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/RelatoriosController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/relatorios/pescadoresporto.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/models/ArrastoFundo.php</file>
         </group>
     </open-files>
 </project-private>

@@ -193,7 +193,7 @@ class Application_Model_Siripoia
         
         $dadosPesqueiro = array(
             'sir_id' => $idEntrevista,
-            'psir_id' => $pesqueiro,
+            'paf_id' => $pesqueiro,
             't_tempoapesqueiro' => $tempoAPesqueiro,
             't_distapesqueiro' => $distAPesqueiro
         );
@@ -205,7 +205,7 @@ class Application_Model_Siripoia
         $this->dbTableTSiripoiaHasPesqueiro = new Application_Model_DbTable_SiripoiaHasPesqueiro();       
                 
         $whereSiripoiaHasPesqueiro = $this->dbTableTSiripoiaHasPesqueiro->getAdapter()
-                ->quoteInto('"sir_psir_id" = ?', $idPesqueiro);
+                ->quoteInto('"sir_paf_id" = ?', $idPesqueiro);
         
         $this->dbTableTSiripoiaHasPesqueiro->delete($whereSiripoiaHasPesqueiro);
         

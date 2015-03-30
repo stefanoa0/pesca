@@ -198,7 +198,7 @@ class Application_Model_Tarrafa
 
         $dadosPesqueiro = array(
             'tar_id' => $idEntrevista,
-            'ptar_id' => $pesqueiro,
+            'paf_id' => $pesqueiro,
         );
 
         $this->dbTableTTarrafa->insert($dadosPesqueiro);
@@ -208,7 +208,7 @@ class Application_Model_Tarrafa
         $this->dbTableTTarrafa = new Application_Model_DbTable_TarrafaHasPesqueiro();
 
         $whereTarrafaHasPesqueiro = $this->dbTableTTarrafa->getAdapter()
-                ->quoteInto('"tar_ptar_id" = ?', $idPesqueiro);
+                ->quoteInto('"tar_paf_id" = ?', $idPesqueiro);
 
         $this->dbTableTTarrafa->delete($whereTarrafaHasPesqueiro);
     }

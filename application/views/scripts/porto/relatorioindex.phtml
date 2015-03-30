@@ -1,22 +1,42 @@
 <h3>Relatórios -> Portos:</h3>
 
-    <ul>
-        <li><a class="relatorio" href="<?= $this->url(array("controller" => "porto", "action" => ""), null, true) ?>"target="_blank">Pontal</a></li>
-        <li><a class="relatorio" href="<?= $this->url(array("controller" => "porto", "action" => ""), null, true) ?>"target="_blank">Terminal Pesqueiro</a></li>
-        <li><a class="relatorio" href="<?= $this->url(array("controller" => "porto", "action" => ""), null, true) ?>"target="_blank">Prainha</a></li>
-        <li><a class="relatorio" href="<?= $this->url(array("controller" => "porto", "action" => ""), null, true) ?>"target="_blank">Amendoeira</a></li>
-        <li><a class="relatorio" href="<?= $this->url(array("controller" => "porto", "action" => ""), null, true) ?>"target="_blank">Porto da Barra</a></li>
-        <li><a class="relatorio" href="<?= $this->url(array("controller" => "porto", "action" => ""), null, true) ?>"target="_blank">São Miguel</a></li>
-        <li><a class="relatorio" href="<?= $this->url(array("controller" => "porto", "action" => ""), null, true) ?>"target="_blank">Ponta da Tulha</a></li>
-        <li><a class="relatorio" href="<?= $this->url(array("controller" => "porto", "action" => ""), null, true) ?>"target="_blank">Mamoã</a></li>
-        <li><a class="relatorio" href="<?= $this->url(array("controller" => "porto", "action" => ""), null, true) ?>"target="_blank">Ponta do Ramo</a></li>
-        <li><a class="relatorio" href="<?= $this->url(array("controller" => "porto", "action" => ""), null, true) ?>"target="_blank">Urucutuca</a></li>
-        <li><a class="relatorio" href="<?= $this->url(array("controller" => "porto", "action" => ""), null, true) ?>"target="_blank">Sambaituba</a></li>      
-        <li><a class="relatorio" href="<?= $this->url(array("controller" => "porto", "action" => ""), null, true) ?>"target="_blank">Juerana Rio</a></li>
-        <li><a class="relatorio" href="<?= $this->url(array("controller" => "porto", "action" => ""), null, true) ?>"target="_blank">Aritaguá</a></li>    
-        <li><a class="relatorio" href="<?= $this->url(array("controller" => "porto", "action" => ""), null, true) ?>"target="_blank">Sobradinho</a></li>
-        <li><a class="relatorio" href="<?= $this->url(array("controller" => "porto", "action" => ""), null, true) ?>"target="_blank">Pé de Serra</a></li>
-        <li><a class="relatorio" href="<?= $this->url(array("controller" => "porto", "action" => ""), null, true) ?>"target="_blank">Vila Badú</a></li>
-        <li><a class="relatorio" href="<?= $this->url(array("controller" => "porto", "action" => ""), null, true) ?>"target="_blank">Porto da Concha</a></li>
-        <li><a class="relatorio" href="<?= $this->url(array("controller" => "porto", "action" => ""), null, true) ?>"target="_blank">Porto do Forte</a></li>
-    </ul>    
+<form action="<?= $this->url(array("controller" => "porto", "action" => "relatorioindex"), null, true) ?>" method="post">
+    <div class="esquerda">
+
+        <fieldset>
+            <legend>Entrevistas:</legend>
+            <div class="form-esq">
+                <label>Portos:</label><select name="porto" >
+                    <option value="1">Pontal</option>
+                    <option value="2">Terminal Pesqueiro</option>
+                    <option value="3">Prainha</option>
+                    <option value="4">Amendoeira</option>
+                    <option value="5">Porto da Barra</option>
+                    <option value="6">São Miguel</option>
+                    <option value="7">Ponta da Tulha</option>
+                    <option value="8">Mamoã</option>
+                    <option value="9">Ponta do Ramo</option>
+                    <option value="10">Urucutuca</option>
+                    <option value="11">Sambaituba</option>      
+                    <option value="12">Juerana Rio</option>
+                    <option value="13">Aritaguá</option>    
+                    <option value="14">Sobradinho</option>
+                    <option value="15">Pé de Serra</option>
+                    <option value="16">Vila Badú</option>
+                    <option value="17">Porto da Concha</option>
+                    <option value="18">Porto do Forte</option>
+                </select>
+            </div>
+            <div class="form-esq">
+            <label>Data Inicial</label>
+            <input type="date" name="dataini" />
+            </div>
+            <div class="form-esq">
+            <label>Data Final</label>
+            <input type="date" name="datafim" />
+            </div>
+            <br/>
+            <input type="submit" value="Enviar"/>
+        </fieldset>
+    </div>
+</form>

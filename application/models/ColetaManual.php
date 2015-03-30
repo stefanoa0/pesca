@@ -188,7 +188,7 @@ private $dbTableColetaManual;
         }
         $dadosPesqueiro = array(
             'cml_id' => $idEntrevista,
-            'pcml_id' => $pesqueiro,
+            'paf_id' => $pesqueiro,
             't_tempoapesqueiro' => $tempoAPesqueiro,
             't_distapesqueiro' => $distAPesqueiro
         );
@@ -200,7 +200,7 @@ private $dbTableColetaManual;
         $this->dbTableTColetaManualHasPesqueiro = new Application_Model_DbTable_ColetaManualHasPesqueiro();       
                 
         $whereColetaManualHasPesqueiro = $this->dbTableTColetaManualHasPesqueiro->getAdapter()
-                ->quoteInto('"cml_pcml_id" = ?', $idPesqueiro);
+                ->quoteInto('"cml_paf_id" = ?', $idPesqueiro);
         
         $this->dbTableTColetaManualHasPesqueiro->delete($whereColetaManualHasPesqueiro);
         
@@ -409,6 +409,55 @@ private $dbTableColetaManual;
                 from('v_entrevista_coletamanual', 'v_entrevista_coletamanual.pto_nome')->joinLeft('v_coletamanual_has_t_especie_capturada', 'v_entrevista_coletamanual.cml_id = v_coletamanual_has_t_especie_capturada.cml_id',
                         array('sum(v_coletamanual_has_t_especie_capturada.spc_quantidade) as quant','sum(v_coletamanual_has_t_especie_capturada.spc_peso_kg) as peso' ))->
                 group(array('pto_nome'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
+    public function selectQuantBarcosByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaColetaManual();
+        $select = $dbTable->select()->
+                from('v_entrevista_coletamanual', array('pto_nome', 'count(bar_nome) as quant','bar_nome'))->
+                group(array('pto_nome','bar_nome'))->
+                order('quant Desc');
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
+    public function selectQuantCapturaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaColetaManual();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_coletamanual', 'v_entrevista_coletamanual.pto_nome')->joinLeft('v_coletamanualfundo_has_t_especie_capturada', 'v_entrevista_coletamanual.cml_id = v_coletamanualfundo_has_t_especie_capturada.cml_id',
+                        array('sum(v_coletamanualfundo_has_t_especie_capturada.spc_quantidade) as quant','sum(v_coletamanualfundo_has_t_especie_capturada.spc_peso_kg) as peso', 'esp_nome_comum' ))->
+                group(array('pto_nome', 'esp_nome_comum'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    public function selectQuantPescadoresByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaColetaManual();
+        $select = $dbTable->select()->
+                from('v_entrevista_coletamanual', array('pto_nome', 'count(tp_nome)', 'tp_nome'))->
+                group(array('pto_nome', 'tp_nome'));
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
+    public function selectCountEntrevistasByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VMonitoramentos();
+        
+        $select = $dbTable->select()->
+                from('v_monitoramentos', array('pto_nome','tap_artepesca', 'sum(monitorados)'))
+                ->group(array('pto_nome', 'tap_artepesca'));
         
         if(!is_null($where)){
             $select->where($where);

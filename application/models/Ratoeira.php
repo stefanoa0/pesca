@@ -195,7 +195,7 @@ class Application_Model_Ratoeira
        
         $dadosPesqueiro = array(
             'rat_id' => $idEntrevista,
-            'prat_id' => $pesqueiro,
+            'paf_id' => $pesqueiro,
             't_tempoapesqueiro' => $tempoAPesqueiro,
             't_distapesqueiro' => $distAPesqueiro
         );
@@ -207,7 +207,7 @@ class Application_Model_Ratoeira
         $this->dbTableTRatoeiraHasPesqueiro = new Application_Model_DbTable_RatoeiraHasPesqueiro();       
                 
         $whereRatoeiraHasPesqueiro = $this->dbTableTRatoeiraHasPesqueiro->getAdapter()
-                ->quoteInto('"rat_prat_id" = ?', $idPesqueiro);
+                ->quoteInto('"rat_paf_id" = ?', $idPesqueiro);
         
         $this->dbTableTRatoeiraHasPesqueiro->delete($whereRatoeiraHasPesqueiro);
         
