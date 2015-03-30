@@ -207,7 +207,7 @@ class Application_Model_Jerere
         
         $dadosPesqueiro = array(
             'jre_id' => $idEntrevista,
-            'pjre_id' => $pesqueiro,
+            'paf_id' => $pesqueiro,
             't_tempoapesqueiro' => $tempoAPesqueiro,
             't_distapesqueiro' => $distAPesqueiro
         );
@@ -219,7 +219,7 @@ class Application_Model_Jerere
         $this->dbTableTJerereHasPesqueiro = new Application_Model_DbTable_JerereHasPesqueiro();       
                 
         $whereJerereHasPesqueiro = $this->dbTableTJerereHasPesqueiro->getAdapter()
-                ->quoteInto('"jre_pjre_id" = ?', $idPesqueiro);
+                ->quoteInto('"jre_paf_id" = ?', $idPesqueiro);
         
         $this->dbTableTJerereHasPesqueiro->delete($whereJerereHasPesqueiro);
         
@@ -429,6 +429,55 @@ class Application_Model_Jerere
                 from('v_entrevista_jerere', 'v_entrevista_jerere.pto_nome')->joinLeft('v_jerere_has_t_especie_capturada', 'v_entrevista_jerere.jre_id = v_jerere_has_t_especie_capturada.jre_id',
                         array('sum(v_jerere_has_t_especie_capturada.spc_quantidade) as quant','sum(v_jerere_has_t_especie_capturada.spc_peso_kg) as peso' ))->
                 group(array('pto_nome'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
+    public function selectQuantBarcosByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaJerere();
+        $select = $dbTable->select()->
+                from('v_entrevista_jerere', array('pto_nome', 'count(bar_nome) as quant','bar_nome'))->
+                group(array('pto_nome','bar_nome'))->
+                order('quant Desc');
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
+    public function selectQuantCapturaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaJerere();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_jerere', 'v_entrevista_jerere.pto_nome')->joinLeft('v_jererefundo_has_t_especie_capturada', 'v_entrevista_jerere.jre_id = v_jererefundo_has_t_especie_capturada.jre_id',
+                        array('sum(v_jererefundo_has_t_especie_capturada.spc_quantidade) as quant','sum(v_jererefundo_has_t_especie_capturada.spc_peso_kg) as peso', 'esp_nome_comum' ))->
+                group(array('pto_nome', 'esp_nome_comum'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    public function selectQuantPescadoresByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaJerere();
+        $select = $dbTable->select()->
+                from('v_entrevista_jerere', array('pto_nome', 'count(tp_nome)', 'tp_nome'))->
+                group(array('pto_nome', 'tp_nome'));
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
+    public function selectCountEntrevistasByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VMonitoramentos();
+        
+        $select = $dbTable->select()->
+                from('v_monitoramentos', array('pto_nome','tap_artepesca', 'sum(monitorados)'))
+                ->group(array('pto_nome', 'tap_artepesca'));
         
         if(!is_null($where)){
             $select->where($where);

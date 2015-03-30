@@ -192,7 +192,7 @@ class Application_Model_Manzua
         }
         $dadosPesqueiro = array(
             'man_id' => $idEntrevista,
-            'pman_id' => $pesqueiro,
+            'paf_id' => $pesqueiro,
             't_tempoapesqueiro' => $tempoAPesqueiro,
             't_distapesqueiro' => $distAPesqueiro
         );
@@ -204,7 +204,7 @@ class Application_Model_Manzua
         $this->dbTableTManzuaHasPesqueiro = new Application_Model_DbTable_ManzuaHasPesqueiro();       
                 
         $whereManzuaHasPesqueiro = $this->dbTableTManzuaHasPesqueiro->getAdapter()
-                ->quoteInto('"man_pman_id" = ?', $idPesqueiro);
+                ->quoteInto('"man_paf_id" = ?', $idPesqueiro);
         
         $this->dbTableTManzuaHasPesqueiro->delete($whereManzuaHasPesqueiro);
         

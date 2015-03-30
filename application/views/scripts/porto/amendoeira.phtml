@@ -1,0 +1,155 @@
+<h2>Porto -> Amendoeira</h2>
+
+<script src="js/Chart.min.js"></script>
+<script type="text/javascript">
+
+    var options = {
+        responsive:true,
+        scaleOverride: false
+
+    };
+
+    var data = {
+        labels: <?= $this->arrayArtes ?>,
+        datasets: [
+            {
+                label: "Quantidade",
+                fillColor: "rgba(151,187,205,.5)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: <?= $this->arrayQuant ?>
+            },
+            {
+                label: "Peso",
+                fillColor: "rgba(151,187,205,.3)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: <?= $this->arrayPeso ?>
+            }
+        ]
+    };
+    window.onload = function(){
+        var ctx = document.getElementById("GraficoLine").getContext("2d");
+        var LineChart = new Chart(ctx).Bar(data, options);
+    };
+</script>
+
+<table>
+    <legend>Captura por Porto</legend>
+    <legend>Entre <?=$this->dataini ?> e <?=$this->datafim ?> </legend>
+    <tr>
+    <th>Arte de pesca</th>
+    <th>Quantidade Total</th>
+    <th>Peso Total (kg)</th>
+</tr>
+<br/>
+<?php foreach ($this->capturaArrasto as $key => $captArrasto): ?>
+    <tr>
+    <td>Arrasto de Fundo</td>
+    <td><?= $captArrasto['quant'].' unidades' ?></td>
+    <td><?= $captArrasto['peso'].' kg' ?></td>
+    </tr>
+<?php endforeach; ?>
+<?php foreach ($this->capturaCalao as $key => $captCalao): ?>
+    <tr>
+    <td>Calão</td>
+    <td><?= $captCalao['quant'].' unidades' ?></td>
+    <td><?= $captCalao['peso'].' kg' ?></td>
+    </tr>
+<?php endforeach; ?>
+<?php foreach ($this->capturaColeta as $key => $captColeta): ?>
+    <tr>
+    <td>Coleta Manual</td>
+    <td><?= $captColeta['quant'].' unidades' ?></td>
+    <td><?= $captColeta['peso'].' kg' ?></td>
+    </tr>
+<?php endforeach; ?>
+    <?php foreach ($this->capturaEmalhe as $key => $captEmalhe): ?>
+    <tr>
+    <td>Emalhe</td>
+    <td><?= $captEmalhe['quant'].' unidades' ?></td>
+    <td><?= $captEmalhe['peso'].' kg' ?></td>
+    </tr>
+<?php endforeach; ?>
+
+<?php foreach ($this->capturaGrosseira as $key => $captGrosseira): ?>
+    <tr>
+    <td>Espinhel/Groseira</td>
+    <td><?= $captGrosseira['quant'].' unidades' ?></td>
+    <td><?= $captGrosseira['peso'].' kg' ?></td>
+    </tr>
+<?php endforeach; ?>
+<?php foreach ($this->capturaJerere as $key => $captJerere): ?>
+    <tr>
+    <td>Jereré</td>
+    <td><?= $captJerere['quant'].' unidades' ?></td>
+    <td><?= $captJerere['peso'].' kg' ?></td>
+    </tr>
+<?php endforeach; ?>
+<?php foreach ($this->capturaLinha as $key => $captLinha): ?>
+    <tr>
+    <td>Pesca de Linha</td>
+    <td><?= $captLinha['quant'].' unidades' ?></td>
+    <td><?= $captLinha['peso'].' kg' ?></td>
+    </tr>
+<?php endforeach; ?>
+<?php foreach ($this->capturaLinhaFundo as $key => $captLinhaFundo): ?>
+    <tr>
+    <td>Pesca de Linha de Fundo</td>
+    <td><?= $captLinhaFundo['quant'].' unidades' ?></td>
+    <td><?= $captLinhaFundo['peso'].' kg' ?></td>
+    </tr>
+<?php endforeach; ?>
+    <?php foreach ($this->capturaManzua as $key => $captManzua): ?>
+    <tr>
+    <td>Pesca de Manzuá</td>
+    <td><?= $captManzua['quant'].' unidades' ?></td>
+    <td><?= $captManzua['peso'].' kg' ?></td>
+    </tr>
+<?php endforeach; ?>
+    <?php foreach ($this->capturaLinhaFundo as $key => $captLinhaFundo): ?>
+    <tr>
+    <td>Pesca de Linha de Fundo</td>
+    <td><?= $captLinhaFundo['quant'].' unidades' ?></td>
+    <td><?= $captLinhaFundo['peso'].' kg' ?></td>
+    </tr>
+<?php endforeach; ?>
+    <?php foreach ($this->capturaLinhaFundo as $key => $captLinhaFundo): ?>
+    <tr>
+    <td>Pesca de Linha de Fundo</td>
+    <td><?= $captLinhaFundo['quant'].' unidades' ?></td>
+    <td><?= $captLinhaFundo['peso'].' kg' ?></td>
+    </tr>
+<?php endforeach; ?>
+    <?php foreach ($this->capturaLinhaFundo as $key => $captLinhaFundo): ?>
+    <tr>
+    <td>Pesca de Linha de Fundo</td>
+    <td><?= $captLinhaFundo['quant'].' unidades' ?></td>
+    <td><?= $captLinhaFundo['peso'].' kg' ?></td>
+    </tr>
+<?php endforeach; ?>
+    <?php foreach ($this->capturaLinhaFundo as $key => $captLinhaFundo): ?>
+    <tr>
+    <td>Pesca de Linha de Fundo</td>
+    <td><?= $captLinhaFundo['quant'].' unidades' ?></td>
+    <td><?= $captLinhaFundo['peso'].' kg' ?></td>
+    </tr>
+<?php endforeach; ?>
+    <?php foreach ($this->capturaLinhaFundo as $key => $captLinhaFundo): ?>
+    <tr>
+    <td>Pesca de Linha de Fundo</td>
+    <td><?= $captLinhaFundo['quant'].' unidades' ?></td>
+    <td><?= $captLinhaFundo['peso'].' kg' ?></td>
+    </tr>
+<?php endforeach; ?>
+</table>
+<br/>
+<div class="box-chart">
+  <canvas id="GraficoLine" style="width:100%;"></canvas>
+</div>

@@ -527,7 +527,10 @@ class Application_Model_ArrastoFundo
         }
         return $dbTable->fetchAll($select)->toArray();
     }
-    
+
+    public function cpue($where = null){
+        
+    }
     /*
     public function selectPescadoresByColonia(){
         $dbTable = new Application_Model_DbTable_VEntrevistaArrasto();

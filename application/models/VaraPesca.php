@@ -244,7 +244,7 @@ class Application_Model_VaraPesca
         
         $dadosPesqueiro = array(
             'vp_id' => $idEntrevista,
-            'pvp_id' => $pesqueiro,
+            'paf_id' => $pesqueiro,
             't_tempoapesqueiro' => $tempoAPesqueiro,
             't_distapesqueiro' => $distAPesqueiro
         );
@@ -256,7 +256,7 @@ class Application_Model_VaraPesca
         $this->dbTableTVaraPescaHasPesqueiro = new Application_Model_DbTable_VaraPescaHasPesqueiro();       
         if(empty($idEntrevista)){
             $whereVaraPescaHasPesqueiro = $this->dbTableTVaraPescaHasPesqueiro->getAdapter()
-                ->quoteInto('"vp_pvp_id" = ?', $idPesqueiro);
+                ->quoteInto('"vp_paf_id" = ?', $idPesqueiro);
         }
         else{
             $whereVaraPescaHasPesqueiro = $this->dbTableTVaraPescaHasPesqueiro->getAdapter()

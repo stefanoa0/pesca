@@ -200,7 +200,7 @@ private $dbTableMergulho;
         }
         $dadosPesqueiro = array(
             'mer_id' => $idEntrevista,
-            'pmer_id' => $pesqueiro,
+            'paf_id' => $pesqueiro,
             't_tempoapesqueiro' => $tempoAPesqueiro,
             't_distapesqueiro' => $distAPesqueiro
         );
@@ -212,7 +212,7 @@ private $dbTableMergulho;
         $this->dbTableTMergulhoHasPesqueiro = new Application_Model_DbTable_MergulhoHasPesqueiro();       
                 
         $whereMergulhoHasPesqueiro = $this->dbTableTMergulhoHasPesqueiro->getAdapter()
-                ->quoteInto('"mer_pmer_id" = ?', $idPesqueiro);
+                ->quoteInto('"mer_paf_id" = ?', $idPesqueiro);
         
         $this->dbTableTMergulhoHasPesqueiro->delete($whereMergulhoHasPesqueiro);
         
