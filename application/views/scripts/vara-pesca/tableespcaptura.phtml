@@ -7,19 +7,18 @@
             <th width="20%">Quantidade</th>
             <th width="20%">Peso (kg)</th>
             <th width="20%">Preço por kg</th>
-            <th width="10%">Venda</th>
             </tr>
             <?php
             foreach ($this->vEspecieCapturadas as $key => $vEspecieCapturada):
                 ?>
                 <tr id="itemEmbarcacoesRows">
-                <td name="inputEntrevista"> <?= $vEspecieCapturada['man_id'] ?> </td>
+                <td name="inputEntrevista"> <?= $vEspecieCapturada['vp_id'] ?> </td>
                 <td name="inputEspecie" > <?= $vEspecieCapturada['esp_nome_comum'] ?> </td>
                 <td name="inputQuantidade"> <?= $vEspecieCapturada['spc_quantidade'] . ' Unidades' ?> </td>
                 <td name="inputPeso"> <?= $vEspecieCapturada['spc_peso_kg'] . ' kg' ?> </td>
-                <td name="inputPreco"> <?= 'R$' . $vEspecieCapturada['spc_preco'] ?> </td>
-                <td name="inputTVenda"> <?= $vEspecieCapturada['ttv_tipovenda'] ?></td>
-                <td><input type="button" class="button-del" width="5%" onclick="jsDeleteEspecieCapturada(<?= $this->entrevista['man_id'] ?>, '<?= $this->url(array("controller" => "manzua", "action" => "deletespecie"), null, true) ?>', <?= $vEspecieCapturada['spc_man_id'] ?>)"></td>
+                <td name="inputPreco"> <?= 'R$ ' . $vEspecieCapturada['spc_preco'] ?> </td>
+                <td><input type="button" class="button-del" width="5%" 
+                           onclick="jsDeleteEspecieCapturada(<?= $this->entrevista['vp_id'] ?>, '<?= $this->url(array("controller" => "vara-pesca", "action" => "deletespecie"), null, true) ?>', <?= $vEspecieCapturada['spc_vp_id'] ?>)"></td>
                 </tr>
             <?php endforeach; ?>
         </table>

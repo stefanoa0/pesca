@@ -1,0 +1,23 @@
+<div id="pesqueiro">
+    <fieldset class="noEditable" id="itemArteTipoRows"><legend>Pesqueiros:</legend>
+        <table id="pesqueiros">
+            <tr>
+            <th width="5%">Id Entrevista</th>
+            <th width="50%">Pesqueiro</th>
+            <th width="30%">Tempo até o Pesqueiro</th>
+            <th width="30%">Distância até o Pesqueiro</th>
+            </tr>
+            <?php
+            foreach ($this->vSiripoia as $key => $vSiripoia):
+                ?>
+                <tr id="itemSiripoiaRows">
+                <td name="inputIdEntrevista"> <?= $vSiripoia['sir_id'] ?> </td>
+                <td name="inputPesqueiro" > <?= $vSiripoia['paf_pesqueiro'] ?> </td>
+                <td name="inputTempoaPesqueiro"> <?= $vSiripoia['t_tempoapesqueiro'] ?> </td>
+                <td name="inputTempoaPesqueiro"> <?= $vSiripoia['t_distapesqueiro'] ?> </td>
+                <td><input type="button" class="button-del" width="5%" onclick="jsDeletePesqueiro(<?= $this->entrevista['sir_id'] ?>, '<?= $this->url(array("controller" => "siripoia", "action" => "deletepesqueiro"), null, true) ?>', <?= $vSiripoia['sir_paf_id'] ?>)"></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </fieldset>
+</div>
