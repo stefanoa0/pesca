@@ -455,7 +455,7 @@ class Application_Model_Emalhe
    public function selectPescadoresByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaEmalhe();
         $select = $dbTable->select()->
-                from('v_entrevista_emalhe', array('pto_nome', 'count(tp_nome)'))->
+                from('v_entrevista_emalhe', array('pto_nome', 'count(distinct(tp_nome))'))->
                 group(array('pto_nome'));
         if(!is_null($where)){
             $select->where($where);
@@ -465,7 +465,7 @@ class Application_Model_Emalhe
     public function selectBarcosByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaEmalhe();
         $select = $dbTable->select()->
-                from('v_entrevista_emalhe', array('pto_nome', 'count(bar_nome)'))->
+                from('v_entrevista_emalhe', array('pto_nome', 'count(distinct(bar_nome))'))->
                 group(array('pto_nome'));
         
         if(!is_null($where)){

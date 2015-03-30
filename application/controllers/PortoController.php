@@ -149,11 +149,20 @@ class PortoController extends Zend_Controller_Action
     }
     public function dataInicial($data){
         if($data == ''){
-            $data = '2013-01-01';
+            $data = '2013-11-01';
         }
         return $data;
     }
-    
+    public function vazioCount($array, $porto){
+        if(empty($array)){
+            $array = array( array(
+                'pto_nome' => $porto,
+                'count' => 0,
+                )
+            );
+        }
+        return $array;
+    }
     public function vazio($array, $porto){
         if(empty($array)){
             $array = array( array(
@@ -165,6 +174,9 @@ class PortoController extends Zend_Controller_Action
         }
         else if($array[0]['quant'] == ""){
             $array[0]['quant'] = 0;
+        }
+        else if($array[0]['peso'] == ""){
+            $array[0]['peso'] = 0;
         }
         return $array;
     }
@@ -232,9 +244,35 @@ class PortoController extends Zend_Controller_Action
         $this->view->assign("capturaTarrafa",   $captTarrafa);     
         $this->view->assign("capturaVaraPesca", $captVaraPesca);
         
-        $arrayArtes = array("Arrasto de fundo","Calão","Coleta Manual","Emalhe", "Groseira", "Jereré", "Linha", "Linha de Fundo");
+        $arrayArtes = array("Arrasto de fundo",
+            "Calão",
+            "Coleta Manual",
+            "Emalhe", 
+            "Groseira", 
+            "Jereré", 
+            "Linha", 
+            "Linha de Fundo",
+            "Manzuá",
+            "Mergulho",
+            "Ratoeira",
+            "Siripoia",
+            "Tarrafa",
+            "Vara de pesca");
         
-        $arrayCaptura =  array_merge_recursive($captArrasto, $captCalao, $captColeta, $captEmalhe, $captGrosseira, $captJerere, $captLinha, $captLinhaFundo);
+        $arrayCaptura =  array_merge_recursive($captArrasto, 
+                $captCalao, 
+                $captColeta, 
+                $captEmalhe, 
+                $captGrosseira, 
+                $captJerere, 
+                $captLinha, 
+                $captLinhaFundo,
+                $captManzua,
+                $captMergulho,
+                $captRatoeira,
+                $captSiripoia,
+                $captTarrafa,
+                $captVaraPesca);
         
         foreach($arrayCaptura as $key => $captura):
             $arrayQuant[] = $captura['quant'];
@@ -242,7 +280,6 @@ class PortoController extends Zend_Controller_Action
         endforeach;
         
         $jsQuant = json_encode($arrayQuant);
-        
         $jsPeso = json_encode($arrayPeso);
         $jsArtes = json_encode($arrayArtes);
         
@@ -258,6 +295,150 @@ class PortoController extends Zend_Controller_Action
 //                $capturaJerere[0]['quant']+
 //                $capturaLinha[0]['quant']+
 //                $capturaLinhaFundo[0]['quant']; 
+//                
+        //BARCOS
+        $barcoArrasto    = $this->modelArrasto   ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $barcoCalao      = $this->modelCalao     ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $barcoColeta     = $this->modelColeta    ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $barcoEmalhe     = $this->modelEmalhe    ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $barcoGrosseira  = $this->modelGrosseira ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $barcoJerere     = $this->modelJerere    ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $barcoLinha      = $this->modelLinha     ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $barcoLinhaFundo = $this->modelLinhaFundo->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $barcoManzua     = $this->modelManzua    ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $barcoMergulho   = $this->modelMergulho  ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $barcoRatoeira   = $this->modelRatoeira  ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $barcoSiripoia   = $this->modelSiripoia  ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $barcoTarrafa    = $this->modelTarrafa   ->selectBarcosByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
+        $barcoVaraPesca  = $this->modelVaraPesca ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        
+        $barArrasto =  $this->vazioCount($barcoArrasto   ,  $porto);
+        $barCalao =    $this->vazioCount($barcoCalao     , $porto);
+        $barColeta =   $this->vazioCount($barcoColeta    , $porto);
+        $barEmalhe =   $this->vazioCount($barcoEmalhe    , $porto);
+        $barGrosseira= $this->vazioCount($barcoGrosseira , $porto);
+        $barJerere =   $this->vazioCount($barcoJerere    , $porto);
+        $barLinha =    $this->vazioCount($barcoLinha     , $porto);
+        $barLinhaFundo=$this->vazioCount($barcoLinhaFundo, $porto);
+        $barManzua=    $this->vazioCount($barcoManzua    , $porto);
+        $barMergulho=  $this->vazioCount($barcoMergulho  , $porto);
+        $barRatoeira=  $this->vazioCount($barcoRatoeira  , $porto);
+        $barSiripoia=  $this->vazioCount($barcoSiripoia  , $porto);
+        $barTarrafa=   $this->vazioCount($barcoTarrafa   , $porto);
+        $barVaraPesca =$this->vazioCount($barcoVaraPesca ,  $porto);
+        
+        $this->view->assign("barcosArrasto",   $barArrasto);   
+        $this->view->assign("barcosCalao",     $barCalao);     
+        $this->view->assign("barcosColeta",    $barColeta);    
+        $this->view->assign("barcosEmalhe",    $barEmalhe);    
+        $this->view->assign("barcosGrosseira", $barGrosseira); 
+        $this->view->assign("barcosJerere",    $barJerere);    
+        $this->view->assign("barcosLinha",     $barLinha);     
+        $this->view->assign("barcosLinhaFundo",$barLinhaFundo);
+        $this->view->assign("barcosManzua",    $barManzua);    
+        $this->view->assign("barcosMergulho",  $barMergulho);    
+        $this->view->assign("barcosRatoeira",  $barRatoeira); 
+        $this->view->assign("barcosSiripoia",  $barSiripoia);    
+        $this->view->assign("barcosTarrafa",   $barTarrafa);     
+        $this->view->assign("barcosVaraPesca", $barVaraPesca);
+        
+        $arrayBarcos =  array_merge_recursive(
+                $barArrasto, 
+                $barCalao, 
+                $barColeta, 
+                $barEmalhe, 
+                $barGrosseira, 
+                $barJerere, 
+                $barLinha, 
+                $barLinhaFundo,
+                $barManzua,
+                $barMergulho,
+                $barRatoeira,
+                $barSiripoia,
+                $barTarrafa,
+                $barVaraPesca);
+        
+        foreach($arrayBarcos as $key => $barco):
+            $arrayCount[] = $barco['count'];
+        endforeach;
+        
+        $jsCount = json_encode($arrayCount);
+
+
+        $this->view->assign("arrayCount", $jsCount);
+        ///BARCOS
+       
+        //PESCADORES
+        $pescadorArrasto    = $this->modelArrasto   ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $pescadorCalao      = $this->modelCalao     ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $pescadorColeta     = $this->modelColeta    ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $pescadorEmalhe     = $this->modelEmalhe    ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $pescadorGrosseira  = $this->modelGrosseira ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $pescadorJerere     = $this->modelJerere    ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $pescadorLinha      = $this->modelLinha     ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $pescadorLinhaFundo = $this->modelLinhaFundo->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $pescadorManzua     = $this->modelManzua    ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $pescadorMergulho   = $this->modelMergulho  ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $pescadorRatoeira   = $this->modelRatoeira  ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $pescadorSiripoia   = $this->modelSiripoia  ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $pescadorTarrafa    = $this->modelTarrafa   ->selectPescadoresByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
+        $pescadorVaraPesca  = $this->modelVaraPesca ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        
+        $pescArrasto =  $this->vazioCount($pescadorArrasto   ,  $porto);
+        $pescCalao =    $this->vazioCount($pescadorCalao     , $porto);
+        $pescColeta =   $this->vazioCount($pescadorColeta    , $porto);
+        $pescEmalhe =   $this->vazioCount($pescadorEmalhe    , $porto);
+        $pescGrosseira= $this->vazioCount($pescadorGrosseira , $porto);
+        $pescJerere =   $this->vazioCount($pescadorJerere    , $porto);
+        $pescLinha =    $this->vazioCount($pescadorLinha     , $porto);
+        $pescLinhaFundo=$this->vazioCount($pescadorLinhaFundo, $porto);
+        $pescManzua=    $this->vazioCount($pescadorManzua    , $porto);
+        $pescMergulho=  $this->vazioCount($pescadorMergulho  , $porto);
+        $pescRatoeira=  $this->vazioCount($pescadorRatoeira  , $porto);
+        $pescSiripoia=  $this->vazioCount($pescadorSiripoia  , $porto);
+        $pescTarrafa=   $this->vazioCount($pescadorTarrafa   , $porto);
+        $pescVaraPesca =$this->vazioCount($pescadorVaraPesca ,  $porto);
+        
+        $this->view->assign("pescadoresArrasto",   $pescArrasto);   
+        $this->view->assign("pescadoresCalao",     $pescCalao);     
+        $this->view->assign("pescadoresColeta",    $pescColeta);    
+        $this->view->assign("pescadoresEmalhe",    $pescEmalhe);    
+        $this->view->assign("pescadoresGrosseira", $pescGrosseira); 
+        $this->view->assign("pescadoresJerere",    $pescJerere);    
+        $this->view->assign("pescadoresLinha",     $pescLinha);     
+        $this->view->assign("pescadoresLinhaFundo",$pescLinhaFundo);
+        $this->view->assign("pescadoresManzua",    $pescManzua);    
+        $this->view->assign("pescadoresMergulho",  $pescMergulho);    
+        $this->view->assign("pescadoresRatoeira",  $pescRatoeira); 
+        $this->view->assign("pescadoresSiripoia",  $pescSiripoia);    
+        $this->view->assign("pescadoresTarrafa",   $pescTarrafa);     
+        $this->view->assign("pescadoresVaraPesca", $pescVaraPesca);
+        
+        $arrayPescadores =  array_merge_recursive(
+                $pescArrasto, 
+                $pescCalao, 
+                $pescColeta, 
+                $pescEmalhe, 
+                $pescGrosseira, 
+                $pescJerere, 
+                $pescLinha, 
+                $pescLinhaFundo,
+                $pescManzua,
+                $pescMergulho,
+                $pescRatoeira,
+                $pescSiripoia,
+                $pescTarrafa,
+                $pescVaraPesca);
+        
+        foreach($arrayPescadores as $key => $pescador):
+            $arrayCountPescador[] = $pescador['count'];
+        endforeach;
+        
+        $jsCountPescador = json_encode($arrayCountPescador);
+
+
+        $this->view->assign("arrayCountPescador", $jsCountPescador);
+        
     }
     public function aritaguaAction(){}
     public function baduAction(){}

@@ -419,5 +419,55 @@ class Application_Model_Manzua
         }
         return $dbTable->fetchAll($select)->toArray();
     }
+    //Quantidade de variaveis por Porto FUNÇÕES PARA REPLICAR
+    public function selectQuantBarcosByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaManzua();
+        $select = $dbTable->select()->
+                from('v_entrevista_manzua', array('pto_nome', 'count(bar_nome) as quant','bar_nome'))->
+                group(array('pto_nome','bar_nome'))->
+                order('quant Desc');
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
+    public function selectQuantCapturaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaManzua();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_manzua', 'v_entrevista_manzua.pto_nome')->joinLeft('v_manzuafundo_has_t_especie_capturada', 'v_entrevista_manzua.man_id = v_manzuafundo_has_t_especie_capturada.man_id',
+                        array('sum(v_manzuafundo_has_t_especie_capturada.spc_quantidade) as quant','sum(v_manzuafundo_has_t_especie_capturada.spc_peso_kg) as peso', 'esp_nome_comum' ))->
+                group(array('pto_nome', 'esp_nome_comum'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    public function selectQuantPescadoresByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaManzua();
+        $select = $dbTable->select()->
+                from('v_entrevista_manzua', array('pto_nome', 'count(tp_nome)', 'tp_nome'))->
+                group(array('pto_nome', 'tp_nome'));
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
+    public function selectCountEntrevistasByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VMonitoramentos();
+        
+        $select = $dbTable->select()->
+                from('v_monitoramentos', array('pto_nome','tap_artepesca', 'sum(monitorados)'))
+                ->group(array('pto_nome', 'tap_artepesca'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
 }
 

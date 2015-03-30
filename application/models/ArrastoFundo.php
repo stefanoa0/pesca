@@ -448,7 +448,7 @@ class Application_Model_ArrastoFundo
     public function selectPescadoresByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaArrasto();
         $select = $dbTable->select()->
-                from('v_entrevista_arrasto', array('pto_nome', 'count(tp_nome)'))->
+                from('v_entrevista_arrasto', array('pto_nome', 'count(distinct(tp_nome))'))->
                 group(array('pto_nome'));
         if(!is_null($where)){
             $select->where($where);
@@ -456,6 +456,17 @@ class Application_Model_ArrastoFundo
         return $dbTable->fetchAll($select)->toArray();
     }
     public function selectBarcosByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaArrasto();
+        $select = $dbTable->select()->
+                from('v_entrevista_arrasto', array('pto_nome', 'count(distinct(bar_nome))'))->
+                group(array('pto_nome'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    public function selectEntrevistasByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaArrasto();
         $select = $dbTable->select()->
                 from('v_entrevista_arrasto', array('pto_nome', 'count(bar_nome)'))->
@@ -535,7 +546,7 @@ class Application_Model_ArrastoFundo
     public function selectPescadoresByColonia(){
         $dbTable = new Application_Model_DbTable_VEntrevistaArrasto();
         $select = $dbTable->select()->
-                from('v_entrevista_arrasto', array('pto_nome', 'count(tp_nome)'))->
+                from('v_entrevista_arrasto', array('pto_nome', 'count(distinct(tp_nome))'))->
                 group(array('pto_nome'));
         
         return $dbTable->fetchAll($select)->toArray();

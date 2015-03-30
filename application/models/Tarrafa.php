@@ -388,7 +388,7 @@ class Application_Model_Tarrafa
     public function selectPescadoresByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaTarrafa();
         $select = $dbTable->select()->
-                from('v_entrevista_tarrafa', array('pto_nome', 'count(tp_nome)'))->
+                from('v_entrevista_tarrafa', array('pto_nome', 'count(distinct(tp_nome))'))->
                 group(array('pto_nome'));
         if(!is_null($where)){
             $select->where($where);
@@ -398,7 +398,7 @@ class Application_Model_Tarrafa
     public function selectBarcosByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaTarrafa();
         $select = $dbTable->select()->
-                from('v_entrevista_tarrafa', array('pto_nome', 'count(bar_nome)'))->
+                from('v_entrevista_tarrafa', array('pto_nome', 'count(distinct(bar_nome))'))->
                 group(array('pto_nome'));
         
         if(!is_null($where)){
@@ -418,5 +418,53 @@ class Application_Model_Tarrafa
         }
         return $dbTable->fetchAll($select)->toArray();
     }
-
+    //Quantidade de variaveis por Porto FUNÇÕES PARA REPLICAR
+    public function selectQuantBarcosByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaTarrafa();
+        $select = $dbTable->select()->
+                from('v_entrevista_tarrafa', array('pto_nome', 'count(bar_nome) as quant','bar_nome'))->
+                group(array('pto_nome','bar_nome'))->
+                order('quant Desc');
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
+    public function selectQuantCapturaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaTarrafa();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_tarrafa', 'v_entrevista_tarrafa.pto_nome')->joinLeft('v_tarrafafundo_has_t_especie_capturada', 'v_entrevista_tarrafa.sir_id = v_tarrafafundo_has_t_especie_capturada.sir_id',
+                        array('sum(v_tarrafafundo_has_t_especie_capturada.spc_quantidade) as quant','sum(v_tarrafafundo_has_t_especie_capturada.spc_peso_kg) as peso', 'esp_nome_comum' ))->
+                group(array('pto_nome', 'esp_nome_comum'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    public function selectQuantPescadoresByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaTarrafa();
+        $select = $dbTable->select()->
+                from('v_entrevista_tarrafa', array('pto_nome', 'count(tp_nome)', 'tp_nome'))->
+                group(array('pto_nome', 'tp_nome'));
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
+    public function selectCountEntrevistasByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VMonitoramentos();
+        
+        $select = $dbTable->select()->
+                from('v_monitoramentos', array('pto_nome','tap_artepesca', 'sum(monitorados)'))
+                ->group(array('pto_nome', 'tap_artepesca'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
 }
