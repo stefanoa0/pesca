@@ -202,6 +202,7 @@
             </div>
         </fieldset>
     </form>
+</div>
     <form>
         <input type="hidden" placeholder = "ID" name="id_entrevista"  value="<?= $this->entrevista['vp_id'] ?>"/><br />
         <input type="hidden" name="id_monitoramento" placeholder="ID"  value="<?= $this->entrevista['mnt_id'] ?>" /><br />
@@ -229,17 +230,17 @@
 <fieldset class="noEditable"><legend>Espécies Capturadas:</legend>
         <fieldset class="noEditable"><legend>Dados das Espécies Capturadas:</legend>
 
-            <div id="base">
+            <div>
                 <input class="responsivo" onclick="ajax_esp_capturada(this.form, '<?= $this->url(array("controller" => "vara-pesca", "action" => "insertespeciecapturada"), null, true) ?>','<?=$this->entrevista['vp_id']?>','venda')" type="button" value="Adicionar" />
-                <select style="float:left;" name="selectEspecie" class="responsivo" >
+                <select style="responsivo-esp" name="selectEspecie" class="responsivo" >
                     <option value="" selected></option>
                     <?php foreach ($this->especies as $key => $especie): ?>
                         <option value="<?= $especie['esp_id']; ?>"><?= $especie['esp_nome_comum']; ?></option>
                     <?php endforeach; ?>
                 </select>
-                <input class="responsivo" style="float:left;" type="text" name="quantidade" placeholder="Quantidade" size="10px">
-                <input class="responsivo" style="float:left;" type="text" name="peso" placeholder="Peso" size="10px">
-                <input class="responsivo" style="float:left;" type="text" name="precokg" placeholder="Preço por kg" size="10px">
+                <input class="responsivo-esp" style="float:left;" type="text" name="quantidade" placeholder="Quantidade" size="10px">
+                <input class="responsivo-esp" style="float:left;" type="text" name="peso" placeholder="Peso" size="10px">
+                <input class="responsivo-esp" style="float:left;" type="text" name="precokg" placeholder="Preço por kg" size="10px">
                 <select name="tipoVenda" class="espc" class="responsivo">
                     <option value="" selected></option>
                      <?php foreach ($this->tipovenda as $key => $tipovenda): ?>
@@ -404,5 +405,3 @@
 </form>
     <br/> <br/>
     <a href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "editar","id" => $this->monitoramento['fd_id']), null, true) ?>" id="botao-ancora">Voltar à Ficha-Diária</a>
-    
-</div>
