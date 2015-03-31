@@ -142,14 +142,41 @@ class PortoController extends Zend_Controller_Action
     public function dataFinal($data){
         
         if($data==''){
-            $data = date('Y-m-j');
+            $mes = date('m')-1;
+            $ano = date('Y');
+            $dia = date('d');
+            while(!checkdate($mes, $dia, $ano)){
+                $dia--;
+            }
+            $data = $ano.'-0'.$mes.'-'.$dia;
         }
-
+        else{
+            $data = explode('-', $data);
+            $mes = $data[1];
+            switch($mes){
+                case '01': $data = $data[0].'-'.$data[1].'-'.'31'; break;
+                case '02': $data = $data[0].'-'.$data[1].'-'.'28'; break;
+                case '03': $data = $data[0].'-'.$data[1].'-'.'31'; break;
+                case '04': $data = $data[0].'-'.$data[1].'-'.'30'; break;
+                case '05': $data = $data[0].'-'.$data[1].'-'.'31'; break;
+                case '06': $data = $data[0].'-'.$data[1].'-'.'30'; break;
+                case '07': $data = $data[0].'-'.$data[1].'-'.'31'; break;
+                case '08': $data = $data[0].'-'.$data[1].'-'.'31'; break;
+                case '09': $data = $data[0].'-'.$data[1].'-'.'30'; break;
+                case '10': $data = $data[0].'-'.$data[1].'-'.'31'; break;
+                case '11': $data = $data[0].'-'.$data[1].'-'.'30'; break;
+                case '12': $data = $data[0].'-'.$data[1].'-'.'31'; break;
+            }
+        }
         return $data;
     }
     public function dataInicial($data){
         if($data == ''){
             $data = '2013-11-01';
+        }
+        else{
+            $data = explode('-', $data);
+            $data = $data[0].'-'.$data[1].'-01';
         }
         return $data;
     }
@@ -180,23 +207,66 @@ class PortoController extends Zend_Controller_Action
         }
         return $array;
     }
+//    public function vazioQuant($array, $porto, $barco){
+//        if(empty($array)){
+//            $array = array( array(
+//                'pto_nome' => $porto,
+//                'quant' => 0,
+//                )
+//            );
+//        }
+//        return $array;
+//    }
     
-    public function amendoeiraAction(){
-        
-        $dateStart = $this->_getParam('dataini');
-        $dateEnd = $this->_getParam('datafim');
-        
-        $dataIni = $this->dataInicial($dateStart);
-        $date = explode('-',$dataIni);
-        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("dataini", $datainicial);
-        
-        $dataFim = $this->dataFinal($dateEnd);
-        $date = explode('-',$dataFim);
-        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("datafim", $datafinal);
-        
-        $porto = "Amendoeira";
+    function removeDuplicate($in, $key1, $key2) {
+        $out = array();
+
+        foreach ($in as $elem) {
+            if(array_key_exists($elem[$key1], $out)) {
+                $out[$elem[$key1]][$key2] += $elem[$key2];
+            } else {
+                $out[$elem[$key1]] = array($key1 => $elem[$key1],$key2 => $elem[$key2]);
+            }
+        }
+
+        return $out;
+    }
+    function array_sort($array, $on, $order=SORT_ASC){
+        $new_array = array();
+        $sortable_array = array();
+
+        if (count($array) > 0) {
+            foreach ($array as $k => $v) {
+                if (is_array($v)) {
+                    foreach ($v as $k2 => $v2) {
+                        if ($k2 == $on) {
+                            $sortable_array[$k] = $v2;
+                        }
+                    }
+                } else {
+                    $sortable_array[$k] = $v;
+                }
+            }
+
+        switch ($order) {
+            case SORT_ASC:
+                asort($sortable_array);
+            break;
+            case SORT_DESC:
+                arsort($sortable_array);
+            break;
+        }
+
+        foreach ($sortable_array as $k => $v) {
+            $new_array[$k] = $array[$k];
+        }
+    }
+
+    return $new_array;
+}
+
+    
+    public function gerarrelatorio($porto, $datainicial, $datafinal){
         //Dados Para Select
         $capturaArrasto    = $this->modelArrasto   ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
         $capturaCalao      = $this->modelCalao     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
@@ -244,7 +314,27 @@ class PortoController extends Zend_Controller_Action
         $this->view->assign("capturaTarrafa",   $captTarrafa);     
         $this->view->assign("capturaVaraPesca", $captVaraPesca);
         
-        $arrayArtes = array("Arrasto de fundo",
+        $arrayArtesPeso = array(
+            "Arrasto de fundo",
+            "Calão",
+            "Emalhe", 
+            "Groseira", 
+            "Jereré", 
+            "Linha", 
+            "Linha de Fundo",
+            "Manzuá",
+            "Mergulho",
+            "Tarrafa",
+            "Vara de pesca");
+        
+        $arrayArtesQuant = array(
+            "Coleta Manual",
+            "Ratoeira",
+            "Siripoia"
+        );
+        
+        $arrayArtes = array(
+            "Arrasto de fundo",
             "Calão",
             "Coleta Manual",
             "Emalhe", 
@@ -257,11 +347,11 @@ class PortoController extends Zend_Controller_Action
             "Ratoeira",
             "Siripoia",
             "Tarrafa",
-            "Vara de pesca");
-        
-        $arrayCaptura =  array_merge_recursive($captArrasto, 
-                $captCalao, 
-                $captColeta, 
+            "Vara de pesca"
+        );
+        $arrayCapturaPeso =  array_merge_recursive(
+                $captArrasto, 
+                $captCalao,
                 $captEmalhe, 
                 $captGrosseira, 
                 $captJerere, 
@@ -269,23 +359,33 @@ class PortoController extends Zend_Controller_Action
                 $captLinhaFundo,
                 $captManzua,
                 $captMergulho,
-                $captRatoeira,
-                $captSiripoia,
                 $captTarrafa,
                 $captVaraPesca);
-        
-        foreach($arrayCaptura as $key => $captura):
-            $arrayQuant[] = $captura['quant'];
+        $arrayCapturaQuant = array_merge_recursive(
+                 $captColeta, 
+        $captRatoeira,
+        $captSiripoia
+                );
+        foreach($arrayCapturaPeso as $key => $captura):
             $arrayPeso[] = $captura['peso'];
+        endforeach;
+        
+        foreach($arrayCapturaQuant as $key => $captura):
+            $arrayQuant[] = $captura['quant'];
         endforeach;
         
         $jsQuant = json_encode($arrayQuant);
         $jsPeso = json_encode($arrayPeso);
+        $jsArtesPeso = json_encode($arrayArtesPeso);
+        $jsArtesQuant = json_encode($arrayArtesQuant);
         $jsArtes = json_encode($arrayArtes);
         
-        $this->view->assign("arrayArtes", $jsArtes);
+        
+        $this->view->assign("arrayArtesPeso", $jsArtesPeso);
+        $this->view->assign("arrayArtesQuant", $jsArtesQuant);
         $this->view->assign("arrayQuant", $jsQuant);
         $this->view->assign("arrayPeso", $jsPeso);
+        $this->view->assign("arrayArtes", $jsArtes);
         //print_r($jsQuant);
 //        $capturaTotal =$capturaArrasto[0]['quant']+
 //                $capturaCalao[0]['quant']+
@@ -436,26 +536,455 @@ class PortoController extends Zend_Controller_Action
         
         $jsCountPescador = json_encode($arrayCountPescador);
 
-
+        
         $this->view->assign("arrayCountPescador", $jsCountPescador);
         
+        
+        
+        //Barcos que mais pescam
+        $quantBarcosArrasto    = $this->modelArrasto   ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantBarcosCalao      = $this->modelCalao     ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantBarcosColeta     = $this->modelColeta    ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantBarcosEmalhe     = $this->modelEmalhe    ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantBarcosGrosseira  = $this->modelGrosseira ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantBarcosJerere     = $this->modelJerere    ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantBarcosLinha      = $this->modelLinha     ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantBarcosLinhaFundo = $this->modelLinhaFundo->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantBarcosManzua     = $this->modelManzua    ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantBarcosMergulho   = $this->modelMergulho  ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantBarcosRatoeira   = $this->modelRatoeira  ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantBarcosSiripoia   = $this->modelSiripoia  ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantBarcosTarrafa    = $this->modelTarrafa   ->selectQuantBarcosByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
+        $quantBarcosVaraPesca  = $this->modelVaraPesca ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        
+        
+        $arrayQuantBarcos =  array_merge_recursive(
+                $quantBarcosArrasto, 
+                $quantBarcosCalao, 
+                $quantBarcosColeta, 
+                $quantBarcosEmalhe, 
+                $quantBarcosGrosseira, 
+                $quantBarcosJerere, 
+                $quantBarcosLinha, 
+                $quantBarcosLinhaFundo,
+                $quantBarcosManzua,
+                $quantBarcosMergulho,
+                $quantBarcosRatoeira,
+                $quantBarcosSiripoia,
+                $quantBarcosTarrafa,
+                $quantBarcosVaraPesca);
+        //arsort($arrayQuantBarcos);
+        $arrayQuantBarcos = $this->removeDuplicate($arrayQuantBarcos, 'bar_nome', 'quant');
+        
+            /** Creio que até aqui já seja suficiente. Mas para gerar a mesma saída solicitada
+            * as linhas abaixo se fazem necessárias */
+        $arrayQuantBarcosOrdenado = $this->array_sort($arrayQuantBarcos, 'quant', SORT_DESC);
+        //print_r($data);
+        
+        $j=0;
+        foreach($arrayQuantBarcosOrdenado as $key => $quantBarcos):
+            if($j==30){
+                break;
+            }
+            $arrayNomesBarcos[] = $quantBarcos['bar_nome'];
+            $arrayQuantidades[] = $quantBarcos['quant'];
+            $j++;
+        endforeach;
+        //print_r($arrayNomesBarcos);
+        //print_r($arrayQuantidades);
+//        
+        $jsLabelBarcos = json_encode($arrayNomesBarcos);
+        $jsQuantBarcos = json_encode($arrayQuantidades);
+//
+//      
+        $this->view->assign("arrayQuantBarcos", $arrayQuantBarcosOrdenado);
+        $this->view->assign("labelBarcos", $jsLabelBarcos);
+        $this->view->assign("quantBarcos", $jsQuantBarcos);
+        
+        //Pescadores que mais pescam
+        $quantPescadoresArrasto    = $this->modelArrasto   ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantPescadoresCalao      = $this->modelCalao     ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantPescadoresColeta     = $this->modelColeta    ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantPescadoresEmalhe     = $this->modelEmalhe    ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantPescadoresGrosseira  = $this->modelGrosseira ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantPescadoresJerere     = $this->modelJerere    ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantPescadoresLinha      = $this->modelLinha     ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantPescadoresLinhaFundo = $this->modelLinhaFundo->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantPescadoresManzua     = $this->modelManzua    ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantPescadoresMergulho   = $this->modelMergulho  ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantPescadoresRatoeira   = $this->modelRatoeira  ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantPescadoresSiripoia   = $this->modelSiripoia  ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantPescadoresTarrafa    = $this->modelTarrafa   ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
+        $quantPescadoresVaraPesca  = $this->modelVaraPesca ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        
+        
+        $arrayQuantPescadores =  array_merge_recursive(
+                $quantPescadoresArrasto, 
+                $quantPescadoresCalao, 
+                $quantPescadoresColeta, 
+                $quantPescadoresEmalhe, 
+                $quantPescadoresGrosseira, 
+                $quantPescadoresJerere, 
+                $quantPescadoresLinha, 
+                $quantPescadoresLinhaFundo,
+                $quantPescadoresManzua,
+                $quantPescadoresMergulho,
+                $quantPescadoresRatoeira,
+                $quantPescadoresSiripoia,
+                $quantPescadoresTarrafa,
+                $quantPescadoresVaraPesca);
+        //arsort($arrayQuantPescadores);
+        $arrayQuantPescadores = $this->removeDuplicate($arrayQuantPescadores, 'tp_nome', 'count');
+        
+        //print_r($arrayQuantPescadores);
+        $arrayQuantPescadoresOrdenado = $this->array_sort($arrayQuantPescadores, 'count', SORT_DESC);
+        //print_r($data);
+        $i=0;
+        foreach($arrayQuantPescadoresOrdenado as $key => $quantPescadores):
+            if($i==30){
+                break;
+            }
+            $arrayNomesPescadores[] = $quantPescadores['tp_nome'];
+            $arrayQuantidadesPesc[] = $quantPescadores['count'];
+            $i++;
+        endforeach;
+        //print_r($arrayNomesPescadores);
+        //print_r($arrayQuantidades);
+//        
+        $jsLabelPescadores = json_encode($arrayNomesPescadores);
+        $jsQuantPescadores = json_encode($arrayQuantidadesPesc);
+//
+        $this->view->assign("arrayQuantPescadores", $arrayQuantPescadoresOrdenado);
+        $this->view->assign("labelPescadores", $jsLabelPescadores);
+        $this->view->assign("quantPescadores", $jsQuantPescadores);
     }
-    public function aritaguaAction(){}
-    public function baduAction(){}
-    public function conchaAction(){}
-    public function forteAction(){}
-    public function jueranaAction(){}
-    public function mamoaAction(){}
-    public function pontalAction(){}
-    public function prainhaAction(){}
-    public function ramoAction(){}
-    public function sambaitubaAction(){}
-    public function saomiguelAction(){}
-    public function serraAction(){}
-    public function sobradinhoAction(){}
-    public function terminalAction(){}
-    public function tulhaAction(){}
-    public function urucutucaAction(){}
+    
+    public function amendoeiraAction(){
+        
+        $dateStart = $this->_getParam('dataini');
+        $dateEnd = $this->_getParam('datafim');
+        
+        $dataIni = $this->dataInicial($dateStart);
+        $date = explode('-',$dataIni);
+        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("dataini", $datainicial);
+        
+        $dataFim = $this->dataFinal($dateEnd);
+        $date = explode('-',$dataFim);
+        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("datafim", $datafinal);
+        
+        $porto = "Amendoeira";
+        
+        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+        
+    }
+    public function aritaguaAction(){
+        $dateStart = $this->_getParam('dataini');
+        $dateEnd = $this->_getParam('datafim');
+        
+        $dataIni = $this->dataInicial($dateStart);
+        $date = explode('-',$dataIni);
+        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("dataini", $datainicial);
+        
+        $dataFim = $this->dataFinal($dateEnd);
+        $date = explode('-',$dataFim);
+        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("datafim", $datafinal);
+        
+        $porto = "Aritaguá";
+        
+        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+    }
+    public function baduAction(){
+        $dateStart = $this->_getParam('dataini');
+        $dateEnd = $this->_getParam('datafim');
+        
+        $dataIni = $this->dataInicial($dateStart);
+        $date = explode('-',$dataIni);
+        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("dataini", $datainicial);
+        
+        $dataFim = $this->dataFinal($dateEnd);
+        $date = explode('-',$dataFim);
+        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("datafim", $datafinal);
+        
+        $porto = "Vila Badú";
+        
+        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+    }
+    public function barraAction(){
+        $dateStart = $this->_getParam('dataini');
+        $dateEnd = $this->_getParam('datafim');
+        
+        $dataIni = $this->dataInicial($dateStart);
+        $date = explode('-',$dataIni);
+        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("dataini", $datainicial);
+        
+        $dataFim = $this->dataFinal($dateEnd);
+        $date = explode('-',$dataFim);
+        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("datafim", $datafinal);
+        
+        $porto = "Porto da Barra";
+        
+        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+    }
+    public function conchaAction(){
+        $dateStart = $this->_getParam('dataini');
+        $dateEnd = $this->_getParam('datafim');
+        
+        $dataIni = $this->dataInicial($dateStart);
+        $date = explode('-',$dataIni);
+        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("dataini", $datainicial);
+        
+        $dataFim = $this->dataFinal($dateEnd);
+        $date = explode('-',$dataFim);
+        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("datafim", $datafinal);
+        
+        $porto = "Porto da Concha";
+        
+        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+    }
+    public function forteAction(){
+        $dateStart = $this->_getParam('dataini');
+        $dateEnd = $this->_getParam('datafim');
+        
+        $dataIni = $this->dataInicial($dateStart);
+        $date = explode('-',$dataIni);
+        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("dataini", $datainicial);
+        
+        $dataFim = $this->dataFinal($dateEnd);
+        $date = explode('-',$dataFim);
+        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("datafim", $datafinal);
+        
+        $porto = "Porto do Forte";
+        
+        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+    }
+    public function jueranaAction(){
+        $dateStart = $this->_getParam('dataini');
+        $dateEnd = $this->_getParam('datafim');
+        
+        $dataIni = $this->dataInicial($dateStart);
+        $date = explode('-',$dataIni);
+        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("dataini", $datainicial);
+        
+        $dataFim = $this->dataFinal($dateEnd);
+        $date = explode('-',$dataFim);
+        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("datafim", $datafinal);
+        
+        $porto = "Juerana rio";
+        
+        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+    }
+    public function mamoaAction(){
+        $dateStart = $this->_getParam('dataini');
+        $dateEnd = $this->_getParam('datafim');
+        
+        $dataIni = $this->dataInicial($dateStart);
+        $date = explode('-',$dataIni);
+        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("dataini", $datainicial);
+        
+        $dataFim = $this->dataFinal($dateEnd);
+        $date = explode('-',$dataFim);
+        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("datafim", $datafinal);
+        
+        $porto = "Mamoã";
+        
+        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+    }
+    public function pontalAction(){
+        $dateStart = $this->_getParam('dataini');
+        $dateEnd = $this->_getParam('datafim');
+        
+        $dataIni = $this->dataInicial($dateStart);
+        $date = explode('-',$dataIni);
+        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("dataini", $datainicial);
+        
+        $dataFim = $this->dataFinal($dateEnd);
+        $date = explode('-',$dataFim);
+        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("datafim", $datafinal);
+        
+        $porto = "Pontal";
+        
+        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+    }
+    public function prainhaAction(){
+        $dateStart = $this->_getParam('dataini');
+        $dateEnd = $this->_getParam('datafim');
+        
+        $dataIni = $this->dataInicial($dateStart);
+        $date = explode('-',$dataIni);
+        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("dataini", $datainicial);
+        
+        $dataFim = $this->dataFinal($dateEnd);
+        $date = explode('-',$dataFim);
+        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("datafim", $datafinal);
+        
+        $porto = "Prainha";
+        
+        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+    }
+    public function ramoAction(){
+        $dateStart = $this->_getParam('dataini');
+        $dateEnd = $this->_getParam('datafim');
+        
+        $dataIni = $this->dataInicial($dateStart);
+        $date = explode('-',$dataIni);
+        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("dataini", $datainicial);
+        
+        $dataFim = $this->dataFinal($dateEnd);
+        $date = explode('-',$dataFim);
+        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("datafim", $datafinal);
+        
+        $porto = "Ponta do Ramo";
+        
+        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+    }
+    public function sambaitubaAction(){
+        $dateStart = $this->_getParam('dataini');
+        $dateEnd = $this->_getParam('datafim');
+        
+        $dataIni = $this->dataInicial($dateStart);
+        $date = explode('-',$dataIni);
+        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("dataini", $datainicial);
+        
+        $dataFim = $this->dataFinal($dateEnd);
+        $date = explode('-',$dataFim);
+        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("datafim", $datafinal);
+        
+        $porto = "Sambaituba";
+        
+        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+    }
+    public function saomiguelAction(){
+        $dateStart = $this->_getParam('dataini');
+        $dateEnd = $this->_getParam('datafim');
+        
+        $dataIni = $this->dataInicial($dateStart);
+        $date = explode('-',$dataIni);
+        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("dataini", $datainicial);
+        
+        $dataFim = $this->dataFinal($dateEnd);
+        $date = explode('-',$dataFim);
+        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("datafim", $datafinal);
+        
+        $porto = "São Miguel";
+        
+        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+    }
+    public function serraAction(){
+        $dateStart = $this->_getParam('dataini');
+        $dateEnd = $this->_getParam('datafim');
+        
+        $dataIni = $this->dataInicial($dateStart);
+        $date = explode('-',$dataIni);
+        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("dataini", $datainicial);
+        
+        $dataFim = $this->dataFinal($dateEnd);
+        $date = explode('-',$dataFim);
+        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("datafim", $datafinal);
+        
+        $porto = "Pé de Serra";
+        
+        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+    }
+    public function sobradinhoAction(){
+        $dateStart = $this->_getParam('dataini');
+        $dateEnd = $this->_getParam('datafim');
+        
+        $dataIni = $this->dataInicial($dateStart);
+        $date = explode('-',$dataIni);
+        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("dataini", $datainicial);
+        
+        $dataFim = $this->dataFinal($dateEnd);
+        $date = explode('-',$dataFim);
+        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("datafim", $datafinal);
+        
+        $porto = "Sobradinho";
+        
+        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+    }
+    public function terminalAction(){
+        $dateStart = $this->_getParam('dataini');
+        $dateEnd = $this->_getParam('datafim');
+        
+        $dataIni = $this->dataInicial($dateStart);
+        $date = explode('-',$dataIni);
+        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("dataini", $datainicial);
+        
+        $dataFim = $this->dataFinal($dateEnd);
+        $date = explode('-',$dataFim);
+        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("datafim", $datafinal);
+        
+        $porto = "Terminal Pesqueiro";
+        
+        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+    }
+    public function tulhaAction(){
+        $dateStart = $this->_getParam('dataini');
+        $dateEnd = $this->_getParam('datafim');
+        
+        $dataIni = $this->dataInicial($dateStart);
+        $date = explode('-',$dataIni);
+        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("dataini", $datainicial);
+        
+        $dataFim = $this->dataFinal($dateEnd);
+        $date = explode('-',$dataFim);
+        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("datafim", $datafinal);
+        
+        $porto = "Ponta da Tulha";
+        
+        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+    }
+    public function urucutucaAction(){
+        $dateStart = $this->_getParam('dataini');
+        $dateEnd = $this->_getParam('datafim');
+        
+        $dataIni = $this->dataInicial($dateStart);
+        $date = explode('-',$dataIni);
+        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("dataini", $datainicial);
+        
+        $dataFim = $this->dataFinal($dateEnd);
+        $date = explode('-',$dataFim);
+        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
+        $this->view->assign("datafim", $datafinal);
+        
+        $porto = "Urucutuca";
+        
+        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+    }
             
 	public function relatorioAction() {
             if($this->usuario['tp_id']==5){

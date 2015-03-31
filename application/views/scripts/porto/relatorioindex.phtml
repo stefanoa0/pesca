@@ -29,11 +29,11 @@
             </div>
             <div class="form-esq">
             <label>Data Inicial</label>
-            <input type="date" name="dataini" />
+            <input type="month" name="dataini" min="2013-11" max="<?= date("Y-m") ?>"/>
             </div>
             <div class="form-esq">
             <label>Data Final</label>
-            <input type="date" name="datafim" />
+            <input type="month" name="datafim" min="2013-11" max="2014-12" />
             </div>
             <br/>
             <input type="submit" value="Enviar"/>

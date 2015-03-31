@@ -26,24 +26,27 @@ fieldset{
 {
 	height: 2cm;
 	width: 3cm;
-	background-image: url('../img/Rachycentronlogo.png');
-	background-repeat: no-repeat;
 	float: left;
 }
 #topoRight
 {
 	height: 2cm;
 	width: 2.2cm;
-	background-image: url('../img/mpesca.png');
-	background-repeat: no-repeat;
 	float: right;
+        margin-right: 2cm;
 }
 
 .busca, .td-botao{
     display: none;
 }
-table th, tr, td{
+table tr, td{
     color: #000;
     border: 1px #CCC solid;
 }
-
+th{
+    background-color: #5F302B;
+    border: 1px #CCC solid;
+}
+table{
+    width: 100%
+}
