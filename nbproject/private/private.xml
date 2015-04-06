@@ -4,31 +4,22 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/amendoeira.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Mergulho.php</file>
             <file>file:/C:/wamp/www/pesca/application/controllers/PortoController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/concha.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/forte.phtml</file>
-            <file>file:/C:/wamp/www/pesca/public/js/Chart.js</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/barra.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/saomiguel.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/mamoa.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/sobradinho.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/aritagua.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Linha.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Manzua.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/VaraPesca.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Calao.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/ColetaManual.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Jerere.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Ratoeira.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Tarrafa.php</file>
             <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/terminal.phtml</file>
-            <file>file:/C:/wamp/www/pesca/public/js/charts-box/samples/box.html</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/ramo.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Siripoia.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Emalhe.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/LinhaFundo.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Grosseira.php</file>
             <file>file:/C:/wamp/www/pesca/application/models/ArrastoFundo.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/juerana.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/relatorioindex.phtml</file>
-            <file>file:/C:/wamp/www/pesca/public/js/charts-box/Chart.js</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/serra.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/badu.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/urucutuca.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/pontal.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/tulha.phtml</file>
-            <file>file:/C:/wamp/www/pesca/public/js/charts-box/docs/index.html</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/sambaituba.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/prainha.phtml</file>
-            <file>file:/C:/wamp/www/pesca/public/css/estilo.css</file>
         </group>
     </open-files>
 </project-private>

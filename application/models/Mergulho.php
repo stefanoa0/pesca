@@ -464,11 +464,11 @@ private $dbTableMergulho;
     }
     
     public function selectCountEntrevistasByPorto($where = null){
-        $dbTable = new Application_Model_DbTable_VMonitoramentos();
+        $dbTable = new Application_Model_DbTable_VEntrevistaMergulho();
         
         $select = $dbTable->select()->
-                from('v_monitoramentos', array('pto_nome','tap_artepesca', 'sum(monitorados)'))
-                ->group(array('pto_nome', 'tap_artepesca'));
+                from('v_entrevista_mergulho', array('pto_nome', 'count(tp_nome)'))
+                ->group(array('pto_nome'));
         
         if(!is_null($where)){
             $select->where($where);
