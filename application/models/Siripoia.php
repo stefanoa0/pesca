@@ -435,8 +435,8 @@ class Application_Model_Siripoia
     public function selectQuantCapturaByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaSiripoia();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_siripoia', 'v_entrevista_siripoia.pto_nome')->joinLeft('v_siripoiafundo_has_t_especie_capturada', 'v_entrevista_siripoia.sir_id = v_siripoiafundo_has_t_especie_capturada.sir_id',
-                        array('sum(v_siripoiafundo_has_t_especie_capturada.spc_quantidade) as quant','sum(v_siripoiafundo_has_t_especie_capturada.spc_peso_kg) as peso', 'esp_nome_comum' ))->
+                from('v_entrevista_siripoia', 'v_entrevista_siripoia.pto_nome')->joinLeft('v_siripoia_has_t_especie_capturada', 'v_entrevista_siripoia.sir_id = v_siripoia_has_t_especie_capturada.sir_id',
+                        array('sum(v_siripoia_has_t_especie_capturada.spc_quantidade) as quant','sum(v_siripoia_has_t_especie_capturada.spc_peso_kg) as peso', 'esp_nome_comum' ))->
                 group(array('pto_nome', 'esp_nome_comum'));
         
         if(!is_null($where)){

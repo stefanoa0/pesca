@@ -1,6 +1,7 @@
 <h2>Porto -> Amendoeira</h2>
 
 <script src="js/Chart.min.js"></script>
+
 <script type="text/javascript">
 
     var options = {
@@ -18,55 +19,157 @@
     var responsive_false = {
         responsive:false
     };
-    var datacapturaPeso = {
-        labels: <?= $this->arrayArtesPeso ?>,
-        datasets: [
-            {
-                label: "Peso",
-                fillColor: "rgba(95,48,43,.8)",
-                strokeColor: "rgba(95,48,43,1)",
-                pointColor: "rgba(95,48,43,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(95,48,43,1)",
-                data: <?= $this->arrayPeso ?>
-            }
-        ]
-    };
     
-    var datacapturaQuant = {
-        labels: <?= $this->arrayArtesQuant ?>,
-        datasets: [
-            {
-                label: "Quantidade",
-                fillColor: "rgba(95,48,43,.8)",
-                strokeColor: "rgba(95,48,43,1)",
-                pointColor: "rgba(95,48,43,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(95,48,43,1)",
-                data: <?= $this->arrayQuant ?>
-            }
-        ]
-    };
+   var datacapturaPeso = {
+       labels: <?= $this->arrayArtesPeso ?>,
+       datasets: [
+           {
+               label: "Peso",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->arrayPeso ?>
+           }
+       ]
+   };
+   
+   var datacapturaQuant = {
+       labels: <?= $this->arrayArtesQuant ?>,
+       datasets: [
+           {
+               label: "Quantidade",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->arrayQuant ?>
+           }
+       ]
+   };
+   
+   var databarcos = {
+       labels: <?= $this->arrayArtes ?>,
+       datasets: [
+           {
+               label: "Quantidade",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->arrayCount ?>
+           }
+       ]
+   };
+   var datapescador = {
+       labels: <?= $this->arrayArtes ?>,
+       datasets: [
+           {
+               label: "Quantidade",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->arrayCountPescador ?>
+           }
+       ]
+   };
+   var dataquantbarcos = {
+       labels: <?= $this->labelBarcos ?>,
+       datasets: [
+           {
+               label: "Quantidade",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->quantBarcos ?>
+           }
+       ]
+   };
+   
+   var dataquantpescadores = {
+       labels: <?= $this->labelPescadores ?>,
+       datasets: [
+           {
+               label: "Quantidade",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->quantPescadores ?>
+           }
+       ]
+   };
+   var dataquantcaptura = {
+       labels: <?= $this->labelCaptura ?>,
+       datasets: [
+           {
+               label: "Quantidade",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->quantCaptura ?>
+           }
+       ]
+   };
     
-    var databarcos = {
-        labels: <?= $this->arrayArtes ?>,
-        datasets: [
-            {
-                label: "Quantidade",
-                fillColor: "rgba(95,48,43,.8)",
-                strokeColor: "rgba(95,48,43,1)",
-                pointColor: "rgba(95,48,43,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(95,48,43,1)",
-                data: <?= $this->arrayCount ?>
-            }
-        ]
+    window.onload = function(){
+        
+        var ctx = document.getElementById("CapturaPeso").getContext("2d");
+        var PesoChart = new Chart(ctx).Bar(datacapturaPeso, options);
+
+        var ctx = document.getElementById("CapturaQuant").getContext("2d");
+        var QuantChart = new Chart(ctx).Bar(datacapturaQuant, options);
+
+        var id_barcos = document.getElementById("Barcos").getContext("2d");
+        var BarChart = new Chart(id_barcos).Bar(databarcos, options);
+
+        var id_pesc = document.getElementById("Pescadores").getContext("2d");
+        var PescChart = new Chart(id_pesc).Bar(datapescador, options);
+
+        var id_quant_barcos = document.getElementById("QuantBarcos").getContext("2d");
+        var QuantBarChart = new Chart(id_quant_barcos).Bar(dataquantbarcos, options);
+
+        var id_quant_pesc = document.getElementById("QuantPescadores").getContext("2d");
+        var QuantPescChart = new Chart(id_quant_pesc).Bar(dataquantpescadores, options);
+        
+        var id_quant_capt = document.getElementById("QuantCaptura").getContext("2d");
+        var QuantCaptChart = new Chart(id_quant_capt).Bar(dataquantcaptura, options);
     };
-    var datapescador = {
-        labels: <?= $this->arrayArtes ?>,
+</script>
+
+<!--<script src="js/charts-box/Chart.js"></script>-->
+<!--<script type="text/javascript">
+    var optionsBox = {
+		
+                whiskerWidth : 0.75,
+                scaleOverride: true,
+                scaleStartValue: 0,
+                scaleSteps: 6,
+                scaleStepWidth: 1,
+                bezierCurve: true,
+                datasetFill: false,
+                connectingLine : true,
+                animation : true
+		};
+        var cpueArrasto = {
+        labels: <?= $this->labels ?>,
         datasets: [
             {
                 label: "Quantidade",
@@ -76,61 +179,17 @@
                 pointStrokeColor: "#fff",
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "rgba(95,48,43,1)",
-                data: <?= $this->arrayCountPescador ?>
-            }
-        ]
-    };
-    var dataquantbarcos = {
-        labels: <?= $this->labelBarcos ?>,
-        datasets: [
-            {
-                label: "Quantidade",
-                fillColor: "rgba(95,48,43,.8)",
-                strokeColor: "rgba(95,48,43,1)",
-                pointColor: "rgba(95,48,43,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(95,48,43,1)",
-                data: <?= $this->quantBarcos ?>
-            }
-        ]
-    };
-    
-    var dataquantpescadores = {
-        labels: <?= $this->labelPescadores ?>,
-        datasets: [
-            {
-                label: "Quantidade",
-                fillColor: "rgba(95,48,43,.8)",
-                strokeColor: "rgba(95,48,43,1)",
-                pointColor: "rgba(95,48,43,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(95,48,43,1)",
-                data: <?= $this->quantPescadores ?>
+                data: [<?= $this->cpue ?>]
             }
         ]
     };
     window.onload = function(){
-        var ctx = document.getElementById("CapturaPeso").getContext("2d");
-        var PesoChart = new Chart(ctx).Bar(datacapturaPeso, optionsCaptura);
+        var myLine = new ChartCalculator(
+        document.getElementById("cpueArrasto").getContext("2d")).Box(cpueArrasto, optionsBox);
         
-        var ctx = document.getElementById("CapturaQuant").getContext("2d");
-        var QuantChart = new Chart(ctx).Bar(datacapturaQuant, optionsCaptura);
-        
-        var id_barcos = document.getElementById("Barcos").getContext("2d");
-        var BarChart = new Chart(id_barcos).Bar(databarcos, options);
-        
-        var id_pesc = document.getElementById("Pescadores").getContext("2d");
-        var PescChart = new Chart(id_pesc).Bar(datapescador, options);
-        
-        var id_quant_barcos = document.getElementById("QuantBarcos").getContext("2d");
-        var QuantBarChart = new Chart(id_quant_barcos).Bar(dataquantbarcos, options);
-        
-        var id_quant_pesc = document.getElementById("QuantPescadores").getContext("2d");
-        var QuantPescChart = new Chart(id_quant_pesc).Bar(dataquantpescadores, options);
-    };
-</script>
+
+    }
+</script>-->
 
 <table>
     <legend>Captura Monitorada por Porto</legend>
@@ -565,6 +624,22 @@
 <div class="box-chart">
   <legend>Gráfico 6: Pescadores Monitorados</legend>  
   <canvas id="QuantPescadores" style="width:100%;"></canvas>
+</div>
+<br/>
+<br/>
+
+<br/>
+<div class="box-chart">
+  <legend>Gráfico 7: Espécies Mais Capturadas</legend>  
+  <canvas id="QuantCaptura" style="width:100%;"></canvas>
+</div>
+<br/>
+<br/>
+
+<br/>
+<div class="box-chart">
+  <legend>Gráfico 7: CPUE Arrasto</legend>  
+  <canvas id="cpueArrasto" style="width:100%;"></canvas>
 </div>
 <br/>
 <br/>

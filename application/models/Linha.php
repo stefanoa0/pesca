@@ -494,8 +494,8 @@ private $dbTableLinha;
     public function selectQuantCapturaByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaLinha();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_linha', 'v_entrevista_linha.pto_nome')->joinLeft('v_linhafundo_has_t_especie_capturada', 'v_entrevista_linha.lin_id = v_linhafundo_has_t_especie_capturada.lin_id',
-                        array('sum(v_linhafundo_has_t_especie_capturada.spc_quantidade) as quant','sum(v_linhafundo_has_t_especie_capturada.spc_peso_kg) as peso', 'esp_nome_comum' ))->
+                from('v_entrevista_linha', 'v_entrevista_linha.pto_nome')->joinLeft('v_linha_has_t_especie_capturada', 'v_entrevista_linha.lin_id = v_linha_has_t_especie_capturada.lin_id',
+                        array('sum(v_linha_has_t_especie_capturada.spc_quantidade) as quant','sum(v_linha_has_t_especie_capturada.spc_peso_kg) as peso', 'esp_nome_comum' ))->
                 group(array('pto_nome', 'esp_nome_comum'));
         
         if(!is_null($where)){

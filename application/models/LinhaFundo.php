@@ -494,8 +494,8 @@ class Application_Model_LinhaFundo
     public function selectQuantCapturaByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaLinhaFundo();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_linhafundo', 'v_entrevista_linhafundo.pto_nome')->joinLeft('v_linhafundofundo_has_t_especie_capturada', 'v_entrevista_linhafundo.lf_id = v_linhafundofundo_has_t_especie_capturada.lf_id',
-                        array('sum(v_linhafundofundo_has_t_especie_capturada.spc_quantidade) as quant','sum(v_linhafundofundo_has_t_especie_capturada.spc_peso_kg) as peso', 'esp_nome_comum' ))->
+                from('v_entrevista_linhafundo', 'v_entrevista_linhafundo.pto_nome')->joinLeft('v_linhafundo_has_t_especie_capturada', 'v_entrevista_linhafundo.lf_id = v_linhafundo_has_t_especie_capturada.lf_id',
+                        array('sum(v_linhafundo_has_t_especie_capturada.spc_quantidade) as quant','sum(v_linhafundo_has_t_especie_capturada.spc_peso_kg) as peso', 'esp_nome_comum' ))->
                 group(array('pto_nome', 'esp_nome_comum'));
         
         if(!is_null($where)){

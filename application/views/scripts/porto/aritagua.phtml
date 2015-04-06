@@ -113,10 +113,10 @@
     };
     window.onload = function(){
         var ctx = document.getElementById("CapturaPeso").getContext("2d");
-        var PesoChart = new Chart(ctx).Bar(datacapturaPeso, optionsCaptura);
+        var PesoChart = new Chart(ctx).Bar(datacapturaPeso, options);
         
         var ctx = document.getElementById("CapturaQuant").getContext("2d");
-        var QuantChart = new Chart(ctx).Bar(datacapturaQuant, optionsCaptura);
+        var QuantChart = new Chart(ctx).Bar(datacapturaQuant, options);
         
         var id_barcos = document.getElementById("Barcos").getContext("2d");
         var BarChart = new Chart(id_barcos).Bar(databarcos, options);

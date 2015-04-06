@@ -1,6 +1,6 @@
 <h2>Porto -> Terminal Pesqueiro</h2>
 
-<script src="js/Chart.min.js"></script>
+<!--<script src="js/Chart.min.js"></script>
 <script type="text/javascript">
 
     var options = {
@@ -113,10 +113,10 @@
     };
     window.onload = function(){
         var ctx = document.getElementById("CapturaPeso").getContext("2d");
-        var PesoChart = new Chart(ctx).Bar(datacapturaPeso, optionsCaptura);
+        var PesoChart = new Chart(ctx).Bar(datacapturaPeso, options);
         
         var ctx = document.getElementById("CapturaQuant").getContext("2d");
-        var QuantChart = new Chart(ctx).Bar(datacapturaQuant, optionsCaptura);
+        var QuantChart = new Chart(ctx).Bar(datacapturaQuant, options);
         
         var id_barcos = document.getElementById("Barcos").getContext("2d");
         var BarChart = new Chart(id_barcos).Bar(databarcos, options);
@@ -130,8 +130,55 @@
         var id_quant_pesc = document.getElementById("QuantPescadores").getContext("2d");
         var QuantPescChart = new Chart(id_quant_pesc).Bar(dataquantpescadores, options);
     };
+</script>-->
+<script src="js/charts-box/Chart.js"></script>  
+<script type="text/javascript">
+        var optionsBox = {
+    		
+                    whiskerWidth : 0.75,
+                    scaleOverride: true,
+                    scaleStartValue: -10,
+                    scaleSteps: 7,
+                    scaleStepWidth: 60,
+                    bezierCurve: true,
+                    datasetFill: true,
+                    connectingLine : true,
+                    animation : true
+    		};
+            var cpueArrasto = {
+            labels: ["jan/2014","fev/2014","mar/2014","abr/2014","mai/2014","jun/2014","7jul/2014","ago/2014","set/2014","out/2014","nov/2014","dez/2014"],
+            datasets: [
+                {
+                    label: "Quantidade",
+                    fillColor: "rgba(95,48,43,.8)",
+                    strokeColor: "rgba(95,48,43,1)",
+                    pointColor: "rgba(95,48,43,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(95,48,43,1)",
+                    data: [<?= $this->cpueJaneiro ?>,
+                           <?= $this->cpueFevereiro ?>,
+                           <?= $this->cpueMarco ?>,
+                           <?= $this->cpueAbril ?>,
+                           <?= $this->cpueMaio ?>,
+                           <?= $this->cpueJunho ?>,
+                           <?= $this->cpueJulho ?>,
+                           <?= $this->cpueAgosto ?>,
+                           <?= $this->cpueSetembro ?>,
+                           [<?= $this->cpueOutubro ?>],
+                           <?= $this->cpueNovembro ?>,
+                           <?= $this->cpueDezembro ?>
+                          
+                          ]
+                }
+            ]
+        };
+        window.onload = function(){
+            var myLine = new ChartCalculator(
+            document.getElementById("cpueArrasto").getContext("2d")).Box(cpueArrasto, optionsBox);
+            
+        };
 </script>
-
 <table>
     <legend>Captura Monitorada por Porto</legend>
     <legend>Entre <?=$this->dataini ?> e <?=$this->datafim ?> </legend>
@@ -565,6 +612,13 @@
 <div class="box-chart">
   <legend>Gráfico 6: Pescadores Monitorados</legend>  
   <canvas id="QuantPescadores" style="width:100%;"></canvas>
+</div>
+<br/>
+<br/>
+
+<div class="box-chart">
+  <legend>Gráfico 7: Gráfico de CPUE(kg/dia) das pescarias de Arrasto de Fundo </legend>  
+  <canvas id="cpueArrasto" height="450" width="1000"></canvas>
 </div>
 <br/>
 <br/>

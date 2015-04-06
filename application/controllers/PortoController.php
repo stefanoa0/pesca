@@ -361,8 +361,9 @@ class PortoController extends Zend_Controller_Action
                 $captMergulho,
                 $captTarrafa,
                 $captVaraPesca);
+        
         $arrayCapturaQuant = array_merge_recursive(
-                 $captColeta, 
+        $captColeta, 
         $captRatoeira,
         $captSiripoia
                 );
@@ -638,7 +639,7 @@ class PortoController extends Zend_Controller_Action
         
         //print_r($arrayQuantPescadores);
         $arrayQuantPescadoresOrdenado = $this->array_sort($arrayQuantPescadores, 'count', SORT_DESC);
-        //print_r($data);
+        //print_r($arrayQuantPescadoresOrdenado);
         $i=0;
         foreach($arrayQuantPescadoresOrdenado as $key => $quantPescadores):
             if($i==30){
@@ -646,7 +647,7 @@ class PortoController extends Zend_Controller_Action
             }
             $arrayNomesPescadores[] = $quantPescadores['tp_nome'];
             $arrayQuantidadesPesc[] = $quantPescadores['count'];
-            $i++;
+            $i++;   
         endforeach;
         //print_r($arrayNomesPescadores);
         //print_r($arrayQuantidades);
@@ -657,8 +658,253 @@ class PortoController extends Zend_Controller_Action
         $this->view->assign("arrayQuantPescadores", $arrayQuantPescadoresOrdenado);
         $this->view->assign("labelPescadores", $jsLabelPescadores);
         $this->view->assign("quantPescadores", $jsQuantPescadores);
+        
+        
+        //Espécies mais capturadas
+        $quantCapturaArrasto    = $this->modelArrasto   ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantCapturaCalao      = $this->modelCalao     ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantCapturaColeta     = $this->modelColeta    ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantCapturaEmalhe     = $this->modelEmalhe    ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantCapturaGrosseira  = $this->modelGrosseira ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantCapturaJerere     = $this->modelJerere    ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantCapturaLinha      = $this->modelLinha     ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantCapturaLinhaFundo = $this->modelLinhaFundo->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantCapturaManzua     = $this->modelManzua    ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantCapturaMergulho   = $this->modelMergulho  ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantCapturaRatoeira   = $this->modelRatoeira  ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantCapturaSiripoia   = $this->modelSiripoia  ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $quantCapturaTarrafa    = $this->modelTarrafa   ->selectQuantCapturaByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
+        $quantCapturaVaraPesca  = $this->modelVaraPesca ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        
+        
+        $arrayQuantCaptura =  array_merge_recursive(
+                $quantCapturaArrasto, 
+                $quantCapturaCalao, 
+                $quantCapturaColeta, 
+                $quantCapturaEmalhe, 
+                $quantCapturaGrosseira, 
+                $quantCapturaJerere, 
+                $quantCapturaLinha, 
+                $quantCapturaLinhaFundo,
+                $quantCapturaManzua,
+                $quantCapturaMergulho,
+                $quantCapturaRatoeira,
+                $quantCapturaSiripoia,
+                $quantCapturaTarrafa,
+                $quantCapturaVaraPesca);
+        //arsort($arrayQuantCaptura);
+        $arrayQuantCaptura = $this->removeDuplicate($arrayQuantCaptura, 'esp_nome_comum', 'quant');
+        
+        //print_r($arrayQuantCaptura);
+        $arrayQuantCapturaOrdenado = $this->array_sort($arrayQuantCaptura, 'quant', SORT_ASC);
+        //print_r($arrayQuantCapturaOrdenado);
+        $i=0;
+        foreach($arrayQuantCapturaOrdenado as $key => $quantCaptura):
+            if($i==30){
+                break;
+            }
+            $arrayNomesCaptura[] = $quantCaptura['esp_nome_comum'];
+            $arrayQuantidadesPesc[] = $quantCaptura['quant'];
+            $i++;   
+        endforeach;
+        //print_r($arrayNomesCaptura);
+        //print_r($arrayQuantidades);
+//        
+        $jsLabelCaptura = json_encode($arrayNomesCaptura);
+        $jsQuantCaptura = json_encode($arrayQuantidadesPesc);
+//
+        $this->view->assign("arrayQuantCaptura", $arrayQuantCapturaOrdenado);
+        $this->view->assign("labelCaptura", $jsLabelCaptura);
+        $this->view->assign("quantCaptura", $jsQuantCaptura);
+        
+        //print_r($arrayQuantCapturaOrdenado);
+        
+//        $cpueArrastoJaneiro   = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 1   And Extract(YEAR FROM fd_data) = 2014");
+//        $cpueArrastoFevereiro = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 2 And Extract(YEAR FROM fd_data) = 2014");
+//        $cpueArrastoMarco     = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 3     And Extract(YEAR FROM fd_data) = 2014");
+//        $cpueArrastoAbril     = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 4     And Extract(YEAR FROM fd_data) = 2014");
+//        $cpueArrastoMaio      = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 5      And Extract(YEAR FROM fd_data) = 2014");
+//        $cpueArrastoJunho     = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 6     And Extract(YEAR FROM fd_data) = 2014");
+//        $cpueArrastoJulho     = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 7     And Extract(YEAR FROM fd_data) = 2014");
+//        $cpueArrastoAgosto    = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 8    And Extract(YEAR FROM fd_data) = 2014");
+//        $cpueArrastoSetembro  = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 9  And Extract(YEAR FROM fd_data) = 2014");
+//        $cpueArrastoOutubro   = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 10  And Extract(YEAR FROM fd_data) = 2014");
+//        $cpueArrastoNovembro  = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 11 And Extract(YEAR FROM fd_data) = 2014");
+//        $cpueArrastoDezembro  = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 12 And Extract(YEAR FROM fd_data) = 2014");
+//        
+////        print_r($cpueArrastoJaneiro);
+//        
+//        foreach($cpueArrastoJaneiro as $cpue):
+//            $cpueJaneiro[] = $cpue['cpue'];
+//        endforeach;
+//        foreach($cpueArrastoFevereiro as $cpue):
+//            $cpueFevereiro[] = $cpue['cpue'];
+//        endforeach;
+//        foreach($cpueArrastoMarco as $cpue):
+//            $cpueMarco[] = $cpue['cpue'];
+//        endforeach;
+//        foreach($cpueArrastoAbril as $cpue):
+//            $cpueAbril[] = $cpue['cpue'];
+//        endforeach;
+//        foreach($cpueArrastoMaio as $cpue):
+//            $cpueMaio[] = $cpue['cpue'];
+//        endforeach;
+//        foreach($cpueArrastoJunho as $cpue):
+//            $cpueJunho[] = $cpue['cpue'];
+//        endforeach;
+//        foreach($cpueArrastoJulho as $cpue):
+//            $cpueJulho[] = $cpue['cpue'];
+//        endforeach;
+//        foreach($cpueArrastoAgosto as $cpue):
+//            $cpueAgosto[] = $cpue['cpue'];
+//        endforeach;
+//        foreach($cpueArrastoSetembro as $cpue):
+//            $cpueSetembro[] = $cpue['cpue'];
+//        endforeach;
+//        foreach($cpueArrastoOutubro as $cpue):
+//            $cpueOutubro[] = $cpue['cpue'];
+//        endforeach;
+//        foreach($cpueArrastoNovembro as $cpue):
+//            $cpueNovembro[] = $cpue['cpue'];
+//        endforeach;
+//        foreach($cpueArrastoDezembro as $cpue):
+//            $cpueDezembro[] = $cpue['cpue'];
+//        endforeach;
+//        
+//        $jsCpueJaneiro = json_encode($cpueJaneiro);
+//        $jsCpueFevereiro = json_encode($cpueFevereiro);
+//        $jsCpueMarco     = json_encode($cpueMarco);
+//        $jsCpueAbril     = json_encode($cpueAbril);
+//        $jsCpueMaio      = json_encode($cpueMaio);
+//        $jsCpueJunho     = json_encode($cpueJunho);
+//        $jsCpueJulho     = json_encode($cpueJulho);
+//        $jsCpueAgosto    = json_encode($cpueAgosto);
+//        $jsCpueSetembro  = json_encode($cpueSetembro);
+//        $jsCpueOutubro   = json_encode($cpueOutubro);
+//        $jsCpueNovembro  = json_encode($cpueNovembro);
+//        $jsCpueDezembro  = json_encode($cpueDezembro);
+//        
+//        
+//        $this->view->assign("cpueJaneiro",   $jsCpueJaneiro);
+//        $this->view->assign("cpueFevereiro", $jsCpueFevereiro);
+//        $this->view->assign("cpueMarco",     $jsCpueMarco    );
+//        $this->view->assign("cpueAbril", $jsCpueAbril    );
+//        $this->view->assign("cpueMaio", $jsCpueMaio     );
+//        $this->view->assign("cpueJunho", $jsCpueJunho    );
+//        $this->view->assign("cpueJulho", $jsCpueJulho    );
+//        $this->view->assign("cpueAgosto", $jsCpueAgosto   );
+//        $this->view->assign("cpueSetembro", $jsCpueSetembro );
+//        $this->view->assign("cpueOutubro", $jsCpueOutubro  );
+//        $this->view->assign("cpueNovembro", $jsCpueNovembro );
+//        $this->view->assign("cpueDezembro", $jsCpueDezembro );
+//        
+//        print_r($jsCpueJaneiro);
+//        print_r($jsCpueFevereiro);
+//        print_r($jsCpueMarco);
+//        print_r($jsCpueAbril);  
+//        print_r($jsCpueMaio);  
+//        print_r($jsCpueJunho);   
+//        print_r($jsCpueJulho);  
+//        print_r($jsCpueAgosto);  
+//        print_r($jsCpueSetembro); 
+//        print_r($jsCpueOutubro);
+//        print_r($jsCpueNovembro);
+//        print_r($jsCpueDezembro);
+        
     }
-    
+    public function gerarcpueAction(){
+        $cpueArrastoJaneiro   = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 1   And Extract(YEAR FROM fd_data) = 2014");
+        $cpueArrastoFevereiro = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 2 And Extract(YEAR FROM fd_data) = 2014");
+        $cpueArrastoMarco     = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 3     And Extract(YEAR FROM fd_data) = 2014");
+        $cpueArrastoAbril     = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 4     And Extract(YEAR FROM fd_data) = 2014");
+        $cpueArrastoMaio      = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 5      And Extract(YEAR FROM fd_data) = 2014");
+        $cpueArrastoJunho     = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 6     And Extract(YEAR FROM fd_data) = 2014");
+        $cpueArrastoJulho     = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 7     And Extract(YEAR FROM fd_data) = 2014");
+        $cpueArrastoAgosto    = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 8    And Extract(YEAR FROM fd_data) = 2014");
+        $cpueArrastoSetembro  = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 9  And Extract(YEAR FROM fd_data) = 2014");
+        $cpueArrastoOutubro   = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 10  And Extract(YEAR FROM fd_data) = 2014");
+        $cpueArrastoNovembro  = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 11 And Extract(YEAR FROM fd_data) = 2014");
+        $cpueArrastoDezembro  = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 12 And Extract(YEAR FROM fd_data) = 2014");
+        
+//        print_r($cpueArrastoJaneiro);
+        
+        foreach($cpueArrastoJaneiro as $cpue):
+            $cpueJaneiro[] = $cpue['cpue'];
+        endforeach;
+        foreach($cpueArrastoFevereiro as $cpue):
+            $cpueFevereiro[] = $cpue['cpue'];
+        endforeach;
+        foreach($cpueArrastoMarco as $cpue):
+            $cpueMarco[] = $cpue['cpue'];
+        endforeach;
+        foreach($cpueArrastoAbril as $cpue):
+            $cpueAbril[] = $cpue['cpue'];
+        endforeach;
+        foreach($cpueArrastoMaio as $cpue):
+            $cpueMaio[] = $cpue['cpue'];
+        endforeach;
+        foreach($cpueArrastoJunho as $cpue):
+            $cpueJunho[] = $cpue['cpue'];
+        endforeach;
+        foreach($cpueArrastoJulho as $cpue):
+            $cpueJulho[] = $cpue['cpue'];
+        endforeach;
+        foreach($cpueArrastoAgosto as $cpue):
+            $cpueAgosto[] = $cpue['cpue'];
+        endforeach;
+        foreach($cpueArrastoSetembro as $cpue):
+            $cpueSetembro[] = $cpue['cpue'];
+        endforeach;
+        foreach($cpueArrastoOutubro as $cpue):
+            $cpueOutubro[] = $cpue['cpue'];
+        endforeach;
+        foreach($cpueArrastoNovembro as $cpue):
+            $cpueNovembro[] = $cpue['cpue'];
+        endforeach;
+        foreach($cpueArrastoDezembro as $cpue):
+            $cpueDezembro[] = $cpue['cpue'];
+        endforeach;
+        
+        $jsCpueJaneiro = json_encode($cpueJaneiro);
+        $jsCpueFevereiro = json_encode($cpueFevereiro);
+        $jsCpueMarco     = json_encode($cpueMarco);
+        $jsCpueAbril     = json_encode($cpueAbril);
+        $jsCpueMaio      = json_encode($cpueMaio);
+        $jsCpueJunho     = json_encode($cpueJunho);
+        $jsCpueJulho     = json_encode($cpueJulho);
+        $jsCpueAgosto    = json_encode($cpueAgosto);
+        $jsCpueSetembro  = json_encode($cpueSetembro);
+        $jsCpueOutubro   = json_encode($cpueOutubro);
+        $jsCpueNovembro  = json_encode($cpueNovembro);
+        $jsCpueDezembro  = json_encode($cpueDezembro);
+        
+        
+        $this->view->assign("cpueJaneiro",   $jsCpueJaneiro);
+        $this->view->assign("cpueFevereiro", $jsCpueFevereiro);
+        $this->view->assign("cpueMarco",     $jsCpueMarco    );
+        $this->view->assign("cpueAbril", $jsCpueAbril    );
+        $this->view->assign("cpueMaio", $jsCpueMaio     );
+        $this->view->assign("cpueJunho", $jsCpueJunho    );
+        $this->view->assign("cpueJulho", $jsCpueJulho    );
+        $this->view->assign("cpueAgosto", $jsCpueAgosto   );
+        $this->view->assign("cpueSetembro", $jsCpueSetembro );
+        $this->view->assign("cpueOutubro", $jsCpueOutubro  );
+        $this->view->assign("cpueNovembro", $jsCpueNovembro );
+        $this->view->assign("cpueDezembro", $jsCpueDezembro );
+        
+        print_r($jsCpueJaneiro);
+        print_r($jsCpueFevereiro);
+        print_r($jsCpueMarco);
+        print_r($jsCpueAbril);  
+        print_r($jsCpueMaio);  
+        print_r($jsCpueJunho);   
+        print_r($jsCpueJulho);  
+        print_r($jsCpueAgosto);  
+        print_r($jsCpueSetembro); 
+        print_r($jsCpueOutubro);
+        print_r($jsCpueNovembro);
+        print_r($jsCpueDezembro);
+    }
     public function amendoeiraAction(){
         
         $dateStart = $this->_getParam('dataini');
@@ -676,8 +922,21 @@ class PortoController extends Zend_Controller_Action
         
         $porto = "Amendoeira";
         
-        $this->gerarrelatorio($porto, $datainicial, $datafinal);
         
+        $capturaCalao      = $this->modelCalao     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaEmalhe     = $this->modelEmalhe    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaGrosseira  = $this->modelGrosseira ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaLinha      = $this->modelLinha     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaManzua     = $this->modelManzua    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaMergulho   = $this->modelMergulho  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaTarrafa    = $this->modelTarrafa   ->selectCapturaByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
+        
+        ////REPLICAR para todos os portos a baixo os itens:
+        //Captura por porto (já feito o select, apenas passar para a view)
+        //Entrevistas por Porto (já está no model de cada arte de pesca)
+        //Embarcações mais monitoradas
+        //Espécies mais capturadas
+        //Depois eu vejo os gráficos disso.
     }
     public function aritaguaAction(){
         $dateStart = $this->_getParam('dataini');
@@ -695,7 +954,17 @@ class PortoController extends Zend_Controller_Action
         
         $porto = "Aritaguá";
         
-        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+        $capturaColeta     = $this->modelColeta    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaEmalhe     = $this->modelEmalhe    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaJerere     = $this->modelJerere    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaLinha      = $this->modelLinha     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaManzua     = $this->modelManzua    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaMergulho   = $this->modelMergulho  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaRatoeira   = $this->modelRatoeira  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaSiripoia   = $this->modelSiripoia  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaTarrafa    = $this->modelTarrafa   ->selectCapturaByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaVaraPesca  = $this->modelVaraPesca ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        
     }
     public function baduAction(){
         $dateStart = $this->_getParam('dataini');
@@ -713,7 +982,16 @@ class PortoController extends Zend_Controller_Action
         
         $porto = "Vila Badú";
         
-        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+        $capturaColeta     = $this->modelColeta    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaEmalhe     = $this->modelEmalhe    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaJerere     = $this->modelJerere    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaLinha      = $this->modelLinha     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaMergulho   = $this->modelMergulho  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaRatoeira   = $this->modelRatoeira  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaSiripoia   = $this->modelSiripoia  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaTarrafa    = $this->modelTarrafa   ->selectCapturaByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaVaraPesca  = $this->modelVaraPesca ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        
     }
     public function barraAction(){
         $dateStart = $this->_getParam('dataini');
@@ -731,7 +1009,8 @@ class PortoController extends Zend_Controller_Action
         
         $porto = "Porto da Barra";
         
-        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+        $capturaArrasto    = $this->modelArrasto   ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        
     }
     public function conchaAction(){
         $dateStart = $this->_getParam('dataini');
@@ -749,7 +1028,14 @@ class PortoController extends Zend_Controller_Action
         
         $porto = "Porto da Concha";
         
-        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+        $capturaArrasto    = $this->modelArrasto   ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaCalao      = $this->modelCalao     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaEmalhe     = $this->modelEmalhe    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaGrosseira  = $this->modelGrosseira ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaLinha      = $this->modelLinha     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaMergulho   = $this->modelMergulho  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaVaraPesca  = $this->modelVaraPesca ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        
     }
     public function forteAction(){
         $dateStart = $this->_getParam('dataini');
@@ -767,7 +1053,14 @@ class PortoController extends Zend_Controller_Action
         
         $porto = "Porto do Forte";
         
-        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+        $capturaArrasto    = $this->modelArrasto   ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaColeta     = $this->modelColeta    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaEmalhe     = $this->modelEmalhe    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaGrosseira  = $this->modelGrosseira ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaLinha      = $this->modelLinha     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaSiripoia   = $this->modelSiripoia  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaTarrafa    = $this->modelTarrafa   ->selectCapturaByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
+        
     }
     public function jueranaAction(){
         $dateStart = $this->_getParam('dataini');
@@ -785,7 +1078,13 @@ class PortoController extends Zend_Controller_Action
         
         $porto = "Juerana rio";
         
-        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+        $capturaLinha      = $this->modelLinha     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaLinhaFundo = $this->modelLinhaFundo->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaManzua     = $this->modelManzua    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaMergulho   = $this->modelMergulho  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaRatoeira   = $this->modelRatoeira  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaVaraPesca  = $this->modelVaraPesca ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        
     }
     public function mamoaAction(){
         $dateStart = $this->_getParam('dataini');
@@ -803,7 +1102,14 @@ class PortoController extends Zend_Controller_Action
         
         $porto = "Mamoã";
         
-        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+        $capturaCalao      = $this->modelCalao     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaEmalhe     = $this->modelEmalhe    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaGrosseira  = $this->modelGrosseira ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaLinha      = $this->modelLinha     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaMergulho   = $this->modelMergulho  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaSiripoia   = $this->modelSiripoia  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaTarrafa    = $this->modelTarrafa   ->selectCapturaByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
+        
     }
     public function pontalAction(){
         $dateStart = $this->_getParam('dataini');
@@ -821,7 +1127,13 @@ class PortoController extends Zend_Controller_Action
         
         $porto = "Pontal";
         
-        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+        $capturaArrasto    = $this->modelArrasto   ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaEmalhe     = $this->modelEmalhe    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaGrosseira  = $this->modelGrosseira ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaLinha      = $this->modelLinha     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaSiripoia   = $this->modelSiripoia  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaVaraPesca  = $this->modelVaraPesca ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        
     }
     public function prainhaAction(){
         $dateStart = $this->_getParam('dataini');
@@ -839,7 +1151,12 @@ class PortoController extends Zend_Controller_Action
         
         $porto = "Prainha";
         
-        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+        $capturaArrasto    = $this->modelArrasto   ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaCalao      = $this->modelCalao     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaGrosseira  = $this->modelGrosseira ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaLinha      = $this->modelLinha     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaMergulho   = $this->modelMergulho  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        
     }
     public function ramoAction(){
         $dateStart = $this->_getParam('dataini');
@@ -857,7 +1174,10 @@ class PortoController extends Zend_Controller_Action
         
         $porto = "Ponta do Ramo";
         
-        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+        $capturaCalao      = $this->modelCalao     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaGrosseira  = $this->modelGrosseira ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaLinha      = $this->modelLinha     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        
     }
     public function sambaitubaAction(){
         $dateStart = $this->_getParam('dataini');
@@ -875,7 +1195,15 @@ class PortoController extends Zend_Controller_Action
         
         $porto = "Sambaituba";
         
-        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+        $capturaEmalhe     = $this->modelEmalhe    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaJerere     = $this->modelJerere    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaLinha      = $this->modelLinha     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaManzua     = $this->modelManzua    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaMergulho   = $this->modelMergulho  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaRatoeira   = $this->modelRatoeira  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaTarrafa    = $this->modelTarrafa   ->selectCapturaByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaVaraPesca  = $this->modelVaraPesca ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        
     }
     public function saomiguelAction(){
         $dateStart = $this->_getParam('dataini');
@@ -893,7 +1221,16 @@ class PortoController extends Zend_Controller_Action
         
         $porto = "São Miguel";
         
-        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+        $capturaArrasto    = $this->modelArrasto   ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaCalao      = $this->modelCalao     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaEmalhe     = $this->modelEmalhe    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaGrosseira  = $this->modelGrosseira ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaLinha      = $this->modelLinha     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaMergulho   = $this->modelMergulho  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaSiripoia   = $this->modelSiripoia  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaTarrafa    = $this->modelTarrafa   ->selectCapturaByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaVaraPesca  = $this->modelVaraPesca ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        
     }
     public function serraAction(){
         $dateStart = $this->_getParam('dataini');
@@ -911,7 +1248,15 @@ class PortoController extends Zend_Controller_Action
         
         $porto = "Pé de Serra";
         
-        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+        $capturaCalao      = $this->modelCalao     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+       $capturaColeta     = $this->modelColeta    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+       $capturaEmalhe     = $this->modelEmalhe    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+       $capturaLinha      = $this->modelLinha     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+       $capturaMergulho   = $this->modelMergulho  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+       $capturaSiripoia   = $this->modelSiripoia  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+       $capturaTarrafa    = $this->modelTarrafa   ->selectCapturaByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
+       $capturaVaraPesca  = $this->modelVaraPesca ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        
     }
     public function sobradinhoAction(){
         $dateStart = $this->_getParam('dataini');
@@ -929,7 +1274,15 @@ class PortoController extends Zend_Controller_Action
         
         $porto = "Sobradinho";
         
-        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+       $capturaCalao      = $this->modelCalao     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+       $capturaEmalhe     = $this->modelEmalhe    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+       $capturaLinha      = $this->modelLinha     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+       $capturaMergulho   = $this->modelMergulho  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+       $capturaSiripoia   = $this->modelSiripoia  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+       $capturaTarrafa    = $this->modelTarrafa   ->selectCapturaByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
+       $capturaVaraPesca  = $this->modelVaraPesca ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        
+       
     }
     public function terminalAction(){
         $dateStart = $this->_getParam('dataini');
@@ -947,7 +1300,12 @@ class PortoController extends Zend_Controller_Action
         
         $porto = "Terminal Pesqueiro";
         
-        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+        $capturaArrasto    = $this->modelArrasto   ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaGrosseira  = $this->modelGrosseira ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaLinha      = $this->modelLinha     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaMergulho   = $this->modelMergulho  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaSiripoia   = $this->modelSiripoia  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        
     }
     public function tulhaAction(){
         $dateStart = $this->_getParam('dataini');
@@ -965,7 +1323,16 @@ class PortoController extends Zend_Controller_Action
         
         $porto = "Ponta da Tulha";
         
-        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+        $capturaCalao      = $this->modelCalao     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaColeta     = $this->modelColeta    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaEmalhe     = $this->modelEmalhe    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaGrosseira  = $this->modelGrosseira ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaLinha      = $this->modelLinha     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaMergulho   = $this->modelMergulho  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaRatoeira   = $this->modelRatoeira  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaSiripoia   = $this->modelSiripoia  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaTarrafa    = $this->modelTarrafa   ->selectCapturaByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
+        
     }
     public function urucutucaAction(){
         $dateStart = $this->_getParam('dataini');
@@ -983,7 +1350,13 @@ class PortoController extends Zend_Controller_Action
         
         $porto = "Urucutuca";
         
-        $this->gerarrelatorio($porto, $datainicial, $datafinal);
+        $capturaEmalhe     = $this->modelEmalhe    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaJerere     = $this->modelJerere    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaManzua     = $this->modelManzua    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaSiripoia   = $this->modelSiripoia  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaTarrafa    = $this->modelTarrafa   ->selectCapturaByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
+        $capturaVaraPesca  = $this->modelVaraPesca ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
+        
     }
             
 	public function relatorioAction() {

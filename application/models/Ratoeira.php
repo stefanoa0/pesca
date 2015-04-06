@@ -437,8 +437,8 @@ class Application_Model_Ratoeira
     public function selectQuantCapturaByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaRatoeira();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_ratoeira', 'v_entrevista_ratoeira.pto_nome')->joinLeft('v_ratoeirafundo_has_t_especie_capturada', 'v_entrevista_ratoeira.rat_id = v_ratoeirafundo_has_t_especie_capturada.rat_id',
-                        array('sum(v_ratoeirafundo_has_t_especie_capturada.spc_quantidade) as quant','sum(v_ratoeirafundo_has_t_especie_capturada.spc_peso_kg) as peso', 'esp_nome_comum' ))->
+                from('v_entrevista_ratoeira', 'v_entrevista_ratoeira.pto_nome')->joinLeft('v_ratoeira_has_t_especie_capturada', 'v_entrevista_ratoeira.rat_id = v_ratoeira_has_t_especie_capturada.rat_id',
+                        array('sum(v_ratoeira_has_t_especie_capturada.spc_quantidade) as quant','sum(v_ratoeira_has_t_especie_capturada.spc_peso_kg) as peso', 'esp_nome_comum' ))->
                 group(array('pto_nome', 'esp_nome_comum'));
         
         if(!is_null($where)){

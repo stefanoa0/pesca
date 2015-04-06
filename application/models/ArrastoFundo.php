@@ -506,7 +506,8 @@ class Application_Model_ArrastoFundo
     public function selectQuantCapturaByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaArrasto();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_arrasto', 'v_entrevista_arrasto.pto_nome')->joinLeft('v_arrastofundo_has_t_especie_capturada', 'v_entrevista_arrasto.af_id = v_arrastofundo_has_t_especie_capturada.af_id',
+                from('v_entrevista_arrasto', 'v_entrevista_arrasto.pto_nome')->
+                joinLeft('v_arrastofundo_has_t_especie_capturada', 'v_entrevista_arrasto.af_id = v_arrastofundo_has_t_especie_capturada.af_id',
                         array('sum(v_arrastofundo_has_t_especie_capturada.spc_quantidade) as quant','sum(v_arrastofundo_has_t_especie_capturada.spc_peso_kg) as peso', 'esp_nome_comum' ))->
                 group(array('pto_nome', 'esp_nome_comum'));
         
@@ -540,7 +541,17 @@ class Application_Model_ArrastoFundo
     }
 
     public function cpue($where = null){
-        
+        $dbTable = new Application_Model_DbTable_VEntrevistaArrasto();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_arrasto', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar)) as mesAno")->
+                joinLeft('v_arrastofundo_has_t_especie_capturada', 'v_entrevista_arrasto.af_id = v_arrastofundo_has_t_especie_capturada.af_id'
+                , array('v_arrastofundo_has_t_especie_capturada.af_id','sum(v_arrastofundo_has_t_especie_capturada.spc_peso_kg)/v_entrevista_arrasto.dias as cpue'))->
+                group(array('v_arrastofundo_has_t_especie_capturada.af_id', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))",'v_entrevista_arrasto.dias'))->
+                order("(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))");
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();        
     }
     /*
     public function selectPescadoresByColonia(){

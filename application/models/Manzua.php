@@ -436,8 +436,8 @@ class Application_Model_Manzua
     public function selectQuantCapturaByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaManzua();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_manzua', 'v_entrevista_manzua.pto_nome')->joinLeft('v_manzuafundo_has_t_especie_capturada', 'v_entrevista_manzua.man_id = v_manzuafundo_has_t_especie_capturada.man_id',
-                        array('sum(v_manzuafundo_has_t_especie_capturada.spc_quantidade) as quant','sum(v_manzuafundo_has_t_especie_capturada.spc_peso_kg) as peso', 'esp_nome_comum' ))->
+                from('v_entrevista_manzua', 'v_entrevista_manzua.pto_nome')->joinLeft('v_manzua_has_t_especie_capturada', 'v_entrevista_manzua.man_id = v_manzua_has_t_especie_capturada.man_id',
+                        array('sum(v_manzua_has_t_especie_capturada.spc_quantidade) as quant','sum(v_manzua_has_t_especie_capturada.spc_peso_kg) as peso', 'esp_nome_comum' ))->
                 group(array('pto_nome', 'esp_nome_comum'));
         
         if(!is_null($where)){

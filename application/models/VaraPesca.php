@@ -492,8 +492,8 @@ class Application_Model_VaraPesca
     public function selectQuantCapturaByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaVaraPesca();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_varapesca', 'v_entrevista_varapesca.pto_nome')->joinLeft('v_varapescafundo_has_t_especie_capturada', 'v_entrevista_varapesca.sir_id = v_varapescafundo_has_t_especie_capturada.sir_id',
-                        array('sum(v_varapescafundo_has_t_especie_capturada.spc_quantidade) as quant','sum(v_varapescafundo_has_t_especie_capturada.spc_peso_kg) as peso', 'esp_nome_comum' ))->
+                from('v_entrevista_varapesca', 'v_entrevista_varapesca.pto_nome')->joinLeft('v_varapesca_has_t_especie_capturada', 'v_entrevista_varapesca.vp_id = v_varapesca_has_t_especie_capturada.vp_id',
+                        array('sum(v_varapesca_has_t_especie_capturada.spc_quantidade) as quant','sum(v_varapesca_has_t_especie_capturada.spc_peso_kg) as peso', 'esp_nome_comum' ))->
                 group(array('pto_nome', 'esp_nome_comum'));
         
         if(!is_null($where)){
