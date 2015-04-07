@@ -1571,6 +1571,86 @@ class PortoController extends Zend_Controller_Action
         
         //print_r($jsCpueNovembro);
     }
+    public function geraqtdporarte($porto, $ano){
+        $quantidadeArrasto    = $this->modelArrasto   ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
+        $quantidadeCalao      = $this->modelCalao     ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
+        $quantidadeColeta     = $this->modelColeta    ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
+        $quantidadeEmalhe     = $this->modelEmalhe    ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
+        $quantidadeGrosseira  = $this->modelGrosseira ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
+        $quantidadeJerere     = $this->modelJerere    ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
+        $quantidadeLinha      = $this->modelLinha     ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
+        $quantidadeLinhaFundo = $this->modelLinhaFundo->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
+        $quantidadeManzua     = $this->modelManzua    ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
+        $quantidadeMergulho   = $this->modelMergulho  ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
+        $quantidadeRatoeira   = $this->modelRatoeira  ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
+        $quantidadeSiripoia   = $this->modelSiripoia  ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
+        $quantidadeTarrafa    = $this->modelTarrafa   ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM tar_data) = ".$ano);
+        $quantidadeVaraPesca  = $this->modelVaraPesca ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
+        
+        $qtdArrasto =  $this->vazioCount($quantidadeArrasto   , $porto, 'Arrasto de Fundo');
+        $qtdCalao =    $this->vazioCount($quantidadeCalao     , $porto, 'Calão');
+        $qtdColeta =   $this->vazioCount($quantidadeColeta    , $porto, 'Coleta');
+        $qtdEmalhe =   $this->vazioCount($quantidadeEmalhe    , $porto, 'Emalhe');
+        $qtdGrosseira= $this->vazioCount($quantidadeGrosseira , $porto, 'Grosseira');
+        $qtdJerere =   $this->vazioCount($quantidadeJerere    , $porto, 'Jereré');
+        $qtdLinha =    $this->vazioCount($quantidadeLinha     , $porto, 'Pesca de Linha');
+        $qtdLinhaFundo=$this->vazioCount($quantidadeLinhaFundo, $porto, 'Linha de Fundo');
+        $qtdManzua=    $this->vazioCount($quantidadeManzua    , $porto, 'Manzuá');
+        $qtdMergulho=  $this->vazioCount($quantidadeMergulho  , $porto, 'Mergulho');
+        $qtdRatoeira=  $this->vazioCount($quantidadeRatoeira  , $porto, 'Ratoeira');
+        $qtdSiripoia=  $this->vazioCount($quantidadeSiripoia  , $porto, 'Siripoia');
+        $qtdTarrafa=   $this->vazioCount($quantidadeTarrafa   , $porto, 'Tarrafa');
+        $qtdVaraPesca =$this->vazioCount($quantidadeVaraPesca , $porto, 'Vara de Pesca');
+        /*
+        $this->view->assign("qtdArrasto",   $qtdArrasto);   
+        $this->view->assign("qtdCalao",     $qtdCalao);     
+        $this->view->assign("qtdColeta",    $qtdColeta);    
+        $this->view->assign("qtdEmalhe",    $qtdEmalhe);    
+        $this->view->assign("qtdGrosseira", $qtdGrosseira); 
+        $this->view->assign("qtdJerere",    $qtdJerere);    
+        $this->view->assign("qtdLinha",     $qtdLinha);     
+        $this->view->assign("qtdLinhaFundo",$qtdLinhaFundo);
+        $this->view->assign("qtdManzua",    $qtdManzua);    
+        $this->view->assign("qtdMergulho",  $qtdMergulho);    
+        $this->view->assign("qtdRatoeira",  $qtdRatoeira); 
+        $this->view->assign("qtdSiripoia",  $qtdSiripoia);    
+        $this->view->assign("qtdTarrafa",   $qtdTarrafa);     
+        $this->view->assign("qtdVaraPesca", $qtdVaraPesca);
+        */
+        $arrayQuantidades =  array_merge_recursive(
+                $qtdArrasto, 
+                $qtdCalao, 
+                $qtdColeta, 
+                $qtdEmalhe, 
+                $qtdGrosseira, 
+                $qtdJerere, 
+                $qtdLinha, 
+                $qtdLinhaFundo,
+                $qtdManzua,
+                $qtdMergulho,
+                $qtdRatoeira,
+                $qtdSiripoia,
+                $qtdTarrafa,
+                $qtdVaraPesca);
+        
+        $arrayQtds = $this->array_sort($arrayQuantidades,'count', SORT_DESC);
+        $i=0;
+        foreach($arrayQtds as $qtd):
+            if($i++ < 5){
+                $arrayTopFive[] = $qtd['count'];
+                $labels[] = $qtd['arte'];
+            }
+        endforeach;
+        
+        $jsTopFive = json_encode($arrayTopFive);
+        $jsLabels = json_encode($labels);
+
+        $this->view->assign("arrayPorArteQtds", $jsTopFive);
+        $this->view->assign("arrayPorArteLabels", $jsLabels);
+        
+        print_r($jsTopFive);
+        print_r($jsLabels);
+    }
     public function amendoeiraAction(){
         
         $dateStart = $this->_getParam('dataini');
@@ -2119,6 +2199,8 @@ class PortoController extends Zend_Controller_Action
         $a = $this->gerarquantcaptura('Terminal Pesqueiro', 2014, 'Arrasto');
         
         print_r($a);
+        
+        $this->geraqtdporarte($porto, '2014');
     }
     public function tulhaAction(){
         $dateStart = $this->_getParam('dataini');

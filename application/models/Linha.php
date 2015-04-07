@@ -490,6 +490,17 @@ private $dbTableLinha;
         }
         return $dbTable->fetchAll($select)->toArray();
     }
+    public function selectEntrevistasByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaLinha();
+        $select = $dbTable->select()->
+                from('v_entrevista_linha', array('pto_nome', 'count(bar_nome)'))->
+                group(array('pto_nome'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
     
     public function selectQuantCapturaByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaLinha();
