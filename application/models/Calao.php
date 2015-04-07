@@ -245,7 +245,7 @@ class Application_Model_Calao
         
         $dadosPesqueiro = array(
             'cal_id' => $idEntrevista,
-            'paf_id' => $pesqueiro,
+            'pcal_id' => $pesqueiro,
         );
         
         $this->dbTableTCalao->insert($dadosPesqueiro);
@@ -255,7 +255,7 @@ class Application_Model_Calao
         $this->dbTableTCalao = new Application_Model_DbTable_CalaoHasPesqueiro();       
                 
         $whereCalaoHasPesqueiro = $this->dbTableTCalao->getAdapter()
-                ->quoteInto('"cal_paf_id" = ?', $idPesqueiro);
+                ->quoteInto('"cal_pcal_id" = ?', $idPesqueiro);
         
         $this->dbTableTCalao->delete($whereCalaoHasPesqueiro);
         
@@ -501,6 +501,20 @@ class Application_Model_Calao
             $select->where($where);
         }
         return $dbTable->fetchAll($select)->toArray();
+    }
+    
+    public function cpue($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaCalao();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_calao', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar)) as mesAno")->
+                joinLeft('v_calao_has_t_especie_capturada', 'v_entrevista_calao.cal_id = v_calao_has_t_especie_capturada.cal_id'
+                , array('v_calao_has_t_especie_capturada.cal_id','sum(v_calao_has_t_especie_capturada.spc_peso_kg) as cpue', 'v_entrevista_calao.tl_local','v_entrevista_calao.pto_nome'))->
+                group(array('v_calao_has_t_especie_capturada.cal_id', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))",'v_entrevista_calao.tl_local','v_entrevista_calao.pto_nome'))->
+                order("(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))");
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();        
     }
 }
 

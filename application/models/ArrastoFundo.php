@@ -545,8 +545,8 @@ class Application_Model_ArrastoFundo
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_entrevista_arrasto', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar)) as mesAno")->
                 joinLeft('v_arrastofundo_has_t_especie_capturada', 'v_entrevista_arrasto.af_id = v_arrastofundo_has_t_especie_capturada.af_id'
-                , array('v_arrastofundo_has_t_especie_capturada.af_id','sum(v_arrastofundo_has_t_especie_capturada.spc_peso_kg)/v_entrevista_arrasto.dias as cpue'))->
-                group(array('v_arrastofundo_has_t_especie_capturada.af_id', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))",'v_entrevista_arrasto.dias'))->
+                , array('v_arrastofundo_has_t_especie_capturada.af_id','sum(v_arrastofundo_has_t_especie_capturada.spc_peso_kg)/v_entrevista_arrasto.dias as cpue', 'v_entrevista_arrasto.tl_local','v_entrevista_arrasto.pto_nome'))->
+                group(array('v_arrastofundo_has_t_especie_capturada.af_id', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))",'v_entrevista_arrasto.dias','v_entrevista_arrasto.tl_local','v_entrevista_arrasto.pto_nome'))->
                 order("(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))");
         if(!is_null($where)){
             $select->where($where);

@@ -210,7 +210,7 @@ class PortoController extends Zend_Controller_Action
         $array[0]['arte'] = $arte;
         return $array;
     }
-//    public function vazioQuant($array, $porto, $barco){
+//    public function vazioCpue($array){
 //        if(empty($array)){
 //            $array = array( array(
 //                'pto_nome' => $porto,
@@ -723,60 +723,826 @@ class PortoController extends Zend_Controller_Action
 
         
     }
-    public function gerarcpueAction(){
-        $cpueArrastoJaneiro   = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 1   And Extract(YEAR FROM fd_data) = 2014");
-        $cpueArrastoFevereiro = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 2 And Extract(YEAR FROM fd_data) = 2014");
-        $cpueArrastoMarco     = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 3     And Extract(YEAR FROM fd_data) = 2014");
-        $cpueArrastoAbril     = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 4     And Extract(YEAR FROM fd_data) = 2014");
-        $cpueArrastoMaio      = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 5      And Extract(YEAR FROM fd_data) = 2014");
-        $cpueArrastoJunho     = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 6     And Extract(YEAR FROM fd_data) = 2014");
-        $cpueArrastoJulho     = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 7     And Extract(YEAR FROM fd_data) = 2014");
-        $cpueArrastoAgosto    = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 8    And Extract(YEAR FROM fd_data) = 2014");
-        $cpueArrastoSetembro  = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 9  And Extract(YEAR FROM fd_data) = 2014");
-        $cpueArrastoOutubro   = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 10  And Extract(YEAR FROM fd_data) = 2014");
-        $cpueArrastoNovembro  = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 11 And Extract(YEAR FROM fd_data) = 2014");
-        $cpueArrastoDezembro  = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 12 And Extract(YEAR FROM fd_data) = 2014");
+    public function gerarquantcaptura($porto, $ano, $arte){
         
+        if($arte == 'Arrasto'){
+            $quantCaptJaneiro   = $this->modelArrasto->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptFevereiro = $this->modelArrasto->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMarco     = $this->modelArrasto->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAbril     = $this->modelArrasto->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMaio      = $this->modelArrasto->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJunho     = $this->modelArrasto->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJulho     = $this->modelArrasto->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAgosto    = $this->modelArrasto->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptSetembro  = $this->modelArrasto->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptOutubro   = $this->modelArrasto->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptNovembro  = $this->modelArrasto->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptDezembro  = $this->modelArrasto->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Calao'){
+            $quantCaptJaneiro   = $this->modelCalao->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptFevereiro = $this->modelCalao->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMarco     = $this->modelCalao->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAbril     = $this->modelCalao->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMaio      = $this->modelCalao->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJunho     = $this->modelCalao->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJulho     = $this->modelCalao->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAgosto    = $this->modelCalao->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptSetembro  = $this->modelCalao->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptOutubro   = $this->modelCalao->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptNovembro  = $this->modelCalao->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptDezembro  = $this->modelCalao->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Coleta'){
+            $quantCaptJaneiro   = $this->modelColeta->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptFevereiro = $this->modelColeta->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMarco     = $this->modelColeta->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAbril     = $this->modelColeta->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMaio      = $this->modelColeta->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJunho     = $this->modelColeta->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJulho     = $this->modelColeta->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAgosto    = $this->modelColeta->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptSetembro  = $this->modelColeta->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptOutubro   = $this->modelColeta->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptNovembro  = $this->modelColeta->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptDezembro  = $this->modelColeta->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Emalhe'){
+            $quantCaptJaneiro   = $this->modelEmalhe->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptFevereiro = $this->modelEmalhe->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMarco     = $this->modelEmalhe->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAbril     = $this->modelEmalhe->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMaio      = $this->modelEmalhe->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJunho     = $this->modelEmalhe->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJulho     = $this->modelEmalhe->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAgosto    = $this->modelEmalhe->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptSetembro  = $this->modelEmalhe->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptOutubro   = $this->modelEmalhe->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptNovembro  = $this->modelEmalhe->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptDezembro  = $this->modelEmalhe->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Grosseira'){
+            $quantCaptJaneiro   = $this->modelGrosseira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptFevereiro = $this->modelGrosseira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMarco     = $this->modelGrosseira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAbril     = $this->modelGrosseira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMaio      = $this->modelGrosseira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJunho     = $this->modelGrosseira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJulho     = $this->modelGrosseira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAgosto    = $this->modelGrosseira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptSetembro  = $this->modelGrosseira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptOutubro   = $this->modelGrosseira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptNovembro  = $this->modelGrosseira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptDezembro  = $this->modelGrosseira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Linha'){
+            $quantCaptJaneiro   = $this->modelLinha->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptFevereiro = $this->modelLinha->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMarco     = $this->modelLinha->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAbril     = $this->modelLinha->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMaio      = $this->modelLinha->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJunho     = $this->modelLinha->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJulho     = $this->modelLinha->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAgosto    = $this->modelLinha->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptSetembro  = $this->modelLinha->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptOutubro   = $this->modelLinha->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptNovembro  = $this->modelLinha->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptDezembro  = $this->modelLinha->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'LinhaFundo'){
+            $quantCaptJaneiro   = $this->modelLinhaFundo->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptFevereiro = $this->modelLinhaFundo->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMarco     = $this->modelLinhaFundo->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAbril     = $this->modelLinhaFundo->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMaio      = $this->modelLinhaFundo->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJunho     = $this->modelLinhaFundo->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJulho     = $this->modelLinhaFundo->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAgosto    = $this->modelLinhaFundo->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptSetembro  = $this->modelLinhaFundo->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptOutubro   = $this->modelLinhaFundo->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptNovembro  = $this->modelLinhaFundo->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptDezembro  = $this->modelLinhaFundo->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Jerere'){
+            $quantCaptJaneiro   = $this->modelJerere->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptFevereiro = $this->modelJerere->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMarco     = $this->modelJerere->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAbril     = $this->modelJerere->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMaio      = $this->modelJerere->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJunho     = $this->modelJerere->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJulho     = $this->modelJerere->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAgosto    = $this->modelJerere->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptSetembro  = $this->modelJerere->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptOutubro   = $this->modelJerere->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptNovembro  = $this->modelJerere->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptDezembro  = $this->modelJerere->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Manzua'){
+            $quantCaptJaneiro   = $this->modelManzua->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptFevereiro = $this->modelManzua->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMarco     = $this->modelManzua->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAbril     = $this->modelManzua->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMaio      = $this->modelManzua->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJunho     = $this->modelManzua->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJulho     = $this->modelManzua->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAgosto    = $this->modelManzua->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptSetembro  = $this->modelManzua->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptOutubro   = $this->modelManzua->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptNovembro  = $this->modelManzua->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptDezembro  = $this->modelManzua->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Mergulho'){
+            $quantCaptJaneiro   = $this->modelMergulho->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptFevereiro = $this->modelMergulho->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMarco     = $this->modelMergulho->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAbril     = $this->modelMergulho->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMaio      = $this->modelMergulho->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJunho     = $this->modelMergulho->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJulho     = $this->modelMergulho->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAgosto    = $this->modelMergulho->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptSetembro  = $this->modelMergulho->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptOutubro   = $this->modelMergulho->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptNovembro  = $this->modelMergulho->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptDezembro  = $this->modelMergulho->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Ratoeira'){
+            $quantCaptJaneiro   = $this->modelRatoeira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptFevereiro = $this->modelRatoeira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMarco     = $this->modelRatoeira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAbril     = $this->modelRatoeira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMaio      = $this->modelRatoeira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJunho     = $this->modelRatoeira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJulho     = $this->modelRatoeira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAgosto    = $this->modelRatoeira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptSetembro  = $this->modelRatoeira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptOutubro   = $this->modelRatoeira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptNovembro  = $this->modelRatoeira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptDezembro  = $this->modelRatoeira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Tarrafa'){
+            $quantCaptJaneiro   = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptFevereiro = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMarco     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAbril     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMaio      = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJunho     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJulho     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAgosto    = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptSetembro  = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptOutubro   = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptNovembro  = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptDezembro  = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Siripoia'){
+            $quantCaptJaneiro   = $this->modelSiripoia->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptFevereiro = $this->modelSiripoia->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMarco     = $this->modelSiripoia->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAbril     = $this->modelSiripoia->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMaio      = $this->modelSiripoia->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJunho     = $this->modelSiripoia->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJulho     = $this->modelSiripoia->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAgosto    = $this->modelSiripoia->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptSetembro  = $this->modelSiripoia->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptOutubro   = $this->modelSiripoia->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptNovembro  = $this->modelSiripoia->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptDezembro  = $this->modelSiripoia->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'VaraPesca'){
+            $quantCaptJaneiro   = $this->modelVaraPesca->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptFevereiro = $this->modelVaraPesca->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMarco     = $this->modelVaraPesca->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAbril     = $this->modelVaraPesca->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptMaio      = $this->modelVaraPesca->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJunho     = $this->modelVaraPesca->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJulho     = $this->modelVaraPesca->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptAgosto    = $this->modelVaraPesca->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptSetembro  = $this->modelVaraPesca->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptOutubro   = $this->modelVaraPesca->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptNovembro  = $this->modelVaraPesca->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptDezembro  = $this->modelVaraPesca->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+
+//        print_r($quantArrastoJaneiro);
+        
+        foreach($quantCaptJaneiro as $quant):
+            $pesoJaneiro[] = $quant['peso'];
+            $quantJaneiro[] = $quant['peso'];
+        endforeach;
+        foreach($quantCaptFevereiro as $quant):
+            $pesoFevereiro[] = $quant['peso'];
+            $quantFevereiro[] = $quant['peso'];
+        endforeach;
+        foreach($quantCaptMarco as $quant):
+            $pesoMarco[] = $quant['peso'];
+            $quantMarco[] = $quant['peso'];
+        endforeach;
+        foreach($quantCaptAbril as $quant):
+            $pesoAbril[] = $quant['peso'];
+            $quantAbril[] = $quant['peso'];
+        endforeach;
+        foreach($quantCaptMaio as $quant):
+            $pesoMaio[] = $quant['peso'];
+            $quantMaio[] = $quant['peso'];
+        endforeach;
+        foreach($quantCaptJunho as $quant):
+            $pesoJunho[] = $quant['peso'];
+            $quantJunho[] = $quant['peso'];
+        endforeach;
+        foreach($quantCaptJulho as $quant):
+            $pesoJulho[] = $quant['peso'];
+            $quantJulho[] = $quant['peso'];
+        endforeach;
+        foreach($quantCaptAgosto as $quant):
+            $pesoAgosto[] = $quant['peso'];
+            $quantAgosto[] = $quant['peso'];
+        endforeach;
+        foreach($quantCaptSetembro as $quant):
+            $pesoSetembro[] = $quant['peso'];
+            $quantSetembro[] = $quant['peso'];
+        endforeach;
+        foreach($quantCaptOutubro as $quant):
+            $pesoOutubro[] = $quant['peso'];
+            $quantOutubro[] = $quant['peso'];
+        endforeach;
+        foreach($quantCaptNovembro as $quant):
+            $pesoNovembro[] = $quant['peso'];
+            $quantNovembro[] = $quant['peso'];
+        endforeach;
+        foreach($quantCaptDezembro as $quant):
+            $pesoDezembro[] = $quant['peso'];
+            $quantDezembro[] = $quant['peso'];
+        endforeach;
+        
+        $labels = array('jan/'.$ano, 'fev/'.$ano, 'mar/'.$ano, 'abr/'.$ano, 'mai/'.$ano, 'jun/'.$ano, 'jul/'.$ano, 'ago/'.$ano, 'set/'.$ano, 'out/'.$ano, 'nov/'.$ano, 'dez/'.$ano);
+        
+        $jsLabels        = json_encode($labels);
+        $jsquantCaptJaneiro   = json_encode($quantJaneiro);
+        $jsquantCaptFevereiro = json_encode($quantFevereiro);
+        $jsquantCaptMarco     = json_encode($quantMarco);
+        $jsquantCaptAbril     = json_encode($quantAbril);
+        $jsquantCaptMaio      = json_encode($quantMaio);
+        $jsquantCaptJunho     = json_encode($quantJunho);
+        $jsquantCaptJulho     = json_encode($quantJulho);
+        $jsquantCaptAgosto    = json_encode($quantAgosto);
+        $jsquantCaptSetembro  = json_encode($quantSetembro);
+        $jsquantCaptOutubro   = json_encode($quantOutubro);
+        $jsquantCaptNovembro  = json_encode($quantNovembro);
+        $jsquantCaptDezembro  = json_encode($quantDezembro);
+        
+        $jspesoCaptJaneiro   = json_encode($pesoJaneiro);
+        $jspesoCaptFevereiro = json_encode($pesoFevereiro);
+        $jspesoCaptMarco     = json_encode($pesoMarco);
+        $jspesoCaptAbril     = json_encode($pesoAbril);
+        $jspesoCaptMaio      = json_encode($pesoMaio);
+        $jspesoCaptJunho     = json_encode($pesoJunho);
+        $jspesoCaptJulho     = json_encode($pesoJulho);
+        $jspesoCaptAgosto    = json_encode($pesoAgosto);
+        $jspesoCaptSetembro  = json_encode($pesoSetembro);
+        $jspesoCaptOutubro   = json_encode($pesoOutubro);
+        $jspesoCaptNovembro  = json_encode($pesoNovembro);
+        $jspesoCaptDezembro  = json_encode($pesoDezembro);
+        
+        $this->view->assign("quantLabels",    $jsLabels);
+        $this->view->assign("quantJaneiro",   $jsquantCaptJaneiro); 
+        $this->view->assign("quantFevereiro", $jsquantCaptFevereiro);
+        $this->view->assign("quantMarco",     $jsquantCaptMarco);
+        $this->view->assign("quantAbril",     $jsquantCaptAbril); 
+        $this->view->assign("quantMaio",      $jsquantCaptMaio); 
+        $this->view->assign("quantJunho",     $jsquantCaptJunho);  
+        $this->view->assign("quantJulho",     $jsquantCaptJulho); 
+        $this->view->assign("quantAgosto",    $jsquantCaptAgosto); 
+        $this->view->assign("quantSetembro",  $jsquantCaptSetembro);
+        $this->view->assign("quantOutubro",   $jsquantCaptOutubro);
+        $this->view->assign("quantNovembro",  $jsquantCaptNovembro);
+        $this->view->assign("quantDezembro",  $jsquantCaptDezembro);
+        
+        $this->view->assign("pesoJaneiro",   $jspesoCaptJaneiro); 
+        $this->view->assign("pesoFevereiro", $jspesoCaptFevereiro);
+        $this->view->assign("pesoMarco",     $jspesoCaptMarco);
+        $this->view->assign("pesoAbril",     $jspesoCaptAbril); 
+        $this->view->assign("pesoMaio",      $jspesoCaptMaio); 
+        $this->view->assign("pesoJunho",     $jspesoCaptJunho);  
+        $this->view->assign("pesoJulho",     $jspesoCaptJulho); 
+        $this->view->assign("pesoAgosto",    $jspesoCaptAgosto); 
+        $this->view->assign("pesoSetembro",  $jspesoCaptSetembro);
+        $this->view->assign("pesoOutubro",   $jspesoCaptOutubro);
+        $this->view->assign("pesoNovembro",  $jspesoCaptNovembro);
+        $this->view->assign("pesoDezembro",  $jspesoCaptDezembro);
+        
+        //print_r($jsquantCaptNovembro);
+    }
+    public function gerarquantentrevistas($porto, $ano, $arte){
+        
+        if($arte == 'Arrasto'){
+            $quantEntrJaneiro   = $this->modelArrasto->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrFevereiro = $this->modelArrasto->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMarco     = $this->modelArrasto->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAbril     = $this->modelArrasto->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMaio      = $this->modelArrasto->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJunho     = $this->modelArrasto->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJulho     = $this->modelArrasto->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAgosto    = $this->modelArrasto->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrSetembro  = $this->modelArrasto->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrOutubro   = $this->modelArrasto->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrNovembro  = $this->modelArrasto->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrDezembro  = $this->modelArrasto->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Calao'){
+            $quantEntrJaneiro   = $this->modelCalao->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrFevereiro = $this->modelCalao->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMarco     = $this->modelCalao->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAbril     = $this->modelCalao->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMaio      = $this->modelCalao->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJunho     = $this->modelCalao->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJulho     = $this->modelCalao->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAgosto    = $this->modelCalao->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrSetembro  = $this->modelCalao->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrOutubro   = $this->modelCalao->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrNovembro  = $this->modelCalao->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrDezembro  = $this->modelCalao->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Coleta'){
+            $quantEntrJaneiro   = $this->modelColeta->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrFevereiro = $this->modelColeta->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMarco     = $this->modelColeta->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAbril     = $this->modelColeta->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMaio      = $this->modelColeta->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJunho     = $this->modelColeta->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJulho     = $this->modelColeta->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAgosto    = $this->modelColeta->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrSetembro  = $this->modelColeta->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrOutubro   = $this->modelColeta->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrNovembro  = $this->modelColeta->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrDezembro  = $this->modelColeta->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Emalhe'){
+            $quantEntrJaneiro   = $this->modelEmalhe->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrFevereiro = $this->modelEmalhe->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMarco     = $this->modelEmalhe->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAbril     = $this->modelEmalhe->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMaio      = $this->modelEmalhe->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJunho     = $this->modelEmalhe->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJulho     = $this->modelEmalhe->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAgosto    = $this->modelEmalhe->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrSetembro  = $this->modelEmalhe->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrOutubro   = $this->modelEmalhe->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrNovembro  = $this->modelEmalhe->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrDezembro  = $this->modelEmalhe->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Grosseira'){
+            $quantEntrJaneiro   = $this->modelGrosseira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrFevereiro = $this->modelGrosseira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMarco     = $this->modelGrosseira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAbril     = $this->modelGrosseira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMaio      = $this->modelGrosseira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJunho     = $this->modelGrosseira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJulho     = $this->modelGrosseira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAgosto    = $this->modelGrosseira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrSetembro  = $this->modelGrosseira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrOutubro   = $this->modelGrosseira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrNovembro  = $this->modelGrosseira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrDezembro  = $this->modelGrosseira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Linha'){
+            $quantEntrJaneiro   = $this->modelLinha->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrFevereiro = $this->modelLinha->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMarco     = $this->modelLinha->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAbril     = $this->modelLinha->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMaio      = $this->modelLinha->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJunho     = $this->modelLinha->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJulho     = $this->modelLinha->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAgosto    = $this->modelLinha->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrSetembro  = $this->modelLinha->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrOutubro   = $this->modelLinha->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrNovembro  = $this->modelLinha->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrDezembro  = $this->modelLinha->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'LinhaFundo'){
+            $quantEntrJaneiro   = $this->modelLinhaFundo->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrFevereiro = $this->modelLinhaFundo->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMarco     = $this->modelLinhaFundo->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAbril     = $this->modelLinhaFundo->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMaio      = $this->modelLinhaFundo->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJunho     = $this->modelLinhaFundo->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJulho     = $this->modelLinhaFundo->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAgosto    = $this->modelLinhaFundo->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrSetembro  = $this->modelLinhaFundo->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrOutubro   = $this->modelLinhaFundo->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrNovembro  = $this->modelLinhaFundo->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrDezembro  = $this->modelLinhaFundo->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Jerere'){
+            $quantEntrJaneiro   = $this->modelJerere->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrFevereiro = $this->modelJerere->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMarco     = $this->modelJerere->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAbril     = $this->modelJerere->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMaio      = $this->modelJerere->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJunho     = $this->modelJerere->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJulho     = $this->modelJerere->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAgosto    = $this->modelJerere->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrSetembro  = $this->modelJerere->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrOutubro   = $this->modelJerere->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrNovembro  = $this->modelJerere->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrDezembro  = $this->modelJerere->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Manzua'){
+            $quantEntrJaneiro   = $this->modelManzua->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrFevereiro = $this->modelManzua->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMarco     = $this->modelManzua->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAbril     = $this->modelManzua->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMaio      = $this->modelManzua->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJunho     = $this->modelManzua->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJulho     = $this->modelManzua->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAgosto    = $this->modelManzua->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrSetembro  = $this->modelManzua->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrOutubro   = $this->modelManzua->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrNovembro  = $this->modelManzua->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrDezembro  = $this->modelManzua->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Mergulho'){
+            $quantEntrJaneiro   = $this->modelMergulho->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrFevereiro = $this->modelMergulho->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMarco     = $this->modelMergulho->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAbril     = $this->modelMergulho->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMaio      = $this->modelMergulho->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJunho     = $this->modelMergulho->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJulho     = $this->modelMergulho->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAgosto    = $this->modelMergulho->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrSetembro  = $this->modelMergulho->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrOutubro   = $this->modelMergulho->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrNovembro  = $this->modelMergulho->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrDezembro  = $this->modelMergulho->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Ratoeira'){
+            $quantEntrJaneiro   = $this->modelRatoeira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrFevereiro = $this->modelRatoeira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMarco     = $this->modelRatoeira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAbril     = $this->modelRatoeira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMaio      = $this->modelRatoeira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJunho     = $this->modelRatoeira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJulho     = $this->modelRatoeira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAgosto    = $this->modelRatoeira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrSetembro  = $this->modelRatoeira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrOutubro   = $this->modelRatoeira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrNovembro  = $this->modelRatoeira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrDezembro  = $this->modelRatoeira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Tarrafa'){
+            $quantEntrJaneiro   = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrFevereiro = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMarco     = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAbril     = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMaio      = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJunho     = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJulho     = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAgosto    = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrSetembro  = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrOutubro   = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrNovembro  = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrDezembro  = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'Siripoia'){
+            $quantEntrJaneiro   = $this->modelSiripoia->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrFevereiro = $this->modelSiripoia->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMarco     = $this->modelSiripoia->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAbril     = $this->modelSiripoia->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMaio      = $this->modelSiripoia->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJunho     = $this->modelSiripoia->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJulho     = $this->modelSiripoia->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAgosto    = $this->modelSiripoia->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrSetembro  = $this->modelSiripoia->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrOutubro   = $this->modelSiripoia->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrNovembro  = $this->modelSiripoia->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrDezembro  = $this->modelSiripoia->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        if($arte == 'VaraPesca'){
+            $quantEntrJaneiro   = $this->modelVaraPesca->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrFevereiro = $this->modelVaraPesca->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMarco     = $this->modelVaraPesca->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAbril     = $this->modelVaraPesca->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrMaio      = $this->modelVaraPesca->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJunho     = $this->modelVaraPesca->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJulho     = $this->modelVaraPesca->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrAgosto    = $this->modelVaraPesca->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrSetembro  = $this->modelVaraPesca->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrOutubro   = $this->modelVaraPesca->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrNovembro  = $this->modelVaraPesca->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrDezembro  = $this->modelVaraPesca->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+
+//        print_r($quantArrastoJaneiro);
+        
+        foreach($quantEntrJaneiro as $quant):
+            $quantJaneiro[] = $quant['count'];
+        endforeach;
+        foreach($quantEntrFevereiro as $quant):
+            $quantFevereiro[] = $quant['count'];
+        endforeach;
+        foreach($quantEntrMarco as $quant):
+            $quantMarco[] = $quant['count'];
+        endforeach;
+        foreach($quantEntrAbril as $quant):
+            $quantAbril[] = $quant['count'];
+        endforeach;
+        foreach($quantEntrMaio as $quant):
+            $quantMaio[] = $quant['count'];
+        endforeach;
+        foreach($quantEntrJunho as $quant):
+            $quantJunho[] = $quant['count'];
+        endforeach;
+        foreach($quantEntrJulho as $quant):
+            $quantJulho[] = $quant['count'];
+        endforeach;
+        foreach($quantEntrAgosto as $quant):
+            $quantAgosto[] = $quant['count'];
+        endforeach;
+        foreach($quantEntrSetembro as $quant):
+            $quantSetembro[] = $quant['count'];
+        endforeach;
+        foreach($quantEntrOutubro as $quant):
+            $quantOutubro[] = $quant['count'];
+        endforeach;
+        foreach($quantEntrNovembro as $quant):
+            $quantNovembro[] = $quant['count'];
+        endforeach;
+        foreach($quantEntrDezembro as $quant):
+            $quantDezembro[] = $quant['count'];
+        endforeach;
+        
+        $labels = array('jan/'.$ano, 'fev/'.$ano, 'mar/'.$ano, 'abr/'.$ano, 'mai/'.$ano, 'jun/'.$ano, 'jul/'.$ano, 'ago/'.$ano, 'set/'.$ano, 'out/'.$ano, 'nov/'.$ano, 'dez/'.$ano);
+        
+        $jsLabels        = json_encode($labels);
+        $jsQuantJaneiro   = json_encode($quantJaneiro);
+        $jsQuantFevereiro = json_encode($quantFevereiro);
+        $jsQuantMarco     = json_encode($quantMarco);
+        $jsQuantAbril     = json_encode($quantAbril);
+        $jsQuantMaio      = json_encode($quantMaio);
+        $jsQuantJunho     = json_encode($quantJunho);
+        $jsQuantJulho     = json_encode($quantJulho);
+        $jsQuantAgosto    = json_encode($quantAgosto);
+        $jsQuantSetembro  = json_encode($quantSetembro);
+        $jsQuantOutubro   = json_encode($quantOutubro);
+        $jsQuantNovembro  = json_encode($quantNovembro);
+        $jsQuantDezembro  = json_encode($quantDezembro);
+        
+        $this->view->assign("quantLabels",    $jsLabels);
+        $this->view->assign("quantJaneiro",   $jsQuantJaneiro);
+        $this->view->assign("quantFevereiro", $jsQuantFevereiro);
+        $this->view->assign("quantMarco",     $jsQuantMarco);
+        $this->view->assign("quantAbril",     $jsQuantAbril);
+        $this->view->assign("quantMaio",      $jsQuantMaio);
+        $this->view->assign("quantJunho",     $jsQuantJunho);
+        $this->view->assign("quantJulho",     $jsQuantJulho);
+        $this->view->assign("quantAgosto",    $jsQuantAgosto);
+        $this->view->assign("quantSetembro",  $jsQuantSetembro);
+        $this->view->assign("quantOutubro",   $jsQuantOutubro);
+        $this->view->assign("quantNovembro",  $jsQuantNovembro);
+        $this->view->assign("quantDezembro",  $jsQuantDezembro);
+        
+        //print_r($jsQuantNovembro);
+    }
+    public function gerarcpue($porto, $ano, $arte){
+        
+        if($arte == 'Arrasto'){
+            $cpueEntrJaneiro   = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrFevereiro = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMarco     = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAbril     = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMaio      = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJunho     = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJulho     = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAgosto    = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrSetembro  = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrOutubro   = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrNovembro  = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrDezembro  = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        else if($arte == 'Calao'){
+            $cpueEntrJaneiro   = $this->modelCalao->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrFevereiro = $this->modelCalao->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMarco     = $this->modelCalao->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAbril     = $this->modelCalao->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMaio      = $this->modelCalao->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJunho     = $this->modelCalao->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJulho     = $this->modelCalao->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAgosto    = $this->modelCalao->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrSetembro  = $this->modelCalao->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrOutubro   = $this->modelCalao->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrNovembro  = $this->modelCalao->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrDezembro  = $this->modelCalao->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        else if($arte == 'Coleta'){
+            $cpueEntrJaneiro   = $this->modelColeta->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrFevereiro = $this->modelColeta->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMarco     = $this->modelColeta->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAbril     = $this->modelColeta->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMaio      = $this->modelColeta->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJunho     = $this->modelColeta->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJulho     = $this->modelColeta->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAgosto    = $this->modelColeta->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrSetembro  = $this->modelColeta->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrOutubro   = $this->modelColeta->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrNovembro  = $this->modelColeta->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrDezembro  = $this->modelColeta->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        else if($arte == 'Emalhe'){
+            $cpueEntrJaneiro   = $this->modelEmalhe->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrFevereiro = $this->modelEmalhe->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMarco     = $this->modelEmalhe->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAbril     = $this->modelEmalhe->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMaio      = $this->modelEmalhe->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJunho     = $this->modelEmalhe->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJulho     = $this->modelEmalhe->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAgosto    = $this->modelEmalhe->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrSetembro  = $this->modelEmalhe->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrOutubro   = $this->modelEmalhe->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrNovembro  = $this->modelEmalhe->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrDezembro  = $this->modelEmalhe->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        else if($arte == 'Grosseira'){
+            $cpueEntrJaneiro   = $this->modelGrosseira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrFevereiro = $this->modelGrosseira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMarco     = $this->modelGrosseira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAbril     = $this->modelGrosseira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMaio      = $this->modelGrosseira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJunho     = $this->modelGrosseira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJulho     = $this->modelGrosseira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAgosto    = $this->modelGrosseira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrSetembro  = $this->modelGrosseira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrOutubro   = $this->modelGrosseira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrNovembro  = $this->modelGrosseira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrDezembro  = $this->modelGrosseira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        else if($arte == 'Linha'){
+            $cpueEntrJaneiro   = $this->modelLinha->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrFevereiro = $this->modelLinha->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMarco     = $this->modelLinha->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAbril     = $this->modelLinha->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMaio      = $this->modelLinha->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJunho     = $this->modelLinha->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJulho     = $this->modelLinha->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAgosto    = $this->modelLinha->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrSetembro  = $this->modelLinha->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrOutubro   = $this->modelLinha->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrNovembro  = $this->modelLinha->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrDezembro  = $this->modelLinha->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        else if($arte == 'LinhaFundo'){
+            $cpueEntrJaneiro   = $this->modelLinhaFundo->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrFevereiro = $this->modelLinhaFundo->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMarco     = $this->modelLinhaFundo->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAbril     = $this->modelLinhaFundo->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMaio      = $this->modelLinhaFundo->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJunho     = $this->modelLinhaFundo->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJulho     = $this->modelLinhaFundo->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAgosto    = $this->modelLinhaFundo->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrSetembro  = $this->modelLinhaFundo->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrOutubro   = $this->modelLinhaFundo->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrNovembro  = $this->modelLinhaFundo->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrDezembro  = $this->modelLinhaFundo->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        else if($arte == 'Jerere'){
+            $cpueEntrJaneiro   = $this->modelJerere->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrFevereiro = $this->modelJerere->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMarco     = $this->modelJerere->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAbril     = $this->modelJerere->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMaio      = $this->modelJerere->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJunho     = $this->modelJerere->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJulho     = $this->modelJerere->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAgosto    = $this->modelJerere->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrSetembro  = $this->modelJerere->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrOutubro   = $this->modelJerere->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrNovembro  = $this->modelJerere->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrDezembro  = $this->modelJerere->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        else if($arte == 'Manzua'){
+            $cpueEntrJaneiro   = $this->modelManzua->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrFevereiro = $this->modelManzua->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMarco     = $this->modelManzua->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAbril     = $this->modelManzua->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMaio      = $this->modelManzua->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJunho     = $this->modelManzua->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJulho     = $this->modelManzua->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAgosto    = $this->modelManzua->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrSetembro  = $this->modelManzua->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrOutubro   = $this->modelManzua->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrNovembro  = $this->modelManzua->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrDezembro  = $this->modelManzua->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        else if($arte == 'Mergulho'){
+            $cpueEntrJaneiro   = $this->modelMergulho->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrFevereiro = $this->modelMergulho->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMarco     = $this->modelMergulho->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAbril     = $this->modelMergulho->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMaio      = $this->modelMergulho->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJunho     = $this->modelMergulho->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJulho     = $this->modelMergulho->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAgosto    = $this->modelMergulho->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrSetembro  = $this->modelMergulho->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrOutubro   = $this->modelMergulho->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrNovembro  = $this->modelMergulho->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrDezembro  = $this->modelMergulho->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        else if($arte == 'Ratoeira'){
+            $cpueEntrJaneiro   = $this->modelRatoeira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrFevereiro = $this->modelRatoeira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMarco     = $this->modelRatoeira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAbril     = $this->modelRatoeira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMaio      = $this->modelRatoeira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJunho     = $this->modelRatoeira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJulho     = $this->modelRatoeira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAgosto    = $this->modelRatoeira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrSetembro  = $this->modelRatoeira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrOutubro   = $this->modelRatoeira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrNovembro  = $this->modelRatoeira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrDezembro  = $this->modelRatoeira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        else if($arte == 'Tarrafa'){
+            $cpueEntrJaneiro   = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrFevereiro = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMarco     = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAbril     = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMaio      = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJunho     = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJulho     = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAgosto    = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrSetembro  = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrOutubro   = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrNovembro  = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrDezembro  = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        else if($arte == 'Siripoia'){
+            $cpueEntrJaneiro   = $this->modelSiripoia->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrFevereiro = $this->modelSiripoia->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMarco     = $this->modelSiripoia->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAbril     = $this->modelSiripoia->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMaio      = $this->modelSiripoia->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJunho     = $this->modelSiripoia->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJulho     = $this->modelSiripoia->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAgosto    = $this->modelSiripoia->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrSetembro  = $this->modelSiripoia->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrOutubro   = $this->modelSiripoia->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrNovembro  = $this->modelSiripoia->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrDezembro  = $this->modelSiripoia->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+        else if($arte == 'VaraPesca'){
+            $cpueEntrJaneiro   = $this->modelVaraPesca->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrFevereiro = $this->modelVaraPesca->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMarco     = $this->modelVaraPesca->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAbril     = $this->modelVaraPesca->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrMaio      = $this->modelVaraPesca->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJunho     = $this->modelVaraPesca->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJulho     = $this->modelVaraPesca->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrAgosto    = $this->modelVaraPesca->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrSetembro  = $this->modelVaraPesca->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrOutubro   = $this->modelVaraPesca->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrNovembro  = $this->modelVaraPesca->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrDezembro  = $this->modelVaraPesca->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+        }
+
 //        print_r($cpueArrastoJaneiro);
         
-        foreach($cpueArrastoJaneiro as $cpue):
+        foreach($cpueEntrJaneiro as $cpue):
             $cpueJaneiro[] = $cpue['cpue'];
         endforeach;
-        foreach($cpueArrastoFevereiro as $cpue):
+        foreach($cpueEntrFevereiro as $cpue):
             $cpueFevereiro[] = $cpue['cpue'];
         endforeach;
-        foreach($cpueArrastoMarco as $cpue):
+        foreach($cpueEntrMarco as $cpue):
             $cpueMarco[] = $cpue['cpue'];
         endforeach;
-        foreach($cpueArrastoAbril as $cpue):
+        foreach($cpueEntrAbril as $cpue):
             $cpueAbril[] = $cpue['cpue'];
         endforeach;
-        foreach($cpueArrastoMaio as $cpue):
+        foreach($cpueEntrMaio as $cpue):
             $cpueMaio[] = $cpue['cpue'];
         endforeach;
-        foreach($cpueArrastoJunho as $cpue):
+        foreach($cpueEntrJunho as $cpue):
             $cpueJunho[] = $cpue['cpue'];
         endforeach;
-        foreach($cpueArrastoJulho as $cpue):
+        foreach($cpueEntrJulho as $cpue):
             $cpueJulho[] = $cpue['cpue'];
         endforeach;
-        foreach($cpueArrastoAgosto as $cpue):
+        foreach($cpueEntrAgosto as $cpue):
             $cpueAgosto[] = $cpue['cpue'];
         endforeach;
-        foreach($cpueArrastoSetembro as $cpue):
+        foreach($cpueEntrSetembro as $cpue):
             $cpueSetembro[] = $cpue['cpue'];
         endforeach;
-        foreach($cpueArrastoOutubro as $cpue):
+        foreach($cpueEntrOutubro as $cpue):
             $cpueOutubro[] = $cpue['cpue'];
         endforeach;
-        foreach($cpueArrastoNovembro as $cpue):
+        foreach($cpueEntrNovembro as $cpue):
             $cpueNovembro[] = $cpue['cpue'];
         endforeach;
-        foreach($cpueArrastoDezembro as $cpue):
+        foreach($cpueEntrDezembro as $cpue):
             $cpueDezembro[] = $cpue['cpue'];
         endforeach;
         
-        $jsCpueJaneiro = json_encode($cpueJaneiro);
+        $labels = array('jan/'.$ano, 'fev/'.$ano, 'mar/'.$ano, 'abr/'.$ano, 'mai/'.$ano, 'jun/'.$ano, 'jul/'.$ano, 'ago/'.$ano, 'set/'.$ano, 'out/'.$ano, 'nov/'.$ano, 'dez/'.$ano);
+        
+        $jsLabels        = json_encode($labels);
+        $jsCpueJaneiro   = json_encode($cpueJaneiro);
         $jsCpueFevereiro = json_encode($cpueFevereiro);
         $jsCpueMarco     = json_encode($cpueMarco);
         $jsCpueAbril     = json_encode($cpueAbril);
@@ -789,32 +1555,21 @@ class PortoController extends Zend_Controller_Action
         $jsCpueNovembro  = json_encode($cpueNovembro);
         $jsCpueDezembro  = json_encode($cpueDezembro);
         
-        
+        $this->view->assign("cpueLabels", $jsLabels);
         $this->view->assign("cpueJaneiro",   $jsCpueJaneiro);
         $this->view->assign("cpueFevereiro", $jsCpueFevereiro);
-        $this->view->assign("cpueMarco",     $jsCpueMarco    );
-        $this->view->assign("cpueAbril", $jsCpueAbril    );
-        $this->view->assign("cpueMaio", $jsCpueMaio     );
-        $this->view->assign("cpueJunho", $jsCpueJunho    );
-        $this->view->assign("cpueJulho", $jsCpueJulho    );
-        $this->view->assign("cpueAgosto", $jsCpueAgosto   );
-        $this->view->assign("cpueSetembro", $jsCpueSetembro );
-        $this->view->assign("cpueOutubro", $jsCpueOutubro  );
-        $this->view->assign("cpueNovembro", $jsCpueNovembro );
-        $this->view->assign("cpueDezembro", $jsCpueDezembro );
+        $this->view->assign("cpueMarco",     $jsCpueMarco);
+        $this->view->assign("cpueAbril",     $jsCpueAbril);
+        $this->view->assign("cpueMaio",      $jsCpueMaio);
+        $this->view->assign("cpueJunho",     $jsCpueJunho);
+        $this->view->assign("cpueJulho",     $jsCpueJulho);
+        $this->view->assign("cpueAgosto",    $jsCpueAgosto);
+        $this->view->assign("cpueSetembro",  $jsCpueSetembro);
+        $this->view->assign("cpueOutubro",   $jsCpueOutubro);
+        $this->view->assign("cpueNovembro",  $jsCpueNovembro);
+        $this->view->assign("cpueDezembro",  $jsCpueDezembro);
         
-        print_r($jsCpueJaneiro);
-        print_r($jsCpueFevereiro);
-        print_r($jsCpueMarco);
-        print_r($jsCpueAbril);  
-        print_r($jsCpueMaio);  
-        print_r($jsCpueJunho);   
-        print_r($jsCpueJulho);  
-        print_r($jsCpueAgosto);  
-        print_r($jsCpueSetembro); 
-        print_r($jsCpueOutubro);
-        print_r($jsCpueNovembro);
-        print_r($jsCpueDezembro);
+        //print_r($jsCpueNovembro);
     }
     public function amendoeiraAction(){
         
@@ -955,20 +1710,14 @@ class PortoController extends Zend_Controller_Action
         
         
         $arrayQuantBarcos =  array_merge_recursive(
-                $quantBarcosArrasto, 
                 $quantBarcosCalao, 
-                $quantBarcosColeta, 
                 $quantBarcosEmalhe, 
                 $quantBarcosGrosseira, 
-                $quantBarcosJerere, 
                 $quantBarcosLinha, 
-                $quantBarcosLinhaFundo,
                 $quantBarcosManzua,
                 $quantBarcosMergulho,
-                $quantBarcosRatoeira,
-                $quantBarcosSiripoia,
-                $quantBarcosTarrafa,
-                $quantBarcosVaraPesca);
+                $quantBarcosTarrafa
+                );
         //arsort($arrayQuantBarcos);
         $arrayQuantBarcos = $this->removeDuplicate($arrayQuantBarcos, 'bar_nome', 'quant');
         
@@ -997,6 +1746,7 @@ class PortoController extends Zend_Controller_Action
         $this->view->assign("labelBarcos", $jsLabelBarcos);
         $this->view->assign("quantBarcos", $jsQuantBarcos);
         
+        $this->gerarcpue($porto);
     }
     public function aritaguaAction(){
         $dateStart = $this->_getParam('dataini');
@@ -1366,6 +2116,9 @@ class PortoController extends Zend_Controller_Action
         $capturaMergulho   = $this->modelMergulho  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
         $capturaSiripoia   = $this->modelSiripoia  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
         
+        $a = $this->gerarquantcaptura('Terminal Pesqueiro', 2014, 'Arrasto');
+        
+        print_r($a);
     }
     public function tulhaAction(){
         $dateStart = $this->_getParam('dataini');
