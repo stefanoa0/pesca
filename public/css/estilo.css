@@ -19,7 +19,7 @@ body
 {
 	height: 100px;
 	width: 350px;
-	background-image: url('img/Rachycentronlogo.png');
+	background-image: url('/img/Rachycentronlogo.png');
 	background-repeat: no-repeat;
 	float: left;
 }
@@ -27,7 +27,7 @@ body
 {
 	height: 100px;
 	width: 150px;
-	background-image: url('img/mpesca.png');
+	background-image: url('/img/mpesca.png');
 	background-repeat: no-repeat;
 	float: right;
 }

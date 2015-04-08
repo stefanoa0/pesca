@@ -422,6 +422,17 @@ class Application_Model_Jerere
         }
         return $dbTable->fetchAll($select)->toArray();
     }
+    public function selectEntrevistasByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaJerere();
+        $select = $dbTable->select()->
+                from('v_entrevista_jerere', array('pto_nome', 'count(bar_nome)'))->
+                group(array('pto_nome'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
     
         public function selectCapturaByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaJerere();
