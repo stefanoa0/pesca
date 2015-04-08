@@ -35,6 +35,36 @@
            }
        ]
    };
+   var capturaByMes = {
+       labels: <?= $this->countCaptLabelsCalao ?>,
+       datasets: [
+           {
+               label: "Captura total por mês",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->countCaptPesoCalao ?>
+           }
+       ]
+   };
+   var Embarcacoes = {
+       labels: <?= $this->labelBarcosCalao ?>,
+       datasets: [
+           {
+               label: "Barcos Mais Monitorados",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->quantBarcosCalao ?>
+           }
+       ]
+   };
    
 //   var datacapturaQuant = {
 //       labels: <?= $this->arrayArtesQuant ?>,
@@ -132,10 +162,13 @@
     window.onload = function(){
         
         var ctx = document.getElementById("EntrevistasByMes").getContext("2d");
-        var PesoChart = new Chart(ctx).Bar(entrevistasByMes, options);
+        var EntrevistasChart = new Chart(ctx).Bar(entrevistasByMes, options);
+        
+        var ctx = document.getElementById("CapturaByMes").getContext("2d");
+        var CapturaChart = new Chart(ctx).Bar(capturaByMes, options);
 
-//        var ctx = document.getElementById("CapturaQuant").getContext("2d");
-//        var QuantChart = new Chart(ctx).Bar(datacapturaQuant, options);
+        var ctx = document.getElementById("BarcosMonitorados").getContext("2d");
+        var EmbarcacoesCharts = new Chart(ctx).Bar(Embarcacoes, options);
 //
 //        var id_barcos = document.getElementById("Barcos").getContext("2d");
 //        var BarChart = new Chart(id_barcos).Bar(databarcos, options);
@@ -192,10 +225,21 @@
 </script>-->
 <br/>
 <div class="box-chart">
-    <legend>Gráfico 1: Captura Monitorada em kg por Arte de Pesca</legend>
+    <legend>Gráfico 1: Número de Pescarias por Mês</legend>
   <canvas id="EntrevistasByMes" style="width:100%;"></canvas>
 </div>
 <br/>
 
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 2: Total de Capturas em kg por Mês</legend>
+  <canvas id="CapturaByMes" style="width:100%;"></canvas>
+</div>
+<br/>
 
-
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 3: Embarcacoes Monitoradas</legend>
+  <canvas id="BarcosMonitorados" style="width:100%;"></canvas>
+</div>
+<br/>

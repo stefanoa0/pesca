@@ -180,18 +180,9 @@ class PortoController extends Zend_Controller_Action
         }
         return $data;
     }
-    public function vazioCount($array, $porto, $arte){
-        if(empty($array)){
-            $array = array( array(
-                'pto_nome' => $porto,
-                'count' => 0,
-                )
-            );
-        }
-        $array[0]['arte'] = $arte;
-        return $array;
-    }
-    public function vazio($array, $porto, $arte){
+
+    //Funções para verificar os vetores vazios e não dar erro nos gráficos.
+    public function verifVazioCaptura($array, $porto, $arte){
         if(empty($array)){
             $array = array( array(
                 'pto_nome' => $porto,
@@ -210,8 +201,25 @@ class PortoController extends Zend_Controller_Action
         $array[0]['arte'] = $arte;
         return $array;
     }
+    //Funções para verificar os vetores vazios e não dar erro nos gráficos.
+    public function verifVazioBarcos($array, $porto, $arte){
+        if(empty($array)){
+            $array = array( array(
+                'pto_nome' => $porto,
+                'quant' => 0,
+                )
+            );
+        }
+        else if($array[0]['quant'] == ""){
+            $array[0]['quant'] = 0;
+        }
+
+        $array[0]['arte'] = $arte;
+        return $array;
+    }
     
-    public function vazioEntrevistas($array, $porto){
+    //Funções para verificar os vetores vazios e não dar erro nos gráficos.
+    public function verifVazioEntrevistas($array, $porto){
         if(empty($array)){
             $array = array( array(
                 'pto_nome' => $porto,
@@ -225,30 +233,35 @@ class PortoController extends Zend_Controller_Action
 
         return $array;
     }
-//    public function vazioCpue($array){
-//        if(empty($array)){
-//            $array = array( array(
-//                'pto_nome' => $porto,
-//                'quant' => 0,
-//                )
-//            );
+    public function verifVazioCpue($array, $porto){
+        if(empty($array)){
+            $array = array( array(
+                'pto_nome' => $porto,
+                'quant' => 0,
+                )
+            );
+        }
+        else if($array[0]['quant'] == ""){
+            $array[0]['quant'] = 0;
+        }
+        return $array;
+    }
+    //Remove valores duplicados do array
+//    function removeDuplicate($in, $key1, $key2) {
+//        $out = array();
+//
+//        foreach ($in as $elem) {
+//            if(array_key_exists($elem[$key1], $out)) {
+//                $out[$elem[$key1]][$key2] += $elem[$key2];
+//            } else {
+//                $out[$elem[$key1]] = array($key1 => $elem[$key1],$key2 => $elem[$key2]);
+//            }
 //        }
-//        return $array;
+//
+//        return $out;
 //    }
     
-    function removeDuplicate($in, $key1, $key2) {
-        $out = array();
-
-        foreach ($in as $elem) {
-            if(array_key_exists($elem[$key1], $out)) {
-                $out[$elem[$key1]][$key2] += $elem[$key2];
-            } else {
-                $out[$elem[$key1]] = array($key1 => $elem[$key1],$key2 => $elem[$key2]);
-            }
-        }
-
-        return $out;
-    }
+    //Ordena array por Key utilizada;
     function array_sort($array, $on, $order=SORT_ASC){
         $new_array = array();
         $sortable_array = array();
@@ -284,460 +297,9 @@ class PortoController extends Zend_Controller_Action
 }
 
     
-//    public function gerarrelatorio($porto, $datainicial, $datafinal){
-//        //Dados Para Select
-//        $capturaArrasto    = $this->modelArrasto   ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $capturaCalao      = $this->modelCalao     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $capturaColeta     = $this->modelColeta    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $capturaEmalhe     = $this->modelEmalhe    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $capturaGrosseira  = $this->modelGrosseira ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $capturaJerere     = $this->modelJerere    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $capturaLinha      = $this->modelLinha     ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $capturaLinhaFundo = $this->modelLinhaFundo->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $capturaManzua     = $this->modelManzua    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $capturaMergulho   = $this->modelMergulho  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $capturaRatoeira   = $this->modelRatoeira  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $capturaSiripoia   = $this->modelSiripoia  ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $capturaTarrafa    = $this->modelTarrafa   ->selectCapturaByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
-//        $capturaVaraPesca  = $this->modelVaraPesca ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        
-//        
-//        $captArrasto = $this->vazio($capturaArrasto,       $porto);
-//        $captCalao= $this->vazio($capturaCalao,            $porto);
-//        $captColeta = $this->vazio($capturaColeta,         $porto);
-//        $captEmalhe = $this->vazio($capturaEmalhe,         $porto);
-//        $captGrosseira = $this->vazio($capturaGrosseira,   $porto);
-//        $captJerere = $this->vazio($capturaJerere,         $porto);
-//        $captLinha = $this->vazio($capturaLinha,           $porto);
-//        $captLinhaFundo = $this->vazio($capturaLinhaFundo, $porto);
-//        $captManzua = $this->vazio($capturaManzua,         $porto);
-//        $captMergulho = $this->vazio($capturaMergulho,     $porto);
-//        $captRatoeira = $this->vazio($capturaRatoeira,     $porto);
-//        $captSiripoia = $this->vazio($capturaSiripoia,     $porto);
-//        $captTarrafa = $this->vazio($capturaTarrafa,       $porto);
-//        $captVaraPesca = $this->vazio($capturaVaraPesca,   $porto);
-//        
-//        $this->view->assign("capturaArrasto",   $captArrasto);   
-//        $this->view->assign("capturaCalao",     $captCalao);     
-//        $this->view->assign("capturaColeta",    $captColeta);    
-//        $this->view->assign("capturaEmalhe",    $captEmalhe);    
-//        $this->view->assign("capturaGrosseira", $captGrosseira); 
-//        $this->view->assign("capturaJerere",    $captJerere);    
-//        $this->view->assign("capturaLinha",     $captLinha);     
-//        $this->view->assign("capturaLinhaFundo",$captLinhaFundo);
-//        $this->view->assign("capturaManzua",    $captManzua);    
-//        $this->view->assign("capturaMergulho",  $captMergulho);    
-//        $this->view->assign("capturaRatoeira",  $captRatoeira); 
-//        $this->view->assign("capturaSiripoia",  $captSiripoia);    
-//        $this->view->assign("capturaTarrafa",   $captTarrafa);     
-//        $this->view->assign("capturaVaraPesca", $captVaraPesca);
-//        
-//        $arrayArtesPeso = array(
-//            "Arrasto de fundo",
-//            "Calão",
-//            "Emalhe", 
-//            "Groseira", 
-//            "Jereré", 
-//            "Linha", 
-//            "Linha de Fundo",
-//            "Manzuá",
-//            "Mergulho",
-//            "Tarrafa",
-//            "Vara de pesca");
-//        
-//        $arrayArtesQuant = array(
-//            "Coleta Manual",
-//            "Ratoeira",
-//            "Siripoia"
-//        );
-//        
-//        $arrayArtes = array(
-//            "Arrasto de fundo",
-//            "Calão",
-//            "Coleta Manual",
-//            "Emalhe", 
-//            "Groseira", 
-//            "Jereré", 
-//            "Linha", 
-//            "Linha de Fundo",
-//            "Manzuá",
-//            "Mergulho",
-//            "Ratoeira",
-//            "Siripoia",
-//            "Tarrafa",
-//            "Vara de pesca"
-//        );
-//        $arrayCapturaPeso =  array_merge_recursive(
-//                $captArrasto, 
-//                $captCalao,
-//                $captEmalhe, 
-//                $captGrosseira, 
-//                $captJerere, 
-//                $captLinha, 
-//                $captLinhaFundo,
-//                $captManzua,
-//                $captMergulho,
-//                $captTarrafa,
-//                $captVaraPesca);
-//        
-//        $arrayCapturaQuant = array_merge_recursive(
-//        $captColeta, 
-//        $captRatoeira,
-//        $captSiripoia
-//                );
-//        foreach($arrayCapturaPeso as $key => $captura):
-//            $arrayPeso[] = $captura['peso'];
-//        endforeach;
-//        
-//        foreach($arrayCapturaQuant as $key => $captura):
-//            $arrayQuant[] = $captura['quant'];
-//        endforeach;
-//        
-//        $jsQuant = json_encode($arrayQuant);
-//        $jsPeso = json_encode($arrayPeso);
-//        $jsArtesPeso = json_encode($arrayArtesPeso);
-//        $jsArtesQuant = json_encode($arrayArtesQuant);
-//        $jsArtes = json_encode($arrayArtes);
-//        
-//        
-//        $this->view->assign("arrayArtesPeso", $jsArtesPeso);
-//        $this->view->assign("arrayArtesQuant", $jsArtesQuant);
-//        $this->view->assign("arrayQuant", $jsQuant);
-//        $this->view->assign("arrayPeso", $jsPeso);
-//        $this->view->assign("arrayArtes", $jsArtes);
-//        //print_r($jsQuant);
-////        $capturaTotal =$capturaArrasto[0]['quant']+
-////                $capturaCalao[0]['quant']+
-////                $capturaColeta[0]['quant']+
-////                $capturaEmalhe[0]['quant']+
-////                $capturaGrosseira[0]['quant']+
-////                $capturaJerere[0]['quant']+
-////                $capturaLinha[0]['quant']+
-////                $capturaLinhaFundo[0]['quant']; 
-////                
-//        //BARCOS
-//        $barcoArrasto    = $this->modelArrasto   ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $barcoCalao      = $this->modelCalao     ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $barcoColeta     = $this->modelColeta    ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $barcoEmalhe     = $this->modelEmalhe    ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $barcoGrosseira  = $this->modelGrosseira ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $barcoJerere     = $this->modelJerere    ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $barcoLinha      = $this->modelLinha     ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $barcoLinhaFundo = $this->modelLinhaFundo->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $barcoManzua     = $this->modelManzua    ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $barcoMergulho   = $this->modelMergulho  ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $barcoRatoeira   = $this->modelRatoeira  ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $barcoSiripoia   = $this->modelSiripoia  ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $barcoTarrafa    = $this->modelTarrafa   ->selectBarcosByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
-//        $barcoVaraPesca  = $this->modelVaraPesca ->selectBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        
-//        $barArrasto =  $this->vazioCount($barcoArrasto   ,  $porto);
-//        $barCalao =    $this->vazioCount($barcoCalao     , $porto);
-//        $barColeta =   $this->vazioCount($barcoColeta    , $porto);
-//        $barEmalhe =   $this->vazioCount($barcoEmalhe    , $porto);
-//        $barGrosseira= $this->vazioCount($barcoGrosseira , $porto);
-//        $barJerere =   $this->vazioCount($barcoJerere    , $porto);
-//        $barLinha =    $this->vazioCount($barcoLinha     , $porto);
-//        $barLinhaFundo=$this->vazioCount($barcoLinhaFundo, $porto);
-//        $barManzua=    $this->vazioCount($barcoManzua    , $porto);
-//        $barMergulho=  $this->vazioCount($barcoMergulho  , $porto);
-//        $barRatoeira=  $this->vazioCount($barcoRatoeira  , $porto);
-//        $barSiripoia=  $this->vazioCount($barcoSiripoia  , $porto);
-//        $barTarrafa=   $this->vazioCount($barcoTarrafa   , $porto);
-//        $barVaraPesca =$this->vazioCount($barcoVaraPesca ,  $porto);
-//        
-//        $this->view->assign("barcosArrasto",   $barArrasto);   
-//        $this->view->assign("barcosCalao",     $barCalao);     
-//        $this->view->assign("barcosColeta",    $barColeta);    
-//        $this->view->assign("barcosEmalhe",    $barEmalhe);    
-//        $this->view->assign("barcosGrosseira", $barGrosseira); 
-//        $this->view->assign("barcosJerere",    $barJerere);    
-//        $this->view->assign("barcosLinha",     $barLinha);     
-//        $this->view->assign("barcosLinhaFundo",$barLinhaFundo);
-//        $this->view->assign("barcosManzua",    $barManzua);    
-//        $this->view->assign("barcosMergulho",  $barMergulho);    
-//        $this->view->assign("barcosRatoeira",  $barRatoeira); 
-//        $this->view->assign("barcosSiripoia",  $barSiripoia);    
-//        $this->view->assign("barcosTarrafa",   $barTarrafa);     
-//        $this->view->assign("barcosVaraPesca", $barVaraPesca);
-//        
-//        $arrayBarcos =  array_merge_recursive(
-//                $barArrasto, 
-//                $barCalao, 
-//                $barColeta, 
-//                $barEmalhe, 
-//                $barGrosseira, 
-//                $barJerere, 
-//                $barLinha, 
-//                $barLinhaFundo,
-//                $barManzua,
-//                $barMergulho,
-//                $barRatoeira,
-//                $barSiripoia,
-//                $barTarrafa,
-//                $barVaraPesca);
-//        
-//        foreach($arrayBarcos as $key => $barco):
-//            $arrayCount[] = $barco['count'];
-//        endforeach;
-//        
-//        $jsCount = json_encode($arrayCount);
-//
-//
-//        $this->view->assign("arrayCount", $jsCount);
-//        ///BARCOS
-//       
-//        //PESCADORES
-//        $pescadorArrasto    = $this->modelArrasto   ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $pescadorCalao      = $this->modelCalao     ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $pescadorColeta     = $this->modelColeta    ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $pescadorEmalhe     = $this->modelEmalhe    ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $pescadorGrosseira  = $this->modelGrosseira ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $pescadorJerere     = $this->modelJerere    ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $pescadorLinha      = $this->modelLinha     ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $pescadorLinhaFundo = $this->modelLinhaFundo->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $pescadorManzua     = $this->modelManzua    ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $pescadorMergulho   = $this->modelMergulho  ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $pescadorRatoeira   = $this->modelRatoeira  ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $pescadorSiripoia   = $this->modelSiripoia  ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $pescadorTarrafa    = $this->modelTarrafa   ->selectPescadoresByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
-//        $pescadorVaraPesca  = $this->modelVaraPesca ->selectPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        
-//        $pescArrasto =  $this->vazioCount($pescadorArrasto   ,  $porto);
-//        $pescCalao =    $this->vazioCount($pescadorCalao     , $porto);
-//        $pescColeta =   $this->vazioCount($pescadorColeta    , $porto);
-//        $pescEmalhe =   $this->vazioCount($pescadorEmalhe    , $porto);
-//        $pescGrosseira= $this->vazioCount($pescadorGrosseira , $porto);
-//        $pescJerere =   $this->vazioCount($pescadorJerere    , $porto);
-//        $pescLinha =    $this->vazioCount($pescadorLinha     , $porto);
-//        $pescLinhaFundo=$this->vazioCount($pescadorLinhaFundo, $porto);
-//        $pescManzua=    $this->vazioCount($pescadorManzua    , $porto);
-//        $pescMergulho=  $this->vazioCount($pescadorMergulho  , $porto);
-//        $pescRatoeira=  $this->vazioCount($pescadorRatoeira  , $porto);
-//        $pescSiripoia=  $this->vazioCount($pescadorSiripoia  , $porto);
-//        $pescTarrafa=   $this->vazioCount($pescadorTarrafa   , $porto);
-//        $pescVaraPesca =$this->vazioCount($pescadorVaraPesca ,  $porto);
-//        
-//        $this->view->assign("pescadoresArrasto",   $pescArrasto);   
-//        $this->view->assign("pescadoresCalao",     $pescCalao);     
-//        $this->view->assign("pescadoresColeta",    $pescColeta);    
-//        $this->view->assign("pescadoresEmalhe",    $pescEmalhe);    
-//        $this->view->assign("pescadoresGrosseira", $pescGrosseira); 
-//        $this->view->assign("pescadoresJerere",    $pescJerere);    
-//        $this->view->assign("pescadoresLinha",     $pescLinha);     
-//        $this->view->assign("pescadoresLinhaFundo",$pescLinhaFundo);
-//        $this->view->assign("pescadoresManzua",    $pescManzua);    
-//        $this->view->assign("pescadoresMergulho",  $pescMergulho);    
-//        $this->view->assign("pescadoresRatoeira",  $pescRatoeira); 
-//        $this->view->assign("pescadoresSiripoia",  $pescSiripoia);    
-//        $this->view->assign("pescadoresTarrafa",   $pescTarrafa);     
-//        $this->view->assign("pescadoresVaraPesca", $pescVaraPesca);
-//        
-//        $arrayPescadores =  array_merge_recursive(
-//                $pescArrasto, 
-//                $pescCalao, 
-//                $pescColeta, 
-//                $pescEmalhe, 
-//                $pescGrosseira, 
-//                $pescJerere, 
-//                $pescLinha, 
-//                $pescLinhaFundo,
-//                $pescManzua,
-//                $pescMergulho,
-//                $pescRatoeira,
-//                $pescSiripoia,
-//                $pescTarrafa,
-//                $pescVaraPesca);
-//        
-//        foreach($arrayPescadores as $key => $pescador):
-//            $arrayCountPescador[] = $pescador['count'];
-//        endforeach;
-//        
-//        $jsCountPescador = json_encode($arrayCountPescador);
-//
-//        
-//        $this->view->assign("arrayCountPescador", $jsCountPescador);
-//        
-//        
-//        
-//        //Barcos que mais pescam
-//        $quantBarcosArrasto    = $this->modelArrasto   ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantBarcosCalao      = $this->modelCalao     ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantBarcosColeta     = $this->modelColeta    ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantBarcosEmalhe     = $this->modelEmalhe    ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantBarcosGrosseira  = $this->modelGrosseira ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantBarcosJerere     = $this->modelJerere    ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantBarcosLinha      = $this->modelLinha     ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantBarcosLinhaFundo = $this->modelLinhaFundo->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantBarcosManzua     = $this->modelManzua    ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantBarcosMergulho   = $this->modelMergulho  ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantBarcosRatoeira   = $this->modelRatoeira  ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantBarcosSiripoia   = $this->modelSiripoia  ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantBarcosTarrafa    = $this->modelTarrafa   ->selectQuantBarcosByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantBarcosVaraPesca  = $this->modelVaraPesca ->selectQuantBarcosByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        
-//        
-//        $arrayQuantBarcos =  array_merge_recursive(
-//                $quantBarcosArrasto, 
-//                $quantBarcosCalao, 
-//                $quantBarcosColeta, 
-//                $quantBarcosEmalhe, 
-//                $quantBarcosGrosseira, 
-//                $quantBarcosJerere, 
-//                $quantBarcosLinha, 
-//                $quantBarcosLinhaFundo,
-//                $quantBarcosManzua,
-//                $quantBarcosMergulho,
-//                $quantBarcosRatoeira,
-//                $quantBarcosSiripoia,
-//                $quantBarcosTarrafa,
-//                $quantBarcosVaraPesca);
-//        //arsort($arrayQuantBarcos);
-//        $arrayQuantBarcos = $this->removeDuplicate($arrayQuantBarcos, 'bar_nome', 'quant');
-//        
-//            /** Creio que até aqui já seja suficiente. Mas para gerar a mesma saída solicitada
-//            * as linhas abaixo se fazem necessárias */
-//        $arrayQuantBarcosOrdenado = $this->array_sort($arrayQuantBarcos, 'quant', SORT_DESC);
-//        //print_r($data);
-//        
-//        $j=0;
-//        foreach($arrayQuantBarcosOrdenado as $key => $quantBarcos):
-//            if($j==30){
-//                break;
-//            }
-//            $arrayNomesBarcos[] = $quantBarcos['bar_nome'];
-//            $arrayQuantidades[] = $quantBarcos['quant'];
-//            $j++;
-//        endforeach;
-//        //print_r($arrayNomesBarcos);
-//        //print_r($arrayQuantidades);
-////        
-//        $jsLabelBarcos = json_encode($arrayNomesBarcos);
-//        $jsQuantBarcos = json_encode($arrayQuantidades);
-////
-////      
-//        $this->view->assign("arrayQuantBarcos", $arrayQuantBarcosOrdenado);
-//        $this->view->assign("labelBarcos", $jsLabelBarcos);
-//        $this->view->assign("quantBarcos", $jsQuantBarcos);
-//        
-//        //Pescadores que mais pescam
-//        $quantPescadoresArrasto    = $this->modelArrasto   ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantPescadoresCalao      = $this->modelCalao     ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantPescadoresColeta     = $this->modelColeta    ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantPescadoresEmalhe     = $this->modelEmalhe    ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantPescadoresGrosseira  = $this->modelGrosseira ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantPescadoresJerere     = $this->modelJerere    ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantPescadoresLinha      = $this->modelLinha     ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantPescadoresLinhaFundo = $this->modelLinhaFundo->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantPescadoresManzua     = $this->modelManzua    ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantPescadoresMergulho   = $this->modelMergulho  ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantPescadoresRatoeira   = $this->modelRatoeira  ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantPescadoresSiripoia   = $this->modelSiripoia  ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantPescadoresTarrafa    = $this->modelTarrafa   ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantPescadoresVaraPesca  = $this->modelVaraPesca ->selectQuantPescadoresByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        
-//        
-//        $arrayQuantPescadores =  array_merge_recursive(
-//                $quantPescadoresArrasto, 
-//                $quantPescadoresCalao, 
-//                $quantPescadoresColeta, 
-//                $quantPescadoresEmalhe, 
-//                $quantPescadoresGrosseira, 
-//                $quantPescadoresJerere, 
-//                $quantPescadoresLinha, 
-//                $quantPescadoresLinhaFundo,
-//                $quantPescadoresManzua,
-//                $quantPescadoresMergulho,
-//                $quantPescadoresRatoeira,
-//                $quantPescadoresSiripoia,
-//                $quantPescadoresTarrafa,
-//                $quantPescadoresVaraPesca);
-//        //arsort($arrayQuantPescadores);
-//        $arrayQuantPescadores = $this->removeDuplicate($arrayQuantPescadores, 'tp_nome', 'count');
-//        
-//        //print_r($arrayQuantPescadores);
-//        $arrayQuantPescadoresOrdenado = $this->array_sort($arrayQuantPescadores, 'count', SORT_DESC);
-//        //print_r($arrayQuantPescadoresOrdenado);
-//        $i=0;
-//        foreach($arrayQuantPescadoresOrdenado as $key => $quantPescadores):
-//            if($i==30){
-//                break;
-//            }
-//            $arrayNomesPescadores[] = $quantPescadores['tp_nome'];
-//            $arrayQuantidadesPesc[] = $quantPescadores['count'];
-//            $i++;   
-//        endforeach;
-//        //print_r($arrayNomesPescadores);
-//        //print_r($arrayQuantidades);
-////        
-//        $jsLabelPescadores = json_encode($arrayNomesPescadores);
-//        $jsQuantPescadores = json_encode($arrayQuantidadesPesc);
-////
-//        $this->view->assign("arrayQuantPescadores", $arrayQuantPescadoresOrdenado);
-//        $this->view->assign("labelPescadores", $jsLabelPescadores);
-//        $this->view->assign("quantPescadores", $jsQuantPescadores);
-//        
-//        
-//        //Espécies mais capturadas
-//        $quantCapturaArrasto    = $this->modelArrasto   ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantCapturaCalao      = $this->modelCalao     ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantCapturaColeta     = $this->modelColeta    ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantCapturaEmalhe     = $this->modelEmalhe    ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantCapturaGrosseira  = $this->modelGrosseira ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantCapturaJerere     = $this->modelJerere    ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantCapturaLinha      = $this->modelLinha     ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantCapturaLinhaFundo = $this->modelLinhaFundo->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantCapturaManzua     = $this->modelManzua    ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantCapturaMergulho   = $this->modelMergulho  ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantCapturaRatoeira   = $this->modelRatoeira  ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantCapturaSiripoia   = $this->modelSiripoia  ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantCapturaTarrafa    = $this->modelTarrafa   ->selectQuantCapturaByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
-//        $quantCapturaVaraPesca  = $this->modelVaraPesca ->selectQuantCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
-//        
-//        
-//        $arrayQuantCaptura =  array_merge_recursive(
-//                $quantCapturaArrasto, 
-//                $quantCapturaCalao, 
-//                $quantCapturaColeta, 
-//                $quantCapturaEmalhe, 
-//                $quantCapturaGrosseira, 
-//                $quantCapturaJerere, 
-//                $quantCapturaLinha, 
-//                $quantCapturaLinhaFundo,
-//                $quantCapturaManzua,
-//                $quantCapturaMergulho,
-//                $quantCapturaRatoeira,
-//                $quantCapturaSiripoia,
-//                $quantCapturaTarrafa,
-//                $quantCapturaVaraPesca);
-//        //arsort($arrayQuantCaptura);
-//        $arrayQuantCaptura = $this->removeDuplicate($arrayQuantCaptura, 'esp_nome_comum', 'quant');
-//        
-//        //print_r($arrayQuantCaptura);
-//        $arrayQuantCapturaOrdenado = $this->array_sort($arrayQuantCaptura, 'quant', SORT_ASC);
-//        //print_r($arrayQuantCapturaOrdenado);
-//        $i=0;
-//        foreach($arrayQuantCapturaOrdenado as $key => $quantCaptura):
-//            if($i==30){
-//                break;
-//            }
-//            $arrayNomesCaptura[] = $quantCaptura['esp_nome_comum'];
-//            $arrayQuantidadesPesc[] = $quantCaptura['quant'];
-//            $i++;   
-//        endforeach;
-//        //print_r($arrayNomesCaptura);
-//        //print_r($arrayQuantidades);
-////        
-//        $jsLabelCaptura = json_encode($arrayNomesCaptura);
-//        $jsQuantCaptura = json_encode($arrayQuantidadesPesc);
-////
-//        $this->view->assign("arrayQuantCaptura", $arrayQuantCapturaOrdenado);
-//        $this->view->assign("labelCaptura", $jsLabelCaptura);
-//        $this->view->assign("quantCaptura", $jsQuantCaptura);
-//   
-//
-//   
-//    }
+
+
+    //Gera as quantidade de captura por porto, mês e ano
     public function gerarquantcaptura($porto, $ano, $arte){
         
         if($arte == 'Arrasto'){
@@ -936,116 +498,150 @@ class PortoController extends Zend_Controller_Action
             $quantCaptNovembro  = $this->modelVaraPesca->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
             $quantCaptDezembro  = $this->modelVaraPesca->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
         }
-
-//        print_r($quantArrastoJaneiro);
+        $quantCaptJaneiro  = $this->verifVazioCaptura($quantCaptJaneiro,   $porto,$arte);
+        $quantCaptFevereiro= $this->verifVazioCaptura($quantCaptFevereiro, $porto,$arte);
+        $quantCaptMarco    = $this->verifVazioCaptura($quantCaptMarco    , $porto,$arte);
+        $quantCaptAbril    = $this->verifVazioCaptura($quantCaptAbril    , $porto,$arte);
+        $quantCaptMaio     = $this->verifVazioCaptura($quantCaptMaio     , $porto,$arte);
+        $quantCaptJunho    = $this->verifVazioCaptura($quantCaptJunho    , $porto,$arte);
+        $quantCaptJulho    = $this->verifVazioCaptura($quantCaptJulho    , $porto,$arte);
+        $quantCaptAgosto   = $this->verifVazioCaptura($quantCaptAgosto   , $porto,$arte);
+        $quantCaptSetembro = $this->verifVazioCaptura($quantCaptSetembro , $porto,$arte);
+        $quantCaptOutubro  = $this->verifVazioCaptura($quantCaptOutubro  , $porto,$arte);
+        $quantCaptNovembro = $this->verifVazioCaptura($quantCaptNovembro , $porto,$arte);
+        $quantCaptDezembro = $this->verifVazioCaptura($quantCaptDezembro , $porto,$arte);
         
-        foreach($quantCaptJaneiro as $quant):
-            $pesoJaneiro[] = $quant['peso'];
-            $quantJaneiro[] = $quant['peso'];
+        $arrayQuantCapturaTotal = array_merge_recursive($quantCaptJaneiro, 
+                $quantCaptFevereiro, 
+                $quantCaptMarco,
+                $quantCaptAbril, 
+                $quantCaptMaio, 
+                $quantCaptJunho, 
+                $quantCaptJulho, 
+                $quantCaptAgosto, 
+                $quantCaptSetembro,
+                $quantCaptOutubro, 
+                $quantCaptNovembro, 
+                $quantCaptDezembro);
+        
+        foreach($arrayQuantCapturaTotal as $quant):
+            $pesoTotal[] = $quant['peso'];
+            $quantTotal[] = $quant['quant'];
         endforeach;
-        foreach($quantCaptFevereiro as $quant):
-            $pesoFevereiro[] = $quant['peso'];
-            $quantFevereiro[] = $quant['peso'];
-        endforeach;
-        foreach($quantCaptMarco as $quant):
-            $pesoMarco[] = $quant['peso'];
-            $quantMarco[] = $quant['peso'];
-        endforeach;
-        foreach($quantCaptAbril as $quant):
-            $pesoAbril[] = $quant['peso'];
-            $quantAbril[] = $quant['peso'];
-        endforeach;
-        foreach($quantCaptMaio as $quant):
-            $pesoMaio[] = $quant['peso'];
-            $quantMaio[] = $quant['peso'];
-        endforeach;
-        foreach($quantCaptJunho as $quant):
-            $pesoJunho[] = $quant['peso'];
-            $quantJunho[] = $quant['peso'];
-        endforeach;
-        foreach($quantCaptJulho as $quant):
-            $pesoJulho[] = $quant['peso'];
-            $quantJulho[] = $quant['peso'];
-        endforeach;
-        foreach($quantCaptAgosto as $quant):
-            $pesoAgosto[] = $quant['peso'];
-            $quantAgosto[] = $quant['peso'];
-        endforeach;
-        foreach($quantCaptSetembro as $quant):
-            $pesoSetembro[] = $quant['peso'];
-            $quantSetembro[] = $quant['peso'];
-        endforeach;
-        foreach($quantCaptOutubro as $quant):
-            $pesoOutubro[] = $quant['peso'];
-            $quantOutubro[] = $quant['peso'];
-        endforeach;
-        foreach($quantCaptNovembro as $quant):
-            $pesoNovembro[] = $quant['peso'];
-            $quantNovembro[] = $quant['peso'];
-        endforeach;
-        foreach($quantCaptDezembro as $quant):
-            $pesoDezembro[] = $quant['peso'];
-            $quantDezembro[] = $quant['peso'];
-        endforeach;
+        
+//        foreach($quantCaptJaneiro as $quant):
+//            $pesoJaneiro[] = $quant['peso'];
+//            $quantJaneiro[] = $quant['quant'];
+//        endforeach;
+//        foreach($quantCaptFevereiro as $quant):
+//            $pesoFevereiro[] = $quant['peso'];
+//            $quantFevereiro[] = $quant['quant'];
+//        endforeach;
+//        foreach($quantCaptMarco as $quant):
+//            $pesoMarco[] = $quant['peso'];
+//            $quantMarco[] = $quant['quant'];
+//        endforeach;
+//        foreach($quantCaptAbril as $quant):
+//            $pesoAbril[] = $quant['peso'];
+//            $quantAbril[] = $quant['quant'];
+//        endforeach;
+//        foreach($quantCaptMaio as $quant):
+//            $pesoMaio[] = $quant['peso'];
+//            $quantMaio[] = $quant['quant'];
+//        endforeach;
+//        foreach($quantCaptJunho as $quant):
+//            $pesoJunho[] = $quant['peso'];
+//            $quantJunho[] = $quant['quant'];
+//        endforeach;
+//        foreach($quantCaptJulho as $quant):
+//            $pesoJulho[] = $quant['peso'];
+//            $quantJulho[] = $quant['quant'];
+//        endforeach;
+//        foreach($quantCaptAgosto as $quant):
+//            $pesoAgosto[] = $quant['peso'];
+//            $quantAgosto[] = $quant['quant'];
+//        endforeach;
+//        foreach($quantCaptSetembro as $quant):
+//            $pesoSetembro[] = $quant['peso'];
+//            $quantSetembro[] = $quant['quant'];
+//        endforeach;
+//        foreach($quantCaptOutubro as $quant):
+//            $pesoOutubro[] = $quant['peso'];
+//            $quantOutubro[] = $quant['quant'];
+//        endforeach;
+//        foreach($quantCaptNovembro as $quant):
+//            $pesoNovembro[] = $quant['peso'];
+//            $quantNovembro[] = $quant['quant'];
+//        endforeach;
+//        foreach($quantCaptDezembro as $quant):
+//            $pesoDezembro[] = $quant['peso'];
+//            $quantDezembro[] = $quant['quant'];
+//        endforeach;
         
         $labels = array('jan/'.$ano, 'fev/'.$ano, 'mar/'.$ano, 'abr/'.$ano, 'mai/'.$ano, 'jun/'.$ano, 'jul/'.$ano, 'ago/'.$ano, 'set/'.$ano, 'out/'.$ano, 'nov/'.$ano, 'dez/'.$ano);
         
-        $jsLabels        = json_encode($labels);
-        $jsquantCaptJaneiro   = json_encode($quantJaneiro);
-        $jsquantCaptFevereiro = json_encode($quantFevereiro);
-        $jsquantCaptMarco     = json_encode($quantMarco);
-        $jsquantCaptAbril     = json_encode($quantAbril);
-        $jsquantCaptMaio      = json_encode($quantMaio);
-        $jsquantCaptJunho     = json_encode($quantJunho);
-        $jsquantCaptJulho     = json_encode($quantJulho);
-        $jsquantCaptAgosto    = json_encode($quantAgosto);
-        $jsquantCaptSetembro  = json_encode($quantSetembro);
-        $jsquantCaptOutubro   = json_encode($quantOutubro);
-        $jsquantCaptNovembro  = json_encode($quantNovembro);
-        $jsquantCaptDezembro  = json_encode($quantDezembro);
-        
-        $jspesoCaptJaneiro   = json_encode($pesoJaneiro);
-        $jspesoCaptFevereiro = json_encode($pesoFevereiro);
-        $jspesoCaptMarco     = json_encode($pesoMarco);
-        $jspesoCaptAbril     = json_encode($pesoAbril);
-        $jspesoCaptMaio      = json_encode($pesoMaio);
-        $jspesoCaptJunho     = json_encode($pesoJunho);
-        $jspesoCaptJulho     = json_encode($pesoJulho);
-        $jspesoCaptAgosto    = json_encode($pesoAgosto);
-        $jspesoCaptSetembro  = json_encode($pesoSetembro);
-        $jspesoCaptOutubro   = json_encode($pesoOutubro);
-        $jspesoCaptNovembro  = json_encode($pesoNovembro);
-        $jspesoCaptDezembro  = json_encode($pesoDezembro);
+        $jsLabels = json_encode($labels);
+        $jsPeso   = json_encode($pesoTotal);
+        $jsQuantidade = json_encode($quantTotal);
+//        $jsquantCaptJaneiro   = json_encode($quantJaneiro);
+//        $jsquantCaptFevereiro = json_encode($quantFevereiro);
+//        $jsquantCaptMarco     = json_encode($quantMarco);
+//        $jsquantCaptAbril     = json_encode($quantAbril);
+//        $jsquantCaptMaio      = json_encode($quantMaio);
+//        $jsquantCaptJunho     = json_encode($quantJunho);
+//        $jsquantCaptJulho     = json_encode($quantJulho);
+//        $jsquantCaptAgosto    = json_encode($quantAgosto);
+//        $jsquantCaptSetembro  = json_encode($quantSetembro);
+//        $jsquantCaptOutubro   = json_encode($quantOutubro);
+//        $jsquantCaptNovembro  = json_encode($quantNovembro);
+//        $jsquantCaptDezembro  = json_encode($quantDezembro);
+//        
+//        $jspesoCaptJaneiro   = json_encode($pesoJaneiro);
+//        $jspesoCaptFevereiro = json_encode($pesoFevereiro);
+//        $jspesoCaptMarco     = json_encode($pesoMarco);
+//        $jspesoCaptAbril     = json_encode($pesoAbril);
+//        $jspesoCaptMaio      = json_encode($pesoMaio);
+//        $jspesoCaptJunho     = json_encode($pesoJunho);
+//        $jspesoCaptJulho     = json_encode($pesoJulho);
+//        $jspesoCaptAgosto    = json_encode($pesoAgosto);
+//        $jspesoCaptSetembro  = json_encode($pesoSetembro);
+//        $jspesoCaptOutubro   = json_encode($pesoOutubro);
+//        $jspesoCaptNovembro  = json_encode($pesoNovembro);
+//        $jspesoCaptDezembro  = json_encode($pesoDezembro);
         
         $this->view->assign("countCaptLabels".$arte,    $jsLabels);
-        $this->view->assign("countCaptJaneiro".$arte,   $jsquantCaptJaneiro); 
-        $this->view->assign("countCaptFevereiro".$arte, $jsquantCaptFevereiro);
-        $this->view->assign("countCaptMarco".$arte,     $jsquantCaptMarco);
-        $this->view->assign("countCaptAbril".$arte,     $jsquantCaptAbril); 
-        $this->view->assign("countCaptMaio".$arte,      $jsquantCaptMaio); 
-        $this->view->assign("countCaptJunho".$arte,     $jsquantCaptJunho);  
-        $this->view->assign("countCaptJulho".$arte,     $jsquantCaptJulho); 
-        $this->view->assign("countCaptAgosto".$arte,    $jsquantCaptAgosto); 
-        $this->view->assign("countCaptSetembro".$arte,  $jsquantCaptSetembro);
-        $this->view->assign("countCaptOutubro".$arte,   $jsquantCaptOutubro);
-        $this->view->assign("countCaptNovembro".$arte,  $jsquantCaptNovembro);
-        $this->view->assign("countCaptDezembro".$arte,  $jsquantCaptDezembro);
-        
-        $this->view->assign("pesoCaptJaneiro".$arte,   $jspesoCaptJaneiro); 
-        $this->view->assign("pesoCaptFevereiro".$arte, $jspesoCaptFevereiro);
-        $this->view->assign("pesoCaptMarco".$arte,     $jspesoCaptMarco);
-        $this->view->assign("pesoCaptAbril".$arte,     $jspesoCaptAbril); 
-        $this->view->assign("pesoCaptMaio".$arte,      $jspesoCaptMaio); 
-        $this->view->assign("pesoCaptJunho".$arte,     $jspesoCaptJunho);  
-        $this->view->assign("pesoCaptJulho".$arte,     $jspesoCaptJulho); 
-        $this->view->assign("pesoCaptAgosto".$arte,    $jspesoCaptAgosto); 
-        $this->view->assign("pesoCaptSetembro".$arte,  $jspesoCaptSetembro);
-        $this->view->assign("pesoCaptOutubro".$arte,   $jspesoCaptOutubro);
-        $this->view->assign("pesoCaptNovembro".$arte,  $jspesoCaptNovembro);
-        $this->view->assign("pesoCaptDezembro".$arte,  $jspesoCaptDezembro);
+        $this->view->assign("countCaptPeso".$arte,      $jsPeso);
+        $this->view->assign("countCaptQuantidade".$arte,$jsQuantidade);
+//        $this->view->assign("countCaptJaneiro".$arte,   $jsquantCaptJaneiro); 
+//        $this->view->assign("countCaptFevereiro".$arte, $jsquantCaptFevereiro);
+//        $this->view->assign("countCaptMarco".$arte,     $jsquantCaptMarco);
+//        $this->view->assign("countCaptAbril".$arte,     $jsquantCaptAbril); 
+//        $this->view->assign("countCaptMaio".$arte,      $jsquantCaptMaio); 
+//        $this->view->assign("countCaptJunho".$arte,     $jsquantCaptJunho);  
+//        $this->view->assign("countCaptJulho".$arte,     $jsquantCaptJulho); 
+//        $this->view->assign("countCaptAgosto".$arte,    $jsquantCaptAgosto); 
+//        $this->view->assign("countCaptSetembro".$arte,  $jsquantCaptSetembro);
+//        $this->view->assign("countCaptOutubro".$arte,   $jsquantCaptOutubro);
+//        $this->view->assign("countCaptNovembro".$arte,  $jsquantCaptNovembro);
+//        $this->view->assign("countCaptDezembro".$arte,  $jsquantCaptDezembro);
+//        
+//        $this->view->assign("pesoCaptJaneiro".$arte,   $jspesoCaptJaneiro); 
+//        $this->view->assign("pesoCaptFevereiro".$arte, $jspesoCaptFevereiro);
+//        $this->view->assign("pesoCaptMarco".$arte,     $jspesoCaptMarco);
+//        $this->view->assign("pesoCaptAbril".$arte,     $jspesoCaptAbril); 
+//        $this->view->assign("pesoCaptMaio".$arte,      $jspesoCaptMaio); 
+//        $this->view->assign("pesoCaptJunho".$arte,     $jspesoCaptJunho);  
+//        $this->view->assign("pesoCaptJulho".$arte,     $jspesoCaptJulho); 
+//        $this->view->assign("pesoCaptAgosto".$arte,    $jspesoCaptAgosto); 
+//        $this->view->assign("pesoCaptSetembro".$arte,  $jspesoCaptSetembro);
+//        $this->view->assign("pesoCaptOutubro".$arte,   $jspesoCaptOutubro);
+//        $this->view->assign("pesoCaptNovembro".$arte,  $jspesoCaptNovembro);
+//        $this->view->assign("pesoCaptDezembro".$arte,  $jspesoCaptDezembro);
         
         //print_r($jsquantCaptNovembro);
     }
+    
+    //Gera a quantidade total de entrevistas por porto, mês e por Arte
     public function gerarquantentrevistas($porto, $ano, $arte){
         
         if($arte == 'Arrasto'){
@@ -1244,18 +840,18 @@ class PortoController extends Zend_Controller_Action
             $quantEntrNovembro  = $this->modelVaraPesca->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
             $quantEntrDezembro  = $this->modelVaraPesca->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
         }
-        $quantEntrJaneiro  =   $this->vazioEntrevistas($quantEntrJaneiro  ,$porto);
-        $quantEntrFevereiro  = $this->vazioEntrevistas($quantEntrFevereiro,$porto);
-        $quantEntrMarco  =     $this->vazioEntrevistas($quantEntrMarco    ,$porto);
-        $quantEntrAbril  =     $this->vazioEntrevistas($quantEntrAbril    ,$porto);
-        $quantEntrMaio  =      $this->vazioEntrevistas($quantEntrMaio     ,$porto);
-        $quantEntrJunho  =     $this->vazioEntrevistas($quantEntrJunho    ,$porto);
-        $quantEntrJulho  =     $this->vazioEntrevistas($quantEntrJulho    ,$porto);
-        $quantEntrAgosto  =    $this->vazioEntrevistas($quantEntrAgosto   ,$porto);
-        $quantEntrSetembro  =  $this->vazioEntrevistas($quantEntrSetembro ,$porto);
-        $quantEntrOutubro  =   $this->vazioEntrevistas($quantEntrOutubro  ,$porto);
-        $quantEntrNovembro  =  $this->vazioEntrevistas($quantEntrNovembro ,$porto);
-        $quantEntrDezembro  =  $this->vazioEntrevistas($quantEntrDezembro ,$porto);
+        $quantEntrJaneiro  =   $this->verifVazioEntrevistas($quantEntrJaneiro  ,$porto);
+        $quantEntrFevereiro  = $this->verifVazioEntrevistas($quantEntrFevereiro,$porto);
+        $quantEntrMarco  =     $this->verifVazioEntrevistas($quantEntrMarco    ,$porto);
+        $quantEntrAbril  =     $this->verifVazioEntrevistas($quantEntrAbril    ,$porto);
+        $quantEntrMaio  =      $this->verifVazioEntrevistas($quantEntrMaio     ,$porto);
+        $quantEntrJunho  =     $this->verifVazioEntrevistas($quantEntrJunho    ,$porto);
+        $quantEntrJulho  =     $this->verifVazioEntrevistas($quantEntrJulho    ,$porto);
+        $quantEntrAgosto  =    $this->verifVazioEntrevistas($quantEntrAgosto   ,$porto);
+        $quantEntrSetembro  =  $this->verifVazioEntrevistas($quantEntrSetembro ,$porto);
+        $quantEntrOutubro  =   $this->verifVazioEntrevistas($quantEntrOutubro  ,$porto);
+        $quantEntrNovembro  =  $this->verifVazioEntrevistas($quantEntrNovembro ,$porto);
+        $quantEntrDezembro  =  $this->verifVazioEntrevistas($quantEntrDezembro ,$porto);
 //        print_r($quantArrastoJaneiro);
         
         foreach($quantEntrJaneiro as $quant):
@@ -1319,6 +915,7 @@ class PortoController extends Zend_Controller_Action
         
         
     }
+    //Gera o relatório de CPUE de cada porto, por mês e por Arte
     public function gerarcpue($porto, $ano, $arte){
         
         if($arte == 'Arrasto'){
@@ -1517,7 +1114,18 @@ class PortoController extends Zend_Controller_Action
             $cpueEntrNovembro  = $this->modelVaraPesca->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
             $cpueEntrDezembro  = $this->modelVaraPesca->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
         }
-
+        $cpueEntrJaneiro  = $this->verifVazioCpue($cpueEntrJaneiro, $porto);
+        $cpueEntrFevereiro= $this->verifVazioCpue($cpueEntrFevereiro, $porto);
+        $cpueEntrMarco    = $this->verifVazioCpue($cpueEntrMarco    , $porto);
+        $cpueEntrAbril    = $this->verifVazioCpue($cpueEntrAbril    , $porto);
+        $cpueEntrMaio     = $this->verifVazioCpue($cpueEntrMaio     , $porto);
+        $cpueEntrJunho    = $this->verifVazioCpue($cpueEntrJunho    , $porto);
+        $cpueEntrJulho    = $this->verifVazioCpue($cpueEntrJulho    , $porto);
+        $cpueEntrAgosto   = $this->verifVazioCpue($cpueEntrAgosto   , $porto);
+        $cpueEntrSetembro = $this->verifVazioCpue($cpueEntrSetembro , $porto);
+        $cpueEntrOutubro  = $this->verifVazioCpue($cpueEntrOutubro  , $porto);
+        $cpueEntrNovembro = $this->verifVazioCpue($cpueEntrNovembro , $porto);
+        $cpueEntrDezembro = $this->verifVazioCpue($cpueEntrDezembro , $porto);
 //        print_r($cpueArrastoJaneiro);
         
         foreach($cpueEntrJaneiro as $cpue):
@@ -1575,7 +1183,7 @@ class PortoController extends Zend_Controller_Action
         
         
 
-        $this->view->assign("cpueLabels".$arte, $jsLabels);
+        $this->view->assign("cpueLabels".$arte,    $jsLabels);
         $this->view->assign("cpueJaneiro".$arte,   $jsCpueJaneiro);
         $this->view->assign("cpueFevereiro".$arte, $jsCpueFevereiro);
         $this->view->assign("cpueMarco".$arte,     $jsCpueMarco);
@@ -1591,7 +1199,7 @@ class PortoController extends Zend_Controller_Action
         
         //print_r($jsCpueNovembro);
     }
-
+    //Gera o relatório dos barcos que mais apareceram no porto.
     public function gerarquantbarcos($porto, $ano, $arte){
         
         switch($arte){
@@ -1638,24 +1246,26 @@ class PortoController extends Zend_Controller_Action
                $arrayQuantBarcos = $this->modelVaraPesca->selectQuantBarcosByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
             break;
         }
-            $i=0;
-            foreach($arrayQuantBarcos as $quant):
-                if($i<=10){
-                    $quantBarcos[] = $quant['quant'];
-                    $labelBarcos[] = $quant['bar_nome'];
-                }
-                $i++;
-            endforeach;
+ 
+        $arrayQuantBarcos = $this->verifVazioBarcos($arrayQuantBarcos, $porto, $arte);
+
+        foreach($arrayQuantBarcos as $quant):
             
-            $jsQuantBarcos = json_encode($quantBarcos);
-            $jsLabelBarcos = json_encode($labelBarcos);
-            
-            $this->view->assign("quantBarcos".$arte, $jsQuantBarcos);
-            $this->view->assign("labelBarcos".$arte, $jsLabelBarcos);
+                $quantBarcos[] = $quant['quant'];
+                $labelBarcos[] = $quant['bar_nome'];
+
+
+        endforeach;
+
+        $jsQuantBarcos = json_encode($quantBarcos);
+        $jsLabelBarcos = json_encode($labelBarcos);
+
+        $this->view->assign("quantBarcos".$arte, $jsQuantBarcos);
+        $this->view->assign("labelBarcos".$arte, $jsLabelBarcos);
             
             
     }
-    public function geraqtdporarte($porto, $ano){
+    public function gerarrelqtdporarte($porto, $ano){
         $quantidadeArrasto    = $this->modelArrasto   ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
         $quantidadeCalao      = $this->modelCalao     ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
         $quantidadeColeta     = $this->modelColeta    ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
@@ -1671,20 +1281,20 @@ class PortoController extends Zend_Controller_Action
         $quantidadeTarrafa    = $this->modelTarrafa   ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM tar_data) = ".$ano);
         $quantidadeVaraPesca  = $this->modelVaraPesca ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
         
-        $qtdArrasto =  $this->vazioCount($quantidadeArrasto   , $porto, 'Arrasto de Fundo');
-        $qtdCalao =    $this->vazioCount($quantidadeCalao     , $porto, 'Calão');
-        $qtdColeta =   $this->vazioCount($quantidadeColeta    , $porto, 'Coleta');
-        $qtdEmalhe =   $this->vazioCount($quantidadeEmalhe    , $porto, 'Emalhe');
-        $qtdGrosseira= $this->vazioCount($quantidadeGrosseira , $porto, 'Grosseira');
-        $qtdJerere =   $this->vazioCount($quantidadeJerere    , $porto, 'Jereré');
-        $qtdLinha =    $this->vazioCount($quantidadeLinha     , $porto, 'Pesca de Linha');
-        $qtdLinhaFundo=$this->vazioCount($quantidadeLinhaFundo, $porto, 'Linha de Fundo');
-        $qtdManzua=    $this->vazioCount($quantidadeManzua    , $porto, 'Manzuá');
-        $qtdMergulho=  $this->vazioCount($quantidadeMergulho  , $porto, 'Mergulho');
-        $qtdRatoeira=  $this->vazioCount($quantidadeRatoeira  , $porto, 'Ratoeira');
-        $qtdSiripoia=  $this->vazioCount($quantidadeSiripoia  , $porto, 'Siripoia');
-        $qtdTarrafa=   $this->vazioCount($quantidadeTarrafa   , $porto, 'Tarrafa');
-        $qtdVaraPesca =$this->vazioCount($quantidadeVaraPesca , $porto, 'Vara de Pesca');
+        $qtdArrasto =  $this->verifVazioCount($quantidadeArrasto   , $porto, 'Arrasto de Fundo');
+        $qtdCalao =    $this->verifVazioCount($quantidadeCalao     , $porto, 'Calão');
+        $qtdColeta =   $this->verifVazioCount($quantidadeColeta    , $porto, 'Coleta');
+        $qtdEmalhe =   $this->verifVazioCount($quantidadeEmalhe    , $porto, 'Emalhe');
+        $qtdGrosseira= $this->verifVazioCount($quantidadeGrosseira , $porto, 'Grosseira');
+        $qtdJerere =   $this->verifVazioCount($quantidadeJerere    , $porto, 'Jereré');
+        $qtdLinha =    $this->verifVazioCount($quantidadeLinha     , $porto, 'Pesca de Linha');
+        $qtdLinhaFundo=$this->verifVazioCount($quantidadeLinhaFundo, $porto, 'Linha de Fundo');
+        $qtdManzua=    $this->verifVazioCount($quantidadeManzua    , $porto, 'Manzuá');
+        $qtdMergulho=  $this->verifVazioCount($quantidadeMergulho  , $porto, 'Mergulho');
+        $qtdRatoeira=  $this->verifVazioCount($quantidadeRatoeira  , $porto, 'Ratoeira');
+        $qtdSiripoia=  $this->verifVazioCount($quantidadeSiripoia  , $porto, 'Siripoia');
+        $qtdTarrafa=   $this->verifVazioCount($quantidadeTarrafa   , $porto, 'Tarrafa');
+        $qtdVaraPesca =$this->verifVazioCount($quantidadeVaraPesca , $porto, 'Vara de Pesca');
         /*
         $this->view->assign("qtdArrasto",   $qtdArrasto);   
         $this->view->assign("qtdCalao",     $qtdCalao);     
@@ -1771,6 +1381,17 @@ class PortoController extends Zend_Controller_Action
         $this->gerarquantentrevistas($porto, $ano, 'Linha');
         $this->gerarquantentrevistas($porto, $ano, 'Manzua');
         
+        
+        $this->gerarquantcaptura($porto, $ano, 'Calao');
+        $this->gerarquantcaptura($porto, $ano, 'Emalhe');
+        $this->gerarquantcaptura($porto, $ano, 'Grosseira');
+        $this->gerarquantcaptura($porto, $ano, 'Linha');
+        $this->gerarquantcaptura($porto, $ano, 'Manzua');
+        
+        $this->gerarquantbarcos($porto, $ano, 'Calao');
+        
+        
+        $this->gerarrelqtdporarte($porto, $ano);
     }
     public function aritaguaAction(){
         $dateStart = $this->_getParam('dataini');
@@ -1785,7 +1406,7 @@ class PortoController extends Zend_Controller_Action
         $date = explode('-',$dataFim);
         $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
         $this->view->assign("datafim", $datafinal);
-        
+        $ano = $date[0];
         $porto = "Aritaguá";
         
         $capturaColeta     = $this->modelColeta    ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
@@ -1799,6 +1420,17 @@ class PortoController extends Zend_Controller_Action
         $capturaTarrafa    = $this->modelTarrafa   ->selectCapturaByPorto("pto_nome='".$porto."' And tar_data between '".$datainicial."' and '".$datafinal."'");
         $capturaVaraPesca  = $this->modelVaraPesca ->selectCapturaByPorto("pto_nome='".$porto."' And fd_data between '".$datainicial."' and '".$datafinal."'");
         
+        
+        $this->gerarquantentrevistas($porto, $ano,'Coleta');
+        $this->gerarquantentrevistas($porto, $ano,'Emalhe');
+        $this->gerarquantentrevistas($porto, $ano,'Jerere');
+        $this->gerarquantentrevistas($porto, $ano,'Linha');
+        $this->gerarquantentrevistas($porto, $ano,'Manzua');
+        $this->gerarquantentrevistas($porto, $ano,'Mergulho');
+        $this->gerarquantentrevistas($porto, $ano,'Ratoeira');
+        $this->gerarquantentrevistas($porto, $ano,'Siripoia');
+        $this->gerarquantentrevistas($porto, $ano,'Tarrafa');
+        $this->gerarquantentrevistas($porto, $ano,'VaraPesca');
     }
     public function baduAction(){
         $dateStart = $this->_getParam('dataini');
@@ -2144,7 +1776,7 @@ class PortoController extends Zend_Controller_Action
         
         print_r($a);
         
-        $this->geraqtdporarte($porto, '2014');
+        $this->gerarrelqtdporarte($porto, '2014');
     }
     public function tulhaAction(){
         $dateStart = $this->_getParam('dataini');
