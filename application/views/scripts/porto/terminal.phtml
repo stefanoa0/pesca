@@ -38,7 +38,7 @@
    };
  
    var entrevistasByMes1 = {
-       labels: <?= $this->quantLabelsLinha ?>,
+       labels: <?= $this->quantLabelsArrasto ?>,
        datasets: [
            {
                label: "Quantidade de Entrevistas Por Mês",
@@ -48,12 +48,12 @@
                pointStrokeColor: "#fff",
                pointHighlightFill: "#fff",
                pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->quantEntrevistasLinha ?>
+               data: <?= $this->quantEntrevistasArrasto ?>
            }
        ]
    };
    var capturaByMes1 = {
-       labels: <?= $this->countCaptLabelsLinha ?>,
+       labels: <?= $this->countCaptLabelsArrasto ?>,
        datasets: [
            {
                label: "Captura total por mês",
@@ -63,12 +63,12 @@
                pointStrokeColor: "#fff",
                pointHighlightFill: "#fff",
                pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->countCaptPesoLinha ?>
+               data: <?= $this->countCaptPesoArrasto ?>
            }
        ]
    };
    var Embarcacoes1 = {
-       labels: <?= $this->labelBarcosLinha ?>,
+       labels: <?= $this->labelBarcosArrasto ?>,
        datasets: [
            {
                label: "Barcos Mais Monitorados",
@@ -78,7 +78,7 @@
                pointStrokeColor: "#fff",
                pointHighlightFill: "#fff",
                pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->quantBarcosLinha ?>
+               data: <?= $this->quantBarcosArrasto ?>
            }
        ]
    };
@@ -86,7 +86,7 @@
 
 //   
    var especiesCapturadas1 = {
-       labels: <?= $this->labelCapturaLinha ?>,
+       labels: <?= $this->labelCapturaArrasto ?>,
        datasets: [
            {
                label: "Quantidade",
@@ -96,13 +96,13 @@
                pointStrokeColor: "#fff",
                pointHighlightFill: "#fff",
                pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->pesoCapturaLinha ?>
+               data: <?= $this->pesoCapturaArrasto ?>
            }
        ]
    };
     
    var entrevistasByMes2 = {
-       labels: <?= $this->quantLabelsCalao ?>,
+       labels: <?= $this->quantLabelsGrosseira ?>,
        datasets: [
            {
                label: "Quantidade de Entrevistas Por Mês",
@@ -112,12 +112,12 @@
                pointStrokeColor: "#fff",
                pointHighlightFill: "#fff",
                pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->quantEntrevistasCalao ?>
+               data: <?= $this->quantEntrevistasGrosseira ?>
            }
        ]
    };
       var capturaByMes2 = {
-       labels: <?= $this->countCaptLabelsCalao ?>,
+       labels: <?= $this->countCaptLabelsGrosseira ?>,
        datasets: [
            {
                label: "Captura total por mês",
@@ -127,12 +127,12 @@
                pointStrokeColor: "#fff",
                pointHighlightFill: "#fff",
                pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->countCaptPesoCalao ?>
+               data: <?= $this->countCaptPesoGrosseira ?>
            }
        ]
    };
    var Embarcacoes2 = {
-       labels: <?= $this->labelBarcosCalao ?>,
+       labels: <?= $this->labelBarcosGrosseira ?>,
        datasets: [
            {
                label: "Barcos Mais Monitorados",
@@ -142,14 +142,14 @@
                pointStrokeColor: "#fff",
                pointHighlightFill: "#fff",
                pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->quantBarcosCalao ?>
+               data: <?= $this->quantBarcosGrosseira ?>
            }
        ]
    };
    
 //   
    var especiesCapturadas2 = {
-       labels: <?= $this->labelCapturaCalao ?>,
+       labels: <?= $this->labelCapturaGrosseira ?>,
        datasets: [
            {
                label: "Quantidade",
@@ -159,7 +159,7 @@
                pointStrokeColor: "#fff",
                pointHighlightFill: "#fff",
                pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->pesoCapturaCalao ?>
+               data: <?= $this->pesoCapturaGrosseira ?>
            }
        ]
    };
@@ -210,15 +210,15 @@
 
 
 
-<h4>Ilhéus - Sede Municipal – Amendoeira</h4>
-<p>O ponto de desembarque da Amendoeira localiza-se na Avenida Litorânea Norte, no bairro do Malhado (Ilhéus, BA).</p>
+<h4>Ilhéus - Sede Municipal – Terminal Pesqueiro</h4>
+<p>Localizado no centro de Ilhéus o Terminal Pesqueiro de Ilhéus é administrado pela Bahia Pesca, apresenta um píer de atracação (na Baia do Pontal) e uma área para venda dos produtos.</p>
+
+<p>Além disso, disponibiliza a venda de água, gelo e combustível.</p>
 
 <img class="img-porto" src="<?= 'img/portos/'.$this->porto.'.jpg'?>"/>
 
-Figura: Amendoeira.	
-<p>Este ponto é utilizado por atravessadores e pescadores para comercializar o pescado. A área monitorada envolve pescadores que desembarcam em um local abrigado, a esquerda da área militar – pescarias de linha e emalhe A maioria dos pescadores vive exclusivamente da pesca, mas nem todos são colonizados;</p>
-
-<p>A arte de pesca mais utilizada pelos pescadores da Amendoeira é a linha de mão, seguida pelo calão, eventualmente, os pescadores realizam pescarias com outras artes de pesca, entre elas: rede de emalhe, mergulho, groseira e tarrafa.</p>
+Figura: Terminal Pesqueiro.	
+<p>O Terminal Pesqueiro não é utilizado apenas por pescadores de Ilhéus, eventualmente embarcações de outros municípios e estados utilizam a área para desembarcar e reabastecer. As embarcações que utilizam o Terminal Pesqueiro atuam principalmente em três artes de pesca: linha de mão, espinhel e arrasto. Raramente alguns pescadores realizam pescarias de mergulho e siripoía no próprio local. A principal arte de pesca utilizada é o arrasto de fundo, totalizando mais de 50% dos desembarques monitorados.</p>
 
 <br/>
 <div class="box-chart">
