@@ -38,70 +38,6 @@
    };
  
    var entrevistasByMes1 = {
-       labels: <?= $this->quantLabelsLinha ?>,
-       datasets: [
-           {
-               label: "Quantidade de Entrevistas Por Mês",
-               fillColor: "rgba(95,48,43,.8)",
-               strokeColor: "rgba(95,48,43,1)",
-               pointColor: "rgba(95,48,43,1)",
-               pointStrokeColor: "#fff",
-               pointHighlightFill: "#fff",
-               pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->quantEntrevistasLinha ?>
-           }
-       ]
-   };
-   var capturaByMes1 = {
-       labels: <?= $this->countCaptLabelsLinha ?>,
-       datasets: [
-           {
-               label: "Captura total por mês",
-               fillColor: "rgba(95,48,43,.8)",
-               strokeColor: "rgba(95,48,43,1)",
-               pointColor: "rgba(95,48,43,1)",
-               pointStrokeColor: "#fff",
-               pointHighlightFill: "#fff",
-               pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->countCaptPesoLinha ?>
-           }
-       ]
-   };
-   var Embarcacoes1 = {
-       labels: <?= $this->labelBarcosLinha ?>,
-       datasets: [
-           {
-               label: "Barcos Mais Monitorados",
-               fillColor: "rgba(95,48,43,.8)",
-               strokeColor: "rgba(95,48,43,1)",
-               pointColor: "rgba(95,48,43,1)",
-               pointStrokeColor: "#fff",
-               pointHighlightFill: "#fff",
-               pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->quantBarcosLinha ?>
-           }
-       ]
-   };
-   
-
-//   
-   var especiesCapturadas1 = {
-       labels: <?= $this->labelCapturaLinha ?>,
-       datasets: [
-           {
-               label: "Quantidade",
-               fillColor: "rgba(95,48,43,.8)",
-               strokeColor: "rgba(95,48,43,1)",
-               pointColor: "rgba(95,48,43,1)",
-               pointStrokeColor: "#fff",
-               pointHighlightFill: "#fff",
-               pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->pesoCapturaLinha ?>
-           }
-       ]
-   };
-    
-   var entrevistasByMes2 = {
        labels: <?= $this->quantLabelsCalao ?>,
        datasets: [
            {
@@ -116,7 +52,7 @@
            }
        ]
    };
-      var capturaByMes2 = {
+   var capturaByMes1 = {
        labels: <?= $this->countCaptLabelsCalao ?>,
        datasets: [
            {
@@ -131,7 +67,7 @@
            }
        ]
    };
-   var Embarcacoes2 = {
+   var Embarcacoes1 = {
        labels: <?= $this->labelBarcosCalao ?>,
        datasets: [
            {
@@ -147,8 +83,9 @@
        ]
    };
    
+
 //   
-   var especiesCapturadas2 = {
+   var especiesCapturadas1 = {
        labels: <?= $this->labelCapturaCalao ?>,
        datasets: [
            {
@@ -160,6 +97,69 @@
                pointHighlightFill: "#fff",
                pointHighlightStroke: "rgba(95,48,43,1)",
                data: <?= $this->pesoCapturaCalao ?>
+           }
+       ]
+   };
+    
+   var entrevistasByMes2 = {
+       labels: <?= $this->quantLabelsEmalhe ?>,
+       datasets: [
+           {
+               label: "Quantidade de Entrevistas Por Mês",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->quantEntrevistasEmalhe ?>
+           }
+       ]
+   };
+      var capturaByMes2 = {
+       labels: <?= $this->countCaptLabelsEmalhe ?>,
+       datasets: [
+           {
+               label: "Captura total por mês",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->countCaptPesoEmalhe ?>
+           }
+       ]
+   };
+   var Embarcacoes2 = {
+       labels: <?= $this->labelBarcosEmalhe ?>,
+       datasets: [
+           {
+               label: "Barcos Mais Monitorados",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->quantBarcosEmalhe ?>
+           }
+       ]
+   };
+   
+//   
+   var especiesCapturadas2 = {
+       labels: <?= $this->labelCapturaEmalhe ?>,
+       datasets: [
+           {
+               label: "Quantidade",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pesoCapturaEmalhe ?>
            }
        ]
    };
@@ -210,15 +210,13 @@
 
 
 
-<h4>Ilhéus - Sede Municipal – Amendoeira</h4>
-<p>O ponto de desembarque da Amendoeira localiza-se na Avenida Litorânea Norte, no bairro do Malhado (Ilhéus, BA).</p>
+<h4>Ilhéus - São Miguel – São Miguel/Pecém</h4>
+<p>O ponto de monitoramento conhecido como São Miguel está localizado no bairro de mesmo nome. As pescarias são monitoradas na praia (pesca de calão) e na margem esquerda do Rio Almada, próximo a sua desembocadura (arrasto, linha, emalhe entre outras).</p>
 
 <img class="img-porto" src="<?= 'img/portos/'.$this->porto.'.jpg'?>"/>
 
-Figura: Amendoeira.	
-<p>Este ponto é utilizado por atravessadores e pescadores para comercializar o pescado. A área monitorada envolve pescadores que desembarcam em um local abrigado, a esquerda da área militar – pescarias de linha e emalhe A maioria dos pescadores vive exclusivamente da pesca, mas nem todos são colonizados;</p>
-
-<p>A arte de pesca mais utilizada pelos pescadores da Amendoeira é a linha de mão, seguida pelo calão, eventualmente, os pescadores realizam pescarias com outras artes de pesca, entre elas: rede de emalhe, mergulho, groseira e tarrafa.</p>
+Figura: São Miguel/Pecém.	
+<p>Nesse bairro fica situada a sede da Associação de Pescadores e Marisqueiras do São Miguel – Apesmar. A principal arte de pesca é o calão, seguido pela rede de emalhe e arrasto. Raramente outras artes de pesca são realizadas pelos pescadores, como, siripoia, tarrafa, Linha de mão, grosseira, mergulho e vara de pesca.</p>
 
 <br/>
 <div class="box-chart">

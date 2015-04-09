@@ -38,6 +38,70 @@
    };
  
    var entrevistasByMes1 = {
+       labels: <?= $this->quantLabelsTarrafa ?>,
+       datasets: [
+           {
+               label: "Quantidade de Entrevistas Por Mês",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->quantEntrevistasTarrafa ?>
+           }
+       ]
+   };
+   var capturaByMes1 = {
+       labels: <?= $this->countCaptLabelsTarrafa ?>,
+       datasets: [
+           {
+               label: "Captura total por mês",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->countCaptPesoTarrafa ?>
+           }
+       ]
+   };
+   var Embarcacoes1 = {
+       labels: <?= $this->labelBarcosTarrafa ?>,
+       datasets: [
+           {
+               label: "Barcos Mais Monitorados",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->quantBarcosTarrafa ?>
+           }
+       ]
+   };
+   
+
+//   
+   var especiesCapturadas1 = {
+       labels: <?= $this->labelCapturaTarrafa ?>,
+       datasets: [
+           {
+               label: "Quantidade",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pesoCapturaTarrafa ?>
+           }
+       ]
+   };
+    
+   var entrevistasByMes2 = {
        labels: <?= $this->quantLabelsLinha ?>,
        datasets: [
            {
@@ -52,7 +116,7 @@
            }
        ]
    };
-   var capturaByMes1 = {
+      var capturaByMes2 = {
        labels: <?= $this->countCaptLabelsLinha ?>,
        datasets: [
            {
@@ -67,7 +131,7 @@
            }
        ]
    };
-   var Embarcacoes1 = {
+   var Embarcacoes2 = {
        labels: <?= $this->labelBarcosLinha ?>,
        datasets: [
            {
@@ -83,9 +147,8 @@
        ]
    };
    
-
 //   
-   var especiesCapturadas1 = {
+   var especiesCapturadas2 = {
        labels: <?= $this->labelCapturaLinha ?>,
        datasets: [
            {
@@ -97,69 +160,6 @@
                pointHighlightFill: "#fff",
                pointHighlightStroke: "rgba(95,48,43,1)",
                data: <?= $this->pesoCapturaLinha ?>
-           }
-       ]
-   };
-    
-   var entrevistasByMes2 = {
-       labels: <?= $this->quantLabelsCalao ?>,
-       datasets: [
-           {
-               label: "Quantidade de Entrevistas Por Mês",
-               fillColor: "rgba(95,48,43,.8)",
-               strokeColor: "rgba(95,48,43,1)",
-               pointColor: "rgba(95,48,43,1)",
-               pointStrokeColor: "#fff",
-               pointHighlightFill: "#fff",
-               pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->quantEntrevistasCalao ?>
-           }
-       ]
-   };
-      var capturaByMes2 = {
-       labels: <?= $this->countCaptLabelsCalao ?>,
-       datasets: [
-           {
-               label: "Captura total por mês",
-               fillColor: "rgba(95,48,43,.8)",
-               strokeColor: "rgba(95,48,43,1)",
-               pointColor: "rgba(95,48,43,1)",
-               pointStrokeColor: "#fff",
-               pointHighlightFill: "#fff",
-               pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->countCaptPesoCalao ?>
-           }
-       ]
-   };
-   var Embarcacoes2 = {
-       labels: <?= $this->labelBarcosCalao ?>,
-       datasets: [
-           {
-               label: "Barcos Mais Monitorados",
-               fillColor: "rgba(95,48,43,.8)",
-               strokeColor: "rgba(95,48,43,1)",
-               pointColor: "rgba(95,48,43,1)",
-               pointStrokeColor: "#fff",
-               pointHighlightFill: "#fff",
-               pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->quantBarcosCalao ?>
-           }
-       ]
-   };
-   
-//   
-   var especiesCapturadas2 = {
-       labels: <?= $this->labelCapturaCalao ?>,
-       datasets: [
-           {
-               label: "Quantidade",
-               fillColor: "rgba(95,48,43,.8)",
-               strokeColor: "rgba(95,48,43,1)",
-               pointColor: "rgba(95,48,43,1)",
-               pointStrokeColor: "#fff",
-               pointHighlightFill: "#fff",
-               pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->pesoCapturaCalao ?>
            }
        ]
    };
@@ -210,15 +210,13 @@
 
 
 
-<h4>Ilhéus - Sede Municipal – Amendoeira</h4>
-<p>O ponto de desembarque da Amendoeira localiza-se na Avenida Litorânea Norte, no bairro do Malhado (Ilhéus, BA).</p>
+<h4>Uruçuca- Serra Grande – Sobradinho</h4>
+<p>Está localizado na praia do Sargi onde há um porto de jangadas. O lugar destaca-se pela presença, de jangadeiros que fazem suas jangadas com a madeira da árvore Apeiba tibourbou, conhecida como “pau de jangada”.</p>
 
 <img class="img-porto" src="<?= 'img/portos/'.$this->porto.'.jpg'?>"/>
 
-Figura: Amendoeira.	
-<p>Este ponto é utilizado por atravessadores e pescadores para comercializar o pescado. A área monitorada envolve pescadores que desembarcam em um local abrigado, a esquerda da área militar – pescarias de linha e emalhe A maioria dos pescadores vive exclusivamente da pesca, mas nem todos são colonizados;</p>
-
-<p>A arte de pesca mais utilizada pelos pescadores da Amendoeira é a linha de mão, seguida pelo calão, eventualmente, os pescadores realizam pescarias com outras artes de pesca, entre elas: rede de emalhe, mergulho, groseira e tarrafa.</p>
+Figura: Sobradinho.	
+<p>Em Sobradinho, a principal arte utilizada é a linha de mão. Raramente outras artes foram monitoradas, e nesses casos a produção era exclusivamente para subsistência.</p>
 
 <br/>
 <div class="box-chart">

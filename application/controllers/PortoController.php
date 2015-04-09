@@ -1921,7 +1921,7 @@ class PortoController extends Zend_Controller_Action
         
         $this->gerarrelqtdporarte($porto, $ano);
         
-        $this->gerarespeciescapturadas($porto, $ano, 'Tarrafa');
+        $this->gerarespeciescapturadas($porto, $ano, 'Calao');
         $this->gerarespeciescapturadas($porto, $ano, 'Linha');
         
         $this->view->assign("porto",$porto);
