@@ -5,7 +5,6 @@
         <group>
             <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/amendoeira.phtml</file>
             <file>file:/C:/wamp/www/pesca/application/controllers/PortoController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/aritagua.phtml</file>
             <file>file:/C:/wamp/www/pesca/application/models/ArrastoFundo.php</file>
         </group>
     </open-files>

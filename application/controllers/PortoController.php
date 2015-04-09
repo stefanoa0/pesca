@@ -113,29 +113,28 @@ class PortoController extends Zend_Controller_Action
         }
     }
     public function relatorioindexAction(){
-        $dataini = $this->_getParam('dataini');
-        $datafim = $this->_getParam('datafim');
+        $ano = $this->_getParam('ano');
         $id = $this->_getParam('porto');
         
         switch($id){
-            case 1: $this->_redirect('porto/pontal/dataini/'.$dataini.'/datafim/'.$datafim);
-            case 2: $this->_redirect('porto/terminal/dataini/'.$dataini.'/datafim/'.$datafim); 
-            case 3: $this->_redirect('porto/prainha/dataini/'.$dataini.'/datafim/'.$datafim); 
-            case 4: $this->_redirect('porto/amendoeira/dataini/'.$dataini.'/datafim/'.$datafim);
-            case 5: $this->_redirect('porto/barra/dataini/'.$dataini.'/datafim/'.$datafim); 
-            case 6: $this->_redirect('porto/saomiguel/dataini/'.$dataini.'/datafim/'.$datafim);
-            case 7: $this->_redirect('porto/tulha/dataini/'.$dataini.'/datafim/'.$datafim);
-            case 8: $this->_redirect('porto/mamoa/dataini/'.$dataini.'/datafim/'.$datafim); 
-            case 9: $this->_redirect('porto/ramo/dataini/'.$dataini.'/datafim/'.$datafim); 
-            case 10: $this->_redirect('porto/urucutuca/dataini/'.$dataini.'/datafim/'.$datafim);
-            case 11: $this->_redirect('porto/sambaituba/dataini/'.$dataini.'/datafim/'.$datafim); 
-            case 12: $this->_redirect('porto/juerana/dataini/'.$dataini.'/datafim/'.$datafim); 
-            case 13: $this->_redirect('porto/aritagua/dataini/'.$dataini.'/datafim/'.$datafim); 
-            case 14: $this->_redirect('porto/sobradinho/dataini/'.$dataini.'/datafim/'.$datafim); 
-            case 15: $this->_redirect('porto/serra/dataini/'.$dataini.'/datafim/'.$datafim); 
-            case 16: $this->_redirect('porto/badu/dataini/'.$dataini.'/datafim/'.$datafim); 
-            case 17: $this->_redirect('porto/concha/dataini/'.$dataini.'/datafim/'.$datafim);
-            case 1: $this->_redirect('porto/forte/dataini/'.$dataini.'/datafim/'.$datafim); 
+            case 1: $this->_redirect('porto/pontal/ano/'.$ano);
+            case 2: $this->_redirect('porto/terminal/ano/'.$ano); 
+            case 3: $this->_redirect('porto/prainha/ano/'.$ano); 
+            case 4: $this->_redirect('porto/amendoeira/ano/'.$ano);
+            case 5: $this->_redirect('porto/barra/ano/'.$ano); 
+            case 6: $this->_redirect('porto/saomiguel/ano/'.$ano);
+            case 7: $this->_redirect('porto/tulha/ano/'.$ano);
+            case 8: $this->_redirect('porto/mamoa/ano/'.$ano); 
+            case 9: $this->_redirect('porto/ramo/ano/'.$ano); 
+            case 10: $this->_redirect('porto/urucutuca/ano/'.$ano);
+            case 11: $this->_redirect('porto/sambaituba/ano/'.$ano); 
+            case 12: $this->_redirect('porto/juerana/ano/'.$ano); 
+            case 13: $this->_redirect('porto/aritagua/ano/'.$ano); 
+            case 14: $this->_redirect('porto/sobradinho/ano/'.$ano); 
+            case 15: $this->_redirect('porto/serra/ano/'.$ano); 
+            case 16: $this->_redirect('porto/badu/ano/'.$ano); 
+            case 17: $this->_redirect('porto/concha/ano/'.$ano);
+            case 1: $this->_redirect('porto/forte/ano/'.$ano); 
         }
         
     }
@@ -219,7 +218,7 @@ class PortoController extends Zend_Controller_Action
     }
     
     //Funções para verificar os vetores vazios e não dar erro nos gráficos.
-    public function verifVazioEntrevistas($array, $porto){
+    public function verifVazioEntrevistas($array, $porto, $arte){
         if(empty($array)){
             $array = array( array(
                 'pto_nome' => $porto,
@@ -230,7 +229,7 @@ class PortoController extends Zend_Controller_Action
         else if($array[0]['count'] == ""){
             $array[0]['count'] = 0;
         }
-
+        $array[0]['arte'] = $arte;
         return $array;
     }
     public function verifVazioCpue($array, $porto){
@@ -840,18 +839,18 @@ class PortoController extends Zend_Controller_Action
             $quantEntrNovembro  = $this->modelVaraPesca->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
             $quantEntrDezembro  = $this->modelVaraPesca->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
         }
-        $quantEntrJaneiro  =   $this->verifVazioEntrevistas($quantEntrJaneiro  ,$porto);
-        $quantEntrFevereiro  = $this->verifVazioEntrevistas($quantEntrFevereiro,$porto);
-        $quantEntrMarco  =     $this->verifVazioEntrevistas($quantEntrMarco    ,$porto);
-        $quantEntrAbril  =     $this->verifVazioEntrevistas($quantEntrAbril    ,$porto);
-        $quantEntrMaio  =      $this->verifVazioEntrevistas($quantEntrMaio     ,$porto);
-        $quantEntrJunho  =     $this->verifVazioEntrevistas($quantEntrJunho    ,$porto);
-        $quantEntrJulho  =     $this->verifVazioEntrevistas($quantEntrJulho    ,$porto);
-        $quantEntrAgosto  =    $this->verifVazioEntrevistas($quantEntrAgosto   ,$porto);
-        $quantEntrSetembro  =  $this->verifVazioEntrevistas($quantEntrSetembro ,$porto);
-        $quantEntrOutubro  =   $this->verifVazioEntrevistas($quantEntrOutubro  ,$porto);
-        $quantEntrNovembro  =  $this->verifVazioEntrevistas($quantEntrNovembro ,$porto);
-        $quantEntrDezembro  =  $this->verifVazioEntrevistas($quantEntrDezembro ,$porto);
+        $quantEntrJaneiro  =   $this->verifVazioEntrevistas($quantEntrJaneiro  ,$porto, $arte);
+        $quantEntrFevereiro  = $this->verifVazioEntrevistas($quantEntrFevereiro,$porto, $arte);
+        $quantEntrMarco  =     $this->verifVazioEntrevistas($quantEntrMarco    ,$porto, $arte);
+        $quantEntrAbril  =     $this->verifVazioEntrevistas($quantEntrAbril    ,$porto, $arte);
+        $quantEntrMaio  =      $this->verifVazioEntrevistas($quantEntrMaio     ,$porto, $arte);
+        $quantEntrJunho  =     $this->verifVazioEntrevistas($quantEntrJunho    ,$porto, $arte);
+        $quantEntrJulho  =     $this->verifVazioEntrevistas($quantEntrJulho    ,$porto, $arte);
+        $quantEntrAgosto  =    $this->verifVazioEntrevistas($quantEntrAgosto   ,$porto, $arte);
+        $quantEntrSetembro  =  $this->verifVazioEntrevistas($quantEntrSetembro ,$porto, $arte);
+        $quantEntrOutubro  =   $this->verifVazioEntrevistas($quantEntrOutubro  ,$porto, $arte);
+        $quantEntrNovembro  =  $this->verifVazioEntrevistas($quantEntrNovembro ,$porto, $arte);
+        $quantEntrDezembro  =  $this->verifVazioEntrevistas($quantEntrDezembro ,$porto, $arte);
 //        print_r($quantArrastoJaneiro);
         
         foreach($quantEntrJaneiro as $quant):
@@ -1265,6 +1264,76 @@ class PortoController extends Zend_Controller_Action
             
             
     }
+    public function gerarespeciescapturadas($porto, $ano, $arte){
+        
+        switch($arte){
+            case 'Arrasto':
+                $arrayQuantCaptura = $this->modelArrasto->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
+            break;
+            case 'Calao':
+                $arrayQuantCaptura =$this->modelCalao->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
+            break;
+            case 'Coleta':
+                $arrayQuantCaptura =$this->modelColeta->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
+            break;
+            case 'Emalhe':
+               $arrayQuantCaptura = $this->modelEmalhe->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
+            break;
+            case 'Grosseira':
+                $arrayQuantCaptura =$this->modelGrosseira->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
+            break;
+            case 'Jerere':
+               $arrayQuantCaptura = $this->modelJerere->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
+            break;
+            case 'Linha':
+               $arrayQuantCaptura = $this->modelLinha->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
+            break;
+            case 'LinhaFundo':
+               $arrayQuantCaptura = $this->modelLinhaFundo->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
+            break;
+            case 'Manzua':
+               $arrayQuantCaptura = $this->modelManzua->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
+            break;
+            case 'Mergulho':
+              $arrayQuantCaptura =  $this->modelMergulho->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
+            break;
+            case 'Ratoeira':
+               $arrayQuantCaptura = $this->modelRatoeira->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
+            break;
+            case 'Siripoia':
+               $arrayQuantCaptura = $this->modelSiripoia->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
+            break;
+            case 'Tarrafa':
+              $arrayQuantCaptura =  $this->modelTarrafa->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
+            break;
+            case 'VaraPesca':
+               $arrayQuantCaptura = $this->modelVaraPesca->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
+            break;
+        }
+ 
+        $arrayQuantCaptura = $this->verifVazioCaptura($arrayQuantCaptura, $porto, $arte);
+        
+        $arrayQuantCapturaOrdenado = $this->array_sort($arrayQuantCaptura, 'peso', SORT_DESC);
+        $i=0;
+        foreach($arrayQuantCapturaOrdenado as $quant):
+            if($i<=10){
+                $quantCaptura[] = $quant['quant'];
+		$pesoCaptura[] = $quant['peso'];
+                $labelCaptura[] = $quant['esp_nome_comum'];
+            }
+            $i++;
+        endforeach;
+
+        $jsQuantCaptura = json_encode($quantCaptura);
+	$jsPesoCaptura = json_encode($pesoCaptura);
+        $jsLabelCaptura = json_encode($labelCaptura);
+
+        $this->view->assign("quantCaptura".$arte, $jsQuantCaptura);
+	$this->view->assign("pesoCaptura".$arte, $jsPesoCaptura);
+        $this->view->assign("labelCaptura".$arte, $jsLabelCaptura);
+            
+    }
+    
     public function gerarrelqtdporarte($porto, $ano){
         $quantidadeArrasto    = $this->modelArrasto   ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
         $quantidadeCalao      = $this->modelCalao     ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
@@ -1281,36 +1350,21 @@ class PortoController extends Zend_Controller_Action
         $quantidadeTarrafa    = $this->modelTarrafa   ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM tar_data) = ".$ano);
         $quantidadeVaraPesca  = $this->modelVaraPesca ->selectEntrevistasByPorto("pto_nome='".$porto."' and Extract(YEAR FROM fd_data) = ".$ano);
         
-        $qtdArrasto =  $this->verifVazioCount($quantidadeArrasto   , $porto, 'Arrasto de Fundo');
-        $qtdCalao =    $this->verifVazioCount($quantidadeCalao     , $porto, 'Calão');
-        $qtdColeta =   $this->verifVazioCount($quantidadeColeta    , $porto, 'Coleta');
-        $qtdEmalhe =   $this->verifVazioCount($quantidadeEmalhe    , $porto, 'Emalhe');
-        $qtdGrosseira= $this->verifVazioCount($quantidadeGrosseira , $porto, 'Grosseira');
-        $qtdJerere =   $this->verifVazioCount($quantidadeJerere    , $porto, 'Jereré');
-        $qtdLinha =    $this->verifVazioCount($quantidadeLinha     , $porto, 'Pesca de Linha');
-        $qtdLinhaFundo=$this->verifVazioCount($quantidadeLinhaFundo, $porto, 'Linha de Fundo');
-        $qtdManzua=    $this->verifVazioCount($quantidadeManzua    , $porto, 'Manzuá');
-        $qtdMergulho=  $this->verifVazioCount($quantidadeMergulho  , $porto, 'Mergulho');
-        $qtdRatoeira=  $this->verifVazioCount($quantidadeRatoeira  , $porto, 'Ratoeira');
-        $qtdSiripoia=  $this->verifVazioCount($quantidadeSiripoia  , $porto, 'Siripoia');
-        $qtdTarrafa=   $this->verifVazioCount($quantidadeTarrafa   , $porto, 'Tarrafa');
-        $qtdVaraPesca =$this->verifVazioCount($quantidadeVaraPesca , $porto, 'Vara de Pesca');
-        /*
-        $this->view->assign("qtdArrasto",   $qtdArrasto);   
-        $this->view->assign("qtdCalao",     $qtdCalao);     
-        $this->view->assign("qtdColeta",    $qtdColeta);    
-        $this->view->assign("qtdEmalhe",    $qtdEmalhe);    
-        $this->view->assign("qtdGrosseira", $qtdGrosseira); 
-        $this->view->assign("qtdJerere",    $qtdJerere);    
-        $this->view->assign("qtdLinha",     $qtdLinha);     
-        $this->view->assign("qtdLinhaFundo",$qtdLinhaFundo);
-        $this->view->assign("qtdManzua",    $qtdManzua);    
-        $this->view->assign("qtdMergulho",  $qtdMergulho);    
-        $this->view->assign("qtdRatoeira",  $qtdRatoeira); 
-        $this->view->assign("qtdSiripoia",  $qtdSiripoia);    
-        $this->view->assign("qtdTarrafa",   $qtdTarrafa);     
-        $this->view->assign("qtdVaraPesca", $qtdVaraPesca);
-        */
+        $qtdArrasto =  $this->verifVazioEntrevistas($quantidadeArrasto   , $porto, 'Arrasto de Fundo');
+        $qtdCalao =    $this->verifVazioEntrevistas($quantidadeCalao     , $porto, 'Calão');
+        $qtdColeta =   $this->verifVazioEntrevistas($quantidadeColeta    , $porto, 'Coleta');
+        $qtdEmalhe =   $this->verifVazioEntrevistas($quantidadeEmalhe    , $porto, 'Emalhe');
+        $qtdGrosseira= $this->verifVazioEntrevistas($quantidadeGrosseira , $porto, 'Grosseira');
+        $qtdJerere =   $this->verifVazioEntrevistas($quantidadeJerere    , $porto, 'Jereré');
+        $qtdLinha =    $this->verifVazioEntrevistas($quantidadeLinha     , $porto, 'Pesca de Linha');
+        $qtdLinhaFundo=$this->verifVazioEntrevistas($quantidadeLinhaFundo, $porto, 'Linha de Fundo');
+        $qtdManzua=    $this->verifVazioEntrevistas($quantidadeManzua    , $porto, 'Manzuá');
+        $qtdMergulho=  $this->verifVazioEntrevistas($quantidadeMergulho  , $porto, 'Mergulho');
+        $qtdRatoeira=  $this->verifVazioEntrevistas($quantidadeRatoeira  , $porto, 'Ratoeira');
+        $qtdSiripoia=  $this->verifVazioEntrevistas($quantidadeSiripoia  , $porto, 'Siripoia');
+        $qtdTarrafa=   $this->verifVazioEntrevistas($quantidadeTarrafa   , $porto, 'Tarrafa');
+        $qtdVaraPesca =$this->verifVazioEntrevistas($quantidadeVaraPesca , $porto, 'Vara de Pesca');
+
         $arrayQuantidades =  array_merge_recursive(
                 $qtdArrasto, 
                 $qtdCalao, 
@@ -1342,26 +1396,27 @@ class PortoController extends Zend_Controller_Action
         $this->view->assign("arrayPorArteQtds", $jsTopFive);
         $this->view->assign("arrayPorArteLabels", $jsLabels);
         
-        print_r($jsTopFive);
-        print_r($jsLabels);
+//        print_r($jsTopFive);
+//        print_r($jsLabels);
 
     }
+    
+    
     public function amendoeiraAction(){
         
-        $dateStart = $this->_getParam('dataini');
-        $dateEnd = $this->_getParam('datafim');
+        $ano = $this->_getParam('ano');
         
-        $dataIni = $this->dataInicial($dateStart);
-        $date = explode('-',$dataIni);
-        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("dataini", $datainicial);
+//        $dataIni = $this->dataInicial($dateStart);
+//        $date = explode('-',$dataIni);
+//        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
+//        $this->view->assign("dataini", $datainicial);
+//        
+//        $dataFim = $this->dataFinal($dateEnd);
+//        $date = explode('-',$dataFim);
+//        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
+//        $this->view->assign("datafim", $datafinal);
         
-        $dataFim = $this->dataFinal($dateEnd);
-        $date = explode('-',$dataFim);
-        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("datafim", $datafinal);
-        
-        $ano = $date[0];
+
         
         $porto = "Amendoeira";
         
@@ -1390,6 +1445,7 @@ class PortoController extends Zend_Controller_Action
         
         $this->gerarquantbarcos($porto, $ano, 'Calao');
         
+        $this->gerarespeciescapturadas($porto, $ano, 'Calao').
         
         $this->gerarrelqtdporarte($porto, $ano);
     }

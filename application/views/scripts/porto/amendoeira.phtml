@@ -66,37 +66,37 @@
        ]
    };
    
-//   var datacapturaQuant = {
-//       labels: <?= $this->arrayArtesQuant ?>,
-//       datasets: [
-//           {
-//               label: "Quantidade",
-//               fillColor: "rgba(95,48,43,.8)",
-//               strokeColor: "rgba(95,48,43,1)",
-//               pointColor: "rgba(95,48,43,1)",
-//               pointStrokeColor: "#fff",
-//               pointHighlightFill: "#fff",
-//               pointHighlightStroke: "rgba(95,48,43,1)",
-//               data: <?= $this->arrayQuant ?>
-//           }
-//       ]
-//   };
+   var artesMonitoradas = {
+       labels: <?= $this->arrayPorArteLabels ?>,
+       datasets: [
+           {
+               label: "Quantidade",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->arrayPorArteQtds ?>
+           }
+       ]
+   };
 //   
-//   var databarcos = {
-//       labels: <?= $this->arrayArtes ?>,
-//       datasets: [
-//           {
-//               label: "Quantidade",
-//               fillColor: "rgba(95,48,43,.8)",
-//               strokeColor: "rgba(95,48,43,1)",
-//               pointColor: "rgba(95,48,43,1)",
-//               pointStrokeColor: "#fff",
-//               pointHighlightFill: "#fff",
-//               pointHighlightStroke: "rgba(95,48,43,1)",
-//               data: <?= $this->arrayCount ?>
-//           }
-//       ]
-//   };
+   var especiesCapturadas = {
+       labels: <?= $this->labelCapturaCalao ?>,
+       datasets: [
+           {
+               label: "Quantidade",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pesoCapturaCalao ?>
+           }
+       ]
+   };
 //   var datapescador = {
 //       labels: <?= $this->arrayArtes ?>,
 //       datasets: [
@@ -161,6 +161,9 @@
     
     window.onload = function(){
         
+        var id_barcos = document.getElementById("ArtesMonitoradas").getContext("2d");
+        var BarChart = new Chart(id_barcos).Bar(artesMonitoradas, options);
+        
         var ctx = document.getElementById("EntrevistasByMes").getContext("2d");
         var EntrevistasChart = new Chart(ctx).Bar(entrevistasByMes, options);
         
@@ -170,14 +173,13 @@
         var ctx = document.getElementById("BarcosMonitorados").getContext("2d");
         var EmbarcacoesCharts = new Chart(ctx).Bar(Embarcacoes, options);
 //
-//        var id_barcos = document.getElementById("Barcos").getContext("2d");
-//        var BarChart = new Chart(id_barcos).Bar(databarcos, options);
+        
 //
 //        var id_pesc = document.getElementById("Pescadores").getContext("2d");
 //        var PescChart = new Chart(id_pesc).Bar(datapescador, options);
 //
-//        var id_quant_barcos = document.getElementById("QuantBarcos").getContext("2d");
-//        var QuantBarChart = new Chart(id_quant_barcos).Bar(dataquantbarcos, options);
+        var id_quant_barcos = document.getElementById("EspeciesCapturadas").getContext("2d");
+        var EspeciesCapturadas = new Chart(id_quant_barcos).Bar(especiesCapturadas, options);
 //
 //        var id_quant_pesc = document.getElementById("QuantPescadores").getContext("2d");
 //        var QuantPescChart = new Chart(id_quant_pesc).Bar(dataquantpescadores, options);
@@ -225,21 +227,36 @@
 </script>-->
 <br/>
 <div class="box-chart">
-    <legend>Gráfico 1: Número de Pescarias por Mês</legend>
+    <legend>Gráfico 1: Artes de Pesca Mais Monitoradas</legend>
+  <canvas id="ArtesMonitoradas" style="width:100%;"></canvas>
+</div>
+<br/>
+
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 2: Número de Pescarias por Mês</legend>
   <canvas id="EntrevistasByMes" style="width:100%;"></canvas>
 </div>
 <br/>
 
 <br/>
 <div class="box-chart">
-    <legend>Gráfico 2: Total de Capturas em kg por Mês</legend>
+    <legend>Gráfico 3: Total de Capturas em kg por Mês</legend>
   <canvas id="CapturaByMes" style="width:100%;"></canvas>
 </div>
 <br/>
 
 <br/>
 <div class="box-chart">
-    <legend>Gráfico 3: Embarcacoes Monitoradas</legend>
+    <legend>Gráfico 4: Espécies Mais Capturadas</legend>
+  <canvas id="EspeciesCapturadas" style="width:100%;"></canvas>
+</div>
+<br/>
+
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 5: Embarcacoes Monitoradas</legend>
   <canvas id="BarcosMonitorados" style="width:100%;"></canvas>
 </div>
 <br/>
+
