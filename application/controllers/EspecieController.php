@@ -38,6 +38,22 @@ private $usuario;
 
         $this->modelEspecie = new Application_Model_Especie();
         $this->modelGenero = new Application_Model_Genero();
+        
+        $this->modelPorto = new Application_Model_Porto();
+        $this->modelArrasto = new Application_Model_ArrastoFundo();
+        $this->modelCalao= new Application_Model_Calao();
+        $this->modelColeta= new Application_Model_ColetaManual();
+        $this->modelEmalhe= new Application_Model_Emalhe();
+        $this->modelGrosseira= new Application_Model_Grosseira();
+        $this->modelJerere= new Application_Model_Jerere();
+        $this->modelLinha= new Application_Model_Linha();
+        $this->modelLinhaFundo= new Application_Model_LinhaFundo();
+        $this->modelManzua= new Application_Model_Manzua();
+        $this->modelMergulho= new Application_Model_Mergulho();
+        $this->modelRatoeira= new Application_Model_Ratoeira();
+        $this->modelSiripoia= new Application_Model_Siripoia();
+        $this->modelTarrafa= new Application_Model_Tarrafa();
+        $this->modelVaraPesca =  new Application_Model_VaraPesca();
     }
 
     /*
@@ -130,9 +146,96 @@ private $usuario;
     public function indexrelatorioAction() {
         $especie = $this->modelEspecie->select(null, 'esp_nome_comum');
         
+        $esp_id = $this->_getParam('esp_id');
+        if(empty($esp_id)){
+            $esp_id = 0;
+        }
+        $arrayEspCaptArrasto = $this->modelArrasto->selectArrastoHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptCalao = $this->modelCalao->selectCalaoHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptColeta = $this->modelColeta->selectColetaManualHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptEmalhe = $this->modelEmalhe->selectEmalheHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptGrosseira = $this->modelGrosseira->selectGrosseiraHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptJerere = $this->modelJerere->selectJerereHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptLinha = $this->modelLinha->selectLinhaHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptLinhaFundo = $this->modelLinhaFundo->selectLinhaFundoHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptManzua = $this->modelManzua->selectManzuaHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptMergulho = $this->modelMergulho->selectMergulhoHasEspCapturadas('esp_id = '. $esp_id); 
+        $arrayEspCaptRatoeira = $this->modelRatoeira->selectRatoeiraHasEspCapturadas('esp_id = '. $esp_id); 
+        $arrayEspCaptSiripoia = $this->modelSiripoia->selectSiripoiaHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptTarrafa = $this->modelTarrafa->selectTarrafaHasEspCapturadas('esp_id = '. $esp_id); 
+        $arrayEspCaptVaraPesca = $this->modelVaraPesca ->selectVaraPescaHasEspCapturadas('esp_id = '. $esp_id);  
+        
+       
+        $this->view->assign("arrayEspArrasto", $arrayEspCaptArrasto);
+        $this->view->assign("arrayEspCalao",$arrayEspCaptCalao);
+        $this->view->assign("arrayEspColeta",$arrayEspCaptColeta); 
+        $this->view->assign("arrayEspEmalhe",$arrayEspCaptEmalhe);
+        $this->view->assign("arrayEspGrosseira",$arrayEspCaptGrosseira);
+        $this->view->assign("arrayEspJerere",$arrayEspCaptJerere);
+        $this->view->assign("arrayEspLinha",$arrayEspCaptLinha);
+        $this->view->assign("arrayEspLinhaFundo",$arrayEspCaptLinhaFundo);
+        $this->view->assign("arrayEspManzua",$arrayEspCaptManzua);
+        $this->view->assign("arrayEspMergulho",$arrayEspCaptMergulho );
+        $this->view->assign("arrayEspRatoeira",$arrayEspCaptRatoeira );
+        $this->view->assign("arrayEspSiripoia",$arrayEspCaptSiripoia );
+        $this->view->assign("arrayEspTarrafa",$arrayEspCaptTarrafa );
+        $this->view->assign("arrayEspVaraPesca",$arrayEspCaptVaraPesca);
         $this->view->assign("especie", $especie);
+        
     }
+    public function selectespeciesAction(){
+        $esp_id = $this->_getParam('esp_id');
 
+        
+        
+        $this->_redirect('especie/tableespc/esp_id/'.$esp_id);
+    }
+    public function addKey($array, $id, $arte){
+        
+        for($i=0; $i<sizeof($array); $i++){
+            $array[$i]['entr'] = $array[$i][$id];
+            $array[$i]['arte'] = $arte[$i][$id];
+        }
+        
+        return $array;
+        
+    }
+    public function tableespcAction(){
+        $this->_helper->layout->disableLayout();
+        $esp_id = $this->_getParam('esp_id');
+        
+        $arrayEspCaptArrasto = $this->modelArrasto->selectArrastoHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptCalao = $this->modelCalao->selectCalaoHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptColeta = $this->modelColeta->selectColetaManualHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptEmalhe = $this->modelEmalhe->selectEmalheHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptGrosseira = $this->modelGrosseira->selectGrosseiraHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptJerere = $this->modelJerere->selectJerereHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptLinha = $this->modelLinha->selectLinhaHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptLinhaFundo = $this->modelLinhaFundo->selectLinhaFundoHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptManzua = $this->modelManzua->selectManzuaHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptMergulho = $this->modelMergulho->selectMergulhoHasEspCapturadas('esp_id = '. $esp_id); 
+        $arrayEspCaptRatoeira = $this->modelRatoeira->selectRatoeiraHasEspCapturadas('esp_id = '. $esp_id); 
+        $arrayEspCaptSiripoia = $this->modelSiripoia->selectSiripoiaHasEspCapturadas('esp_id = '. $esp_id);
+        $arrayEspCaptTarrafa = $this->modelTarrafa->selectTarrafaHasEspCapturadas('esp_id = '. $esp_id); 
+        $arrayEspCaptVaraPesca = $this->modelVaraPesca ->selectVaraPescaHasEspCapturadas('esp_id = '. $esp_id);  
+        
+       
+        $this->view->assign("arrayEspArrasto", $arrayEspCaptArrasto);
+        $this->view->assign("arrayEspCalao",$arrayEspCaptCalao);
+        $this->view->assign("arrayEspColeta",$arrayEspCaptColeta); 
+        $this->view->assign("arrayEspEmalhe",$arrayEspCaptEmalhe);
+        $this->view->assign("arrayEspGrosseira",$arrayEspCaptGrosseira);
+        $this->view->assign("arrayEspJerere",$arrayEspCaptJerere);
+        $this->view->assign("arrayEspLinha",$arrayEspCaptLinha);
+        $this->view->assign("arrayEspLinhaFundo",$arrayEspCaptLinhaFundo);
+        $this->view->assign("arrayEspManzua",$arrayEspCaptManzua);
+        $this->view->assign("arrayEspMergulho",$arrayEspCaptMergulho );
+        $this->view->assign("arrayEspRatoeira",$arrayEspCaptRatoeira );
+        $this->view->assign("arrayEspSiripoia",$arrayEspCaptSiripoia );
+        $this->view->assign("arrayEspTarrafa",$arrayEspCaptTarrafa );
+        $this->view->assign("arrayEspVaraPesca",$arrayEspCaptVaraPesca);
+        
+    }
 	public function relatorioAction() {
             if($this->usuario['tp_id']==5){
             $this->_redirect('index');

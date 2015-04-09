@@ -1,0 +1,199 @@
+<div id="espcapturada">
+    <table>
+        <tr>
+        <th>Arte de Pesca </th>
+        <th>Espécie</th>
+        <th>Quantidade (n)</th>
+        <th>Peso (kg)</th>
+        <th>Preco</th>
+        <th>Número da Entrevista</th>
+        </tr>
+
+        <?php foreach ($this->arrayEspArrasto as $key => $entrevista): ?>
+            <tr>
+            <td>Arrasto de Fundo</td>
+            <td><?= $entrevista['esp_nome_comum'] ?></td>
+            <td><?= $entrevista['spc_quantidade'] ?></td>
+            <td><?= $entrevista['spc_peso_kg'] ?></td>
+            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['af_id'] ?></td>
+
+            </a>
+            </tr>
+        <?php endforeach; ?>
+
+        <?php foreach ($this->arrayEspCalao as $key => $entrevista): ?>
+            <tr>
+            <td>Calão</td>
+            <td><?= $entrevista['esp_nome_comum'] ?></td>
+            <td><?= $entrevista['spc_quantidade'] ?></td>
+            <td><?= $entrevista['spc_peso_kg'] ?></td>
+            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['cal_id'] ?></td>
+
+            </a>
+            </tr>
+        <?php endforeach; ?>
+
+
+        <?php foreach ($this->arrayEspColeta as $key => $entrevista): ?>
+            <tr>
+            <td>Coleta Manual</td>
+            <td><?= $entrevista['esp_nome_comum'] ?></td>
+            <td><?= $entrevista['spc_quantidade'] ?></td>
+            <td><?= $entrevista['spc_peso_kg'] ?></td>
+            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['cml_id'] ?></td>
+
+            </a>
+            </tr>
+        <?php endforeach; ?>
+
+        <?php foreach ($this->arrayEspEmalhe as $key => $entrevista): ?>
+            <tr>
+            <td>Emalhe</td>
+            <td><?= $entrevista['esp_nome_comum'] ?></td>
+            <td><?= $entrevista['spc_quantidade'] ?></td>
+            <td><?= $entrevista['spc_peso_kg'] ?></td>
+            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['em_id'] ?></td>
+
+            </a>
+            </tr>
+        <?php endforeach; ?>
+
+        <?php foreach ($this->arrayEspGrosseira as $key => $entrevista): ?>
+            <tr>
+            <td>Groseira/Espinhel</td>
+            <td><?= $entrevista['esp_nome_comum'] ?></td>
+            <td><?= $entrevista['spc_quantidade'] ?></td>
+            <td><?= $entrevista['spc_peso_kg'] ?></td>
+            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['grs_id'] ?></td>
+
+            </a>
+            </tr>
+        <?php endforeach; ?>
+
+        <?php foreach ($this->arrayEspJerere as $key => $entrevista): ?>
+            <tr>
+            <td>Jereré</td>
+            <td><?= $entrevista['esp_nome_comum'] ?></td>
+            <td><?= $entrevista['spc_quantidade'] ?></td>
+            <td><?= $entrevista['spc_peso_kg'] ?></td>
+            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['jre_id'] ?></td>
+
+            </a>
+            </tr>
+        <?php endforeach; ?>
+
+        <?php foreach ($this->arrayEspLinha as $key => $entrevista): ?>
+            <tr>
+            <td>Pesca de Linha</td>
+            <td><?= $entrevista['esp_nome_comum'] ?></td>
+            <td><?= $entrevista['spc_quantidade'] ?></td>
+            <td><?= $entrevista['spc_peso_kg'] ?></td>
+            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['lin_id'] ?></td>
+
+            </a>
+            </tr>
+        <?php endforeach; ?>
+
+        <?php foreach ($this->arrayEspLinhaFundo as $key => $entrevista): ?>
+            <tr>
+            <td>Linha de Fundo</td>
+            <td><?= $entrevista['esp_nome_comum'] ?></td>
+            <td><?= $entrevista['spc_quantidade'] ?></td>
+            <td><?= $entrevista['spc_peso_kg'] ?></td>
+            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['lin_id'] ?></td>
+
+            </a>
+            </tr>
+        <?php endforeach; ?>
+
+        <?php foreach ($this->arrayEspManzua as $key => $entrevista): ?>
+            <tr>
+            <td>Manzua</td>
+            <td><?= $entrevista['esp_nome_comum'] ?></td>
+            <td><?= $entrevista['spc_quantidade'] ?></td>
+            <td><?= $entrevista['spc_peso_kg'] ?></td>
+            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['man_id'] ?></td>
+
+            </a>
+            </tr>
+        <?php endforeach; ?>
+
+
+        <?php foreach ($this->arrayEspMergulho as $key => $entrevista): ?>
+            <tr>
+            <td>Mergulho</td>
+            <td><?= $entrevista['esp_nome_comum'] ?></td>
+            <td><?= $entrevista['spc_quantidade'] ?></td>
+            <td><?= $entrevista['spc_peso_kg'] ?></td>
+            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['mer_id'] ?></td>
+
+            </a>
+            </tr>
+        <?php endforeach; ?>
+
+        <?php foreach ($this->arrayEspRatoeira as $key => $entrevista): ?>
+            <tr>
+            <td>Ratoeira</td>
+            <td><?= $entrevista['esp_nome_comum'] ?></td>
+            <td><?= $entrevista['spc_quantidade'] ?></td>
+            <td><?= $entrevista['spc_peso_kg'] ?></td>
+            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['rat_id'] ?></td>
+
+            </a>
+            </tr>
+        <?php endforeach; ?>
+
+
+        <?php foreach ($this->arrayEspSiripoia as $key => $entrevista): ?>
+            <tr>
+            <td>Siripoia</td>
+            <td><?= $entrevista['esp_nome_comum'] ?></td>
+            <td><?= $entrevista['spc_quantidade'] ?></td>
+            <td><?= $entrevista['spc_peso_kg'] ?></td>
+            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['sir_id'] ?></td>
+
+            </a>
+            </tr>
+        <?php endforeach; ?>
+
+        <?php foreach ($this->arrayEspTarrafa as $key => $entrevista): ?>
+            <tr>
+            <td>Tarrafa</td>
+            <td><?= $entrevista['esp_nome_comum'] ?></td>
+            <td><?= $entrevista['spc_quantidade'] ?></td>
+            <td><?= $entrevista['spc_peso_kg'] ?></td>
+            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['tar_id'] ?></td>
+
+            </a>
+            </tr>
+        <?php endforeach; ?>
+
+        <?php foreach ($this->arrayEspVaraPesca as $key => $entrevista): ?>
+            <tr>
+            <td>Vara de Pesca</td>
+            <td><?= $entrevista['esp_nome_comum'] ?></td>
+            <td><?= $entrevista['spc_quantidade'] ?></td>
+            <td><?= $entrevista['spc_peso_kg'] ?></td>
+            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['vp_id'] ?></td>
+
+            </a>
+            </tr>
+        <?php endforeach; ?>
+
+
+    </table>
+</div>

@@ -1523,7 +1523,7 @@ function ajax_monitoramento(form, url){
                 };
                     // Send the data to PHP now... and wait for response to update the status div
                 hr.send(vars); // Actually execute the request
-                document.getElementById("monitoramentos").innerHTML = "processing...";
+                document.getElementById("monitoramentos").innerHTML = "processando...";
             }
      }
      
@@ -1616,10 +1616,42 @@ function ajax_pesqueiro(form, url, id_entrevista, tipo_entrevista){
                 };
                     // Send the data to PHP now... and wait for response to update the status div
                 hr.send(vars); // Actually execute the request
-                document.getElementById("pesqueiro").innerHTML = "processing...";
+                document.getElementById("pesqueiro").innerHTML = "processando...";
             }
 }
-
+function ajax_busca_esp_capturada(form, url){
+     // Create our XMLHttpRequest object
+            var hr = new XMLHttpRequest();
+            
+            // Create some variables we need to send to our PHP file
+            var url = url;
+            var especie = form.nome_comum.value;
+            
+            
+            if(especie === ""){
+                alert("Escolha um pesqueiro");
+            }
+            else{
+                var vars;
+                
+                //var ln = document.getElementById("last_name").value;
+                vars = "esp_id="+especie;
+                }
+                hr.open("POST", url, true);
+                // Set content type header information for sending url encoded variables in the request
+                hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                // Access the onreadystatechange event for the XMLHttpRequest object
+                hr.onreadystatechange = function() {
+                        if(hr.readyState === 4 && hr.status === 200) {
+                        var return_data = hr.responseText;
+                            document.getElementById("espcapturada").innerHTML = return_data;
+                        }
+                };
+                    // Send the data to PHP now... and wait for response to update the status div
+                hr.send(vars); // Actually execute the request
+                document.getElementById("espcapturada").innerHTML = "processando...";
+            
+}
 //DELETAR DEPOIS
 function jsInsertPesqueiro(frm, pag, entrevista) {
 

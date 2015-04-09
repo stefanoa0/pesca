@@ -1,48 +1,52 @@
 <div>
-<div id="titulos">
-    <h2>Relatórios</h2>
-    <h3>Espécies</h3>
-</div>
+    <div id="titulos">
+        <h2>Relatórios</h2>
+        <h3>Espécies</h3>
+    </div>
 
-<div id="esquerda_base">
-<form>
-<label>Espécie: </label>
-            <input class="responsivo" onclick="ajax_busca_esp_capturada(this.form, '<?= $this->url(array("controller" => "arrasto-fundo", "action" => "indexrelatorio"), null, true) ?>')" type="button" value="Buscar Entrevistas"/>
-            <select class="responsivo" name="nome_comum">
+    <div id="esquerda_base">
+        <form>
+            <label>Buscar entrevistas por Espécie: </label>
+            <input class="responsivo" onclick="ajax_busca_esp_capturada(this.form, '<?= $this->url(array("controller" => "especie", "action" => "selectespecies"), null, true) ?>')" type="button" value="Buscar Entrevistas"/>
+            
+            <select class="responsivo"  name="nome_comum">
                 <?php foreach ($this->especie as $key => $especie): ?>
-                <option value="<?= $especie['esp_id']; ?>" ><?= $especie['esp_nome_comum']; ?></option>
+                    <option value="<?= $especie['esp_id']; ?>" ><?= $especie['esp_nome_comum']; ?></option>
                 <?php endforeach; ?>
             </select>
+            <br/>
 
-            <?php include('tableespc.phtml'); ?>
-</form>
-</div>
+        </form>
+    </div>
+    
+    <?php include('tableespc.phtml'); ?>
+    
     <br/>
-<legend>Listagem</legend>
-<ul>
-<li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "grupo", "action" => "relatorio"), null, true) ?>"target="_blank">Filogenia - Grupo</a></li>
-    <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "ordem", "action" => "relatoriolista"), null, true) ?>"target="_blank">Filogenia - Ordem</a></li>
-    <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "familia", "action" => "relatoriolista"), null, true) ?>"target="_blank">Filogenia - Família</a></li>
-    <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "genero", "action" => "relatoriolista"), null, true) ?>"target="_blank">Filogenia - Género</a></li>
-    <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "especie", "action" => "relatoriolista"), null, true) ?>"target="_blank">Filogenia - Espécie</a></li>
-</ul>
+    <legend>Listagem</legend>
+    <ul>
+        <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "grupo", "action" => "relatorio"), null, true) ?>"target="_blank">Filogenia - Grupo</a></li>
+        <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "ordem", "action" => "relatoriolista"), null, true) ?>"target="_blank">Filogenia - Ordem</a></li>
+        <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "familia", "action" => "relatoriolista"), null, true) ?>"target="_blank">Filogenia - Família</a></li>
+        <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "genero", "action" => "relatoriolista"), null, true) ?>"target="_blank">Filogenia - Género</a></li>
+        <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "especie", "action" => "relatoriolista"), null, true) ?>"target="_blank">Filogenia - Espécie</a></li>
+    </ul>
 
-<legend>Tabelas conjuntas</legend>
-<ul>
-    <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "grupo", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Grupo</a></li>
-    <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "ordem", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Ordem</a></li>
-    <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "familia", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Família</a></li>
-    <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "genero", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Género</a></li>
-    <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "especie", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Espécie</a></li>
-    <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "relatorios", "action" => "relatoriocompletoespecies"), null, true) ?>"target="_blank">Espécies Capturadas</a></li>
-    <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "relatorios", "action" => "relatoriocompletoespeciesmes"), null, true) ?>"target="_blank">Espécies Capturadas(Mês)</a></li>
-</ul>
+    <legend>Tabelas conjuntas</legend>
+    <ul>
+        <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "grupo", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Grupo</a></li>
+        <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "ordem", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Ordem</a></li>
+        <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "familia", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Família</a></li>
+        <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "genero", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Género</a></li>
+        <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "especie", "action" => "relatorio"), null, true) ?>"target="_blank" class="relatorio">Filogenia - Espécie</a></li>
+        <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "relatorios", "action" => "relatoriocompletoespecies"), null, true) ?>"target="_blank">Espécies Capturadas</a></li>
+        <li><img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "relatorios", "action" => "relatoriocompletoespeciesmes"), null, true) ?>"target="_blank">Espécies Capturadas(Mês)</a></li>
+    </ul>
 
-<div id="obs">
-    <p>Obs:</p>
-    <p><span> Os relatórios com o ícone </span><img src="img/pdf-icon.png" class="icon-relatorios"/> <span>estão no formato PDF.</span></p>
-    <p><span> Os relatórios com o ícone </span><img src="img/xls-icon.png" class="icon-relatorios"/> <span>estão no formato XLS (EXCEL).</span></p>
-    <p><span>Alguns relatórios possuem consultas complexas, demorando assim de serem gerados.</span></p>
-</div>
+    <div id="obs">
+        <p>Obs:</p>
+        <p><span> Os relatórios com o ícone </span><img src="img/pdf-icon.png" class="icon-relatorios"/> <span>estão no formato PDF.</span></p>
+        <p><span> Os relatórios com o ícone </span><img src="img/xls-icon.png" class="icon-relatorios"/> <span>estão no formato XLS (EXCEL).</span></p>
+        <p><span>Alguns relatórios possuem consultas complexas, demorando assim de serem gerados.</span></p>
+    </div>
 
 </div>
