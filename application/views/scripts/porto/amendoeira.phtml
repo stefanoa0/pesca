@@ -19,8 +19,89 @@
     var responsive_false = {
         responsive:false
     };
+ 
+ 
+    var artesMonitoradas = {
+       labels: <?= $this->arrayPorArteLabels ?>,
+       datasets: [
+           {
+               label: "Quantidade",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->arrayPorArteQtds ?>
+           }
+       ]
+   };
+ 
+   var entrevistasByMes1 = {
+       labels: <?= $this->quantLabelsLinha ?>,
+       datasets: [
+           {
+               label: "Quantidade de Entrevistas Por Mês",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->quantEntrevistasLinha ?>
+           }
+       ]
+   };
+   var capturaByMes1 = {
+       labels: <?= $this->countCaptLabelsLinha ?>,
+       datasets: [
+           {
+               label: "Captura total por mês",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->countCaptPesoLinha ?>
+           }
+       ]
+   };
+   var Embarcacoes1 = {
+       labels: <?= $this->labelBarcosLinha ?>,
+       datasets: [
+           {
+               label: "Barcos Mais Monitorados",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->quantBarcosLinha ?>
+           }
+       ]
+   };
+   
+
+//   
+   var especiesCapturadas1 = {
+       labels: <?= $this->labelCapturaLinha ?>,
+       datasets: [
+           {
+               label: "Quantidade",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pesoCapturaLinha ?>
+           }
+       ]
+   };
     
-   var entrevistasByMes = {
+   var entrevistasByMes2 = {
        labels: <?= $this->quantLabelsCalao ?>,
        datasets: [
            {
@@ -35,7 +116,7 @@
            }
        ]
    };
-   var capturaByMes = {
+      var capturaByMes2 = {
        labels: <?= $this->countCaptLabelsCalao ?>,
        datasets: [
            {
@@ -50,7 +131,7 @@
            }
        ]
    };
-   var Embarcacoes = {
+   var Embarcacoes2 = {
        labels: <?= $this->labelBarcosCalao ?>,
        datasets: [
            {
@@ -66,23 +147,8 @@
        ]
    };
    
-   var artesMonitoradas = {
-       labels: <?= $this->arrayPorArteLabels ?>,
-       datasets: [
-           {
-               label: "Quantidade",
-               fillColor: "rgba(95,48,43,.8)",
-               strokeColor: "rgba(95,48,43,1)",
-               pointColor: "rgba(95,48,43,1)",
-               pointStrokeColor: "#fff",
-               pointHighlightFill: "#fff",
-               pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->arrayPorArteQtds ?>
-           }
-       ]
-   };
 //   
-   var especiesCapturadas = {
+   var especiesCapturadas2 = {
        labels: <?= $this->labelCapturaCalao ?>,
        datasets: [
            {
@@ -160,32 +226,45 @@
 //   };
     
     window.onload = function(){
-        
         var id_barcos = document.getElementById("ArtesMonitoradas").getContext("2d");
         var BarChart = new Chart(id_barcos).Bar(artesMonitoradas, options);
         
+        //PESCA PRINCIPAL
+        //2
         var ctx = document.getElementById("EntrevistasByMes").getContext("2d");
-        var EntrevistasChart = new Chart(ctx).Bar(entrevistasByMes, options);
+        var EntrevistasChart = new Chart(ctx).Bar(entrevistasByMes1, options);
         
+        //3
         var ctx = document.getElementById("CapturaByMes").getContext("2d");
-        var CapturaChart = new Chart(ctx).Bar(capturaByMes, options);
+        var CapturaChart = new Chart(ctx).Bar(capturaByMes1, options);
 
+        //4
         var ctx = document.getElementById("BarcosMonitorados").getContext("2d");
-        var EmbarcacoesCharts = new Chart(ctx).Bar(Embarcacoes, options);
-//
-        
-//
-//        var id_pesc = document.getElementById("Pescadores").getContext("2d");
-//        var PescChart = new Chart(id_pesc).Bar(datapescador, options);
-//
+        var EmbarcacoesCharts = new Chart(ctx).Bar(Embarcacoes1, options);
+
+        //5
         var id_quant_barcos = document.getElementById("EspeciesCapturadas").getContext("2d");
-        var EspeciesCapturadas = new Chart(id_quant_barcos).Bar(especiesCapturadas, options);
-//
-//        var id_quant_pesc = document.getElementById("QuantPescadores").getContext("2d");
-//        var QuantPescChart = new Chart(id_quant_pesc).Bar(dataquantpescadores, options);
-//        
-//        var id_quant_capt = document.getElementById("QuantCaptura").getContext("2d");
-//        var QuantCaptChart = new Chart(id_quant_capt).Bar(dataquantcaptura, options);
+        var EspeciesCapturadas = new Chart(id_quant_barcos).Bar(especiesCapturadas1, options);
+        //PESCA PRINCIPAL
+        
+        
+        //PESCA SECUNDÁRIA
+        //6
+        var ctx = document.getElementById("EntrevistasByMes2").getContext("2d");
+        var EntrevistasChart = new Chart(ctx).Bar(entrevistasByMes2, options);
+        
+        //7
+        var ctx = document.getElementById("CapturaByMes2").getContext("2d");
+        var CapturaChart = new Chart(ctx).Bar(capturaByMes2, options);
+        
+        //8
+        var ctx = document.getElementById("BarcosMonitorados2").getContext("2d");
+        var EmbarcacoesCharts = new Chart(ctx).Bar(Embarcacoes2, options);
+        
+        //9
+        var id_quant_barcos = document.getElementById("EspeciesCapturadas2").getContext("2d");
+        var EspeciesCapturadas = new Chart(id_quant_barcos).Bar(especiesCapturadas2, options);
+        //PESCA SECUNDARIA
     };
 </script>
 
@@ -225,38 +304,80 @@
 
     }
 </script>-->
+
+<h4>Ilhéus - Sede Municipal – Amendoeira</h4>
+<p>O ponto de desembarque da Amendoeira localiza-se na Avenida Litorânea Norte, no bairro do Malhado (Ilhéus, BA).</p>
+
+<img class="img-porto" src="<?= 'img/portos/'.$this->porto.'.jpg'?>"/>
+
+Figura: Amendoeira.	
+<p>Este ponto é utilizado por atravessadores e pescadores para comercializar o pescado. A área monitorada envolve pescadores que desembarcam em um local abrigado, a esquerda da área militar – pescarias de linha e emalhe A maioria dos pescadores vive exclusivamente da pesca, mas nem todos são colonizados;</p>
+
+<p>A arte de pesca mais utilizada pelos pescadores da Amendoeira é a linha de mão, seguida pelo calão, eventualmente, os pescadores realizam pescarias com outras artes de pesca, entre elas: rede de emalhe, mergulho, groseira e tarrafa.</p>
+
 <br/>
 <div class="box-chart">
-    <legend>Gráfico 1: Artes de Pesca Mais Monitoradas</legend>
+    <legend>Gráfico 1: Artes de Pesca Mais Monitoradas (n)</legend>
   <canvas id="ArtesMonitoradas" style="width:100%;"></canvas>
 </div>
 <br/>
 
+<h4> Monitoramentos com Pesca de <?= $this->arteMaisPescada?> </h4>
 <br/>
 <div class="box-chart">
-    <legend>Gráfico 2: Número de Pescarias por Mês</legend>
+    <legend>Gráfico 2: Número de Pescarias por Mês na Pesca de <?= $this->arteMaisPescada?></legend>
   <canvas id="EntrevistasByMes" style="width:100%;"></canvas>
 </div>
 <br/>
 
 <br/>
 <div class="box-chart">
-    <legend>Gráfico 3: Total de Capturas em kg por Mês</legend>
+    <legend>Gráfico 3: Total de Capturas em kg por Mês na Pesca de <?= $this->arteMaisPescada?></legend>
   <canvas id="CapturaByMes" style="width:100%;"></canvas>
 </div>
 <br/>
 
 <br/>
 <div class="box-chart">
-    <legend>Gráfico 4: Espécies Mais Capturadas</legend>
+    <legend>Gráfico 4: Espécies Mais Capturadas na Pesca de <?= $this->arteMaisPescada?></legend>
   <canvas id="EspeciesCapturadas" style="width:100%;"></canvas>
 </div>
 <br/>
 
 <br/>
 <div class="box-chart">
-    <legend>Gráfico 5: Embarcacoes Monitoradas</legend>
+    <legend>Gráfico 5: Embarcacoes Monitoradas na Pesca de <?= $this->arteMaisPescada?></legend>
   <canvas id="BarcosMonitorados" style="width:100%;"></canvas>
+</div>
+<br/>
+
+
+<h4> Monitoramentos com Pesca de <?= $this->segArteMaisPescada?> </h4>
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 6: Número de Pescarias por Mês na Pesca de <?= $this->segArteMaisPescada?></legend>
+  <canvas id="EntrevistasByMes2" style="width:100%;"></canvas>
+</div>
+<br/>
+
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 7: Total de Capturas em kg por Mês na Pesca de <?= $this->segArteMaisPescada?></legend>
+  <canvas id="CapturaByMes2" style="width:100%;"></canvas>
+</div>
+<br/>
+
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 8: Espécies Mais Capturadas na Pesca de <?= $this->segArteMaisPescada?></legend>
+  <canvas id="EspeciesCapturadas2" style="width:100%;"></canvas>
+</div>
+<br/>
+
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 9: Embarcacoes Monitoradas na Pesca de <?= $this->segArteMaisPescada?></legend>
+  <canvas id="BarcosMonitorados2" style="width:100%;"></canvas>
 </div>
 <br/>
 

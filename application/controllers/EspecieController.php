@@ -128,7 +128,9 @@ private $usuario;
     }
     
     public function indexrelatorioAction() {
-
+        $especie = $this->modelEspecie->select(null, 'esp_nome_comum');
+        
+        $this->view->assign("especie", $especie);
     }
 
 	public function relatorioAction() {

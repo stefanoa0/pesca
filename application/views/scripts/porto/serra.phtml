@@ -1,6 +1,7 @@
 <h2>Porto -> Pé de Serra</h2>
 
 <script src="js/Chart.min.js"></script>
+
 <script type="text/javascript">
 
     var options = {
@@ -18,553 +19,270 @@
     var responsive_false = {
         responsive:false
     };
-    var datacapturaPeso = {
-        labels: <?= $this->arrayArtesPeso ?>,
-        datasets: [
-            {
-                label: "Peso",
-                fillColor: "rgba(95,48,43,.8)",
-                strokeColor: "rgba(95,48,43,1)",
-                pointColor: "rgba(95,48,43,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(95,48,43,1)",
-                data: <?= $this->arrayPeso ?>
-            }
-        ]
-    };
+ 
+ 
+    var artesMonitoradas = {
+       labels: <?= $this->arrayPorArteLabels ?>,
+       datasets: [
+           {
+               label: "Quantidade",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->arrayPorArteQtds ?>
+           }
+       ]
+   };
+ 
+   var entrevistasByMes1 = {
+       labels: <?= $this->quantLabelsLinha ?>,
+       datasets: [
+           {
+               label: "Quantidade de Entrevistas Por Mês",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->quantEntrevistasLinha ?>
+           }
+       ]
+   };
+   var capturaByMes1 = {
+       labels: <?= $this->countCaptLabelsLinha ?>,
+       datasets: [
+           {
+               label: "Captura total por mês",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->countCaptPesoLinha ?>
+           }
+       ]
+   };
+   var Embarcacoes1 = {
+       labels: <?= $this->labelBarcosLinha ?>,
+       datasets: [
+           {
+               label: "Barcos Mais Monitorados",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->quantBarcosLinha ?>
+           }
+       ]
+   };
+   
+
+//   
+   var especiesCapturadas1 = {
+       labels: <?= $this->labelCapturaLinha ?>,
+       datasets: [
+           {
+               label: "Quantidade",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pesoCapturaLinha ?>
+           }
+       ]
+   };
     
-    var datacapturaQuant = {
-        labels: <?= $this->arrayArtesQuant ?>,
-        datasets: [
-            {
-                label: "Quantidade",
-                fillColor: "rgba(95,48,43,.8)",
-                strokeColor: "rgba(95,48,43,1)",
-                pointColor: "rgba(95,48,43,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(95,48,43,1)",
-                data: <?= $this->arrayQuant ?>
-            }
-        ]
-    };
+   var entrevistasByMes2 = {
+       labels: <?= $this->quantLabelsCalao ?>,
+       datasets: [
+           {
+               label: "Quantidade de Entrevistas Por Mês",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->quantEntrevistasCalao ?>
+           }
+       ]
+   };
+      var capturaByMes2 = {
+       labels: <?= $this->countCaptLabelsCalao ?>,
+       datasets: [
+           {
+               label: "Captura total por mês",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->countCaptPesoCalao ?>
+           }
+       ]
+   };
+   var Embarcacoes2 = {
+       labels: <?= $this->labelBarcosCalao ?>,
+       datasets: [
+           {
+               label: "Barcos Mais Monitorados",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->quantBarcosCalao ?>
+           }
+       ]
+   };
+   
+//   
+   var especiesCapturadas2 = {
+       labels: <?= $this->labelCapturaCalao ?>,
+       datasets: [
+           {
+               label: "Quantidade",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pesoCapturaCalao ?>
+           }
+       ]
+   };
+
     
-    var databarcos = {
-        labels: <?= $this->arrayArtes ?>,
-        datasets: [
-            {
-                label: "Quantidade",
-                fillColor: "rgba(95,48,43,.8)",
-                strokeColor: "rgba(95,48,43,1)",
-                pointColor: "rgba(95,48,43,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(95,48,43,1)",
-                data: <?= $this->arrayCount ?>
-            }
-        ]
-    };
-    var datapescador = {
-        labels: <?= $this->arrayArtes ?>,
-        datasets: [
-            {
-                label: "Quantidade",
-                fillColor: "rgba(95,48,43,.8)",
-                strokeColor: "rgba(95,48,43,1)",
-                pointColor: "rgba(95,48,43,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(95,48,43,1)",
-                data: <?= $this->arrayCountPescador ?>
-            }
-        ]
-    };
-    var dataquantbarcos = {
-        labels: <?= $this->labelBarcos ?>,
-        datasets: [
-            {
-                label: "Quantidade",
-                fillColor: "rgba(95,48,43,.8)",
-                strokeColor: "rgba(95,48,43,1)",
-                pointColor: "rgba(95,48,43,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(95,48,43,1)",
-                data: <?= $this->quantBarcos ?>
-            }
-        ]
-    };
-    
-    var dataquantpescadores = {
-        labels: <?= $this->labelPescadores ?>,
-        datasets: [
-            {
-                label: "Quantidade",
-                fillColor: "rgba(95,48,43,.8)",
-                strokeColor: "rgba(95,48,43,1)",
-                pointColor: "rgba(95,48,43,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(95,48,43,1)",
-                data: <?= $this->quantPescadores ?>
-            }
-        ]
-    };
     window.onload = function(){
-        var ctx = document.getElementById("CapturaPeso").getContext("2d");
-        var PesoChart = new Chart(ctx).Bar(datacapturaPeso, optionsCaptura);
+        var id_barcos = document.getElementById("ArtesMonitoradas").getContext("2d");
+        var BarChart = new Chart(id_barcos).Bar(artesMonitoradas, options);
         
-        var ctx = document.getElementById("CapturaQuant").getContext("2d");
-        var QuantChart = new Chart(ctx).Bar(datacapturaQuant, optionsCaptura);
+        //PESCA PRINCIPAL
+        //2
+        var ctx = document.getElementById("EntrevistasByMes").getContext("2d");
+        var EntrevistasChart = new Chart(ctx).Bar(entrevistasByMes1, options);
         
-        var id_barcos = document.getElementById("Barcos").getContext("2d");
-        var BarChart = new Chart(id_barcos).Bar(databarcos, options);
+        //3
+        var ctx = document.getElementById("CapturaByMes").getContext("2d");
+        var CapturaChart = new Chart(ctx).Bar(capturaByMes1, options);
+
+        //4
+        var ctx = document.getElementById("BarcosMonitorados").getContext("2d");
+        var EmbarcacoesCharts = new Chart(ctx).Bar(Embarcacoes1, options);
+
+        //5
+        var id_quant_barcos = document.getElementById("EspeciesCapturadas").getContext("2d");
+        var EspeciesCapturadas = new Chart(id_quant_barcos).Bar(especiesCapturadas1, options);
+        //PESCA PRINCIPAL
         
-        var id_pesc = document.getElementById("Pescadores").getContext("2d");
-        var PescChart = new Chart(id_pesc).Bar(datapescador, options);
         
-        var id_quant_barcos = document.getElementById("QuantBarcos").getContext("2d");
-        var QuantBarChart = new Chart(id_quant_barcos).Bar(dataquantbarcos, options);
+        //PESCA SECUNDÁRIA
+        //6
+        var ctx = document.getElementById("EntrevistasByMes2").getContext("2d");
+        var EntrevistasChart = new Chart(ctx).Bar(entrevistasByMes2, options);
         
-        var id_quant_pesc = document.getElementById("QuantPescadores").getContext("2d");
-        var QuantPescChart = new Chart(id_quant_pesc).Bar(dataquantpescadores, options);
+        //7
+        var ctx = document.getElementById("CapturaByMes2").getContext("2d");
+        var CapturaChart = new Chart(ctx).Bar(capturaByMes2, options);
+        
+        //8
+        var ctx = document.getElementById("BarcosMonitorados2").getContext("2d");
+        var EmbarcacoesCharts = new Chart(ctx).Bar(Embarcacoes2, options);
+        
+        //9
+        var id_quant_barcos = document.getElementById("EspeciesCapturadas2").getContext("2d");
+        var EspeciesCapturadas = new Chart(id_quant_barcos).Bar(especiesCapturadas2, options);
+        //PESCA SECUNDARIA
     };
 </script>
 
-<table>
-    <legend>Captura Monitorada por Porto</legend>
-    <legend>Entre <?=$this->dataini ?> e <?=$this->datafim ?> </legend>
-    <tr>
-    <th>Arte de pesca</th>
-    <th>Quantidade Total</th>
-    <th>Unidade de Medida</th>
-    <th>Peso Total </th>
-    <th>Unidade de Medida</th>
-    </tr>
-<br/>
-<?php foreach ($this->capturaArrasto as $key => $captArrasto): ?>
-    <tr>
-    <td>Arrasto de Fundo</td>
-    <td><?= $captArrasto['quant'] ?></td>
-    <td>Unidades </td>
-    <td><?= $captArrasto['peso'] ?></td>
-    <td>kg</td>
-    
-    </tr>
-<?php endforeach; ?>
-<?php foreach ($this->capturaCalao as $key => $captCalao): ?>
-    <tr>
-    <td>Calão</td>
-    <td><?= $captCalao['quant'] ?></td>
-    <td>Unidades </td>
-    <td><?= $captCalao['peso'] ?></td>
-    <td>kg</td>
-    </tr>
-<?php endforeach; ?>
-<?php foreach ($this->capturaColeta as $key => $captColeta): ?>
-    <tr>
-    <td>Coleta Manual</td>
-    <td><?= $captColeta['quant'] ?></td>
-    <td>Unidades </td>
-    <td><?= $captColeta['peso'] ?></td>
-    <td>kg</td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->capturaEmalhe as $key => $captEmalhe): ?>
-    <tr>
-    <td>Emalhe</td>
-    <td><?= $captEmalhe['quant'] ?></td>
-    <td>Unidades </td>
-    <td><?= $captEmalhe['peso'] ?></td>
-    <td>kg</td>
-    </tr>
-<?php endforeach; ?>
 
-<?php foreach ($this->capturaGrosseira as $key => $captGrosseira): ?>
-    <tr>
-    <td>Espinhel/Groseira</td>
-    <td><?= $captGrosseira['quant'] ?></td>
-    <td>Unidades </td>
-    <td><?= $captGrosseira['peso'] ?></td>
-    <td>kg</td>
-    </tr>
-<?php endforeach; ?>
-<?php foreach ($this->capturaJerere as $key => $captJerere): ?>
-    <tr>
-    <td>Jereré</td>
-    <td><?= $captJerere['quant'] ?></td>
-    <td>Unidades </td>
-    <td><?= $captJerere['peso'] ?></td>
-    <td>kg</td>
-    </tr>
-<?php endforeach; ?>
-<?php foreach ($this->capturaLinha as $key => $captLinha): ?>
-    <tr>
-    <td>Pesca de Linha</td>
-    <td><?= $captLinha['quant'] ?></td>
-    <td>Unidades </td>
-    <td><?= $captLinha['peso'] ?></td>
-    <td>kg</td>
-    </tr>
-<?php endforeach; ?>
-<?php foreach ($this->capturaLinhaFundo as $key => $captLinhaFundo): ?>
-    <tr>
-    <td>Pesca de Linha de Fundo</td>
-    <td><?= $captLinhaFundo['quant'] ?></td>
-    <td>Unidades </td>
-    <td><?= $captLinhaFundo['peso'] ?></td>
-    <td>kg</td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->capturaManzua as $key => $captManzua): ?>
-    <tr>
-    <td>Pesca de Manzuá</td>
-    <td><?= $captManzua['quant'] ?></td>
-    <td>Unidades </td>
-    <td><?= $captManzua['peso'] ?></td>
-    <td>kg</td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->capturaMergulho as $key => $captMergulho): ?>
-    <tr>
-    <td>Pesca de Mergulho</td>
-    <td><?= $captMergulho['quant'] ?></td>
-    <td>Unidades </td>
-    <td><?= $captMergulho['peso'] ?></td>
-    <td>kg</td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->capturaRatoeira as $key => $captRatoeira): ?>
-    <tr>
-    <td>Pesca de Ratoeira</td>
-    <td><?= $captRatoeira['quant'] ?></td>
-    <td>Unidades </td>
-    <td><?= $captRatoeira['peso'] ?></td>
-    <td>kg</td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->capturaSiripoia as $key => $captSiripoia): ?>
-    <tr>
-    <td>Pesca de Siripoia</td>
-    <td><?= $captSiripoia['quant'] ?></td>
-    <td>Unidades </td>
-    <td><?= $captSiripoia['peso'] ?></td>
-    <td>kg</td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->capturaTarrafa as $key => $captTarrafa): ?>
-    <tr>
-    <td>Pesca de Tarrafa</td>
-    <td><?= $captTarrafa['quant'] ?></td>
-    <td>Unidades </td>
-    <td><?= $captTarrafa['peso'] ?></td>
-    <td>kg</td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->capturaVaraPesca as $key => $captVaraPesca): ?>
-    <tr>
-    <td>Vara de Pesca</td>
-    <td><?= $captVaraPesca['quant'] ?></td>
-    <td>Unidades </td>
-    <td><?= $captVaraPesca['peso'] ?></td>
-    <td>kg</td>
-    </tr>
-<?php endforeach; ?>
-</table>
-<br/>
-<div class="box-chart">
-    <legend>Gráfico 1: Captura Monitorada em kg por Arte de Pesca</legend>
-  <canvas id="CapturaPeso" style="width:100%;"></canvas>
-</div>
-<br/>
-<br/>
-<div class="box-chart">
-    <legend>Gráfico 2: Captura Monitorada em unidades por Arte de Pesca</legend>
-  <canvas id="CapturaQuant" style="width:100%;"></canvas>
-</div>
-<br/>
-<br/>
 
-<table>
-    <legend>Barcos Monitorados por Porto</legend>
-    <legend>Entre <?=$this->dataini ?> e <?=$this->datafim ?> </legend>
-    <tr>
-    <th>Arte de pesca</th>
-    <th>Quantidade</th>
-    <th>Barcos</th>
-    
-</tr>
-<br/>
-<?php foreach ($this->barcosArrasto as $key => $barcosArrasto): ?>
-    <tr>
-    <td>Arrasto de Fundo</td>
-    <td><?= $barcosArrasto['count'] ?></td>
-    <td> Barcos </td>
-   
-    </tr>
-<?php endforeach; ?>
-<?php foreach ($this->barcosCalao as $key => $barcosCalao): ?>
-    <tr>
-    <td>Calão</td>
-    <td><?= $barcosCalao['count'].' barcos' ?></td>
-    <td> Barcos </td>
-    </tr>
-<?php endforeach; ?>
-<?php foreach ($this->barcosColeta as $key => $barcosColeta): ?>
-    <tr>
-    <td>Coleta Manual</td>
-    <td><?= $barcosColeta['count'].' barcos' ?></td>
-    <td> Barcos </td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->barcosEmalhe as $key => $barcosEmalhe): ?>
-    <tr>
-    <td>Emalhe</td>
-    <td><?= $barcosEmalhe['count'].' barcos' ?></td>
-    <td> Barcos </td>
-    </tr>
-<?php endforeach; ?>
+<h4>Ilhéus - Sede Municipal – Amendoeira</h4>
+<p>O ponto de desembarque da Amendoeira localiza-se na Avenida Litorânea Norte, no bairro do Malhado (Ilhéus, BA).</p>
 
-<?php foreach ($this->barcosGrosseira as $key => $barcosGrosseira): ?>
-    <tr>
-    <td>Espinhel/Groseira</td>
-    <td><?= $barcosGrosseira['count'].' barcos' ?></td>
-    <td> Barcos </td>
-    </tr>
-<?php endforeach; ?>
-<?php foreach ($this->barcosJerere as $key => $barcosJerere): ?>
-    <tr>
-    <td>Jereré</td>
-    <td><?= $barcosJerere['count'].' barcos' ?></td>
-    <td> Barcos </td>
-    </tr>
-<?php endforeach; ?>
-<?php foreach ($this->barcosLinha as $key => $barcosLinha): ?>
-    <tr>
-    <td>Pesca de Linha</td>
-    <td><?= $barcosLinha['count'].' barcos' ?></td>
-    <td> Barcos </td>
-    </tr>
-<?php endforeach; ?>
-<?php foreach ($this->barcosLinhaFundo as $key => $barcosLinhaFundo): ?>
-    <tr>
-    <td>Pesca de Linha de Fundo</td>
-    <td><?= $barcosLinhaFundo['count'].' barcos' ?></td>
-    <td> Barcos </td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->barcosManzua as $key => $barcosManzua): ?>
-    <tr>
-    <td>Pesca de Manzuá</td>
-    <td><?= $barcosManzua['count'].' barcos' ?></td>
-    <td> Barcos </td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->barcosMergulho as $key => $barcosMergulho): ?>
-    <tr>
-    <td>Pesca de Mergulho</td>
-    <td><?= $barcosMergulho['count'].' barcos' ?></td>
-    <td> Barcos </td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->barcosRatoeira as $key => $barcosRatoeira): ?>
-    <tr>
-    <td>Pesca de Ratoeira</td>
-    <td><?= $barcosRatoeira['count'].' barcos' ?></td>
-    <td> Barcos </td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->barcosSiripoia as $key => $barcosSiripoia): ?>
-    <tr>
-    <td>Pesca de Siripoia</td>
-    <td><?= $barcosSiripoia['count'].' barcos' ?></td>
-   <td> Barcos </td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->barcosTarrafa as $key => $barcosTarrafa): ?>
-    <tr>
-    <td>Pesca de Tarrafa</td>
-    <td><?= $barcosTarrafa['count'].' barcos' ?></td>
-    <td> Barcos </td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->barcosVaraPesca as $key => $barcosVaraPesca): ?>
-    <tr>
-    <td>Vara de Pesca</td>
-    <td><?= $barcosVaraPesca['count'].' barcos' ?></td>
-    <td> Barcos </td>
-    </tr>
-<?php endforeach; ?>
-</table>
-<br/>
-<div class="box-chart">
-    <legend>Gráfico 3: Quantidade de Barcos Monitorados por Arte de Pesca</legend>
-  <canvas id="Barcos" style="width:100%;"></canvas>
-</div>
+<img class="img-porto" src="<?= 'img/portos/'.$this->porto.'.jpg'?>"/>
 
-<br/>
-<br/>
+Figura: Amendoeira.	
+<p>Este ponto é utilizado por atravessadores e pescadores para comercializar o pescado. A área monitorada envolve pescadores que desembarcam em um local abrigado, a esquerda da área militar – pescarias de linha e emalhe A maioria dos pescadores vive exclusivamente da pesca, mas nem todos são colonizados;</p>
 
-<table>
-    <legend>Quantidade Pescadores Monitorados por Arte de Pesca</legend>
-    <legend>Entre <?=$this->dataini ?> e <?=$this->datafim ?> </legend>
-    <tr>
-    <th>Arte de pesca</th>
-    <th>Quantidade</th>
-    <th></th>
-</tr>
-<br/>
-<?php foreach ($this->pescadoresArrasto as $key => $pescadoresArrasto): ?>
-    <tr>
-    <td>Arrasto de Fundo</td>
-    <td><?= $pescadoresArrasto['count'] ?></td>
-    <td>Pescadores</td>
-    </tr>
-<?php endforeach; ?>
-<?php foreach ($this->pescadoresCalao as $key => $pescadoresCalao): ?>
-    <tr>
-    <td>Calão</td>
-    <td><?= $pescadoresCalao['count'] ?></td>
-    <td>Pescadores</td>
-    </tr>
-<?php endforeach; ?>
-<?php foreach ($this->pescadoresColeta as $key => $pescadoresColeta): ?>
-    <tr>
-    <td>Coleta Manual</td>
-    <td><?= $pescadoresColeta['count'] ?></td>
-    <td>Pescadores</td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->pescadoresEmalhe as $key => $pescadoresEmalhe): ?>
-    <tr>
-    <td>Emalhe</td>
-    <td><?= $pescadoresEmalhe['count'] ?></td>
-    <td>Pescadores</td>
-    </tr>
-<?php endforeach; ?>
-
-<?php foreach ($this->pescadoresGrosseira as $key => $pescadoresGrosseira): ?>
-    <tr>
-    <td>Espinhel/Groseira</td>
-    <td><?= $pescadoresGrosseira['count'] ?></td>
-    <td>Pescadores</td>
-    </tr>
-<?php endforeach; ?>
-<?php foreach ($this->pescadoresJerere as $key => $pescadoresJerere): ?>
-    <tr>
-    <td>Jereré</td>
-    <td><?= $pescadoresJerere['count'] ?></td>
-    <td>Pescadores</td>
-    </tr>
-<?php endforeach; ?>
-<?php foreach ($this->pescadoresLinha as $key => $pescadoresLinha): ?>
-    <tr>
-    <td>Pesca de Linha</td>
-    <td><?= $pescadoresLinha['count'] ?></td>
-    <td>Pescadores</td>
-    </tr>
-<?php endforeach; ?>
-<?php foreach ($this->pescadoresLinhaFundo as $key => $pescadoresLinhaFundo): ?>
-    <tr>
-    <td>Pesca de Linha de Fundo</td>
-    <td><?= $pescadoresLinhaFundo['count'] ?></td>
-    <td>Pescadores</td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->pescadoresManzua as $key => $pescadoresManzua): ?>
-    <tr>
-    <td>Pesca de Manzuá</td>
-    <td><?= $pescadoresManzua['count'] ?></td>
-    <td>Pescadores</td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->pescadoresMergulho as $key => $pescadoresMergulho): ?>
-    <tr>
-    <td>Pesca de Mergulho</td>
-    <td><?= $pescadoresMergulho['count'] ?></td>
-    <td>Pescadores</td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->pescadoresRatoeira as $key => $pescadoresRatoeira): ?>
-    <tr>
-    <td>Pesca de Ratoeira</td>
-    <td><?= $pescadoresRatoeira['count'] ?></td>
-    <td>Pescadores</td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->pescadoresSiripoia as $key => $pescadoresSiripoia): ?>
-    <tr>
-    <td>Pesca de Siripoia</td>
-    <td><?= $pescadoresSiripoia['count'] ?></td>
-   <td>Pescadores</td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->pescadoresTarrafa as $key => $pescadoresTarrafa): ?>
-    <tr>
-    <td>Pesca de Tarrafa</td>
-    <td><?= $pescadoresTarrafa['count'] ?></td>
-    <td>Pescadores</td>
-    </tr>
-<?php endforeach; ?>
-    <?php foreach ($this->pescadoresVaraPesca as $key => $pescadoresVaraPesca): ?>
-    <tr>
-    <td>Vara de Pesca</td>
-    <td><?= $pescadoresVaraPesca['count'] ?></td>
-    <td>Pescadores</td>
-    </tr>
-<?php endforeach; ?>
-</table>
-<br/>
-<div class="box-chart">
-  <legend>Gráfico 4: Quantidade de Pescadores Monitorados por Arte de Pesca</legend>  
-  <canvas id="Pescadores" style="width:100%;"></canvas>
-</div>
-
-<table>
-    <legend>Barcos Monitorados</legend>
-    <legend>Entre <?=$this->dataini ?> e <?=$this->datafim ?> </legend>
-    <tr>
-        <th>Ordem</th>
-        <th>Barcos</th>
-        <th>Monitoramentos</th>
-    </tr>
-    <?php $i=1; foreach ($this->arrayQuantBarcos as $key => $barco): ?>
-    <tr>
-        <td><?= $i ?></td>
-        <td><?= $barco['bar_nome'] ?></td>
-        <td><?= $barco['quant'] ?></td>
-    </tr>
-    <?php $i++; endforeach; ?>
-</table>
+<p>A arte de pesca mais utilizada pelos pescadores da Amendoeira é a linha de mão, seguida pelo calão, eventualmente, os pescadores realizam pescarias com outras artes de pesca, entre elas: rede de emalhe, mergulho, groseira e tarrafa.</p>
 
 <br/>
 <div class="box-chart">
-  <legend>Gráfico 5: Barcos Monitorados</legend>  
-  <canvas id="QuantBarcos" style="width:100%;"></canvas>
+    <legend>Gráfico 1: Artes de Pesca Mais Monitoradas (n)</legend>
+  <canvas id="ArtesMonitoradas" style="width:100%;"></canvas>
 </div>
 <br/>
-<br/>
-<table>
-    <legend>Pescadores Monitorados</legend>
-    <legend>Entre <?=$this->dataini ?> e <?=$this->datafim ?> </legend>
-    <tr>
-        <th>Ordem</th>
-        <th>Pescadores</th>
-        <th>Monitoramentos</th>
-    </tr>
-    <?php $i=1; foreach ($this->arrayQuantPescadores as $key => $pescador): ?>
-    <tr>
-        <td><?= $i ?></td>
-        <td><?= $pescador['tp_nome'] ?></td>
-        <td><?= $pescador['count'] ?></td>
-    </tr>
-    <?php $i++; endforeach; ?>
-</table>
+
+<h4> Monitoramentos com Pesca de <?= $this->arteMaisPescada?> </h4>
 <br/>
 <div class="box-chart">
-  <legend>Gráfico 6: Pescadores Monitorados</legend>  
-  <canvas id="QuantPescadores" style="width:100%;"></canvas>
+    <legend>Gráfico 2: Número de Pescarias por Mês na Pesca de <?= $this->arteMaisPescada?></legend>
+  <canvas id="EntrevistasByMes" style="width:100%;"></canvas>
 </div>
 <br/>
+
 <br/>
+<div class="box-chart">
+    <legend>Gráfico 3: Total de Capturas em kg por Mês na Pesca de <?= $this->arteMaisPescada?></legend>
+  <canvas id="CapturaByMes" style="width:100%;"></canvas>
+</div>
+<br/>
+
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 4: Espécies Mais Capturadas na Pesca de <?= $this->arteMaisPescada?></legend>
+  <canvas id="EspeciesCapturadas" style="width:100%;"></canvas>
+</div>
+<br/>
+
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 5: Embarcacoes Monitoradas na Pesca de <?= $this->arteMaisPescada?></legend>
+  <canvas id="BarcosMonitorados" style="width:100%;"></canvas>
+</div>
+<br/>
+
+
+<h4> Monitoramentos com Pesca de <?= $this->segArteMaisPescada?> </h4>
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 6: Número de Pescarias por Mês na Pesca de <?= $this->segArteMaisPescada?></legend>
+  <canvas id="EntrevistasByMes2" style="width:100%;"></canvas>
+</div>
+<br/>
+
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 7: Total de Capturas em kg por Mês na Pesca de <?= $this->segArteMaisPescada?></legend>
+  <canvas id="CapturaByMes2" style="width:100%;"></canvas>
+</div>
+<br/>
+
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 8: Espécies Mais Capturadas na Pesca de <?= $this->segArteMaisPescada?></legend>
+  <canvas id="EspeciesCapturadas2" style="width:100%;"></canvas>
+</div>
+<br/>
+
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 9: Embarcacoes Monitoradas na Pesca de <?= $this->segArteMaisPescada?></legend>
+  <canvas id="BarcosMonitorados2" style="width:100%;"></canvas>
+</div>
+<br/>
+

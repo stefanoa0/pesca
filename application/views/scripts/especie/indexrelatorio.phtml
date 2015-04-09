@@ -1,8 +1,23 @@
+<div>
 <div id="titulos">
     <h2>Relatórios</h2>
     <h3>Espécies</h3>
 </div>
 
+<div id="esquerda_base">
+<form>
+<label>Espécie: </label>
+            <input class="responsivo" onclick="ajax_busca_esp_capturada(this.form, '<?= $this->url(array("controller" => "arrasto-fundo", "action" => "indexrelatorio"), null, true) ?>')" type="button" value="Buscar Entrevistas"/>
+            <select class="responsivo" name="nome_comum">
+                <?php foreach ($this->especie as $key => $especie): ?>
+                <option value="<?= $especie['esp_id']; ?>" ><?= $especie['esp_nome_comum']; ?></option>
+                <?php endforeach; ?>
+            </select>
+
+            <?php include('tableespc.phtml'); ?>
+</form>
+</div>
+    <br/>
 <legend>Listagem</legend>
 <ul>
 <li><img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="<?= $this->url(array("controller" => "grupo", "action" => "relatorio"), null, true) ?>"target="_blank">Filogenia - Grupo</a></li>
@@ -28,4 +43,6 @@
     <p><span> Os relatórios com o ícone </span><img src="img/pdf-icon.png" class="icon-relatorios"/> <span>estão no formato PDF.</span></p>
     <p><span> Os relatórios com o ícone </span><img src="img/xls-icon.png" class="icon-relatorios"/> <span>estão no formato XLS (EXCEL).</span></p>
     <p><span>Alguns relatórios possuem consultas complexas, demorando assim de serem gerados.</span></p>
+</div>
+
 </div>

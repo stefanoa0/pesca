@@ -456,18 +456,18 @@ class PortoController extends Zend_Controller_Action
             $quantCaptDezembro  = $this->modelRatoeira->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
         }
         if($arte == 'Tarrafa'){
-            $quantCaptJaneiro   = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantCaptFevereiro = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantCaptMarco     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantCaptAbril     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantCaptMaio      = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantCaptJunho     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantCaptJulho     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantCaptAgosto    = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantCaptSetembro  = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantCaptOutubro   = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantCaptNovembro  = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantCaptDezembro  = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantCaptJaneiro   = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  1  And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantCaptFevereiro = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  2  And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantCaptMarco     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  3  And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantCaptAbril     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  4  And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantCaptMaio      = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  5  And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantCaptJunho     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  6  And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantCaptJulho     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  7  And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantCaptAgosto    = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  8  And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantCaptSetembro  = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  9  And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantCaptOutubro   = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  10 And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantCaptNovembro  = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  11 And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantCaptDezembro  = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  12 And Extract(YEAR FROM tar_data) = ".$ano);
         }
         if($arte == 'Siripoia'){
             $quantCaptJaneiro   = $this->modelSiripoia->selectCapturaByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
@@ -798,18 +798,18 @@ class PortoController extends Zend_Controller_Action
             $quantEntrDezembro  = $this->modelRatoeira->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
         }
         if($arte == 'Tarrafa'){
-            $quantEntrJaneiro   = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantEntrFevereiro = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantEntrMarco     = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantEntrAbril     = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantEntrMaio      = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantEntrJunho     = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantEntrJulho     = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantEntrAgosto    = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantEntrSetembro  = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantEntrOutubro   = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantEntrNovembro  = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
-            $quantEntrDezembro  = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+            $quantEntrJaneiro   = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  1  And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantEntrFevereiro = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  2  And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantEntrMarco     = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  3  And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantEntrAbril     = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  4  And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantEntrMaio      = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  5  And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantEntrJunho     = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  6  And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantEntrJulho     = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  7  And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantEntrAgosto    = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  8  And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantEntrSetembro  = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  9  And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantEntrOutubro   = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  10 And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantEntrNovembro  = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  11 And Extract(YEAR FROM tar_data) = ".$ano);
+            $quantEntrDezembro  = $this->modelTarrafa->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  12 And Extract(YEAR FROM tar_data) = ".$ano);
         }
         if($arte == 'Siripoia'){
             $quantEntrJaneiro   = $this->modelSiripoia->selectCountEntrevistasByPorto("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
@@ -1072,18 +1072,18 @@ class PortoController extends Zend_Controller_Action
             $cpueEntrDezembro  = $this->modelRatoeira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
         }
         else if($arte == 'Tarrafa'){
-            $cpueEntrJaneiro   = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
-            $cpueEntrFevereiro = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
-            $cpueEntrMarco     = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
-            $cpueEntrAbril     = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  4  And Extract(YEAR FROM fd_data) = ".$ano);
-            $cpueEntrMaio      = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  5  And Extract(YEAR FROM fd_data) = ".$ano);
-            $cpueEntrJunho     = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  6  And Extract(YEAR FROM fd_data) = ".$ano);
-            $cpueEntrJulho     = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  7  And Extract(YEAR FROM fd_data) = ".$ano);
-            $cpueEntrAgosto    = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  8  And Extract(YEAR FROM fd_data) = ".$ano);
-            $cpueEntrSetembro  = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  9  And Extract(YEAR FROM fd_data) = ".$ano);
-            $cpueEntrOutubro   = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  10 And Extract(YEAR FROM fd_data) = ".$ano);
-            $cpueEntrNovembro  = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
-            $cpueEntrDezembro  = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
+            $cpueEntrJaneiro   = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  1  And Extract(YEAR FROM tar_data) = ".$ano);
+            $cpueEntrFevereiro = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  2  And Extract(YEAR FROM tar_data) = ".$ano);
+            $cpueEntrMarco     = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  3  And Extract(YEAR FROM tar_data) = ".$ano);
+            $cpueEntrAbril     = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  4  And Extract(YEAR FROM tar_data) = ".$ano);
+            $cpueEntrMaio      = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  5  And Extract(YEAR FROM tar_data) = ".$ano);
+            $cpueEntrJunho     = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  6  And Extract(YEAR FROM tar_data) = ".$ano);
+            $cpueEntrJulho     = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  7  And Extract(YEAR FROM tar_data) = ".$ano);
+            $cpueEntrAgosto    = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  8  And Extract(YEAR FROM tar_data) = ".$ano);
+            $cpueEntrSetembro  = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  9  And Extract(YEAR FROM tar_data) = ".$ano);
+            $cpueEntrOutubro   = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  10 And Extract(YEAR FROM tar_data) = ".$ano);
+            $cpueEntrNovembro  = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  11 And Extract(YEAR FROM tar_data) = ".$ano);
+            $cpueEntrDezembro  = $this->modelTarrafa->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM tar_data) =  12 And Extract(YEAR FROM tar_data) = ".$ano);
         }
         else if($arte == 'Siripoia'){
             $cpueEntrJaneiro   = $this->modelSiripoia->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
@@ -1239,7 +1239,7 @@ class PortoController extends Zend_Controller_Action
                $arrayQuantBarcos = $this->modelSiripoia->selectQuantBarcosByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
             break;
             case 'Tarrafa':
-              $arrayQuantBarcos =  $this->modelTarrafa->selectQuantBarcosByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
+              $arrayQuantBarcos =  $this->modelTarrafa->selectQuantBarcosByPorto("pto_nome='".$porto."' And Extract(YEAR FROM tar_data) = ".$ano);
             break;
             case 'VaraPesca':
                $arrayQuantBarcos = $this->modelVaraPesca->selectQuantBarcosByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
@@ -1261,7 +1261,7 @@ class PortoController extends Zend_Controller_Action
 
         $this->view->assign("quantBarcos".$arte, $jsQuantBarcos);
         $this->view->assign("labelBarcos".$arte, $jsLabelBarcos);
-            
+        
             
     }
     public function gerarespeciescapturadas($porto, $ano, $arte){
@@ -1304,7 +1304,7 @@ class PortoController extends Zend_Controller_Action
                $arrayQuantCaptura = $this->modelSiripoia->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
             break;
             case 'Tarrafa':
-              $arrayQuantCaptura =  $this->modelTarrafa->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
+              $arrayQuantCaptura =  $this->modelTarrafa->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM tar_data) = ".$ano);
             break;
             case 'VaraPesca':
                $arrayQuantCaptura = $this->modelVaraPesca->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
@@ -1405,7 +1405,9 @@ class PortoController extends Zend_Controller_Action
     public function amendoeiraAction(){
         
         $ano = $this->_getParam('ano');
-        
+        if($ano == ""){
+            $ano = 2014;
+        }
 //        $dataIni = $this->dataInicial($dateStart);
 //        $date = explode('-',$dataIni);
 //        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
@@ -1431,39 +1433,35 @@ class PortoController extends Zend_Controller_Action
         //$this->modelTarrafa   
         
         $this->gerarquantentrevistas($porto, $ano, 'Calao');
-        $this->gerarquantentrevistas($porto, $ano, 'Emalhe');
-        $this->gerarquantentrevistas($porto, $ano, 'Grosseira');
+        //$this->gerarquantentrevistas($porto, $ano, 'Emalhe');
+        //$this->gerarquantentrevistas($porto, $ano, 'Grosseira');
         $this->gerarquantentrevistas($porto, $ano, 'Linha');
-        $this->gerarquantentrevistas($porto, $ano, 'Manzua');
+        //$this->gerarquantentrevistas($porto, $ano, 'Manzua');
         
         
         $this->gerarquantcaptura($porto, $ano, 'Calao');
-        $this->gerarquantcaptura($porto, $ano, 'Emalhe');
-        $this->gerarquantcaptura($porto, $ano, 'Grosseira');
+        //$this->gerarquantcaptura($porto, $ano, 'Emalhe');
+        //$this->gerarquantcaptura($porto, $ano, 'Grosseira');
         $this->gerarquantcaptura($porto, $ano, 'Linha');
-        $this->gerarquantcaptura($porto, $ano, 'Manzua');
+        //$this->gerarquantcaptura($porto, $ano, 'Manzua');
         
         $this->gerarquantbarcos($porto, $ano, 'Calao');
+        $this->gerarquantbarcos($porto, $ano, 'Linha');
         
-        $this->gerarespeciescapturadas($porto, $ano, 'Calao').
+        $this->gerarespeciescapturadas($porto, $ano, 'Calao');
+        $this->gerarespeciescapturadas($porto, $ano, 'Linha');
         
         $this->gerarrelqtdporarte($porto, $ano);
+        
+        $this->view->assign("porto",$porto);
+        $this->view->assign("arteMaisPescada", "Linha");
+        $this->view->assign("segArteMaisPescada", "Calão");
     }
     public function aritaguaAction(){
-        $dateStart = $this->_getParam('dataini');
-        $dateEnd = $this->_getParam('datafim');
-        
-        $dataIni = $this->dataInicial($dateStart);
-        $date = explode('-',$dataIni);
-        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("dataini", $datainicial);
-        
-        $dataFim = $this->dataFinal($dateEnd);
-        $date = explode('-',$dataFim);
-        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("datafim", $datafinal);
-        $ano = $date[0];
-        
+        $ano = $this->_getParam('ano');
+        if($ano == ""){
+            $ano = 2014;
+        }
         $porto = "Aritaguá";
         
         /* Artes desse porto:
@@ -1479,56 +1477,53 @@ class PortoController extends Zend_Controller_Action
          * VaraPesca
          */
         
-        $this->gerarquantentrevistas($porto, $ano,'Coleta');
-        $this->gerarquantentrevistas($porto, $ano,'Emalhe');
+//        $this->gerarquantentrevistas($porto, $ano,'Coleta');
+//        $this->gerarquantentrevistas($porto, $ano,'Emalhe');
         $this->gerarquantentrevistas($porto, $ano,'Jerere');
-        $this->gerarquantentrevistas($porto, $ano,'Linha');
-        $this->gerarquantentrevistas($porto, $ano,'Manzua');
-        $this->gerarquantentrevistas($porto, $ano,'Mergulho');
+//        $this->gerarquantentrevistas($porto, $ano,'Linha');
+//        $this->gerarquantentrevistas($porto, $ano,'Manzua');
+//        $this->gerarquantentrevistas($porto, $ano,'Mergulho');
         $this->gerarquantentrevistas($porto, $ano,'Ratoeira');
-        $this->gerarquantentrevistas($porto, $ano,'Siripoia');
-        $this->gerarquantentrevistas($porto, $ano,'Tarrafa');
-        $this->gerarquantentrevistas($porto, $ano,'VaraPesca');        
+//        $this->gerarquantentrevistas($porto, $ano,'Siripoia');
+//        $this->gerarquantentrevistas($porto, $ano,'Tarrafa');
+//        $this->gerarquantentrevistas($porto, $ano,'VaraPesca');        
         
-        $this->gerarquantcaptura($porto, $ano, 'Coleta');
-        $this->gerarquantcaptura($porto, $ano, 'Emalhe');
+//        $this->gerarquantcaptura($porto, $ano, 'Coleta');
+//        $this->gerarquantcaptura($porto, $ano, 'Emalhe');
         $this->gerarquantcaptura($porto, $ano, 'Jerere');
-        $this->gerarquantcaptura($porto, $ano, 'Linha');
-        $this->gerarquantcaptura($porto, $ano, 'Manzua');
-        $this->gerarquantcaptura($porto, $ano, 'Mergulho');
+//        $this->gerarquantcaptura($porto, $ano, 'Linha');
+//        $this->gerarquantcaptura($porto, $ano, 'Manzua');
+//        $this->gerarquantcaptura($porto, $ano, 'Mergulho');
         $this->gerarquantcaptura($porto, $ano, 'Ratoeira');
-        $this->gerarquantcaptura($porto, $ano, 'Siripoia');
-        $this->gerarquantcaptura($porto, $ano, 'Tarrafa');
-        $this->gerarquantcaptura($porto, $ano, 'VaraPesca');  
+//        $this->gerarquantcaptura($porto, $ano, 'Siripoia');
+//        $this->gerarquantcaptura($porto, $ano, 'Tarrafa');
+//        $this->gerarquantcaptura($porto, $ano, 'VaraPesca');  
         
-        $this->gerarquantbarcos($porto, $ano, 'Coleta');
-        $this->gerarquantbarcos($porto, $ano, 'Emalhe');
+//        $this->gerarquantbarcos($porto, $ano, 'Coleta');
+//        $this->gerarquantbarcos($porto, $ano, 'Emalhe');
         $this->gerarquantbarcos($porto, $ano, 'Jerere');
-        $this->gerarquantbarcos($porto, $ano, 'Linha');
-        $this->gerarquantbarcos($porto, $ano, 'Manzua');
-        $this->gerarquantbarcos($porto, $ano, 'Mergulho');
+//        $this->gerarquantbarcos($porto, $ano, 'Linha');
+//        $this->gerarquantbarcos($porto, $ano, 'Manzua');
+//        $this->gerarquantbarcos($porto, $ano, 'Mergulho');
         $this->gerarquantbarcos($porto, $ano, 'Ratoeira');
-        $this->gerarquantbarcos($porto, $ano, 'Siripoia');
-        $this->gerarquantbarcos($porto, $ano, 'Tarrafa');
-        $this->gerarquantbarcos($porto, $ano, 'VaraPesca');  
+//        $this->gerarquantbarcos($porto, $ano, 'Siripoia');
+//        $this->gerarquantbarcos($porto, $ano, 'Tarrafa');
+//        $this->gerarquantbarcos($porto, $ano, 'VaraPesca');  
       
         $this->gerarrelqtdporarte($porto, $ano);
+        
+        $this->gerarespeciescapturadas($porto, $ano, 'Jerere');
+        $this->gerarespeciescapturadas($porto, $ano, 'Ratoeira');
+        
+        $this->view->assign("porto",$porto);
+        $this->view->assign("arteMaisPescada", "Jereré");
+        $this->view->assign("segArteMaisPescada", "Ratoeira");
     }
     public function baduAction(){
-        $dateStart = $this->_getParam('dataini');
-        $dateEnd = $this->_getParam('datafim');
-        
-        $dataIni = $this->dataInicial($dateStart);
-        $date = explode('-',$dataIni);
-        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("dataini", $datainicial);
-        
-        $dataFim = $this->dataFinal($dateEnd);
-        $date = explode('-',$dataFim);
-        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("datafim", $datafinal);
-        $ano = $date[0];
-        
+        $ano = $this->_getParam('ano');
+        if($ano == ""){
+            $ano = 2014;
+        }
         $porto = "Vila Badú";
                 
         /* Artes desse porto:
@@ -1543,53 +1538,53 @@ class PortoController extends Zend_Controller_Action
          * VaraPesca
          */
         
-        $this->gerarquantentrevistas($porto, $ano,'Coleta');
-        $this->gerarquantentrevistas($porto, $ano,'Emalhe');
-        $this->gerarquantentrevistas($porto, $ano,'Jerere');
-        $this->gerarquantentrevistas($porto, $ano,'Manzua');
-        $this->gerarquantentrevistas($porto, $ano,'Mergulho');
-        $this->gerarquantentrevistas($porto, $ano,'Ratoeira');
-        $this->gerarquantentrevistas($porto, $ano,'Siripoia');
+//        $this->gerarquantentrevistas($porto, $ano,'Coleta');
+//        $this->gerarquantentrevistas($porto, $ano,'Emalhe');
+//        $this->gerarquantentrevistas($porto, $ano,'Jerere');
+//        $this->gerarquantentrevistas($porto, $ano,'Manzua');
+        $this->gerarquantentrevistas($porto, $ano,'Linha');
+//        $this->gerarquantentrevistas($porto, $ano,'Mergulho');
+//        $this->gerarquantentrevistas($porto, $ano,'Ratoeira');
+//        $this->gerarquantentrevistas($porto, $ano,'Siripoia');
         $this->gerarquantentrevistas($porto, $ano,'Tarrafa');
-        $this->gerarquantentrevistas($porto, $ano,'VaraPesca');        
+//        $this->gerarquantentrevistas($porto, $ano,'VaraPesca');        
         
-        $this->gerarquantcaptura($porto, $ano, 'Coleta');
-        $this->gerarquantcaptura($porto, $ano, 'Emalhe');
-        $this->gerarquantcaptura($porto, $ano, 'Jerere');
-        $this->gerarquantcaptura($porto, $ano, 'Manzua');
-        $this->gerarquantcaptura($porto, $ano, 'Mergulho');
-        $this->gerarquantcaptura($porto, $ano, 'Ratoeira');
-        $this->gerarquantcaptura($porto, $ano, 'Siripoia');
+//        $this->gerarquantcaptura($porto, $ano, 'Coleta');
+//        $this->gerarquantcaptura($porto, $ano, 'Emalhe');
+//        $this->gerarquantcaptura($porto, $ano, 'Jerere');
+//        $this->gerarquantcaptura($porto, $ano, 'Manzua');
+        $this->gerarquantcaptura($porto, $ano, 'Linha');
+//        $this->gerarquantcaptura($porto, $ano, 'Mergulho');
+//        $this->gerarquantcaptura($porto, $ano, 'Ratoeira');
+//        $this->gerarquantcaptura($porto, $ano, 'Siripoia');
         $this->gerarquantcaptura($porto, $ano, 'Tarrafa');
-        $this->gerarquantcaptura($porto, $ano, 'VaraPesca');  
+//        $this->gerarquantcaptura($porto, $ano, 'VaraPesca');  
         
-        $this->gerarquantbarcos($porto, $ano, 'Coleta');
-        $this->gerarquantbarcos($porto, $ano, 'Emalhe');
-        $this->gerarquantbarcos($porto, $ano, 'Jerere');
-        $this->gerarquantbarcos($porto, $ano, 'Manzua');
-        $this->gerarquantbarcos($porto, $ano, 'Mergulho');
-        $this->gerarquantbarcos($porto, $ano, 'Ratoeira');
-        $this->gerarquantbarcos($porto, $ano, 'Siripoia');
+//        $this->gerarquantbarcos($porto, $ano, 'Coleta');
+//        $this->gerarquantbarcos($porto, $ano, 'Emalhe');
+//        $this->gerarquantbarcos($porto, $ano, 'Jerere');
+//        $this->gerarquantbarcos($porto, $ano, 'Manzua');
+        $this->gerarquantbarcos($porto, $ano, 'Linha');
+//        $this->gerarquantbarcos($porto, $ano, 'Mergulho');
+//        $this->gerarquantbarcos($porto, $ano, 'Ratoeira');
+//        $this->gerarquantbarcos($porto, $ano, 'Siripoia');
         $this->gerarquantbarcos($porto, $ano, 'Tarrafa');
-        $this->gerarquantbarcos($porto, $ano, 'VaraPesca');  
+//        $this->gerarquantbarcos($porto, $ano, 'VaraPesca');  
       
+        $this->gerarespeciescapturadas($porto, $ano, 'Tarrafa');
+        $this->gerarespeciescapturadas($porto, $ano, 'Linha');
+        
         $this->gerarrelqtdporarte($porto, $ano);
+        
+        $this->view->assign("porto",$porto);
+        $this->view->assign("arteMaisPescada", "Tarrafa");
+        $this->view->assign("segArteMaisPescada", "Linha");
     }
     public function barraAction(){
-        $dateStart = $this->_getParam('dataini');
-        $dateEnd = $this->_getParam('datafim');
-        
-        $dataIni = $this->dataInicial($dateStart);
-        $date = explode('-',$dataIni);
-        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("dataini", $datainicial);
-        
-        $dataFim = $this->dataFinal($dateEnd);
-        $date = explode('-',$dataFim);
-        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("datafim", $datafinal);
-        $ano = $date[0];
-        
+        $ano = $this->_getParam('ano');
+        if($ano == ""){
+            $ano = 2014;
+        }
         $porto = "Porto da Barra";
         
         /* Artes desse porto:
@@ -1597,28 +1592,28 @@ class PortoController extends Zend_Controller_Action
          */
                 
         $this->gerarquantentrevistas($porto, $ano, 'Arrasto');
-                
+        $this->gerarquantentrevistas($porto, $ano, 'Siripoia');
+        
         $this->gerarquantcaptura($porto, $ano, 'Arrasto');
+        $this->gerarquantcaptura($porto, $ano, 'Siripoia');
         
         $this->gerarquantbarcos($porto, $ano, 'Arrasto');
+        $this->gerarquantbarcos($porto, $ano, 'Siripoia');
         
         $this->gerarrelqtdporarte($porto, $ano);
+        
+        $this->gerarespeciescapturadas($porto, $ano, 'Arrasto');
+        $this->gerarespeciescapturadas($porto, $ano, 'Siripoia');
+        
+        $this->view->assign("porto",$porto);
+        $this->view->assign("arteMaisPescada", "Arrasto");
+        $this->view->assign("segArteMaisPescada", "Siripoia");
     }
     public function conchaAction(){
-        $dateStart = $this->_getParam('dataini');
-        $dateEnd = $this->_getParam('datafim');
-        
-        $dataIni = $this->dataInicial($dateStart);
-        $date = explode('-',$dataIni);
-        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("dataini", $datainicial);
-        
-        $dataFim = $this->dataFinal($dateEnd);
-        $date = explode('-',$dataFim);
-        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("datafim", $datafinal);
-        $ano = $date[0];
-        
+        $ano = $this->_getParam('ano');
+        if($ano == ""){
+            $ano = 2014;
+        }
         $porto = "Porto da Concha";
                 
         /* Artes desse porto:
@@ -1656,22 +1651,19 @@ class PortoController extends Zend_Controller_Action
         $this->gerarquantbarcos($porto, $ano, 'VaraPesca');
         
         $this->gerarrelqtdporarte($porto, $ano);
+        
+        $this->gerarespeciescapturadas($porto, $ano, 'Emalhe');
+        $this->gerarespeciescapturadas($porto, $ano, 'Linha');
+        
+        $this->view->assign("porto",$porto);
+        $this->view->assign("arteMaisPescada", "Linha");
+        $this->view->assign("segArteMaisPescada", "Emalhe");
     }
     public function forteAction(){
-        $dateStart = $this->_getParam('dataini');
-        $dateEnd = $this->_getParam('datafim');
-        
-        $dataIni = $this->dataInicial($dateStart);
-        $date = explode('-',$dataIni);
-        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("dataini", $datainicial);
-        
-        $dataFim = $this->dataFinal($dateEnd);
-        $date = explode('-',$dataFim);
-        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("datafim", $datafinal);
-        $ano = $date[0];
-        
+        $ano = $this->_getParam('ano');
+        if($ano == ""){
+            $ano = 2014;
+        }
         $porto = "Porto do Forte";
           
         /* Artes desse porto:
@@ -1709,22 +1701,19 @@ class PortoController extends Zend_Controller_Action
         $this->gerarquantbarcos($porto, $ano, 'Tarrafa');
         
         $this->gerarrelqtdporarte($porto, $ano);
+        
+        $this->gerarespeciescapturadas($porto, $ano, 'Tarrafa');
+        $this->gerarespeciescapturadas($porto, $ano, 'Linha');
+        
+        $this->view->assign("porto",$porto);
+        $this->view->assign("arteMaisPescada", "Linha");
+        $this->view->assign("segArteMaisPescada", "Tarrafa");
     }
     public function jueranaAction(){
-        $dateStart = $this->_getParam('dataini');
-        $dateEnd = $this->_getParam('datafim');
-        
-        $dataIni = $this->dataInicial($dateStart);
-        $date = explode('-',$dataIni);
-        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("dataini", $datainicial);
-        
-        $dataFim = $this->dataFinal($dateEnd);
-        $date = explode('-',$dataFim);
-        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("datafim", $datafinal);
-        $ano = $date[0];
-        
+        $ano = $this->_getParam('ano');
+        if($ano == ""){
+            $ano = 2014;
+        }
         $porto = "Juerana rio";
         
         /* Artes desse porto:
@@ -1758,22 +1747,19 @@ class PortoController extends Zend_Controller_Action
         $this->gerarquantbarcos($porto, $ano, 'VaraPesca');
         
         $this->gerarrelqtdporarte($porto, $ano);
+        
+        $this->gerarespeciescapturadas($porto, $ano, 'Manzua');
+        $this->gerarespeciescapturadas($porto, $ano, 'Ratoeira');
+        
+        $this->view->assign("porto",$porto);
+        $this->view->assign("arteMaisPescada", "Manzua");
+        $this->view->assign("segArteMaisPescada", "Ratoeira");
     }
     public function mamoaAction(){
-        $dateStart = $this->_getParam('dataini');
-        $dateEnd = $this->_getParam('datafim');
-        
-        $dataIni = $this->dataInicial($dateStart);
-        $date = explode('-',$dataIni);
-        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("dataini", $datainicial);
-        
-        $dataFim = $this->dataFinal($dateEnd);
-        $date = explode('-',$dataFim);
-        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("datafim", $datafinal);
-        $ano = $date[0];
-        
+        $ano = $this->_getParam('ano');
+        if($ano == ""){
+            $ano = 2014;
+        }
         $porto = "Mamoã";
                   
         /* Artes desse porto:
@@ -1811,22 +1797,19 @@ class PortoController extends Zend_Controller_Action
         $this->gerarquantbarcos($porto, $ano, 'Tarrafa');
         
         $this->gerarrelqtdporarte($porto, $ano);
+        
+        $this->gerarespeciescapturadas($porto, $ano, 'Linha');
+        $this->gerarespeciescapturadas($porto, $ano, 'Calao');
+        
+        $this->view->assign("porto",$porto);
+        $this->view->assign("arteMaisPescada", "Linha");
+        $this->view->assign("segArteMaisPescada", "Calao");
     }
     public function pontalAction(){
-        $dateStart = $this->_getParam('dataini');
-        $dateEnd = $this->_getParam('datafim');
-        
-        $dataIni = $this->dataInicial($dateStart);
-        $date = explode('-',$dataIni);
-        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("dataini", $datainicial);
-        
-        $dataFim = $this->dataFinal($dateEnd);
-        $date = explode('-',$dataFim);
-        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("datafim", $datafinal);
-        $ano = $date[0];
-        
+        $ano = $this->_getParam('ano');
+        if($ano == ""){
+            $ano = 2014;
+        }
         $porto = "Pontal";
         
         /* Artes desse porto:
@@ -1860,22 +1843,20 @@ class PortoController extends Zend_Controller_Action
         $this->gerarquantbarcos($porto, $ano, 'VaraPesca');
         
         $this->gerarrelqtdporarte($porto, $ano);
+        
+        $this->gerarespeciescapturadas($porto, $ano, 'Arrasto');
+        $this->gerarespeciescapturadas($porto, $ano, 'Linha');
+        
+        $this->view->assign("porto",$porto);
+        $this->view->assign("arteMaisPescada", "Linha");
+        $this->view->assign("segArteMaisPescada", "Arrasto");
     }
     public function prainhaAction(){
-        $dateStart = $this->_getParam('dataini');
-        $dateEnd = $this->_getParam('datafim');
+        $ano = $this->_getParam('ano');
         
-        $dataIni = $this->dataInicial($dateStart);
-        $date = explode('-',$dataIni);
-        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("dataini", $datainicial);
-        
-        $dataFim = $this->dataFinal($dateEnd);
-        $date = explode('-',$dataFim);
-        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("datafim", $datafinal);
-        $ano = $date[0];
-        
+        if($ano == ""){
+            $ano = 2014;
+        }
         $porto = "Prainha";
         
         /* Artes desse porto:
@@ -1905,22 +1886,19 @@ class PortoController extends Zend_Controller_Action
         $this->gerarquantbarcos($porto, $ano, 'Mergulho');
         
         $this->gerarrelqtdporarte($porto, $ano);
+        
+        $this->gerarespeciescapturadas($porto, $ano, 'Linha');
+        $this->gerarespeciescapturadas($porto, $ano, 'Arrasto');
+        
+        $this->view->assign("porto",$porto);
+        $this->view->assign("arteMaisPescada", "Linha");
+        $this->view->assign("segArteMaisPescada", "Arrasto");
     }
     public function ramoAction(){
-        $dateStart = $this->_getParam('dataini');
-        $dateEnd = $this->_getParam('datafim');
-        
-        $dataIni = $this->dataInicial($dateStart);
-        $date = explode('-',$dataIni);
-        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("dataini", $datainicial);
-        
-        $dataFim = $this->dataFinal($dateEnd);
-        $date = explode('-',$dataFim);
-        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("datafim", $datafinal);
-        $ano = $date[0];
-        
+        $ano = $this->_getParam('ano');
+        if($ano == ""){
+            $ano = 2014;
+        }
         $porto = "Ponta do Ramo";
         
         /* Artes desse porto:
@@ -1942,22 +1920,19 @@ class PortoController extends Zend_Controller_Action
         $this->gerarquantbarcos($porto, $ano, 'Linha');
         
         $this->gerarrelqtdporarte($porto, $ano);
+        
+        $this->gerarespeciescapturadas($porto, $ano, 'Tarrafa');
+        $this->gerarespeciescapturadas($porto, $ano, 'Linha');
+        
+        $this->view->assign("porto",$porto);
+        $this->view->assign("arteMaisPescada", "Linha");
+        $this->view->assign("segArteMaisPescada", "Calao");
     }
     public function sambaitubaAction(){
-        $dateStart = $this->_getParam('dataini');
-        $dateEnd = $this->_getParam('datafim');
-        
-        $dataIni = $this->dataInicial($dateStart);
-        $date = explode('-',$dataIni);
-        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("dataini", $datainicial);
-        
-        $dataFim = $this->dataFinal($dateEnd);
-        $date = explode('-',$dataFim);
-        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("datafim", $datafinal);
-        $ano = $date[0];
-        
+        $ano = $this->_getParam('ano');
+        if($ano == ""){
+            $ano = 2014;
+        }
         $porto = "Sambaituba";
         
         /* Artes desse porto:
@@ -1999,22 +1974,19 @@ class PortoController extends Zend_Controller_Action
         $this->gerarquantbarcos($porto, $ano, 'VaraPesca');
         
         $this->gerarrelqtdporarte($porto, $ano);
+        
+        $this->gerarespeciescapturadas($porto, $ano, 'Manzua');
+        $this->gerarespeciescapturadas($porto, $ano, 'Ratoeira');
+        
+        $this->view->assign("porto",$porto);
+        $this->view->assign("arteMaisPescada", "Manzua");
+        $this->view->assign("segArteMaisPescada", "Ratoeira");
     }
     public function saomiguelAction(){
-        $dateStart = $this->_getParam('dataini');
-        $dateEnd = $this->_getParam('datafim');
-        
-        $dataIni = $this->dataInicial($dateStart);
-        $date = explode('-',$dataIni);
-        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("dataini", $datainicial);
-        
-        $dataFim = $this->dataFinal($dateEnd);
-        $date = explode('-',$dataFim);
-        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("datafim", $datafinal);
-        $ano = $date[0];
-        
+        $ano = $this->_getParam('ano');
+        if($ano == ""){
+            $ano = 2014;
+        }
         $porto = "São Miguel";
         
         /* Artes desse porto:
@@ -2060,22 +2032,19 @@ class PortoController extends Zend_Controller_Action
         $this->gerarquantbarcos($porto, $ano, 'VaraPesca');
         
         $this->gerarrelqtdporarte($porto, $ano);
+        
+        $this->gerarespeciescapturadas($porto, $ano, 'Calao');
+        $this->gerarespeciescapturadas($porto, $ano, 'Emalhe');
+        
+        $this->view->assign("porto",$porto);
+        $this->view->assign("arteMaisPescada", "Calao");
+        $this->view->assign("segArteMaisPescada", "Emalhe");
     }
     public function serraAction(){
-        $dateStart = $this->_getParam('dataini');
-        $dateEnd = $this->_getParam('datafim');
-        
-        $dataIni = $this->dataInicial($dateStart);
-        $date = explode('-',$dataIni);
-        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("dataini", $datainicial);
-        
-        $dataFim = $this->dataFinal($dateEnd);
-        $date = explode('-',$dataFim);
-        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("datafim", $datafinal);
-        $ano = $date[0];
-        
+        $ano = $this->_getParam('ano');
+        if($ano == ""){
+            $ano = 2014;
+        }
         $porto = "Pé de Serra";
         
         /* Artes desse porto:
@@ -2117,22 +2086,19 @@ class PortoController extends Zend_Controller_Action
         $this->gerarquantbarcos($porto, $ano, 'VaraPesca');
         
         $this->gerarrelqtdporarte($porto, $ano);
+        
+        $this->gerarespeciescapturadas($porto, $ano, 'Tarrafa');
+        $this->gerarespeciescapturadas($porto, $ano, 'VaraPesca');
+        
+        $this->view->assign("porto",$porto);
+        $this->view->assign("arteMaisPescada", "Tarrafa");
+        $this->view->assign("segArteMaisPescada", "VaraPesca");
     }
     public function sobradinhoAction(){
-        $dateStart = $this->_getParam('dataini');
-        $dateEnd = $this->_getParam('datafim');
-        
-        $dataIni = $this->dataInicial($dateStart);
-        $date = explode('-',$dataIni);
-        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("dataini", $datainicial);
-        
-        $dataFim = $this->dataFinal($dateEnd);
-        $date = explode('-',$dataFim);
-        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("datafim", $datafinal);
-        $ano = $date[0];
-        
+        $ano = $this->_getParam('ano');
+        if($ano == ""){
+            $ano = 2014;
+        }
         $porto = "Sobradinho";
         
         /* Artes desse porto:
@@ -2170,22 +2136,19 @@ class PortoController extends Zend_Controller_Action
         $this->gerarquantbarcos($porto, $ano, 'VaraPesca');
         
         $this->gerarrelqtdporarte($porto, $ano);
+        
+        $this->gerarespeciescapturadas($porto, $ano, 'Tarrafa');
+        $this->gerarespeciescapturadas($porto, $ano, 'Linha');
+        
+        $this->view->assign("porto",$porto);
+        $this->view->assign("arteMaisPescada", "Linha");
+        $this->view->assign("segArteMaisPescada", "Tarrafa");
     }
     public function terminalAction(){
-        $dateStart = $this->_getParam('dataini');
-        $dateEnd = $this->_getParam('datafim');
-        
-        $dataIni = $this->dataInicial($dateStart);
-        $date = explode('-',$dataIni);
-        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("dataini", $datainicial);
-        
-        $dataFim = $this->dataFinal($dateEnd);
-        $date = explode('-',$dataFim);
-        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("datafim", $datafinal);
-        $ano = $date[0];
-        
+        $ano = $this->_getParam('ano');
+        if($ano == ""){
+            $ano = 2014;
+        }
         $porto = "Terminal Pesqueiro";
         
         /* Artes desse porto:
@@ -2215,22 +2178,19 @@ class PortoController extends Zend_Controller_Action
         $this->gerarquantbarcos($porto, $ano, 'Siripoia');
         
         $this->gerarrelqtdporarte($porto, $ano);
+        
+        $this->gerarespeciescapturadas($porto, $ano, 'Arrasto');
+        $this->gerarespeciescapturadas($porto, $ano, 'Grosseira');
+        
+        $this->view->assign("porto",$porto);
+        $this->view->assign("arteMaisPescada", "Arrasto");
+        $this->view->assign("segArteMaisPescada", "Grosseira");
     }
     public function tulhaAction(){
-        $dateStart = $this->_getParam('dataini');
-        $dateEnd = $this->_getParam('datafim');
-        
-        $dataIni = $this->dataInicial($dateStart);
-        $date = explode('-',$dataIni);
-        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("dataini", $datainicial);
-        
-        $dataFim = $this->dataFinal($dateEnd);
-        $date = explode('-',$dataFim);
-        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("datafim", $datafinal);
-        $ano = $date[0];
-        
+        $ano = $this->_getParam('ano');
+        if($ano == ""){
+            $ano = 2014;
+        }
         $porto = "Ponta da Tulha";
         
         /* Artes desse porto:
@@ -2276,22 +2236,19 @@ class PortoController extends Zend_Controller_Action
         $this->gerarquantbarcos($porto, $ano, 'Tarrafa');
         
         $this->gerarrelqtdporarte($porto, $ano);
+        
+        $this->gerarespeciescapturadas($porto, $ano, 'Linha');
+        $this->gerarespeciescapturadas($porto, $ano, 'Calao');
+        
+        $this->view->assign("porto",$porto);
+        $this->view->assign("arteMaisPescada", "Linha");
+        $this->view->assign("segArteMaisPescada", "Calao");
     }
     public function urucutucaAction(){
-        $dateStart = $this->_getParam('dataini');
-        $dateEnd = $this->_getParam('datafim');
-        
-        $dataIni = $this->dataInicial($dateStart);
-        $date = explode('-',$dataIni);
-        $datainicial = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("dataini", $datainicial);
-        
-        $dataFim = $this->dataFinal($dateEnd);
-        $date = explode('-',$dataFim);
-        $datafinal = $date[2].'-'.$date[1].'-'.$date[0];
-        $this->view->assign("datafim", $datafinal);
-        $ano = $date[0];
-        
+        $ano = $this->_getParam('ano');
+        if($ano == ""){
+            $ano = 2014;
+        }
         $porto = "Urucutuca";
         
         /* Artes desse porto:
@@ -2325,6 +2282,13 @@ class PortoController extends Zend_Controller_Action
         $this->gerarquantbarcos($porto, $ano, 'VaraPesca');
         
         $this->gerarrelqtdporarte($porto, $ano);
+        
+        $this->gerarespeciescapturadas($porto, $ano, 'Manzua');
+        $this->gerarespeciescapturadas($porto, $ano, 'VaraPesca');
+        
+        $this->view->assign("porto",$porto);
+        $this->view->assign("arteMaisPescada", "Manzua");
+        $this->view->assign("segArteMaisPescada", "VaraPesca");
     }
             
 	public function relatorioAction() {
