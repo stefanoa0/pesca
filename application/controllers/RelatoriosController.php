@@ -4592,11 +4592,11 @@ class RelatoriosController extends Zend_Controller_Action
         $modelTarrafa=     new Application_Model_Tarrafa;
         $modelVaraPesca =  new Application_Model_VaraPesca;
         
-//         $date =  $this->_getParam('data');
-//        $datend = $this->_getParam('datafim');
-//        
-//        $data = $this->dataInicial($date);
-//        $datafim = $this->dataFinal($datend);
+         $date =  $this->_getParam('data');
+        $datend = $this->_getParam('datafim');
+        
+        $data = $this->dataInicial($date);
+        $datafim = $this->dataFinal($datend);
 //        
 //        $porto = $this->_getParam('porto');
         
@@ -4662,9 +4662,14 @@ class RelatoriosController extends Zend_Controller_Action
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Arte');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Local');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mês');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'CPUE');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mês/Ano');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Total em kg');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Total em T');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'CPUE (kg)');
 
         $coluna= 0;
         $linha++;
@@ -5036,6 +5041,348 @@ class RelatoriosController extends Zend_Controller_Action
 
         header('Content-Type: application/vnd.ms-excel');
         header("Content-Disposition: attachment;filename='CPUE.xls'");
+        header('Cache-Control: max-age=0');
+
+        ob_end_clean();
+        $objWriter->save('php://output');
+    }
+    
+    
+    public function relartesbyportoAction(){
+        set_time_limit(0);
+        if($this->usuario['tp_id']==5){
+            $this->_redirect('index');
+        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        
+        $modelArrasto =    new Application_Model_ArrastoFundo;
+        $modelCalao=       new Application_Model_Calao;
+        $modelColetaManual=new Application_Model_ColetaManual;
+        $modelEmalhe=      new Application_Model_Emalhe;
+        $modelGrosseira=   new Application_Model_Grosseira;
+        $modelJerere=      new Application_Model_Jerere;
+        $modelLinha=       new Application_Model_Linha;
+        $modelLinhaFundo=  new Application_Model_LinhaFundo;
+        $modelManzua=      new Application_Model_Manzua;
+        $modelMergulho=    new Application_Model_Mergulho;
+        $modelRatoeira=    new Application_Model_Ratoeira;
+        $modelSiripoia=    new Application_Model_Siripoia;
+        $modelTarrafa=     new Application_Model_Tarrafa;
+        $modelVaraPesca =  new Application_Model_VaraPesca;
+        
+         $date =  $this->_getParam('data');
+        $datend = $this->_getParam('datafim');
+        
+        $data = $this->dataInicial($date);
+        $datafim = $this->dataFinal($datend);
+        
+        $porto = $this->_getParam('porto');
+        
+//        if($porto != '999'){
+//            $nomePorto = $this->verifporto($porto);
+//            $arrasto = $modelArrasto->selectQuantPescadoresByPorto();
+//            $calao =$modelCalao->selectQuantPescadoresByPorto("cal_data between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+//            $coletamanual =$modelColetaManual->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+//            $emalhe =$modelEmalhe->selectQuantPescadoresByPorto("drecolhimento between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+//            $grosseira =$modelGrosseira->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+//            $jerere =$modelJerere->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+//            $pescalinha =$modelLinha->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+//            $linhafundo =$modelLinhaFundo->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+//            $manzua =$modelManzua->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'",      'esp_nome_comum');
+//            $mergulho =$modelMergulho->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'",  'esp_nome_comum');
+//            $ratoeira =$modelRatoeira->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'",  'esp_nome_comum');
+//            $siripoia =$modelSiripoia->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'",   'esp_nome_comum');
+//            $tarrafa =$modelTarrafa->selectQuantPescadoresByPorto("tar_data between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'",   'esp_nome_comum');
+//            $varapesca =$modelVaraPesca->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
+//        }
+//         else{
+//             $arrasto = $modelArrasto->selectQuantPescadoresByPorto();
+//             $calao =$modelCalao->selectQuantPescadoresByPorto("cal_data between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+//            $coletamanual =$modelColetaManual->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+//            $emalhe =$modelEmalhe->selectQuantPescadoresByPorto("drecolhimento between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+//            $grosseira =$modelGrosseira->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+//            $jerere =$modelJerere->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+//            $pescalinha =$modelLinha->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+//            $linhafundo =$modelLinhaFundo->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+//            $manzua =$modelManzua->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+//            $mergulho =$modelMergulho->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+//            $ratoeira =$modelRatoeira->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+//            $siripoia =$modelSiripoia->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+//            $tarrafa =$modelTarrafa->selectQuantPescadoresByPorto("tar_data between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+//            $varapesca =$modelVaraPesca->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
+//         } 
+        
+                
+        require_once "../library/Classes/PHPExcel.php";
+        $arrayPortos = array('Amendoeira','Pontal','Prainha','Terminal Pesqueiro','Porto da Barra','São Miguel','Mamoã','Ponta da Tulha','Ponta do Ramo','Aritaguá','Juerana rio','Sambaituba','Urucutuca','Pé de Serra','Sobradinho','Vila Badú','Porto da Concha','Porto do Forte');
+
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->setActiveSheetIndex(0);
+        $coluna = 0;
+        $linha = 1;
+        
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   'Arte de Pesca (n)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Arrasto de Fundo');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Arrasto de Praia');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Arrasto de Rio');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Calão');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Coleta Manual');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Emalhe');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Groseira');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Jereré');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Linha');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Linha de Fundo');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Manzuá');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Mergulho');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Ratoeira');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Siripoia');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Tarrafa');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'VaraPesca');
+        $linha = 1;
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Amendoeira');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Pontal');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Prainha');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Terminal Pesqueiro');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto da Barra');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'São Miguel');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mamoã');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ponta da Tulha');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ponta do Ramo');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Aritaguá');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Juerana rio');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Sambaituba');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Urucutuca');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Pé de Serra');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Sobradinho');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Vila Badú');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto da Concha');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto do Forte');
+
+        $coluna=1;
+        $linha++;
+        foreach ( $arrayPortos as $porto ):
+            $quantEntrArrasto = $modelArrasto->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrArrasto[0]['count']);
+            $coluna++;
+            //$linha++;
+        endforeach;
+        
+        
+        
+        $coluna=1;
+        $linha++;
+        foreach ( $arrayPortos as $porto ):
+            $quantEntrAP = $modelCalao->selectEntrevistasByPorto("pto_nome = '".$porto."' And tcat_tipo = 'Arrasto de Praia'");
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrAP[0]['count']);
+            $coluna++;
+            //$linha++;
+        endforeach; 
+        
+        $coluna=1;
+        $linha++;
+        foreach ( $arrayPortos as $porto ):
+            $quantEntrAR = $modelCalao->selectEntrevistasByPorto("pto_nome = '".$porto."' And tcat_tipo = 'Arrasto de Rio'");
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrAR[0]['count']);
+            $coluna++;
+            //$linha++;
+        endforeach;
+        
+        $coluna=1;
+        $linha++;
+        foreach ( $arrayPortos as $porto ):
+            $quantEntrCalao = $modelCalao->selectEntrevistasByPorto("pto_nome = '".$porto."' And tcat_tipo = 'Calão'");
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrCalao[0]['count']);
+            $coluna++;
+            //$linha++;
+        endforeach; 
+        
+        $coluna=1;
+        $linha++;
+        foreach ( $arrayPortos as $porto ):
+            $quantEntrColetaManual = $modelColetaManual->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrColetaManual[0]['count']);
+            $coluna++;
+            //$linha++;
+        endforeach; 
+        
+        $coluna=1;
+        $linha++;
+        foreach ( $arrayPortos as $porto ):
+            $quantEntrEmalhe = $modelEmalhe->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrEmalhe[0]['count']);
+            $coluna++;
+            //$linha++;
+        endforeach; 
+        
+        $coluna=1;
+        $linha++;
+        foreach ( $arrayPortos as $porto ):
+            $quantEntrGrosseira = $modelGrosseira->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrGrosseira[0]['count']);
+            $coluna++;
+            //$linha++;
+        endforeach; 
+        
+        $coluna=1;
+        $linha++;
+        foreach ( $arrayPortos as $porto ):
+            $quantEntrJerere = $modelJerere->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrJerere[0]['count']);
+            $coluna++;
+            //$linha++;
+        endforeach; 
+        
+        $coluna=1;
+        $linha++;
+        foreach ( $arrayPortos as $porto ):
+            $quantEntrLinha = $modelLinha->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrLinha[0]['count']);
+            $coluna++;
+            //$linha++;
+        endforeach; 
+        
+        $coluna=1;
+        $linha++;
+        foreach ( $arrayPortos as $porto ):
+            $quantEntrLinhaFundo = $modelLinhaFundo->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrLinhaFundo[0]['count']);
+            $coluna++;
+            //$linha++;
+        endforeach; 
+        
+        $coluna=1;
+        $linha++;
+        foreach ( $arrayPortos as $porto ):
+            $quantEntrManzua = $modelManzua->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrManzua[0]['count']);
+            $coluna++;
+            //$linha++;
+        endforeach; 
+        
+        $coluna=1;
+        $linha++;
+        foreach ( $arrayPortos as $porto ):
+            $quantEntrMergulho = $modelMergulho->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrMergulho[0]['count']);
+            $coluna++;
+            //$linha++;
+        endforeach; 
+        
+        $coluna=1;
+        $linha++;
+        foreach ( $arrayPortos as $porto ):
+            $quantEntrRatoeira = $modelRatoeira->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrRatoeira[0]['count']);
+            $coluna++;
+            //$linha++;
+        endforeach; 
+        
+        $coluna=1;
+        $linha++;
+        foreach ( $arrayPortos as $porto ):
+            $quantEntrSiripoia = $modelSiripoia->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrSiripoia[0]['count']);
+            $coluna++;
+            //$linha++;
+        endforeach; 
+        
+        $coluna=1;
+        $linha++;
+        foreach ( $arrayPortos as $porto ):
+            $quantEntrTarrafa = $modelTarrafa->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrTarrafa[0]['count']);
+            $coluna++;
+            //$linha++;
+        endforeach; 
+        
+        $coluna=1;
+        $linha++;
+        foreach ( $arrayPortos as $porto ):
+            $quantEntrVaraPesca = $modelVaraPesca->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrVaraPesca[0]['count']);
+            $coluna++;
+            //$linha++;
+        endforeach; 
+        
+        $coluna=0;
+        $linha++;
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Total');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(B2:B17)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(C2:C17)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(D2:D17)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(E2:E17)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(F2:F17)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(G2:G17)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(H2:H17)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(I2:I17)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(J2:J17)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(K2:K17)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(L2:L17)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(M2:M17)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(N2:N17)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(O2:O17)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(P2:P17)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(Q2:Q17)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(R2:R17)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(S2:S17)');
+        
+        $linha+=2;
+        $coluna = 0;
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   'Arte de Pesca (%)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Arrasto de Fundo');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Arrasto de Praia');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Arrasto de Rio');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Calão');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Coleta Manual');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Emalhe');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Groseira');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Jereré');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Linha');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Linha de Fundo');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Manzuá');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Mergulho');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Ratoeira');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Siripoia');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Tarrafa');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'VaraPesca');
+        $linha -=16;
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Amendoeira');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Pontal');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Prainha');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Terminal Pesqueiro');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto da Barra');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'São Miguel');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mamoã');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ponta da Tulha');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ponta do Ramo');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Aritaguá');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Juerana rio');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Sambaituba');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Urucutuca');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Pé de Serra');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Sobradinho');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Vila Badú');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto da Concha');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto do Forte');
+        $linha++;
+
+        
+        for($linhaAux=2; $linhaAux<19; $linhaAux++){
+            for($coluna=1; $coluna<19; $coluna++){
+                $valEntrevistas = $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, $linhaAux)->getFormattedValue();
+                $valTotal = $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 18)->getFormattedValue();
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $valEntrevistas/$valTotal*100);
+            }
+            $linha++;
+        }
+        
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        ob_end_clean();
+
+        header('Content-Type: application/vnd.ms-excel');
+        header("Content-Disposition: attachment;filename='Artes por Portos.xls'");
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
