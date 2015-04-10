@@ -1568,6 +1568,7 @@ function ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista){ //url é
                     // Send the data to PHP now... and wait for response to update the status div
                 hr.send(vars); // Actually execute the request
                 document.getElementById("especie").innerHTML = "processando...";
+                resetFormValues("formEntrevistas");
             }
      }  
 
@@ -1617,8 +1618,16 @@ function ajax_pesqueiro(form, url, id_entrevista, tipo_entrevista){
                     // Send the data to PHP now... and wait for response to update the status div
                 hr.send(vars); // Actually execute the request
                 document.getElementById("pesqueiro").innerHTML = "processando...";
+                resetFormValues("formEntrevistas");
             }
+} 
+
+function resetFormValues(formid) {
+    $(":text,select", $("#"+formid)).each(function () {
+        $(this).val("");
+    });
 }
+
 function ajax_busca_esp_capturada(form, url){
      // Create our XMLHttpRequest object
             var hr = new XMLHttpRequest();
