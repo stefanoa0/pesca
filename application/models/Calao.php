@@ -245,7 +245,7 @@ class Application_Model_Calao
         
         $dadosPesqueiro = array(
             'cal_id' => $idEntrevista,
-            'pcal_id' => $pesqueiro,
+            'paf_id' => $pesqueiro,
         );
         
         $this->dbTableTCalao->insert($dadosPesqueiro);
@@ -255,7 +255,7 @@ class Application_Model_Calao
         $this->dbTableTCalao = new Application_Model_DbTable_CalaoHasPesqueiro();       
                 
         $whereCalaoHasPesqueiro = $this->dbTableTCalao->getAdapter()
-                ->quoteInto('"cal_pcal_id" = ?', $idPesqueiro);
+                ->quoteInto('"cal_paf_id" = ?', $idPesqueiro);
         
         $this->dbTableTCalao->delete($whereCalaoHasPesqueiro);
         
