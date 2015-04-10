@@ -48,7 +48,19 @@ class Application_Model_Relatorios
         
         return $arrasto;
     }
-
+    public function selectCapturaByArteArrasto($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaArrasto();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_arrasto', 'v_entrevista_arrasto.af_id')->joinLeft('v_arrastofundo_has_t_especie_capturada', 'v_entrevista_arrasto.af_id = v_arrastofundo_has_t_especie_capturada.af_id',
+                        array('sum(v_arrastofundo_has_t_especie_capturada.spc_quantidade) as quant','sum(v_arrastofundo_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('v_entrevista_arrasto.af_id'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
     
     ///////////////////////////////////////////////////////////////////////////////////////
     
@@ -98,7 +110,18 @@ class Application_Model_Relatorios
         
         return $Calao;
     }
-    
+    public function selectCapturaByArteCalao($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaCalao();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_calao', 'v_entrevista_calao.cal_id')->joinLeft('v_calao_has_t_especie_capturada', 'v_entrevista_calao.cal_id = v_calao_has_t_especie_capturada.cal_id',
+                        array('sum(v_calao_has_t_especie_capturada.spc_quantidade) as quant','sum(v_calao_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('v_entrevista_calao.cal_id'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
     //////////////////////////////////////////////////////////////////////////////////////
     
     //COLETA MANUAL//////////////////////////////////////////////////////////////////////
@@ -148,6 +171,19 @@ class Application_Model_Relatorios
         $ColetaManual = $this->modelColetaManual->selectColetaManualHasEspCapturadas($where, $order, $limit);
         
         return $ColetaManual;
+    }
+    
+    public function selectCapturaByArteColeta($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaColetaManual();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_coletamanual', 'v_entrevista_coletamanual.cml_id')->joinLeft('v_coletamanual_has_t_especie_capturada', 'v_entrevista_coletamanual.cml_id = v_coletamanual_has_t_especie_capturada.cml_id',
+                        array('sum(v_coletamanual_has_t_especie_capturada.spc_quantidade) as quant','sum(v_coletamanual_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('v_entrevista_coletamanual.cml_id'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
     }
     //////////////////////////////////////////////////////////////////////////////////////
     
@@ -200,6 +236,19 @@ class Application_Model_Relatorios
         
         return $Emalhe;
     }
+    
+    public function selectCapturaByArteEmalhe($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaEmalhe();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_emalhe', 'v_entrevista_emalhe.em_id')->joinLeft('v_emalhe_has_t_especie_capturada', 'v_entrevista_emalhe.em_id = v_emalhe_has_t_especie_capturada.em_id',
+                        array('sum(v_emalhe_has_t_especie_capturada.spc_quantidade) as quant','sum(v_emalhe_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('v_entrevista_emalhe.em_id'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
     ///////////////////////////////////////////////////////////////////////////////////////
     
     ///Grosseira//////////////////////////////////////////////////////////////////////////////
@@ -249,6 +298,18 @@ class Application_Model_Relatorios
         
         return $Grosseira;
     }
+    public function selectCapturaByArteGrosseira($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaGrosseira();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_grosseira', 'v_entrevista_grosseira.grs_id')->joinLeft('v_grosseira_has_t_especie_capturada', 'v_entrevista_grosseira.grs_id = v_grosseira_has_t_especie_capturada.grs_id',
+                        array('sum(v_grosseira_has_t_especie_capturada.spc_quantidade) as quant','sum(v_grosseira_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('v_entrevista_grosseira.grs_id'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
     ///////////////////////////////////////////////////////////////////////////////////////
     
     ///Jerere//////////////////////////////////////////////////////////////////////////////
@@ -297,6 +358,20 @@ class Application_Model_Relatorios
         
         return $Jerere;
     }
+    
+    public function selectCapturaByArteJerere($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaJerere();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_jerere', 'v_entrevista_jerere.jre_id')->joinLeft('v_jerere_has_t_especie_capturada', 'v_entrevista_jerere.jre_id = v_jerere_has_t_especie_capturada.jre_id',
+                        array('sum(v_jerere_has_t_especie_capturada.spc_quantidade) as quant','sum(v_jerere_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('v_entrevista_jerere.jre_id'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+	
     //////////////////////////////////////////////////////////////////////////////////////
     
     ///Linha//////////////////////////////////////////////////////////////////////////////
@@ -346,6 +421,20 @@ class Application_Model_Relatorios
         
         return $Linha;
     }
+    
+    public function selectCapturaByArteLinha($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaLinha();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_linha', 'v_entrevista_linha.lin_id')->joinLeft('v_linha_has_t_especie_capturada', 'v_entrevista_linha.lin_id = v_linha_has_t_especie_capturada.lin_id',
+                        array('sum(v_linha_has_t_especie_capturada.spc_quantidade) as quant','sum(v_linha_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('v_entrevista_linha.lin_id'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+	
     ///////////////////////////////////////////////////////////////////////////////////////
     
     ///LinhaFundo//////////////////////////////////////////////////////////////////////////////
@@ -395,6 +484,18 @@ class Application_Model_Relatorios
         
         return $LinhaFundo;
     }
+    public function selectCapturaByArteLinhaFundo($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaLinhaFundo();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_linhafundo', 'v_entrevista_linhafundo.lf_id')->joinLeft('v_linhafundo_has_t_especie_capturada', 'v_entrevista_linhafundo.lf_id = v_linhafundo_has_t_especie_capturada.lf_id',
+                        array('sum(v_linhafundo_has_t_especie_capturada.spc_quantidade) as quant','sum(v_linhafundo_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('v_entrevista_linhafundo.lf_id'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////
     
     ///Manzua//////////////////////////////////////////////////////////////////////////////
@@ -443,6 +544,18 @@ class Application_Model_Relatorios
         
         return $Manzua;
     }
+    public function selectCapturaByArteManzua($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaManzua();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_manzua', 'v_entrevista_manzua.man_id')->joinLeft('v_manzua_has_t_especie_capturada', 'v_entrevista_manzua.man_id = v_manzua_has_t_especie_capturada.man_id',
+                        array('sum(v_manzua_has_t_especie_capturada.spc_quantidade) as quant','sum(v_manzua_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('v_entrevista_manzua.man_id'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
 /////////////////////////////////////////////////////////////////////////////////////////////
     
     ///Mergulho//////////////////////////////////////////////////////////////////////////////
@@ -490,6 +603,19 @@ class Application_Model_Relatorios
         $Mergulho = $this->modelMergulho->selectMergulhoHasEspCapturadas($where, $order, $limit);
         
         return $Mergulho;
+    }
+    
+    public function selectCapturaByArteMergulho($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaMergulho();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_mergulho', 'v_entrevista_mergulho.mer_id')->joinLeft('v_mergulho_has_t_especie_capturada', 'v_entrevista_mergulho.mer_id = v_mergulho_has_t_especie_capturada.mer_id',
+                        array('sum(v_mergulho_has_t_especie_capturada.spc_quantidade) as quant','sum(v_mergulho_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('v_entrevista_mergulho.mer_id'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
     }
 /////////////////////////////////////////////////////////////////////////////////////////////
     
@@ -541,6 +667,19 @@ class Application_Model_Relatorios
         
         return $Ratoeira;
     }
+    
+    public function selectCapturaByArteRatoeira($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaRatoeira();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_ratoeira', 'v_entrevista_ratoeira.rat_id')->joinLeft('v_ratoeira_has_t_especie_capturada', 'v_entrevista_ratoeira.rat_id = v_ratoeira_has_t_especie_capturada.rat_id',
+                        array('sum(v_ratoeira_has_t_especie_capturada.spc_quantidade) as quant','sum(v_ratoeira_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('v_entrevista_ratoeira.rat_id'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
 /////////////////////////////////////////////////////////////////////////////////////////////
     
     ///Siripoia//////////////////////////////////////////////////////////////////////////////
@@ -590,6 +729,21 @@ class Application_Model_Relatorios
         
         return $Siripoia;
     }
+    public function selectCapturaByArteSiripoia($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaSiripoia();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_siripoia', 'v_entrevista_siripoia.sir_id')->joinLeft('v_siripoia_has_t_especie_capturada', 'v_entrevista_siripoia.sir_id = v_siripoia_has_t_especie_capturada.sir_id',
+                        array('sum(v_siripoia_has_t_especie_capturada.spc_quantidade) as quant','sum(v_siripoia_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('v_entrevista_siripoia.sir_id'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+	
+	
+    
 /////////////////////////////////////////////////////////////////////////////////////////////
     
     ///Tarrafa//////////////////////////////////////////////////////////////////////////////
@@ -638,6 +792,18 @@ class Application_Model_Relatorios
         
         return $Tarrafa;
     }
+    public function selectCapturaByArteTarrafa($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaTarrafa();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_tarrafa', 'v_entrevista_tarrafa.tar_id')->joinLeft('v_tarrafa_has_t_especie_capturada', 'v_entrevista_tarrafa.tar_id = v_tarrafa_has_t_especie_capturada.tar_id',
+                        array('sum(v_tarrafa_has_t_especie_capturada.spc_quantidade) as quant','sum(v_tarrafa_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('v_entrevista_tarrafa.tar_id'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
 /////////////////////////////////////////////////////////////////////////////////////////////
     
     ///VaraPesca//////////////////////////////////////////////////////////////////////////////
@@ -685,6 +851,18 @@ class Application_Model_Relatorios
         $VaraPesca = $this->modelVaraPesca->selectVaraPescaHasEspCapturadas($where, $order, $limit);
         
         return $VaraPesca;
+    }
+    public function selectCapturaByArteVaraPesca($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaVaraPesca();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_varapesca', 'v_entrevista_varapesca.vp_id')->joinLeft('v_varapesca_has_t_especie_capturada', 'v_entrevista_varapesca.vp_id = v_varapesca_has_t_especie_capturada.vp_id',
+                        array('sum(v_varapesca_has_t_especie_capturada.spc_quantidade) as quant','sum(v_varapesca_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                group(array('v_entrevista_varapesca.vp_id'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
     }
 /////////////////////////////////////////////////////////////////////////////////////////////
     

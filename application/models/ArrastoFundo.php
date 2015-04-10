@@ -489,6 +489,7 @@ class Application_Model_ArrastoFundo
         }
         return $dbTable->fetchAll($select)->toArray();
     }
+    
     //Quantidade de variaveis por Porto FUNÇÕES PARA REPLICAR
     public function selectQuantBarcosByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaArrasto();
