@@ -51,9 +51,10 @@ class Application_Model_Relatorios
     public function selectCapturaByArteArrasto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaArrasto();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_arrasto', 'v_entrevista_arrasto.af_id')->joinLeft('v_arrastofundo_has_t_especie_capturada', 'v_entrevista_arrasto.af_id = v_arrastofundo_has_t_especie_capturada.af_id',
-                        array('sum(v_arrastofundo_has_t_especie_capturada.spc_quantidade) as quant','sum(v_arrastofundo_has_t_especie_capturada.spc_peso_kg) as peso' ))->
-                group(array('v_entrevista_arrasto.af_id'));
+                from('v_entrevista_arrasto', 'v_entrevista_arrasto.af_id')->
+                        joinLeft('v_arrastofundo_has_t_especie_capturada', 'v_entrevista_arrasto.af_id = v_arrastofundo_has_t_especie_capturada.af_id',
+                        array('sum(v_arrastofundo_has_t_especie_capturada.spc_quantidade) as quant','sum(CASE When v_arrastofundo_has_t_especie_capturada.esp_id = 4532 Or v_arrastofundo_has_t_especie_capturada.esp_id = 4533 Or v_arrastofundo_has_t_especie_capturada.esp_id = 4534 Or v_arrastofundo_has_t_especie_capturada.esp_id = 4536 THEN v_arrastofundo_has_t_especie_capturada.spc_peso_kg Else 0 END ) as peso' ))->
+                        group(array('v_entrevista_arrasto.af_id'));
         
         if(!is_null($where)){
             $select->where($where);
@@ -362,8 +363,9 @@ class Application_Model_Relatorios
     public function selectCapturaByArteJerere($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaJerere();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_jerere', 'v_entrevista_jerere.jre_id')->joinLeft('v_jerere_has_t_especie_capturada', 'v_entrevista_jerere.jre_id = v_jerere_has_t_especie_capturada.jre_id',
-                        array('sum(v_jerere_has_t_especie_capturada.spc_quantidade) as quant','sum(v_jerere_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                from('v_entrevista_jerere', 'v_entrevista_jerere.jre_id')->
+                joinLeft('v_jerere_has_t_especie_capturada', 'v_entrevista_jerere.jre_id = v_jerere_has_t_especie_capturada.jre_id',
+                        array('sum(v_jerere_has_t_especie_capturada.spc_quantidade) as quant','sum( CASE When v_jerere_has_t_especie_capturada.esp_id = 4596 THEN v_jerere_has_t_especie_capturada.spc_peso_kg Else 0 END) as peso' ))->
                 group(array('v_entrevista_jerere.jre_id'));
         
         if(!is_null($where)){
@@ -547,8 +549,9 @@ class Application_Model_Relatorios
     public function selectCapturaByArteManzua($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaManzua();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_manzua', 'v_entrevista_manzua.man_id')->joinLeft('v_manzua_has_t_especie_capturada', 'v_entrevista_manzua.man_id = v_manzua_has_t_especie_capturada.man_id',
-                        array('sum(v_manzua_has_t_especie_capturada.spc_quantidade) as quant','sum(v_manzua_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                from('v_entrevista_manzua', 'v_entrevista_manzua.man_id')->
+                joinLeft('v_manzua_has_t_especie_capturada', 'v_entrevista_manzua.man_id = v_manzua_has_t_especie_capturada.man_id',
+                        array('sum(v_manzua_has_t_especie_capturada.spc_quantidade) as quant','sum(CASE When v_manzua_has_t_especie_capturada.esp_id = 4596 THEN v_manzua_has_t_especie_capturada.spc_peso_kg Else 0 END) as peso' ))->
                 group(array('v_entrevista_manzua.man_id'));
         
         if(!is_null($where)){
@@ -671,8 +674,9 @@ class Application_Model_Relatorios
     public function selectCapturaByArteRatoeira($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaRatoeira();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_ratoeira', 'v_entrevista_ratoeira.rat_id')->joinLeft('v_ratoeira_has_t_especie_capturada', 'v_entrevista_ratoeira.rat_id = v_ratoeira_has_t_especie_capturada.rat_id',
-                        array('sum(v_ratoeira_has_t_especie_capturada.spc_quantidade) as quant','sum(v_ratoeira_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                from('v_entrevista_ratoeira', 'v_entrevista_ratoeira.rat_id')->
+                joinLeft('v_ratoeira_has_t_especie_capturada', 'v_entrevista_ratoeira.rat_id = v_ratoeira_has_t_especie_capturada.rat_id',
+                        array('sum(v_ratoeira_has_t_especie_capturada.spc_quantidade) as quant','sum(CASE When v_ratoeira_has_t_especie_capturada.esp_id = 4580 THEN v_ratoeira_has_t_especie_capturada.spc_peso_kg Else 0 END) as peso' ))->
                 group(array('v_entrevista_ratoeira.rat_id'));
         
         if(!is_null($where)){

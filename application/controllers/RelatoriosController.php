@@ -195,7 +195,8 @@ class RelatoriosController extends Zend_Controller_Action
             case 16:$this->_redirect("/relatorios/biometriascamarao".$data.$datafim.$porto);break;
             case 17:$this->_redirect("/relatorios/biometriaspeixe".$data.$datafim.$porto);break;
             case 18:$this->_redirect("/relatorios/cpue".$data.$datafim.$porto);break;
-
+            case 19:$this->_redirect("/relatorios/relartesbyporto".$data.$datafim.$porto);break;
+            
         }
     }
     
@@ -4888,9 +4889,9 @@ class RelatoriosController extends Zend_Controller_Action
     endforeach;
     
     
-$coluna= 0;
+    $coluna= 0;
 
-foreach ( $mergulho as $key => $consulta ):
+    foreach ( $mergulho as $key => $consulta ):
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Mergulho');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
@@ -4911,9 +4912,9 @@ foreach ( $mergulho as $key => $consulta ):
     endforeach;
     
     
-$coluna= 0;
+    $coluna= 0;
 
-foreach ( $ratoeira as $key => $consulta ):
+    foreach ( $ratoeira as $key => $consulta ):
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Ratoeira');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
@@ -4933,9 +4934,9 @@ foreach ( $ratoeira as $key => $consulta ):
             $linha++;
     endforeach;
     
-$coluna= 0;
+    $coluna= 0;
 
-foreach ( $siripoia as $key => $consulta ):
+    foreach ( $siripoia as $key => $consulta ):
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Siripoia');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
@@ -4957,7 +4958,7 @@ foreach ( $siripoia as $key => $consulta ):
     
     $coluna= 0;
 
-foreach ( $tarrafa as $key => $consulta ):
+    foreach ( $tarrafa as $key => $consulta ):
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Tarrafa');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
@@ -4977,9 +4978,9 @@ foreach ( $tarrafa as $key => $consulta ):
             $linha++;
     endforeach;
     
-$coluna= 0;
+    $coluna= 0;
 
-foreach ( $varapesca as $key => $consulta ):
+    foreach ( $varapesca as $key => $consulta ):
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'VaraPesca');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
@@ -5045,41 +5046,7 @@ foreach ( $varapesca as $key => $consulta ):
         $datafim = $this->dataFinal($datend);
         
         $porto = $this->_getParam('porto');
-        
-//        if($porto != '999'){
-//            $nomePorto = $this->verifporto($porto);
-//            $arrasto = $modelArrasto->selectQuantPescadoresByPorto();
-//            $calao =$modelCalao->selectQuantPescadoresByPorto("cal_data between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
-//            $coletamanual =$modelColetaManual->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
-//            $emalhe =$modelEmalhe->selectQuantPescadoresByPorto("drecolhimento between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
-//            $grosseira =$modelGrosseira->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
-//            $jerere =$modelJerere->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
-//            $pescalinha =$modelLinha->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
-//            $linhafundo =$modelLinhaFundo->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
-//            $manzua =$modelManzua->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'",      'esp_nome_comum');
-//            $mergulho =$modelMergulho->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'",  'esp_nome_comum');
-//            $ratoeira =$modelRatoeira->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'",  'esp_nome_comum');
-//            $siripoia =$modelSiripoia->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'",   'esp_nome_comum');
-//            $tarrafa =$modelTarrafa->selectQuantPescadoresByPorto("tar_data between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'",   'esp_nome_comum');
-//            $varapesca =$modelVaraPesca->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."' and pto_nome ='".$nomePorto."'", 'esp_nome_comum');
-//        }
-//         else{
-//             $arrasto = $modelArrasto->selectQuantPescadoresByPorto();
-//             $calao =$modelCalao->selectQuantPescadoresByPorto("cal_data between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
-//            $coletamanual =$modelColetaManual->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
-//            $emalhe =$modelEmalhe->selectQuantPescadoresByPorto("drecolhimento between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
-//            $grosseira =$modelGrosseira->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
-//            $jerere =$modelJerere->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
-//            $pescalinha =$modelLinha->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
-//            $linhafundo =$modelLinhaFundo->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
-//            $manzua =$modelManzua->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
-//            $mergulho =$modelMergulho->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
-//            $ratoeira =$modelRatoeira->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
-//            $siripoia =$modelSiripoia->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
-//            $tarrafa =$modelTarrafa->selectQuantPescadoresByPorto("tar_data between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
-//            $varapesca =$modelVaraPesca->selectQuantPescadoresByPorto("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
-//         } 
-        
+           
                 
         require_once "../library/Classes/PHPExcel.php";
         $arrayPortos = array('Amendoeira','Pontal','Prainha','Terminal Pesqueiro','Porto da Barra','São Miguel','Mamoã','Ponta da Tulha','Ponta do Ramo','Aritaguá','Juerana rio','Sambaituba','Urucutuca','Pé de Serra','Sobradinho','Vila Badú','Porto da Concha','Porto do Forte');
@@ -5129,7 +5096,7 @@ foreach ( $varapesca as $key => $consulta ):
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrArrasto = $modelArrasto->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $quantEntrArrasto = $modelArrasto->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrArrasto[0]['count']);
             $coluna++;
             //$linha++;
@@ -5140,7 +5107,7 @@ foreach ( $varapesca as $key => $consulta ):
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrAP = $modelCalao->selectEntrevistasByPorto("pto_nome = '".$porto."' And tcat_tipo = 'Arrasto de Praia'");
+            $quantEntrAP = $modelCalao->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND  pto_nome = '".$porto."' And tcat_tipo = 'Arrasto de Praia'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrAP[0]['count']);
             $coluna++;
             //$linha++;
@@ -5149,7 +5116,7 @@ foreach ( $varapesca as $key => $consulta ):
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrAR = $modelCalao->selectEntrevistasByPorto("pto_nome = '".$porto."' And tcat_tipo = 'Arrasto de Rio'");
+            $quantEntrAR = $modelCalao->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."' And tcat_tipo = 'Arrasto de Rio'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrAR[0]['count']);
             $coluna++;
             //$linha++;
@@ -5158,7 +5125,7 @@ foreach ( $varapesca as $key => $consulta ):
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrCalao = $modelCalao->selectEntrevistasByPorto("pto_nome = '".$porto."' And tcat_tipo = 'Calão'");
+            $quantEntrCalao = $modelCalao->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."' And tcat_tipo = 'Calão'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrCalao[0]['count']);
             $coluna++;
             //$linha++;
@@ -5167,7 +5134,7 @@ foreach ( $varapesca as $key => $consulta ):
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrColetaManual = $modelColetaManual->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $quantEntrColetaManual = $modelColetaManual->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrColetaManual[0]['count']);
             $coluna++;
             //$linha++;
@@ -5176,7 +5143,7 @@ foreach ( $varapesca as $key => $consulta ):
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrEmalhe = $modelEmalhe->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $quantEntrEmalhe = $modelEmalhe->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrEmalhe[0]['count']);
             $coluna++;
             //$linha++;
@@ -5185,7 +5152,7 @@ foreach ( $varapesca as $key => $consulta ):
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrGrosseira = $modelGrosseira->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $quantEntrGrosseira = $modelGrosseira->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrGrosseira[0]['count']);
             $coluna++;
             //$linha++;
@@ -5194,7 +5161,7 @@ foreach ( $varapesca as $key => $consulta ):
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrJerere = $modelJerere->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $quantEntrJerere = $modelJerere->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrJerere[0]['count']);
             $coluna++;
             //$linha++;
@@ -5203,7 +5170,7 @@ foreach ( $varapesca as $key => $consulta ):
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrLinha = $modelLinha->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $quantEntrLinha = $modelLinha->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrLinha[0]['count']);
             $coluna++;
             //$linha++;
@@ -5212,7 +5179,7 @@ foreach ( $varapesca as $key => $consulta ):
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrLinhaFundo = $modelLinhaFundo->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $quantEntrLinhaFundo = $modelLinhaFundo->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrLinhaFundo[0]['count']);
             $coluna++;
             //$linha++;
@@ -5221,7 +5188,7 @@ foreach ( $varapesca as $key => $consulta ):
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrManzua = $modelManzua->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $quantEntrManzua = $modelManzua->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrManzua[0]['count']);
             $coluna++;
             //$linha++;
@@ -5230,7 +5197,7 @@ foreach ( $varapesca as $key => $consulta ):
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrMergulho = $modelMergulho->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $quantEntrMergulho = $modelMergulho->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrMergulho[0]['count']);
             $coluna++;
             //$linha++;
@@ -5239,7 +5206,7 @@ foreach ( $varapesca as $key => $consulta ):
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrRatoeira = $modelRatoeira->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $quantEntrRatoeira = $modelRatoeira->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrRatoeira[0]['count']);
             $coluna++;
             //$linha++;
@@ -5248,7 +5215,7 @@ foreach ( $varapesca as $key => $consulta ):
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrSiripoia = $modelSiripoia->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $quantEntrSiripoia = $modelSiripoia->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrSiripoia[0]['count']);
             $coluna++;
             //$linha++;
@@ -5257,7 +5224,7 @@ foreach ( $varapesca as $key => $consulta ):
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrTarrafa = $modelTarrafa->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $quantEntrTarrafa = $modelTarrafa->selectEntrevistasByPorto("tar_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrTarrafa[0]['count']);
             $coluna++;
             //$linha++;
@@ -5266,7 +5233,7 @@ foreach ( $varapesca as $key => $consulta ):
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrVaraPesca = $modelVaraPesca->selectEntrevistasByPorto("pto_nome = '".$porto."'");
+            $quantEntrVaraPesca = $modelVaraPesca->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrVaraPesca[0]['count']);
             $coluna++;
             //$linha++;
