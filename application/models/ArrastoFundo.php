@@ -478,11 +478,10 @@ class Application_Model_ArrastoFundo
         return $dbTable->fetchAll($select)->toArray();
     }
     public function selectCapturaByPorto($where = null){
-        $dbTable = new Application_Model_DbTable_VEntrevistaArrasto();
+        $dbTable = new Application_Model_DbTable_VEstimativaArrasto();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_arrasto', 'v_entrevista_arrasto.pto_nome')->joinLeft('v_arrastofundo_has_t_especie_capturada', 'v_entrevista_arrasto.af_id = v_arrastofundo_has_t_especie_capturada.af_id',
-                        array('sum(v_arrastofundo_has_t_especie_capturada.spc_quantidade) as quant','sum(v_arrastofundo_has_t_especie_capturada.spc_peso_kg) as peso' ))->
-                group(array('pto_nome'));
+                from('v_estimativa_arrasto', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados)', 'sum(monitorados)', 'sum(peso) as peso', 'mes', 'ano', '((sum(peso)/sum(monitorados))*sum(naomonitorados))+sum(monitorados) as pesototal'))->
+                group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
         
         if(!is_null($where)){
             $select->where($where);
