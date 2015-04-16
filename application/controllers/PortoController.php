@@ -1201,12 +1201,12 @@ class PortoController extends Zend_Controller_Action
  
         $arrayQuantBarcos = $this->verifVazioBarcos($arrayQuantBarcos, $porto, $arte);
 
+        $i = 0;
         foreach($arrayQuantBarcos as $quant):
-            
+            if ($i++ < 10){
                 $quantBarcos[] = $quant['quant'];
                 $labelBarcos[] = $quant['bar_nome'];
-
-
+            }
         endforeach;
 
         $jsQuantBarcos = json_encode($quantBarcos);
@@ -1336,12 +1336,19 @@ class PortoController extends Zend_Controller_Action
         
         $arrayQtds = $this->array_sort($arrayQuantidades,'count', SORT_DESC);
         $i=0;
+        $soma = 0;
         foreach($arrayQtds as $qtd):
+            $soma += $qtd['count'];
             if($i++ < 5){
                 $arrayTopFive[] = $qtd['count'];
                 $labels[] = $qtd['arte'];
             }
         endforeach;
+        
+        for ($i = 0; $i < 5; $i++){
+            $porcentagem = ($arrayTopFive[$i]/$soma)*100;
+            $arrayTopFive[$i] = $porcentagem;
+        }
         
         $jsTopFive = json_encode($arrayTopFive);
         $jsLabels = json_encode($labels);

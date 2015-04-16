@@ -1494,7 +1494,7 @@ function jsDeleteDynamicEmbarcacao(id,Barco, pag, idBack)
 }
 
 
-function ajax_monitoramento(form, url){
+function ajax_monitoramento(form, url, data){
             // Create our XMLHttpRequest object
             var hr = new XMLHttpRequest();
             // Create some variables we need to send to our PHP file
@@ -1503,9 +1503,21 @@ function ajax_monitoramento(form, url){
             var quantEmb = form.QuantidadeEmbarcacoes.value;
             var idFicha = form.id_fichaDiaria.value;
             var arte = form.SelectArtePesca.value;
+                        
+            var dataIniDefesa1 = Date.parse(data.split("-")[0].toString() + "-4-" + "1");
+            var dataFimDefesa1 = Date.parse(data.split("-")[0].toString() + "-5-" + "15");
+            var dataIniDefesa2 = Date.parse(data.split("-")[0].toString() + "-9-" + "15");
+            var dataFimDefesa2 = Date.parse(data.split("-")[0].toString() + "-10-" + "31");
+            data = Date.parse(data);
             
-            if(quantEmb === ""){
-                alert("Digite a quantidade de Embarcações")
+            // Se a arte for arrasto e a data estiver no período de defesa
+            if (arte === '1' &&
+               ((dataIniDefesa1 < data && data < dataFimDefesa1) || (dataIniDefesa2 < data && data < dataFimDefesa2))
+                                        ){
+                    alert("A data digitada está no período de defesa. Insira outra data.");
+            } 
+            else if(quantEmb === ""){
+                alert("Digite a quantidade de Embarcações");
             }
             else{
                 //var ln = document.getElementById("last_name").value;

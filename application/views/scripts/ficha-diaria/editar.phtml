@@ -8,7 +8,7 @@
     <h3>Editar</h3>
 </div>
 
-<form action="<?= $this->url(array("controller" => "ficha-diaria", "action" => "atualizar"), null, true) ?>" method="post">
+<form id="formFichaDiaria" action="<?= $this->url(array("controller" => "ficha-diaria", "action" => "atualizar"), null, true) ?>" method="post">
 <fieldset id="Desembarque">
     <div class="esquerda">
         <div class="form-esq">
@@ -145,7 +145,7 @@
 
             <div id="base">
 
-                <input onclick="ajax_monitoramento(this.form, '<?= $this->url(array("controller" => "ficha-diaria", "action" => "insertmonitoramento"), null, true) ?>')" type="button" value="Adicionar" />
+                <input onclick="ajax_monitoramento(this.form, '<?= $this->url(array("controller" => "ficha-diaria", "action" => "insertmonitoramento"), null, true) ?>', getElementById('data_Viagem').value)" type="button" value="Adicionar" />
 
                 <select class="tam_medio" name="SelectMonitorada" style="float:left">
                     <option   value="TRUE" selected="selected">Monitorada</option>
