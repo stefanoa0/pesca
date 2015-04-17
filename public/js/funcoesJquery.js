@@ -110,6 +110,7 @@ $(document).ready(function() {
         $("#RelPerfilSocial").hide();
         $("#RelDesembarque").hide();
         $("#Especialista").hide();
+        $("#Estatistica").hide();
         $("#dadosEmbarcacao").hide();
     }
     else if ($("fieldset").attr('id') === "RelListas"){
@@ -208,6 +209,7 @@ $(document).ready(function() {
         $("#RelPerfilSocial").hide();
         $("#RelDesembarque").hide();
         $("#Especialista").hide();
+        $("#Estatistica").hide();
         $("#dadosEmbarcacao").hide();
     }
 

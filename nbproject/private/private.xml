@@ -7,11 +7,10 @@
             <file>file:/C:/wamp/www/pesca/application/controllers/PortoController.php</file>
             <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/forte.phtml</file>
             <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/aritagua.phtml</file>
+            <file>file:/C:/wamp/www/pesca/library/Classes/PHPExcel/CachedObjectStorageFactory.php</file>
             <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/terminal.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/models/Siripoia.php</file>
             <file>file:/C:/wamp/www/pesca/application/controllers/RelatoriosController.php</file>
             <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/barra.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/models/ArrastoFundo.php</file>
         </group>
     </open-files>
 </project-private>

@@ -521,6 +521,18 @@ class Application_Model_Emalhe
         }
         return $dbTable->fetchAll($select)->toArray();
     }
+    public function selectEstimativaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEstimativaEmalhe();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_estimativa_emalhe', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados) as naomonitorados', 'sum(monitorados) as monitorados', 'sum(peso) as peso', 'mes', 'ano'))->
+                group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
     public function selectQuantPescadoresByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaEmalhe();
         $select = $dbTable->select()->

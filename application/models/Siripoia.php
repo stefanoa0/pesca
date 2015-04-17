@@ -429,6 +429,18 @@ class Application_Model_Siripoia
         }
         return $dbTable->fetchAll($select)->toArray();
     }
+    
+    public function selectEstimativaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEstimativaSiripoia();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_estimativa_siripoia', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados) as naomonitorados', 'sum(monitorados) as monitorados', 'sum(quantidade) as quantidade', 'mes', 'ano'))->
+                group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
     //Quantidade de variaveis por Porto FUNÇÕES PARA REPLICAR
     public function selectQuantBarcosByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaSiripoia();
