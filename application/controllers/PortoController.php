@@ -1700,11 +1700,11 @@ class PortoController extends Zend_Controller_Action
         $this->gerarrelqtdporarte($porto, $ano);
         
         $this->gerarespeciescapturadas($porto, $ano, 'Manzua');
-        $this->gerarespeciescapturadas($porto, $ano, 'Vara de Pesca');
+        $this->gerarespeciescapturadas($porto, $ano, 'VaraPesca');
         
         $this->view->assign("porto",$porto);
         $this->view->assign("arteMaisPescada", "Manzua");
-        $this->view->assign("segArteMaisPescada", "Ratoeira");
+        $this->view->assign("segArteMaisPescada", "Vara de Pesca");
     }
     public function mamoaAction(){
         $ano = $this->_getParam('ano');
