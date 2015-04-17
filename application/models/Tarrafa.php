@@ -419,12 +419,11 @@ class Application_Model_Tarrafa
         return $dbTable->fetchAll($select)->toArray();
     }
     
-        public function selectCapturaByPorto($where = null){
-        $dbTable = new Application_Model_DbTable_VEntrevistaTarrafa();
+    public function selectCapturaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEstimativaTarrafa();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_tarrafa', 'v_entrevista_tarrafa.pto_nome')->joinLeft('v_tarrafa_has_t_especie_capturada', 'v_entrevista_tarrafa.tar_id = v_tarrafa_has_t_especie_capturada.tar_id',
-                        array('sum(v_tarrafa_has_t_especie_capturada.spc_quantidade) as quant','sum(v_tarrafa_has_t_especie_capturada.spc_peso_kg) as peso' ))->
-                group(array('pto_nome'));
+                from('v_estimativa_tarrafa', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados)', 'sum(monitorados)', 'sum(peso) as peso', 'mes', 'ano', '((sum(peso)/sum(monitorados))*sum(naomonitorados))+sum(peso) as pesototal'))->
+                group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
         
         if(!is_null($where)){
             $select->where($where);

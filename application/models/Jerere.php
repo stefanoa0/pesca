@@ -434,12 +434,11 @@ class Application_Model_Jerere
         return $dbTable->fetchAll($select)->toArray();
     }
     
-        public function selectCapturaByPorto($where = null){
-        $dbTable = new Application_Model_DbTable_VEntrevistaJerere();
+    public function selectCapturaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEstimativaJerere();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_jerere', 'v_entrevista_jerere.pto_nome')->joinLeft('v_jerere_has_t_especie_capturada', 'v_entrevista_jerere.jre_id = v_jerere_has_t_especie_capturada.jre_id',
-                        array('sum(v_jerere_has_t_especie_capturada.spc_quantidade) as quant','sum(v_jerere_has_t_especie_capturada.spc_peso_kg) as peso' ))->
-                group(array('pto_nome'));
+                from('v_estimativa_jerere', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados)', 'sum(monitorados)', 'sum(peso) as peso', 'mes', 'ano', '((sum(peso)/sum(monitorados))*sum(naomonitorados))+sum(peso) as pesototal'))->
+                group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
         
         if(!is_null($where)){
             $select->where($where);
