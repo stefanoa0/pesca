@@ -5321,5 +5321,134 @@ class RelatoriosController extends Zend_Controller_Action
         ob_end_clean();
         $objWriter->save('php://output');
     }
+    
+    public function divisao($peso, $monitoramentos){
+        if($monitoramentos == 0){
+            $media = $peso;
+        }
+        else{
+            $media = $peso/$monitoramentos;
+        }
+        return $media;
+    }
+    public function relatorioestimativasAction(){
+        set_time_limit(0);
+        if($this->usuario['tp_id']==5){
+            $this->_redirect('index');
+        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        
+        $modelArrasto =    new Application_Model_ArrastoFundo;
+        $modelCalao=       new Application_Model_Calao;
+        $modelColetaManual=new Application_Model_ColetaManual;
+        $modelEmalhe=      new Application_Model_Emalhe;
+        $modelGrosseira=   new Application_Model_Grosseira;
+        $modelJerere=      new Application_Model_Jerere;
+        $modelLinha=       new Application_Model_Linha;
+        $modelLinhaFundo=  new Application_Model_LinhaFundo;
+        $modelManzua=      new Application_Model_Manzua;
+        $modelMergulho=    new Application_Model_Mergulho;
+        $modelRatoeira=    new Application_Model_Ratoeira;
+        $modelSiripoia=    new Application_Model_Siripoia;
+        $modelTarrafa=     new Application_Model_Tarrafa;
+        $modelVaraPesca =  new Application_Model_VaraPesca;
+        
+        
+        $porto = $this->_getParam('porto');
+           
+                
+        require_once "../library/Classes/PHPExcel.php";
+        
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->setActiveSheetIndex(0);
+        $coluna = 0;
+        $linha = 1;
+        
+        
+        
+        
+        if($porto != '999'){
+            $nomePorto = $this->verifporto($porto);
+            $arrasto = $modelArrasto->selectEstimativaByPorto( "pto_nome ='".$nomePorto."'");
+//            $calao =   $modelCalao->selectCapturaByPorto("pto_nome ='".$nomePorto."'");
+//            $coletamanual =$modelColetaManual->selectCapturaByPorto( "pto_nome ='".$nomePorto."'");
+//            $emalhe =$modelEmalhe->selectCapturaByPorto("pto_nome ='".$nomePorto."'");
+//            $grosseira =$modelGrosseira->selectCapturaByPorto( "pto_nome ='".$nomePorto."'");
+//            $jerere =$modelJerere->selectCapturaByPorto( "pto_nome ='".$nomePorto."'");
+//            $pescalinha =$modelLinha->selectCapturaByPorto( "pto_nome ='".$nomePorto."'");
+//            $linhafundo =$modelLinhaFundo->selectCapturaByPorto( "pto_nome ='".$nomePorto."'");
+//            $manzua =$modelManzua->selectCapturaByPorto( "pto_nome ='".$nomePorto."'");
+//            $mergulho =$modelMergulho->selectCapturaByPorto( "pto_nome ='".$nomePorto."'");
+//            $ratoeira =$modelRatoeira->selectCapturaByPorto( "pto_nome ='".$nomePorto."'");
+//            $siripoia =$modelSiripoia->selectCapturaByPorto( "pto_nome ='".$nomePorto."'");
+//            $tarrafa =$modelTarrafa->selectCapturaByPorto("pto_nome ='".$nomePorto."'");
+//            $varapesca =$modelVaraPesca->selectCapturaByPorto( "pto_nome ='".$nomePorto."'");
+        }
+         else{
+             $arrasto = $modelArrasto->selectEstimativaByPorto();
+//             $calao =$modelCalao->selectCapturaByPorto();
+//            $coletamanual =$modelColetaManual->selectCapturaByPorto();
+//            $emalhe =$modelEmalhe->selectCapturaByPorto();
+//            $grosseira =$modelGrosseira->selectCapturaByPorto();
+//            $jerere =$modelJerere->selectCapturaByPorto();
+//            $pescalinha =$modelLinha->selectCapturaByPorto();
+//            $linhafundo =$modelLinhaFundo->selectCapturaByPorto();
+//            $manzua =$modelManzua->selectCapturaByPorto();
+//            $mergulho =$modelMergulho->selectCapturaByPorto();
+//            $ratoeira =$modelRatoeira->selectCapturaByPorto();
+//            $siripoia =$modelSiripoia->selectCapturaByPorto();
+//            $tarrafa =$modelTarrafa->selectCapturaByPorto();
+//            $varapesca =$modelVaraPesca->selectCapturaByPorto();
+         }  
+         
+        // $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Local');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Artes de Pesca');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mês');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Monitorados (n)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Monitorada (kg)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Média');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Não Monitorados');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Não Monitorada (kg)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Total de Monitoramentos');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Total Estimada (kg)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Total Estimada (t)');
+         
+        $linha++;
+         foreach ( $arrasto as $key => $consulta ):
+                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
+                $media = $this->divisao($consulta['peso'],$consulta['monitorados']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $media);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
+                $capturaNaoMonitorada = $media*$consulta['naomonitorados'];
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
+                $capturaTotal = $consulta['peso']+$capturaNaoMonitorada;
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
+                
+                $coluna=0;
+                $linha++;
+        endforeach; 
+         
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        ob_end_clean();
+
+        header('Content-Type: application/vnd.ms-excel');
+        header("Content-Disposition: attachment;filename='Artes por Portos.xls'");
+        header('Cache-Control: max-age=0');
+
+        ob_end_clean();
+        $objWriter->save('php://output');
+    }
 }
 

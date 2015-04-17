@@ -181,25 +181,52 @@ class PortoController extends Zend_Controller_Action
     }
 
     //Funções para verificar os vetores vazios e não dar erro nos gráficos.
-    public function verifVazioCaptura($array, $porto, $arte){
+    public function verifVazioCaptura($array, $porto, $tipo){
+        if($tipo == 'peso'){
+            if(empty($array)){
+                $array = array( array(
+                    'pto_nome' => $porto,
+                    'pesototal' => 0,
+                    )
+                );
+            }
+            else if($array[0]['pesototal'] == ""){
+                $array[0]['pesototal'] = 0;
+            }
+        }
+        else{
+            if(empty($array)){
+                $array = array( array(
+                    'pto_nome' => $porto,
+                    'quanttotal' => 0,
+                    )
+                );
+            }
+            else if($array[0]['quanttotal'] == ""){
+                $array[0]['quanttotal'] = 0;
+            }
+        }
+        return $array;
+    }
+    public function verifVazioQuantCaptura($array, $porto, $arte){
         if(empty($array)){
             $array = array( array(
                 'pto_nome' => $porto,
+                'peso' => 0,
                 'quant' => 0,
-                'pesototal' => 0,
                 )
             );
         }
         else if($array[0]['quant'] == ""){
             $array[0]['quant'] = 0;
         }
-        else if($array[0]['pesototal'] == ""){
-            $array[0]['pesototal'] = 0;
+        else if($array[0]['peso'] == ""){
+            $array[0]['peso'] = 0;
         }
-        
+
         $array[0]['arte'] = $arte;
         return $array;
-    }
+    }    
     //Funções para verificar os vetores vazios e não dar erro nos gráficos.
     public function verifVazioBarcos($array, $porto, $arte){
         if(empty($array)){
@@ -456,18 +483,18 @@ class PortoController extends Zend_Controller_Action
             $quantCaptDezembro  = $this->modelRatoeira->selectCapturaByPorto("pto_nome='".$porto."' and mes =  12 And ano = ".$ano);
         }
         if($arte == 'Tarrafa'){
-            $quantCaptJaneiro   = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =  1  ano = ".$ano);
-            $quantCaptFevereiro = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =  2  ano = ".$ano);
-            $quantCaptMarco     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =  3  ano = ".$ano);
-            $quantCaptAbril     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =  4  ano = ".$ano);
-            $quantCaptMaio      = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =  5  ano = ".$ano);
-            $quantCaptJunho     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =  6  ano = ".$ano);
-            $quantCaptJulho     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =  7  ano = ".$ano);
-            $quantCaptAgosto    = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =  8  ano = ".$ano);
-            $quantCaptSetembro  = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =  9  ano = ".$ano);
-            $quantCaptOutubro   = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =  10 ano = ".$ano);
-            $quantCaptNovembro  = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =  11 ano = ".$ano);
-            $quantCaptDezembro  = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =  12 ano = ".$ano);
+            $quantCaptJaneiro   = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =   1  And ano = ".$ano);
+            $quantCaptFevereiro = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =   2  And ano = ".$ano);
+            $quantCaptMarco     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =   3  And ano = ".$ano);
+            $quantCaptAbril     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =   4  And ano = ".$ano);
+            $quantCaptMaio      = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =   5  And ano = ".$ano);
+            $quantCaptJunho     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =   6  And ano = ".$ano);
+            $quantCaptJulho     = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =   7  And ano = ".$ano);
+            $quantCaptAgosto    = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =   8  And ano = ".$ano);
+            $quantCaptSetembro  = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =   9  And ano = ".$ano);
+            $quantCaptOutubro   = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =   10 And ano = ".$ano);
+            $quantCaptNovembro  = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =   11 And ano = ".$ano);
+            $quantCaptDezembro  = $this->modelTarrafa->selectCapturaByPorto("pto_nome='".$porto."' and mes =   12 And ano = ".$ano);
         }
         if($arte == 'Siripoia'){
             $quantCaptJaneiro   = $this->modelSiripoia->selectCapturaByPorto("pto_nome='".$porto."' and mes =  1  And ano = ".$ano);
@@ -497,19 +524,34 @@ class PortoController extends Zend_Controller_Action
             $quantCaptNovembro  = $this->modelVaraPesca->selectCapturaByPorto("pto_nome='".$porto."' and mes =  11 And ano = ".$ano);
             $quantCaptDezembro  = $this->modelVaraPesca->selectCapturaByPorto("pto_nome='".$porto."' and mes =  12 And ano = ".$ano);
         }
-        $quantCaptJaneiro  = $this->verifVazioCaptura($quantCaptJaneiro,   $porto,$arte);
-        $quantCaptFevereiro= $this->verifVazioCaptura($quantCaptFevereiro, $porto,$arte);
-        $quantCaptMarco    = $this->verifVazioCaptura($quantCaptMarco    , $porto,$arte);
-        $quantCaptAbril    = $this->verifVazioCaptura($quantCaptAbril    , $porto,$arte);
-        $quantCaptMaio     = $this->verifVazioCaptura($quantCaptMaio     , $porto,$arte);
-        $quantCaptJunho    = $this->verifVazioCaptura($quantCaptJunho    , $porto,$arte);
-        $quantCaptJulho    = $this->verifVazioCaptura($quantCaptJulho    , $porto,$arte);
-        $quantCaptAgosto   = $this->verifVazioCaptura($quantCaptAgosto   , $porto,$arte);
-        $quantCaptSetembro = $this->verifVazioCaptura($quantCaptSetembro , $porto,$arte);
-        $quantCaptOutubro  = $this->verifVazioCaptura($quantCaptOutubro  , $porto,$arte);
-        $quantCaptNovembro = $this->verifVazioCaptura($quantCaptNovembro , $porto,$arte);
-        $quantCaptDezembro = $this->verifVazioCaptura($quantCaptDezembro , $porto,$arte);
-        
+        if($arte == 'Ratoeira' OR  $arte == 'Coleta' OR $arte == 'Siripoia'){
+            $quantCaptJaneiro  = $this->verifVazioCaptura($quantCaptJaneiro,   $porto,'quant');
+            $quantCaptFevereiro= $this->verifVazioCaptura($quantCaptFevereiro, $porto,'quant');
+            $quantCaptMarco    = $this->verifVazioCaptura($quantCaptMarco    , $porto,'quant');
+            $quantCaptAbril    = $this->verifVazioCaptura($quantCaptAbril    , $porto,'quant');
+            $quantCaptMaio     = $this->verifVazioCaptura($quantCaptMaio     , $porto,'quant');
+            $quantCaptJunho    = $this->verifVazioCaptura($quantCaptJunho    , $porto,'quant');
+            $quantCaptJulho    = $this->verifVazioCaptura($quantCaptJulho    , $porto,'quant');
+            $quantCaptAgosto   = $this->verifVazioCaptura($quantCaptAgosto   , $porto,'quant');
+            $quantCaptSetembro = $this->verifVazioCaptura($quantCaptSetembro , $porto,'quant');
+            $quantCaptOutubro  = $this->verifVazioCaptura($quantCaptOutubro  , $porto,'quant');
+            $quantCaptNovembro = $this->verifVazioCaptura($quantCaptNovembro , $porto,'quant');
+            $quantCaptDezembro = $this->verifVazioCaptura($quantCaptDezembro , $porto,'quant');
+        }
+        else{
+            $quantCaptJaneiro  = $this->verifVazioCaptura($quantCaptJaneiro,   $porto,'peso');
+            $quantCaptFevereiro= $this->verifVazioCaptura($quantCaptFevereiro, $porto,'peso');
+            $quantCaptMarco    = $this->verifVazioCaptura($quantCaptMarco    , $porto,'peso');
+            $quantCaptAbril    = $this->verifVazioCaptura($quantCaptAbril    , $porto,'peso');
+            $quantCaptMaio     = $this->verifVazioCaptura($quantCaptMaio     , $porto,'peso');
+            $quantCaptJunho    = $this->verifVazioCaptura($quantCaptJunho    , $porto,'peso');
+            $quantCaptJulho    = $this->verifVazioCaptura($quantCaptJulho    , $porto,'peso');
+            $quantCaptAgosto   = $this->verifVazioCaptura($quantCaptAgosto   , $porto,'peso');
+            $quantCaptSetembro = $this->verifVazioCaptura($quantCaptSetembro , $porto,'peso');
+            $quantCaptOutubro  = $this->verifVazioCaptura($quantCaptOutubro  , $porto,'peso');
+            $quantCaptNovembro = $this->verifVazioCaptura($quantCaptNovembro , $porto,'peso');
+            $quantCaptDezembro = $this->verifVazioCaptura($quantCaptDezembro , $porto,'peso');
+        }
         $arrayQuantCapturaTotal = array_merge_recursive($quantCaptJaneiro, 
                 $quantCaptFevereiro, 
                 $quantCaptMarco,
@@ -523,74 +565,29 @@ class PortoController extends Zend_Controller_Action
                 $quantCaptNovembro, 
                 $quantCaptDezembro);
         
-        foreach($arrayQuantCapturaTotal as $quant):
-            $pesoTotal[] = $quant['pesototal'];
-            $quantTotal[] = $quant['quantidade'];
-        endforeach;
-        
-        
+        if($arte == 'Ratoeira' OR  $arte == 'Coleta' OR $arte == 'Siripoia'){
+            foreach($arrayQuantCapturaTotal as $quant):
+                $quantTotal[] = $quant['quanttotal'];
+            endforeach;
+            $jsQuantidade = json_encode($quantTotal);
+            $this->view->assign("countCaptQuantidade".$arte,$jsQuantidade);
+        }
+        else{
+            foreach($arrayQuantCapturaTotal as $quant):
+                $pesoTotal[] = $quant['pesototal'];
+            endforeach;
+            $jsPeso   = json_encode($pesoTotal);
+            $this->view->assign("countCaptPeso".$arte,      $jsPeso);
+        }
         
         $labels = array('jan/'.$ano, 'fev/'.$ano, 'mar/'.$ano, 'abr/'.$ano, 'mai/'.$ano, 'jun/'.$ano, 'jul/'.$ano, 'ago/'.$ano, 'set/'.$ano, 'out/'.$ano, 'nov/'.$ano, 'dez/'.$ano);
         
         $jsLabels = json_encode($labels);
-        $jsPeso   = json_encode($pesoTotal);
-        $jsQuantidade = json_encode($quantTotal);
-//        $jsquantCaptJaneiro   = json_encode($quantJaneiro);
-//        $jsquantCaptFevereiro = json_encode($quantFevereiro);
-//        $jsquantCaptMarco     = json_encode($quantMarco);
-//        $jsquantCaptAbril     = json_encode($quantAbril);
-//        $jsquantCaptMaio      = json_encode($quantMaio);
-//        $jsquantCaptJunho     = json_encode($quantJunho);
-//        $jsquantCaptJulho     = json_encode($quantJulho);
-//        $jsquantCaptAgosto    = json_encode($quantAgosto);
-//        $jsquantCaptSetembro  = json_encode($quantSetembro);
-//        $jsquantCaptOutubro   = json_encode($quantOutubro);
-//        $jsquantCaptNovembro  = json_encode($quantNovembro);
-//        $jsquantCaptDezembro  = json_encode($quantDezembro);
-//        
-//        $jspesoCaptJaneiro   = json_encode($pesoJaneiro);
-//        $jspesoCaptFevereiro = json_encode($pesoFevereiro);
-//        $jspesoCaptMarco     = json_encode($pesoMarco);
-//        $jspesoCaptAbril     = json_encode($pesoAbril);
-//        $jspesoCaptMaio      = json_encode($pesoMaio);
-//        $jspesoCaptJunho     = json_encode($pesoJunho);
-//        $jspesoCaptJulho     = json_encode($pesoJulho);
-//        $jspesoCaptAgosto    = json_encode($pesoAgosto);
-//        $jspesoCaptSetembro  = json_encode($pesoSetembro);
-//        $jspesoCaptOutubro   = json_encode($pesoOutubro);
-//        $jspesoCaptNovembro  = json_encode($pesoNovembro);
-//        $jspesoCaptDezembro  = json_encode($pesoDezembro);
+        
         
         $this->view->assign("countCaptLabels".$arte,    $jsLabels);
-        $this->view->assign("countCaptPeso".$arte,      $jsPeso);
-        $this->view->assign("countCaptQuantidade".$arte,$jsQuantidade);
-//        $this->view->assign("countCaptJaneiro".$arte,   $jsquantCaptJaneiro); 
-//        $this->view->assign("countCaptFevereiro".$arte, $jsquantCaptFevereiro);
-//        $this->view->assign("countCaptMarco".$arte,     $jsquantCaptMarco);
-//        $this->view->assign("countCaptAbril".$arte,     $jsquantCaptAbril); 
-//        $this->view->assign("countCaptMaio".$arte,      $jsquantCaptMaio); 
-//        $this->view->assign("countCaptJunho".$arte,     $jsquantCaptJunho);  
-//        $this->view->assign("countCaptJulho".$arte,     $jsquantCaptJulho); 
-//        $this->view->assign("countCaptAgosto".$arte,    $jsquantCaptAgosto); 
-//        $this->view->assign("countCaptSetembro".$arte,  $jsquantCaptSetembro);
-//        $this->view->assign("countCaptOutubro".$arte,   $jsquantCaptOutubro);
-//        $this->view->assign("countCaptNovembro".$arte,  $jsquantCaptNovembro);
-//        $this->view->assign("countCaptDezembro".$arte,  $jsquantCaptDezembro);
-//        
-//        $this->view->assign("pesoCaptJaneiro".$arte,   $jspesoCaptJaneiro); 
-//        $this->view->assign("pesoCaptFevereiro".$arte, $jspesoCaptFevereiro);
-//        $this->view->assign("pesoCaptMarco".$arte,     $jspesoCaptMarco);
-//        $this->view->assign("pesoCaptAbril".$arte,     $jspesoCaptAbril); 
-//        $this->view->assign("pesoCaptMaio".$arte,      $jspesoCaptMaio); 
-//        $this->view->assign("pesoCaptJunho".$arte,     $jspesoCaptJunho);  
-//        $this->view->assign("pesoCaptJulho".$arte,     $jspesoCaptJulho); 
-//        $this->view->assign("pesoCaptAgosto".$arte,    $jspesoCaptAgosto); 
-//        $this->view->assign("pesoCaptSetembro".$arte,  $jspesoCaptSetembro);
-//        $this->view->assign("pesoCaptOutubro".$arte,   $jspesoCaptOutubro);
-//        $this->view->assign("pesoCaptNovembro".$arte,  $jspesoCaptNovembro);
-//        $this->view->assign("pesoCaptDezembro".$arte,  $jspesoCaptDezembro);
         
-        //print_r($jsquantCaptNovembro);
+       
     }
     
     //Gera a quantidade total de entrevistas por porto, mês e por Arte
@@ -1264,7 +1261,7 @@ class PortoController extends Zend_Controller_Action
             break;
         }
  
-        $arrayQuantCaptura = $this->verifVazioCaptura($arrayQuantCaptura, $porto, $arte);
+        $arrayQuantCaptura = $this->verifVazioQuantCaptura($arrayQuantCaptura, $porto, $arte);
         
         $arrayQuantCapturaOrdenado = $this->array_sort($arrayQuantCaptura, 'peso', SORT_DESC);
         $i=0;
@@ -1552,18 +1549,18 @@ class PortoController extends Zend_Controller_Action
          */
                 
         $this->gerarquantentrevistas($porto, $ano, 'Arrasto');
-        //$this->gerarquantentrevistas($porto, $ano, 'Siripoia');
+        $this->gerarquantentrevistas($porto, $ano, 'Siripoia');
         
         $this->gerarquantcaptura($porto, $ano, 'Arrasto');
-        //$this->gerarquantcaptura($porto, $ano, 'Siripoia');
+        $this->gerarquantcaptura($porto, $ano, 'Siripoia');
         
         $this->gerarquantbarcos($porto, $ano, 'Arrasto');
-        //$this->gerarquantbarcos($porto, $ano, 'Siripoia');
+        $this->gerarquantbarcos($porto, $ano, 'Siripoia');
         
         $this->gerarrelqtdporarte($porto, $ano);
         
         $this->gerarespeciescapturadas($porto, $ano, 'Arrasto');
-        //$this->gerarespeciescapturadas($porto, $ano, 'Siripoia');
+        $this->gerarespeciescapturadas($porto, $ano, 'Siripoia');
         
         $this->view->assign("porto",$porto);
         $this->view->assign("arteMaisPescada", "Arrasto");
@@ -1640,7 +1637,7 @@ class PortoController extends Zend_Controller_Action
 //        $this->gerarquantentrevistas($porto, $ano, 'Coleta');
 //        $this->gerarquantentrevistas($porto, $ano, 'Emalhe');
 //        $this->gerarquantentrevistas($porto, $ano, 'Grosseira');
-        $this->gerarquantentrevistas($porto, $ano, 'Linha');
+        $this->gerarquantentrevistas($porto, $ano, 'Arrasto');
 //        $this->gerarquantentrevistas($porto, $ano, 'Siripoia');
         $this->gerarquantentrevistas($porto, $ano, 'Linha');
                 
@@ -1648,7 +1645,7 @@ class PortoController extends Zend_Controller_Action
 //        $this->gerarquantcaptura($porto, $ano, 'Coleta');
 //        $this->gerarquantcaptura($porto, $ano, 'Emalhe');
 //        $this->gerarquantcaptura($porto, $ano, 'Grosseira');
-        $this->gerarquantcaptura($porto, $ano, 'Linha');
+        $this->gerarquantcaptura($porto, $ano, 'Arrasto');
 //        $this->gerarquantcaptura($porto, $ano, 'Siripoia');
         $this->gerarquantcaptura($porto, $ano, 'Linha');
         
@@ -1656,17 +1653,17 @@ class PortoController extends Zend_Controller_Action
 //        $this->gerarquantbarcos($porto, $ano, 'Coleta');
 //        $this->gerarquantbarcos($porto, $ano, 'Emalhe');
 //        $this->gerarquantbarcos($porto, $ano, 'Grosseira');
-        $this->gerarquantbarcos($porto, $ano, 'Linha');
+        $this->gerarquantbarcos($porto, $ano, 'Arrasto');
 //        $this->gerarquantbarcos($porto, $ano, 'Siripoia');
         $this->gerarquantbarcos($porto, $ano, 'Linha');
         
         $this->gerarrelqtdporarte($porto, $ano);
         
-        $this->gerarespeciescapturadas($porto, $ano, 'Linha');
+        $this->gerarespeciescapturadas($porto, $ano, 'Arrasto');
         $this->gerarespeciescapturadas($porto, $ano, 'Linha');
         
         $this->view->assign("porto",$porto);
-        $this->view->assign("arteMaisPescada", "Linha");
+        $this->view->assign("arteMaisPescada", "Arrasto");
         $this->view->assign("segArteMaisPescada", "Linha");
     }
     public function jueranaAction(){
@@ -1685,31 +1682,25 @@ class PortoController extends Zend_Controller_Action
          * VaraPesca
          */
                 
-//        $this->gerarquantentrevistas($porto, $ano, 'Linha');
-//        $this->gerarquantentrevistas($porto, $ano, 'LinhaFundo');
         $this->gerarquantentrevistas($porto, $ano, 'Manzua');
-//        $this->gerarquantentrevistas($porto, $ano, 'Mergulho');
-        $this->gerarquantentrevistas($porto, $ano, 'Ratoeira'); 
-//        $this->gerarquantentrevistas($porto, $ano, 'VaraPesca');
-                
-//        $this->gerarquantcaptura($porto, $ano, 'Linha');
-//        $this->gerarquantcaptura($porto, $ano, 'LinhaFundo');
+        $this->gerarquantentrevistas($porto, $ano, 'VaraPesca'); 
+
         $this->gerarquantcaptura($porto, $ano, 'Manzua');
 //        $this->gerarquantcaptura($porto, $ano, 'Mergulho');
-        $this->gerarquantcaptura($porto, $ano, 'Ratoeira'); 
+        $this->gerarquantcaptura($porto, $ano, 'VaraPesca'); 
 //        $this->gerarquantcaptura($porto, $ano, 'VaraPesca');
         
 //        $this->gerarquantbarcos($porto, $ano, 'Linha');
 //        $this->gerarquantbarcos($porto, $ano, 'LinhaFundo');
         $this->gerarquantbarcos($porto, $ano, 'Manzua');
 //        $this->gerarquantbarcos($porto, $ano, 'Mergulho');
-        $this->gerarquantbarcos($porto, $ano, 'Ratoeira'); 
+        $this->gerarquantbarcos($porto, $ano, 'VaraPesca'); 
 //        $this->gerarquantbarcos($porto, $ano, 'VaraPesca');
         
         $this->gerarrelqtdporarte($porto, $ano);
         
         $this->gerarespeciescapturadas($porto, $ano, 'Manzua');
-        $this->gerarespeciescapturadas($porto, $ano, 'Ratoeira');
+        $this->gerarespeciescapturadas($porto, $ano, 'Vara de Pesca');
         
         $this->view->assign("porto",$porto);
         $this->view->assign("arteMaisPescada", "Manzua");
@@ -1961,35 +1952,15 @@ class PortoController extends Zend_Controller_Action
          * VaraPesca
          */
         
-//        $this->gerarquantentrevistas($porto, $ano, 'Arrasto');
         $this->gerarquantentrevistas($porto, $ano, 'Calao');
         $this->gerarquantentrevistas($porto, $ano, 'Emalhe');
-//        $this->gerarquantentrevistas($porto, $ano, 'Grosseira');
-//        $this->gerarquantentrevistas($porto, $ano, 'Linha');
-//        $this->gerarquantentrevistas($porto, $ano, 'Mergulho');
-//        $this->gerarquantentrevistas($porto, $ano, 'Siripoia');
-//        $this->gerarquantentrevistas($porto, $ano, 'Tarrafa');
-//        $this->gerarquantentrevistas($porto, $ano, 'VaraPesca');
-                
-//        $this->gerarquantcaptura($porto, $ano, 'Arrasto');
+
         $this->gerarquantcaptura($porto, $ano, 'Calao');
         $this->gerarquantcaptura($porto, $ano, 'Emalhe');
-//        $this->gerarquantcaptura($porto, $ano, 'Grosseira');
-//        $this->gerarquantcaptura($porto, $ano, 'Linha');
-//        $this->gerarquantcaptura($porto, $ano, 'Mergulho');
-//        $this->gerarquantcaptura($porto, $ano, 'Siripoia');
-//        $this->gerarquantcaptura($porto, $ano, 'Tarrafa');
-//        $this->gerarquantcaptura($porto, $ano, 'VaraPesca');
-        
-//        $this->gerarquantbarcos($porto, $ano, 'Arrasto');
+
         $this->gerarquantbarcos($porto, $ano, 'Calao');
         $this->gerarquantbarcos($porto, $ano, 'Emalhe');
-//        $this->gerarquantbarcos($porto, $ano, 'Grosseira');
-//        $this->gerarquantbarcos($porto, $ano, 'Linha');
-//        $this->gerarquantbarcos($porto, $ano, 'Mergulho');
-//        $this->gerarquantbarcos($porto, $ano, 'Siripoia');
-//        $this->gerarquantbarcos($porto, $ano, 'Tarrafa');
-//        $this->gerarquantbarcos($porto, $ano, 'VaraPesca');
+
         
         $this->gerarrelqtdporarte($porto, $ano);
         
@@ -2018,30 +1989,14 @@ class PortoController extends Zend_Controller_Action
          * VaraPesca
          */
         
-//        $this->gerarquantentrevistas($porto, $ano, 'Calao');
-//        $this->gerarquantentrevistas($porto, $ano, 'Coleta');
-//        $this->gerarquantentrevistas($porto, $ano, 'Emalhe');
-//        $this->gerarquantentrevistas($porto, $ano, 'Linha');
-//        $this->gerarquantentrevistas($porto, $ano, 'Mergulho');
-//        $this->gerarquantentrevistas($porto, $ano, 'Siripoia');
+
         $this->gerarquantentrevistas($porto, $ano, 'Tarrafa');
         $this->gerarquantentrevistas($porto, $ano, 'VaraPesca');
                 
-//        $this->gerarquantcaptura($porto, $ano, 'Calao');
-//        $this->gerarquantcaptura($porto, $ano, 'Coleta');
-//        $this->gerarquantcaptura($porto, $ano, 'Emalhe');
-//        $this->gerarquantcaptura($porto, $ano, 'Linha');
-//        $this->gerarquantcaptura($porto, $ano, 'Mergulho');
-//        $this->gerarquantcaptura($porto, $ano, 'Siripoia');
+
         $this->gerarquantcaptura($porto, $ano, 'Tarrafa');
         $this->gerarquantcaptura($porto, $ano, 'VaraPesca');
-        
-//        $this->gerarquantbarcos($porto, $ano, 'Calao');
-//        $this->gerarquantbarcos($porto, $ano, 'Coleta');
-//        $this->gerarquantbarcos($porto, $ano, 'Emalhe');
-//        $this->gerarquantbarcos($porto, $ano, 'Linha');
-//        $this->gerarquantbarcos($porto, $ano, 'Mergulho');
-//        $this->gerarquantbarcos($porto, $ano, 'Siripoia');
+
         $this->gerarquantbarcos($porto, $ano, 'Tarrafa');
         $this->gerarquantbarcos($porto, $ano, 'VaraPesca');
         
@@ -2071,29 +2026,15 @@ class PortoController extends Zend_Controller_Action
          * VaraPesca
          */
                
-//        $this->gerarquantentrevistas($porto, $ano, 'Calao');
-//        $this->gerarquantentrevistas($porto, $ano, 'Emalhe');
         $this->gerarquantentrevistas($porto, $ano, 'Linha');
-//        $this->gerarquantentrevistas($porto, $ano, 'Mergulho');
-//        $this->gerarquantentrevistas($porto, $ano, 'Siripoia');
         $this->gerarquantentrevistas($porto, $ano, 'Tarrafa');
-//        $this->gerarquantentrevistas($porto, $ano, 'VaraPesca');
-                
-//        $this->gerarquantcaptura($porto, $ano, 'Calao');
-//        $this->gerarquantcaptura($porto, $ano, 'Emalhe');
+
         $this->gerarquantcaptura($porto, $ano, 'Linha');
-//        $this->gerarquantcaptura($porto, $ano, 'Mergulho');
-//        $this->gerarquantcaptura($porto, $ano, 'Siripoia');
         $this->gerarquantcaptura($porto, $ano, 'Tarrafa');
-//        $this->gerarquantcaptura($porto, $ano, 'VaraPesca');
         
-//        $this->gerarquantbarcos($porto, $ano, 'Calao');
-//        $this->gerarquantbarcos($porto, $ano, 'Emalhe');
+
         $this->gerarquantbarcos($porto, $ano, 'Linha');
-//        $this->gerarquantbarcos($porto, $ano, 'Mergulho');
-//        $this->gerarquantbarcos($porto, $ano, 'Siripoia');
         $this->gerarquantbarcos($porto, $ano, 'Tarrafa');
-//        $this->gerarquantbarcos($porto, $ano, 'VaraPesca');
         
         $this->gerarrelqtdporarte($porto, $ano);
         
@@ -2121,21 +2062,15 @@ class PortoController extends Zend_Controller_Action
                
         $this->gerarquantentrevistas($porto, $ano, 'Arrasto');
         $this->gerarquantentrevistas($porto, $ano, 'Grosseira');
-//        $this->gerarquantentrevistas($porto, $ano, 'Linha');
-//        $this->gerarquantentrevistas($porto, $ano, 'Mergulho');
-//        $this->gerarquantentrevistas($porto, $ano, 'Siripoia');
+
                 
         $this->gerarquantcaptura($porto, $ano, 'Arrasto');
         $this->gerarquantcaptura($porto, $ano, 'Grosseira');
-//        $this->gerarquantcaptura($porto, $ano, 'Linha');
-//        $this->gerarquantcaptura($porto, $ano, 'Mergulho');
-//        $this->gerarquantcaptura($porto, $ano, 'Siripoia');
+
         
         $this->gerarquantbarcos($porto, $ano, 'Arrasto');
         $this->gerarquantbarcos($porto, $ano, 'Grosseira');
-//        $this->gerarquantbarcos($porto, $ano, 'Linha');
-//        $this->gerarquantbarcos($porto, $ano, 'Mergulho');
-//        $this->gerarquantbarcos($porto, $ano, 'Siripoia');
+
         
         $this->gerarrelqtdporarte($porto, $ano);
         
@@ -2144,7 +2079,7 @@ class PortoController extends Zend_Controller_Action
         
         $this->view->assign("porto",$porto);
         $this->view->assign("arteMaisPescada", "Arrasto");
-        $this->view->assign("segArteMaisPescada", "Grosseira");
+        $this->view->assign("segArteMaisPescada", "Groseira");
     }
     public function tulhaAction(){
         $ano = $this->_getParam('ano');
@@ -2166,34 +2101,15 @@ class PortoController extends Zend_Controller_Action
          */
                
         $this->gerarquantentrevistas($porto, $ano, 'Calao');
-//        $this->gerarquantentrevistas($porto, $ano, 'Coleta');
-//        $this->gerarquantentrevistas($porto, $ano, 'Emalhe');
-//        $this->gerarquantentrevistas($porto, $ano, 'Grosseira');
         $this->gerarquantentrevistas($porto, $ano, 'Linha');
-//        $this->gerarquantentrevistas($porto, $ano, 'Mergulho');
-//        $this->gerarquantentrevistas($porto, $ano, 'Ratoeira');
-//        $this->gerarquantentrevistas($porto, $ano, 'Siripoia');
-//        $this->gerarquantentrevistas($porto, $ano, 'Tarrafa');
+
                 
         $this->gerarquantcaptura($porto, $ano, 'Calao');
-//        $this->gerarquantcaptura($porto, $ano, 'Coleta');
-//        $this->gerarquantcaptura($porto, $ano, 'Emalhe');
-//        $this->gerarquantcaptura($porto, $ano, 'Grosseira');
         $this->gerarquantcaptura($porto, $ano, 'Linha');
-//        $this->gerarquantcaptura($porto, $ano, 'Mergulho');
-//        $this->gerarquantcaptura($porto, $ano, 'Ratoeira');
-//        $this->gerarquantcaptura($porto, $ano, 'Siripoia');
-//        $this->gerarquantcaptura($porto, $ano, 'Tarrafa');
         
         $this->gerarquantbarcos($porto, $ano, 'Calao');
-//        $this->gerarquantbarcos($porto, $ano, 'Coleta');
-//        $this->gerarquantbarcos($porto, $ano, 'Emalhe');
-//        $this->gerarquantbarcos($porto, $ano, 'Grosseira');
         $this->gerarquantbarcos($porto, $ano, 'Linha');
-//        $this->gerarquantbarcos($porto, $ano, 'Mergulho');
-//        $this->gerarquantbarcos($porto, $ano, 'Ratoeira');
-//        $this->gerarquantbarcos($porto, $ano, 'Siripoia');
-//        $this->gerarquantbarcos($porto, $ano, 'Tarrafa');
+
         
         $this->gerarrelqtdporarte($porto, $ano);
         
@@ -2220,25 +2136,14 @@ class PortoController extends Zend_Controller_Action
          * VaraPesca
          */
                
-//        $this->gerarquantentrevistas($porto, $ano, 'Emalhe');
-//        $this->gerarquantentrevistas($porto, $ano, 'Jerere');
+
         $this->gerarquantentrevistas($porto, $ano, 'Manzua');
-//        $this->gerarquantentrevistas($porto, $ano, 'Siripoia');
-//        $this->gerarquantentrevistas($porto, $ano, 'Tarrafa');
         $this->gerarquantentrevistas($porto, $ano, 'VaraPesca');
                 
-//        $this->gerarquantcaptura($porto, $ano, 'Emalhe');
-//        $this->gerarquantcaptura($porto, $ano, 'Jerere');
         $this->gerarquantcaptura($porto, $ano, 'Manzua');
-//        $this->gerarquantcaptura($porto, $ano, 'Siripoia');
-//        $this->gerarquantcaptura($porto, $ano, 'Tarrafa');
         $this->gerarquantcaptura($porto, $ano, 'VaraPesca');
         
-//        $this->gerarquantbarcos($porto, $ano, 'Emalhe');
-//        $this->gerarquantbarcos($porto, $ano, 'Jerere');
         $this->gerarquantbarcos($porto, $ano, 'Manzua');
-//        $this->gerarquantbarcos($porto, $ano, 'Siripoia');
-//        $this->gerarquantbarcos($porto, $ano, 'Tarrafa');
         $this->gerarquantbarcos($porto, $ano, 'VaraPesca');
         
         $this->gerarrelqtdporarte($porto, $ano);

@@ -408,12 +408,12 @@ class Application_Model_Ratoeira
         return $dbTable->fetchAll($select)->toArray();
     }
     
-        public function selectCapturaByPorto($where = null){
-        $dbTable = new Application_Model_DbTable_VEntrevistaRatoeira();
+    public function selectCapturaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEstimativaRatoeira();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_ratoeira', 'v_entrevista_ratoeira.pto_nome')->joinLeft('v_ratoeira_has_t_especie_capturada', 'v_entrevista_ratoeira.rat_id = v_ratoeira_has_t_especie_capturada.rat_id',
-                        array('sum(v_ratoeira_has_t_especie_capturada.spc_quantidade) as quant','sum(v_ratoeira_has_t_especie_capturada.spc_peso_kg) as peso' ))->
-                group(array('pto_nome'));
+                from('v_estimativa_ratoeira', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados)', 'sum(monitorados)', 
+                    'sum(quantidade) as quant', 'mes', 'ano', '((sum(quantidade)/sum(monitorados))*sum(naomonitorados))+sum(quantidade) as quanttotal'))->
+                group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
         
         if(!is_null($where)){
             $select->where($where);

@@ -415,11 +415,11 @@ private $dbTableColetaManual;
         return $dbTable->fetchAll($select)->toArray();
     }
     public function selectCapturaByPorto($where = null){
-        $dbTable = new Application_Model_DbTable_VEntrevistaColetaManual();
+        $dbTable = new Application_Model_DbTable_VEstimativaColetaManual();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_coletamanual', 'v_entrevista_coletamanual.pto_nome')->joinLeft('v_coletamanual_has_t_especie_capturada', 'v_entrevista_coletamanual.cml_id = v_coletamanual_has_t_especie_capturada.cml_id',
-                        array('sum(v_coletamanual_has_t_especie_capturada.spc_quantidade) as quant','sum(v_coletamanual_has_t_especie_capturada.spc_peso_kg) as peso' ))->
-                group(array('pto_nome'));
+                from('v_estimativa_coletamanual', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados)', 'sum(monitorados)', 
+                    'sum(quantidade) as quant', 'mes', 'ano', '((sum(quantidade)/sum(monitorados))*sum(naomonitorados))+sum(quantidade) as quanttotal'))->
+                group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
         
         if(!is_null($where)){
             $select->where($where);

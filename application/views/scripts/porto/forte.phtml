@@ -38,6 +38,70 @@
    };
  
    var entrevistasByMes1 = {
+       labels: <?= $this->quantLabelsArrasto ?>,
+       datasets: [
+           {
+               label: "Quantidade de Entrevistas Por Mês",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->quantEntrevistasArrasto ?>
+           }
+       ]
+   };
+   var capturaByMes1 = {
+       labels: <?= $this->countCaptLabelsArrasto ?>,
+       datasets: [
+           {
+               label: "Captura total por mês",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->countCaptPesoArrasto ?>
+           }
+       ]
+   };
+   var Embarcacoes1 = {
+       labels: <?= $this->labelBarcosArrasto ?>,
+       datasets: [
+           {
+               label: "Barcos Mais Monitorados",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->quantBarcosArrasto ?>
+           }
+       ]
+   };
+   
+
+//   
+   var especiesCapturadas1 = {
+       labels: <?= $this->labelCapturaArrasto ?>,
+       datasets: [
+           {
+               label: "Quantidade",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pesoCapturaArrasto ?>
+           }
+       ]
+   };
+    
+   var entrevistasByMes2 = {
        labels: <?= $this->quantLabelsLinha ?>,
        datasets: [
            {
@@ -52,7 +116,7 @@
            }
        ]
    };
-   var capturaByMes1 = {
+      var capturaByMes2 = {
        labels: <?= $this->countCaptLabelsLinha ?>,
        datasets: [
            {
@@ -67,7 +131,7 @@
            }
        ]
    };
-   var Embarcacoes1 = {
+   var Embarcacoes2 = {
        labels: <?= $this->labelBarcosLinha ?>,
        datasets: [
            {
@@ -83,9 +147,8 @@
        ]
    };
    
-
 //   
-   var especiesCapturadas1 = {
+   var especiesCapturadas2 = {
        labels: <?= $this->labelCapturaLinha ?>,
        datasets: [
            {
@@ -97,69 +160,6 @@
                pointHighlightFill: "#fff",
                pointHighlightStroke: "rgba(95,48,43,1)",
                data: <?= $this->pesoCapturaLinha ?>
-           }
-       ]
-   };
-    
-   var entrevistasByMes2 = {
-       labels: <?= $this->quantLabelsTarrafa ?>,
-       datasets: [
-           {
-               label: "Quantidade de Entrevistas Por Mês",
-               fillColor: "rgba(95,48,43,.8)",
-               strokeColor: "rgba(95,48,43,1)",
-               pointColor: "rgba(95,48,43,1)",
-               pointStrokeColor: "#fff",
-               pointHighlightFill: "#fff",
-               pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->quantEntrevistasTarrafa ?>
-           }
-       ]
-   };
-      var capturaByMes2 = {
-       labels: <?= $this->countCaptLabelsTarrafa ?>,
-       datasets: [
-           {
-               label: "Captura total por mês",
-               fillColor: "rgba(95,48,43,.8)",
-               strokeColor: "rgba(95,48,43,1)",
-               pointColor: "rgba(95,48,43,1)",
-               pointStrokeColor: "#fff",
-               pointHighlightFill: "#fff",
-               pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->countCaptPesoTarrafa ?>
-           }
-       ]
-   };
-   var Embarcacoes2 = {
-       labels: <?= $this->labelBarcosTarrafa ?>,
-       datasets: [
-           {
-               label: "Barcos Mais Monitorados",
-               fillColor: "rgba(95,48,43,.8)",
-               strokeColor: "rgba(95,48,43,1)",
-               pointColor: "rgba(95,48,43,1)",
-               pointStrokeColor: "#fff",
-               pointHighlightFill: "#fff",
-               pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->quantBarcosTarrafa ?>
-           }
-       ]
-   };
-   
-//   
-   var especiesCapturadas2 = {
-       labels: <?= $this->labelCapturaTarrafa ?>,
-       datasets: [
-           {
-               label: "Quantidade",
-               fillColor: "rgba(95,48,43,.8)",
-               strokeColor: "rgba(95,48,43,1)",
-               pointColor: "rgba(95,48,43,1)",
-               pointStrokeColor: "#fff",
-               pointHighlightFill: "#fff",
-               pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->pesoCapturaTarrafa ?>
            }
        ]
    };

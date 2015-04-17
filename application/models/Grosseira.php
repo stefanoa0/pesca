@@ -476,12 +476,11 @@ private $dbTableGrosseira;
         return $dbTable->fetchAll($select)->toArray();
     }
     
-        public function selectCapturaByPorto($where = null){
-        $dbTable = new Application_Model_DbTable_VEntrevistaGrosseira();
+    public function selectCapturaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEstimativaGrosseira();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_grosseira', 'v_entrevista_grosseira.pto_nome')->joinLeft('v_grosseira_has_t_especie_capturada', 'v_entrevista_grosseira.grs_id = v_grosseira_has_t_especie_capturada.grs_id',
-                        array('sum(v_grosseira_has_t_especie_capturada.spc_quantidade) as quant','sum(v_grosseira_has_t_especie_capturada.spc_peso_kg) as peso' ))->
-                group(array('pto_nome'));
+                from('v_estimativa_grosseira', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados)', 'sum(monitorados)', 'sum(peso) as peso', 'mes', 'ano', '((sum(peso)/sum(monitorados))*sum(naomonitorados))+sum(peso) as pesototal'))->
+                group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
         
         if(!is_null($where)){
             $select->where($where);
