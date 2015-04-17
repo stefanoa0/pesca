@@ -102,7 +102,7 @@
    };
     
    var entrevistasByMes2 = {
-       labels: <?= $this->quantLabelsRatoeira ?>,
+       labels: <?= $this->quantLabelsVaraPesca ?>,
        datasets: [
            {
                label: "Quantidade de Entrevistas Por Mês",
@@ -112,12 +112,12 @@
                pointStrokeColor: "#fff",
                pointHighlightFill: "#fff",
                pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->quantEntrevistasRatoeira ?>
+               data: <?= $this->quantEntrevistasVaraPesca ?>
            }
        ]
    };
       var capturaByMes2 = {
-       labels: <?= $this->countCaptLabelsRatoeira ?>,
+       labels: <?= $this->countCaptLabelsVaraPesca ?>,
        datasets: [
            {
                label: "Captura total por mês",
@@ -127,12 +127,12 @@
                pointStrokeColor: "#fff",
                pointHighlightFill: "#fff",
                pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->countCaptPesoRatoeira ?>
+               data: <?= $this->countCaptPesoVaraPesca ?>
            }
        ]
    };
    var Embarcacoes2 = {
-       labels: <?= $this->labelBarcosRatoeira ?>,
+       labels: <?= $this->labelBarcosVaraPesca ?>,
        datasets: [
            {
                label: "Barcos Mais Monitorados",
@@ -142,14 +142,14 @@
                pointStrokeColor: "#fff",
                pointHighlightFill: "#fff",
                pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->quantBarcosRatoeira ?>
+               data: <?= $this->quantBarcosVaraPesca ?>
            }
        ]
    };
    
 //   
    var especiesCapturadas2 = {
-       labels: <?= $this->labelCapturaRatoeira ?>,
+       labels: <?= $this->labelCapturaVaraPesca ?>,
        datasets: [
            {
                label: "Quantidade",
@@ -159,7 +159,7 @@
                pointStrokeColor: "#fff",
                pointHighlightFill: "#fff",
                pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->pesoCapturaRatoeira ?>
+               data: <?= $this->pesoCapturaVaraPesca ?>
            }
        ]
    };
@@ -220,7 +220,7 @@ Figura: Juerana.
 
 <br/>
 <div class="box-chart">
-    <legend>Gráfico 1: Artes de Pesca Mais Monitoradas (n)</legend>
+    <legend>Gráfico 1: Artes de Pesca Mais Monitoradas (%)</legend>
   <canvas id="ArtesMonitoradas" style="width:100%;"></canvas>
 </div>
 <br/>
