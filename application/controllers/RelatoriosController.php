@@ -34,6 +34,8 @@ class RelatoriosController extends Zend_Controller_Action
         $porto = $modelPorto->select(null, 'pto_nome');
         
         $this->view->assign("portos", $porto);
+        
+
 
     }
     public function graficosAction(){
@@ -196,7 +198,7 @@ class RelatoriosController extends Zend_Controller_Action
             case 17:$this->_redirect("/relatorios/biometriaspeixe".$data.$datafim.$porto);break;
             case 18:$this->_redirect("/relatorios/cpue".$data.$datafim.$porto);break;
             case 19:$this->_redirect("/relatorios/relartesbyporto".$data.$datafim.$porto);break;
-            
+            case 20:$this->_redirect("/relatorios/relatorioestimativas".$data.$datafim.$porto);break;
         }
     }
     
@@ -244,7 +246,7 @@ class RelatoriosController extends Zend_Controller_Action
     }
     public function dataInicial($data){
         if($data == '--'){
-            $data = '2013-01-01';
+            $data = '2013-10-01';
         }
         return $data;
     }
@@ -5386,6 +5388,20 @@ class RelatoriosController extends Zend_Controller_Action
         $modelTarrafa=     new Application_Model_Tarrafa;
         $modelVaraPesca =  new Application_Model_VaraPesca;
         
+         $date =  $this->_getParam('data');
+        $datend = $this->_getParam('datafim');
+        
+        $data = $this->dataInicial($date);
+        $datafim = $this->dataFinal($datend);
+        
+        $explode_data = explode('-', $data);
+        $explode_dataFim = explode('-', $datafim);
+        
+        $mes = $explode_data[1];
+        $ano = $explode_data[0];
+        
+        $mesfim = $explode_dataFim[1];
+        $anofim = $explode_dataFim[0];
         
         $porto = $this->_getParam('porto');
            
@@ -5405,19 +5421,19 @@ class RelatoriosController extends Zend_Controller_Action
         if($porto != '999'){
             $nomePorto = $this->verifporto($porto);
             $arrasto = $modelArrasto->selectEstimativaByPorto( "pto_nome ='".$nomePorto."'");
-            $calao =   $modelCalao->selectEstimativaByPorto("pto_nome ='".$nomePorto."'");
-            $coletamanual =$modelColetaManual->selectEstimativaByPorto( "pto_nome ='".$nomePorto."'");
-            $emalhe =$modelEmalhe->selectEstimativaByPorto("pto_nome ='".$nomePorto."'");
-            $grosseira =$modelGrosseira->selectEstimativaByPorto( "pto_nome ='".$nomePorto."'");
-            $jerere =$modelJerere->selectEstimativaByPorto( "pto_nome ='".$nomePorto."'");
-            $pescalinha =$modelLinha->selectEstimativaByPorto( "pto_nome ='".$nomePorto."'");
-            $linhafundo =$modelLinhaFundo->selectEstimativaByPorto( "pto_nome ='".$nomePorto."'");
-            $manzua =$modelManzua->selectEstimativaByPorto( "pto_nome ='".$nomePorto."'");
-            $mergulho =$modelMergulho->selectEstimativaByPorto( "pto_nome ='".$nomePorto."'");
-            $ratoeira =$modelRatoeira->selectEstimativaByPorto( "pto_nome ='".$nomePorto."'");
-            $siripoia =$modelSiripoia->selectEstimativaByPorto( "pto_nome ='".$nomePorto."'");
-            $tarrafa =$modelTarrafa->selectEstimativaByPorto("pto_nome ='".$nomePorto."'");
-            $varapesca =$modelVaraPesca->selectEstimativaByPorto( "pto_nome ='".$nomePorto."'");
+            $calao =   $modelCalao->selectEstimativaByPorto("pto_nome ='".$nomePorto."' ");
+            $coletamanual =$modelColetaManual->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
+            $emalhe =$modelEmalhe->selectEstimativaByPorto("pto_nome ='".$nomePorto."' ");
+            $grosseira =$modelGrosseira->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
+            $jerere =$modelJerere->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
+            $pescalinha =$modelLinha->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
+            $linhafundo =$modelLinhaFundo->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
+            $manzua =$modelManzua->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
+            $mergulho =$modelMergulho->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
+            $ratoeira =$modelRatoeira->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
+            $siripoia =$modelSiripoia->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
+            $tarrafa =$modelTarrafa->selectEstimativaByPorto("pto_nome ='".$nomePorto."' ");
+            $varapesca =$modelVaraPesca->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
         }
          else{
              $arrasto = $modelArrasto->selectEstimativaByPorto();
@@ -5439,9 +5455,9 @@ class RelatoriosController extends Zend_Controller_Action
          $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Local');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Artes de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mês');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Monitorados (n)');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Monitoradoss (n)');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Monitorada (kg)');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Média');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Não Monitorados');
@@ -5706,8 +5722,8 @@ class RelatoriosController extends Zend_Controller_Action
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Local');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Artes de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mês');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Monitorados (n)');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Monitorada (n)');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Média');
