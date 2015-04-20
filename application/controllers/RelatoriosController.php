@@ -4916,12 +4916,12 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Tarrafa');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $dataFormatada =$this->formataData($consulta['fd_data']);
+            $dataFormatada =$this->formataData($consulta['tar_data']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $dataFormatada);
-            $explodeData = explode('-',$consulta['fd_data']);
+            $explodeData = explode('-',$consulta['tar_data']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[1]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[0]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '1');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_id']);
             $capturaTotal = $this->modelRel->selectCapturaByArteTarrafa('v_entrevista_tarrafa.tar_id='.$consulta['tar_id']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']);
