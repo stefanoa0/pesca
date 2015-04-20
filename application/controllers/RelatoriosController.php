@@ -5579,7 +5579,7 @@ class RelatoriosController extends Zend_Controller_Action
                 $linha++;
         endforeach;
         
-        foreach ( $linha as $key => $consulta ):
+        foreach ( $pescalinha as $key => $consulta ):
                 //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
