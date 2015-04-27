@@ -444,7 +444,7 @@ class Application_Model_Calao
     public function selectEntrevistasByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaCalao();
         $select = $dbTable->select()->
-                from('v_entrevista_calao', array('pto_nome', 'count(bar_nome)'))->
+                from('v_entrevista_calao', array('pto_nome', 'count(cal_id)'))->
                 group(array('pto_nome'));
         
         if(!is_null($where)){
@@ -464,6 +464,18 @@ class Application_Model_Calao
         }
         return $dbTable->fetchAll($select)->toArray();
     }
+    public function selectEstimativaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEstimativaCalao();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_estimativa_calao', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados) as naomonitorados', 'sum(monitorados) as monitorados', 'sum(peso) as peso', 'mes', 'ano'))->
+                group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
     public function selectQuantBarcosByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaCalao();
         $select = $dbTable->select()->

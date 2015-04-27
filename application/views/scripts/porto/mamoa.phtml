@@ -1,7 +1,7 @@
 <h2>Porto -> Mamoã</h2>
 
 <script src="js/Chart.min.js"></script>
-
+<a id="pdf" href="javascript:print();" title="Gerar PDF"><img src="img/pdf-icon.png" class="icon-relatorios"></a><br/>
 <script type="text/javascript">
 
     var options = {
@@ -286,3 +286,5 @@ Figura: Mamoã.
 </div>
 <br/>
 
+<a href="<?= $this->url(array("controller" => "porto", "action" => "cpue", "ano" => $this->ano, "arte" => $this->arteMaisPescada, "porto" => $this->porto ), null, true) ?>" id="botao-ancora">Gráfico de CPUE em <?=$this->arteMaisPescada?></a><br/>
+<a href="<?= $this->url(array("controller" => "porto", "action" => "cpue", "ano" => $this->ano, "arte" => $this->segArteMaisPescada, "porto" => $this->porto ), null, true) ?>" id="botao-ancora">Gráfico de CPUE em <?=$this->segArteMaisPescada?></a><br/>

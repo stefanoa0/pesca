@@ -426,6 +426,18 @@ private $dbTableMergulho;
         }
         return $dbTable->fetchAll($select)->toArray();
     }
+    
+    public function selectEstimativaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEstimativaMergulho();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_estimativa_mergulho', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados) as naomonitorados', 'sum(monitorados) as monitorados', 'sum(peso) as peso', 'mes', 'ano'))->
+                group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
     //Quantidade de variaveis por Porto FUNÇÕES PARA REPLICAR
     public function selectQuantBarcosByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaMergulho();
@@ -442,7 +454,7 @@ private $dbTableMergulho;
     public function selectEntrevistasByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaMergulho();
         $select = $dbTable->select()->
-                from('v_entrevista_mergulho', array('pto_nome', 'count(bar_nome)'))->
+                from('v_entrevista_mergulho', array('pto_nome', 'count(mer_id)'))->
                 group(array('pto_nome'));
         
         if(!is_null($where)){

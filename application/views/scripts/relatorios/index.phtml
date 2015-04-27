@@ -1,3 +1,11 @@
+<!--<script>
+  $( "#openDialog" ).click(function() {
+      $( "#dialog" ).dialog( "open" );
+    });
+  </script>
+<div id="dialog" title="Carregando">
+  <p>O relatório está sendo carregado, por favor, aguarde.</p>
+</div>-->
 <div id="titulos">
     <h2>Relatórios</h2>
 </div>
@@ -28,6 +36,7 @@
                     <option value="17">Biometrias de Peixes - XLS</option>
                     <option value="18">CPUE (todas as artes) - XLS</option>
                     <option value="19">Artes de Pesca Por Porto</option>
+                    <option value="20">Estimativas de Captura</option>
                 </select>
             </div>
             <div class="form-esq">
@@ -44,15 +53,15 @@
                 <div class="forDate">
                     <input type="number" placeholder="dia" max="31" min="1" name="dia_ini" class="data"/>
                     <input type="number" placeholder="mes" max="12" min="1" name="mes_ini" class="data"/>
-                    <input type="number" placeholder="ano" max="2015" min="2013" name="ano_ini" class="data"/>
+                    <input type="number" placeholder="ano" max="<?= date('Y')?>" min="2013" name="ano_ini" class="data"/>
                 </div>
             </div>
             <div class="form-esq">
                 <label>Data final:</label>
                 <div class="forDate">
-                    <input type="number" placeholder="dia" max="31" min="1" name="dia_fim" class="data"/>
+                    <input type="number" placeholder="dia" max="31" min="1" name="dia_fim" class="data" />
                     <input type="number" placeholder="mes" max="12" min="1" name="mes_fim" class="data"/>
-                    <input type="number" placeholder="ano" max="2015" min="2013" name="ano_fim" class="data"/>
+                    <input type="number" placeholder="ano" max="<?= date('Y')?>" min="2013" name="ano_fim" class="data"/>
                 </div>
             </div>
             <div class="form-esq">
@@ -73,7 +82,7 @@
             </div>
         
             <div class="form-esq">     
-                <input type="submit" value="Relatório"/>
+                <input type="submit" value="Relatório" id="openDialog"/>
             </div>
     </fieldset>
     </div>

@@ -409,7 +409,7 @@ class Application_Model_Siripoia
     public function selectEntrevistasByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaSiripoia();
         $select = $dbTable->select()->
-                from('v_entrevista_siripoia', array('pto_nome', 'count(bar_nome)'))->
+                from('v_entrevista_siripoia', array('pto_nome', 'count(sir_id)'))->
                 group(array('pto_nome'));
         
         if(!is_null($where)){
@@ -422,6 +422,18 @@ class Application_Model_Siripoia
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_estimativa_siripoia', array('pto_nome', 'tap_artepesca as arte', 'sum(naomonitorados)', 'sum(monitorados)', 
                     'sum(quantidade) as quant', 'mes', 'ano', '((sum(quantidade)/sum(monitorados))*sum(naomonitorados))+sum(monitorados) as quanttotal'))->
+                group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    
+    public function selectEstimativaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEstimativaSiripoia();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_estimativa_siripoia', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados) as naomonitorados', 'sum(monitorados) as monitorados', 'sum(quantidade) as quantidade', 'mes', 'ano'))->
                 group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
         
         if(!is_null($where)){

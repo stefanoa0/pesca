@@ -1,0 +1,52 @@
+<h2><?=$this->porto?></h2>
+
+<h3><?='Pesca de '.$this->arte.' em '.$this->ano?></h3>
+<canvas id="canvas" height="600" width="900"></canvas>
+<script src="js/charts-box/Chart.js"></script>
+
+	<script>
+
+		var lineChartData = {
+			labels : <?=$this->cpueLabels ?>,
+			datasets : [
+				{
+					fillColor : "rgba(25,25,25,1)",
+					strokeColor : "rgba(0,0,0,1)",
+					pointColor : "rgba(0,0,0,1)",
+					pointStrokeColor : "#fff",
+					data : [
+                                            <?=$this->cpueJaneiro ?>,
+                                            <?=$this->cpueFevereiro?>,
+                                            <?=$this->cpueMarco  ?> ,
+                                            <?=$this->cpueAbril?>, 
+                                            <?=$this->cpueMaio?>,    
+                                            <?=$this->cpueJunho  ?>, 
+                                            <?=$this->cpueJulho  ?>,
+                                            <?=$this->cpueAgosto?>,
+                                            <?=$this->cpueSetembro?>,
+                                            <?=$this->cpueOutubro?>,
+                                            <?=$this->cpueNovembro?>,
+                                            <?=$this->cpueDezembro?>
+						]
+				},		
+			]
+		}
+	
+		options = {
+		
+			whiskerWidth : 0.75,
+			scaleOverride: true,
+			scaleStartValue: 0,
+			scaleSteps: 15,
+			scaleStepWidth: 20,
+			bezierCurve: true,
+			datasetFill: false,
+			connectingLine : true,
+			animation : true
+		}
+
+	var myLine = new ChartCalculator(document.getElementById("canvas").getContext("2d")).Box(lineChartData, options);
+	
+	</script>
+
+

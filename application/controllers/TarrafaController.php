@@ -65,6 +65,7 @@ private $usuario;
         $ent_pescador = $this->_getParam("tp_nome");
         $ent_barco = $this->_getParam("bar_nome");
         $ent_apelido = $this->_getParam("tp_apelido");
+        $ent_all = $this->_getParam("ent_all");
 
         if ($ent_id > 0) {
             $dados = $this->modelTarrafa->selectEntrevistaTarrafa("tar_id>=" . $ent_id, array('tar_id'),50);
@@ -75,6 +76,9 @@ private $usuario;
        }
        elseif ($ent_apelido){
             $dados = $this->modelTarrafa->selectEntrevistaTarrafa("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'tar_id DESC'), 20);
+        }
+        elseif($ent_all){
+            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelTarrafa->selectEntrevistaTarrafa(null, array('fd_id DESC', 'tp_nome'),20);

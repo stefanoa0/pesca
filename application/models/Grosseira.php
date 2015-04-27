@@ -467,7 +467,7 @@ private $dbTableGrosseira;
     public function selectEntrevistasByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaGrosseira();
         $select = $dbTable->select()->
-                from('v_entrevista_grosseira', array('pto_nome', 'count(bar_nome)'))->
+                from('v_entrevista_grosseira', array('pto_nome', 'count(grs_id)'))->
                 group(array('pto_nome'));
         
         if(!is_null($where)){
@@ -480,6 +480,17 @@ private $dbTableGrosseira;
         $dbTable = new Application_Model_DbTable_VEstimativaGrosseira();
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_estimativa_grosseira', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados)', 'sum(monitorados)', 'sum(peso) as peso', 'mes', 'ano', '((sum(peso)/sum(monitorados))*sum(naomonitorados))+sum(peso) as pesototal'))->
+                group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    public function selectEstimativaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEstimativaGrosseira();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_estimativa_grosseira', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados) as naomonitorados', 'sum(monitorados) as monitorados', 'sum(peso) as peso', 'mes', 'ano'))->
                 group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
         
         if(!is_null($where)){

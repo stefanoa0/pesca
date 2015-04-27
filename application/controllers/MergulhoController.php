@@ -76,7 +76,8 @@ class MergulhoController extends Zend_Controller_Action
         $ent_pescador = $this->_getParam("tp_nome");
         $ent_barco = $this->_getParam("bar_nome");
         $ent_apelido = $this->_getParam("tp_apelido");
-
+        $ent_all = $this->_getParam("ent_all");
+        
         if ($ent_id > 0) {
             $dados = $this->modelMergulho->selectEntrevistaMergulho("mer_id>=" . $ent_id, array('mer_id'),50);
         } elseif ($ent_pescador) {
@@ -86,6 +87,9 @@ class MergulhoController extends Zend_Controller_Action
        }
         elseif ($ent_apelido){
             $dados = $this->modelMergulho->selectEntrevistaMergulho("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'mer_id v'), 20);
+        }
+        elseif($ent_all){
+            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelMergulho->selectEntrevistaMergulho(null, array('fd_id DESC', 'tp_nome'),20);
@@ -114,8 +118,8 @@ class MergulhoController extends Zend_Controller_Action
         $tipoVenda = $this->modelTipoVenda->select(null, 'ttv_tipovenda');
 
         $idEntrevista = $this->_getParam('id');
-        $datahoraSaida[] = split(" ",$entrevista['mer_dhsaida']);
-        $datahoraVolta[] = split(" ",$entrevista['mer_dhvolta']);
+        $datahoraSaida[] = explode(" ",$entrevista['mer_dhsaida']);
+        $datahoraVolta[] = explode(" ",$entrevista['mer_dhvolta']);
 
         $vMergulho = $this->modelMergulho->selectMergulhoHasPesqueiro('mer_id='.$idEntrevista);
 

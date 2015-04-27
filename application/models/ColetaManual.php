@@ -406,7 +406,7 @@ private $dbTableColetaManual;
     public function selectEntrevistasByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaColetaManual();
         $select = $dbTable->select()->
-                from('v_entrevista_coletamanual', array('pto_nome', 'count(bar_nome)'))->
+                from('v_entrevista_coletamanual', array('pto_nome', 'count(cml_id)'))->
                 group(array('pto_nome'));
         
         if(!is_null($where)){
@@ -419,6 +419,17 @@ private $dbTableColetaManual;
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_estimativa_coletamanual', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados)', 'sum(monitorados)', 
                     'sum(quantidade) as quant', 'mes', 'ano', '((sum(quantidade)/sum(monitorados))*sum(naomonitorados))+sum(quantidade) as quanttotal'))->
+                group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
+    public function selectEstimativaByPorto($where = null){
+        $dbTable = new Application_Model_DbTable_VEstimativaColetaManual();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_estimativa_coletamanual', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados) as naomonitorados', 'sum(monitorados) as monitorados', 'sum(quantidade) as quantidade', 'mes', 'ano'))->
                 group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
         
         if(!is_null($where)){

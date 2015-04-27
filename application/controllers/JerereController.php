@@ -72,7 +72,8 @@ private $usuario;
         $ent_pescador = $this->_getParam("tp_nome");
         $ent_barco = $this->_getParam("bar_nome");
         $ent_apelido = $this->_getParam("tp_apelido");
-
+        $ent_all = $this->_getParam("ent_all");
+        
         if ($ent_id > 0) {
             $dados = $this->modelJerere->selectEntrevistaJerere("jre_id>=" . $ent_id, array('jre_id'),50);
         } elseif ($ent_pescador) {
@@ -82,6 +83,9 @@ private $usuario;
        }
         elseif ($ent_apelido){
             $dados = $this->modelJerere->selectEntrevistaJerere("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'jre_id DESC'), 20);
+        }
+        elseif($ent_all){
+            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelJerere->selectEntrevistaJerere(null, array('fd_id DESC', 'tp_nome'),20);
@@ -111,8 +115,8 @@ private $usuario;
         $tipoVenda = $this->modelTipoVenda->select(null, 'ttv_tipovenda');
 
         $idEntrevista = $this->_getParam('id');
-        $datahoraSaida[] = split(" ",$entrevista['jre_dhsaida']);
-        $datahoraVolta[] = split(" ",$entrevista['jre_dhvolta']);
+        $datahoraSaida[] = explode(" ",$entrevista['jre_dhsaida']);
+        $datahoraVolta[] = explode(" ",$entrevista['jre_dhvolta']);
 
         $vJerere = $this->modelJerere->selectJerereHasPesqueiro('jre_id='.$idEntrevista);
 

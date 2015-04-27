@@ -79,7 +79,8 @@ class LinhaFundoController extends Zend_Controller_Action
         $ent_pescador = $this->_getParam("tp_nome");
         $ent_barco = $this->_getParam("bar_nome");
         $ent_apelido = $this->_getParam("tp_apelido");
-
+        $ent_all = $this->_getParam("ent_all");
+        
         if ($ent_id > 0) {
             $dados = $this->modelLinhaFundo->selectEntrevistaLinhaFundo("lf_id>=" . $ent_id, array('lf_id'),50);
         } elseif ($ent_pescador) {
@@ -89,6 +90,9 @@ class LinhaFundoController extends Zend_Controller_Action
        }
         elseif ($ent_apelido){
             $dados = $this->modelLinhaFundo->selectEntrevistaLinhaFundo("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'lf_id DESC'), 20);
+        }
+        elseif($ent_all){
+            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelLinhaFundo->selectEntrevistaLinhaFundo(null, array('fd_id DESC', 'tp_nome'),20);
@@ -115,8 +119,8 @@ class LinhaFundoController extends Zend_Controller_Action
         $tipoVenda = $this->modelTipoVenda->select(null, 'ttv_tipovenda');
 
         $idEntrevista = $this->_getParam('id');
-        $datahoraSaida[] = split(" ",$entrevista['lf_dhsaida']);
-        $datahoraVolta[] = split(" ",$entrevista['lf_dhvolta']);
+        $datahoraSaida[] = explode(" ",$entrevista['lf_dhsaida']);
+        $datahoraVolta[] = explode(" ",$entrevista['lf_dhvolta']);
 
         $vLinhaFundo = $this->modelLinhaFundo->selectLinhaFundoHasPesqueiro('lf_id='.$idEntrevista);
 

@@ -76,7 +76,8 @@ private $usuario;
         $ent_pescador = $this->_getParam("tp_nome");
         $ent_barco = $this->_getParam("bar_nome");
         $ent_apelido = $this->_getParam("tp_apelido");
-
+        $ent_all = $this->_getParam("ent_all");
+        
         if ($ent_id > 0) {
             $dados = $this->modelRatoeira->selectEntrevistaRatoeira("rat_id>=" . $ent_id, array('rat_id'),50);
         } elseif ($ent_pescador) {
@@ -86,6 +87,9 @@ private $usuario;
         }
         elseif ($ent_apelido){
             $dados = $this->modelRatoeira->selectEntrevistaRatoeira("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido DESC', 'rat_id'), 20);
+        }
+        elseif($ent_all){
+            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelRatoeira->selectEntrevistaRatoeira(null, array('fd_id DESC', 'tp_nome'),20);
@@ -113,8 +117,8 @@ private $usuario;
         $tipoVenda = $this->modelTipoVenda->select(null, 'ttv_tipovenda');
 
         $idEntrevista = $this->_getParam('id');
-        $datahoraSaida[] = split(" ",$entrevista['rat_dhsaida']);
-        $datahoraVolta[] = split(" ",$entrevista['rat_dhvolta']);
+        $datahoraSaida[] = explode(" ",$entrevista['rat_dhsaida']);
+        $datahoraVolta[] = explode(" ",$entrevista['rat_dhvolta']);
 
         $vRatoeira = $this->modelRatoeira->selectRatoeiraHasPesqueiro('rat_id='.$idEntrevista);
 

@@ -75,7 +75,8 @@ public function visualizarAction() {
         $ent_pescador = $this->_getParam("tp_nome");
         $ent_barco = $this->_getParam("bar_nome");
         $ent_apelido = $this->_getParam("tp_apelido");
-
+        $ent_all = $this->_getParam("ent_all");
+        
         if ($ent_id > 0) {
             $dados = $this->modelManzua->selectEntrevistaManzua("man_id>=" . $ent_id, array('man_id'),50);
         } elseif ($ent_pescador) {
@@ -85,6 +86,9 @@ public function visualizarAction() {
        }
         elseif ($ent_apelido){
             $dados = $this->modelManzua->selectEntrevistaManzua("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'man_id DESC'), 20);
+        }
+        elseif($ent_all){
+            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelManzua->selectEntrevistaManzua(null, array('fd_id DESC', 'tp_nome'),20);
@@ -111,8 +115,8 @@ public function visualizarAction() {
 
         $mare = $this->modelMare->select();
         $idEntrevista = $this->_getParam('id');
-        $datahoraSaida[] = split(" ",$entrevista['man_dhsaida']);
-        $datahoraVolta[] = split(" ",$entrevista['man_dhvolta']);
+        $datahoraSaida[] = explode(" ",$entrevista['man_dhsaida']);
+        $datahoraVolta[] = explode(" ",$entrevista['man_dhvolta']);
 
         $vManzua = $this->modelManzua->selectManzuaHasPesqueiro('man_id='.$idEntrevista);
 
