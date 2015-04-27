@@ -326,7 +326,6 @@ class PortoController extends Zend_Controller_Action
         foreach($array as $campo){
             if($campo['esp_nome_comum'] == 'Rosinha'){
                 $rosinha = $campo['peso'];
-                unset($array[$campo]);
             }
             if($campo['esp_nome_comum'] == 'Rosa'){
                 $rosa = array(
@@ -334,10 +333,12 @@ class PortoController extends Zend_Controller_Action
                 'peso' => $campo['peso']+$rosinha,
                 'quant' => $campo['quant']
                 );
-                unset($array[$campo['esp_nome_comum']]);
-                
+               
+
             }
+            print_r($campo);
         }
+       
         array_push($array, $rosa);
         return $array;
     }
@@ -1492,6 +1493,7 @@ class PortoController extends Zend_Controller_Action
         $this->gerarespeciescapturadas($porto, $ano, 'Ratoeira');
         
         $this->view->assign("porto",$porto);
+        $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Jereré");
         $this->view->assign("segArteMaisPescada", "Ratoeira");
     }
@@ -1553,6 +1555,7 @@ class PortoController extends Zend_Controller_Action
         $this->gerarrelqtdporarte($porto, $ano);
         
         $this->view->assign("porto",$porto);
+        $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Tarrafa");
         $this->view->assign("segArteMaisPescada", "Linha");
     }
@@ -1582,6 +1585,7 @@ class PortoController extends Zend_Controller_Action
         $this->gerarespeciescapturadas($porto, $ano, 'Siripoia');
         
         $this->view->assign("porto",$porto);
+        $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Arrasto");
         $this->view->assign("segArteMaisPescada", "Siripoia");
     }
@@ -1632,6 +1636,7 @@ class PortoController extends Zend_Controller_Action
         $this->gerarespeciescapturadas($porto, $ano, 'Linha');
         
         $this->view->assign("porto",$porto);
+        $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Linha");
         $this->view->assign("segArteMaisPescada", "Emalhe");
     }
@@ -1691,6 +1696,7 @@ class PortoController extends Zend_Controller_Action
         $this->gerarespeciescapturadas($porto, $ano, 'Linha');
         
         $this->view->assign("porto",$porto);
+        $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Arrasto");
         $this->view->assign("segArteMaisPescada", "Linha");
     }
@@ -1731,6 +1737,7 @@ class PortoController extends Zend_Controller_Action
         $this->gerarespeciescapturadas($porto, $ano, 'VaraPesca');
         
         $this->view->assign("porto",$porto);
+        $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Manzua");
         $this->view->assign("segArteMaisPescada", "Vara de Pesca");
     }
@@ -1781,6 +1788,7 @@ class PortoController extends Zend_Controller_Action
         $this->gerarespeciescapturadas($porto, $ano, 'Calao');
         
         $this->view->assign("porto",$porto);
+        $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Linha");
         $this->view->assign("segArteMaisPescada", "Calao");
     }
@@ -1827,6 +1835,7 @@ class PortoController extends Zend_Controller_Action
         $this->gerarespeciescapturadas($porto, $ano, 'Linha');
         
         $this->view->assign("porto",$porto);
+        $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Linha");
         $this->view->assign("segArteMaisPescada", "Arrasto");
     }
@@ -1870,6 +1879,7 @@ class PortoController extends Zend_Controller_Action
         $this->gerarespeciescapturadas($porto, $ano, 'Arrasto');
         
         $this->view->assign("porto",$porto);
+        $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Linha");
         $this->view->assign("segArteMaisPescada", "Arrasto");
     }
@@ -1904,6 +1914,7 @@ class PortoController extends Zend_Controller_Action
         $this->gerarespeciescapturadas($porto, $ano, 'Linha');
         
         $this->view->assign("porto",$porto);
+        $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Linha");
         $this->view->assign("segArteMaisPescada", "Calao");
     }
@@ -1958,6 +1969,7 @@ class PortoController extends Zend_Controller_Action
         $this->gerarespeciescapturadas($porto, $ano, 'Ratoeira');
         
         $this->view->assign("porto",$porto);
+        $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Manzua");
         $this->view->assign("segArteMaisPescada", "Ratoeira");
     }
@@ -1996,6 +2008,7 @@ class PortoController extends Zend_Controller_Action
         $this->gerarespeciescapturadas($porto, $ano, 'Emalhe');
         
         $this->view->assign("porto",$porto);
+        $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Calao");
         $this->view->assign("segArteMaisPescada", "Emalhe");
     }
@@ -2034,6 +2047,7 @@ class PortoController extends Zend_Controller_Action
         $this->gerarespeciescapturadas($porto, $ano, 'VaraPesca');
         
         $this->view->assign("porto",$porto);
+        $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Tarrafa");
         $this->view->assign("segArteMaisPescada", "VaraPesca");
     }
@@ -2070,6 +2084,7 @@ class PortoController extends Zend_Controller_Action
         $this->gerarespeciescapturadas($porto, $ano, 'Linha');
         
         $this->view->assign("porto",$porto);
+        $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Linha");
         $this->view->assign("segArteMaisPescada", "Tarrafa");
     }
@@ -2106,6 +2121,7 @@ class PortoController extends Zend_Controller_Action
         $this->gerarespeciescapturadas($porto, $ano, 'Grosseira');
         
         $this->view->assign("porto",$porto);
+        $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Arrasto");
         $this->view->assign("segArteMaisPescada", "Groseira");
     }
@@ -2145,6 +2161,7 @@ class PortoController extends Zend_Controller_Action
         $this->gerarespeciescapturadas($porto, $ano, 'Calao');
         
         $this->view->assign("porto",$porto);
+        $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Linha");
         $this->view->assign("segArteMaisPescada", "Calao");
     }
@@ -2180,6 +2197,7 @@ class PortoController extends Zend_Controller_Action
         $this->gerarespeciescapturadas($porto, $ano, 'VaraPesca');
         
         $this->view->assign("porto",$porto);
+        $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Manzua");
         $this->view->assign("segArteMaisPescada", "VaraPesca");
     }
