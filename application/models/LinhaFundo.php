@@ -467,7 +467,7 @@ class Application_Model_LinhaFundo
     public function selectEntrevistasByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaLinhaFundo();
         $select = $dbTable->select()->
-                from('v_entrevista_linhafundo', array('pto_nome', 'count(bar_nome)'))->
+                from('v_entrevista_linhafundo', array('pto_nome', 'count(lf_id)'))->
                 group(array('pto_nome'));
         
         if(!is_null($where)){

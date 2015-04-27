@@ -72,7 +72,8 @@ private $usuario;
         $ent_pescador = $this->_getParam("tp_nome");
         $ent_barco = $this->_getParam("bar_nome");
         $ent_apelido = $this->_getParam("tp_apelido");
-
+        $ent_all = $this->_getParam("ent_all");
+        
         if ($ent_id > 0) {
             $dados = $this->modelGrosseira->selectEntrevistaGrosseira("grs_id>=" . $ent_id, array('grs_id'),50);
         } elseif ($ent_pescador) {
@@ -82,6 +83,9 @@ private $usuario;
        }
         elseif ($ent_apelido){
             $dados = $this->modelGrosseira->selectEntrevistaGrosseira("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'grs_id DESC'), 20);
+        }
+        elseif($ent_all){
+            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelGrosseira->selectEntrevistaGrosseira(null, array('fd_id DESC', 'tp_nome'),20);
@@ -107,8 +111,8 @@ private $usuario;
 
         
         $idEntrevista = $this->_getParam('id');
-        $datahoraSaida[] = split(" ",$entrevista['grs_dhsaida']);
-        $datahoraVolta[] = split(" ",$entrevista['grs_dhvolta']);
+        $datahoraSaida[] = explode(" ",$entrevista['grs_dhsaida']);
+        $datahoraVolta[] = explode(" ",$entrevista['grs_dhvolta']);
 
         $vGrosseira = $this->modelGrosseira->selectGrosseiraHasPesqueiro('grs_id='.$idEntrevista);
 

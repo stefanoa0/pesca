@@ -65,7 +65,8 @@ class ArrastoFundoController extends Zend_Controller_Action {
         $ent_pescador = $this->_getParam("tp_nome");
         $ent_barco = $this->_getParam("bar_nome");
         $ent_apelido = $this->_getParam("tp_apelido");
-
+        $ent_all = $this->_getParam("ent_all");
+        
         if ($ent_id > 0) {
             $dados = $this->modelArrastoFundo->selectEntrevistaArrasto("af_id>=" . $ent_id, array('af_id'), 50);
         } elseif ($ent_pescador) {
@@ -75,6 +76,9 @@ class ArrastoFundoController extends Zend_Controller_Action {
        }
         elseif ($ent_apelido){
             $dados = $this->modelArrastoFundo->selectEntrevistaArrasto("tp_apelido ~*'".$ent_apelido."'", array('tp_apelido', 'af_id DESC'));
+        }
+        elseif($ent_all){
+            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelArrastoFundo->selectEntrevistaArrasto(null, array('fd_id DESC', 'tp_nome'), 20);
@@ -101,8 +105,8 @@ class ArrastoFundoController extends Zend_Controller_Action {
         $idEntrevista = $this->_getParam('id');
         
         
-        $datahoraSaida[] = split(" ", $entrevista['af_dhsaida']);
-        $datahoraVolta[] = split(" ", $entrevista['af_dhvolta']);
+        $datahoraSaida[] = explode(" ", $entrevista['af_dhsaida']);
+        $datahoraVolta[] = explode(" ", $entrevista['af_dhvolta']);
         $vArrastoFundo = $this->modelArrastoFundo->selectArrastoHasPesqueiro('af_id=' . $idEntrevista);
         $vEspecieCapturadas = $this->modelArrastoFundo->selectArrastoHasEspCapturadas('af_id=' . $idEntrevista);
         $vArrastoAvistamento = $this->modelArrastoFundo->selectArrastoHasAvistamento('af_id=' . $idEntrevista);           

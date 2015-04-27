@@ -444,7 +444,7 @@ class Application_Model_Calao
     public function selectEntrevistasByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaCalao();
         $select = $dbTable->select()->
-                from('v_entrevista_calao', array('pto_nome', 'count(bar_nome)'))->
+                from('v_entrevista_calao', array('pto_nome', 'count(cal_id)'))->
                 group(array('pto_nome'));
         
         if(!is_null($where)){

@@ -263,12 +263,12 @@ class PortoController extends Zend_Controller_Action
         if(empty($array)){
             $array = array( array(
                 'pto_nome' => $porto,
-                'quant' => 0,
+                'cpue' => 0,
                 )
             );
         }
-        else if($array[0]['quant'] == ""){
-            $array[0]['quant'] = 0;
+        else if($array[0]['cpue'] == ""){
+            $array[0]['cpue'] = 0;
         }
         return $array;
     }
@@ -288,7 +288,7 @@ class PortoController extends Zend_Controller_Action
 //    }
     
     //Ordena array por Key utilizada;
-    function array_sort($array, $on, $order=SORT_ASC){
+    function array_sort($array, $on, $order = SORT_ASC) {
         $new_array = array();
         $sortable_array = array();
 
@@ -305,26 +305,42 @@ class PortoController extends Zend_Controller_Action
                 }
             }
 
-        switch ($order) {
-            case SORT_ASC:
-                asort($sortable_array);
-            break;
-            case SORT_DESC:
-                arsort($sortable_array);
-            break;
+            switch ($order) {
+                case SORT_ASC:
+                    asort($sortable_array);
+                    break;
+                case SORT_DESC:
+                    arsort($sortable_array);
+                    break;
+            }
+
+            foreach ($sortable_array as $k => $v) {
+                $new_array[$k] = $array[$k];
+            }
         }
 
-        foreach ($sortable_array as $k => $v) {
-            $new_array[$k] = $array[$k];
-        }
+        return $new_array;
     }
-
-    return $new_array;
-}
-
-    
-
-
+    public function verificaEspecies($array){
+        
+        foreach($array as $campo){
+            if($campo['esp_nome_comum'] == 'Rosinha'){
+                $rosinha = $campo['peso'];
+                unset($array[$campo]);
+            }
+            if($campo['esp_nome_comum'] == 'Rosa'){
+                $rosa = array(
+                'esp_nome_comum' => 'Rosa',
+                'peso' => $campo['peso']+$rosinha,
+                'quant' => $campo['quant']
+                );
+                unset($array[$campo['esp_nome_comum']]);
+                
+            }
+        }
+        array_push($array, $rosa);
+        return $array;
+    }
     //Gera as quantidade de captura por porto, mês e ano
     public function gerarquantcaptura($porto, $ano, $arte){
         
@@ -860,9 +876,7 @@ class PortoController extends Zend_Controller_Action
         
         $this->view->assign("quantLabels".$arte,    $jsLabels);
         $this->view->assign("quantEntrevistas".$arte,   $jsQuantEntrevistas);
-        
-        
-        
+
     }
     //Gera o relatório de CPUE de cada porto, por mês e por Arte
     public function gerarcpue($porto, $ano, $arte){
@@ -1078,40 +1092,40 @@ class PortoController extends Zend_Controller_Action
 //        print_r($cpueArrastoJaneiro);
         
         foreach($cpueEntrJaneiro as $cpue):
-            $cpueJaneiro[] = $cpue['cpue'];
+            $cpueJaneiro[] = floatval($cpue['cpue']);
         endforeach;
         foreach($cpueEntrFevereiro as $cpue):
-            $cpueFevereiro[] = $cpue['cpue'];
+            $cpueFevereiro[] = floatval($cpue['cpue']);
         endforeach;
         foreach($cpueEntrMarco as $cpue):
-            $cpueMarco[] = $cpue['cpue'];
+            $cpueMarco[] = floatval($cpue['cpue']);
         endforeach;
         foreach($cpueEntrAbril as $cpue):
-            $cpueAbril[] = $cpue['cpue'];
+            $cpueAbril[] = floatval($cpue['cpue']);
         endforeach;
         foreach($cpueEntrMaio as $cpue):
-            $cpueMaio[] = $cpue['cpue'];
+            $cpueMaio[] = floatval($cpue['cpue']);
         endforeach;
         foreach($cpueEntrJunho as $cpue):
-            $cpueJunho[] = $cpue['cpue'];
+            $cpueJunho[] = floatval($cpue['cpue']);
         endforeach;
         foreach($cpueEntrJulho as $cpue):
-            $cpueJulho[] = $cpue['cpue'];
+            $cpueJulho[] = floatval($cpue['cpue']);
         endforeach;
         foreach($cpueEntrAgosto as $cpue):
-            $cpueAgosto[] = $cpue['cpue'];
+            $cpueAgosto[] = floatval($cpue['cpue']);
         endforeach;
         foreach($cpueEntrSetembro as $cpue):
-            $cpueSetembro[] = $cpue['cpue'];
+            $cpueSetembro[] = floatval($cpue['cpue']);
         endforeach;
         foreach($cpueEntrOutubro as $cpue):
-            $cpueOutubro[] = $cpue['cpue'];
+            $cpueOutubro[] = floatval($cpue['cpue']);
         endforeach;
         foreach($cpueEntrNovembro as $cpue):
-            $cpueNovembro[] = $cpue['cpue'];
+            $cpueNovembro[] = floatval($cpue['cpue']);
         endforeach;
         foreach($cpueEntrDezembro as $cpue):
-            $cpueDezembro[] = $cpue['cpue'];
+            $cpueDezembro[] = floatval($cpue['cpue']);
         endforeach;
         
         $labels = array('jan/'.$ano, 'fev/'.$ano, 'mar/'.$ano, 'abr/'.$ano, 'mai/'.$ano, 'jun/'.$ano, 'jul/'.$ano, 'ago/'.$ano, 'set/'.$ano, 'out/'.$ano, 'nov/'.$ano, 'dez/'.$ano);
@@ -1131,20 +1145,22 @@ class PortoController extends Zend_Controller_Action
         $jsCpueDezembro  = json_encode($cpueDezembro);
         
         
-
-        $this->view->assign("cpueLabels".$arte,    $jsLabels);
-        $this->view->assign("cpueJaneiro".$arte,   $jsCpueJaneiro);
-        $this->view->assign("cpueFevereiro".$arte, $jsCpueFevereiro);
-        $this->view->assign("cpueMarco".$arte,     $jsCpueMarco);
-        $this->view->assign("cpueAbril".$arte,     $jsCpueAbril);
-        $this->view->assign("cpueMaio".$arte,      $jsCpueMaio);
-        $this->view->assign("cpueJunho".$arte,     $jsCpueJunho);
-        $this->view->assign("cpueJulho".$arte,     $jsCpueJulho);
-        $this->view->assign("cpueAgosto".$arte,    $jsCpueAgosto);
-        $this->view->assign("cpueSetembro".$arte,  $jsCpueSetembro);
-        $this->view->assign("cpueOutubro".$arte,   $jsCpueOutubro);
-        $this->view->assign("cpueNovembro".$arte,  $jsCpueNovembro);
-        $this->view->assign("cpueDezembro".$arte,  $jsCpueDezembro);
+        $this->view->assign("arte", $arte);
+        $this->view->assign("porto", $porto);
+        $this->view->assign("ano", $ano);
+        $this->view->assign("cpueLabels",    $jsLabels);
+        $this->view->assign("cpueJaneiro",   $jsCpueJaneiro);
+        $this->view->assign("cpueFevereiro", $jsCpueFevereiro);
+        $this->view->assign("cpueMarco",     $jsCpueMarco);
+        $this->view->assign("cpueAbril",     $jsCpueAbril);
+        $this->view->assign("cpueMaio",      $jsCpueMaio);
+        $this->view->assign("cpueJunho",     $jsCpueJunho);
+        $this->view->assign("cpueJulho",     $jsCpueJulho);
+        $this->view->assign("cpueAgosto",    $jsCpueAgosto);
+        $this->view->assign("cpueSetembro",  $jsCpueSetembro);
+        $this->view->assign("cpueOutubro",   $jsCpueOutubro);
+        $this->view->assign("cpueNovembro",  $jsCpueNovembro);
+        $this->view->assign("cpueDezembro",  $jsCpueDezembro);
         
         //print_r($jsCpueNovembro);
     }
@@ -1218,7 +1234,8 @@ class PortoController extends Zend_Controller_Action
         
         switch($arte){
             case 'Arrasto':
-                $arrayQuantCaptura = $this->modelArrasto->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
+                $arrayEsp = $this->modelArrasto->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
+                $arrayQuantCaptura = $this->verificaEspecies($arrayEsp);
             break;
             case 'Calao':
                 $arrayQuantCaptura =$this->modelCalao->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
@@ -1263,10 +1280,11 @@ class PortoController extends Zend_Controller_Action
  
         $arrayQuantCaptura = $this->verifVazioQuantCaptura($arrayQuantCaptura, $porto, $arte);
         
+        
         $arrayQuantCapturaOrdenado = $this->array_sort($arrayQuantCaptura, 'peso', SORT_DESC);
         $i=0;
         foreach($arrayQuantCapturaOrdenado as $quant):
-            if($i<=10){
+            if($i<=10 && $quant['esp_nome_comum'] != 'Rosinha'){
                 $quantCaptura[] = $quant['quant'];
 		$pesoCaptura[] = $quant['peso'];
                 $labelCaptura[] = $quant['esp_nome_comum'];
@@ -1411,6 +1429,7 @@ class PortoController extends Zend_Controller_Action
         $this->gerarrelqtdporarte($porto, $ano);
         
         $this->view->assign("porto",$porto);
+        $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Linha");
         $this->view->assign("segArteMaisPescada", "Calão");
     }
@@ -1615,6 +1634,15 @@ class PortoController extends Zend_Controller_Action
         $this->view->assign("porto",$porto);
         $this->view->assign("arteMaisPescada", "Linha");
         $this->view->assign("segArteMaisPescada", "Emalhe");
+    }
+    
+    public function cpueAction(){
+        $porto = $this->_getParam('porto');
+        $arte = $this->_getParam('arte');
+        $ano = $this->_getParam('ano');
+        
+        
+        $this->gerarcpue($porto, $ano, $arte);
     }
     public function forteAction(){
         $ano = $this->_getParam('ano');

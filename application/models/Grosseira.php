@@ -467,7 +467,7 @@ private $dbTableGrosseira;
     public function selectEntrevistasByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaGrosseira();
         $select = $dbTable->select()->
-                from('v_entrevista_grosseira', array('pto_nome', 'count(bar_nome)'))->
+                from('v_entrevista_grosseira', array('pto_nome', 'count(grs_id)'))->
                 group(array('pto_nome'));
         
         if(!is_null($where)){

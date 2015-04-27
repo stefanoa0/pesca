@@ -42,109 +42,6 @@ class RelatoriosController extends Zend_Controller_Action
         
     }
     
-    public function pescadoresportoAction(){
-        $this->modelRelatorios = new Application_Model_Relatorios();
-        $pescadoresPorto = $this->modelRelatorios->selectPescadores('pto_nome');
-        
-        foreach($pescadoresPorto as $key => $porto):
-            $array_porto[] = $porto['pto_nome'];
-            $array_quantidade[] = $porto['count'];
-        endforeach;
-        
-        $js_porto = json_encode($array_porto);
-        $js_quantidade = json_encode($array_quantidade);
-
-        $this->view->assign("array_porto",$js_porto);
-        $this->view->assign("array_quantidade",$js_quantidade);
-    }
-    public function pescadoresportoxlsAction(){
-        
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
-        require_once "../library/Classes/PHPExcel.php";
-
-        $objPHPExcel = new PHPExcel();
-        $objPHPExcel->setActiveSheetIndex(0);
-        $sheet = $objPHPExcel->getActiveSheet();
-        $this->modelRelatorios = new Application_Model_Relatorios();
-        $pescadoresPorto = $this->modelRelatorios->selectPescadores('pto_nome');
-        
-        $coluna=0;
-        $linha=1;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, 'Quantidade de Pescadores');
-        
-        $linha++;
-        $coluna=0;
-        foreach($pescadoresPorto as $consulta){
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $consulta['count']);
-            $linha++;
-            $coluna=0;
-        }
-        
-        
-        $values = new PHPExcel_Chart_DataSeriesValues('Number', 'Worksheet!$B$2:$B$18');
-
-        $categories = new PHPExcel_Chart_DataSeriesValues('String', 'Worksheet!$A$2:$A$18');
-        
-        $series = new PHPExcel_Chart_DataSeries(
-          PHPExcel_Chart_DataSeries::TYPE_BARCHART,
-          PHPExcel_Chart_DataSeries::GROUPING_CLUSTERED,  
-          array(0),                                       
-          array(),                                        
-          array($categories), 
-          array($values)  
-        );
-        $series->setPlotDirection(PHPExcel_Chart_DataSeries::DIRECTION_COL);
-        
-        $layout = new PHPExcel_Chart_Layout();
-        $plotarea = new PHPExcel_Chart_PlotArea($layout, array($series));
-        
-        $chart = new PHPExcel_Chart('exemplo', null, null, $plotarea);
-        
-
-        $title = new PHPExcel_Chart_Title(null, $layout);
-        $title->setCaption(utf8_encode('Gráfico PHPExcel Chart Class'));
-
-        $chart->setTopLeftPosition('D1');
-        $chart->setBottomRightPosition('K15');
-        $chart->setTitle($title);
-        
-        $sheet->addChart($chart);
-        
-        $writer = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        
-        $writer->setIncludeCharts(TRUE);
-        ob_end_clean();
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="grafico_phpexcel_chart_class.xls"');
-        header('Cache-Control: max-age=0');
-        ob_end_clean();
-        $writer->save('php://output');
-        
-    }
-    public function pescadorescoloniaAction(){
-        $this->modelRelatorios = new Application_Model_Relatorios();
-        $pescadoresColonias = $this->modelRelatorios->selectPescadores('tc_nome');
-        
-        foreach($pescadoresColonias as $key => $colonia):
-            $array_colonia[] = $colonia['tc_nome'];
-            $array_quantidade[] = $colonia['count'];
-        endforeach;
-        
-        $js_colonia = json_encode($array_colonia);
-        $js_quantidade = json_encode($array_quantidade);
-        
-        $this->view->assign("array_quantidade", $js_quantidade);
-        $this->view->assign("array_colonia",$js_colonia);
-    }
-    public function pescadoresescolaridadeAction(){
-        $this->modelRelatorios = new Application_Model_Relatorios();
-        $pescadoresEscolaridade = $this->modelRelatorios->selectPescadores('esc_nivel');
-        
-        $this->view->assign("escolaridades",$pescadoresEscolaridade);
-    }
     
     public function monitoramentosAction(){
         $consultaPadrao = new Application_Model_VConsultaPadrao();
@@ -179,7 +76,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         switch($valueRelatorio['artePesca']){
             
-            case 1: $this->_redirect("/relatorios/relatoriocompletoarrasto/".$rel.$data.$datafim.$porto);break;
+            case 1:$this->_redirect("/relatorios/relatoriocompletoarrasto/".$rel.$data.$datafim.$porto);break;
             case 2:$this->_redirect("/relatorios/relatoriocompletocalao/".$rel.$data.$datafim.$porto);break;
             case 3:$this->_redirect("/relatorios/relatoriocompletocoletamanual/".$rel.$data.$datafim.$porto);break;
             case 4:$this->_redirect("/relatorios/relatoriocompletoemalhe/".$rel.$data.$datafim.$porto);break;
@@ -250,11 +147,16 @@ class RelatoriosController extends Zend_Controller_Action
         }
         return $data;
     }
+    
+    public function loadingAction(){
+        
+    }
     public function relatoriocompletoarrastoAction() {
-        set_time_limit(300);
+        set_time_limit(0);
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
         }
+        
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
@@ -382,9 +284,10 @@ class RelatoriosController extends Zend_Controller_Action
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="relatorioArrasto.xls"');
         header('Cache-Control: max-age=0');
-
+        
         ob_end_clean();
         $objWriter->save('php://output');
+        
     }
     
     

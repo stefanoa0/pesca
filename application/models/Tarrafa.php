@@ -410,7 +410,7 @@ class Application_Model_Tarrafa
     public function selectEntrevistasByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaTarrafa();
         $select = $dbTable->select()->
-                from('v_entrevista_tarrafa', array('pto_nome', 'count(bar_nome)'))->
+                from('v_entrevista_tarrafa', array('pto_nome', 'count(tar_id)'))->
                 group(array('pto_nome'));
         
         if(!is_null($where)){

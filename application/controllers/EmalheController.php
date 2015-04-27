@@ -68,7 +68,8 @@ class EmalheController extends Zend_Controller_Action
         $ent_pescador = $this->_getParam("tp_nome");
         $ent_barco = $this->_getParam("bar_nome");
         $ent_apelido = $this->_getParam("tp_apelido");
-
+        $ent_all = $this->_getParam("ent_all");
+        
         if ($ent_id > 0) {
             $dados = $this->modelEmalhe->selectEntrevistaEmalhe("em_id>=" . $ent_id, array('em_id'),50);
         } elseif ($ent_pescador) {
@@ -78,6 +79,9 @@ class EmalheController extends Zend_Controller_Action
        }
         elseif ($ent_apelido){
             $dados = $this->modelEmalhe->selectEntrevistaEmalhe("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'em_id DESC'), 20);
+        }
+        elseif($ent_all){
+            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelEmalhe->selectEntrevistaEmalhe(null, array('fd_id DESC', 'tp_nome'),20);
@@ -104,8 +108,8 @@ class EmalheController extends Zend_Controller_Action
         $idEntrevista = $this->_getParam('id');
         
         
-        $datahoraSaida[] = split(" ",$entrevista['em_dhlancamento']);
-        $datahoraVolta[] = split(" ",$entrevista['em_dhrecolhimento']);
+        $datahoraSaida[] = explode(" ",$entrevista['em_dhlancamento']);
+        $datahoraVolta[] = explode(" ",$entrevista['em_dhrecolhimento']);
 
         $vEmalhe = $this->modelEmalhe->selectEmalheHasPesqueiro('em_id='.$idEntrevista);
 

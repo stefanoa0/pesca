@@ -425,7 +425,7 @@ class Application_Model_Jerere
     public function selectEntrevistasByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaJerere();
         $select = $dbTable->select()->
-                from('v_entrevista_jerere', array('pto_nome', 'count(bar_nome)'))->
+                from('v_entrevista_jerere', array('pto_nome', 'count(jre_id)'))->
                 group(array('pto_nome'));
         
         if(!is_null($where)){

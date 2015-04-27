@@ -78,7 +78,8 @@ class SiripoiaController extends Zend_Controller_Action
         $ent_pescador = $this->_getParam("tp_nome");
         $ent_barco = $this->_getParam("bar_nome");
         $ent_apelido = $this->_getParam("tp_apelido");
-
+        $ent_all = $this->_getParam("ent_all");
+        
         if ($ent_id > 0) {
             $dados = $this->modelSiripoia->selectEntrevistaSiripoia("sir_id>=" . $ent_id, array('sir_id'),50);
         } elseif ($ent_pescador) {
@@ -88,6 +89,9 @@ class SiripoiaController extends Zend_Controller_Action
        }
         elseif ($ent_apelido){
             $dados = $this->modelSiripoia->selectEntrevistaSiripoia("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'sir_id DESC'), 20);
+        }
+        elseif($ent_all){
+            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelSiripoia->selectEntrevistaSiripoia(null, array('fd_id DESC', 'tp_nome'),20);
@@ -117,8 +121,8 @@ class SiripoiaController extends Zend_Controller_Action
         $tipoVenda = $this->modelTipoVenda->select(null, 'ttv_tipovenda');
 
         $idEntrevista = $this->_getParam('id');
-        $datahoraSaida[] = split(" ",$entrevista['sir_dhsaida']);
-        $datahoraVolta[] = split(" ",$entrevista['sir_dhvolta']);
+        $datahoraSaida[] = explode(" ",$entrevista['sir_dhsaida']);
+        $datahoraVolta[] = explode(" ",$entrevista['sir_dhvolta']);
 
         $vSiripoia = $this->modelSiripoia->selectSiripoiaHasPesqueiro('sir_id='.$idEntrevista);
 
