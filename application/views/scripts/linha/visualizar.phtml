@@ -16,6 +16,7 @@
         <input class="busca" name="buscaEntrevistas" placeholder="Buscar Entrevista"/><br/>
         <table>
             <tr>
+                <th>Contagem</th>
                 <th>Ficha Diária</th>
                 <th>Monitoramento</th>
                 <th>Entrevista</th>
@@ -24,8 +25,9 @@
                 <th>Barco</th>
             </tr>
 
-            <?php foreach ($this->dados as $key => $entrevista): ?>
+            <?php $i=1; foreach ($this->dados as $key => $entrevista): ?>
                 <tr>
+                    <td><?= $i++ ?></td>
                     <td><?= $entrevista['fd_id']?></td>
                     <td><?= $entrevista['mnt_id'] ?></td>
                     <td><?= $entrevista['lin_id'] ?></td>

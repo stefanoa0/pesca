@@ -16,6 +16,7 @@
             <input class="busca" name="buscaEntrevistas" placeholder="Buscar Entrevista"/><br/>
         <table>
             <tr>
+                <th>Número</th>
                 <th>Arte de Pesca</th>
                 <th>Entrevista</th>
                 <th>Pescador</th>
@@ -25,8 +26,9 @@
                 <th>Data</th>
             </tr>
 
-            <?php foreach ($this->dados as $key => $entrevista): ?>
+            <?php $i=1; foreach ($this->dados as $key => $entrevista): ?>
                 <tr>
+                    <td><?= $i++?></td>
                     <td><b><?= $entrevista['artepesca']?></b></td>
                     <td><?= $entrevista['id'] ?></td>
                     <td><?= $entrevista['tp_nome'] ?></td>
