@@ -751,3 +751,16 @@ legend{
     width: 300px;
     height: 200px;
 }
+
+#legendaBoxplot{
+    float:left;
+    margin-left: 472px;
+    font-size: 1.25em;
+}
+
+#canvasLegendaBox {
+    border: 1px solid #000;
+    height: 10px;
+    width: 10px;
+    background-color: #5F302B;
+}

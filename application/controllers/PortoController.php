@@ -1163,11 +1163,13 @@ class PortoController extends Zend_Controller_Action
         $jsCpueDezembro  = json_encode($cpueDezembro);
 
         
-        $scale = $ArrayOrdCpue[0]/15;
+        $steps = $ArrayOrdCpue[0]/30;
+        $stepwidth = $ArrayOrdCpue[0]/$steps;
         $this->view->assign("arte", $arte);
         $this->view->assign("porto", $porto);
         $this->view->assign("ano", $ano);
-        $this->view->assign("scale", $scale);
+        $this->view->assign("steps", $steps);
+        $this->view->assign("stepwidth", $stepwidth);
         $this->view->assign("cpueLabels",    $jsLabels);
         $this->view->assign("cpueJaneiro",   $jsCpueJaneiro);
         $this->view->assign("cpueFevereiro", $jsCpueFevereiro);
