@@ -2130,6 +2130,14 @@ class RelatoriosController extends Zend_Controller_Action
         ob_end_clean();
         $objWriter->save('php://output');
     }
+    
+    public function imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel){
+        foreach ($Relesp as $key => $esp):
+           if ($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()) {
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $esp[$tipoRel]);
+              }
+        endforeach;
+    }
     public function relatoriocompletoresumidoAction() {
         $inicio1 = microtime(true);
         set_time_limit(0);
@@ -2185,7 +2193,7 @@ class RelatoriosController extends Zend_Controller_Action
         } else {
             $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
         }
-        $linha = 2;
+        $linha=2;
         $coluna = 0;
 
         foreach ($relatorioArrasto as $key => $consulta):
@@ -2201,35 +2209,38 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['af_id']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, '');
+            $coluna++;
 
             $coluna++;
             $Relesp = $this->modelRelatorios->selectArrastoHasEspCapturadas('af_id = ' . $consulta['af_id']);
             foreach ($relatorioEspecies as $key => $especie):
-                foreach ($Relesp as $key => $esp):
-                    if ($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()) {
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $esp[$tipoRel]);
-                    }
-                endforeach;
-                if ($coluna < $lastcolumn) {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                } else {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '');
+//                foreach ($Relesp as $key => $esp):
+//                    if ($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()) {
+//                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $esp[$tipoRel]);
+//                    }
+//                endforeach;
+                
+                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
+                if ($coluna < $lastcolumn && empty($objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, $linha)->getFormattedValue())) {
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, '0');
                 }
+                $coluna++;
             endforeach;
             $coluna = 0;
             $linha++;
+            unset($consulta);
         endforeach;
-
-        $porto = $this->_getParam('porto');
+        
+        unset($relatorioArrasto);
+        unset($Relesp);
+        
+        
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
             $relatorioCalao = $this->modelRelatorios->selectCalao("cal_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
         } else {
             $relatorioCalao = $this->modelRelatorios->selectCalao("cal_data between '" . $data . "'" . " and '" . $datafim . "'");
         }
-        $linha = 2;
-        $coluna = 0;
 
         foreach ($relatorioCalao as $key => $consulta):
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
@@ -2249,21 +2260,20 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             $Relesp = $this->modelRelatorios->selectCalaoHasEspCapturadas('cal_id = ' . $consulta['cal_id']);
             foreach ($relatorioEspecies as $key => $especie):
-                foreach ($Relesp as $key => $esp):
-                    if ($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()) {
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $esp[$tipoRel]);
-                    }
-                endforeach;
-                if ($coluna < $lastcolumn) {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                } else {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '');
+                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
+                if ($coluna < $lastcolumn && empty($objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, $linha)->getFormattedValue())) {
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, '0');
                 }
+                $coluna++;
             endforeach;
             $coluna = 0;
             $linha++;
+            unset($consulta);
         endforeach;
-
+        
+        unset($relatorioCalao);
+        unset($Relesp);
+        
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
             $relatorioColeta = $this->modelRelatorios->selectColetaManual("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
@@ -2288,23 +2298,21 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             $Relesp = $this->modelRelatorios->selectColetaManualHasEspCapturadas('cml_id = ' . $consulta['cml_id']);
             foreach ($relatorioEspecies as $key => $especie):
-                foreach ($Relesp as $key => $esp):
-                    if ($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()) {
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $esp[$tipoRel]);
-                    }
-                endforeach;
-                if ($coluna < $lastcolumn) {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                } else {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '');
+                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
+                if ($coluna < $lastcolumn && empty($objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, $linha)->getFormattedValue())) {
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, '0');
                 }
+                $coluna++;
             endforeach;
 
             $coluna = 0;
             $linha++;
+            unset($consulta);
         endforeach;
+        
 
-
+        unset($relatorioColeta);
+        unset($Relesp);
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
             $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
@@ -2329,24 +2337,22 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             $Relesp = $this->modelRelatorios->selectEmalheHasEspCapturadas('em_id = ' . $consulta['em_id']);
             foreach ($relatorioEspecies as $key => $especie):
-                foreach ($Relesp as $key => $esp):
-                    if ($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()) {
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $esp[$tipoRel]);
-                    }
-                endforeach;
-                if ($coluna < $lastcolumn) {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                } else {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '');
+                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
+                if ($coluna < $lastcolumn && empty($objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, $linha)->getFormattedValue())) {
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, '0');
                 }
+                $coluna++;
             endforeach;
 
 
             $coluna = 0;
             $linha++;
+            unset($consulta);
         endforeach;
+        
 
-
+        unset($relatorioEmalhe);
+        unset($Relesp);
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
             $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
@@ -2371,23 +2377,21 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             $Relesp = $this->modelRelatorios->selectGrosseiraHasEspCapturadas('grs_id = ' . $consulta['grs_id']);
             foreach ($relatorioEspecies as $key => $especie):
-                foreach ($Relesp as $key => $esp):
-                    if ($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()) {
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $esp[$tipoRel]);
-                    }
-                endforeach;
-                if ($coluna < $lastcolumn) {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                } else {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '');
+                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
+                if ($coluna < $lastcolumn && empty($objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, $linha)->getFormattedValue())) {
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, '0');
                 }
+                $coluna++;
             endforeach;
 
             $coluna = 0;
             $linha++;
+            unset($consulta);
         endforeach;
+        
 
-
+        unset($relatorioGrosseira);
+        unset($Relesp);
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
             $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
@@ -2414,23 +2418,22 @@ class RelatoriosController extends Zend_Controller_Action
 
             $coluna++;
             foreach ($relatorioEspecies as $key => $especie):
-                foreach ($Relesp as $key => $esp):
-                    if ($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()) {
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $esp[$tipoRel]);
-                    }
-                endforeach;
-                if ($coluna < $lastcolumn) {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                } else {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '');
+                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
+                if ($coluna < $lastcolumn && empty($objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, $linha)->getFormattedValue())) {
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, '0');
                 }
+                $coluna++;
             endforeach;
 
             $coluna = 0;
             $linha++;
+            unset($consulta);
+            
         endforeach;
+        
 
-
+        unset($relatorioJerere);
+        unset($Relesp);
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
             $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
@@ -2457,23 +2460,22 @@ class RelatoriosController extends Zend_Controller_Action
 
             $coluna++;
             foreach ($relatorioEspecies as $key => $especie):
-                foreach ($Relesp as $key => $esp):
-                    if ($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()) {
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $esp[$tipoRel]);
-                    }
-                endforeach;
-                if ($coluna < $lastcolumn) {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                } else {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '');
+                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
+                if ($coluna < $lastcolumn && empty($objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, $linha)->getFormattedValue())) {
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, '0');
                 }
+                $coluna++;
             endforeach;
 
             $coluna = 0;
             $linha++;
+            unset($consulta);
         endforeach;
+        
 
-
+        unset($relatorioLinha);
+        unset($Relesp);
+        
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
             $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
@@ -2501,23 +2503,23 @@ class RelatoriosController extends Zend_Controller_Action
 
             $coluna++;
             foreach ($relatorioEspecies as $key => $especie):
-                foreach ($Relesp as $key => $esp):
-                    if ($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()) {
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $esp[$tipoRel]);
-                    }
-                endforeach;
-                if ($coluna < $lastcolumn) {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                } else {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '');
+                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
+                if ($coluna < $lastcolumn && empty($objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, $linha)->getFormattedValue())) {
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, '0');
                 }
+                $coluna++;
             endforeach;
 
             $coluna = 0;
             $linha++;
+            unset($consulta);
+
         endforeach;
+        
 
-
+        unset($relatorioLinhaFundo);
+        unset($Relesp);
+        
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
             $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
@@ -2545,23 +2547,23 @@ class RelatoriosController extends Zend_Controller_Action
 
             $coluna++;
             foreach ($relatorioEspecies as $key => $especie):
-                foreach ($Relesp as $key => $esp):
-                    if ($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()) {
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $esp[$tipoRel]);
-                    }
-                endforeach;
-                if ($coluna < $lastcolumn) {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                } else {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '');
+                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
+                if ($coluna < $lastcolumn && empty($objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, $linha)->getFormattedValue())) {
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, '0');
                 }
+                $coluna++;
             endforeach;
 
             $coluna = 0;
             $linha++;
+            unset($consulta);
+
         endforeach;
+        
 
-
+        unset($relatorioManzua);
+        unset($Relesp);
+        
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
             $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
@@ -2588,23 +2590,22 @@ class RelatoriosController extends Zend_Controller_Action
 
             $coluna++;
             foreach ($relatorioEspecies as $key => $especie):
-                foreach ($Relesp as $key => $esp):
-                    if ($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()) {
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $esp[$tipoRel]);
-                    }
-                endforeach;
-                if ($coluna < $lastcolumn) {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                } else {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '');
+                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
+                if ($coluna < $lastcolumn && empty($objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, $linha)->getFormattedValue())) {
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, '0');
                 }
+                $coluna++;
             endforeach;
 
             $coluna = 0;
             $linha++;
+            unset($consulta);
         endforeach;
 
-        $porto = $this->_getParam('porto');
+
+        unset($relatorioMergulho);
+        unset($Relesp);
+        
         if ($porto != '999') {
             $porto = $this->verifporto($porto);
             $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto . "'");
@@ -2630,23 +2631,23 @@ class RelatoriosController extends Zend_Controller_Action
 
             $coluna++;
             foreach ($relatorioEspecies as $key => $especie):
-                foreach ($Relesp as $key => $esp):
-                    if ($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()) {
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $esp[$tipoRel]);
-                    }
-                endforeach;
-                if ($coluna < $lastcolumn) {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                } else {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '');
+                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
+                if ($coluna < $lastcolumn && empty($objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, $linha)->getFormattedValue())) {
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, '0');
                 }
+                $coluna++;
             endforeach;
 
             $coluna = 0;
             $linha++;
+            unset($consulta);
+
         endforeach;
 
-        $porto = $this->_getParam('porto');
+
+        unset($relatorioRatoeira);
+        unset($Relesp);
+        
         if ($porto != '999') {
             $porto = $this->verifporto($porto);
             $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto . "'");
@@ -2672,23 +2673,23 @@ class RelatoriosController extends Zend_Controller_Action
 
             $coluna++;
             foreach ($relatorioEspecies as $key => $especie):
-                foreach ($Relesp as $key => $esp):
-                    if ($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()) {
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $esp[$tipoRel]);
-                    }
-                endforeach;
-                if ($coluna < $lastcolumn) {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                } else {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '');
+                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
+                if ($coluna < $lastcolumn && empty($objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, $linha)->getFormattedValue())) {
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, '0');
                 }
+                $coluna++;
             endforeach;
 
             $coluna = 0;
             $linha++;
-        endforeach;
+            unset($consulta);
 
-        $porto = $this->_getParam('porto');
+        endforeach;
+        
+
+        unset($relatorioSiripoia);
+        unset($Relesp);
+        
         if ($porto != '999') {
             $porto = $this->verifporto($porto);
             $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto . "'");
@@ -2715,22 +2716,22 @@ class RelatoriosController extends Zend_Controller_Action
 
             $coluna++;
             foreach ($relatorioEspecies as $key => $especie):
-                foreach ($Relesp as $key => $esp):
-                    if ($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()) {
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $esp[$tipoRel]);
-                    }
-                endforeach;
-                if ($coluna < $lastcolumn) {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                } else {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '');
+                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
+                if ($coluna < $lastcolumn && empty($objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, $linha)->getFormattedValue())) {
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, '0');
                 }
+                $coluna++;
             endforeach;
             $coluna = 0;
             $linha++;
-        endforeach;
+            unset($consulta);
 
-        $porto = $this->_getParam('porto');
+        endforeach;
+        
+
+        unset($relatorioTarrafa);
+        unset($Relesp);
+        
         if ($porto != '999') {
             $porto = $this->verifporto($porto);
             $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto . "'");
@@ -2757,24 +2758,26 @@ class RelatoriosController extends Zend_Controller_Action
 
             $Relesp = $this->modelRelatorios->selectVaraPescaHasEspCapturadas('vp_id = ' . $consulta['vp_id']);
 
-            $coluna = 2 + $quant;
+            $coluna++;
             foreach ($relatorioEspecies as $key => $especie):
-                foreach ($Relesp as $key => $esp):
-                    if ($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()) {
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $esp[$tipoRel]);
-                    }
-                endforeach;
-                if ($coluna < $lastcolumn) {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                } else {
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '');
+                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
+                if ($coluna < $lastcolumn && empty($objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, $linha)->getFormattedValue())) {
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, '0');
                 }
+                $coluna++;
             endforeach;
 
             $coluna = 0;
             $linha++;
-        endforeach;
+            unset($consulta);
 
+        endforeach;
+        
+
+        unset($relatorioVaraPesca);
+        unset($Relesp);
+        unset($relatorioEspecies);
+        
         $fim1 = microtime(true);
 
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(1, $linha, $fim1 - $inicio1);
@@ -2782,7 +2785,7 @@ class RelatoriosController extends Zend_Controller_Action
         ob_end_clean();
 
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="relatorioCompleto_' . $tipoRel . '.xls"');
+        header('Content-Disposition: attachment;filename="relatorioCompletoResumido_' . $tipoRel . '.xls"');
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
