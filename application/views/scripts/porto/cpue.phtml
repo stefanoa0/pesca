@@ -1,6 +1,44 @@
 <h2><?=$this->porto?></h2>
 
 <h3><?='Pesca de '.$this->arte.' em '.$this->ano?></h3>
+
+<div id="legendaBoxplot">    
+    <canvas id="canvasMedian" width="23" height="10"></canvas>&nbsp;Median&nbsp;&nbsp;&nbsp;&nbsp;
+    <canvas id="canvasLegendaBox"></canvas>&nbsp;25% - 75%&nbsp;&nbsp;&nbsp;&nbsp;
+    <canvas id="canvasNonOutlier" width="23" height="23"></canvas>&nbsp;Non-Outlier Range
+    <script>
+      var canvas = document.getElementById('canvasNonOutlier');
+      var lineMed = canvas.getContext('2d');
+      var lineUp = canvas.getContext('2d');
+      var lineDown = canvas.getContext('2d');
+
+      lineMed.beginPath();
+      lineMed.moveTo(10, 5);
+      lineMed.lineTo(10, 20);
+      lineMed.stroke();
+
+      lineUp.beginPath();
+      lineUp.moveTo(5, 5);
+      lineUp.lineTo(15, 5);
+      lineUp.stroke();
+
+      lineDown.beginPath();
+      lineDown.moveTo(5, 20);
+      lineDown.lineTo(15, 20);
+      lineDown.stroke();
+      
+      var canvasMed = document.getElementById('canvasMedian');
+      var line = canvasMed.getContext('2d');
+
+      line.beginPath();
+      line.moveTo(5, 5);
+      line.lineTo(15, 5);
+      line.stroke();
+    </script>
+</div>
+
+<br />
+
 <canvas id="canvas" height="600" width="900"></canvas>
 <script src="js/charts-box/Chart.js"></script>
 
@@ -10,7 +48,7 @@
 			labels : <?=$this->cpueLabels ?>,
 			datasets : [
 				{
-					fillColor : "rgba(25,25,25,1)",
+					fillColor : "rgba(95,48,43,0.8)",
 					strokeColor : "rgba(0,0,0,1)",
 					pointColor : "rgba(0,0,0,1)",
 					pointStrokeColor : "#fff",
@@ -39,8 +77,9 @@
 			scaleStartValue: 0,
 			scaleSteps: 15,
 			scaleStepWidth: 20,
+                        barStrokeWidth: 2,
 			bezierCurve: true,
-			datasetFill: false,
+			datasetFill: true,
 			connectingLine : true,
 			animation : true
 		}
