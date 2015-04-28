@@ -11,6 +11,8 @@
             <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/cpue.phtml</file>
             <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/aritagua.phtml</file>
             <file>file:/C:/wamp/www/pesca/application/models/ArrastoFundo.php</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/RelatoriosController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/relatorios/index.phtml</file>
         </group>
     </open-files>
 </project-private>
