@@ -490,5 +490,19 @@ class Application_Model_Siripoia
         }
         return $dbTable->fetchAll($select)->toArray();
     }
+    
+    public function cpue($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaSiripoia();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_siripoia', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar)) as mesAno")->
+                joinLeft('v_siripoia_has_t_especie_capturada', 'v_entrevista_siripoia.sir_id = v_siripoia_has_t_especie_capturada.sir_id'
+                , array('v_siripoia_has_t_especie_capturada.sir_id','sum(v_siripoia_has_t_especie_capturada.spc_quantidade) as cpue', 'v_entrevista_siripoia.tl_local','v_entrevista_siripoia.pto_nome'))->
+                group(array('v_siripoia_has_t_especie_capturada.sir_id', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))",'v_entrevista_siripoia.tl_local','v_entrevista_siripoia.pto_nome'))->
+                order("(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))");
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();        
+    }
 }
 

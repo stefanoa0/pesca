@@ -486,5 +486,19 @@ private $dbTableColetaManual;
         }
         return $dbTable->fetchAll($select)->toArray();
     }
+    
+    public function cpue($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaColetaManual();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_coletamanual', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar)) as mesAno")->
+                joinLeft('v_coletamanual_has_t_especie_capturada', 'v_entrevista_coletamanual.cml_id = v_coletamanual_has_t_especie_capturada.cml_id'
+                , array('v_coletamanual_has_t_especie_capturada.cml_id','sum(v_coletamanual_has_t_especie_capturada.spc_quantidade) as cpue', 'v_entrevista_coletamanual.tl_local','v_entrevista_coletamanual.pto_nome'))->
+                group(array('v_coletamanual_has_t_especie_capturada.cml_id', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))",'v_entrevista_coletamanual.tl_local','v_entrevista_coletamanual.pto_nome'))->
+                order("(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))");
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();        
+    }
 }
 

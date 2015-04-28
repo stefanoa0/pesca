@@ -492,6 +492,20 @@ class Application_Model_Ratoeira
         }
         return $dbTable->fetchAll($select)->toArray();
     }
+    
+    public function cpue($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaRatoeira();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_ratoeira', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar)) as mesAno")->
+                joinLeft('v_ratoeira_has_t_especie_capturada', 'v_entrevista_ratoeira.rat_id = v_ratoeira_has_t_especie_capturada.rat_id'
+                , array('v_ratoeira_has_t_especie_capturada.rat_id','sum(v_ratoeira_has_t_especie_capturada.spc_quantidade) as cpue', 'v_entrevista_ratoeira.tl_local','v_entrevista_ratoeira.pto_nome'))->
+                group(array('v_ratoeira_has_t_especie_capturada.rat_id', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))",'v_entrevista_ratoeira.tl_local','v_entrevista_ratoeira.pto_nome'))->
+                order("(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))");
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();        
+    }
 }
 
 

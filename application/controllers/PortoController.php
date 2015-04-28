@@ -336,7 +336,7 @@ class PortoController extends Zend_Controller_Action
                
 
             }
-            print_r($campo);
+            //print_r($campo);
         }
        
         array_push($array, $rosa);
@@ -896,7 +896,7 @@ class PortoController extends Zend_Controller_Action
             $cpueEntrNovembro  = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 11 And Extract(YEAR FROM fd_data) = ".$ano);
             $cpueEntrDezembro  = $this->modelArrasto->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) = 12 And Extract(YEAR FROM fd_data) = ".$ano);
         }
-        else if($arte == 'Calao'){
+        else if($arte == 'Calão'){
             $cpueEntrJaneiro   = $this->modelCalao->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
             $cpueEntrFevereiro = $this->modelCalao->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
             $cpueEntrMarco     = $this->modelCalao->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
@@ -1090,8 +1090,25 @@ class PortoController extends Zend_Controller_Action
         $cpueEntrOutubro  = $this->verifVazioCpue($cpueEntrOutubro  , $porto);
         $cpueEntrNovembro = $this->verifVazioCpue($cpueEntrNovembro , $porto);
         $cpueEntrDezembro = $this->verifVazioCpue($cpueEntrDezembro , $porto);
-//        print_r($cpueArrastoJaneiro);
         
+        $ArrayCpue = array_merge_recursive($cpueEntrJaneiro,  
+                                            $cpueEntrFevereiro,
+                                            $cpueEntrMarco    ,
+                                            $cpueEntrAbril    ,
+                                            $cpueEntrMaio     ,
+                                            $cpueEntrJunho    ,
+                                            $cpueEntrJulho    ,
+                                            $cpueEntrAgosto   ,
+                                            $cpueEntrSetembro ,
+                                            $cpueEntrOutubro  ,
+                                            $cpueEntrNovembro ,
+                                            $cpueEntrDezembro );
+        
+        $ArrayCpueOrdenado = $this->array_sort($ArrayCpue, 'cpue', SORT_DESC);
+        
+        foreach($ArrayCpueOrdenado as $cpue):
+            $ArrayOrdCpue[] = floatval($cpue['cpue']);
+        endforeach;
         foreach($cpueEntrJaneiro as $cpue):
             $cpueJaneiro[] = floatval($cpue['cpue']);
         endforeach;
@@ -1144,11 +1161,13 @@ class PortoController extends Zend_Controller_Action
         $jsCpueOutubro   = json_encode($cpueOutubro);
         $jsCpueNovembro  = json_encode($cpueNovembro);
         $jsCpueDezembro  = json_encode($cpueDezembro);
+
         
-        
+        $scale = $ArrayOrdCpue[0]/15;
         $this->view->assign("arte", $arte);
         $this->view->assign("porto", $porto);
         $this->view->assign("ano", $ano);
+        $this->view->assign("scale", $scale);
         $this->view->assign("cpueLabels",    $jsLabels);
         $this->view->assign("cpueJaneiro",   $jsCpueJaneiro);
         $this->view->assign("cpueFevereiro", $jsCpueFevereiro);

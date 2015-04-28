@@ -556,5 +556,19 @@ class Application_Model_Emalhe
         }
         return $dbTable->fetchAll($select)->toArray();
     }
+    
+    public function cpue($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaEmalhe();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_emalhe', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar)) as mesAno")->
+                joinLeft('v_emalhe_has_t_especie_capturada', 'v_entrevista_emalhe.em_id = v_emalhe_has_t_especie_capturada.em_id'
+                , array('v_emalhe_has_t_especie_capturada.em_id','sum(v_emalhe_has_t_especie_capturada.spc_peso_kg) as cpue', 'v_entrevista_emalhe.tl_local','v_entrevista_emalhe.pto_nome'))->
+                group(array('v_emalhe_has_t_especie_capturada.em_id', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))",'v_entrevista_emalhe.tl_local','v_entrevista_emalhe.pto_nome'))->
+                order("(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))");
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();        
+    }
 }
 

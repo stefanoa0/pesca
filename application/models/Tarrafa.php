@@ -491,4 +491,18 @@ class Application_Model_Tarrafa
         }
         return $dbTable->fetchAll($select)->toArray();
     }
+    
+    public function cpue($where = null){
+        $dbTable = new Application_Model_DbTable_VEntrevistaTarrafa();
+        $select = $dbTable->select()->setIntegrityCheck(false)->
+                from('v_entrevista_tarrafa', "(cast(date_part('month'::text, tar_data) as varchar)) || '/' || (cast(date_part('year'::text, tar_data) as varchar)) as mesAno")->
+                joinLeft('v_tarrafa_has_t_especie_capturada', 'v_entrevista_tarrafa.tar_id = v_tarrafa_has_t_especie_capturada.tar_id'
+                , array('v_tarrafa_has_t_especie_capturada.tar_id','sum(v_tarrafa_has_t_especie_capturada.spc_peso_kg) as cpue', 'v_entrevista_tarrafa.tl_local','v_entrevista_tarrafa.pto_nome'))->
+                group(array('v_tarrafa_has_t_especie_capturada.tar_id', "(cast(date_part('month'::text, tar_data) as varchar)) || '/' || (cast(date_part('year'::text, tar_data) as varchar))",'v_entrevista_tarrafa.tl_local','v_entrevista_tarrafa.pto_nome'))->
+                order("(cast(date_part('month'::text, tar_data) as varchar)) || '/' || (cast(date_part('year'::text, tar_data) as varchar))");
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();        
+    }
 }
