@@ -48,7 +48,7 @@
 			labels : <?=$this->cpueLabels ?>,
 			datasets : [
 				{
-					fillColor : "rgba(95,48,43,0.8)",
+					fillColor : "rgba(95,48,43,0.6)",
 					strokeColor : "rgba(0,0,0,1)",
 					pointColor : "rgba(0,0,0,1)",
 					pointStrokeColor : "#fff",
@@ -66,9 +66,9 @@
                                             <?=$this->cpueNovembro?>,
                                             <?=$this->cpueDezembro?>
 						]
-				},		
+				}		
 			]
-		}
+		};
 	
 		options = {
 		
@@ -81,8 +81,22 @@
 			bezierCurve: true,
 			datasetFill: true,
 			connectingLine : true,
-			animation : true
-		}
+			animation : true,
+                        // outliers
+			outlierShowLabels : true,
+			outlierLabelFormatter : function(s){return s;},
+			outlierLabelFontFamily : "'Arial'",
+			outlierLabelFontStyle : "normal",
+			outlierLabelFontSize : 12,        // pixels
+			outlierLabelFontColor : "#666",
+			outlierLabelPlacement : "right",  // left, top, bottom
+			outlierLabelMargin : 2,           // pixels. between label and dot
+			outlierDotStyle : 'disc',         // options: disc, circle
+			outlierDotFillColor : "#666",
+			outlierDotRadius : 2,             // pixels
+			outlierDotStrokeWidth : 2,        // pixels
+			outlierDotStrokeColor : "#666",
+		};
 
 	var myLine = new ChartCalculator(document.getElementById("canvas").getContext("2d")).Box(lineChartData, options);
 	
@@ -90,7 +104,18 @@
 
 
 <table>
+    <tr>
+        <?php foreach($this->tableCpueLabels as $key=> $label){ ?>
+             
+            <th><?=$label?></th>
+                
+        <?php }?>
+    </tr>
     
+    <tr>
+        <td></td>
+    </tr>
+
     
 </table>
 

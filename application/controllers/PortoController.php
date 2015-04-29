@@ -938,7 +938,7 @@ class PortoController extends Zend_Controller_Action
             $cpueEntrNovembro  = $this->modelEmalhe->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
             $cpueEntrDezembro  = $this->modelEmalhe->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
         }
-        else if($arte == 'Grosseira'){
+        else if($arte == 'Groseira'){
             $cpueEntrJaneiro   = $this->modelGrosseira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
             $cpueEntrFevereiro = $this->modelGrosseira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
             $cpueEntrMarco     = $this->modelGrosseira->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
@@ -966,7 +966,7 @@ class PortoController extends Zend_Controller_Action
             $cpueEntrNovembro  = $this->modelLinha->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
             $cpueEntrDezembro  = $this->modelLinha->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
         }
-        else if($arte == 'LinhaFundo'){
+        else if($arte == 'Linha de Fundo'){
             $cpueEntrJaneiro   = $this->modelLinhaFundo->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
             $cpueEntrFevereiro = $this->modelLinhaFundo->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
             $cpueEntrMarco     = $this->modelLinhaFundo->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
@@ -980,7 +980,7 @@ class PortoController extends Zend_Controller_Action
             $cpueEntrNovembro  = $this->modelLinhaFundo->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
             $cpueEntrDezembro  = $this->modelLinhaFundo->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
         }
-        else if($arte == 'Jerere'){
+        else if($arte == 'Jereré'){
             $cpueEntrJaneiro   = $this->modelJerere->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
             $cpueEntrFevereiro = $this->modelJerere->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
             $cpueEntrMarco     = $this->modelJerere->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
@@ -1064,7 +1064,7 @@ class PortoController extends Zend_Controller_Action
             $cpueEntrNovembro  = $this->modelSiripoia->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
             $cpueEntrDezembro  = $this->modelSiripoia->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
         }
-        else if($arte == 'VaraPesca'){
+        else if($arte == 'Vara de Pesca'){
             $cpueEntrJaneiro   = $this->modelVaraPesca->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  1  And Extract(YEAR FROM fd_data) = ".$ano);
             $cpueEntrFevereiro = $this->modelVaraPesca->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  2  And Extract(YEAR FROM fd_data) = ".$ano);
             $cpueEntrMarco     = $this->modelVaraPesca->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  3  And Extract(YEAR FROM fd_data) = ".$ano);
@@ -1078,6 +1078,7 @@ class PortoController extends Zend_Controller_Action
             $cpueEntrNovembro  = $this->modelVaraPesca->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  11 And Extract(YEAR FROM fd_data) = ".$ano);
             $cpueEntrDezembro  = $this->modelVaraPesca->cpue("pto_nome='".$porto."' and EXTRACT(MONTH FROM fd_data) =  12 And Extract(YEAR FROM fd_data) = ".$ano);
         }
+       
         $cpueEntrJaneiro  = $this->verifVazioCpue($cpueEntrJaneiro, $porto);
         $cpueEntrFevereiro= $this->verifVazioCpue($cpueEntrFevereiro, $porto);
         $cpueEntrMarco    = $this->verifVazioCpue($cpueEntrMarco    , $porto);
@@ -1164,7 +1165,16 @@ class PortoController extends Zend_Controller_Action
 
         
         $steps = $ArrayOrdCpue[0]/30;
-        $stepwidth = $ArrayOrdCpue[0]/$steps;
+        $stepwidth =$ArrayOrdCpue[0]/$steps;
+        if($steps > $stepwidth){
+            $steps1 = $stepwidth;
+            $stepwidth = intval($steps);
+            $steps = $steps1;
+        }
+        elseif($steps <= 2){
+            $steps = 5;
+            $stepwidth = intval($ArrayOrdCpue[0]/$steps);
+        }
         $this->view->assign("arte", $arte);
         $this->view->assign("porto", $porto);
         $this->view->assign("ano", $ano);
@@ -1184,7 +1194,19 @@ class PortoController extends Zend_Controller_Action
         $this->view->assign("cpueNovembro",  $jsCpueNovembro);
         $this->view->assign("cpueDezembro",  $jsCpueDezembro);
         
-        //print_r($jsCpueNovembro);
+        $this->view->assign("tableCpueLabels",$labels);
+        $this->view->assign("tablecpueJaneiro", $cpueJaneiro);
+        $this->view->assign("tablecpueFevereiro", $cpueFevereiro);
+        $this->view->assign("tablecpueMarco", $cpueMarco);
+        $this->view->assign("tablecpueAbril", $cpueAbril);
+        $this->view->assign("tablecpueMaio", $cpueMaio);
+        $this->view->assign("tablecpueJunho", $cpueJunho);
+        $this->view->assign("tablecpueJulho", $cpueJulho);
+        $this->view->assign("tablecpueAgosto", $cpueAgosto);
+        $this->view->assign("tablecpueSetembro", $cpueSetembro);
+        $this->view->assign("tablecpueOutubro", $cpueOutubro);
+        $this->view->assign("tablecpueNovembro", $cpueNovembro);
+        $this->view->assign("tablecpueDezembro", $cpueDezembro);
     }
     //Gera o relatório dos barcos que mais apareceram no porto.
     public function gerarquantbarcos($porto, $ano, $arte){
@@ -2070,7 +2092,7 @@ class PortoController extends Zend_Controller_Action
         $this->view->assign("porto",$porto);
         $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Tarrafa");
-        $this->view->assign("segArteMaisPescada", "VaraPesca");
+        $this->view->assign("segArteMaisPescada", "Vara de Pesca");
     }
     public function sobradinhoAction(){
         $ano = $this->_getParam('ano');
@@ -2184,7 +2206,7 @@ class PortoController extends Zend_Controller_Action
         $this->view->assign("porto",$porto);
         $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Linha");
-        $this->view->assign("segArteMaisPescada", "Calao");
+        $this->view->assign("segArteMaisPescada", "Calão");
     }
     public function urucutucaAction(){
         $ano = $this->_getParam('ano');
@@ -2220,7 +2242,7 @@ class PortoController extends Zend_Controller_Action
         $this->view->assign("porto",$porto);
         $this->view->assign("ano", $ano);
         $this->view->assign("arteMaisPescada", "Manzua");
-        $this->view->assign("segArteMaisPescada", "VaraPesca");
+        $this->view->assign("segArteMaisPescada", "Vara de Pesca");
     }
             
 	public function relatorioAction() {

@@ -1,1 +1,2044 @@
-window.ChartCalculator=function(e){function t(e,t){for(var a=0;a<e.datasets.length;a++){for(var o=[],l=0;l<e.datasets[a].data.length;l++){for(var r=e.datasets[a].data[l],n=r.length,i=0,s=0;n>s;s++)i+=r[s];var d=i/n;if(e.datasets[a].data[l]=d,t.error){if("range"==t.error){r.sort(function(e,t){return e-t});var c=r[n-1],u=c-d}else if("stdev"==t.error&&n>2){for(var i=0,s=0;n>s;s++)i+=Math.pow(r[s]-d,2);var u=Math.sqrt(i/(n-1))}o.push(u)}}t.error&&(e.datasets[a].error=o)}return e}this.Box=function(t,a){for(var o=0;o<t.datasets.length;o++)for(var l=0;l<t.datasets[o].data.length;l++){var r=t.datasets[o].data[l];r.sort(function(e,t){return e-t});var n=r.length,i=r[0],s=Math.floor(n/2);if(n%2==1)var d=r[s];else var d=(r[s]+r[s+1])/2;var c=Math.floor(n/4)+1,u=Math.floor(3*n/4),h=r[c],S=r[u],f=r[n-1];qArr=[i,h,d,S,f],t.datasets[o].data[l]=qArr}return new Chart(e).Box(t,a)},this.Bar=function(a,o){var l=t(a,o);return new Chart(e).Bar(l,o)},this.Line=function(a,o){var l=t(a,o);return new Chart(e).Line(l,o)},this.Scatter=function(a,o){var l=t(a,o);return new Chart(e).Scatter(l,o)}},window.Chart=function(e){function t(e,t,a){var o=t.steps*t.stepValue,l=e-t.graphMin,r=c(l/o,1,0);return a*t.steps*r}function a(e,t,a,o){function l(){var l=e.animation?c(i(s),null,0):1;m(o),e.scaleOverlay?(a(l),t()):(t(),a(l))}function r(){s+=n,l(),1>=s?y(r):"function"==typeof e.onAnimationComplete&&e.onAnimationComplete()}var n=e.animation?1/c(e.animationSteps,Number.MAX_VALUE,1):1,i=b[e.animationEasing],s=e.animation?0:1;"function"!=typeof t&&(t=function(){}),y(r)}function o(e,t,a,o,r,n){var i,s,d,c,u,h,S;for(h=o-r,S=Math.floor(Math.log(h)/Math.LN10),i=Math.floor(r/(1*Math.pow(10,S)))*Math.pow(10,S),s=Math.ceil(o/(1*Math.pow(10,S)))*Math.pow(10,S),d=s-i,c=Math.pow(10,S),u=Math.round(d/c);a>u||u>t;)a>u?(c/=2,u=Math.round(d/c)):(c*=2,u=Math.round(d/c));var f=[];return l(n,f,u,i,c),{steps:u,stepValue:c,graphMin:i,labels:f}}function l(e,t,a,o,l){if(e)for(var r=1;a+1>r;r++)t.push(S(e,{value:(o+l*r).toFixed(u(l))}))}function r(e){return Math.max.apply(Math,e)}function n(e){return Math.min.apply(Math,e)}function s(e,t){return e?e:t}function d(e){return!isNaN(parseFloat(e))&&isFinite(e)}function c(e,t,a){return d(t)&&e>t?t:d(a)&&a>e?a:e}function u(e){return e%1!=0?e.toString().split(".")[1].length:0}function h(e,t){var a={};for(var o in e)a[o]=e[o];for(var o in t)a[o]=t[o];return a}function S(e,t){var a=/\W/.test(e)?new Function("obj","var p=[],print=function(){p.push.apply(p,arguments);};with(obj){p.push('"+e.replace(/[\r\t\n]/g," ").split("<%").join("	").replace(/((^|%>)[^\t]*)'/g,"$1\r").replace(/\t=(.*?)%>/g,"',$1,'").split("	").join("');").split("%>").join("p.push('").split("\r").join("\\'")+"');}return p.join('');"):M[e]=M[e]||S(document.getElementById(e).innerHTML);return t?a(t):a}var f=this,b={linear:function(e){return e},easeInQuad:function(e){return e*e},easeOutQuad:function(e){return-1*e*(e-2)},easeInOutQuad:function(e){return(e/=.5)<1?.5*e*e:-0.5*(--e*(e-2)-1)},easeInCubic:function(e){return e*e*e},easeOutCubic:function(e){return 1*((e=e/1-1)*e*e+1)},easeInOutCubic:function(e){return(e/=.5)<1?.5*e*e*e:.5*((e-=2)*e*e+2)},easeInQuart:function(e){return e*e*e*e},easeOutQuart:function(e){return-1*((e=e/1-1)*e*e*e-1)},easeInOutQuart:function(e){return(e/=.5)<1?.5*e*e*e*e:-0.5*((e-=2)*e*e*e-2)},easeInQuint:function(e){return 1*(e/=1)*e*e*e*e},easeOutQuint:function(e){return 1*((e=e/1-1)*e*e*e*e+1)},easeInOutQuint:function(e){return(e/=.5)<1?.5*e*e*e*e*e:.5*((e-=2)*e*e*e*e+2)},easeInSine:function(e){return-1*Math.cos(e/1*(Math.PI/2))+1},easeOutSine:function(e){return 1*Math.sin(e/1*(Math.PI/2))},easeInOutSine:function(e){return-0.5*(Math.cos(Math.PI*e/1)-1)},easeInExpo:function(e){return 0==e?1:1*Math.pow(2,10*(e/1-1))},easeOutExpo:function(e){return 1==e?1:1*(-Math.pow(2,-10*e/1)+1)},easeInOutExpo:function(e){return 0==e?0:1==e?1:(e/=.5)<1?.5*Math.pow(2,10*(e-1)):.5*(-Math.pow(2,-10*--e)+2)},easeInCirc:function(e){return e>=1?e:-1*(Math.sqrt(1-(e/=1)*e)-1)},easeOutCirc:function(e){return 1*Math.sqrt(1-(e=e/1-1)*e)},easeInOutCirc:function(e){return(e/=.5)<1?-0.5*(Math.sqrt(1-e*e)-1):.5*(Math.sqrt(1-(e-=2)*e)+1)},easeInElastic:function(e){var t=1.70158,a=0,o=1;if(0==e)return 0;if(1==(e/=1))return 1;if(a||(a=.3),o<Math.abs(1)){o=1;var t=a/4}else var t=a/(2*Math.PI)*Math.asin(1/o);return-(o*Math.pow(2,10*(e-=1))*Math.sin(2*(1*e-t)*Math.PI/a))},easeOutElastic:function(e){var t=1.70158,a=0,o=1;if(0==e)return 0;if(1==(e/=1))return 1;if(a||(a=.3),o<Math.abs(1)){o=1;var t=a/4}else var t=a/(2*Math.PI)*Math.asin(1/o);return o*Math.pow(2,-10*e)*Math.sin(2*(1*e-t)*Math.PI/a)+1},easeInOutElastic:function(e){var t=1.70158,a=0,o=1;if(0==e)return 0;if(2==(e/=.5))return 1;if(a||(a=.3*1.5),o<Math.abs(1)){o=1;var t=a/4}else var t=a/(2*Math.PI)*Math.asin(1/o);return 1>e?-.5*o*Math.pow(2,10*(e-=1))*Math.sin(2*(1*e-t)*Math.PI/a):o*Math.pow(2,-10*(e-=1))*Math.sin(2*(1*e-t)*Math.PI/a)*.5+1},easeInBack:function(e){var t=1.70158;return 1*(e/=1)*e*((t+1)*e-t)},easeOutBack:function(e){var t=1.70158;return 1*((e=e/1-1)*e*((t+1)*e+t)+1)},easeInOutBack:function(e){var t=1.70158;return(e/=.5)<1?.5*e*e*(((t*=1.525)+1)*e-t):.5*((e-=2)*e*(((t*=1.525)+1)*e+t)+2)},easeInBounce:function(e){return 1-b.easeOutBounce(1-e)},easeOutBounce:function(e){return(e/=1)<1/2.75?7.5625*e*e:2/2.75>e?1*(7.5625*(e-=1.5/2.75)*e+.75):2.5/2.75>e?1*(7.5625*(e-=2.25/2.75)*e+.9375):1*(7.5625*(e-=2.625/2.75)*e+.984375)},easeInOutBounce:function(e){return.5>e?.5*b.easeInBounce(2*e):.5*b.easeOutBounce(2*e-1)+.5}},p=e.canvas.width,v=e.canvas.height;window.devicePixelRatio&&(e.canvas.style.width=p+"px",e.canvas.style.height=v+"px",e.canvas.height=v*window.devicePixelRatio,e.canvas.width=p*window.devicePixelRatio,e.scale(window.devicePixelRatio,window.devicePixelRatio)),this.PolarArea=function(t,a){f.PolarArea.defaults={scaleOverlay:!0,scaleOverride:!1,scaleSteps:null,scaleStepWidth:null,scaleStartValue:null,scaleShowLine:!0,scaleLineColor:"rgba(0,0,0,.1)",scaleLineWidth:1,scaleShowLabels:!0,scaleLabel:"<%=value%>",scaleFontFamily:"'Arial'",scaleFontSize:12,scaleFontStyle:"normal",scaleFontColor:"#666",scaleShowLabelBackdrop:!0,scaleBackdropColor:"rgba(255,255,255,0.75)",scaleBackdropPaddingY:2,scaleBackdropPaddingX:2,segmentShowStroke:!0,segmentStrokeColor:"#fff",segmentStrokeWidth:2,animation:!0,animationSteps:100,animationEasing:"easeOutBounce",animateRotate:!0,animateScale:!1,onAnimationComplete:null};var o=a?h(f.PolarArea.defaults,a):f.PolarArea.defaults;return new g(t,o,e)},this.Radar=function(t,a){f.Radar.defaults={scaleOverlay:!1,scaleOverride:!1,scaleSteps:null,scaleStepWidth:null,scaleStartValue:null,scaleShowLine:!0,scaleLineColor:"rgba(0,0,0,.1)",scaleLineWidth:1,scaleShowLabels:!1,scaleLabel:"<%=value%>",scaleFontFamily:"'Arial'",scaleFontSize:12,scaleFontStyle:"normal",scaleFontColor:"#666",scaleShowLabelBackdrop:!0,scaleBackdropColor:"rgba(255,255,255,0.75)",scaleBackdropPaddingY:2,scaleBackdropPaddingX:2,angleShowLineOut:!0,angleLineColor:"rgba(0,0,0,.1)",angleLineWidth:1,pointLabelFontFamily:"'Arial'",pointLabelFontStyle:"normal",pointLabelFontSize:12,pointLabelFontColor:"#666",pointDot:!0,pointDotRadius:3,pointDotStrokeWidth:1,datasetStroke:!0,datasetStrokeWidth:2,datasetFill:!0,animation:!0,animationSteps:60,animationEasing:"easeOutQuart",onAnimationComplete:null};var o=a?h(f.Radar.defaults,a):f.Radar.defaults;return new k(t,o,e)},this.Pie=function(t,a){f.Pie.defaults={segmentShowStroke:!0,segmentStrokeColor:"#fff",segmentStrokeWidth:2,animation:!0,animationSteps:100,animationEasing:"easeOutBounce",animateRotate:!0,animateScale:!1,onAnimationComplete:null};var o=a?h(f.Pie.defaults,a):f.Pie.defaults;return new L(t,o,e)},this.Doughnut=function(t,a){f.Doughnut.defaults={segmentShowStroke:!0,segmentStrokeColor:"#fff",segmentStrokeWidth:2,percentageInnerCutout:50,animation:!0,animationSteps:100,animationEasing:"easeOutBounce",animateRotate:!0,animateScale:!1,onAnimationComplete:null};var o=a?h(f.Doughnut.defaults,a):f.Doughnut.defaults;return new F(t,o,e)},this.Line=function(t,a){f.Line.defaults={chartType:"Line",errorStrokeWidth:1,errorStrokeColor:"#333",errorCapWidth:2,scaleOverlay:!1,scaleOverride:!1,scaleSteps:null,scaleStepWidth:null,scaleStartValue:null,scaleShowStartValue:!1,scaleLineColor:"rgba(0,0,0,.1)",scaleLineWidth:1,scaleShowLabels:!0,scaleLabel:"<%=value%>",scaleLabelPosition:"left",scaleFontFamily:"'Arial'",scaleFontSize:12,scaleFontStyle:"normal",scaleFontColor:"#666",labelsFontColor:"#666",scaleShowGridLines:!0,scaleGridLineColor:"rgba(0,0,0,.05)",scaleGridLineWidth:1,bezierCurve:!1,pointDot:!0,pointDotRadius:4,pointDotStrokeWidth:2,datasetStroke:!0,datasetStrokeWidth:2,datasetFill:!1,animation:!0,animationSteps:60,animationEasing:"easeOutQuart",onAnimationComplete:null};var o=a?h(f.Line.defaults,a):f.Line.defaults;return new w(t,o,e)},this.Scatter=function(t,a){f.Line.defaults={chartType:"Scatter",errorStrokeWidth:1,errorStrokeColor:"#333",errorCapWidth:2,scaleOverlay:!1,scaleOverride:!1,scaleSteps:null,scaleStepWidth:null,scaleStartValue:null,xScaleOverride:!1,xScaleSteps:null,xScaleStepWidth:null,xScaleStartValue:null,scaleLineColor:"rgba(0,0,0,.1)",scaleLineWidth:1,scaleShowLabels:!0,scaleLabel:"<%=value%>",scaleFontFamily:"'Arial'",scaleFontSize:12,scaleFontStyle:"normal",scaleFontColor:"#666",scaleShowGridLines:!0,scaleGridLineColor:"rgba(0,0,0,.05)",scaleGridLineWidth:1,connectingLine:!1,bezierCurve:!1,pointDot:!0,pointDotRadius:4,pointDotStrokeWidth:2,datasetStroke:!0,datasetStrokeWidth:2,datasetFill:!1,animation:!0,animationSteps:60,animationEasing:"easeOutQuart",onAnimationComplete:null};var o=a?h(f.Line.defaults,a):f.Line.defaults,l=[];if(o.xScaleOverride){var r=o.xScaleStartValue;for(i=0;i<o.xScaleSteps;i++)l.push(r),r+=o.xScaleStepWidth}return t.labels=l,new w(t,o,e)},this.Bar=function(t,a){f.Bar.defaults={chartType:"Bar",errorStrokeWidth:5,errorStrokeColor:"#333",errorCapWidth:.75,scaleOverlay:!1,scaleOverride:!1,scaleSteps:null,scaleStepWidth:null,scaleStartValue:null,scaleLineColor:"rgba(0,0,0,.1)",scaleLineWidth:1,scaleShowLabels:!0,scaleLabel:"<%=value%>",scaleFontFamily:"'Arial'",scaleFontSize:12,scaleFontStyle:"normal",scaleFontColor:"#666",scaleShowGridLines:!0,scaleGridLineColor:"rgba(0,0,0,.05)",scaleGridLineWidth:1,barShowLabels:!1,barLabelFormatter:function(e){return e},barLabelFontFamily:"'Arial'",barLabelFontSize:12,barLabelFontStyle:"normal",barLabelFontColor:"#666",barShowStroke:!0,barStrokeWidth:2,barValueSpacing:5,barDatasetSpacing:1,animation:!0,animationSteps:60,animationEasing:"easeOutQuart",onAnimationComplete:null};var o=a?h(f.Bar.defaults,a):f.Bar.defaults;return new W(t,o,e)},this.Box=function(t,a){f.Bar.defaults={chartType:"Box",showWhiskers:!0,whiskerWidth:!1,scaleOverlay:!1,scaleOverride:!1,scaleSteps:null,scaleStepWidth:null,scaleStartValue:null,scaleLineColor:"rgba(0,0,0,.1)",scaleLineWidth:1,scaleShowLabels:!0,scaleLabel:"<%=value%>",scaleFontFamily:"'Arial'",scaleFontSize:12,scaleFontStyle:"normal",scaleFontColor:"#666",scaleShowGridLines:!0,scaleGridLineColor:"rgba(0,0,0,.05)",scaleGridLineWidth:1,barShowLabels:!1,barLabelFormatter:function(e){return e},barLabelFontFamily:"'Arial'",barLabelFontSize:12,barLabelFontStyle:"normal",barLabelFontColor:"#666",barShowStroke:!0,barStrokeWidth:5,barValueSpacing:5,barDatasetSpacing:0,animation:!0,animationSteps:60,animationEasing:"easeOutQuart",onAnimationComplete:null,outlierShowLabels:!0,outlierLabelFormatter:function(e){return e},outlierLabelFontFamily:"'Arial'",outlierLabelFontStyle:"normal",outlierLabelFontSize:12,outlierLabelFontColor:"#666",outlierLabelPlacement:"right",outlierLabelMargin:2,outlierDotStyle:"disc",outlierDotFillColor:"#666",outlierDotRadius:2,outlierDotStrokeWidth:2,outlierDotStrokeColor:"#666"};var o=a?h(f.Bar.defaults,a):f.Bar.defaults;return new W(t,o,e)};var m=function(e){e.clearRect(0,0,p,v)},g=function(e,i,d){function c(){f=n([p,v])/2,f-=r([.5*i.scaleFontSize,.5*i.scaleLineWidth]),g=2*i.scaleFontSize,i.scaleShowLabelBackdrop&&(g+=2*i.scaleBackdropPaddingY,f-=1.5*i.scaleBackdropPaddingY),k=f,g=s(g,5)}function u(){for(var e=0;e<m.steps;e++)if(i.scaleShowLine&&(d.beginPath(),d.arc(p/2,v/2,b*(e+1),0,2*Math.PI,!0),d.strokeStyle=i.scaleLineColor,d.lineWidth=i.scaleLineWidth,d.stroke()),i.scaleShowLabels){d.textAlign="center",d.font=i.scaleFontStyle+" "+i.scaleFontSize+"px "+i.scaleFontFamily;var t=m.labels[e];if(i.scaleShowLabelBackdrop){var a=d.measureText(t).width;d.fillStyle=i.scaleBackdropColor,d.beginPath(),d.rect(Math.round(p/2-a/2-i.scaleBackdropPaddingX),Math.round(v/2-b*(e+1)-.5*i.scaleFontSize-i.scaleBackdropPaddingY),Math.round(a+2*i.scaleBackdropPaddingX),Math.round(i.scaleFontSize+2*i.scaleBackdropPaddingY)),d.fill()}d.textBaseline="middle",d.fillStyle=i.scaleFontColor,d.fillText(t,p/2,v/2-b*(e+1))}}function h(a){var o=-Math.PI/2,l=2*Math.PI/e.length,r=1,n=1;i.animation&&(i.animateScale&&(r=a),i.animateRotate&&(n=a));for(var s=0;s<e.length;s++)d.beginPath(),d.arc(p/2,v/2,r*t(e[s].value,m,b),o,o+n*l,!1),d.lineTo(p/2,v/2),d.closePath(),d.fillStyle=e[s].color,d.fill(),i.segmentShowStroke&&(d.strokeStyle=i.segmentStrokeColor,d.lineWidth=i.segmentStrokeWidth,d.stroke()),o+=n*l}function S(){for(var t=Number.MIN_VALUE,a=Number.MAX_VALUE,o=0;o<e.length;o++)e[o].value>t&&(t=e[o].value),e[o].value<a&&(a=e[o].value);var l=Math.floor(k/(.66*g)),r=Math.floor(k/g*.5);return{maxValue:t,minValue:a,maxSteps:l,minSteps:r}}var f,b,m,g,k,L,F;c(),L=S(),F=i.scaleShowLabels?i.scaleLabel:null,i.scaleOverride?(m={steps:i.scaleSteps,stepValue:i.scaleStepWidth,graphMin:i.scaleStartValue,labels:[]},l(F,m.labels,m.steps,i.scaleStartValue,i.scaleStepWidth)):m=o(k,L.maxSteps,L.minSteps,L.maxValue,L.minValue,F),b=f/m.steps,a(i,u,h,d)},k=function(e,i,d){function u(a){var o=2*Math.PI/e.datasets[0].data.length;d.save(),d.translate(p/2,v/2);for(var l=i.datasetStroke&&i.datasetStrokeWidth,r=0;r<e.datasets.length;r++){d.beginPath(),d.moveTo(0,-1*a*t(e.datasets[r].data[0],g,m));for(var n=1;n<e.datasets[r].data.length;n++)d.rotate(o),d.lineTo(0,-1*a*t(e.datasets[r].data[n],g,m));if(d.closePath(),d.fillStyle=e.datasets[r].fillColor,d.strokeStyle=e.datasets[r].strokeColor,d.lineWidth=l,d.fill(),d.stroke(),i.pointDot){d.fillStyle=e.datasets[r].pointColor,d.strokeStyle=e.datasets[r].pointStrokeColor,d.lineWidth=i.pointDotStrokeWidth;for(var s=0;s<e.datasets[r].data.length;s++)d.rotate(o),d.beginPath(),d.arc(0,-1*a*t(e.datasets[r].data[s],g,m),i.pointDotRadius,2*Math.PI,!1),d.fill(),d.stroke()}d.rotate(o)}d.restore()}function h(){var t=2*Math.PI/e.datasets[0].data.length;if(d.save(),d.translate(p/2,v/2),i.angleShowLineOut){d.strokeStyle=i.angleLineColor,d.lineWidth=i.angleLineWidth;for(var a=0;a<e.datasets[0].data.length;a++)d.rotate(t),d.beginPath(),d.moveTo(0,0),d.lineTo(0,-b),d.stroke()}for(var o=0;o<g.steps;o++){if(d.beginPath(),i.scaleShowLine){d.strokeStyle=i.scaleLineColor,d.lineWidth=i.scaleLineWidth,d.moveTo(0,-m*(o+1));for(var l=0;l<e.datasets[0].data.length;l++)d.rotate(t),d.lineTo(0,-m*(o+1));d.closePath(),d.stroke()}if(i.scaleShowLabels){if(d.textAlign="center",d.font=i.scaleFontStyle+" "+i.scaleFontSize+"px "+i.scaleFontFamily,d.textBaseline="middle",i.scaleShowLabelBackdrop){var r=d.measureText(g.labels[o]).width;d.fillStyle=i.scaleBackdropColor,d.beginPath(),d.rect(Math.round(-r/2-i.scaleBackdropPaddingX),Math.round(-m*(o+1)-.5*i.scaleFontSize-i.scaleBackdropPaddingY),Math.round(r+2*i.scaleBackdropPaddingX),Math.round(i.scaleFontSize+2*i.scaleBackdropPaddingY)),d.fill()}d.fillStyle=i.scaleFontColor,d.fillText(g.labels[o],0,-m*(o+1))}}for(var n=0;n<e.labels.length;n++){d.font=i.pointLabelFontStyle+" "+i.pointLabelFontSize+"px "+i.pointLabelFontFamily,d.fillStyle=i.pointLabelFontColor;var s=Math.sin(t*n)*(b+i.pointLabelFontSize),c=Math.cos(t*n)*(b+i.pointLabelFontSize);d.textAlign=t*n==Math.PI||t*n==0?"center":t*n>Math.PI?"right":"left",d.textBaseline="middle",d.fillText(e.labels[n],s,-c)}d.restore()}function S(){b=n([p,v])/2,k=2*i.scaleFontSize;for(var t=0,a=0;a<e.labels.length;a++){d.font=i.pointLabelFontStyle+" "+i.pointLabelFontSize+"px "+i.pointLabelFontFamily;var o=d.measureText(e.labels[a]).width;o>t&&(t=o)}b-=r([t,i.pointLabelFontSize/2*1.5]),b-=i.pointLabelFontSize,b=c(b,null,0),L=b,k=s(k,5)}function f(){for(var t=Number.MIN_VALUE,a=Number.MAX_VALUE,o=0;o<e.datasets.length;o++)for(var l=0;l<e.datasets[o].data.length;l++)e.datasets[o].data[l]>t&&(t=e.datasets[o].data[l]),e.datasets[o].data[l]<a&&(a=e.datasets[o].data[l]);var r=Math.floor(L/(.66*k)),n=Math.floor(L/k*.5);return{maxValue:t,minValue:a,maxSteps:r,minSteps:n}}var b,m,g,k,L,F,w;e.labels||(e.labels=[]),S();var F=f();w=i.scaleShowLabels?i.scaleLabel:null,i.scaleOverride?(g={steps:i.scaleSteps,stepValue:i.scaleStepWidth,graphMin:i.scaleStartValue,labels:[]},l(w,g.labels,g.steps,i.scaleStartValue,i.scaleStepWidth)):g=o(L,F.maxSteps,F.minSteps,F.maxValue,F.minValue,w),m=b/g.steps,a(i,h,u,d)},L=function(e,t,o){function l(a){var l=-Math.PI/2,n=1,s=1;t.animation&&(t.animateScale&&(n=a),t.animateRotate&&(s=a));for(var d=0;d<e.length;d++){var c=s*(e[d].value/r)*2*Math.PI;o.beginPath(),o.arc(p/2,v/2,n*i,l,l+c),o.lineTo(p/2,v/2),o.closePath(),o.fillStyle=e[d].color,o.fill(),t.segmentShowStroke&&(o.lineWidth=t.segmentStrokeWidth,o.strokeStyle=t.segmentStrokeColor,o.stroke()),l+=c}}for(var r=0,i=n([v/2,p/2])-5,s=0;s<e.length;s++)r+=e[s].value;a(t,null,l,o)},F=function(e,t,o){function l(a){var l=-Math.PI/2,n=1,d=1;t.animation&&(t.animateScale&&(n=a),t.animateRotate&&(d=a));for(var c=0;c<e.length;c++){var u=d*(e[c].value/r)*2*Math.PI;o.beginPath(),o.arc(p/2,v/2,n*i,l,l+u,!1),o.arc(p/2,v/2,n*s,l+u,l,!0),o.closePath(),o.fillStyle=e[c].color,o.fill(),t.segmentShowStroke&&(o.lineWidth=t.segmentStrokeWidth,o.strokeStyle=t.segmentStrokeColor,o.stroke()),l+=u}}for(var r=0,i=n([v/2,p/2])-5,s=i*(t.percentageInnerCutout/100),d=0;d<e.length;d++)r+=e[d].value;a(t,null,l,o)},w=function(e,r,n){function i(a){function o(o,l){return C-a*t(e.datasets[o].data[l],b,f)}function l(o,l){return C-a*t(e.datasets[o].data[l],b,f)}function i(e){return M+F*e}for(var s=r.datasetStroke&&r.datasetStrokeWidth,d=0;d<e.datasets.length;d++){n.strokeStyle=e.datasets[d].strokeColor,n.lineWidth=s,n.beginPath(),n.moveTo(M,C-a*t(e.datasets[d].data[0],b,f));for(var c=1;c<e.datasets[d].data.length;c++)r.bezierCurve?n.bezierCurveTo(i(c-.5),o(d,c-1),i(c-.5),o(d,c),i(c),o(d,c)):n.lineTo(i(c),o(d,c));if(n.stroke(),r.datasetFill?(n.lineTo(M+F*(e.datasets[d].data.length-1),C),n.lineTo(M,C),n.closePath(),n.fillStyle=e.datasets[d].fillColor,n.fill()):n.closePath(),r.pointDot)for(var u=0;u<e.datasets[d].data.length;u++){n.fillStyle=e.datasets[d].pointColor,n.strokeStyle=e.datasets[d].pointStrokeColor,n.lineWidth=r.pointDotStrokeWidth,n.beginPath();var h=M+F*u,l=C-a*t(e.datasets[d].data[u],b,f);if(n.arc(h,l,r.pointDotRadius,0,2*Math.PI,!0),n.fill(),n.stroke(),e.datasets[d].error){n.lineWidth=r.errorStrokeWidth,n.strokeStyle=r.errorStrokeColor,n.beginPath(),n.moveTo(h,l);var S=C-a*t(e.datasets[d].data[u]+e.datasets[d].error[u],b,f),p=C-a*t(e.datasets[d].data[u]-e.datasets[d].error[u],b,f);n.lineTo(h,S),n.stroke(),n.beginPath();var v=r.errorCapWidth*r.pointDotRadius;n.moveTo(h-v/2,S),n.lineTo(h+v/2,S),n.stroke(),n.beginPath(),n.moveTo(h,l),n.lineTo(h,p),n.stroke(),n.beginPath(),n.moveTo(h-v/2,p),n.lineTo(h+v/2,p),n.stroke()}}}}function s(a){function o(o,l){return C-a*t(e.datasets[o].data[l],b,f)}function l(t,a){return M+e.datasets[t].xVal[a]/y}for(var i=0;i<e.datasets.length;i++){for(var s=0;s<e.datasets[i].data.length;s++){var d=l(i,s),c=o(i,s);if(r.pointDot&&(n.fillStyle=e.datasets[i].pointColor,n.strokeStyle=e.datasets[i].pointStrokeColor,n.lineWidth=r.pointDotStrokeWidth,n.beginPath(),n.arc(d,c,r.pointDotRadius,0,2*Math.PI,!0),n.fill(),n.stroke()),e.datasets[i].error){n.lineWidth=r.errorStrokeWidth,n.strokeStyle=r.errorStrokeColor,n.beginPath(),n.moveTo(d,c);var u=C-a*t(e.datasets[i].data[s]+e.datasets[i].error[s],b,f),h=C-a*t(e.datasets[i].data[s]-e.datasets[i].error[s],b,f);n.lineTo(d,u),n.stroke(),n.beginPath();var S=r.errorCapWidth*r.pointDotRadius;n.moveTo(d-S/2,u),n.lineTo(d+S/2,u),n.stroke(),n.beginPath(),n.moveTo(d,c),n.lineTo(d,h),n.stroke(),n.beginPath(),n.moveTo(d-S/2,h),n.lineTo(d+S/2,h),n.stroke()}if(r.connectingLine){n.strokeStyle=e.datasets[i].strokeColor,n.lineWidth=r.datasetStrokeWidth,n.beginPath(),n.moveTo(d,c);var p=l(i,s+1),v=o(i,s+1);if(!r.bezierCurve&&s+1<e.datasets[i].data.length)n.lineTo(p,v),n.stroke();else if(s+1<e.datasets[i].data.length){var m=(d+p)/2;n.bezierCurveTo(m,c,m,v,p,v),n.stroke()}}}if(e.datasets[i].trendline){for(var g=0,k=0,L=0,F=0,w=0,W=0;W<e.datasets[i].data.length;W++){var P=e.datasets[i].xVal[W],T=e.datasets[i].data[W];g+=P,k+=T,L+=P*T,F+=P*P,w+=T*T}var x=(W*L-g*k)/(W*F-g*g),B=(k-x*g)/W;if("undefined"==typeof e.datasets[i].trendlineStart)var A=e.datasets[i].xVal[0];else var A=e.datasets[i].trendlineStart;if("undefined"==typeof e.datasets[i].trendlineEnd)var O=e.datasets[i].xVal[e.datasets[i].xVal.length-1];else var O=e.datasets[i].trendlineEnd;var V=x*A+B,I=x*O+B;n.strokeStyle=e.datasets[i].strokeColor,n.lineWidth=r.datasetStrokeWidth,n.beginPath(),n.moveTo(M+A/y,C-a*t(V,b,f)),n.lineTo(M+O/y,C-a*t(I,b,f)),n.stroke()}}}function d(){n.lineWidth=r.scaleLineWidth,n.strokeStyle=r.scaleLineColor,n.beginPath(),n.moveTo(p-w/2+5,C),n.lineTo(p-w/2-W-5,C),n.stroke(),P>0?(n.save(),n.textAlign="right"):n.textAlign="center",n.fillStyle=r.labelsFontColor;for(var t=0;t<e.labels.length;t++)n.save(),P>0?(n.translate(M+t*F,C+r.scaleFontSize),n.rotate(-(P*(Math.PI/180))),n.fillText(e.labels[t],0,0),n.restore()):n.fillText(e.labels[t],M+t*F,C+r.scaleFontSize+3),n.beginPath(),n.moveTo(M+t*F,C+3),("vertical"==r.scaleShowGridLines||r.scaleShowGridLines===!0)&&t>0?(n.lineWidth=r.scaleGridLineWidth,n.strokeStyle=r.scaleGridLineColor,n.lineTo(M+t*F,5)):n.lineTo(M+t*F,C+3),n.stroke();n.lineWidth=r.scaleLineWidth,n.strokeStyle=r.scaleLineColor,n.fillStyle=r.scaleFontColor,n.beginPath(),n.moveTo(M,C+5),n.lineTo(M,5),n.stroke(),n.textAlign="right"==r.scaleLabelPosition?"left":"right",n.textBaseline="middle";var a=b.steps;r.scaleShowStartValue&&++a;for(var o=+!r.scaleShowStartValue;a>o;o++)n.beginPath(),n.moveTo(M-3,C-o*f),"horizontal"==r.scaleShowGridLines||r.scaleShowGridLines===!0?(n.lineWidth=r.scaleGridLineWidth,n.strokeStyle=r.scaleGridLineColor,n.lineTo(M+W+5,C-(o+1)*f)):n.lineTo(M-.5,C-(o+1)*f),n.stroke(),r.scaleShowLabels&&n.fillText(b.labels[o],M-8+("right"==r.scaleLabelPosition?W+20:0),C-o*f)}function c(){var t=1;if(r.scaleShowLabels){n.font=r.scaleFontStyle+" "+r.scaleFontSize+"px "+r.scaleFontFamily;for(var a=0;a<b.labels.length;a++){var o=n.measureText(b.labels[a]).width;t=o>t?o:t}t+=10}widestYLabel=t,W=p-t-w,F=W/(e.labels.length-1);var l=(r.xScaleSteps-1)*r.xScaleStepWidth;y=l/W,M=p-w/2-W,C=g+r.scaleFontSize/2}function u(){S=v,n.font=r.scaleFontStyle+" "+r.scaleFontSize+"px "+r.scaleFontFamily,w=1;for(var t=0;t<e.labels.length;t++){var a=n.measureText(e.labels[t]).width;w=a>w?a:w}p/e.labels.length<w?(P=45,p/e.labels.length<Math.cos(P)*w?(P=90,S-=w):S-=Math.sin(P)*w):S-=r.scaleFontSize,S-=5,m=r.scaleFontSize,S-=m,g=S}function h(){for(var t=Number.MIN_VALUE,a=Number.MAX_VALUE,o=0;o<e.datasets.length;o++)for(var l=0;l<e.datasets[o].data.length;l++)e.datasets[o].data[l]>t&&(t=e.datasets[o].data[l]),e.datasets[o].data[l]<a&&(a=e.datasets[o].data[l]);var r=Math.floor(g/(.66*m)),n=Math.floor(g/m*.5);return{maxValue:t,minValue:a,maxSteps:r,minSteps:n}}var S,f,b,m,g,k,L,F,w,W,y,M,C,P=0;u(),k=h(),L=r.scaleShowLabels?r.scaleLabel:"",r.scaleOverride?(b={steps:r.scaleSteps,stepValue:r.scaleStepWidth,graphMin:r.scaleStartValue,labels:[]},l(L,b.labels,b.steps,r.scaleStartValue,r.scaleStepWidth,r.scaleShowStartValue)):b=o(g,k.maxSteps,k.minSteps,k.maxValue,k.minValue,L),f=Math.floor(g/b.steps),c(),"Line"==r.chartType?a(r,d,i,n):a(r,d,s,n)},W=function(e,r,n){function i(a){n.lineWidth=r.barStrokeWidth;for(var o=0;o<e.datasets.length;o++){n.strokeStyle=e.datasets[o].strokeColor;for(var l=0;l<e.datasets[o].data.length;l++){n.save(),n.fillStyle=T(e.datasets[o].fillColor,l,e.datasets[o].data[l],a);var i=y+r.barValueSpacing+F*l+C*o+r.barDatasetSpacing*o+r.barStrokeWidth*o,s=M-a*t(e.datasets[o].data[l],b,f)+r.barStrokeWidth/2;if(n.beginPath(),n.moveTo(i,M),n.lineTo(i,s),n.lineTo(i+C,s),n.lineTo(i+C,M),r.barShowStroke&&n.stroke(),n.closePath(),n.fill(),n.restore(),r.barShowLabels){n.save(),n.textAlign="center",n.font=r.barLabelFontStyle+" "+r.barLabelFontSize+"px "+r.barLabelFontFamily;var d=r.barLabelFormatter(e.datasets[o].data[l]);n.textBaseline="bottom",n.fillStyle=r.barLabelFontColor,n.fillText(d,i+C/2,s-4),n.restore()}if(e.datasets[o].error&&"none"!=r.errorDir){if("down"!=r.errorDir){n.strokeStyle=r.errorStrokeWidth,n.beginPath(),n.moveTo(i+C/2,M-a*t(e.datasets[o].data[l],b,f)+r.barStrokeWidth/2),n.lineTo(i+C/2,M-a*t(e.datasets[o].data[l]+e.datasets[o].error[l],b,f)+r.barStrokeWidth/2),n.stroke(),n.beginPath();var c=r.errorCapWidth*C||1;capOffset=(C-c)/2,n.moveTo(i+capOffset,M-a*t(e.datasets[o].data[l]+e.datasets[o].error[l],b,f)+r.barStrokeWidth/2),n.lineTo(i+C-capOffset,M-a*t(e.datasets[o].data[l]+e.datasets[o].error[l],b,f)+r.barStrokeWidth/2),n.stroke()}if("up"!=r.errorDir){n.beginPath(),n.moveTo(i+C/2,M-a*t(e.datasets[o].data[l],b,f)+r.barStrokeWidth/2),n.lineTo(i+C/2,M-a*t(e.datasets[o].data[l]-e.datasets[o].error[l],b,f)+r.barStrokeWidth/2),n.stroke(),n.beginPath();var c=r.errorCapWidth*C||1;capOffset=(C-c)/2,n.moveTo(i+capOffset,M-a*t(e.datasets[o].data[l]-e.datasets[o].error[l],b,f)+r.barStrokeWidth/2),n.lineTo(i+C-capOffset,M-a*t(e.datasets[o].data[l]-e.datasets[o].error[l],b,f)+r.barStrokeWidth/2),n.stroke()}}}}}function s(a){n.lineWidth=r.barStrokeWidth;for(var o=0;o<e.datasets.length;o++){n.strokeStyle=e.datasets[o].strokeColor;for(var l=0;l<e.datasets[o].data.length;l++){n.fillStyle=T(e.datasets[o].fillColor,l,e.datasets[o].data[l],a);var i=y+r.barValueSpacing+F*l+C*o+r.barDatasetSpacing*o+r.barStrokeWidth*o;n.beginPath();var s=r.whiskerWidth*C||1;wisOffset=(C-s)/2;var d=i,c=i+C/2,u=i+C,h=i+wisOffset,S=i+C-wisOffset,p=function(n){return M-a*t(e.datasets[o].data[l][n],b,f)+r.barStrokeWidth/2},v=p(0),m=p(1),g=p(2),k=p(3),L=p(4);if(n.moveTo(d,m),n.lineTo(d,k),n.lineTo(u,k),n.lineTo(u,m),n.closePath(),n.stroke(),r.datasetFill&&n.fill(),n.beginPath(),n.moveTo(d,g),n.lineTo(u,g),n.stroke(),r.showWhiskers&&(n.beginPath(),n.moveTo(c,v),n.lineTo(c,m),n.stroke(),n.beginPath(),n.moveTo(h,v),n.lineTo(S,v),n.stroke(),n.beginPath(),n.moveTo(c,k),n.lineTo(c,L),n.stroke(),n.beginPath(),n.moveTo(h,L),n.lineTo(S,L),n.stroke()),r.barShowLabels){n.save(),n.textAlign="center",n.font=r.barLabelFontStyle+" "+r.barLabelFontSize+"px "+r.barLabelFontFamily,n.fillStyle=r.barLabelFontColor;var w=(r.showWhiskers?v:m)+2,W=(r.showWhiskers?L:k)-2;n.textBaseline="top";var P=r.barLabelFormatter(e.datasets[o].data[l][r.showWhiskers?0:1]);n.fillText(P,i+C/2,w),n.textBaseline="bottom",P=r.barLabelFormatter(e.datasets[o].data[l][r.showWhiskers?4:3]),n.fillText(P,i+C/2,W),n.restore()}if(void 0!==e.datasets[o].outliers&&void 0!==e.datasets[o].outliers[l]){n.save(),n.strokeStyle=r.outlierDotStrokeColor;for(var x=0;x<e.datasets[o].outliers[l].length;x++){var B=e.datasets[o].outliers[l][x],A=c,O=M-a*t(B,b,f)+r.barStrokeWidth/2;if(n.beginPath(),n.arc(A,O,r.outlierDotRadius,0,2*Math.PI),n.stroke(),"disc"==r.outlierDotStyle&&(n.fillStyle=r.outlierDotFillColor,n.fill()),r.outlierShowLabels){var V,I,z=r.outlierDotRadius+r.outlierDotStrokeWidth+r.outlierLabelMargin;switch(r.outlierLabelPlacement){case"right":n.textAlign="left",n.textBaseline="center",V=A+z,I=O;break;case"left":n.textAlign="right",n.textBaseline="center",V=A-z,I=O;break;case"top":n.textAlign="center",n.textBaseline="bottom",V=A,I=O-z;break;case"bottom":n.textAlign="center",n.textBaseline="top",V=A,I=O+z}n.font=r.outlierLabelFontStyle+" "+r.outlierLabelFontSize+"px"+r.outlierLabelFontFamily,n.fillStyle=r.outlierLabelFontColor;var P=r.outlierLabelFormatter(B);n.fillText(P,V,I)}}n.restore()}}}}function d(){n.lineWidth=r.scaleLineWidth,n.strokeStyle=r.scaleLineColor,n.beginPath(),n.moveTo(p-w/2+5,M),n.lineTo(p-w/2-W-5,M),n.stroke(),P>0?(n.save(),n.textAlign="right"):n.textAlign="center",n.fillStyle=r.scaleFontColor;for(var t=0;t<e.labels.length;t++)n.save(),P>0?(n.translate(y+t*F,M+r.scaleFontSize),n.rotate(-(P*(Math.PI/180))),n.fillText(e.labels[t],0,0),n.restore()):n.fillText(e.labels[t],y+t*F+F/2,M+r.scaleFontSize+3),n.beginPath(),n.moveTo(y+(t+1)*F,M+3),n.lineWidth=r.scaleGridLineWidth,n.strokeStyle=r.scaleGridLineColor,n.lineTo(y+(t+1)*F,5),n.stroke();n.lineWidth=r.scaleLineWidth,n.strokeStyle=r.scaleLineColor,n.beginPath(),n.moveTo(y,M+5),n.lineTo(y,5),n.stroke(),n.textAlign="right",n.textBaseline="middle";for(var a=0;a<b.steps;a++)n.beginPath(),n.moveTo(y-3,M-(a+1)*f),r.scaleShowGridLines?(n.lineWidth=r.scaleGridLineWidth,n.strokeStyle=r.scaleGridLineColor,n.lineTo(y+W+5,M-(a+1)*f)):n.lineTo(y-.5,M-(a+1)*f),n.stroke(),r.scaleShowLabels&&n.fillText(b.labels[a],y-8,M-(a+1)*f)}function c(){var t=1;if(r.scaleShowLabels){n.font=r.scaleFontStyle+" "+r.scaleFontSize+"px "+r.scaleFontFamily;for(var a=0;a<b.labels.length;a++){var o=n.measureText(b.labels[a]).width;t=o>t?o:t}t+=10}W=p-t-w,F=Math.floor(W/e.labels.length),C=(F-2*r.scaleGridLineWidth-2*r.barValueSpacing-(r.barDatasetSpacing*e.datasets.length-1)-(r.barStrokeWidth/2*e.datasets.length-1))/e.datasets.length,y=p-w/2-W,M=g+r.scaleFontSize/2}function u(){S=v,n.font=r.scaleFontStyle+" "+r.scaleFontSize+"px "+r.scaleFontFamily,w=1;for(var t=0;t<e.labels.length;t++){var a=n.measureText(e.labels[t]).width;w=a>w?a:w}p/e.labels.length<w?(P=45,p/e.labels.length<Math.cos(P)*w?(P=90,S-=w):S-=Math.sin(P)*w):S-=r.scaleFontSize,S-=5,m=r.scaleFontSize,S-=m,g=S}function h(){for(var t=Number.MIN_VALUE,a=Number.MAX_VALUE,o=0;o<e.datasets.length;o++)for(var l=0;l<e.datasets[o].data.length;l++)e.datasets[o].data[l]>t&&(t=e.datasets[o].data[l]),e.datasets[o].data[l]<a&&(a=e.datasets[o].data[l]);var r=Math.floor(g/(.66*m)),n=Math.floor(g/m*.5);return{maxValue:t,minValue:a,maxSteps:r,minSteps:n}}var S,f,b,m,g,k,L,F,w,W,y,M,C,P=0;u(),k=h(),L=r.scaleShowLabels?r.scaleLabel:"",r.scaleOverride?(b={steps:r.scaleSteps,stepValue:r.scaleStepWidth,graphMin:r.scaleStartValue,labels:[]},l(L,b.labels,b.steps,r.scaleStartValue,r.scaleStepWidth)):b=o(g,k.maxSteps,k.minSteps,k.maxValue,k.minValue,L),f=Math.floor(g/b.steps),c(),"Box"==r.chartType?a(r,d,s,n):a(r,d,i,n);var T=function(e,t,a,o){return"string"==typeof e?e:"function"==typeof e?e(a,o):"[object Array]"===Object.prototype.toString.call(e)?T(e[t%e.length],t,a,o):(this.console&&console.log("could not read fill color function, returning #000000"),"#000000")}},y=function(){return window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.oRequestAnimationFrame||window.msRequestAnimationFrame||function(e){window.setTimeout(e,1e3/60)}}(),M={}};
+"strict mode"
+
+/* This is a fork of Chart.js
+ * http://chartjs.org/
+ *
+ * Copyright 2013 Nick Downie
+ * Released under the MIT license
+ * https://github.com/nnnick/Chart.js/blob/master/LICENSE.md
+ */
+
+/*The chart calculator acts a wrapper around window.Chart. It allows arrays to be
+passed in place of individual data points. The median (in the case of Box plots) or
+mean (in other cases) is calculated, along with appropriate error bars, and all of this 
+is passed along to the main Chart object.
+It is not necessary to use the Chart calculator, but in that case data points and actual
+error info (if desired) must be passed directly to the Chart object.
+*/
+window.ChartCalculator = function(context) {
+	
+	this.Box = function(data, options) {
+		for (var x = 0; x < data.datasets.length; x++) {
+			for (var y = 0; y < data.datasets[x].data.length; y++) {
+				var values = data.datasets[x].data[y]
+				values.sort(function(a, b){return a - b});
+				var n = values.length;
+				//get the minimum value
+				var q0 = values[0]
+				//get the median (q2) value
+				var q2n = Math.floor(n / 2);
+				if (n % 2 == 1) { //odd sample size
+					var q2 = values[q2n];
+				} else {
+					var q2 = (values[q2n] + values[q2n + 1]) / 2;
+				}
+				var q1n = Math.floor(n / 4) + 1;
+				var q3n = Math.floor(n * 3 / 4);
+				var q1 = values[q1n];
+				var q3 = values[q3n];
+				var q4 = values[n - 1];
+				qArr = [q0, q1, q2, q3, q4];
+				data.datasets[x].data[y] = qArr;
+			}
+		}
+		return new Chart(context).Box(data, options);	
+	}
+	
+	this.Bar = function(data, options){
+		var repackagedData = calculateMeans(data, options);
+		return new Chart(context).Bar(repackagedData, options);
+	}
+	
+	this.Line = function(data, options){
+		var repackagedData = calculateMeans(data, options);
+		return new Chart(context).Line(repackagedData, options);
+	}
+	
+	this.Scatter = function(data, options){
+		var repackagedData = calculateMeans(data, options);
+		return new Chart(context).Scatter(repackagedData, options);
+	}
+	
+	function calculateMeans(data, options) {
+		for (var x = 0; x < data.datasets.length; x++) {
+			var errorValues = [];
+			for (var y = 0; y < data.datasets[x].data.length; y++) {
+				var values = data.datasets[x].data[y]
+				var n = values.length;
+				//calculate the average value 
+				var sum = 0;
+				for (var z = 0; z < n; z++) {
+					sum = sum + values[z];
+				}
+				var avg = sum/n;
+				//put the average value into data in place of the array 
+				data.datasets[x].data[y] = avg;
+				if (options.error){
+					if (options.error == "range"){
+						//get the maximum value 
+						values.sort(function(a, b){return a - b});
+						var maximum = values[n - 1];
+						var error = maximum - avg;
+					} else if (options.error == "stdev" && n > 2) {
+						//find the sum of the squares of the diffs from the mean
+						var sum = 0;
+						for (var z = 0; z < n; z++) {
+							sum = sum + Math.pow(values[z] - avg, 2);
+						}
+						var error = Math.sqrt(sum / (n - 1));
+					}
+					errorValues.push(error);
+				}
+			}
+			if (options.error) data.datasets[x].error = errorValues;
+		}
+		return data;
+	}
+	
+}
+
+
+
+//Define the global Chart Variable as a class.
+window.Chart = function(context) {
+
+	var chart = this;
+
+
+	//Easing functions adapted from Robert Penner's easing equations
+	//http://www.robertpenner.com/easing/
+
+	var animationOptions = {
+		linear : function (t){
+			return t;
+		},
+		easeInQuad: function (t) {
+			return t*t;
+		},
+		easeOutQuad: function (t) {
+			return -1 *t*(t-2);
+		},
+		easeInOutQuad: function (t) {
+			if ((t/=1/2) < 1) return 1/2*t*t;
+			return -1/2 * ((--t)*(t-2) - 1);
+		},
+		easeInCubic: function (t) {
+			return t*t*t;
+		},
+		easeOutCubic: function (t) {
+			return 1*((t=t/1-1)*t*t + 1);
+		},
+		easeInOutCubic: function (t) {
+			if ((t/=1/2) < 1) return 1/2*t*t*t;
+			return 1/2*((t-=2)*t*t + 2);
+		},
+		easeInQuart: function (t) {
+			return t*t*t*t;
+		},
+		easeOutQuart: function (t) {
+			return -1 * ((t=t/1-1)*t*t*t - 1);
+		},
+		easeInOutQuart: function (t) {
+			if ((t/=1/2) < 1) return 1/2*t*t*t*t;
+			return -1/2 * ((t-=2)*t*t*t - 2);
+		},
+		easeInQuint: function (t) {
+			return 1*(t/=1)*t*t*t*t;
+		},
+		easeOutQuint: function (t) {
+			return 1*((t=t/1-1)*t*t*t*t + 1);
+		},
+		easeInOutQuint: function (t) {
+			if ((t/=1/2) < 1) return 1/2*t*t*t*t*t;
+			return 1/2*((t-=2)*t*t*t*t + 2);
+		},
+		easeInSine: function (t) {
+			return -1 * Math.cos(t/1 * (Math.PI/2)) + 1;
+		},
+		easeOutSine: function (t) {
+			return 1 * Math.sin(t/1 * (Math.PI/2));
+		},
+		easeInOutSine: function (t) {
+			return -1/2 * (Math.cos(Math.PI*t/1) - 1);
+		},
+		easeInExpo: function (t) {
+			return (t==0) ? 1 : 1 * Math.pow(2, 10 * (t/1 - 1));
+		},
+		easeOutExpo: function (t) {
+			return (t==1) ? 1 : 1 * (-Math.pow(2, -10 * t/1) + 1);
+		},
+		easeInOutExpo: function (t) {
+			if (t==0) return 0;
+			if (t==1) return 1;
+			if ((t/=1/2) < 1) return 1/2 * Math.pow(2, 10 * (t - 1));
+			return 1/2 * (-Math.pow(2, -10 * --t) + 2);
+			},
+		easeInCirc: function (t) {
+			if (t>=1) return t;
+			return -1 * (Math.sqrt(1 - (t/=1)*t) - 1);
+		},
+		easeOutCirc: function (t) {
+			return 1 * Math.sqrt(1 - (t=t/1-1)*t);
+		},
+		easeInOutCirc: function (t) {
+			if ((t/=1/2) < 1) return -1/2 * (Math.sqrt(1 - t*t) - 1);
+			return 1/2 * (Math.sqrt(1 - (t-=2)*t) + 1);
+		},
+		easeInElastic: function (t) {
+			var s=1.70158;var p=0;var a=1;
+			if (t==0) return 0;  if ((t/=1)==1) return 1;  if (!p) p=1*.3;
+			if (a < Math.abs(1)) { a=1; var s=p/4; }
+			else var s = p/(2*Math.PI) * Math.asin (1/a);
+			return -(a*Math.pow(2,10*(t-=1)) * Math.sin( (t*1-s)*(2*Math.PI)/p ));
+		},
+		easeOutElastic: function (t) {
+			var s=1.70158;var p=0;var a=1;
+			if (t==0) return 0;  if ((t/=1)==1) return 1;  if (!p) p=1*.3;
+			if (a < Math.abs(1)) { a=1; var s=p/4; }
+			else var s = p/(2*Math.PI) * Math.asin (1/a);
+			return a*Math.pow(2,-10*t) * Math.sin( (t*1-s)*(2*Math.PI)/p ) + 1;
+		},
+		easeInOutElastic: function (t) {
+			var s=1.70158;var p=0;var a=1;
+			if (t==0) return 0;  if ((t/=1/2)==2) return 1;  if (!p) p=1*(.3*1.5);
+			if (a < Math.abs(1)) { a=1; var s=p/4; }
+			else var s = p/(2*Math.PI) * Math.asin (1/a);
+			if (t < 1) return -.5*(a*Math.pow(2,10*(t-=1)) * Math.sin( (t*1-s)*(2*Math.PI)/p ));
+			return a*Math.pow(2,-10*(t-=1)) * Math.sin( (t*1-s)*(2*Math.PI)/p )*.5 + 1;
+		},
+		easeInBack: function (t) {
+			var s = 1.70158;
+			return 1*(t/=1)*t*((s+1)*t - s);
+		},
+		easeOutBack: function (t) {
+			var s = 1.70158;
+			return 1*((t=t/1-1)*t*((s+1)*t + s) + 1);
+		},
+		easeInOutBack: function (t) {
+			var s = 1.70158;
+			if ((t/=1/2) < 1) return 1/2*(t*t*(((s*=(1.525))+1)*t - s));
+			return 1/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2);
+		},
+		easeInBounce: function (t) {
+			return 1 - animationOptions.easeOutBounce (1-t);
+		},
+		easeOutBounce: function (t) {
+			if ((t/=1) < (1/2.75)) {
+				return 1*(7.5625*t*t);
+			} else if (t < (2/2.75)) {
+				return 1*(7.5625*(t-=(1.5/2.75))*t + .75);
+			} else if (t < (2.5/2.75)) {
+				return 1*(7.5625*(t-=(2.25/2.75))*t + .9375);
+			} else {
+				return 1*(7.5625*(t-=(2.625/2.75))*t + .984375);
+			}
+		},
+		easeInOutBounce: function (t) {
+			if (t < 1/2) return animationOptions.easeInBounce (t*2) * .5;
+			return animationOptions.easeOutBounce (t*2-1) * .5 + 1*.5;
+		}
+	};
+
+	//Variables global to the chart
+	var width = context.canvas.width;
+	var height = context.canvas.height;
+
+
+	//High pixel density displays - multiply the size of the canvas height/width by the device pixel ratio, then scale.
+	if (window.devicePixelRatio) {
+		context.canvas.style.width = width + "px";
+		context.canvas.style.height = height + "px";
+		context.canvas.height = height * window.devicePixelRatio;
+		context.canvas.width = width * window.devicePixelRatio;
+		context.scale(window.devicePixelRatio, window.devicePixelRatio);
+	}
+	
+	this.PolarArea = function(data,options){
+
+		chart.PolarArea.defaults = {
+			scaleOverlay : true,
+			scaleOverride : false,
+			scaleSteps : null,
+			scaleStepWidth : null,
+			scaleStartValue : null,
+			scaleShowLine : true,
+			scaleLineColor : "rgba(0,0,0,.1)",
+			scaleLineWidth : 1,
+			scaleShowLabels : true,
+			scaleLabel : "<%=value%>",
+			scaleFontFamily : "'Arial'",
+			scaleFontSize : 12,
+			scaleFontStyle : "normal",
+			scaleFontColor : "#666",
+			scaleShowLabelBackdrop : true,
+			scaleBackdropColor : "rgba(255,255,255,0.75)",
+			scaleBackdropPaddingY : 2,
+			scaleBackdropPaddingX : 2,
+			segmentShowStroke : true,
+			segmentStrokeColor : "#fff",
+			segmentStrokeWidth : 2,
+			animation : true,
+			animationSteps : 100,
+			animationEasing : "easeOutBounce",
+			animateRotate : true,
+			animateScale : false,
+			onAnimationComplete : null
+		};
+
+		var config = (options)? mergeChartConfig(chart.PolarArea.defaults,options) : chart.PolarArea.defaults;
+
+		return new PolarArea(data,config,context);
+	};
+	
+	this.Radar = function(data,options){
+
+		chart.Radar.defaults = {
+			scaleOverlay : false,
+			scaleOverride : false,
+			scaleSteps : null,
+			scaleStepWidth : null,
+			scaleStartValue : null,
+			scaleShowLine : true,
+			scaleLineColor : "rgba(0,0,0,.1)",
+			scaleLineWidth : 1,
+			scaleShowLabels : false,
+			scaleLabel : "<%=value%>",
+			scaleFontFamily : "'Arial'",
+			scaleFontSize : 12,
+			scaleFontStyle : "normal",
+			scaleFontColor : "#666",
+			scaleShowLabelBackdrop : true,
+			scaleBackdropColor : "rgba(255,255,255,0.75)",
+			scaleBackdropPaddingY : 2,
+			scaleBackdropPaddingX : 2,
+			angleShowLineOut : true,
+			angleLineColor : "rgba(0,0,0,.1)",
+			angleLineWidth : 1,
+			pointLabelFontFamily : "'Arial'",
+			pointLabelFontStyle : "normal",
+			pointLabelFontSize : 12,
+			pointLabelFontColor : "#666",
+			pointDot : true,
+			pointDotRadius : 3,
+			pointDotStrokeWidth : 1,
+			datasetStroke : true,
+			datasetStrokeWidth : 2,
+			datasetFill : true,
+			animation : true,
+			animationSteps : 60,
+			animationEasing : "easeOutQuart",
+			onAnimationComplete : null
+		};
+
+		var config = (options)? mergeChartConfig(chart.Radar.defaults,options) : chart.Radar.defaults;
+
+		return new Radar(data,config,context);
+	};
+
+	this.Pie = function(data,options){
+		chart.Pie.defaults = {
+			segmentShowStroke : true,
+			segmentStrokeColor : "#fff",
+			segmentStrokeWidth : 2,
+			animation : true,
+			animationSteps : 100,
+			animationEasing : "easeOutBounce",
+			animateRotate : true,
+			animateScale : false,
+			onAnimationComplete : null
+		};
+
+		var config = (options)? mergeChartConfig(chart.Pie.defaults,options) : chart.Pie.defaults;
+
+		return new Pie(data,config,context);
+	};
+
+	this.Doughnut = function(data,options){
+
+		chart.Doughnut.defaults = {
+			segmentShowStroke : true,
+			segmentStrokeColor : "#fff",
+			segmentStrokeWidth : 2,
+			percentageInnerCutout : 50,
+			animation : true,
+			animationSteps : 100,
+			animationEasing : "easeOutBounce",
+			animateRotate : true,
+			animateScale : false,
+			onAnimationComplete : null
+		};
+
+		var config = (options)? mergeChartConfig(chart.Doughnut.defaults,options) : chart.Doughnut.defaults;
+
+		return new Doughnut(data,config,context);
+
+	};
+	
+	this.Line = function(data,options){
+
+		chart.Line.defaults = {
+			chartType: "Line",
+			errorStrokeWidth : 1,
+			errorStrokeColor : "#333",
+			errorCapWidth : 2,
+			scaleOverlay : false,
+			scaleOverride : false,
+			scaleSteps : null,
+			scaleStepWidth : null,
+			scaleStartValue : null,
+			scaleShowStartValue : false,
+			scaleLineColor : "rgba(0,0,0,.1)",
+			scaleLineWidth : 1,
+			scaleShowLabels : true,
+			scaleLabel : "<%=value%>",
+			scaleLabelPosition : 'left',
+			scaleFontFamily : "'Arial'",
+			scaleFontSize : 12,
+			scaleFontStyle : "normal",
+			scaleFontColor : "#666",
+			labelsFontColor : "#666",
+			scaleShowGridLines : true,
+			scaleGridLineColor : "rgba(0,0,0,.05)",
+			scaleGridLineWidth : 1,
+			bezierCurve : false,
+			pointDot : true,
+			pointDotRadius : 4,
+			pointDotStrokeWidth : 2,
+			datasetStroke : true,
+			datasetStrokeWidth : 2,
+			datasetFill : false,
+			animation : true,
+			animationSteps : 60,
+			animationEasing : "easeOutQuart",
+			onAnimationComplete : null
+		};		
+		var config = (options) ? mergeChartConfig(chart.Line.defaults,options) : chart.Line.defaults;
+		
+		return new Line(data,config,context);
+	}
+	
+	this.Scatter = function(data,options){
+	
+		chart.Line.defaults = {
+			//set the chart type
+			chartType : "Scatter",
+			errorStrokeWidth : 1,
+			errorStrokeColor : "#333",
+			errorCapWidth : 2,
+			
+			//y-scale information is still called "scale" to maintain compatibility with the
+			//original Chart.js
+			scaleOverlay : false,
+			scaleOverride : false,
+			scaleSteps : null,
+			scaleStepWidth : null,
+			scaleStartValue : null,
+			//the next 4 defaults were added by CY
+			xScaleOverride: false,
+			xScaleSteps: null,
+			xScaleStepWidth: null,
+			xScaleStartValue: null,
+			scaleLineColor : "rgba(0,0,0,.1)",
+			scaleLineWidth : 1,
+			scaleShowLabels : true,
+			scaleLabel : "<%=value%>",
+			scaleFontFamily : "'Arial'",
+			scaleFontSize : 12,
+			scaleFontStyle : "normal",
+			scaleFontColor : "#666",
+			scaleShowGridLines : true,
+			scaleGridLineColor : "rgba(0,0,0,.05)",
+			scaleGridLineWidth : 1,
+			//added option for a connecting line, set default to false
+			connectingLine : false,
+			//changed bezierCurve option default to false
+			bezierCurve : false,
+			pointDot : true,
+			pointDotRadius : 4,
+			pointDotStrokeWidth : 2,
+			datasetStroke : true,
+			datasetStrokeWidth : 2,
+			//changed dataset fill default option to false
+			datasetFill : false,
+			animation : true,
+			animationSteps : 60,
+			animationEasing : "easeOutQuart",
+			onAnimationComplete : null
+		};		
+		var config = (options) ? mergeChartConfig(chart.Line.defaults,options) : chart.Line.defaults;
+		
+		var labels = [];
+		
+		if (config.xScaleOverride){
+			//populate this.labels
+			var x = config.xScaleStartValue;
+			for (i = 0; i < config.xScaleSteps; i++){
+				labels.push(x);
+				x = x + config.xScaleStepWidth;
+			}
+		}
+		
+		data.labels = labels;
+		
+		return new Line(data, config, context);
+	}
+
+	this.Bar = function(data,options){
+		chart.Bar.defaults = {
+			chartType : "Bar",
+			//error bars
+			errorStrokeWidth : 5,
+			errorStrokeColor : "#333",
+			errorCapWidth : 0.75,
+			// scale 
+			scaleOverlay : false,
+			scaleOverride : false,
+			scaleSteps : null,
+			scaleStepWidth : null,
+			scaleStartValue : null,
+			scaleLineColor : "rgba(0,0,0,.1)",
+			scaleLineWidth : 1,
+			// scale labels
+			scaleShowLabels : true,
+			scaleLabel : "<%=value%>",
+			scaleFontFamily : "'Arial'",
+			scaleFontSize : 12,
+			scaleFontStyle : "normal",
+			scaleFontColor : "#666",
+			// scale grid lines
+			scaleShowGridLines : true,
+			scaleGridLineColor : "rgba(0,0,0,.05)",
+			scaleGridLineWidth : 1,
+			// bar labels
+			barShowLabels : false,
+			barLabelFormatter : function (s) { return s; },
+			barLabelFontFamily : "'Arial'",
+			barLabelFontSize : 12,
+			barLabelFontStyle : "normal",
+			barLabelFontColor : "#666",
+			// bar stroke
+			barShowStroke : true,
+			barStrokeWidth : 2,
+			// bar spacing
+			barValueSpacing : 5,
+			barDatasetSpacing : 1,
+			// animation
+			animation : true,
+			animationSteps : 60,
+			animationEasing : "easeOutQuart",
+			onAnimationComplete : null
+		};
+		var config = (options) ? mergeChartConfig(chart.Bar.defaults,options) : chart.Bar.defaults;
+		return new Bar(data,config,context);
+		
+	}
+	
+	this.Box = function(data,options){
+		chart.Bar.defaults = {
+			chartType : "Box",
+			showWhiskers : true,
+			//if false, whiskerWidth is the same as barWidth
+			whiskerWidth : true,
+			// scale
+			scaleOverlay : false,
+			scaleOverride : false,
+			scaleSteps : null,
+			scaleStepWidth : null,
+			scaleStartValue : null,
+			scaleLineColor : "rgba(0,0,0,.1)",
+			scaleLineWidth : 0.5,
+			// scale labels
+			scaleShowLabels : true,
+			scaleLabel : "<%=value%>",
+			scaleFontFamily : "'Arial'",
+			scaleFontSize : 12,
+			scaleFontStyle : "normal",
+			scaleFontColor : "#666",
+			// scale grid lines
+			scaleShowGridLines : true,
+			scaleGridLineColor : "rgba(0,0,0,.05)",
+			scaleGridLineWidth : 1,
+			// bar labels
+			barShowLabels : false,
+			barLabelFormatter : function (s) { return s; },
+			barLabelFontFamily : "'Arial'",
+			barLabelFontSize : 12,
+			barLabelFontStyle : "normal",
+			barLabelFontColor : "#666",
+			// bar stroke
+			barShowStroke : true,
+			barStrokeWidth : 1,
+			// bar spacing
+			barValueSpacing : 5,
+			barDatasetSpacing : 0,
+			// animation
+			animation : true,
+			animationSteps : 60,
+			animationEasing : "easeOutQuart",
+			onAnimationComplete : null,
+			// outliers
+			outlierShowLabels : true,
+			outlierLabelFormatter : function(s){return s;},
+			outlierLabelFontFamily : "'Arial'",
+			outlierLabelFontStyle : "normal",
+			outlierLabelFontSize : 12,        // pixels
+			outlierLabelFontColor : "#666",
+			outlierLabelPlacement : "right",  // left, top, bottom
+			outlierLabelMargin : 2,           // pixels. between label and dot
+			outlierDotStyle : 'disc',         // options: disc, circle
+			outlierDotFillColor : "#666",
+			outlierDotRadius : 2,             // pixels
+			outlierDotStrokeWidth : 2,        // pixels
+			outlierDotStrokeColor : "#666",
+		};
+		var config = (options) ? mergeChartConfig(chart.Bar.defaults,options) : chart.Bar.defaults;
+		
+		return new Bar(data,config,context);
+	}
+
+	var clear = function(c){
+		c.clearRect(0, 0, width, height);
+	};
+
+	var PolarArea = function(data,config,ctx){
+		var maxSize, scaleHop, calculatedScale, labelHeight, scaleHeight, valueBounds, labelTemplateString;
+
+		calculateDrawingSizes();
+
+		valueBounds = getValueBounds();
+
+		labelTemplateString = (config.scaleShowLabels)? config.scaleLabel : null;
+
+		//Check and set the scale
+		if (!config.scaleOverride){
+
+			calculatedScale = calculateScale(scaleHeight,valueBounds.maxSteps,valueBounds.minSteps,valueBounds.maxValue,valueBounds.minValue,labelTemplateString);
+		}
+		else {
+			calculatedScale = {
+				steps : config.scaleSteps,
+				stepValue : config.scaleStepWidth,
+				graphMin : config.scaleStartValue,
+				labels : []
+			}
+			populateLabels(labelTemplateString, calculatedScale.labels,calculatedScale.steps,config.scaleStartValue,config.scaleStepWidth);
+		}
+
+		scaleHop = maxSize/(calculatedScale.steps);
+
+		//Wrap in an animation loop wrapper
+		animationLoop(config,drawScale,drawAllSegments,ctx);
+
+		function calculateDrawingSizes(){
+			maxSize = (Min([width,height])/2);
+			//Remove whatever is larger - the font size or line width.
+
+			maxSize -= Max([config.scaleFontSize*0.5,config.scaleLineWidth*0.5]);
+
+			labelHeight = config.scaleFontSize*2;
+			//If we're drawing the backdrop - add the Y padding to the label height and remove from drawing region.
+			if (config.scaleShowLabelBackdrop){
+				labelHeight += (2 * config.scaleBackdropPaddingY);
+				maxSize -= config.scaleBackdropPaddingY*1.5;
+			}
+
+			scaleHeight = maxSize;
+			//If the label height is less than 5, set it to 5 so we don't have lines on top of each other.
+			labelHeight = Default(labelHeight,5);
+		}
+		function drawScale(){
+			for (var i=0; i<calculatedScale.steps; i++){
+				//If the line object is there
+				if (config.scaleShowLine){
+					ctx.beginPath();
+					ctx.arc(width/2, height/2, scaleHop * (i + 1), 0, (Math.PI * 2), true);
+					ctx.strokeStyle = config.scaleLineColor;
+					ctx.lineWidth = config.scaleLineWidth;
+					ctx.stroke();
+				}
+
+				if (config.scaleShowLabels){
+					ctx.textAlign = "center";
+					ctx.font = config.scaleFontStyle + " " + config.scaleFontSize + "px " + config.scaleFontFamily;
+					var label =  calculatedScale.labels[i];
+					//If the backdrop object is within the font object
+					if (config.scaleShowLabelBackdrop){
+						var textWidth = ctx.measureText(label).width;
+						ctx.fillStyle = config.scaleBackdropColor;
+						ctx.beginPath();
+						ctx.rect(
+							Math.round(width/2 - textWidth/2 - config.scaleBackdropPaddingX), //X
+							Math.round(height/2 - (scaleHop * (i + 1)) - config.scaleFontSize*0.5 - config.scaleBackdropPaddingY),//Y
+							Math.round(textWidth + (config.scaleBackdropPaddingX*2)), //Width
+							Math.round(config.scaleFontSize + (config.scaleBackdropPaddingY*2)) //Height
+						);
+						ctx.fill();
+					}
+					ctx.textBaseline = "middle";
+					ctx.fillStyle = config.scaleFontColor;
+					ctx.fillText(label,width/2,height/2 - (scaleHop * (i + 1)));
+				}
+			}
+		}
+		function drawAllSegments(animationDecimal){
+			var startAngle = -Math.PI/2,
+			angleStep = (Math.PI*2)/data.length,
+			scaleAnimation = 1,
+			rotateAnimation = 1;
+			if (config.animation) {
+				if (config.animateScale) {
+					scaleAnimation = animationDecimal;
+				}
+				if (config.animateRotate){
+					rotateAnimation = animationDecimal;
+				}
+			}
+
+			for (var i=0; i<data.length; i++){
+
+				ctx.beginPath();
+				ctx.arc(width/2,height/2,scaleAnimation * calculateOffset(data[i].value,calculatedScale,scaleHop),startAngle, startAngle + rotateAnimation*angleStep, false);
+				ctx.lineTo(width/2,height/2);
+				ctx.closePath();
+				ctx.fillStyle = data[i].color;
+				ctx.fill();
+
+				if(config.segmentShowStroke){
+					ctx.strokeStyle = config.segmentStrokeColor;
+					ctx.lineWidth = config.segmentStrokeWidth;
+					ctx.stroke();
+				}
+				startAngle += rotateAnimation*angleStep;
+			}
+		}
+		function getValueBounds() {
+			var upperValue = Number.MIN_VALUE;
+			var lowerValue = Number.MAX_VALUE;
+			for (var i=0; i<data.length; i++){
+				if (data[i].value > upperValue) {upperValue = data[i].value;}
+				if (data[i].value < lowerValue) {lowerValue = data[i].value;}
+			};
+
+			var maxSteps = Math.floor((scaleHeight / (labelHeight*0.66)));
+			var minSteps = Math.floor((scaleHeight / labelHeight*0.5));
+
+			return {
+				maxValue : upperValue,
+				minValue : lowerValue,
+				maxSteps : maxSteps,
+				minSteps : minSteps
+			};
+
+
+		}
+	}
+
+	var Radar = function (data,config,ctx) {
+		var maxSize, scaleHop, calculatedScale, labelHeight, scaleHeight, valueBounds, labelTemplateString;
+
+		//If no labels are defined set to an empty array, so referencing length for looping doesn't blow up.
+		if (!data.labels) data.labels = [];
+
+		calculateDrawingSizes();
+
+		var valueBounds = getValueBounds();
+
+		labelTemplateString = (config.scaleShowLabels)? config.scaleLabel : null;
+
+		//Check and set the scale
+		if (!config.scaleOverride){
+
+			calculatedScale = calculateScale(scaleHeight,valueBounds.maxSteps,valueBounds.minSteps,valueBounds.maxValue,valueBounds.minValue,labelTemplateString);
+		}
+		else {
+			calculatedScale = {
+				steps : config.scaleSteps,
+				stepValue : config.scaleStepWidth,
+				graphMin : config.scaleStartValue,
+				labels : []
+			}
+			populateLabels(labelTemplateString, calculatedScale.labels,calculatedScale.steps,config.scaleStartValue,config.scaleStepWidth);
+		}
+
+		scaleHop = maxSize/(calculatedScale.steps);
+
+		animationLoop(config,drawScale,drawAllDataPoints,ctx);
+
+		//Radar specific functions.
+		function drawAllDataPoints(animationDecimal){
+			var rotationDegree = (2*Math.PI)/data.datasets[0].data.length;
+
+			ctx.save();
+			//translate to the centre of the canvas.
+			ctx.translate(width/2,height/2);
+
+			// strokeWidth never changes during the loop so we cache it beforehand
+			var strokeWidth = config.datasetStroke && config.datasetStrokeWidth;
+
+			//We accept multiple data sets for radar charts, so show loop through each set
+			for (var i=0; i<data.datasets.length; i++){
+				ctx.beginPath();
+
+				ctx.moveTo(0,animationDecimal*(-1*calculateOffset(data.datasets[i].data[0],calculatedScale,scaleHop)));
+				for (var j=1; j<data.datasets[i].data.length; j++){
+					ctx.rotate(rotationDegree);
+					ctx.lineTo(0,animationDecimal*(-1*calculateOffset(data.datasets[i].data[j],calculatedScale,scaleHop)));
+
+				}
+				ctx.closePath();
+				ctx.fillStyle = data.datasets[i].fillColor;
+				ctx.strokeStyle = data.datasets[i].strokeColor;
+				ctx.lineWidth = strokeWidth;
+				ctx.fill();
+				ctx.stroke();
+				if (config.pointDot){
+					ctx.fillStyle = data.datasets[i].pointColor;
+					ctx.strokeStyle = data.datasets[i].pointStrokeColor;
+					ctx.lineWidth = config.pointDotStrokeWidth;
+					for (var k=0; k<data.datasets[i].data.length; k++){
+						ctx.rotate(rotationDegree);
+						ctx.beginPath();
+						ctx.arc(0,animationDecimal*(-1*calculateOffset(data.datasets[i].data[k],calculatedScale,scaleHop)),config.pointDotRadius,2*Math.PI,false);
+						ctx.fill();
+						ctx.stroke();
+					}
+
+				}
+				ctx.rotate(rotationDegree);
+
+			}
+			ctx.restore();
+
+
+		}
+		function drawScale(){
+			var rotationDegree = (2*Math.PI)/data.datasets[0].data.length;
+			ctx.save();
+		    ctx.translate(width / 2, height / 2);
+			if (config.angleShowLineOut){
+				ctx.strokeStyle = config.angleLineColor;
+				ctx.lineWidth = config.angleLineWidth;
+				for (var h=0; h<data.datasets[0].data.length; h++){		
+					ctx.rotate(rotationDegree);
+					ctx.beginPath();
+					ctx.moveTo(0,0);
+					ctx.lineTo(0,-maxSize);
+					ctx.stroke();
+				}
+			}
+
+			for (var i=0; i<calculatedScale.steps; i++){
+				ctx.beginPath();
+
+				if(config.scaleShowLine){
+					ctx.strokeStyle = config.scaleLineColor;
+					ctx.lineWidth = config.scaleLineWidth;
+					ctx.moveTo(0,-scaleHop * (i+1));
+					for (var j=0; j<data.datasets[0].data.length; j++){
+						ctx.rotate(rotationDegree);
+						ctx.lineTo(0,-scaleHop * (i+1));
+					}
+					ctx.closePath();
+					ctx.stroke();			
+				}
+				if (config.scaleShowLabels){
+					ctx.textAlign = 'center';
+					ctx.font = config.scaleFontStyle + " " + config.scaleFontSize+"px " + config.scaleFontFamily;
+					ctx.textBaseline = "middle";
+
+					if (config.scaleShowLabelBackdrop){
+						var textWidth = ctx.measureText(calculatedScale.labels[i]).width;
+						ctx.fillStyle = config.scaleBackdropColor;
+						ctx.beginPath();
+						ctx.rect(
+							Math.round(- textWidth/2 - config.scaleBackdropPaddingX),     //X
+							Math.round((-scaleHop * (i + 1)) - config.scaleFontSize*0.5 - config.scaleBackdropPaddingY),//Y
+							Math.round(textWidth + (config.scaleBackdropPaddingX*2)), //Width
+							Math.round(config.scaleFontSize + (config.scaleBackdropPaddingY*2)) //Height
+						);
+						ctx.fill();
+					}
+					ctx.fillStyle = config.scaleFontColor;
+					ctx.fillText(calculatedScale.labels[i],0,-scaleHop*(i+1));
+				}
+
+			}
+			for (var k=0; k<data.labels.length; k++){
+			ctx.font = config.pointLabelFontStyle + " " + config.pointLabelFontSize+"px " + config.pointLabelFontFamily;
+			ctx.fillStyle = config.pointLabelFontColor;
+				var opposite = Math.sin(rotationDegree*k) * (maxSize + config.pointLabelFontSize);
+				var adjacent = Math.cos(rotationDegree*k) * (maxSize + config.pointLabelFontSize);
+
+				if(rotationDegree*k == Math.PI || rotationDegree*k == 0){
+					ctx.textAlign = "center";
+				}
+				else if(rotationDegree*k > Math.PI){
+					ctx.textAlign = "right";
+				}
+				else{
+					ctx.textAlign = "left";
+				}
+
+				ctx.textBaseline = "middle";
+
+				ctx.fillText(data.labels[k],opposite,-adjacent);
+
+			}
+			ctx.restore();
+		};
+		function calculateDrawingSizes(){
+			maxSize = (Min([width,height])/2);
+
+			labelHeight = config.scaleFontSize*2;
+
+			var labelLength = 0;
+			for (var i=0; i<data.labels.length; i++){
+				ctx.font = config.pointLabelFontStyle + " " + config.pointLabelFontSize+"px " + config.pointLabelFontFamily;
+				var textMeasurement = ctx.measureText(data.labels[i]).width;
+				if(textMeasurement>labelLength) labelLength = textMeasurement;
+			}
+
+			//Figure out whats the largest - the height of the text or the width of what's there, and minus it from the maximum usable size.
+			maxSize -= Max([labelLength,((config.pointLabelFontSize/2)*1.5)]);
+			maxSize -= config.pointLabelFontSize;
+			maxSize = CapValue(maxSize, null, 0);
+			scaleHeight = maxSize;
+			//If the label height is less than 5, set it to 5 so we don't have lines on top of each other.
+			labelHeight = Default(labelHeight,5);
+		};
+		function getValueBounds() {
+			var upperValue = Number.MIN_VALUE;
+			var lowerValue = Number.MAX_VALUE;
+
+			for (var i=0; i<data.datasets.length; i++){
+				for (var j=0; j<data.datasets[i].data.length; j++){
+					if (data.datasets[i].data[j] > upperValue){upperValue = data.datasets[i].data[j]}
+					if (data.datasets[i].data[j] < lowerValue){lowerValue = data.datasets[i].data[j]}
+				}
+			}
+
+			var maxSteps = Math.floor((scaleHeight / (labelHeight*0.66)));
+			var minSteps = Math.floor((scaleHeight / labelHeight*0.5));
+
+			return {
+				maxValue : upperValue,
+				minValue : lowerValue,
+				maxSteps : maxSteps,
+				minSteps : minSteps
+			};
+
+
+		}
+	}
+
+	var Pie = function(data,config,ctx){
+		var segmentTotal = 0;
+
+		//In case we have a canvas that is not a square. Minus 5 pixels as padding round the edge.
+		var pieRadius = Min([height/2,width/2]) - 5;
+
+		for (var i=0; i<data.length; i++){
+			segmentTotal += data[i].value;
+		}
+
+
+		animationLoop(config,null,drawPieSegments,ctx);
+
+		function drawPieSegments (animationDecimal){
+			var cumulativeAngle = -Math.PI/2,
+			scaleAnimation = 1,
+			rotateAnimation = 1;
+			if (config.animation) {
+				if (config.animateScale) {
+					scaleAnimation = animationDecimal;
+				}
+				if (config.animateRotate){
+					rotateAnimation = animationDecimal;
+				}
+			}
+			for (var i=0; i<data.length; i++){
+				var segmentAngle = rotateAnimation * ((data[i].value/segmentTotal) * (Math.PI*2));
+				ctx.beginPath();
+				ctx.arc(width/2,height/2,scaleAnimation * pieRadius,cumulativeAngle,cumulativeAngle + segmentAngle);
+				ctx.lineTo(width/2,height/2);
+				ctx.closePath();
+				ctx.fillStyle = data[i].color;
+				ctx.fill();
+
+				if(config.segmentShowStroke){
+					ctx.lineWidth = config.segmentStrokeWidth;
+					ctx.strokeStyle = config.segmentStrokeColor;
+					ctx.stroke();
+				}
+				cumulativeAngle += segmentAngle;
+			}
+		}
+	}
+
+	var Doughnut = function(data,config,ctx){
+		var segmentTotal = 0;
+
+		//In case we have a canvas that is not a square. Minus 5 pixels as padding round the edge.
+		var doughnutRadius = Min([height/2,width/2]) - 5;
+
+		var cutoutRadius = doughnutRadius * (config.percentageInnerCutout/100);
+
+		for (var i=0; i<data.length; i++){
+			segmentTotal += data[i].value;
+		}
+
+
+		animationLoop(config,null,drawPieSegments,ctx);
+
+
+		function drawPieSegments (animationDecimal){
+			var cumulativeAngle = -Math.PI/2,
+			scaleAnimation = 1,
+			rotateAnimation = 1;
+			if (config.animation) {
+				if (config.animateScale) {
+					scaleAnimation = animationDecimal;
+				}
+				if (config.animateRotate){
+					rotateAnimation = animationDecimal;
+				}
+			}
+			for (var i=0; i<data.length; i++){
+				var segmentAngle = rotateAnimation * ((data[i].value/segmentTotal) * (Math.PI*2));
+				ctx.beginPath();
+				ctx.arc(width/2,height/2,scaleAnimation * doughnutRadius,cumulativeAngle,cumulativeAngle + segmentAngle,false);
+				ctx.arc(width/2,height/2,scaleAnimation * cutoutRadius,cumulativeAngle + segmentAngle,cumulativeAngle,true);
+				ctx.closePath();
+				ctx.fillStyle = data[i].color;
+				ctx.fill();
+
+				if(config.segmentShowStroke){
+					ctx.lineWidth = config.segmentStrokeWidth;
+					ctx.strokeStyle = config.segmentStrokeColor;
+					ctx.stroke();
+				}
+				cumulativeAngle += segmentAngle;
+			}
+		}
+	}
+	
+	var Line = function(data,config,ctx) {
+		var maxSize, scaleHop, calculatedScale, labelHeight, scaleHeight, valueBounds, labelTemplateString, valueHop,widestXLabel, xAxisLength, xAspectRatio, yAxisPosX,xAxisPosY, rotateLabels = 0;
+		
+		calculateDrawingSizes();
+
+		valueBounds = getValueBounds();
+		//Check and set the scale
+		labelTemplateString = (config.scaleShowLabels)? config.scaleLabel : "";
+		if (!config.scaleOverride){
+
+			calculatedScale = calculateScale(scaleHeight,valueBounds.maxSteps,valueBounds.minSteps,valueBounds.maxValue,valueBounds.minValue,labelTemplateString);
+		} else {
+			calculatedScale = {
+				steps : config.scaleSteps,
+				stepValue : config.scaleStepWidth,
+				graphMin : config.scaleStartValue,
+				labels : []
+			}
+			populateLabels(labelTemplateString, calculatedScale.labels,calculatedScale.steps,config.scaleStartValue,config.scaleStepWidth, config.scaleShowStartValue);
+		}
+
+		scaleHop = Math.floor(scaleHeight/calculatedScale.steps);
+		calculateXAxisSize();
+
+		if (config.chartType == "Line"){
+			animationLoop(config,drawScale,drawLines,ctx);
+		} else {
+			animationLoop(config,drawScale,drawPoints,ctx);
+		}
+
+		function drawLines(animPc){
+			var strokeWidth = config.datasetStroke && config.datasetStrokeWidth;
+			for (var i=0; i<data.datasets.length; i++){
+				
+				ctx.strokeStyle = data.datasets[i].strokeColor;
+				ctx.lineWidth = strokeWidth;
+				ctx.beginPath();
+				ctx.moveTo(yAxisPosX, xAxisPosY - animPc*(calculateOffset(data.datasets[i].data[0],calculatedScale,scaleHop)))
+
+				for (var j=1; j<data.datasets[i].data.length; j++){
+					if (config.bezierCurve){
+                        ctx.bezierCurveTo(getXPos(j-0.5),getYPos(i,j-1),getXPos(j-0.5),getYPos(i,j),getXPos(j),getYPos(i,j));
+					}
+					else{
+                        ctx.lineTo(getXPos(j),getYPos(i,j));
+					}
+				}
+				ctx.stroke();
+				if (config.datasetFill){
+					ctx.lineTo(yAxisPosX + (valueHop*(data.datasets[i].data.length-1)),xAxisPosY);
+					ctx.lineTo(yAxisPosX,xAxisPosY);
+					ctx.closePath();
+					ctx.fillStyle = data.datasets[i].fillColor;
+					ctx.fill();
+				}
+				else{
+					ctx.closePath();
+				}
+				if(config.pointDot){
+					for (var k=0; k<data.datasets[i].data.length; k++){
+						ctx.fillStyle = data.datasets[i].pointColor;
+						ctx.strokeStyle = data.datasets[i].pointStrokeColor;
+						ctx.lineWidth = config.pointDotStrokeWidth;
+						ctx.beginPath();
+						var xPos = yAxisPosX + (valueHop *k);
+						var yPos = xAxisPosY - animPc*(calculateOffset(data.datasets[i].data[k],calculatedScale,scaleHop));
+						ctx.arc( xPos, yPos, config.pointDotRadius, 0 ,Math.PI*2, true );
+						ctx.fill();
+						ctx.stroke();
+						//the if block below was added by CY to draw error bars in line charts
+						if (data.datasets[i].error){
+							ctx.lineWidth = config.errorStrokeWidth;
+							ctx.strokeStyle = config.errorStrokeColor;
+							ctx.beginPath();
+							ctx.moveTo(xPos,yPos);
+							var yTopError = xAxisPosY - animPc*(calculateOffset(data.datasets[i].data[k] + data.datasets[i].error[k],calculatedScale,scaleHop));
+							var yBottomError = xAxisPosY - animPc*(calculateOffset(data.datasets[i].data[k] - data.datasets[i].error[k],calculatedScale,scaleHop));
+							ctx.lineTo(xPos, yTopError)
+							ctx.stroke();
+							ctx.beginPath();
+							var cap = (config.errorCapWidth * config.pointDotRadius);
+							ctx.moveTo(xPos - cap/2, yTopError);
+							ctx.lineTo(xPos + cap/2, yTopError);
+							ctx.stroke();
+							ctx.beginPath();
+							ctx.moveTo(xPos, yPos);
+							ctx.lineTo(xPos, yBottomError);
+							ctx.stroke();
+							ctx.beginPath();
+							ctx.moveTo(xPos - cap/2, yBottomError);
+							ctx.lineTo(xPos + cap/2, yBottomError);
+							ctx.stroke();
+						}
+					}
+				}
+			}
+
+			function getYPos(dataSet,iteration){
+				return xAxisPosY - animPc*(calculateOffset(data.datasets[dataSet].data[iteration],calculatedScale,scaleHop));
+			}			
+
+			function yPos(dataSet,iteration){
+				return xAxisPosY - animPc*(calculateOffset(data.datasets[dataSet].data[iteration],calculatedScale,scaleHop));
+			}
+			
+            function getXPos(iteration){
+				return yAxisPosX + (valueHop * iteration);
+			}
+		}
+		
+		//this function was added to draw scatter plots. The xPosition and 
+		//yPosition functions were modified slighly to support this.
+		function drawPoints(animPc) {
+			for (var i=0; i<data.datasets.length; i++){
+				//xAspectRatio = , yAxisPosX, config.xScaleStartValue
+				for (var k=0; k<data.datasets[i].data.length; k++){
+					var xPos = xPosition(i, k);
+					var yPos = yPosition(i, k);
+					if(config.pointDot){
+						ctx.fillStyle = data.datasets[i].pointColor;
+						ctx.strokeStyle = data.datasets[i].pointStrokeColor;
+						ctx.lineWidth = config.pointDotStrokeWidth;
+						ctx.beginPath();
+						ctx.arc(xPos, yPos,config.pointDotRadius,0,Math.PI*2,true);
+						ctx.fill();
+						ctx.stroke();
+					}
+					//draw the error bars
+					if (data.datasets[i].error){
+						ctx.lineWidth = config.errorStrokeWidth;
+						ctx.strokeStyle = config.errorStrokeColor;
+						ctx.beginPath();
+						ctx.moveTo(xPos, yPos);
+						var yTopError = xAxisPosY - animPc*(calculateOffset(data.datasets[i].data[k] + data.datasets[i].error[k],calculatedScale,scaleHop));
+						var yBottomError = xAxisPosY - animPc*(calculateOffset(data.datasets[i].data[k] - data.datasets[i].error[k],calculatedScale,scaleHop));
+						ctx.lineTo(xPos, yTopError)
+						ctx.stroke();
+						ctx.beginPath();
+						var cap = (config.errorCapWidth * config.pointDotRadius);
+						ctx.moveTo(xPos - cap/2, yTopError);
+						ctx.lineTo(xPos + cap/2, yTopError);
+						ctx.stroke();
+						ctx.beginPath();
+						ctx.moveTo(xPos, yPos);
+						ctx.lineTo(xPos, yBottomError);
+						ctx.stroke();
+						ctx.beginPath();
+						ctx.moveTo(xPos - cap/2, yBottomError);
+						ctx.lineTo(xPos + cap/2, yBottomError);
+						ctx.stroke();
+					}
+					if (config.connectingLine) {
+						ctx.strokeStyle = data.datasets[i].strokeColor;
+						ctx.lineWidth = config.datasetStrokeWidth;
+						ctx.beginPath();
+						ctx.moveTo(xPos, yPos);
+						var newXPos = xPosition(i, k + 1);
+						var newYPos = yPosition(i, k + 1);
+						if (!config.bezierCurve && k + 1 < data.datasets[i].data.length) {
+							ctx.lineTo(newXPos, newYPos);
+							ctx.stroke();
+						} else if (k + 1 < data.datasets[i].data.length) {
+							var halfX = (xPos + newXPos) / 2;
+							ctx.bezierCurveTo(halfX, yPos, halfX, newYPos, newXPos, newYPos);
+							ctx.stroke();
+						}
+					}	
+				}
+				if (data.datasets[i].trendline) {
+					//determine the equation of the trendline from a least-squares method
+					var sumX = 0;
+					var sumY = 0;
+					var sumXY = 0;
+					var sumXX = 0; 
+					var sumYY = 0;
+					for (var z = 0; z < data.datasets[i].data.length; z++) {
+						var X = data.datasets[i].xVal[z];
+						var Y = data.datasets[i].data[z];
+						sumX = sumX + X;
+						sumY = sumY + Y;
+						sumXY = sumXY + X * Y;
+						sumXX = sumXX + X * X;
+						sumYY = sumYY + Y * Y;
+					}
+					var m = (z * sumXY - sumX * sumY) / (z * sumXX - sumX * sumX);
+					var b = (sumY - m * sumX) / z;
+					/*R-sqaured value. Not currently used for anything but might be valuable
+					if equation display function is added in future.
+					var r2 = Math.pow((z * sumXY - sumX * sumY)/Math.sqrt((z * sumXX - sumX * sumX) * (z * sumYY - sumY * sumY)), 2)*/
+					
+					//determine the starting and ending x points;
+					if (typeof data.datasets[i].trendlineStart == 'undefined') {
+						var startX = data.datasets[i].xVal[0];
+					} else {
+						var startX = data.datasets[i].trendlineStart;
+					}
+					if (typeof data.datasets[i].trendlineEnd == 'undefined') {
+						var endX = data.datasets[i].xVal[data.datasets[i].xVal.length - 1];
+					} else {
+						var endX = data.datasets[i].trendlineEnd;
+					}
+					var startY = m * startX + b;
+					var endY = m * endX + b;
+					
+					//draw the trendline
+					ctx.strokeStyle = data.datasets[i].strokeColor;
+					ctx.lineWidth = config.datasetStrokeWidth;
+					ctx.beginPath();
+					ctx.moveTo(yAxisPosX + startX / xAspectRatio, xAxisPosY - animPc*(calculateOffset(startY,calculatedScale,scaleHop)));
+					ctx.lineTo(yAxisPosX + endX / xAspectRatio, xAxisPosY - animPc*(calculateOffset(endY,calculatedScale,scaleHop)));
+					ctx.stroke();
+				}
+			}
+			
+			function yPosition(dataSet,iteration){
+				return xAxisPosY - animPc*(calculateOffset(data.datasets[dataSet].data[iteration],calculatedScale,scaleHop));
+			}
+			//modified by CY. The key is xAspectRatio, which is the ratio between 
+			//the data spread represented by the x-axis and the actual size of the 
+			//x-axis in pixels.
+			function xPosition(dataSet, iteration){
+				return yAxisPosX + data.datasets[dataSet].xVal[iteration] / xAspectRatio;
+			}
+		}
+		
+		function drawScale(){
+			//X axis line
+			ctx.lineWidth = config.scaleLineWidth;
+			ctx.strokeStyle = config.scaleLineColor;
+			ctx.beginPath();
+			ctx.moveTo(width-widestXLabel/2+5,xAxisPosY);
+			ctx.lineTo(width-(widestXLabel/2)-xAxisLength-5,xAxisPosY);
+			ctx.stroke();
+
+
+			if (rotateLabels > 0){
+				ctx.save();
+				ctx.textAlign = "right";
+			}
+			else{
+				ctx.textAlign = "center";
+			}
+			ctx.fillStyle = config.labelsFontColor;
+			for (var i=0; i<data.labels.length; i++){
+				ctx.save();
+				if (rotateLabels > 0){
+					ctx.translate(yAxisPosX + i*valueHop,xAxisPosY + config.scaleFontSize);
+					ctx.rotate(-(rotateLabels * (Math.PI/180)));
+					ctx.fillText(data.labels[i], 0,0);
+					ctx.restore();
+				}
+
+				else{
+					ctx.fillText(data.labels[i], yAxisPosX + i*valueHop,xAxisPosY + config.scaleFontSize+3);
+				}
+
+				ctx.beginPath();
+				ctx.moveTo(yAxisPosX + i * valueHop, xAxisPosY+3);
+
+				//Check i isnt 0, so we dont go over the Y axis twice.
+				if((config.scaleShowGridLines == 'vertical' || config.scaleShowGridLines === true) && i > 0){
+					ctx.lineWidth = config.scaleGridLineWidth;
+					ctx.strokeStyle = config.scaleGridLineColor;
+					ctx.lineTo(yAxisPosX + i * valueHop, 5);
+				}
+				else{
+					ctx.lineTo(yAxisPosX + i * valueHop, xAxisPosY+3);
+				}
+				ctx.stroke();
+			}
+
+			//Y axis
+			ctx.lineWidth = config.scaleLineWidth;
+			ctx.strokeStyle = config.scaleLineColor;
+			ctx.fillStyle = config.scaleFontColor;
+			ctx.beginPath();
+			ctx.moveTo(yAxisPosX,xAxisPosY+5);
+			ctx.lineTo(yAxisPosX,5);
+			ctx.stroke();
+
+			ctx.textAlign = config.scaleLabelPosition == "right" ? 'left' : 'right';
+			ctx.textBaseline = "middle";
+
+			var k = calculatedScale.steps;
+			if (config.scaleShowStartValue) {
+				++k;
+			}
+			for (var j = +!config.scaleShowStartValue; j < k; j++){
+				ctx.beginPath();
+				ctx.moveTo(yAxisPosX - 3, xAxisPosY - (j * scaleHop));
+				if (config.scaleShowGridLines == 'horizontal' || config.scaleShowGridLines === true){
+					ctx.lineWidth = config.scaleGridLineWidth;
+					ctx.strokeStyle = config.scaleGridLineColor;
+					ctx.lineTo(yAxisPosX + xAxisLength + 5,xAxisPosY - ((j+1) * scaleHop));
+				}
+				else{
+					ctx.lineTo(yAxisPosX-0.5,xAxisPosY - ((j+1) * scaleHop));
+				}
+
+				ctx.stroke();
+
+				if (config.scaleShowLabels) {
+					ctx.fillText(
+						calculatedScale.labels[j],
+						yAxisPosX - 8 + (config.scaleLabelPosition == 'right' ? xAxisLength + 20 : 0),
+						xAxisPosY - (j * scaleHop)
+					);
+				}
+			}
+
+
+		}
+		function calculateXAxisSize(){
+			var longestText = 1;
+			//if we are showing the labels
+			if (config.scaleShowLabels){
+				ctx.font = config.scaleFontStyle + " " + config.scaleFontSize+"px " + config.scaleFontFamily;
+				for (var i=0; i<calculatedScale.labels.length; i++){
+					var measuredText = ctx.measureText(calculatedScale.labels[i]).width;
+					longestText = (measuredText > longestText)? measuredText : longestText;
+				}
+				//Add a little extra padding from the y axis
+				longestText +=10;
+			}
+			widestYLabel = longestText;
+			xAxisLength = width - longestText - widestXLabel;
+			//took out Math.floor - no reason valueHop can't be a decimal
+			valueHop = xAxisLength/(data.labels.length-1);
+			//added by CY
+			var xValueSpread = (config.xScaleSteps - 1) * config.xScaleStepWidth;
+			xAspectRatio = xValueSpread / xAxisLength;
+			yAxisPosX = width-widestXLabel/2-xAxisLength;
+			xAxisPosY = scaleHeight + config.scaleFontSize/2;
+		}		
+
+		function calculateDrawingSizes(){
+			maxSize = height;
+
+			//Need to check the X axis first - measure the length of each text metric, and figure out if we need to rotate by 45 degrees.
+			ctx.font = config.scaleFontStyle + " " + config.scaleFontSize+"px " + config.scaleFontFamily;
+			widestXLabel = 1;
+			for (var i=0; i<data.labels.length; i++){
+				var textLength = ctx.measureText(data.labels[i]).width;
+				//If the text length is longer - make that equal to longest text!
+				widestXLabel = (textLength > widestXLabel)? textLength : widestXLabel;
+			}
+			if (width/data.labels.length < widestXLabel){
+				rotateLabels = 45;
+				if (width/data.labels.length < Math.cos(rotateLabels) * widestXLabel){
+					rotateLabels = 90;
+					maxSize -= widestXLabel;
+				}
+				else{
+					maxSize -= Math.sin(rotateLabels) * widestXLabel;
+				}
+			}
+			else{
+				maxSize -= config.scaleFontSize;
+			}
+
+			//Add a little padding between the x line and the text
+			maxSize -= 5;
+
+
+			labelHeight = config.scaleFontSize;
+
+			maxSize -= labelHeight;
+			//Set 5 pixels greater than the font size to allow for a little padding from the X axis.
+
+			scaleHeight = maxSize;
+
+			//Then get the area above we can safely draw on.
+
+		}
+		function getValueBounds() {
+			var upperValue = Number.MIN_VALUE;
+			var lowerValue = Number.MAX_VALUE;
+			for (var i=0; i<data.datasets.length; i++){
+				for (var j=0; j<data.datasets[i].data.length; j++){
+					if ( data.datasets[i].data[j] > upperValue) { upperValue = data.datasets[i].data[j] };
+					if ( data.datasets[i].data[j] < lowerValue) { lowerValue = data.datasets[i].data[j] };
+				}
+			};
+
+			var maxSteps = Math.floor((scaleHeight / (labelHeight*0.66)));
+			var minSteps = Math.floor((scaleHeight / labelHeight*0.5));
+
+			return {
+				maxValue : upperValue,
+				minValue : lowerValue,
+				maxSteps : maxSteps,
+				minSteps : minSteps
+			};
+
+
+		}
+
+
+	}
+
+	var Bar = function(data,config,ctx){
+		var maxSize, scaleHop, calculatedScale, labelHeight, scaleHeight, valueBounds, labelTemplateString, valueHop,widestXLabel, xAxisLength,yAxisPosX,xAxisPosY,barWidth, rotateLabels = 0;
+
+		calculateDrawingSizes();
+
+		valueBounds = getValueBounds();
+		//Check and set the scale
+		labelTemplateString = (config.scaleShowLabels)? config.scaleLabel : "";
+		if (!config.scaleOverride){
+
+			calculatedScale = calculateScale(scaleHeight,valueBounds.maxSteps,valueBounds.minSteps,valueBounds.maxValue,valueBounds.minValue,labelTemplateString);
+		}
+		else {
+			calculatedScale = {
+				steps : config.scaleSteps,
+				stepValue : config.scaleStepWidth,
+				graphMin : config.scaleStartValue,
+				labels : []
+			}
+			populateLabels(labelTemplateString, calculatedScale.labels,calculatedScale.steps,config.scaleStartValue,config.scaleStepWidth);
+		}
+
+		scaleHop = Math.floor(scaleHeight/calculatedScale.steps);
+		calculateXAxisSize();
+
+		if (config.chartType == "Box") {
+			animationLoop(config,drawScale,drawBoxes,ctx);
+		} else {
+			animationLoop(config,drawScale,drawBars,ctx);
+		}
+    
+		// This function returns the fill color found in an object of variable type
+		// If functionOrObject is a string, returns the string's value
+		// If functionOrObject is an array, uses nth element of array and recurses
+		//   (where n is index modulo length)
+		// If functionOrObject is a function, runs the function and returns its
+		//   return value. This enables bars to change color as the animation
+		//   continues.
+		var getFillColor = (function(functionOrObject, index, dataValue, animationPercent) {
+			if (typeof functionOrObject == "string") {
+				return functionOrObject;
+			} else if (typeof functionOrObject == "function") {
+				return functionOrObject(dataValue, animationPercent);
+			} else if (Object.prototype.toString.call( functionOrObject ) === '[object Array]') {
+				// cycle through it
+				// recurse in case each element is a function, or subarray?
+				return getFillColor(functionOrObject[index%functionOrObject.length], index, dataValue, animationPercent);
+			} else {
+				if (this.console) {
+					console.log("could not read fill color function, returning #000000");
+				}
+				return "#000000";
+			}
+		});
+		
+		//arg animPc is the fraction-complete of the animation - ie
+		//it has a value of 1 for the final chart
+
+		function drawBars(animPc){
+			ctx.lineWidth = config.barStrokeWidth;
+			//i is looping through the datasets ...
+			for (var i=0; i<data.datasets.length; i++){
+					ctx.strokeStyle = data.datasets[i].strokeColor;
+				//... wheras j is looping through the individual data points
+				for (var j=0; j<data.datasets[i].data.length; j++){
+					ctx.save();
+					
+					ctx.fillStyle = getFillColor(data.datasets[i].fillColor, j, data.datasets[i].data[j], animPc);
+					
+					var barOffset = yAxisPosX + config.barValueSpacing + valueHop*j + barWidth*i + config.barDatasetSpacing*i + config.barStrokeWidth*i;
+					var barTop = xAxisPosY - animPc * calculateOffset(data.datasets[i].data[j], calculatedScale, scaleHop) + (config.barStrokeWidth / 2);
+					ctx.beginPath();
+					//bottom left corner
+					ctx.moveTo(barOffset, xAxisPosY);
+					//top left corner
+					ctx.lineTo(barOffset, barTop);
+					//top right corner
+					ctx.lineTo(barOffset + barWidth, barTop);
+					//bottom right corner
+					ctx.lineTo(barOffset + barWidth, xAxisPosY);
+					if(config.barShowStroke){
+						ctx.stroke();
+					}
+					ctx.closePath();
+					ctx.fill();
+					ctx.restore();
+					if (config.barShowLabels) {
+						ctx.save();
+						ctx.textAlign = "center";
+						ctx.font = config.barLabelFontStyle + " " + config.barLabelFontSize + "px " + config.barLabelFontFamily;
+						var label = config.barLabelFormatter(data.datasets[i].data[j]);
+						ctx.textBaseline = "bottom";
+						ctx.fillStyle = config.barLabelFontColor;
+						ctx.fillText(label, barOffset + barWidth / 2, barTop - 4);
+						ctx.restore();
+					}
+					
+					//check the previous pull request for any other changes?
+					//update documentation
+					if ( data.datasets[i].error && config.errorDir != "none"){
+						//draw upper error bar
+						if ( config.errorDir != "down") {		
+							ctx.strokeStyle = config.errorStrokeWidth;
+							ctx.beginPath();
+							ctx.moveTo(barOffset + barWidth/2, xAxisPosY - animPc*calculateOffset(data.datasets[i].data[j],calculatedScale,scaleHop)+(config.barStrokeWidth/2));
+							ctx.lineTo(barOffset + barWidth/2, xAxisPosY - animPc*calculateOffset(data.datasets[i].data[j] + data.datasets[i].error[j],calculatedScale,scaleHop)+(config.barStrokeWidth/2))
+							ctx.stroke();
+							ctx.beginPath();
+							var cap = (config.errorCapWidth * barWidth) || 1;
+							capOffset = (barWidth - cap)/2;
+							ctx.moveTo(barOffset + capOffset, xAxisPosY - animPc*calculateOffset(data.datasets[i].data[j] + data.datasets[i].error[j],calculatedScale,scaleHop)+(config.barStrokeWidth/2));
+							ctx.lineTo(barOffset + barWidth - capOffset, xAxisPosY - animPc*calculateOffset(data.datasets[i].data[j] + data.datasets[i].error[j],calculatedScale,scaleHop)+(config.barStrokeWidth/2));
+							ctx.stroke();
+						}
+						
+						//draw lower error bar
+						if (config.errorDir != "up") {						
+							ctx.beginPath();
+							ctx.moveTo(barOffset + barWidth/2, xAxisPosY - animPc*calculateOffset(data.datasets[i].data[j],calculatedScale,scaleHop)+(config.barStrokeWidth/2));
+							ctx.lineTo(barOffset + barWidth/2, xAxisPosY - animPc*calculateOffset(data.datasets[i].data[j] - data.datasets[i].error[j],calculatedScale,scaleHop)+(config.barStrokeWidth/2))
+							ctx.stroke();
+							ctx.beginPath();
+							var cap = (config.errorCapWidth * barWidth) || 1;
+							capOffset = (barWidth - cap)/2;
+							ctx.moveTo(barOffset + capOffset, xAxisPosY - animPc*calculateOffset(data.datasets[i].data[j] - data.datasets[i].error[j],calculatedScale,scaleHop)+(config.barStrokeWidth/2));
+							ctx.lineTo(barOffset + barWidth - capOffset, xAxisPosY - animPc*calculateOffset(data.datasets[i].data[j] - data.datasets[i].error[j],calculatedScale,scaleHop)+(config.barStrokeWidth/2));
+							ctx.stroke();					
+						}
+					}
+				}
+			}
+		}
+		
+		function drawBoxes(animPc) {
+			ctx.lineWidth = config.barStrokeWidth;
+			//i is looping through the datasets ...
+			for (var i=0; i<data.datasets.length; i++){
+				ctx.strokeStyle = data.datasets[i].strokeColor;
+				//... wheras j is looping through the individual data points
+				for (var j=0; j<data.datasets[i].data.length; j++){
+					ctx.fillStyle = getFillColor(data.datasets[i].fillColor, j, data.datasets[i].data[j], animPc);
+					
+					var barOffset = yAxisPosX + config.barValueSpacing + valueHop*j + barWidth*i + config.barDatasetSpacing*i + config.barStrokeWidth*i;
+					ctx.beginPath();
+					
+					// reusable values of grid features
+					var wis = (config.whiskerWidth * barWidth) || 1;
+					wisOffset = (barWidth - wis)/2;
+					var leftX   = barOffset;
+					var centerX = barOffset + barWidth/2;
+					var rightX  = barOffset + barWidth;
+					var whiskerMinX = barOffset + wisOffset;
+					var whiskerMaxX = barOffset + barWidth - wisOffset;
+					var getYForIndex = (function(index){ return xAxisPosY - animPc*calculateOffset(data.datasets[i].data[j][index],calculatedScale,scaleHop)+(config.barStrokeWidth/2); });
+					var minY    = getYForIndex(0);
+					var bottomY = getYForIndex(1);
+					var medianY = getYForIndex(2);
+					var topY    = getYForIndex(3);
+					var maxY    = getYForIndex(4);
+					
+					// box
+					ctx.moveTo(leftX, bottomY);
+					ctx.lineTo(leftX, topY);
+					ctx.lineTo(rightX, topY);
+					ctx.lineTo(rightX, bottomY);
+					ctx.closePath();
+					ctx.stroke();
+					if(config.datasetFill){
+						ctx.fill();
+					}
+					//draw the median line
+					ctx.beginPath();
+					ctx.moveTo(leftX, medianY);
+					ctx.lineTo(rightX, medianY);
+					ctx.stroke();
+					
+					if (config.showWhiskers) {
+						//draw the lower whisker
+						ctx.beginPath();
+						ctx.moveTo(centerX, minY);
+						ctx.lineTo(centerX, bottomY);
+						ctx.stroke();
+						ctx.beginPath();
+						ctx.moveTo(whiskerMinX, minY);
+						ctx.lineTo(whiskerMaxX, minY);
+						ctx.stroke();
+						//draw the upper whisker
+						ctx.beginPath();
+						ctx.moveTo(centerX, topY);
+						ctx.lineTo(centerX, maxY);
+						ctx.stroke();
+						ctx.beginPath();
+						ctx.moveTo(whiskerMinX, maxY);
+						ctx.lineTo(whiskerMaxX, maxY);
+						ctx.stroke();
+					}
+					
+					if (config.barShowLabels) {
+						ctx.save(); // we're going to be messing with font settings
+						
+						ctx.textAlign = "center";
+						ctx.font = config.barLabelFontStyle + " " + config.barLabelFontSize + "px " + config.barLabelFontFamily;
+						ctx.fillStyle = config.barLabelFontColor;
+						
+						var bottomLabelY = (config.showWhiskers ? minY : bottomY) + 2;
+						var topLabelY = (config.showWhiskers ? maxY : topY) - 2;
+						
+						ctx.textBaseline = "top";
+						var label = config.barLabelFormatter(data.datasets[i].data[j][(config.showWhiskers ? 0 : 1)]);
+						ctx.fillText(label, barOffset + barWidth / 2, bottomLabelY);
+						
+						ctx.textBaseline = "bottom";
+						label = config.barLabelFormatter(data.datasets[i].data[j][(config.showWhiskers ? 4 : 3)]);
+						ctx.fillText(label, barOffset + barWidth / 2, topLabelY);
+						
+						ctx.restore();
+					}
+					
+					// draw outlier dots & labels
+					if (data.datasets[i].outliers !== undefined &&
+							data.datasets[i].outliers[j] !== undefined) {
+						ctx.save();
+						ctx.strokeStyle = config.outlierDotStrokeColor;
+						
+						for (var k=0; k<data.datasets[i].outliers[j].length; k++) {
+							var outlier = data.datasets[i].outliers[j][k];
+							var outlierDotX = centerX;
+							var outlierDotY = xAxisPosY - animPc*calculateOffset(outlier,calculatedScale,scaleHop)+(config.barStrokeWidth/2);
+							ctx.beginPath();
+							ctx.arc(outlierDotX, outlierDotY, config.outlierDotRadius, 0, Math.PI*2);
+							ctx.stroke();
+							if (config.outlierDotStyle == "disc") {
+								ctx.fillStyle = config.outlierDotFillColor;
+								ctx.fill();
+							}
+							
+							if (config.outlierShowLabels) {
+								var outlierLabelX, outlierLabelY;
+								var outlierLabelDotGap = config.outlierDotRadius + config.outlierDotStrokeWidth + config.outlierLabelMargin;
+								switch(config.outlierLabelPlacement) {
+									case "right":
+										ctx.textAlign = "left";
+										ctx.textBaseline = "center";
+										outlierLabelX = outlierDotX + outlierLabelDotGap;
+										outlierLabelY = outlierDotY;
+										break;
+									case "left":
+										ctx.textAlign = "right";
+										ctx.textBaseline = "center";
+										outlierLabelX = outlierDotX - outlierLabelDotGap;
+										outlierLabelY = outlierDotY;
+										break;
+									case "top":
+										ctx.textAlign = "center";
+										ctx.textBaseline = "bottom";
+										outlierLabelX = outlierDotX;
+										outlierLabelY = outlierDotY - outlierLabelDotGap;
+										break;
+									case "bottom":
+										ctx.textAlign = "center";
+										ctx.textBaseline = "top";
+										outlierLabelX = outlierDotX;
+										outlierLabelY = outlierDotY + outlierLabelDotGap;
+										break;
+								}
+								ctx.font = config.outlierLabelFontStyle + " " + config.outlierLabelFontSize + "px" + config.outlierLabelFontFamily;
+								ctx.fillStyle = config.outlierLabelFontColor;
+								var label = config.outlierLabelFormatter(outlier);
+								ctx.fillText(label, outlierLabelX, outlierLabelY);
+							}
+						}
+						ctx.restore();
+					}
+				}
+			}
+		}
+		
+		function drawScale(){
+			//X axis line
+			ctx.lineWidth = config.scaleLineWidth;
+			ctx.strokeStyle = config.scaleLineColor;
+			ctx.beginPath();
+			ctx.moveTo(width-widestXLabel/2+5,xAxisPosY);
+			ctx.lineTo(width-(widestXLabel/2)-xAxisLength-5,xAxisPosY);
+			ctx.stroke();
+
+
+			if (rotateLabels > 0){
+				ctx.save();
+				ctx.textAlign = "right";
+			}
+			else{
+				ctx.textAlign = "center";
+			}
+			ctx.fillStyle = config.scaleFontColor;
+			for (var i=0; i<data.labels.length; i++){
+				ctx.save();
+				if (rotateLabels > 0){
+					ctx.translate(yAxisPosX + i*valueHop,xAxisPosY + config.scaleFontSize);
+					ctx.rotate(-(rotateLabels * (Math.PI/180)));
+					ctx.fillText(data.labels[i], 0,0);
+					ctx.restore();
+				}
+
+				else{
+					ctx.fillText(data.labels[i], yAxisPosX + i*valueHop + valueHop/2,xAxisPosY + config.scaleFontSize+3);
+				}
+
+				ctx.beginPath();
+				ctx.moveTo(yAxisPosX + (i+1) * valueHop, xAxisPosY+3);
+
+				//Check i isnt 0, so we dont go over the Y axis twice.
+					ctx.lineWidth = config.scaleGridLineWidth;
+					ctx.strokeStyle = config.scaleGridLineColor;
+					ctx.lineTo(yAxisPosX + (i+1) * valueHop, 5);
+				ctx.stroke();
+			}
+
+			//Y axis
+			ctx.lineWidth = config.scaleLineWidth;
+			ctx.strokeStyle = config.scaleLineColor;
+			ctx.beginPath();
+			ctx.moveTo(yAxisPosX,xAxisPosY+5);
+			ctx.lineTo(yAxisPosX,5);
+			ctx.stroke();
+
+			ctx.textAlign = "right";
+			ctx.textBaseline = "middle";
+			for (var j=0; j<calculatedScale.steps; j++){
+				ctx.beginPath();
+				ctx.moveTo(yAxisPosX-3,xAxisPosY - ((j+1) * scaleHop));
+				if (config.scaleShowGridLines){
+					ctx.lineWidth = config.scaleGridLineWidth;
+					ctx.strokeStyle = config.scaleGridLineColor;
+					ctx.lineTo(yAxisPosX + xAxisLength + 5,xAxisPosY - ((j+1) * scaleHop));
+				}
+				else{
+					ctx.lineTo(yAxisPosX-0.5,xAxisPosY - ((j+1) * scaleHop));
+				}
+
+				ctx.stroke();
+				if (config.scaleShowLabels){
+					ctx.fillText(calculatedScale.labels[j],yAxisPosX-8,xAxisPosY - ((j+1) * scaleHop));
+				}
+			}
+
+
+		}
+		function calculateXAxisSize(){
+			var longestText = 1;
+			//if we are showing the labels
+			if (config.scaleShowLabels){
+				ctx.font = config.scaleFontStyle + " " + config.scaleFontSize+"px " + config.scaleFontFamily;
+				for (var i=0; i<calculatedScale.labels.length; i++){
+					var measuredText = ctx.measureText(calculatedScale.labels[i]).width;
+					longestText = (measuredText > longestText)? measuredText : longestText;
+				}
+				//Add a little extra padding from the y axis
+				longestText +=10;
+			}
+			xAxisLength = width - longestText - widestXLabel;
+			valueHop = Math.floor(xAxisLength/(data.labels.length));
+			barWidth = (valueHop - config.scaleGridLineWidth*2 - (config.barValueSpacing*2) - (config.barDatasetSpacing*data.datasets.length-1) - ((config.barStrokeWidth/2)*data.datasets.length-1))/data.datasets.length;
+
+			yAxisPosX = width-widestXLabel/2-xAxisLength;
+			xAxisPosY = scaleHeight + config.scaleFontSize/2;
+		}
+		function calculateDrawingSizes(){
+			maxSize = height;
+
+			//Need to check the X axis first - measure the length of each text metric, and figure out if we need to rotate by 45 degrees.
+			ctx.font = config.scaleFontStyle + " " + config.scaleFontSize+"px " + config.scaleFontFamily;
+			widestXLabel = 1;
+			for (var i=0; i<data.labels.length; i++){
+				var textLength = ctx.measureText(data.labels[i]).width;
+				//If the text length is longer - make that equal to longest text!
+				widestXLabel = (textLength > widestXLabel)? textLength : widestXLabel;
+			}
+			if (width/data.labels.length < widestXLabel){
+				rotateLabels = 45;
+				if (width/data.labels.length < Math.cos(rotateLabels) * widestXLabel){
+					rotateLabels = 90;
+					maxSize -= widestXLabel;
+				}
+				else{
+					maxSize -= Math.sin(rotateLabels) * widestXLabel;
+				}
+			}
+			else{
+				maxSize -= config.scaleFontSize;
+			}
+
+			//Add a little padding between the x line and the text
+			maxSize -= 5;
+
+
+			labelHeight = config.scaleFontSize;
+
+			maxSize -= labelHeight;
+			//Set 5 pixels greater than the font size to allow for a little padding from the X axis.
+
+			scaleHeight = maxSize;
+
+			//Then get the area above we can safely draw on.
+		}
+		function getValueBounds() {
+			var upperValue = Number.MIN_VALUE;
+			var lowerValue = Number.MAX_VALUE;
+			for (var i=0; i<data.datasets.length; i++){
+				for (var j=0; j<data.datasets[i].data.length; j++){
+					if ( data.datasets[i].data[j] > upperValue) { upperValue = data.datasets[i].data[j] };
+					if ( data.datasets[i].data[j] < lowerValue) { lowerValue = data.datasets[i].data[j] };
+				}
+			};
+
+			var maxSteps = Math.floor((scaleHeight / (labelHeight*0.66)));
+			var minSteps = Math.floor((scaleHeight / labelHeight*0.5));
+
+			return {
+				maxValue : upperValue,
+				minValue : lowerValue,
+				maxSteps : maxSteps,
+				minSteps : minSteps
+			};
+
+
+		}
+	}
+
+	function calculateOffset(val,calculatedScale,scaleHop){
+		var outerValue = calculatedScale.steps * calculatedScale.stepValue;
+		var adjustedValue = val - calculatedScale.graphMin;
+		var scalingFactor = CapValue(adjustedValue/outerValue,1,0);
+		return (scaleHop*calculatedScale.steps) * scalingFactor;
+	}
+
+	function animationLoop(config,drawScale,drawData,ctx){
+		var animFrameAmount = (config.animation)? 1/CapValue(config.animationSteps,Number.MAX_VALUE,1) : 1,
+			easingFunction = animationOptions[config.animationEasing],
+			percentAnimComplete =(config.animation)? 0 : 1;
+
+
+
+		if (typeof drawScale !== "function") drawScale = function(){};
+
+		requestAnimFrame(animLoop);
+
+		function animateFrame(){
+			var easeAdjustedAnimationPercent =(config.animation)? CapValue(easingFunction(percentAnimComplete),null,0) : 1;
+			clear(ctx);
+			if(config.scaleOverlay){
+				drawData(easeAdjustedAnimationPercent);
+				drawScale();
+			} else {
+				drawScale();
+				drawData(easeAdjustedAnimationPercent);
+			}
+		}
+		function animLoop(){
+			//We need to check if the animation is incomplete (less than 1), or complete (1).
+				percentAnimComplete += animFrameAmount;
+				animateFrame();
+				//Stop the loop continuing forever
+				if (percentAnimComplete <= 1){
+					requestAnimFrame(animLoop);
+				}
+				else{
+					if (typeof config.onAnimationComplete == "function") config.onAnimationComplete();
+				}
+
+		}
+
+	}
+
+	//Declare global functions to be called within this namespace here.
+
+
+	// shim layer with setTimeout fallback
+	var requestAnimFrame = (function(){
+		return window.requestAnimationFrame ||
+			window.webkitRequestAnimationFrame ||
+			window.mozRequestAnimationFrame ||
+			window.oRequestAnimationFrame ||
+			window.msRequestAnimationFrame ||
+			function(callback) {
+				window.setTimeout(callback, 1000 / 60);
+			};
+	})();
+
+	function calculateScale(drawingHeight,maxSteps,minSteps,maxValue,minValue,labelTemplateString){
+		var graphMin,graphMax,graphRange,stepValue,numberOfSteps,valueRange,rangeOrderOfMagnitude,decimalNum;
+		
+		valueRange = maxValue - minValue;
+		
+		rangeOrderOfMagnitude = Math.floor(Math.log(valueRange) / Math.LN10);
+		graphMin = Math.floor(minValue / (1 * Math.pow(10, rangeOrderOfMagnitude))) * Math.pow(10, rangeOrderOfMagnitude);
+		graphMax = Math.ceil(maxValue / (1 * Math.pow(10, rangeOrderOfMagnitude))) * Math.pow(10, rangeOrderOfMagnitude);
+		graphRange = graphMax - graphMin;
+		stepValue = Math.pow(10, rangeOrderOfMagnitude);
+		numberOfSteps = Math.round(graphRange / stepValue);
+		
+		//Compare number of steps to the max and min for that size graph, and add in half steps if need be.
+		while(numberOfSteps < minSteps || numberOfSteps > maxSteps) {
+			if (numberOfSteps < minSteps){
+				stepValue /= 2;
+				numberOfSteps = Math.round(graphRange/stepValue);
+			}
+			else{
+				stepValue *=2;
+				numberOfSteps = Math.round(graphRange/stepValue);
+			}
+		};
+
+
+		var labels = [];
+		populateLabels(labelTemplateString, labels, numberOfSteps, graphMin, stepValue);
+	
+		return {
+			steps : numberOfSteps,
+			stepValue : stepValue,
+			graphMin : graphMin,
+			labels : labels
+		}
+	}
+
+	//Populate an array of all the labels by interpolating the string.
+	function populateLabels(labelTemplateString, labels, numberOfSteps, graphMin, stepValue) {
+		if (labelTemplateString) {
+			//Fix floating point errors by setting to fixed the on the same decimal as the stepValue.
+			for (var i = 1; i < numberOfSteps + 1; i++) {
+				labels.push(tmpl(labelTemplateString, {value: (graphMin + (stepValue * i)).toFixed(getDecimalPlaces(stepValue))}));
+			}
+		}
+	}
+	
+	//Max value from array
+	function Max( array ){
+		return Math.max.apply( Math, array );
+	};
+	//Min value from array
+	function Min( array ){
+		return Math.min.apply( Math, array );
+	};
+	//Default if undefined
+	function Default(userDeclared,valueIfFalse){
+		if(!userDeclared){
+			return valueIfFalse;
+		} else {
+			return userDeclared;
+		}
+	};
+	//Is a number function
+	function isNumber(n) {
+		return !isNaN(parseFloat(n)) && isFinite(n);
+	}
+	//Apply cap a value at a high or low number
+	function CapValue(valueToCap, maxValue, minValue){
+		if(isNumber(maxValue)) {
+			if( valueToCap > maxValue ) {
+				return maxValue;
+			}
+		}
+		if(isNumber(minValue)){
+			if ( valueToCap < minValue ){
+				return minValue;
+			}
+		}
+		return valueToCap;
+	}
+	function getDecimalPlaces (num){
+		var numberOfDecimalPlaces;
+		if (num%1!=0){
+			return num.toString().split(".")[1].length
+		}
+		else{
+			return 0;
+		}
+
+	}
+
+	function mergeChartConfig(defaults,userDefined){
+		var returnObj = {};
+		for (var attrname in defaults) { returnObj[attrname] = defaults[attrname]; }
+		for (var attrname in userDefined) { returnObj[attrname] = userDefined[attrname]; }
+		return returnObj;
+	}
+
+	//Javascript micro templating by John Resig - source at http://ejohn.org/blog/javascript-micro-templating/
+	var cache = {};
+	
+	function tmpl(str, data){
+		// Figure out if we're getting a template, or if we need to
+		// load the template - and be sure to cache the result.
+		var fn = !/\W/.test(str) ?
+			cache[str] = cache[str] ||
+			tmpl(document.getElementById(str).innerHTML) :
+			 
+			// Generate a reusable function that will serve as a template
+			// generator (and which will be cached).
+			new Function("obj",
+				"var p=[],print=function(){p.push.apply(p,arguments);};" +
+			 
+				// Introduce the data as local variables using with(){}
+				"with(obj){p.push('" +
+			 
+				// Convert the template into pure JavaScript
+				str
+					.replace(/[\r\t\n]/g, " ")
+					.split("<%").join("\t")
+					.replace(/((^|%>)[^\t]*)'/g, "$1\r")
+					.replace(/\t=(.*?)%>/g, "',$1,'")
+					.split("\t").join("');")
+					.split("%>").join("p.push('")
+					.split("\r").join("\\'")
+			+ "');}return p.join('');");
+	 
+		// Provide some basic currying to the user
+		return data ? fn( data ) : fn;
+	 }
+}
