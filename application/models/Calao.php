@@ -40,17 +40,7 @@ class Application_Model_Calao
         $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableCalao = new Application_Model_DbTable_Calao();
         
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['PescadorEntrevistado'],
-            'sa_datachegada' => $request['data']
-        );
         
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
         
         $tamanho = $request['tamanho'];
         $malha1 = $request['malha1'];
@@ -96,8 +86,6 @@ class Application_Model_Calao
             'cal_altura' => $altura,
             'cal_malha' => $malha,
             'cal_numlances' => $numLances,
-            'cal_subamostra' => $request['subamostra'],
-            'sa_id' => $idSubamostra,
             'cal_obs' => $request['observacao'],
             'dp_id' => $request['destinoPescado'],
             'mnt_id' => $request['id_monitoramento'],
@@ -113,17 +101,7 @@ class Application_Model_Calao
         $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableCalao = new Application_Model_DbTable_Calao();
         
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['data']
-        );
         
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
         
         $tamanho = $request['tamanho'];
         $malha1 = $request['malha1'];
@@ -170,8 +148,6 @@ class Application_Model_Calao
             'cal_altura' => $altura,
             'cal_malha' => $malha,
             'cal_numlances' => $numLances,
-            'cal_subamostra' => $request['subamostra'],
-            'sa_id' => $idSubamostra,
             'dp_id' => $request['destinoPescado'],
             'cal_obs' => $request['observacao'],
             'cal_tipo' => $request['tipocalao']

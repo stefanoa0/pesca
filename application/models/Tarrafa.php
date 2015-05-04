@@ -26,20 +26,9 @@ class Application_Model_Tarrafa
 
     public function insert(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableTarrafa = new Application_Model_DbTable_Tarrafa();
 
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['data']
-        );
-
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
+        
         $roda = $request['roda'];
         $altura = $request['altura'];
         $numLances = $request['numLances'];
@@ -74,8 +63,6 @@ class Application_Model_Tarrafa
             'tar_altura' => $altura,
             'tar_malha' => $malha,
             'tar_numlances' => $numLances,
-            'tar_subamostra' => $request['subamostra'],
-            'sa_id' => $idSubamostra,
             'tar_obs' => $request['observacao'],
             'dp_id' => $request['destinoPescado'],
             'mnt_id' => $request['id_monitoramento']
@@ -87,20 +74,9 @@ class Application_Model_Tarrafa
 
     public function update(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableTarrafa = new Application_Model_DbTable_Tarrafa();
 
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['data']
-        );
-
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
+        
         $roda = $request['roda'];
         $altura = $request['altura'];
         $numLances = $request['numLances'];
@@ -136,8 +112,6 @@ class Application_Model_Tarrafa
             'tar_altura' => $altura,
             'tar_malha' => $malha,
             'tar_numlances' => $numLances,
-            'tar_subamostra' => $request['subamostra'],
-            'sa_id' => $idSubamostra,
             'dp_id' => $request['destinoPescado'],
             'tar_obs' => $request['observacao'],
         );

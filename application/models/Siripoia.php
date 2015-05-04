@@ -35,17 +35,6 @@ class Application_Model_Siripoia
             $timestampVolta = 'Erro';
         }
         
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['dataVolta']
-        );
-        
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
         $numArmadilhas = $request['numArmadilhas'];
         
         if(empty($numArmadilhas)){
@@ -65,9 +54,7 @@ class Application_Model_Siripoia
             'sir_dhvolta' => $timestampVolta,
             'sir_dhsaida' => $timestampSaida, 
             'sir_tempogasto' => $request['tempoGasto'],
-            'sir_subamostra' => $request['subamostra'],
             'sir_obs' => $request['observacao'],
-            'sa_id' => $idSubamostra,
             'sir_numarmadilhas' => $numArmadilhas,
             'mnt_id' => $request['id_monitoramento'],
             'mre_id' => $request['mare'],
@@ -82,7 +69,6 @@ class Application_Model_Siripoia
     
     public function update(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableSiripoia = new Application_Model_DbTable_Siripoia();
         
         $timestampSaida = $request['dataSaida']." ".$request['horaSaida'];
@@ -91,17 +77,6 @@ class Application_Model_Siripoia
             $timestampVolta = 'Erro';
         }
         
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['dataVolta']
-        );
-        
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
         $numArmadilhas = $request['numArmadilhas'];
         
         if(empty($numArmadilhas)){
@@ -122,9 +97,7 @@ class Application_Model_Siripoia
             'sir_dhvolta' => $timestampVolta,
             'sir_dhsaida' => $timestampSaida, 
             'sir_tempogasto' => $request['tempoGasto'],
-            'sir_subamostra' => $request['subamostra'],
             'sir_obs' => $request['observacao'],
-            'sa_id' => $idSubamostra,
             'sir_numarmadilhas' => $numArmadilhas,
             'mre_id' => $request['mare'],
             'dp_id' => $request['destinoPescado'],

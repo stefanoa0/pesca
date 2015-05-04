@@ -50,18 +50,7 @@ class Application_Model_ArrastoFundo
         if($timestampSaida > $timestampVolta){
             $timestampVolta = 'Erro';
         }
-
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['dataVolta']
-        );
-
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
+        
         $diesel = $request['diesel'];
         $oleo = $request['oleo'];
         $alimento = $request['alimento'];
@@ -93,8 +82,6 @@ class Application_Model_ArrastoFundo
             'af_oleo' => $oleo,
             'af_alimento' => $alimento,
             'af_gelo' => $gelo,
-            'af_subamostra' => $request['subamostra'],
-            'sa_id' => $idSubamostra,
             'af_obs' => $request['observacao'],
             'dp_id' => $request['destinoPescado'],
             'mnt_id' => $request['id_monitoramento']
@@ -119,17 +106,7 @@ class Application_Model_ArrastoFundo
             $timestampVolta = 'Erro';
         }
 
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['dataVolta']
-        );
-
-        $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
+        
         $diesel = $request['diesel'];
         $oleo = $request['oleo'];
         $alimento = $request['alimento'];
@@ -164,8 +141,6 @@ class Application_Model_ArrastoFundo
             'af_alimento' => $alimento,
             'af_gelo' => $gelo,
             'dp_id' => $request['destinoPescado'],
-            'af_subamostra' => $request['subamostra'],
-            'sa_id' => $idSubamostra,
             'af_obs' => $request['observacao']
         );
 

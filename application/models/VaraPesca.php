@@ -26,7 +26,6 @@ class Application_Model_VaraPesca
     
     public function insert(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableVaraPesca = new Application_Model_DbTable_VaraPesca();
         
         $timestampSaida = $request['dataSaida']." ".$request['horaSaida'];
@@ -35,17 +34,6 @@ class Application_Model_VaraPesca
             $timestampVolta = 'Erro';
         }
         
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['dataVolta']
-        );
-        
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
         $diesel = $request['diesel'];
         $oleo = $request['oleo'];
         $alimento = $request['alimento'];
@@ -88,9 +76,7 @@ class Application_Model_VaraPesca
             'vp_oleo' => $oleo,
             'vp_alimento' => $alimento,
             'vp_gelo' => $gelo,
-            'vp_subamostra' => $request['subamostra'],
             'vp_obs' => $request['observacao'],
-            'sa_id' => $idSubamostra,
             'vp_numanzoisplinha' => $numAnzois,
             'vp_numlinhas' => $numLinhas,
             'isc_id' => $request['isca'],
@@ -106,7 +92,6 @@ class Application_Model_VaraPesca
     
     public function update(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableVaraPesca = new Application_Model_DbTable_VaraPesca();
         $this->dbTableFichaDiaria = new Application_Model_FichaDiaria();
         
@@ -116,17 +101,6 @@ class Application_Model_VaraPesca
             $timestampVolta = 'Erro';
         }
         
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['dataVolta']
-        );
-        
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
         $diesel = $request['diesel'];
         $oleo = $request['oleo'];
         $alimento = $request['alimento'];
@@ -171,9 +145,7 @@ class Application_Model_VaraPesca
             'vp_oleo' => $oleo,
             'vp_alimento' => $alimento,
             'vp_gelo' => $gelo,
-            'vp_subamostra' => $request['subamostra'],
             'vp_obs' => $request['observacao'],
-            'sa_id' => $idSubamostra,
             'vp_numanzoisplinha' => $numAnzois,
             'vp_numlinhas' => $numLinhas,
             'isc_id' => $request['isca'],

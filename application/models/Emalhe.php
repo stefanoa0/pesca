@@ -37,22 +37,8 @@ class Application_Model_Emalhe
     
     public function insert(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
-        $this->dbTableEmalhe = new Application_Model_DbTable_Emalhe();
 
-        
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['dataRecolhimento']
-        );
-        
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        
-        else {
-            $idSubamostra = null;
-        }
+        $this->dbTableEmalhe = new Application_Model_DbTable_Emalhe();
         
         $diesel = $request['diesel'];
         $oleo = $request['oleo'];
@@ -110,8 +96,6 @@ class Application_Model_Emalhe
             'em_oleo' => $oleo,
             'em_alimento' => $alimento,
             'em_gelo' => $gelo,
-            'em_subamostra' => $request['subamostra'],
-            'sa_id' => $idSubamostra,
             'em_tamanho' => $tamanho,
             'em_altura' => $altura,
             'em_numpanos' => $numPanos,

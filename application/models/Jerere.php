@@ -36,7 +36,6 @@ class Application_Model_Jerere
     
     public function insert(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableJerere = new Application_Model_DbTable_Jerere();
         
         $timestampSaida = $request['dataSaida']." ".$request['horaSaida'];
@@ -45,17 +44,7 @@ class Application_Model_Jerere
         if($timestampSaida > $timestampVolta){
             $timestampVolta = 'Erro';
         }
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['dataVolta']
-        );
         
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
         $numArmadilhas = $request['numArmadilhas'];
         
         if(empty($numArmadilhas)){
@@ -74,10 +63,8 @@ class Application_Model_Jerere
             'jre_quantpescadores' => $request['numPescadores'],
             'jre_dhvolta' => $timestampVolta,
             'jre_dhsaida' => $timestampSaida,
-            'jre_subamostra' => $request['subamostra'],
             'jre_obs' => $request['observacao'],
             'jre_motor' => $request['motor'],
-            'sa_id' => $idSubamostra,
             'jre_tempogasto' => $request['tempoGasto'],
             'jre_numarmadilhas' => $numArmadilhas,
             'mnt_id' => $request['id_monitoramento'],
@@ -103,17 +90,6 @@ class Application_Model_Jerere
         if($timestampSaida > $timestampVolta){
             $timestampVolta = 'Erro';
         }
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['dataVolta']
-        );
-        
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
         $combustivel = $request['combustivel'];
         if(empty($combustivel)){
             $combustivel = null;
@@ -134,10 +110,8 @@ class Application_Model_Jerere
             'jre_quantpescadores' => $request['numPescadores'],
             'jre_dhvolta' => $timestampVolta,
             'jre_dhsaida' => $timestampSaida,
-            'jre_subamostra' => $request['subamostra'],
             'jre_obs' => $request['observacao'],
             'jre_motor' => $request['motor'],
-            'sa_id' => $idSubamostra,
             'jre_tempogasto' => $request['tempoGasto'],
             'jre_numarmadilhas' => $numArmadilhas,
             'mre_id' => $request['mare'],

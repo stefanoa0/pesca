@@ -10,6 +10,9 @@
             <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/sambaituba.phtml</file>
             <file>file:/C:/wamp/www/pesca/public/js/charts-box/Chart.js</file>
             <file>file:/C:/wamp/www/pesca/public/css/estilo-admin.css</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/RelatoriosController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/ArrastoFundo.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Relatorios.php</file>
         </group>
     </open-files>
 </project-private>

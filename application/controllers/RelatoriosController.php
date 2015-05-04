@@ -214,8 +214,8 @@ class RelatoriosController extends Zend_Controller_Action
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto = $this->verifporto($porto);
-            $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $porto2 = $this->verifporto($porto);
+            $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
             $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."'");
@@ -352,8 +352,8 @@ class RelatoriosController extends Zend_Controller_Action
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto = $this->verifporto($porto);
-            $relatorioColetaManual = $this->modelRelatorios->selectColetaManual("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $porto2 = $this->verifporto($porto);
+            $relatorioColetaManual = $this->modelRelatorios->selectColetaManual("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
             $relatorioColetaManual = $this->modelRelatorios->selectColetaManual("fd_data between '". $data."'"." and '".$datafim."'");
@@ -496,8 +496,8 @@ class RelatoriosController extends Zend_Controller_Action
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto = $this->verifporto($porto);
-            $relatorioCalao = $this->modelRelatorios->selectCalao("cal_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $porto2 = $this->verifporto($porto);
+            $relatorioCalao = $this->modelRelatorios->selectCalao("cal_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
             $relatorioCalao = $this->modelRelatorios->selectCalao("cal_data between '". $data."'"." and '".$datafim."'");
@@ -633,8 +633,8 @@ class RelatoriosController extends Zend_Controller_Action
 
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto = $this->verifporto($porto);
-            $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("drecolhimento between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $porto2 = $this->verifporto($porto);
+            $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("drecolhimento between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
             $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("drecolhimento between '". $data."'"." and '".$datafim."'");
@@ -774,8 +774,8 @@ class RelatoriosController extends Zend_Controller_Action
 
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto = $this->verifporto($porto);
-            $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $porto2 = $this->verifporto($porto);
+            $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
             $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."'");
@@ -917,8 +917,8 @@ class RelatoriosController extends Zend_Controller_Action
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto = $this->verifporto($porto);
-            $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $porto2 = $this->verifporto($porto);
+            $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
             $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."'");
@@ -1060,8 +1060,8 @@ class RelatoriosController extends Zend_Controller_Action
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto = $this->verifporto($porto);
-            $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $porto2 = $this->verifporto($porto);
+            $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
             $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."'");
@@ -1204,8 +1204,8 @@ class RelatoriosController extends Zend_Controller_Action
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto = $this->verifporto($porto);
-            $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $porto2 = $this->verifporto($porto);
+            $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
             $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."'");
@@ -1344,8 +1344,8 @@ class RelatoriosController extends Zend_Controller_Action
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto = $this->verifporto($porto);
-            $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $porto2 = $this->verifporto($porto);
+            $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
             $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."'");
@@ -1485,8 +1485,8 @@ class RelatoriosController extends Zend_Controller_Action
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto = $this->verifporto($porto);
-            $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $porto2 = $this->verifporto($porto);
+            $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
             $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."'");
@@ -1627,8 +1627,8 @@ class RelatoriosController extends Zend_Controller_Action
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto = $this->verifporto($porto);
-            $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $porto2 = $this->verifporto($porto);
+            $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
             $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."'");
@@ -1768,8 +1768,8 @@ class RelatoriosController extends Zend_Controller_Action
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto = $this->verifporto($porto);
-            $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $porto2 = $this->verifporto($porto);
+            $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
             $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."'");
@@ -1903,8 +1903,8 @@ class RelatoriosController extends Zend_Controller_Action
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto = $this->verifporto($porto);
-            $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $porto2 = $this->verifporto($porto);
+            $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
             $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."'");
@@ -2043,8 +2043,8 @@ class RelatoriosController extends Zend_Controller_Action
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto = $this->verifporto($porto);
-            $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $porto2 = $this->verifporto($porto);
+            $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
             $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."'");
@@ -2607,7 +2607,7 @@ class RelatoriosController extends Zend_Controller_Action
         unset($Relesp);
         
         if ($porto != '999') {
-            $porto = $this->verifporto($porto);
+            $porto2 = $this->verifporto($porto);
             $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto . "'");
         } else {
             $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
@@ -2649,7 +2649,7 @@ class RelatoriosController extends Zend_Controller_Action
         unset($Relesp);
         
         if ($porto != '999') {
-            $porto = $this->verifporto($porto);
+            $porto2 = $this->verifporto($porto);
             $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto . "'");
         } else {
             $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
@@ -2691,7 +2691,7 @@ class RelatoriosController extends Zend_Controller_Action
         unset($Relesp);
         
         if ($porto != '999') {
-            $porto = $this->verifporto($porto);
+            $porto2 = $this->verifporto($porto);
             $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto . "'");
         } else {
             $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '" . $data . "'" . " and '" . $datafim . "'");
@@ -2733,7 +2733,7 @@ class RelatoriosController extends Zend_Controller_Action
         unset($Relesp);
         
         if ($porto != '999') {
-            $porto = $this->verifporto($porto);
+            $porto2 = $this->verifporto($porto);
             $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto . "'");
         } else {
             $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
@@ -3587,8 +3587,8 @@ class RelatoriosController extends Zend_Controller_Action
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto = $this->verifporto($porto);
-            $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $porto2 = $this->verifporto($porto);
+            $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
             $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."'");
@@ -3667,8 +3667,8 @@ class RelatoriosController extends Zend_Controller_Action
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto = $this->verifporto($porto);
-            $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $porto2 = $this->verifporto($porto);
+            $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
             $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."'");
@@ -3748,8 +3748,8 @@ class RelatoriosController extends Zend_Controller_Action
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto = $this->verifporto($porto);
-            $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $porto2 = $this->verifporto($porto);
+            $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
             $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."'");
@@ -3823,8 +3823,8 @@ class RelatoriosController extends Zend_Controller_Action
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto = $this->verifporto($porto);
-            $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $porto2 = $this->verifporto($porto);
+            $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
             $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."'");
@@ -5694,7 +5694,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrArrasto = $modelArrasto->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $quantEntrArrasto = $modelArrasto->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrArrasto[0]['count']);
             $coluna++;
             //$linha++;
@@ -5732,7 +5732,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrColetaManual = $modelColetaManual->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $quantEntrColetaManual = $modelColetaManual->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrColetaManual[0]['count']);
             $coluna++;
             //$linha++;
@@ -5741,7 +5741,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrEmalhe = $modelEmalhe->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $quantEntrEmalhe = $modelEmalhe->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrEmalhe[0]['count']);
             $coluna++;
             //$linha++;
@@ -5750,7 +5750,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrGrosseira = $modelGrosseira->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $quantEntrGrosseira = $modelGrosseira->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrGrosseira[0]['count']);
             $coluna++;
             //$linha++;
@@ -5759,7 +5759,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrJerere = $modelJerere->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $quantEntrJerere = $modelJerere->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrJerere[0]['count']);
             $coluna++;
             //$linha++;
@@ -5768,7 +5768,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrLinha = $modelLinha->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $quantEntrLinha = $modelLinha->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrLinha[0]['count']);
             $coluna++;
             //$linha++;
@@ -5777,7 +5777,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrLinhaFundo = $modelLinhaFundo->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $quantEntrLinhaFundo = $modelLinhaFundo->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrLinhaFundo[0]['count']);
             $coluna++;
             //$linha++;
@@ -5786,7 +5786,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrManzua = $modelManzua->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $quantEntrManzua = $modelManzua->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrManzua[0]['count']);
             $coluna++;
             //$linha++;
@@ -5795,7 +5795,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrMergulho = $modelMergulho->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $quantEntrMergulho = $modelMergulho->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrMergulho[0]['count']);
             $coluna++;
             //$linha++;
@@ -5804,7 +5804,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrRatoeira = $modelRatoeira->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $quantEntrRatoeira = $modelRatoeira->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrRatoeira[0]['count']);
             $coluna++;
             //$linha++;
@@ -5813,7 +5813,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrSiripoia = $modelSiripoia->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $quantEntrSiripoia = $modelSiripoia->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrSiripoia[0]['count']);
             $coluna++;
             //$linha++;
@@ -5822,7 +5822,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrTarrafa = $modelTarrafa->selectEntrevistasByPorto("tar_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $quantEntrTarrafa = $modelTarrafa->selectEntrevistasByPorto("tar_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrTarrafa[0]['count']);
             $coluna++;
             //$linha++;
@@ -5831,7 +5831,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrVaraPesca = $modelVaraPesca->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
+            $quantEntrVaraPesca = $modelVaraPesca->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrVaraPesca[0]['count']);
             $coluna++;
             //$linha++;

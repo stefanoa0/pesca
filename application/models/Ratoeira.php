@@ -26,7 +26,6 @@ class Application_Model_Ratoeira
     
     public function insert(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableRatoeira = new Application_Model_DbTable_Ratoeira();
         
         $timestampSaida = $request['dataSaida']." ".$request['horaSaida'];
@@ -35,17 +34,7 @@ class Application_Model_Ratoeira
         if($timestampSaida > $timestampVolta){
             $timestampVolta = 'Erro';
         }
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['dataVolta']
-        );
         
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
         $numArmadilhas = $request['numArmadilhas'];
         
         if(empty($numArmadilhas)){
@@ -64,9 +53,7 @@ class Application_Model_Ratoeira
             'rat_quantpescadores' => $request['numPescadores'],
             'rat_dhvolta' => $timestampVolta,
             'rat_dhsaida' => $timestampSaida, 
-            'rat_subamostra' => $request['subamostra'],
             'rat_obs' => $request['observacao'],
-            'sa_id' => $idSubamostra,
             'rat_tempogasto' => $request['tempoGasto'],
             'rat_numarmadilhas' => $numArmadilhas,
             'mnt_id' => $request['id_monitoramento'],
@@ -82,7 +69,6 @@ class Application_Model_Ratoeira
     
     public function update(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableRatoeira = new Application_Model_DbTable_Ratoeira();
         
         $timestampSaida = $request['dataSaida']." ".$request['horaSaida'];
@@ -91,17 +77,7 @@ class Application_Model_Ratoeira
         if($timestampSaida > $timestampVolta){
             $timestampVolta = 'Erro';
         }
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['dataVolta']
-        );
-        
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
+       
         $combustivel = $request['combustivel'];
         if(empty($combustivel)){
             $combustivel = null;
@@ -122,9 +98,7 @@ class Application_Model_Ratoeira
             'rat_quantpescadores' => $request['numPescadores'],
             'rat_dhvolta' => $timestampVolta,
             'rat_dhsaida' => $timestampSaida, 
-            'rat_subamostra' => $request['subamostra'],
             'rat_obs' => $request['observacao'],
-            'sa_id' => $idSubamostra,
             'rat_tempogasto' => $request['tempoGasto'],
             'rat_numarmadilhas' => $numArmadilhas,
             'mre_id' => $request['mare'],

@@ -26,19 +26,8 @@ private $dbTableMergulho;
     
     public function insert(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
+       
         $this->dbTableMergulho = new Application_Model_DbTable_Mergulho();
-        if($request['subamostra']==true){
-            $dadosSubamostra = array(
-                'sa_pescador' => $request['pescadorEntrevistado'],
-                'sa_datachegada' => $request['data']
-            );
-        
-            $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
         
         $mareViva = $request['mareviva'];
         if($mareViva=='1'){
@@ -67,8 +56,6 @@ private $dbTableMergulho;
             'mer_dhsaida' => $timestampSaida,
             'mer_dhvolta' => $timestampVolta,
             'mer_tempogasto' => $request['tempoGasto'],
-            'mer_subamostra' => $request['subamostra'],
-            'sa_id' => $idSubamostra,
             'mer_obs' => $request['observacao'],
             'mnt_id' => $request['id_monitoramento'],
             'mre_id' => $request['mare'],
@@ -86,17 +73,7 @@ private $dbTableMergulho;
         $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableMergulho = new Application_Model_DbTable_Mergulho();
         
-        if($request['subamostra']==true){
-            $dadosSubamostra = array(
-                'sa_pescador' => $request['pescadorEntrevistado'],
-                'sa_datachegada' => $request['data']
-            );
         
-            $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
         $combustivel = $request['combustivel'];
         if(empty($combustivel)){
             $combustivel = null;
@@ -128,8 +105,6 @@ private $dbTableMergulho;
             'mer_dhsaida' => $timestampSaida,
             'mer_dhvolta' => $timestampVolta,
             'mer_tempogasto' => $request['tempoGasto'],
-            'mer_subamostra' => $request['subamostra'],
-            'sa_id' => $idSubamostra,
             'mer_obs' => $request['observacao'],
             'mre_id' => $request['mare'],
             'dp_id' => $request['destinoPescado'],
