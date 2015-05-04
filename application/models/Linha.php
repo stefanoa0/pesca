@@ -40,17 +40,7 @@ private $dbTableLinha;
         $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableLinha = new Application_Model_DbTable_Linha();
         
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['data']
-        );
         
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
         
          $timestampSaida = $request['dataSaida']." ".$request['horaSaida'];
         $timestampVolta = $request['dataVolta']." ".$request['horaVolta'];
@@ -86,8 +76,6 @@ private $dbTableLinha;
             $gelo = NULL;
         }
         
-        
-        
         $dadosLinha = array(
             'lin_embarcada' => $request['embarcada'],
             'bar_id' => $request['nomeBarco'],
@@ -103,8 +91,6 @@ private $dbTableLinha;
             'lin_gelo' => $gelo,
             'lin_numlinhas' => $numLinhas,
             'lin_numanzoisplinha' => $numAnzois,
-            'lin_subamostra' => $request['subamostra'],
-            'sa_id' => $idSubamostra,
             'lin_obs' => $request['observacao'],
             'mnt_id' => $request['id_monitoramento'],
             'dp_id' => $request['destinoPescado'],
@@ -118,20 +104,7 @@ private $dbTableLinha;
     
     public function update(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableLinha = new Application_Model_DbTable_Linha();
-        
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['data']
-        );
-        
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
         
          $timestampSaida = $request['dataSaida']." ".$request['horaSaida'];
         $timestampVolta = $request['dataVolta']." ".$request['horaVolta'];
@@ -183,8 +156,6 @@ private $dbTableLinha;
             'lin_gelo' => $gelo,
             'lin_numlinhas' => $numLinhas,
             'lin_numanzoisplinha' => $numAnzois,
-            'lin_subamostra' => $request['subamostra'],
-            'sa_id' => $idSubamostra,
             'lin_obs' => $request['observacao'],
             'dp_id' => $request['destinoPescado'],
             'isc_id' => $request['isca']

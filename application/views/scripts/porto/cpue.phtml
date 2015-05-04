@@ -83,7 +83,7 @@
 			connectingLine : true,
 			animation : true,
                         // outliers
-			outlierShowLabels : true,
+			outlierShowLabels : false,
 			outlierLabelFormatter : function(s){return s;},
 			outlierLabelFontFamily : "'Arial'",
 			outlierLabelFontStyle : "normal",
@@ -104,18 +104,109 @@
 
 
 <table>
+
     <tr>
-        <?php foreach($this->tableCpueLabels as $key=> $label){ ?>
-             
-            <th><?=$label?></th>
-                
-        <?php }?>
+        <th>Janeiro/<?= $this->ano ?>
+        <?php foreach ($this->tablecpueJaneiro as $key => $label) { ?>
+
+        <td><?= round($label, 2) ?></td>
+
+        <?php } ?>
     </tr>
     
     <tr>
-        <td></td>
+        <th>Fevereiro/<?= $this->ano ?>
+        <?php foreach ($this->tablecpueFevereiro as $key => $label) { ?>
+
+        <td><?= round($label, 2) ?></td>
+
+        <?php } ?>
+    </tr>
+    
+    <tr>
+        <th>Março/<?= $this->ano ?>
+            <?php foreach ($this->tablecpueMarco as $key => $label) { ?>
+
+            <td><?= round($label, 2) ?></td>
+
+        <?php } ?>
+    </tr>
+    
+    <tr>
+        <th>Abril/<?= $this->ano ?>
+        <?php foreach ($this->tablecpueAbril as $key => $label) { ?>
+
+        <td><?= round($label, 2) ?></td>
+
+    <?php } ?>
+    </tr>
+    
+    <tr>
+        <th>Maio/<?= $this->ano ?>
+        <?php foreach ($this->tablecpueMaio as $key => $label) { ?>
+
+        <td><?= round($label, 2) ?></td>
+
+    <?php } ?>
     </tr>
 
+    <tr>
+        <th>Junho/<?= $this->ano ?>
+        <?php foreach ($this->tablecpueJunho as $key => $label) { ?>
+
+        <td><?= round($label, 2) ?></td>
+
+    <?php } ?>
+    </tr>
     
+    <tr>
+        <th>Julho/<?= $this->ano ?>
+        <?php foreach ($this->tablecpueJulho as $key => $label) { ?>
+
+        <td><?= round($label, 2) ?></td>
+
+    <?php } ?>
+    </tr>
+        <tr>
+            <th>Agosto/<?= $this->ano ?>
+            <?php foreach ($this->tablecpueAgosto as $key => $label) { ?>
+
+            <td><?= round($label, 2) ?></td>
+
+            <?php } ?>
+    </tr>
+
+    <tr>
+        <th>Setembro/<?= $this->ano ?>
+        <?php foreach ($this->tablecpueSetembro as $key => $label) { ?>
+
+        <td><?= round($label, 2) ?></td>
+
+        <?php } ?>
+    </tr>
+    <tr>
+        <th>Outubro/<?= $this->ano ?>
+        <?php foreach ($this->tablecpueOutubro as $key => $label) { ?>
+
+        <td><?= round($label, 2) ?></td>
+
+        <?php } ?>
+    </tr>
+<tr>
+    <th>Novembro/<?= $this->ano ?>
+    <?php foreach ($this->tablecpueNovembro as $key => $label) { ?>
+
+    <td><?= round($label, 2) ?></td>
+
+<?php } ?>
+</tr>
+<tr>
+    <th>Dezembro/<?= $this->ano ?>
+    <?php foreach ($this->tablecpueDezembro as $key => $label) { ?>
+
+    <td><?= round($label, 2) ?></td>
+
+<?php } ?>
+</tr>
 </table>
 

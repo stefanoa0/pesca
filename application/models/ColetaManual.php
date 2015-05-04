@@ -39,17 +39,6 @@ private $dbTableColetaManual;
     {
         $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableColetaManual = new Application_Model_DbTable_ColetaManual();
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['dataVolta']
-        );
-        
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
         
         $timestampSaida = $request['dataSaida']." ".$request['horaSaida'];
         $timestampVolta = $request['dataVolta']." ".$request['horaVolta'];
@@ -71,8 +60,6 @@ private $dbTableColetaManual;
             'cml_dhsaida' => $timestampSaida,
             'cml_dhvolta' => $timestampVolta,
             'cml_tempogasto' => $request['tempoGasto'],
-            'cml_subamostra' => $request['subamostra'],
-            'sa_id' => $idSubamostra,
             'cml_obs' => $request['observacao'],
             'mnt_id' => $request['id_monitoramento'],
             'mre_id' => $request['mare'],

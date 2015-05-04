@@ -117,11 +117,33 @@ class EstatisticaController extends Zend_Controller_Action
         //Colonia
         $coloniaPescadores = $this->modelPescador->select_Pescador_group_colonia();
         $this->view->assign("coloniaPescadores", $coloniaPescadores);
+        
+        //Escolaridade
+        $escolaridadePescadores = $this->modelPescador->select_Pescador_group_escolaridade();
+        $this->view->assign("escolaridadePescadores", $escolaridadePescadores);
     }
     
     public function barcoAction()
     {
-    
+        $this->modelEmbarcacaoDetalhada = new Application_Model_EmbarcacaoDetalhada();
+        //Embarcacoes Por porto
+        $embarcacoesByPorto = $this->modelEmbarcacaoDetalhada->selectEmbarcacoesByPorto();
+        $this->view->assign("embarcacoesByPorto", $embarcacoesByPorto);
+        
+        //Percentual de estado de conservação das embarcações
+        $embarcacoesByConservacao = $this->modelEmbarcacaoDetalhada->selectEmbarcacoesByConservacao();
+        $this->view->assign("embarcacoesByConservacao", $embarcacoesByConservacao);
+        
+        $embarcacoesByArte = $this->modelEmbarcacaoDetalhada->selectEmbarcacoesByArtePesca();
+        $this->view->assign("embarcacoesByArte", $embarcacoesByArte);
+        
+        $embarcacoesByEstado = $this->modelEmbarcacaoDetalhada->selectEmbarcacoesByEstado();
+        $this->view->assign("embarcacoesByEstado", $embarcacoesByEstado);
+       
+        $embarcacoesByAnoConstrucao = $this->modelEmbarcacaoDetalhada->selectEmbarcacoesByAnoConstr();
+        $this->view->assign("embarcacoesByAnoConstrucao", $embarcacoesByAnoConstrucao);
+        
+        print_r($embarcacoesByAnoConstrucao);
     }
     
     public function entrevistaAction()

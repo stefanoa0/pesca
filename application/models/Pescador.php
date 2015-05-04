@@ -498,6 +498,14 @@ class Application_Model_Pescador {
 
         return $db->fetchAll($select)->toArray();
     }
+    public function select_Pescador_group_escolaridade() {
+        $db = new Application_Model_DbTable_VPescador();
+        $select = $db->select()
+                ->from('v_pescador', array('count(tp_id)', 'esc_nivel'))
+                ->group('esc_nivel');
+
+        return $db->fetchAll($select)->toArray();
+    }
     public function selectPescadorByPortos($where = null, $order = null, $limit = null) {
         $dao = new Application_Model_DbTable_VPescadorByPortos();
         $select = $dao->select()->from($dao)->order($order)->limit($limit);

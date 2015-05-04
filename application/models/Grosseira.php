@@ -37,20 +37,8 @@ private $dbTableGrosseira;
     
     public function insert(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableGrosseira = new Application_Model_DbTable_Grosseira();
         
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['data']
-        );
-        
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
         
          $timestampSaida = $request['dataSaida']." ".$request['horaSaida'];
         $timestampVolta = $request['dataVolta']." ".$request['horaVolta'];
@@ -103,8 +91,6 @@ private $dbTableGrosseira;
             'grs_gelo' => $gelo,
             'grs_numlinhas' => $numLinhas,
             'grs_numanzoisplinha' => $numAnzois,
-            'grs_subamostra' => $request['subamostra'],
-            'sa_id' => $idSubamostra,
             'grs_obs' => $request['observacao'],
             'mnt_id' => $request['id_monitoramento'],
             'dp_id' => $request['destinoPescado'],
@@ -118,20 +104,8 @@ private $dbTableGrosseira;
     
     public function update(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableGrosseira = new Application_Model_DbTable_Grosseira();
         
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['data']
-        );
-        
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
         
          $timestampSaida = $request['dataSaida']." ".$request['horaSaida'];
         $timestampVolta = $request['dataVolta']." ".$request['horaVolta'];
@@ -184,8 +158,6 @@ private $dbTableGrosseira;
             'grs_gelo' => $gelo,
             'grs_numlinhas' => $numLinhas,
             'grs_numanzoisplinha' => $numAnzois,
-            'grs_subamostra' => $request['subamostra'],
-            'sa_id' => $idSubamostra,
             'grs_obs' => $request['observacao'],
             'dp_id' => $request['destinoPescado'],
             'isc_id' => $request['isca']

@@ -36,7 +36,6 @@ class Application_Model_LinhaFundo
     
     public function insert(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableLinhaFundo = new Application_Model_DbTable_LinhaFundo();
         
         $timestampSaida = $request['dataSaida']." ".$request['horaSaida'];
@@ -45,18 +44,7 @@ class Application_Model_LinhaFundo
         if($timestampSaida > $timestampVolta){
             $timestampVolta = 'Erro';
         }
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['dataVolta']
-        );
-        
-        
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
+
         $diesel = $request['diesel'];
         $oleo = $request['oleo'];
         $alimento = $request['alimento'];
@@ -99,9 +87,7 @@ class Application_Model_LinhaFundo
             'lf_oleo' => $oleo,
             'lf_alimento' => $alimento,
             'lf_gelo' => $gelo,
-            'lf_subamostra' => $request['subamostra'],
             'lf_obs' => $request['observacao'],
-            'sa_id' => $idSubamostra,
             'lf_numanzoisplinha' => $numAnzois,
             'lf_numlinhas' => $numLinhas,
             'isc_id' => $request['isca'],
@@ -126,18 +112,7 @@ class Application_Model_LinhaFundo
         if($timestampSaida > $timestampVolta){
             $timestampVolta = 'Erro';
         }
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['dataVolta']
-        );
         
-        
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
         $diesel = $request['diesel'];
         $oleo = $request['oleo'];
         $alimento = $request['alimento'];
@@ -181,9 +156,7 @@ class Application_Model_LinhaFundo
             'lf_oleo' => $oleo,
             'lf_alimento' => $alimento,
             'lf_gelo' => $gelo,
-            'lf_subamostra' => $request['subamostra'],
             'lf_obs' => $request['observacao'],
-            'sa_id' => $idSubamostra,
             'lf_numanzoisplinha' => $numAnzois,
             'lf_numlinhas' => $numLinhas,
             'isc_id' => $request['isca'],
