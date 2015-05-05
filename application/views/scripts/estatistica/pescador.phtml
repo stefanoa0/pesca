@@ -1,4 +1,69 @@
-<br /><br />
-<div id="view-content">
-	<p>View script for controller <b>Estatistica</b> and script/action name <b>index</b></p>
+<h2>Relatórios Estatísticos - Pescadores Cadastrados</h2>
+
+<script src="js/Chart.min.js"></script>
+<p> Quantidade total de Pescadores cadastrados: <b><?=$this->quantPescadores ?></b> </p>
+<script type="text/javascript">
+
+    var options = {
+        responsive:true,
+        scaleOverride: false
+
+    };
+
+    var responsive_false = {
+        responsive:false
+    };
+ 
+ 
+    var generoPescadores = [
+       {
+        value: <?= $this->Masculino ?>,
+        color:"#F7464A",
+        highlight: "#FF5A5E",
+        label: "Masculino"
+       },
+       {
+        value: <?= $this->Feminino ?>,
+        color:"#F7464A",
+        highlight: "#FF5A5E",
+        label: "Feminino"
+       }
+   ];
+   
+   var pescadoresByPorto = {
+       labels: <?= $this->portos ?>,
+       datasets: [
+           {
+               label: "Quantidade de Entrevistas Por Mês",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pescadoresByPorto ?>
+           }
+       ]
+   };
+   window.onload = function(){
+        var id_barcos = document.getElementById("genero").getContext("2d");
+        var GenChart = new Chart(id_barcos).Pie(generoPescadores, options);
+        
+        var ctx = document.getElementById("pescByPorto").getContext("2d");
+        var PescByPorChart = new Chart(ctx).Bar(pescadoresByPorto, options);
+    };
+</script>
+
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 1: Quantidade Pescadores Por Gênero</legend>
+  <canvas id="genero" style="width:100%;"></canvas>
 </div>
+<br/>
+
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 2: Quantidade de Pescadores Monitorados Em Arrasto de Fundo</legend>
+  <canvas id="pescByPorto" style="width:100%;"></canvas>
+</div>
+<br/>

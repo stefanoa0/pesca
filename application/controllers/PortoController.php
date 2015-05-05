@@ -243,7 +243,64 @@ class PortoController extends Zend_Controller_Action
         $array[0]['arte'] = $arte;
         return $array;
     }
-    
+    public function verificaPorto($porto){
+        if($porto === 'Amendoeira'){
+            $back_porto = 'amendoeira';
+        }
+        elseif($porto === 'Aritaguá'){
+            $back_porto = 'aritagua';
+        }
+        elseif($porto === 'Juerana rio'){
+            $back_porto = 'juerana';
+        }
+        elseif($porto === 'Mamoã'){
+            $back_porto = 'mamoa';
+        }
+        elseif($porto === 'Pé de Serra'){
+            $back_porto = 'serra';
+        }
+        elseif($porto === 'Ponta da Tulha'){
+            $back_porto = 'tulha';
+        }
+        elseif($porto === 'Ponta do Ramo'){
+            $back_porto = 'ramo';
+        }
+        elseif($porto === 'Pontal'){
+            $back_porto = 'pontal';
+        }
+        elseif($porto === 'Porto da Barra'){
+            $back_porto = 'barra';
+        }
+        elseif($porto === 'Porto da Concha'){
+            $back_porto = 'concha';
+        }
+        elseif($porto === 'Porto do Forte'){
+            $back_porto = 'forte';
+        }
+        elseif($porto === 'Prainha'){
+            $back_porto = 'prainha';
+        }
+        elseif($porto === 'Sambaituba'){
+            $back_porto = 'sambaituba';
+        }
+        elseif($porto === 'São Miguel'){
+            $back_porto = 'saomiguel';
+        }
+        elseif($porto === 'Sobradinho'){
+            $back_porto = 'sobradinho';
+        }
+        elseif($porto === 'Terminal Pesqueiro'){
+            $back_porto = 'terminal';
+        }
+        elseif($porto === 'Urucutuca'){
+            $back_porto = 'urucutuca';
+        }
+        elseif($porto === 'Vila Badu'){
+            $back_porto = 'badu';
+        }
+        return $back_porto;
+        
+    }
     //Funções para verificar os vetores vazios e não dar erro nos gráficos.
     public function verifVazioEntrevistas($array, $porto, $arte){
         if(empty($array)){
@@ -1105,6 +1162,19 @@ class PortoController extends Zend_Controller_Action
                                             $cpueEntrNovembro ,
                                             $cpueEntrDezembro );
         
+       $cpueEntrJaneiro =   $this->array_sort($cpueEntrJaneiro, 'cpue'    , SORT_ASC); 
+       $cpueEntrFevereiro =   $this->array_sort($cpueEntrFevereiro, 'cpue', SORT_ASC);
+       $cpueEntrMarco     =   $this->array_sort($cpueEntrMarco    , 'cpue', SORT_ASC );    
+       $cpueEntrAbril     =   $this->array_sort($cpueEntrAbril    , 'cpue', SORT_ASC); 
+       $cpueEntrMaio      =   $this->array_sort($cpueEntrMaio     , 'cpue', SORT_ASC);
+       $cpueEntrJunho     =   $this->array_sort($cpueEntrJunho    , 'cpue', SORT_ASC);
+       $cpueEntrJulho     =   $this->array_sort($cpueEntrJulho    , 'cpue', SORT_ASC);
+       $cpueEntrAgosto    =   $this->array_sort($cpueEntrAgosto   , 'cpue', SORT_ASC);
+       $cpueEntrSetembro  =   $this->array_sort($cpueEntrSetembro , 'cpue', SORT_ASC);
+       $cpueEntrOutubro   =   $this->array_sort($cpueEntrOutubro  , 'cpue', SORT_ASC);
+       $cpueEntrNovembro  =   $this->array_sort($cpueEntrNovembro , 'cpue', SORT_ASC);
+       $cpueEntrDezembro  =   $this->array_sort($cpueEntrDezembro , 'cpue', SORT_ASC );
+       
         $ArrayCpueOrdenado = $this->array_sort($ArrayCpue, 'cpue', SORT_DESC);
         
         foreach($ArrayCpueOrdenado as $cpue):
@@ -1194,6 +1264,7 @@ class PortoController extends Zend_Controller_Action
         $this->view->assign("cpueNovembro",  $jsCpueNovembro);
         $this->view->assign("cpueDezembro",  $jsCpueDezembro);
         
+        
         $this->view->assign("tableCpueLabels",$labels);
         $this->view->assign("tablecpueJaneiro", $cpueJaneiro);
         $this->view->assign("tablecpueFevereiro", $cpueFevereiro);
@@ -1207,6 +1278,8 @@ class PortoController extends Zend_Controller_Action
         $this->view->assign("tablecpueOutubro", $cpueOutubro);
         $this->view->assign("tablecpueNovembro", $cpueNovembro);
         $this->view->assign("tablecpueDezembro", $cpueDezembro);
+        
+        
     }
     //Gera o relatório dos barcos que mais apareceram no porto.
     public function gerarquantbarcos($porto, $ano, $arte){
@@ -1689,7 +1762,9 @@ class PortoController extends Zend_Controller_Action
         $arte = $this->_getParam('arte');
         $ano = $this->_getParam('ano');
         
+        $back_porto = $this->verificaPorto($porto);
         
+        $this->view->assign("back", $back_porto);
         $this->gerarcpue($porto, $ano, $arte);
     }
     public function forteAction(){

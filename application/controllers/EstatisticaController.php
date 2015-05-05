@@ -33,7 +33,7 @@ class EstatisticaController extends Zend_Controller_Action
         $this->modelArrasto = new Application_Model_ArrastoFundo();
         $this->modelCalao = new Application_Model_Calao();
         $this->modelColetaManual = new Application_Model_ColetaManual();
-        $this->modelEsmalhe = new Application_Model_Esmalhe();
+        $this->modelEsmalhe = new Application_Model_Emalhe();
         $this->modelGrosseira = new Application_Model_Grosseira();
         $this->modelJerere = new Application_Model_Jerere();
         $this->modelLinha = new Application_Model_Linha();
@@ -51,12 +51,21 @@ class EstatisticaController extends Zend_Controller_Action
         
         //Quantidade de Pescadores por gênero
         $consultaGenero = $this->modelPescador->selectPescadorBySexo();
-        $this->view->assign("generoPescador", $consultaGenero);
+        $masc[] = $consultaGenero['masculino'];
+        $fem[] = $consultaGenero['feminino'];
+        $this->view->assign("Masculino", $masc[0]);
+        $this->view->assign("Feminino", $fem[0]);
         
         //Quantidade de Pescadores por porto e por arte de pesca
         //Arrasto de Fundo
         $arrastoPescadoresPorto = $this->modelArrasto->selectPescadoresByPorto();
         $this->view->assign("arrastoPescadoresPorto", $arrastoPescadoresPorto);
+        foreach($arrastoPescadoresPorto as $consulta):
+            $count[] = $consulta['count'];
+            $porto[] = $consulta['pto_nome'];
+        endforeach;
+        $this->view->assign("portos", json_encode($porto));
+        $this->view->assign("pescadoresByPorto", json_encode($count));
         
         //Calao
         $calaoPescadoresPorto = $this->modelCalao->selectPescadoresByPorto();
@@ -134,6 +143,7 @@ class EstatisticaController extends Zend_Controller_Action
         $embarcacoesByConservacao = $this->modelEmbarcacaoDetalhada->selectEmbarcacoesByConservacao();
         $this->view->assign("embarcacoesByConservacao", $embarcacoesByConservacao);
         
+        //Percentual de Embarcações por Artes de Pesca
         $embarcacoesByArte = $this->modelEmbarcacaoDetalhada->selectEmbarcacoesByArtePesca();
         $this->view->assign("embarcacoesByArte", $embarcacoesByArte);
         
