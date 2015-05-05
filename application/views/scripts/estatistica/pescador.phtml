@@ -6,8 +6,8 @@
 
     var options = {
         responsive:true,
-        scaleOverride: false
-
+        scaleOverride: false,
+        animation: false
     };
 
     var responsive_false = {
@@ -29,28 +29,335 @@
         label: "Feminino"
        }
    ];
+   var azulClaro = "rgba(89,130,149,.8)";
+   var azulEscuro = "rgba(38,60,91,1)";
+   var azul = "rgba(0,0,255,1)";
+   var vermelhoClaro = "rgba(217,86,104,.8)";
+   var vermelhoEscuro = "rgba(144,36,36,1)";
+   var vermelho = "rgba(255,0,0,1)";
+   var verde = "rgba(0,180,0,1)";
+   var verdeClaro = "rgba(153,222,157,1)";
+   var verdeEscuro = "rgba(32,94,36,1)";
+   var marromRachy = "rgba(95,48,43,.8)";
+   var marromEscuroRachy = "rgba(68,37,33,1)";
+   var laranja = "rgba(255,122,4,.5)";
+   var laranjaEscuro = "rgba(255,122,12,1);"
+   var azulCeleste = "rgba(102,113,199,1)";
+   var azulCelesteClaro = "rgba(102,113,199,1)";
    
-   var pescadoresByPorto = {
-       labels: <?= $this->portos ?>,
+   
+   var pescadoresByPortoArrasto = {
+       labels: <?= $this->portosArrasto ?>,
        datasets: [
            {
-               label: "Quantidade de Entrevistas Por Mês",
+               label: "Quantidade de Pescadores Por Porto",
+               fillColor: azulClaro,
+               strokeColor: azulEscuro,
+               pointColor: azulEscuro,
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pescByPortoArrasto ?>
+           }
+       ]
+   };
+   var pescadoresByPortoCalao = {
+       labels: <?= $this->portosCalao ?>,
+       datasets: [
+           {
+               label: "Quantidade de Pescadores Por Porto",
+               fillColor: vermelhoClaro,
+               strokeColor: vermelhoEscuro,
+               pointColor: vermelhoEscuro,
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pescByPortoCalao ?>
+           }
+       ]
+   };
+   var pescadoresByPortoColeta = {
+       labels: <?= $this->portosColeta ?>,
+       datasets: [
+           {
+               label: "Quantidade de Pescadores Por Porto",
+               fillColor: verde,
+               strokeColor: verdeClaro,
+               pointColor: verdeClaro,
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pescByPortoColeta ?>
+           }
+       ]
+   };
+   var pescadoresByPortoEmalhe = {
+       labels: <?= $this->portosEmalhe ?>,
+       datasets: [
+           {
+               label: "Quantidade de Pescadores Por Porto",
                fillColor: "rgba(95,48,43,.8)",
                strokeColor: "rgba(95,48,43,1)",
                pointColor: "rgba(95,48,43,1)",
                pointStrokeColor: "#fff",
                pointHighlightFill: "#fff",
                pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->pescadoresByPorto ?>
+               data: <?= $this->pescByPortoEmalhe ?>
+           }
+       ]
+   };
+   var pescadoresByPortoGroseira = {
+       labels: <?= $this->portosGroseira ?>,
+       datasets: [
+           {
+               label: "Quantidade de Pescadores Por Porto",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pescByPortoGroseira ?>
+           }
+       ]
+   };
+   var pescadoresByPortoJerere = {
+       labels: <?= $this->portosJerere ?>,
+       datasets: [
+           {
+               label: "Quantidade de Pescadores Por Porto",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pescByPortoJerere ?>
+           }
+       ]
+   };
+   var pescadoresByPortoLinha = {
+       labels: <?= $this->portosLinha ?>,
+       datasets: [
+           {
+               label: "Quantidade de Pescadores Por Porto",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pescByPortoLinha ?>
+           }
+       ]
+   };
+   var pescadoresByPortoLinhaFundo = {
+       labels: <?= $this->portosLinhaFundo ?>,
+       datasets: [
+           {
+               label: "Quantidade de Pescadores Por Porto",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pescByPortoLinhaFundo ?>
+           }
+       ]
+   };
+   var pescadoresByPortoManzua = {
+       labels: <?= $this->portosManzua ?>,
+       datasets: [
+           {
+               label: "Quantidade de Pescadores Por Porto",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pescByPortoManzua ?>
+           }
+       ]
+   };
+   var pescadoresByPortoMergulho = {
+       labels: <?= $this->portosRatoeira ?>,
+       datasets: [
+           {
+               label: "Quantidade de Pescadores Por Porto",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pescByPortoMergulho ?>
+           }
+       ]
+   };
+   var pescadoresByPortoRatoeira = {
+       labels: <?= $this->portosRatoeira ?>,
+       datasets: [
+           {
+               label: "Quantidade de Pescadores Por Porto",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pescByPortoRatoeira ?>
+           }
+       ]
+   };
+   var pescadoresByPortoSiripoia = {
+       labels: <?= $this->portosSiripoia ?>,
+       datasets: [
+           {
+               label: "Quantidade de Pescadores Por Porto",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pescByPortoSiripoia ?>
+           }
+       ]
+   };
+   var pescadoresByPortoTarrafa = {
+       labels: <?= $this->portosTarrafa ?>,
+       datasets: [
+           {
+               label: "Quantidade de Pescadores Por Porto",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pescByPortoTarrafa ?>
+           }
+       ]
+   };
+   var pescadoresByPortoVaraPesca = {
+       labels: <?= $this->portosVaraPesca ?>,
+       datasets: [
+           {
+               label: "Quantidade de Pescadores Por Porto",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pescByPortoVaraPesca ?>
+           }
+       ]
+   };
+   
+   var pescadoresByComunidades = {
+       labels: <?= $this->comunidades ?>,
+       datasets: [
+           {
+               label: "Quantidade de Pescadores Por Comunidades",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pescByComunidades ?>
+           }
+       ]
+   };
+   
+   var pescadoresByColonias = {
+       labels: <?= $this->colonias ?>,
+       datasets: [
+           {
+               label: "Quantidade de Pescadores Por Comunidades",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pescByColonias ?>
+           }
+       ]
+   };
+   
+   var pescadoresByEscolaridades = {
+       labels: <?= $this->escolaridades ?>,
+       datasets: [
+           {
+               label: "Quantidade de Pescadores Por Comunidades",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->pescByEscolaridade ?>
            }
        ]
    };
    window.onload = function(){
         var id_barcos = document.getElementById("genero").getContext("2d");
-        var GenChart = new Chart(id_barcos).Pie(generoPescadores, options);
+        var GenChart = new Chart(id_barcos).Pie(generoPescadores, responsive_false);
         
-        var ctx = document.getElementById("pescByPorto").getContext("2d");
-        var PescByPorChart = new Chart(ctx).Bar(pescadoresByPorto, options);
+        var ctx = document.getElementById("pescByPortoArrasto").getContext("2d");
+        var PescByPorChartArrasto = new Chart(ctx).Bar(pescadoresByPortoArrasto, options);
+        
+        var ctx = document.getElementById("pescByPortoCalao").getContext("2d");
+        var PescByPorChartCalao = new Chart(ctx).Bar(pescadoresByPortoCalao, options);
+
+        var ctx = document.getElementById("pescByPortoColeta").getContext("2d");
+        var PescByPorChartColeta = new Chart(ctx).Bar(pescadoresByPortoColeta, options);
+		
+        var ctx = document.getElementById("pescByPortoEmalhe").getContext("2d");
+        var PescByPorChartEmalhe = new Chart(ctx).Bar(pescadoresByPortoEmalhe, options);
+		
+        var ctx = document.getElementById("pescByPortoGroseira").getContext("2d");
+        var PescByPorChartGroseira = new Chart(ctx).Bar(pescadoresByPortoGroseira, options);
+		
+        var ctx = document.getElementById("pescByPortoJerere").getContext("2d");
+        var PescByPorChartJerere = new Chart(ctx).Bar(pescadoresByPortoJerere, options);
+		
+        var ctx = document.getElementById("pescByPortoLinha").getContext("2d");
+        var PescByPorChartLinha = new Chart(ctx).Bar(pescadoresByPortoLinha, options);
+		
+        var ctx = document.getElementById("pescByPortoLinhaFundo").getContext("2d");
+        var PescByPorChartLinhaFundo = new Chart(ctx).Bar(pescadoresByPortoLinhaFundo, options);
+		
+        var ctx = document.getElementById("pescByPortoManzua").getContext("2d");
+        var PescByPorChartManzua = new Chart(ctx).Bar(pescadoresByPortoManzua, options);
+		
+        var ctx = document.getElementById("pescByPortoMergulho").getContext("2d");
+        var PescByPorChartMergulho = new Chart(ctx).Bar(pescadoresByPortoMergulho, options);
+		
+        var ctx = document.getElementById("pescByPortoRatoeira").getContext("2d");
+        var PescByPorChartRatoeira = new Chart(ctx).Bar(pescadoresByPortoRatoeira, options);
+		
+        var ctx = document.getElementById("pescByPortoTarrafa").getContext("2d");
+        var PescByPorChartTarrafa = new Chart(ctx).Bar(pescadoresByPortoTarrafa, options);
+		
+        var ctx = document.getElementById("pescByPortoSiripoia").getContext("2d");
+        var PescByPorChartSiripoia = new Chart(ctx).Bar(pescadoresByPortoSiripoia, options);
+		
+        var ctx = document.getElementById("pescByPortoVaraPesca").getContext("2d");
+        var PescByPorChartVaraPesca = new Chart(ctx).Bar(pescadoresByPortoVaraPesca, options);
+        
+        var ctx = document.getElementById("pescByComunidades").getContext("2d");
+        var PescByPorChartComunidade = new Chart(ctx).Bar(pescadoresByComunidades, options);
+        
+        var ctx = document.getElementById("pescByColonias").getContext("2d");
+        var PescByPorChartColonia = new Chart(ctx).Bar(pescadoresByColonias, options);
+        
+        var ctx = document.getElementById("pescByEscolaridades").getContext("2d");
+        var PescByPorChartEscolaridades = new Chart(ctx).Bar(pescadoresByEscolaridades, options);
     };
 </script>
 
@@ -64,6 +371,106 @@
 <br/>
 <div class="box-chart">
     <legend>Gráfico 2: Quantidade de Pescadores Monitorados Em Arrasto de Fundo</legend>
-  <canvas id="pescByPorto" style="width:100%;"></canvas>
+  <canvas id="pescByPortoArrasto" style="width:100%;"></canvas>
+</div>
+<br/>
+
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 3: Quantidade de Pescadores Monitorados Em Calão</legend>
+  <canvas id="pescByPortoCalao" style="width:100%;"></canvas>
+</div>
+<br/>
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 4: Quantidade de Pescadores Monitorados Em Coleta Manual</legend>
+  <canvas id="pescByPortoColeta" style="width:100%;"></canvas>
+</div>
+<br/>
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 5: Quantidade de Pescadores Monitorados Em Emalhe</legend>
+  <canvas id="pescByPortoEmalhe" style="width:100%;"></canvas>
+</div>
+<br/>
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 6: Quantidade de Pescadores Monitorados Em Espinhel/Groseira</legend>
+  <canvas id="pescByPortoGroseira" style="width:100%;"></canvas>
+</div>
+<br/>
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 7: Quantidade de Pescadores Monitorados Em Jereré</legend>
+  <canvas id="pescByPortoJerere" style="width:100%;"></canvas>
+</div>
+<br/>
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 8: Quantidade de Pescadores Monitorados Em Pesca de Linha</legend>
+  <canvas id="pescByPortoLinha" style="width:100%;"></canvas>
+</div>
+<br/>
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 9: Quantidade de Pescadores Monitorados Em Linha de Fundo</legend>
+  <canvas id="pescByPortoLinhaFundo" style="width:100%;"></canvas>
+</div>
+<br/>
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 10: Quantidade de Pescadores Monitorados Em Manzuá</legend>
+  <canvas id="pescByPortoManzua" style="width:100%;"></canvas>
+</div>
+<br/>
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 11: Quantidade de Pescadores Monitorados Em Mergulho</legend>
+  <canvas id="pescByPortoMergulho" style="width:100%;"></canvas>
+</div>
+<br/>
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 12: Quantidade de Pescadores Monitorados Em Pesca de Ratoeira</legend>
+  <canvas id="pescByPortoRatoeira" style="width:100%;"></canvas>
+</div>
+<br/>
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 13: Quantidade de Pescadores Monitorados Em Siripoia</legend>
+  <canvas id="pescByPortoSiripoia" style="width:100%;"></canvas>
+</div>
+<br/>
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 14: Quantidade de Pescadores Monitorados Em Tarrafa</legend>
+  <canvas id="pescByPortoTarrafa" style="width:100%;"></canvas>
+</div>
+<br/>
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 15: Quantidade de Pescadores Monitorados Em Vara de Pesca</legend>
+  <canvas id="pescByPortoVaraPesca" style="width:100%;"></canvas>
+</div>
+<br/>
+
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 16: Quantidade de Pescadores por Comunidades</legend>
+  <canvas id="pescByComunidades" style="width:100%;"></canvas>
+</div>
+<br/>
+
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 17: Quantidade de Pescadores por Colônias</legend>
+  <canvas id="pescByColonias" style="width:100%;"></canvas>
+</div>
+<br/>
+
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 18: Quantidade de Pescadores por Escolaridade</legend>
+  <canvas id="pescByEscolaridades" style="width:100%;"></canvas>
 </div>
 <br/>
