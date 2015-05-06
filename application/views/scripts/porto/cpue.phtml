@@ -1,11 +1,11 @@
 <h2><?=$this->porto?></h2>
 
 <h3><?='CPUE Média de '.$this->arte.' em '.$this->ano?></h3>
-
+<a href="<?= $this->url(array("controller" => "porto", "action" => "$this->back", "ano" => $this->ano ), null, true) ?>" id="botao-ancora">Voltar</a><br/>
 <div id="legendaBoxplot">    
-    <canvas id="canvasMedian" width="23" height="10"></canvas>&nbsp;Median&nbsp;&nbsp;&nbsp;&nbsp;
+    <canvas id="canvasMedian" width="23" height="10"></canvas>&nbsp;Mediana&nbsp;&nbsp;&nbsp;&nbsp;
     <canvas id="canvasLegendaBox"></canvas>&nbsp;25% - 75%&nbsp;&nbsp;&nbsp;&nbsp;
-    <canvas id="canvasNonOutlier" width="23" height="23"></canvas>&nbsp;Non-Outlier Range
+    <canvas id="canvasNonOutlier" width="23" height="23"></canvas>&nbsp;Max-Min
     <script>
       var canvas = document.getElementById('canvasNonOutlier');
       var lineMed = canvas.getContext('2d');
@@ -39,7 +39,10 @@
 
 <br />
 
+
+
 <canvas id="canvas" height="600" width="900"></canvas>
+
 <script src="js/charts-box/Chart.js"></script>
 
 	<script>
@@ -102,15 +105,16 @@
 	
 	</script>
 
-
-<table>
-
+<br/>
+<br/>
+<br/>
+<br/>
+<table class="display">
     <tr>
         <th>Janeiro/<?= $this->ano ?>
         <?php foreach ($this->tablecpueJaneiro as $key => $label) { ?>
-
-        <td><?= round($label, 2) ?></td>
-
+         
+            <td><?= round($label, 2) ?></td>
         <?php } ?>
     </tr>
     

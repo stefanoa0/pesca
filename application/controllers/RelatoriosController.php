@@ -2929,17 +2929,11 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna = 2+$quant;
             $Relesp = $this->modelRelatorios->selectCalaoHasEspCapturadas('cal_id = '.$consulta['cal_id']);
             foreach($relatorioEspecies as $key => $especie):
-                 foreach($Relesp as $key => $esp):
-                     if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $esp[$tipoRel]);
-                     }
-                 endforeach;
-                    if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                 }
-                 else{
-                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '');
-                 }
+                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
+                if ($coluna < $lastcolumn && empty($objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, $linha)->getFormattedValue())) {
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, '0');
+                }
+                $coluna++;
             endforeach; 
             $coluna=0;
             $linha++;
