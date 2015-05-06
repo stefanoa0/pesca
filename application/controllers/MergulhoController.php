@@ -229,13 +229,15 @@ class MergulhoController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idEntrevistaHasPesqueiro = $this->_getParam("id");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasPesqueiro = $this->_getParam("id_entrevista_has_pesqueiro");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
         $this->modelMergulho->deletePesqueiro($idEntrevistaHasPesqueiro);
 
-        $this->redirect("/mergulho/editar/id/" . $backUrl);
+        $this->redirect("/mergulho/tablepesqueiro/id/" . $idEntrevista);
+        //$this->redirect("/mergulho/editar/id/" . $backUrl);
     }
     public function tableespcapturaAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
         //IMPORTANTE TER!!
@@ -275,13 +277,15 @@ class MergulhoController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idEntrevistaHasEspecie = $this->_getParam("id");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasEspecie = $this->_getParam("id_entrevista_has_especie");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
         $this->modelMergulho->deleteEspCapturada($idEntrevistaHasEspecie);
 
-        $this->redirect("/mergulho/editar/id/" . $backUrl);
+        $this->redirect("/mergulho/tableespcaptura/id/" . $idEntrevista);
+        //$this->redirect("/mergulho/editar/id/" . $backUrl);
     }
     public function insertavistamentoAction(){
         $this->_helper->layout->disableLayout();

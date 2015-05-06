@@ -14,7 +14,7 @@
                             <td name="inputIdEntrevista"> <?= $vArrastoFundo['af_id'] ?> </td>
                             <td name="inputPesqueiro" > <?= $vArrastoFundo['paf_pesqueiro'] ?> </td>
                             <td name="inputTempoaPesqueiro"> <?= $vArrastoFundo['t_tempopesqueiro'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePesqueiro(<?= $this->entrevista['af_id'] ?>, '<?= $this->url(array("controller" => "arrasto-fundo", "action" => "deletepesqueiro"), null, true) ?>', <?= $vArrastoFundo['af_paf_id'] ?>)"></td>
+                            <td><input type="button" class="button-del" width="5%" onclick="ajax_delete_entrevista_has(<?= $vArrastoFundo['af_id'] ?>, '<?= $this->url(array("controller" => "arrasto-fundo", "action" => "deletepesqueiro"), null, true) ?>', <?= $vArrastoFundo['af_paf_id'] ?>, 'pesqueiro')"></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>

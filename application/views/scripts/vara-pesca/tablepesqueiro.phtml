@@ -15,7 +15,7 @@
                 <td name="inputPesqueiro" > <?= $vVarapesca['paf_pesqueiro'] ?> </td>
                 <td name="inputTempoaPesqueiro"> <?= $vVarapesca['t_tempoapesqueiro'] ?> </td>
                 <td name="inputTempoaPesqueiro"> <?= $vVarapesca['t_distapesqueiro'] ?> </td>
-                <td><input type="button" class="button-del" width="5%" onclick="jsDeletePesqueiro(<?= $this->entrevista['vp_id'] ?>, '<?= $this->url(array("controller" => "vara-pesca", "action" => "deletepesqueiro"), null, true) ?>', <?= $vVarapesca['vp_paf_id'] ?>)"></td>
+                <td><input type="button" class="button-del" width="5%" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['vp_id'] ?>, '<?= $this->url(array("controller" => "vara-pesca", "action" => "deletepesqueiro"), null, true) ?>', <?= $vVarapesca['vp_paf_id'] ?>, 'pesqueiro')"></td>
                 </tr>
             <?php endforeach; ?>
         </table>

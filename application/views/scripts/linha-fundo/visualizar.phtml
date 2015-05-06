@@ -43,10 +43,12 @@
                     </td>
 
                     <td class="td-botao">
-                        <input type="button" name="Excluir" class="button-del" onclick="beforeDelete('<?= $this->url(array("controller" => "linha-fundo", "action" => "excluir", "id" => $entrevista['lf_id']), null, true) ?>')">
+                        <a name="Excluir" class="button-del" onclick="beforeDelete('<?= $this->url(array("controller" => "linha-fundo", "action" => "excluir", "id" => $entrevista['lf_id']), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a> 
                     </td>
-
-                    </a>
 
                 </tr>
             <?php endforeach; ?>

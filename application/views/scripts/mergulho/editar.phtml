@@ -166,7 +166,7 @@
             <fieldset class="noEditable"><legend>Pesqueiro:</legend>
                 <fieldset class="noEditable"><legend>Pesqueiro e tempo até o pesqueiro:</legend>
                     <div id="base">
-                        <input class="responsivo" onclick="ajax_pesqueiro(this.form, '<?= $this->url(array("controller" => "mergulho", "action" => "insertpesqueiro"), null, true) ?>', '<?= $this->entrevista['mer_id'] ?>','distancia')" type="button" value="Novo" />
+                        <input class="responsivo" onclick="ajax_pesqueiro(this.form, '<?= $this->url(array("controller" => "mergulho", "action" => "insertpesqueiro"), null, true) ?>', '<?= $this->entrevista['mer_id'] ?>','distancia')" type="button" value="Adicionar" />
                         <select class="responsivo" style="float:left;" name="nomePesqueiro">
                             <option value="" selected></option>
                             <?php foreach ($this->pesqueiros as $key => $pesqueiro): ?>
@@ -186,7 +186,7 @@
         <fieldset class="noEditable"><legend>Dados das Espécies Capturadas:</legend>
 
             <div >
-                <input class="responsivo" onclick="ajax_esp_capturada(this.form, '<?= $this->url(array("controller" => "mergulho", "action" => "insertespeciecapturada"), null, true) ?>','<?=$this->entrevista['mer_id']?>','venda')" type="button" value="Novo" />
+                <input class="responsivo" onclick="ajax_esp_capturada(this.form, '<?= $this->url(array("controller" => "mergulho", "action" => "insertespeciecapturada"), null, true) ?>','<?=$this->entrevista['mer_id']?>','venda')" type="button" value="Adicionar" />
                 <select class="responsivo-esp"  name="selectEspecie" class="espc">
                     <option value="" selected></option>
                     <?php foreach ($this->especies as $key => $especie): ?>
@@ -212,7 +212,7 @@
     <fieldset class="noEditable"><legend>Avistamento:</legend>
         <fieldset class="noEditable"><legend>O Que foi avistado:</legend>
             <div id="base">
-                <input class="responsivo" onclick="jsInsertAvistamento(this.form, '<?= $this->url(array("controller" => "mergulho", "action" => "insertavistamento"), null, true) ?>', '<?=$this->entrevista['mer_id']?>')" type="button" value="Novo" />
+                <input class="responsivo" onclick="jsInsertAvistamento(this.form, '<?= $this->url(array("controller" => "mergulho", "action" => "insertavistamento"), null, true) ?>', '<?=$this->entrevista['mer_id']?>')" type="button" value="Adicionar" />
                 
                 <select class="responsivo" style="float:left;" name="SelectAvistamento">
                     <option value="" selected></option>

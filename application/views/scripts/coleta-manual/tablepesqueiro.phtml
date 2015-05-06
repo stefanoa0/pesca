@@ -15,7 +15,7 @@
                 <td name="inputPesqueiro" > <?= $vColetaManual['paf_pesqueiro'] ?> </td>
                 <td name="inputTempoaPesqueiro"> <?= $vColetaManual['t_tempoapesqueiro'] ?> </td>
                 <td name="inputTempoaPesqueiro"> <?= $vColetaManual['t_distapesqueiro'] ?> </td>
-                <td><input type="button" class="button-del" width="5%" onclick="jsDeletePesqueiro(<?= $this->entrevista['cml_id'] ?>, '<?= $this->url(array("controller" => "coleta-manual", "action" => "deletepesqueiro"), null, true) ?>', <?= $vColetaManual['cml_paf_id'] ?>)"></td>
+                <td><input type="button" class="button-del" width="5%" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['cml_id'] ?>, '<?= $this->url(array("controller" => "coleta-manual", "action" => "deletepesqueiro"), null, true) ?>', <?= $vColetaManual['cml_paf_id'] ?>, 'pesqueiro')"></td>
                 </tr>
             <?php endforeach; ?>
         </table>

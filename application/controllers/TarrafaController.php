@@ -203,13 +203,15 @@ private $usuario;
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idEntrevistaHasPesqueiro = $this->_getParam("id");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasPesqueiro = $this->_getParam("id_entrevista_has_pesqueiro");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
         $this->modelTarrafa->deletePesqueiro($idEntrevistaHasPesqueiro);
 
-        $this->redirect("/tarrafa/editar/id/" . $backUrl);
+        $this->redirect("/tarrafa/tablepesqueiro/id/" . $idEntrevista);//
+        //$this->redirect("/tarrafa/editar/id/" . $backUrl);
     }
     public function tableespcapturaAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
         //IMPORTANTE TER!!
@@ -248,13 +250,15 @@ private $usuario;
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idEntrevistaHasEspecie = $this->_getParam("id");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasEspecie = $this->_getParam("id_entrevista_has_especie");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
         $this->modelTarrafa->deleteEspCapturada($idEntrevistaHasEspecie);
 
-        $this->redirect("/tarrafa/editar/id/" . $backUrl);
+        $this->redirect("/tarrafa/tableespcaptura/id/" . $idEntrevista);
+        //$this->redirect("/tarrafa/editar/id/" . $backUrl);
     }
     public function insertavistamentoAction(){
         $this->_helper->layout->disableLayout();

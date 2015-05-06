@@ -221,13 +221,15 @@ class EmalheController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idEntrevistaHasPesqueiro = $this->_getParam("id");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasPesqueiro = $this->_getParam("id_entrevista_has_pesqueiro");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
         $this->modelEmalhe->deletePesqueiro($idEntrevistaHasPesqueiro);
 
-        $this->redirect("/emalhe/editar/id/" . $backUrl);
+        $this->redirect("/emalhe/tablepesqueiro/id/" . $idEntrevista);
+        //$this->redirect("/emalhe/editar/id/" . $backUrl);
     }
     public function tableespcapturaAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
         //IMPORTANTE TER!!
@@ -273,13 +275,15 @@ class EmalheController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idEntrevistaHasEspecie = $this->_getParam("id");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasEspecie = $this->_getParam("id_entrevista_has_especie");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
         $this->modelEmalhe->deleteEspCapturada($idEntrevistaHasEspecie);
 
-        $this->redirect("/emalhe/editar/id/" . $backUrl);
+        $this->redirect("/emalhe/tableespcaptura/id/" . $idEntrevista);
+        //$this->redirect("/emalhe/editar/id/" . $backUrl);
     }
     public function insertavistamentoAction(){
         if($this->usuario['tp_id']==5){

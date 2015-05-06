@@ -224,13 +224,15 @@ public function visualizarAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idEntrevistaHasPesqueiro = $this->_getParam("id");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasPesqueiro = $this->_getParam("id_entrevista_has_pesqueiro");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
         $this->modelLinha->deletePesqueiro($idEntrevistaHasPesqueiro);
 
-        $this->redirect("/linha/editar/id/" . $backUrl);
+        $this->redirect("/linha/tablepesqueiro/id/" . $idEntrevista);
+        //$this->redirect("/linha/editar/id/" . $backUrl);
     }
     
     
@@ -278,13 +280,15 @@ public function visualizarAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idEntrevistaHasEspecie = $this->_getParam("id");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasEspecie = $this->_getParam("id_entrevista_has_especie");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
         $this->modelLinha->deleteEspCapturada($idEntrevistaHasEspecie);
 
-        $this->redirect("/linha/editar/id/" . $backUrl);
+        $this->redirect("/linha/tableespcaptura/id/" . $idEntrevista);
+        //$this->redirect("/linha/editar/id/" . $backUrl);
     }
     public function insertavistamentoAction(){
         if($this->usuario['tp_id'] == 5){
