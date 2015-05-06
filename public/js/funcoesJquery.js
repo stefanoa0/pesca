@@ -1609,10 +1609,12 @@ function ajax_pesqueiro(form, url, id_entrevista, tipo_entrevista){
                 }
                 else if(tipo_entrevista === 'distancia'){
                     var tempo = form.tempoAPesqueiro.value;
+                    
                     var distancia = form.distAPesqueiro.value;
 
                     vars = "nomePesqueiro="+pesqueiro+"&tempoAPesqueiro="+tempo+"&distAPesqueiro="+distancia+
                         "&id_entrevista="+id_entrevista;
+                        //alert(vars);
                 }
                 else{
                 //var ln = document.getElementById("last_name").value;

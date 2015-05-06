@@ -22,14 +22,63 @@ class EstatisticaController extends Zend_Controller_Action
         $this->modelUsuario = new Application_Model_Usuario();
         $this->usuario = $this->modelUsuario->selectLogin($identity2['tl_id']);
         $this->view->assign("usuario", $this->usuario);
+        
+         $this->modelPescador =   new Application_Model_Pescador();
+        $this->modelArrasto =    new Application_Model_ArrastoFundo();
+        $this->modelCalao =      new Application_Model_Calao();
+        $this->modelColeta =     new Application_Model_ColetaManual();
+        $this->modelEmalhe =     new Application_Model_Emalhe();
+        $this->modelGroseira =   new Application_Model_Grosseira();
+        $this->modelJerere =     new Application_Model_Jerere();
+        $this->modelLinha =      new Application_Model_Linha();
+        $this->modelLinhaFundo = new Application_Model_LinhaFundo();
+        $this->modelManzua =     new Application_Model_Manzua();
+        $this->modelMergulho =   new Application_Model_Mergulho();
+        $this->modelRatoeira =   new Application_Model_Ratoeira();
+        $this->modelSiripoia =   new Application_Model_Siripoia();
+        $this->modelTarrafa =    new Application_Model_Tarrafa();
+        $this->modelVaraPesca =  new Application_Model_VaraPesca();
     }
 
     public function indexAction()
     {
         // action body
     }
-    
+    function array_sort($array, $on, $order = SORT_ASC) {
+        $new_array = array();
+        $sortable_array = array();
+
+        if (count($array) > 0) {
+            foreach ($array as $k => $v) {
+                if (is_array($v)) {
+                    foreach ($v as $k2 => $v2) {
+                        if ($k2 == $on) {
+                            $sortable_array[$k] = $v2;
+                        }
+                    }
+                } else {
+                    $sortable_array[$k] = $v;
+                }
+            }
+
+            switch ($order) {
+                case SORT_ASC:
+                    asort($sortable_array);
+                    break;
+                case SORT_DESC:
+                    arsort($sortable_array);
+                    break;
+            }
+
+            foreach ($sortable_array as $k => $v) {
+                $new_array[$k] = $array[$k];
+            }
+        }
+
+        return $new_array;
+    }
     public function separaArrayPescadores($arrayPescadores){
+        
         foreach($arrayPescadores as $consulta):
             $count[] = $consulta['count'];
             $porto[] = $consulta['pto_nome'];
@@ -41,21 +90,21 @@ class EstatisticaController extends Zend_Controller_Action
     
     public function pescadorAction()
     {
-        $this->modelPescador = new Application_Model_Pescador();
-        $this->modelArrasto = new Application_Model_ArrastoFundo();
-        $this->modelCalao = new Application_Model_Calao();
-        $this->modelColeta = new Application_Model_ColetaManual();
-        $this->modelEmalhe = new Application_Model_Emalhe();
-        $this->modelGroseira = new Application_Model_Grosseira();
-        $this->modelJerere = new Application_Model_Jerere();
-        $this->modelLinha = new Application_Model_Linha();
+        $this->modelPescador =   new Application_Model_Pescador();
+        $this->modelArrasto =    new Application_Model_ArrastoFundo();
+        $this->modelCalao =      new Application_Model_Calao();
+        $this->modelColeta =     new Application_Model_ColetaManual();
+        $this->modelEmalhe =     new Application_Model_Emalhe();
+        $this->modelGroseira =   new Application_Model_Grosseira();
+        $this->modelJerere =     new Application_Model_Jerere();
+        $this->modelLinha =      new Application_Model_Linha();
         $this->modelLinhaFundo = new Application_Model_LinhaFundo();
-        $this->modelManzua = new Application_Model_Manzua();
-        $this->modelMergulho = new Application_Model_Mergulho();
-        $this->modelRatoeira = new Application_Model_Ratoeira();
-        $this->modelSiripoia = new Application_Model_Siripoia();
-        $this->modelTarrafa = new Application_Model_Tarrafa();
-        $this->modelVaraPesca = new Application_Model_VaraPesca();
+        $this->modelManzua =     new Application_Model_Manzua();
+        $this->modelMergulho =   new Application_Model_Mergulho();
+        $this->modelRatoeira =   new Application_Model_Ratoeira();
+        $this->modelSiripoia =   new Application_Model_Siripoia();
+        $this->modelTarrafa =    new Application_Model_Tarrafa();
+        $this->modelVaraPesca =  new Application_Model_VaraPesca();
         //Quantidade de Pescadores
         $pescadores = $this->modelPescador->selectView();
         $quantPescador = count($pescadores);
@@ -212,30 +261,147 @@ class EstatisticaController extends Zend_Controller_Action
     public function barcoAction()
     {
         $this->modelEmbarcacaoDetalhada = new Application_Model_EmbarcacaoDetalhada();
+        
+        $this->modelBarcos = new Application_Model_Barcos();
         //Embarcacoes Por porto
+        $totalBarcos = $this->modelBarcos->select();
+        $quantBarcos = count($totalBarcos);
+        $this->view->assign("quantBarcos", $quantBarcos);
+        
+        $totalEmbarcacoes = $this->modelEmbarcacaoDetalhada->select();
+        $quantEmbarcacoes = count($totalEmbarcacoes);
+        $this->view->assign("quantEmbarcacoes", $quantEmbarcacoes);
+        
+        
         $embarcacoesByPorto = $this->modelEmbarcacaoDetalhada->selectEmbarcacoesByPorto();
-        $this->view->assign("embarcacoesByPorto", $embarcacoesByPorto);
+        foreach($embarcacoesByPorto as $dados){
+            $portos[] = $dados['pto_nome'];
+            $countBarcosPorto[] = $dados['count'];
+        }
+        $this->view->assign("portos", json_encode($portos));
+        $this->view->assign("countEmbarcacoes", json_encode($countBarcosPorto));
         
         //Percentual de estado de conservação das embarcações
         $embarcacoesByConservacao = $this->modelEmbarcacaoDetalhada->selectEmbarcacoesByConservacao();
-        $this->view->assign("embarcacoesByConservacao", $embarcacoesByConservacao);
+        foreach($embarcacoesByConservacao as $dados):
+            if($dados['conservacao'] == 'Bom'){
+                $bom = $dados['count'];
+            }
+            if($dados['conservacao'] == 'Ruim'){
+                $ruim = $dados['count'];
+            }
+            if($dados['conservacao'] == 'Não Declarado'){
+                $naoRespondeu = $dados['count'];
+            }
+        endforeach;
+        
+        $this->view->assign("bom", $bom);
+        $this->view->assign("ruim", $ruim);
+        $this->view->assign("naoRespondeu", $naoRespondeu);
+        
         
         //Percentual de Embarcações por Artes de Pesca
         $embarcacoesByArte = $this->modelEmbarcacaoDetalhada->selectEmbarcacoesByArtePesca();
         $this->view->assign("embarcacoesByArte", $embarcacoesByArte);
         
         $embarcacoesByEstado = $this->modelEmbarcacaoDetalhada->selectEmbarcacoesByEstado();
-        $this->view->assign("embarcacoesByEstado", $embarcacoesByEstado);
+        foreach($embarcacoesByEstado as $dados):
+            if($dados['estado'] == 'Nova'){
+                $nova = $dados['count'];
+            }
+            if($dados['estado'] == 'Usada'){
+                $usada = $dados['count'];
+            }
+            if($dados['estado'] == 'Não Declarado'){
+                $naoRespondeuEstado = $dados['count'];
+            }
+        endforeach;
+        //print_r($embarcacoesByEstado);
+        $this->view->assign("nova", $nova);
+        $this->view->assign("usada", $usada);
+        $this->view->assign("naoRespondeuEstado", $naoRespondeuEstado);
        
         $embarcacoesByAnoConstrucao = $this->modelEmbarcacaoDetalhada->selectEmbarcacoesByAnoConstr();
-        $this->view->assign("embarcacoesByAnoConstrucao", $embarcacoesByAnoConstrucao);
+        $embarcacoesByAnoConstrucaoOrdenado = $this->array_sort($embarcacoesByAnoConstrucao, 'ted_ano_construcao');
+        foreach($embarcacoesByAnoConstrucaoOrdenado as $dados):
+            $ano[] = $dados['ted_ano_construcao'];
+            $countEmbByAno[] = $dados['count'];
+        endforeach;
+        
+        $this->view->assign("ano",  json_encode($ano));
+        $this->view->assign("embarcacoesByAnoConstrucao", json_encode($countEmbByAno));
         
         //print_r($embarcacoesByAnoConstrucao);
     }
     
     public function entrevistaAction()
     {
-        // action body
+        $quantidadeArrasto    = $this->modelArrasto   ->select();
+        $quantidadeCalao      = $this->modelCalao     ->select();
+        $quantidadeColeta     = $this->modelColeta    ->select();
+        $quantidadeEmalhe     = $this->modelEmalhe    ->select();
+        $quantidadeGrosseira  = $this->modelGroseira  ->select();
+        $quantidadeJerere     = $this->modelJerere    ->select();
+        $quantidadeLinha      = $this->modelLinha     ->select();
+        $quantidadeLinhaFundo = $this->modelLinhaFundo->select();
+        $quantidadeManzua     = $this->modelManzua    ->select();
+        $quantidadeMergulho   = $this->modelMergulho  ->select();
+        $quantidadeRatoeira   = $this->modelRatoeira  ->select();
+        $quantidadeSiripoia   = $this->modelSiripoia  ->select();
+        $quantidadeTarrafa    = $this->modelTarrafa   ->select();
+        $quantidadeVaraPesca  = $this->modelVaraPesca ->select();
+        
+        $qtdArrasto =  count($quantidadeArrasto);
+        $qtdCalao =    count($quantidadeCalao);
+        $qtdColeta =   count($quantidadeColeta);
+        $qtdEmalhe =   count($quantidadeEmalhe);
+        $qtdGrosseira= count($quantidadeGrosseira);
+        $qtdJerere =   count($quantidadeJerere);
+        $qtdLinha =    count($quantidadeLinha);
+        $qtdLinhaFundo=count($quantidadeLinhaFundo);
+        $qtdManzua=    count($quantidadeManzua);
+        $qtdMergulho=  count($quantidadeMergulho);
+        $qtdRatoeira=  count($quantidadeRatoeira);
+        $qtdSiripoia=  count($quantidadeSiripoia);
+        $qtdTarrafa=   count($quantidadeTarrafa);
+        $qtdVaraPesca =count($quantidadeVaraPesca);
+        
+        $totalEntrevistas =  $qtdArrasto+ 
+                             $qtdCalao+  
+                             $qtdColeta+  
+                             $qtdEmalhe+  
+                             $qtdGrosseira+
+                             $qtdJerere+
+                             $qtdLinha+   
+                             $qtdLinhaFundo+
+                             $qtdManzua+
+                             $qtdMergulho+
+                             $qtdRatoeira+ 
+                             $qtdSiripoia+ 
+                             $qtdTarrafa+ 
+                             $qtdVaraPesca;
+        
+        $arrayQuantidades =  array(
+                $qtdArrasto, 
+                $qtdCalao, 
+                $qtdColeta, 
+                $qtdEmalhe, 
+                $qtdGrosseira, 
+                $qtdJerere, 
+                $qtdLinha, 
+                $qtdLinhaFundo,
+                $qtdManzua,
+                $qtdMergulho,
+                $qtdRatoeira,
+                $qtdSiripoia,
+                $qtdTarrafa,
+                $qtdVaraPesca);
+        $arrayArtes = array("Arrasto de Fundo", "Calão", "Coleta Manual", "Emalhe", "Espinhel/Groseira", "Jerere", "Linha", "Linha de Fundo", "Manzuá", "Mergulho", "Ratoeira", "Siripoia", "Tarrafa", "Vara de Pesca");
+        
+        $this->view->assign("totalEntrevistas", $totalEntrevistas);
+        $this->view->assign("arrayLabels", json_encode($arrayArtes));
+        $this->view->assign("arrayQuantidades", json_encode($arrayQuantidades));
+        
     }
     
     public function capturaAction()

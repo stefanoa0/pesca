@@ -517,7 +517,7 @@ class Application_Model_ArrastoFundo
         $dbTable = new Application_Model_DbTable_VEntrevistaArrasto();
         
         $select = $dbTable->select()->
-                from('v_entrevista_arrasto', array('pto_nome', 'count(tp_nome)'))
+                from('v_entrevista_arrasto', array('pto_nome', 'count(af_id)'))
                 ->group(array('pto_nome'));
         
         if(!is_null($where)){
