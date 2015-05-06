@@ -11,7 +11,7 @@
                 <tr id="itemEmalheRows">
                 <td name="inputIdEntrevista"> <?= $vEmalhe['em_id'] ?> </td>
                 <td name="inputPesqueiro"> <?= $vEmalhe['paf_pesqueiro'] ?> </td>
-                <td><input type="button" class="button-del" width="5%" onclick="jsDeletePesqueiro(<?= $this->entrevista['em_id'] ?>, '<?= $this->url(array("controller" => "emalhe", "action" => "deletepesqueiro"), null, true) ?>', <?= $vEmalhe['em_paf_id'] ?>)"></td>
+                <td><input type="button" class="button-del" width="5%" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['em_id'] ?>, '<?= $this->url(array("controller" => "emalhe", "action" => "deletepesqueiro"), null, true) ?>', <?= $vEmalhe['em_paf_id'] ?>, 'pesqueiro')"></td>
                 </tr>
             <?php endforeach; ?>
         </table>

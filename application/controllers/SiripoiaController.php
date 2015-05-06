@@ -231,13 +231,15 @@ class SiripoiaController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idEntrevistaHasPesqueiro = $this->_getParam("id");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasPesqueiro = $this->_getParam("id_entrevista_has_pesqueiro");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
         $this->modelSiripoia->deletePesqueiro($idEntrevistaHasPesqueiro);
 
-        $this->redirect("/siripoia/editar/id/" . $backUrl);
+        $this->redirect("/siripoia/tablepesqueiro/id/" . $idEntrevista);//
+        //$this->redirect("/siripoia/editar/id/" . $backUrl);
     }
     public function tableespcapturaAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
         //IMPORTANTE TER!!
@@ -277,13 +279,15 @@ class SiripoiaController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idEntrevistaHasEspecie = $this->_getParam("id");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasEspecie = $this->_getParam("id_entrevista_has_especie");
 
-        $backUrl = $this->_getParam("back_url");
+        //$backUrl = $this->_getParam("back_url");
 
         $this->modelSiripoia->deleteEspCapturada($idEntrevistaHasEspecie);
 
-        $this->redirect("/siripoia/editar/id/" . $backUrl);
+        $this->redirect("/siripoia/tableespcaptura/id/" . $idEntrevista);
+        //$this->redirect("/siripoia/editar/id/" . $backUrl);
     }
     public function insertavistamentoAction(){
         $this->_helper->layout->disableLayout();

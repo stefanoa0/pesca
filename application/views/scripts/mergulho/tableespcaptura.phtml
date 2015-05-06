@@ -17,7 +17,7 @@
                 <td name="inputQuantidade"> <?= $vEspecieCapturada['spc_quantidade'] . ' Unidades' ?> </td>
                 <td name="inputPeso"> <?= $vEspecieCapturada['spc_peso_kg'] . ' kg' ?> </td>
                 <td name="inputPreco"> <?= 'R$ ' . $vEspecieCapturada['spc_preco'] ?> </td>
-                <td><input type="button" class="button-del" width="5%" onclick="jsDeleteEspecieCapturada(<?= $this->entrevista['mer_id'] ?>, '<?= $this->url(array("controller" => "mergulho", "action" => "deletespecie"), null, true) ?>', <?= $vEspecieCapturada['spc_mer_id'] ?>)"></td>
+                <td><input type="button" class="button-del" width="5%" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['mer_id'] ?>, '<?= $this->url(array("controller" => "mergulho", "action" => "deletespecie"), null, true) ?>', <?= $vEspecieCapturada['spc_mer_id'] ?>, 'especie')"></td>
                 </tr>
             <?php endforeach; ?>
         </table>

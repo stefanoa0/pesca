@@ -15,7 +15,7 @@
                 <td name="inputPesqueiro" > <?= $vManzua['paf_pesqueiro'] ?> </td>
                 <td name="inputTempoaPesqueiro"> <?= $vManzua['t_tempoapesqueiro'] ?> </td>
                 <td name="inputTempoaPesqueiro"> <?= $vManzua['t_distapesqueiro'] ?> </td>
-                <td><input type="button" class="button-del" width="5%" onclick="jsDeletePesqueiro(<?= $this->entrevista['man_id'] ?>, '<?= $this->url(array("controller" => "manzua", "action" => "deletepesqueiro"), null, true) ?>', <?= $vManzua['man_paf_id'] ?>)"></td>
+                <td><input type="button" class="button-del" width="5%" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['man_id'] ?>, '<?= $this->url(array("controller" => "manzua", "action" => "deletepesqueiro"), null, true) ?>', <?= $vManzua['man_paf_id'] ?>, 'pesqueiro')"></td>
                 </tr>
             <?php endforeach; ?>
         </table>

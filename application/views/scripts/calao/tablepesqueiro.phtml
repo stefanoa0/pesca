@@ -11,7 +11,7 @@
                         <tr id="itemArrastoRows">
                             <td name="inputIdEntrevista"> <?= $vCalao['cal_id'] ?> </td>
                             <td name="inputPesqueiro"> <?= $vCalao['paf_pesqueiro'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePesqueiro(<?= $this->entrevista['cal_id'] ?>, '<?= $this->url(array("controller" => "calao", "action" => "deletepesqueiro"), null, true) ?>', <?= $vCalao['cal_paf_id'] ?>)"></td>
+                            <td><input type="button" class="button-del" width="5%" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['cal_id'] ?>, '<?= $this->url(array("controller" => "calao", "action" => "deletepesqueiro"), null, true) ?>', <?= $vCalao['cal_paf_id'] ?>, 'pesqueiro')"></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>

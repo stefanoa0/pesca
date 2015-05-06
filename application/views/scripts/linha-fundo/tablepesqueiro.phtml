@@ -15,7 +15,7 @@
                 <td name="inputPesqueiro" > <?= $vLinhaFundo['paf_pesqueiro'] ?> </td>
                 <td name="inputTempoaPesqueiro"> <?= $vLinhaFundo['t_tempoapesqueiro'] ?> </td>
                 <td name="inputTempoaPesqueiro"> <?= $vLinhaFundo['t_distapesqueiro'] ?> </td>
-                <td><input type="button" class="button-del" width="5%" onclick="jsDeletePesqueiro(<?= $this->entrevista['lf_id'] ?>, '<?= $this->url(array("controller" => "linha-fundo", "action" => "deletepesqueiro"), null, true) ?>', <?= $vLinhaFundo['lf_paf_id'] ?>)"></td>
+                <td><input type="button" class="button-del" width="5%" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['lf_id'] ?>, '<?= $this->url(array("controller" => "linha-fundo", "action" => "deletepesqueiro"), null, true) ?>', <?= $vLinhaFundo['lf_paf_id'] ?>, 'pesqueiro')"></td>
                 </tr>
             <?php endforeach; ?>
         </table>
