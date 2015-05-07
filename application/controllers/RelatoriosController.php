@@ -5690,7 +5690,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrArrasto = $modelArrasto->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrArrasto = $modelArrasto->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrArrasto[0]['count']);
             $coluna++;
             //$linha++;
@@ -5728,7 +5728,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrColetaManual = $modelColetaManual->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrColetaManual = $modelColetaManual->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrColetaManual[0]['count']);
             $coluna++;
             //$linha++;
@@ -5737,7 +5737,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrEmalhe = $modelEmalhe->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrEmalhe = $modelEmalhe->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrEmalhe[0]['count']);
             $coluna++;
             //$linha++;
@@ -5746,7 +5746,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrGrosseira = $modelGrosseira->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrGrosseira = $modelGrosseira->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrGrosseira[0]['count']);
             $coluna++;
             //$linha++;
@@ -5755,7 +5755,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrJerere = $modelJerere->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrJerere = $modelJerere->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrJerere[0]['count']);
             $coluna++;
             //$linha++;
@@ -5764,7 +5764,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrLinha = $modelLinha->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrLinha = $modelLinha->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrLinha[0]['count']);
             $coluna++;
             //$linha++;
@@ -5773,7 +5773,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrLinhaFundo = $modelLinhaFundo->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrLinhaFundo = $modelLinhaFundo->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrLinhaFundo[0]['count']);
             $coluna++;
             //$linha++;
@@ -5782,7 +5782,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrManzua = $modelManzua->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrManzua = $modelManzua->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrManzua[0]['count']);
             $coluna++;
             //$linha++;
@@ -5791,7 +5791,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrMergulho = $modelMergulho->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrMergulho = $modelMergulho->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrMergulho[0]['count']);
             $coluna++;
             //$linha++;
@@ -5800,7 +5800,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrRatoeira = $modelRatoeira->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrRatoeira = $modelRatoeira->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrRatoeira[0]['count']);
             $coluna++;
             //$linha++;
@@ -5809,7 +5809,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrSiripoia = $modelSiripoia->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrSiripoia = $modelSiripoia->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrSiripoia[0]['count']);
             $coluna++;
             //$linha++;
@@ -5818,7 +5818,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrTarrafa = $modelTarrafa->selectEntrevistasByPorto("tar_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrTarrafa = $modelTarrafa->selectEntrevistasByPorto("tar_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrTarrafa[0]['count']);
             $coluna++;
             //$linha++;
@@ -5827,7 +5827,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrVaraPesca = $modelVaraPesca->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrVaraPesca = $modelVaraPesca->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrVaraPesca[0]['count']);
             $coluna++;
             //$linha++;

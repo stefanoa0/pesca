@@ -494,5 +494,17 @@ class Application_Model_Jerere
         }
         return $dbTable->fetchAll($select)->toArray();        
     }
+    
+    public function selectPesqueirosVisitados($where = null,$order = null, $limit = null){
+        $dbTable = new Application_Model_DbTable_VJerereHasPesqueiro();
+        
+        $select = $dbTable->select()->from('v_jerere_has_t_pesqueiro',array('count(jre_id)','paf_pesqueiro'))->
+                group('paf_pesqueiro')->order($order)->limit($limit);
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
 }
 

@@ -366,41 +366,44 @@ class EstatisticaController extends Zend_Controller_Action
         $qtdTarrafa=   count($quantidadeTarrafa);
         $qtdVaraPesca =count($quantidadeVaraPesca);
         
-        $totalEntrevistas =  $qtdArrasto+ 
-                             $qtdCalao+  
-                             $qtdColeta+  
-                             $qtdEmalhe+  
-                             $qtdGrosseira+
-                             $qtdJerere+
-                             $qtdLinha+   
-                             $qtdLinhaFundo+
-                             $qtdManzua+
-                             $qtdMergulho+
-                             $qtdRatoeira+ 
-                             $qtdSiripoia+ 
-                             $qtdTarrafa+ 
-                             $qtdVaraPesca;
+        $totalEntrevistas =  $qtdArrasto+ $qtdCalao+  $qtdColeta+  $qtdEmalhe+  $qtdGrosseira+$qtdJerere+$qtdLinha+   $qtdLinhaFundo+$qtdManzua+$qtdMergulho+$qtdRatoeira+ $qtdSiripoia+ $qtdTarrafa+ $qtdVaraPesca;
         
-        $arrayQuantidades =  array(
-                $qtdArrasto, 
-                $qtdCalao, 
-                $qtdColeta, 
-                $qtdEmalhe, 
-                $qtdGrosseira, 
-                $qtdJerere, 
-                $qtdLinha, 
-                $qtdLinhaFundo,
-                $qtdManzua,
-                $qtdMergulho,
-                $qtdRatoeira,
-                $qtdSiripoia,
-                $qtdTarrafa,
-                $qtdVaraPesca);
+        $arrayQuantidades =  array($qtdArrasto, $qtdCalao, $qtdColeta, $qtdEmalhe, $qtdGrosseira, $qtdJerere, $qtdLinha, $qtdLinhaFundo,$qtdManzua,$qtdMergulho,$qtdRatoeira,$qtdSiripoia,$qtdTarrafa,$qtdVaraPesca);
         $arrayArtes = array("Arrasto de Fundo", "Calão", "Coleta Manual", "Emalhe", "Espinhel/Groseira", "Jerere", "Linha", "Linha de Fundo", "Manzuá", "Mergulho", "Ratoeira", "Siripoia", "Tarrafa", "Vara de Pesca");
         
         $this->view->assign("totalEntrevistas", $totalEntrevistas);
         $this->view->assign("arrayLabels", json_encode($arrayArtes));
         $this->view->assign("arrayQuantidades", json_encode($arrayQuantidades));
+        
+        $pesqueirosArrasto    = $this->modelArrasto   ->selectPesqueirosVisitados(null,'count Desc','30');
+        $pesqueirosCalao      = $this->modelCalao     ->selectPesqueirosVisitados(null,'count Desc','30');
+        $pesqueirosColeta     = $this->modelColeta    ->selectPesqueirosVisitados(null,'count Desc','30');
+        $pesqueirosEmalhe     = $this->modelEmalhe    ->selectPesqueirosVisitados(null,'count Desc','30');
+        $pesqueirosGrosseira  = $this->modelGroseira  ->selectPesqueirosVisitados(null,'count Desc','30');
+        $pesqueirosJerere     = $this->modelJerere    ->selectPesqueirosVisitados(null,'count Desc','30');
+        $pesqueirosLinha      = $this->modelLinha     ->selectPesqueirosVisitados(null,'count Desc','30');
+        $pesqueirosLinhaFundo = $this->modelLinhaFundo->selectPesqueirosVisitados(null,'count Desc','30');
+        $pesqueirosManzua     = $this->modelManzua    ->selectPesqueirosVisitados(null,'count Desc','30');
+        $pesqueirosMergulho   = $this->modelMergulho  ->selectPesqueirosVisitados(null,'count Desc','30');
+        $pesqueirosRatoeira   = $this->modelRatoeira  ->selectPesqueirosVisitados(null,'count Desc','30');
+        $pesqueirosSiripoia   = $this->modelSiripoia  ->selectPesqueirosVisitados(null,'count Desc','30');
+        $pesqueirosTarrafa    = $this->modelTarrafa   ->selectPesqueirosVisitados(null,'count Desc','30');
+        $pesqueirosVaraPesca  = $this->modelVaraPesca ->selectPesqueirosVisitados(null,'count Desc','30');
+        
+        print_r($pesqueirosArrasto); 
+        print_r($pesqueirosCalao); 
+        print_r($pesqueirosColeta); 
+        print_r($pesqueirosEmalhe); 
+        print_r($pesqueirosGrosseira); 
+        print_r($pesqueirosJerere); 
+        print_r($pesqueirosLinha); 
+        print_r($pesqueirosLinhaFundo);
+        print_r($pesqueirosManzua); 
+        print_r($pesqueirosMergulho); 
+        print_r($pesqueirosRatoeira); 
+        print_r($pesqueirosSiripoia); 
+        print_r($pesqueirosTarrafa); 
+        print_r($pesqueirosVaraPesca); 
         
     }
     
