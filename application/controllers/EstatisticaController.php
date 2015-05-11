@@ -375,36 +375,121 @@ class EstatisticaController extends Zend_Controller_Action
         $this->view->assign("arrayLabels", json_encode($arrayArtes));
         $this->view->assign("arrayQuantidades", json_encode($arrayQuantidades));
         
-        $pesqueirosArrasto    = $this->modelArrasto   ->selectPesqueirosVisitados(null,'count Desc','30');
-        $pesqueirosCalao      = $this->modelCalao     ->selectPesqueirosVisitados(null,'count Desc','30');
-        $pesqueirosColeta     = $this->modelColeta    ->selectPesqueirosVisitados(null,'count Desc','30');
-        $pesqueirosEmalhe     = $this->modelEmalhe    ->selectPesqueirosVisitados(null,'count Desc','30');
-        $pesqueirosGrosseira  = $this->modelGroseira  ->selectPesqueirosVisitados(null,'count Desc','30');
-        $pesqueirosJerere     = $this->modelJerere    ->selectPesqueirosVisitados(null,'count Desc','30');
-        $pesqueirosLinha      = $this->modelLinha     ->selectPesqueirosVisitados(null,'count Desc','30');
-        $pesqueirosLinhaFundo = $this->modelLinhaFundo->selectPesqueirosVisitados(null,'count Desc','30');
-        $pesqueirosManzua     = $this->modelManzua    ->selectPesqueirosVisitados(null,'count Desc','30');
-        $pesqueirosMergulho   = $this->modelMergulho  ->selectPesqueirosVisitados(null,'count Desc','30');
-        $pesqueirosRatoeira   = $this->modelRatoeira  ->selectPesqueirosVisitados(null,'count Desc','30');
-        $pesqueirosSiripoia   = $this->modelSiripoia  ->selectPesqueirosVisitados(null,'count Desc','30');
-        $pesqueirosTarrafa    = $this->modelTarrafa   ->selectPesqueirosVisitados(null,'count Desc','30');
-        $pesqueirosVaraPesca  = $this->modelVaraPesca ->selectPesqueirosVisitados(null,'count Desc','30');
+        $pesqueirosArrasto    = $this->modelArrasto   ->selectPesqueirosVisitados(null,'count Desc','25');
+        $pesqueirosCalao      = $this->modelCalao     ->selectPesqueirosVisitados(null,'count Desc','25');
+        $pesqueirosColeta     = $this->modelColeta    ->selectPesqueirosVisitados(null,'count Desc','25');
+        $pesqueirosEmalhe     = $this->modelEmalhe    ->selectPesqueirosVisitados(null,'count Desc','25');
+        $pesqueirosGrosseira  = $this->modelGroseira  ->selectPesqueirosVisitados(null,'count Desc','25');
+        $pesqueirosJerere     = $this->modelJerere    ->selectPesqueirosVisitados(null,'count Desc','25');
+        $pesqueirosLinha      = $this->modelLinha     ->selectPesqueirosVisitados(null,'count Desc','25');
+        $pesqueirosLinhaFundo = $this->modelLinhaFundo->selectPesqueirosVisitados(null,'count Desc','25');
+        $pesqueirosManzua     = $this->modelManzua    ->selectPesqueirosVisitados(null,'count Desc','25');
+        $pesqueirosMergulho   = $this->modelMergulho  ->selectPesqueirosVisitados(null,'count Desc','25');
+        $pesqueirosRatoeira   = $this->modelRatoeira  ->selectPesqueirosVisitados(null,'count Desc','25');
+        $pesqueirosSiripoia   = $this->modelSiripoia  ->selectPesqueirosVisitados(null,'count Desc','25');
+        $pesqueirosTarrafa    = $this->modelTarrafa   ->selectPesqueirosVisitados(null,'count Desc','25');
+        $pesqueirosVaraPesca  = $this->modelVaraPesca ->selectPesqueirosVisitados(null,'count Desc','25');
         
-        print_r($pesqueirosArrasto); 
-        print_r($pesqueirosCalao); 
-        print_r($pesqueirosColeta); 
-        print_r($pesqueirosEmalhe); 
-        print_r($pesqueirosGrosseira); 
-        print_r($pesqueirosJerere); 
-        print_r($pesqueirosLinha); 
-        print_r($pesqueirosLinhaFundo);
-        print_r($pesqueirosManzua); 
-        print_r($pesqueirosMergulho); 
-        print_r($pesqueirosRatoeira); 
-        print_r($pesqueirosSiripoia); 
-        print_r($pesqueirosTarrafa); 
-        print_r($pesqueirosVaraPesca); 
+        foreach($pesqueirosArrasto as $dados):
+            $pesqArrasto[] = $dados['paf_pesqueiro'];
+            $quantArrasto[] = $dados['count'];    
+        endforeach;
+        foreach($pesqueirosCalao as $dados):
+            $pesqCalao[] = $dados['paf_pesqueiro'];
+            $quantCalao[] = $dados['count'];  
+        endforeach;
+        foreach($pesqueirosColeta as $dados):
+            $pesqColeta[] = $dados['paf_pesqueiro'];
+            $quantColeta[] = $dados['count'];  
+        endforeach;
+        foreach($pesqueirosEmalhe  as $dados):
+            $pesqEmalhe[] = $dados['paf_pesqueiro'];
+            $quantEmalhe[] = $dados['count'];  
+        endforeach;
+        foreach($pesqueirosGrosseira as $dados):
+            $pesqGrosseira[] = $dados['paf_pesqueiro'];
+            $quantGrosseira[] = $dados['count'];  
+        endforeach;
+        foreach($pesqueirosJerere as $dados):
+            $pesqJerere[] = $dados['paf_pesqueiro'];
+            $quantJerere[] = $dados['count'];  
+        endforeach;
+        foreach($pesqueirosLinha as $dados):
+            $pesqLinha[] = $dados['paf_pesqueiro'];
+            $quantLinha[] = $dados['count'];  
+        endforeach;
+        foreach($pesqueirosLinhaFundo as $dados):
+            $pesqLinhaFundo[] = $dados['paf_pesqueiro'];
+            $quantLinhaFundo[] = $dados['count'];  
+        endforeach;
+        foreach($pesqueirosManzua as $dados):
+            $pesqManzua[] = $dados['paf_pesqueiro'];
+            $quantManzua[] = $dados['count'];  
+        endforeach;
+        foreach($pesqueirosMergulho as $dados):
+            $pesqMergulho[] = $dados['paf_pesqueiro'];
+            $quantMergulho[] = $dados['count'];  
+        endforeach;
+        foreach($pesqueirosRatoeira as $dados):
+            $pesqRatoeira[] = $dados['paf_pesqueiro'];
+            $quantRatoeira[] = $dados['count'];  
+        endforeach;
+        foreach($pesqueirosSiripoia as $dados):
+            $pesqSiripoia[] = $dados['paf_pesqueiro'];
+            $quantSiripoia[] = $dados['count'];  
+        endforeach;
+        foreach($pesqueirosTarrafa as $dados):
+            $pesqTarrafa[] = $dados['paf_pesqueiro'];
+            $quantTarrafa[] = $dados['count'];  
+        endforeach;
+        foreach($pesqueirosVaraPesca as $dados):
+            $pesqVaraPesca[] = $dados['paf_pesqueiro'];
+            $quantVaraPesca[] = $dados['count'];  
+        endforeach;
         
+        $this->view->assign("pesqArrasto", json_encode($pesqArrasto));
+        $this->view->assign("quantArrasto", json_encode($quantArrasto));
+        
+        $this->view->assign("pesqCalao", json_encode($pesqCalao));
+        $this->view->assign("quantCalao", json_encode($quantCalao));
+        
+        $this->view->assign("pesqColeta", json_encode($pesqColeta));
+        $this->view->assign("quantColeta", json_encode($quantColeta));
+        
+        $this->view->assign("pesqEmalhe", json_encode($pesqEmalhe));
+        $this->view->assign("quantEmalhe", json_encode($quantEmalhe));
+        
+        $this->view->assign("pesqGrosseira", json_encode($pesqGrosseira));
+        $this->view->assign("quantGrosseira", json_encode($quantGrosseira));
+        
+        $this->view->assign("pesqJerere", json_encode($pesqJerere));
+        $this->view->assign("quantJerere", json_encode($quantJerere));
+        
+        $this->view->assign("pesqLinha", json_encode($pesqLinha));
+        $this->view->assign("quantLinha", json_encode($quantLinha));
+        
+        $this->view->assign("pesqLinhaFundo", json_encode($pesqLinhaFundo));
+        $this->view->assign("quantLinhaFundo", json_encode($quantLinhaFundo));
+        
+        $this->view->assign("pesqManzua", json_encode($pesqManzua));
+        $this->view->assign("quantManzua", json_encode($quantManzua));
+        
+        $this->view->assign("pesqMergulho", json_encode($pesqMergulho));
+        $this->view->assign("quantMergulho", json_encode($quantMergulho));
+        
+        $this->view->assign("pesqRatoeira", json_encode($pesqRatoeira));
+        $this->view->assign("quantRatoeira", json_encode($quantRatoeira));
+        
+        $this->view->assign("pesqSiripoia", json_encode($pesqSiripoia));
+        $this->view->assign("quantSiripoia", json_encode($quantSiripoia));
+        
+        $this->view->assign("pesqTarrafa", json_encode($pesqTarrafa));
+        $this->view->assign("quantTarrafa", json_encode($quantTarrafa));
+        
+        $this->view->assign("pesqVaraPesca", json_encode($pesqVaraPesca));
+        $this->view->assign("quantVaraPesca", json_encode($quantVaraPesca));
+        
+            
     }
     
     public function capturaAction()
