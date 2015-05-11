@@ -449,7 +449,7 @@ class Application_Model_VaraPesca
     public function selectCapturaByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEstimativaVaraPesca();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_estimativa_varapesca', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados)', 'sum(monitorados)', 'sum(peso) as peso', 'mes', 'ano', '((sum(peso)/sum(monitorados))*sum(naomonitorados))+sum(peso) as pesototal'))->
+                from('v_estimativa_varapesca', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados)', 'sum(monitorados)', 'sum(peso) as peso', 'mes', 'ano', 'pesototal'=> new Zend_Db_Expr('((sum(peso)/sum(monitorados))*sum(naomonitorados))+sum(peso)')))->
                 group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
         
         if(!is_null($where)){
@@ -521,11 +521,11 @@ class Application_Model_VaraPesca
     public function cpue($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaVaraPesca();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_varapesca', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar)) as mesAno")->
+                from('v_entrevista_varapesca', array('mesAno' => new Zend_Db_Expr("(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))")))->
                 joinLeft('v_varapesca_has_t_especie_capturada', 'v_entrevista_varapesca.vp_id = v_varapesca_has_t_especie_capturada.vp_id'
-                , array('v_varapesca_has_t_especie_capturada.vp_id','sum(v_varapesca_has_t_especie_capturada.spc_peso_kg) as cpue', 'v_entrevista_varapesca.tl_local','v_entrevista_varapesca.pto_nome'))->
-                group(array('v_varapesca_has_t_especie_capturada.vp_id', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))",'v_entrevista_varapesca.tl_local','v_entrevista_varapesca.pto_nome'))->
-                order("(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))");
+                , array('v_varapesca_has_t_especie_capturada.vp_id','cpue'=> new Zend_Db_Expr('sum(v_varapesca_has_t_especie_capturada.spc_peso_kg)'), 'v_entrevista_varapesca.tl_local','v_entrevista_varapesca.pto_nome'))->
+                group(array('v_varapesca_has_t_especie_capturada.vp_id', "mesAno",'v_entrevista_varapesca.tl_local','v_entrevista_varapesca.pto_nome'))->
+                order("mesAno");
         if(!is_null($where)){
             $select->where($where);
         }

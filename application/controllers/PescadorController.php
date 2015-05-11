@@ -18,6 +18,7 @@ class PescadorController extends Zend_Controller_Action {
     private $modelPescadorEspecialista;
 
     public function init() {
+        
         if (!Zend_Auth::getInstance()->hasIdentity()) {
             $this->_redirect('index');
         }
@@ -38,6 +39,7 @@ class PescadorController extends Zend_Controller_Action {
 
         $this->modelPescador = new Application_Model_Pescador();
         $this->modelPescadorEspecialista = new Application_Model_PescadorEspecialista();
+        
     }
 
     public function indexAction() {
@@ -951,7 +953,7 @@ class PescadorController extends Zend_Controller_Action {
 
         $localPescador = $localModelPescador->select($where, array('tp_nome', 'tp_id'), NULL);
 
-        require_once "../library/Classes/PHPExcel.php";
+
 
         $objPHPExcel = new PHPExcel();
 
@@ -1032,7 +1034,7 @@ class PescadorController extends Zend_Controller_Action {
         $localModelTipoCapturada = new Application_Model_VPescadorHasTipoCapturada();
         $localModelEmbarcacoes = new Application_Model_VPescadorHasEmbarcacao();
 
-        require_once "../library/ModeloRelatorio.php";
+        
         $modeloRelatorio = new ModeloRelatorio();
         $modeloRelatorio->setTitulo('Relatório de Pescador');
 
@@ -1250,7 +1252,6 @@ class PescadorController extends Zend_Controller_Action {
         $localModelPescador = new Application_Model_Pescador();
         $localPescador = $localModelPescador->selectView($where, $order, NULL);
 
-        require_once "../library/ModeloRelatorio.php";
         $modeloRelatorio = new ModeloRelatorio();
         $modeloRelatorio->setTitulo('Relatório de Pescador');
         $modeloRelatorio->setLegenda(30, 'Código');
@@ -1279,7 +1280,7 @@ class PescadorController extends Zend_Controller_Action {
         $localModelPescador = new Application_Model_Pescador();
         $localPescador = $localModelPescador->selectView($where, $order, NULL);
 
-        require_once "../library/ModeloRelatorio.php";
+
         $modeloRelatorio = new ModeloRelatorio();
         $modeloRelatorio->setTitulo('Relatório de Pescador - Comunidade');
         $modeloRelatorio->setLegenda(30, 'Código');
@@ -1311,7 +1312,7 @@ class PescadorController extends Zend_Controller_Action {
         $localModelPescador = new Application_Model_Pescador();
         $localPescador = $localModelPescador->selectView($where, $order, NULL);
 
-        require_once "../library/ModeloRelatorio.php";
+
         $modeloRelatorio = new ModeloRelatorio();
         $modeloRelatorio->setTitulo('Relatório de Pescador - Colônia');
         $modeloRelatorio->setLegenda(30, 'Código');
@@ -1343,7 +1344,7 @@ class PescadorController extends Zend_Controller_Action {
         $localModelPescador = new Application_Model_Pescador();
         $localPescador = $localModelPescador->select_Pescador_group_comunidade();
 
-        require_once "../library/ModeloRelatorio.php";
+
         $modeloRelatorio = new ModeloRelatorio();
         $modeloRelatorio->setTitulo('Relatório de Quantidade de Pescadores por Comunidade');
         $modeloRelatorio->setLegenda(30, 'Nº Pescadores');
@@ -1380,7 +1381,7 @@ class PescadorController extends Zend_Controller_Action {
         $localModelPescador = new Application_Model_Pescador();
         $localPescador = $localModelPescador->select_Pescador_group_colonia();
 
-        require_once "../library/ModeloRelatorio.php";
+
         $modeloRelatorio = new ModeloRelatorio();
         $modeloRelatorio->setTitulo('Relatório de Quantidade de Pescadores por Colônia');
         $modeloRelatorio->setLegenda(30, 'Nº Pescadores');
@@ -1415,7 +1416,7 @@ class PescadorController extends Zend_Controller_Action {
         $localModelPescador = new Application_Model_Pescador();
         $localPescador = $localModelPescador->selectPescadorByPortos();
 
-        require_once "../library/ModeloRelatorio.php";
+
         $modeloRelatorio = new ModeloRelatorio();
         $modeloRelatorio->setTitulo('Relatório de Pescador - Colônia');
         $modeloRelatorio->setLegenda(30, 'Código');
@@ -2153,7 +2154,7 @@ class PescadorController extends Zend_Controller_Action {
         $this->modelPescadorHasColonias = new Application_Model_VPescadorHasColonia();
         $this->modelPescadorHasTipoEmbarcacao = new Application_Model_VPescadorHasEmbarcacao();
         
-        require_once "../library/Classes/PHPExcel.php";
+
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);

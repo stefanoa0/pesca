@@ -432,7 +432,7 @@ class Application_Model_Calao
     public function selectCapturaByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEstimativaCalao();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_estimativa_calao', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados)', 'sum(monitorados)', 'sum(peso) as peso', 'mes', 'ano', '((sum(peso)/sum(monitorados))*sum(naomonitorados))+sum(peso) as pesototal'))->
+                from('v_estimativa_calao', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados)', 'sum(monitorados)', 'sum(peso) as peso', 'mes', 'ano', 'pesototal'=> new Zend_Db_Expr('((sum(peso)/sum(monitorados))*sum(naomonitorados))+sum(peso)')))->
                 group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
         
         if(!is_null($where)){
@@ -504,11 +504,11 @@ class Application_Model_Calao
     public function cpue($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaCalao();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_calao', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar)) as mesAno")->
+                from('v_entrevista_calao', array('mesAno' => new Zend_Db_Expr("(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))")))->
                 joinLeft('v_calao_has_t_especie_capturada', 'v_entrevista_calao.cal_id = v_calao_has_t_especie_capturada.cal_id'
-                , array('v_calao_has_t_especie_capturada.cal_id','sum(v_calao_has_t_especie_capturada.spc_peso_kg) as cpue', 'v_entrevista_calao.tl_local','v_entrevista_calao.pto_nome'))->
-                group(array('v_calao_has_t_especie_capturada.cal_id', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))",'v_entrevista_calao.tl_local','v_entrevista_calao.pto_nome'))->
-                order("(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))");
+                , array('v_calao_has_t_especie_capturada.cal_id','cpue'=> new Zend_Db_Expr('sum(v_calao_has_t_especie_capturada.spc_peso_kg)'), 'v_entrevista_calao.tl_local','v_entrevista_calao.pto_nome'))->
+                group(array('v_calao_has_t_especie_capturada.cal_id', "mesAno",'v_entrevista_calao.tl_local','v_entrevista_calao.pto_nome'))->
+                order("mesAno");
         if(!is_null($where)){
             $select->where($where);
         }

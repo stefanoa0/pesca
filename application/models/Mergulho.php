@@ -393,7 +393,7 @@ private $dbTableMergulho;
         $dbTable = new Application_Model_DbTable_VEstimativaMergulho();
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_estimativa_mergulho', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados)', 'sum(monitorados)', 
-                    'sum(peso) as peso', 'mes', 'ano', '((sum(peso)/sum(monitorados))*sum(naomonitorados))+sum(quantidade) as pesototal'))->
+                    'sum(peso) as peso', 'mes', 'ano', 'pesototal'=> new Zend_Db_Expr('((sum(peso)/sum(monitorados))*sum(naomonitorados))+sum(quantidade)')))->
                 group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
         
         if(!is_null($where)){
@@ -477,11 +477,11 @@ private $dbTableMergulho;
     public function cpue($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaMergulho();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_mergulho', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar)) as mesAno")->
+                from('v_entrevista_mergulho', array('mesAno' => new Zend_Db_Expr("(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))")))->
                 joinLeft('v_mergulho_has_t_especie_capturada', 'v_entrevista_mergulho.mer_id = v_mergulho_has_t_especie_capturada.mer_id'
-                , array('v_mergulho_has_t_especie_capturada.mer_id','sum(v_mergulho_has_t_especie_capturada.spc_peso_kg) as cpue', 'v_entrevista_mergulho.tl_local','v_entrevista_mergulho.pto_nome'))->
-                group(array('v_mergulho_has_t_especie_capturada.mer_id', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))",'v_entrevista_mergulho.tl_local','v_entrevista_mergulho.pto_nome'))->
-                order("(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))");
+                , array('v_mergulho_has_t_especie_capturada.mer_id','cpue'=> new Zend_Db_Expr('sum(v_mergulho_has_t_especie_capturada.spc_peso_kg)'), 'v_entrevista_mergulho.tl_local','v_entrevista_mergulho.pto_nome'))->
+                group(array('v_mergulho_has_t_especie_capturada.mer_id', "mesAno",'v_entrevista_mergulho.tl_local','v_entrevista_mergulho.pto_nome'))->
+                order("mesAno");
         if(!is_null($where)){
             $select->where($where);
         }

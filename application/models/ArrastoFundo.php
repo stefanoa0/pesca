@@ -456,7 +456,7 @@ class Application_Model_ArrastoFundo
     public function selectCapturaByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEstimativaArrasto();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_estimativa_arrasto', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados)', 'sum(monitorados)', 'sum(peso) as peso', 'mes', 'ano', '((sum(peso)/sum(monitorados))*sum(naomonitorados))+sum(peso) as pesototal'))->
+                from('v_estimativa_arrasto', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados)', 'sum(monitorados)', 'sum(peso) as peso', 'mes', 'ano', 'pesototal'=> new Zend_Db_Expr('((sum(peso)/sum(monitorados))*sum(naomonitorados))+sum(peso)')))->
                 group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
         
         if(!is_null($where)){
@@ -530,11 +530,11 @@ class Application_Model_ArrastoFundo
     public function cpue($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaArrasto();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_arrasto', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar)) as mesAno")->
+                from('v_entrevista_arrasto', array('mesAno' => new Zend_Db_Expr("(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))")))->
                 joinLeft('v_arrastofundo_has_t_especie_capturada', 'v_entrevista_arrasto.af_id = v_arrastofundo_has_t_especie_capturada.af_id'
-                , array('v_arrastofundo_has_t_especie_capturada.af_id','sum(v_arrastofundo_has_t_especie_capturada.spc_peso_kg)/v_entrevista_arrasto.dias as cpue', 'v_entrevista_arrasto.tl_local','v_entrevista_arrasto.pto_nome'))->
-                group(array('v_arrastofundo_has_t_especie_capturada.af_id', "(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))",'v_entrevista_arrasto.dias','v_entrevista_arrasto.tl_local','v_entrevista_arrasto.pto_nome'))->
-                order("(cast(date_part('month'::text, fd_data) as varchar)) || '/' || (cast(date_part('year'::text, fd_data) as varchar))");
+                , array('v_arrastofundo_has_t_especie_capturada.af_id','cpue'=> new Zend_Db_Expr('sum(v_arrastofundo_has_t_especie_capturada.spc_peso_kg)/v_entrevista_arrasto.dias'), 'v_entrevista_arrasto.tl_local','v_entrevista_arrasto.pto_nome'))->
+                group(array('v_arrastofundo_has_t_especie_capturada.af_id', 'mesAno','v_entrevista_arrasto.dias','v_entrevista_arrasto.tl_local','v_entrevista_arrasto.pto_nome'))->
+                order('mesAno');
         if(!is_null($where)){
             $select->where($where);
         }

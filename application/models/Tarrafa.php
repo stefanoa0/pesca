@@ -396,7 +396,7 @@ class Application_Model_Tarrafa
     public function selectCapturaByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEstimativaTarrafa();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_estimativa_tarrafa', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados)', 'sum(monitorados)', 'sum(peso) as peso', 'mes', 'ano', '((sum(peso)/sum(monitorados))*sum(naomonitorados))+sum(peso) as pesototal'))->
+                from('v_estimativa_tarrafa', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados)', 'sum(monitorados)', 'sum(peso) as peso', 'mes', 'ano', 'pesototal'=> new Zend_Db_Expr('((sum(peso)/sum(monitorados))*sum(naomonitorados))+sum(peso)')))->
                 group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
         
         if(!is_null($where)){
@@ -469,11 +469,11 @@ class Application_Model_Tarrafa
     public function cpue($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaTarrafa();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_tarrafa', "(cast(date_part('month'::text, tar_data) as varchar)) || '/' || (cast(date_part('year'::text, tar_data) as varchar)) as mesAno")->
+                from('v_entrevista_tarrafa', array('mesAno' => new Zend_Db_Expr("(cast(date_part('month'::text, tar_data) as varchar)) || '/' || (cast(date_part('year'::text, tar_data) as varchar))")))->
                 joinLeft('v_tarrafa_has_t_especie_capturada', 'v_entrevista_tarrafa.tar_id = v_tarrafa_has_t_especie_capturada.tar_id'
-                , array('v_tarrafa_has_t_especie_capturada.tar_id','sum(v_tarrafa_has_t_especie_capturada.spc_peso_kg) as cpue', 'v_entrevista_tarrafa.tl_local','v_entrevista_tarrafa.pto_nome'))->
-                group(array('v_tarrafa_has_t_especie_capturada.tar_id', "(cast(date_part('month'::text, tar_data) as varchar)) || '/' || (cast(date_part('year'::text, tar_data) as varchar))",'v_entrevista_tarrafa.tl_local','v_entrevista_tarrafa.pto_nome'))->
-                order("(cast(date_part('month'::text, tar_data) as varchar)) || '/' || (cast(date_part('year'::text, tar_data) as varchar))");
+                , array('v_tarrafa_has_t_especie_capturada.tar_id','cpue'=> new Zend_Db_Expr('sum(v_tarrafa_has_t_especie_capturada.spc_peso_kg)'), 'v_entrevista_tarrafa.tl_local','v_entrevista_tarrafa.pto_nome'))->
+                group(array('v_tarrafa_has_t_especie_capturada.tar_id', "mesAno",'v_entrevista_tarrafa.tl_local','v_entrevista_tarrafa.pto_nome'))->
+                order("mesAno");
         if(!is_null($where)){
             $select->where($where);
         }
