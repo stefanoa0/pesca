@@ -282,6 +282,18 @@ private $usuario;
         $this->redirect("/calao/tableespcaptura/id/" . $idEntrevista);
         //$this->redirect("/calao/editar/id/" . $backUrl);
     }
+
+    public function tableavistamentoAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelCalao->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vCalaoAvistamento = $this->modelCalao->selectCalaoHasAvistamento('cal_id='.$idEntrevista);  
+
+        $this->view->assign('vCalaoAvistamento', $vCalaoAvistamento);
+    }    
     public function insertavistamentoAction(){
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
@@ -293,11 +305,9 @@ private $usuario;
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelCalao->insertAvistamento($idEntrevista, $avistamento);
 
-        $this->redirect("/calao/editar/id/" . $backUrl);
+        $this->redirect("/calao/tableavistamento/id/" . $idEntrevista);
     }
     public function deleteavistamentoAction(){
         if($this->usuario['tp_id']==5){
@@ -306,15 +316,22 @@ private $usuario;
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idAvistamento = $this->_getParam("id_avistamento");
-
         $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasAvistamento = $this->_getParam("id_entrevista_has_avistamento");
 
-        $backUrl = $this->_getParam("back_url");
+        $this->modelCalao->deleteAvistamento($idEntrevistaHasAvistamento, $idEntrevista);
 
-        $this->modelCalao->deleteAvistamento($idAvistamento, $idEntrevista);
-
-        $this->redirect("/calao/editar/id/" . $backUrl);
+        $this->redirect("/calao/tableavistamento/id/" . $idEntrevista);
+    }
+    public function tablebiocamaraoAction(){//Action para tablepesqueiro
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelCalao->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vBioCamarao = $this->modelCalao->selectVBioCamarao('tcal_id='.$idEntrevista);
+        $this->view->assign('vBioCamarao', $vBioCamarao);
     }
     public function insertbiocamaraoAction() {
         if($this->usuario['tp_id']==5){
@@ -335,11 +352,9 @@ private $usuario;
         
         $peso = $this->_getParam("peso");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelCalao->insertBioCamarao($idEntrevista, $idEspecie, $sexo, $maturidade, $compCabeca, $peso);
 
-        $this->redirect("/calao/editar/id/" . $backUrl);
+        $this->redirect("/calao/tablebiocamarao/id/" . $idEntrevista);
     }
     public function deletebiocamaraoAction() {
         if($this->usuario['tp_id']==5){
@@ -348,14 +363,25 @@ private $usuario;
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idBiometria = $this->_getParam("id");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasBioCamarao = $this->_getParam("id_entrevista_has_biocamarao");
 
-        $backUrl = $this->_getParam("back_url");
+        $this->modelCalao->deleteBioCamarao($idEntrevistaHasBioCamarao);
 
-        $this->modelCalao->deleteBioCamarao($idBiometria);
-
-        $this->redirect("/calao/editar/id/" . $backUrl);
+        $this->redirect("/calao/tablebiocamarao/id/" . $idEntrevista);
     }
+    
+    public function tablebiopeixeAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelCalao->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vBioPeixe = $this->modelCalao->selectVBioPeixe('tcal_id='.$idEntrevista);
+
+        $this->view->assign('vBioPeixe', $vBioPeixe);
+    }    
     
     public function insertbiopeixeAction() {
         if($this->usuario['tp_id']==5){
@@ -373,12 +399,10 @@ private $usuario;
         $comprimento = $this->_getParam("comprimento");
         
         $peso = $this->_getParam("peso");
-
-        $backUrl = $this->_getParam("back_url");
-
+        
         $this->modelCalao->insertBioPeixe($idEntrevista, $idEspecie, $sexo, $comprimento, $peso);
 
-        $this->redirect("/calao/editar/id/" . $backUrl);
+        $this->redirect("/calao/tablebiopeixe/id/" . $idEntrevista);
     }
     public function deletebiopeixeAction() {
         if($this->usuario['tp_id']==5){
@@ -386,14 +410,13 @@ private $usuario;
         }
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+        
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasBioPeixe = $this->_getParam("id_entrevista_has_biopeixe");
 
-        $idBiometria = $this->_getParam("id");
+        $this->modelCalao->deleteBioPeixe($idEntrevistaHasBioPeixe);
 
-        $backUrl = $this->_getParam("back_url");
-
-        $this->modelCalao->deleteBioPeixe($idBiometria);
-
-        $this->redirect("/calao/editar/id/" . $backUrl);
+        $this->redirect("/calao/tablebiopeixe/id/" . $idEntrevista);
     }
     public function relatoriolistaAction(){
         if($this->usuario['tp_id']==5){

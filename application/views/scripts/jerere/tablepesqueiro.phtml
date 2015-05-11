@@ -2,10 +2,10 @@
 <fieldset class="noEditable" id="itemArteTipoRows"><legend>Pesqueiros:</legend>
     <table id="pesqueiros">
         <tr>
-        <th width="5%">Id Entrevista</th>
+        <th width="15%">Id Entrevista</th>
         <th width="50%">Pesqueiro</th>
-        <th width="30%">Tempo até o Pesqueiro</th>
-        <th width="30%">Distância até o Pesqueiro</th>
+        <th width="20%">Tempo até o Pesqueiro</th>
+        <th width="20%">Distância até o Pesqueiro</th>
         </tr>
         <?php
         foreach ($this->vJerere as $key => $vJerere):
@@ -15,7 +15,13 @@
             <td name="inputPesqueiro" > <?= $vJerere['paf_pesqueiro'] ?> </td>
             <td name="inputTempoaPesqueiro"> <?= $vJerere['t_tempoapesqueiro'] ?> </td>
             <td name="inputTempoaPesqueiro"> <?= $vJerere['t_distapesqueiro'] ?> </td>
-            <td><input type="button" class="button-del" width="5%" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['jre_id'] ?>, '<?= $this->url(array("controller" => "jerere", "action" => "deletepesqueiro"), null, true) ?>', <?= $vJerere['jre_paf_id'] ?>, 'pesqueiro')"></td>
+            <td class="td-botao">
+                <a name="Excluir" class="button-del" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['jre_id'] ?>, '<?= $this->url(array("controller" => "jerere", "action" => "deletepesqueiro"), null, true) ?>', <?= $vJerere['jre_paf_id'] ?>, 'pesqueiro')">
+                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                    </ul>
+                </a> 
+            </td>
             </tr>
         <?php endforeach; ?>
     </table>

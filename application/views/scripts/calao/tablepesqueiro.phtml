@@ -2,8 +2,8 @@
     <fieldset class="noEditable" id="itemArteTipoRows"><legend>Pesqueiros:</legend>
                 <table id="pesqueiros">
                     <tr>
-                        <th width="5%">Id Entrevista</th>
-                        <th width="50%">Pesqueiro</th>
+                        <th width="15%">Id Entrevista</th>
+                        <th width="85%">Pesqueiro</th>
                     </tr>
                     <?php
                     foreach ($this->vCalao as $key => $vCalao):
@@ -11,7 +11,13 @@
                         <tr id="itemArrastoRows">
                             <td name="inputIdEntrevista"> <?= $vCalao['cal_id'] ?> </td>
                             <td name="inputPesqueiro"> <?= $vCalao['paf_pesqueiro'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['cal_id'] ?>, '<?= $this->url(array("controller" => "calao", "action" => "deletepesqueiro"), null, true) ?>', <?= $vCalao['cal_paf_id'] ?>, 'pesqueiro')"></td>
+                            <td class="td-botao">
+                                <a name="Excluir" class="button-del" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['cal_id'] ?>, '<?= $this->url(array("controller" => "calao", "action" => "deletepesqueiro"), null, true) ?>', <?= $vCalao['cal_paf_id'] ?>, 'pesqueiro')">
+                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                    </ul>
+                                </a> 
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </table>

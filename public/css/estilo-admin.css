@@ -440,7 +440,7 @@ fieldset.noBorder {
 fieldset.noEditable {
     padding: 1em;
     /*font:80%/1 sans-serif;*/
-    border: 2px #af3333 solid;
+    border: 2px rgba(95,48,43,0.6) solid;
     border-radius: 5px;
 }
 

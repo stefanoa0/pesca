@@ -235,8 +235,8 @@
         <fieldset class="noEditable" id="itemArteTipoRows"><legend>Avistamentos:</legend>
             <table id="pesqueiros">
                 <tr>
-                    <th width="5%">Id Avistamento</th>
-                    <th width="50%">Avistamento</th>
+                    <th width="15%">Id Avistamento</th>
+                    <th width="85%">Avistamento</th>
                 </tr>
                 <?php
                 foreach ($this->vRatoeiraAvistamento as $key => $vRatoeiraAvistamento):
@@ -244,7 +244,13 @@
                     <tr id="itemRatoeiraRows">
                         <td name="inputIdEntrevista"> <?= $vRatoeiraAvistamento['avs_id'] ?> </td>
                         <td name="inputAvistamento" > <?= $vRatoeiraAvistamento['avs_descricao'] ?> </td>
-                        <td><input type="button" class="button-del" width="5%" onclick="jsDeleteAvistamento(<?= $this->entrevista['rat_id'] ?>, '<?= $this->url(array("controller" => "ratoeira", "action" => "deleteavistamento"), null, true) ?>', <?= $vRatoeiraAvistamento['avs_id'] ?>)"></td>
+                        <td class="td-botao">
+                            <a name="Excluir" class="button-del" onclick="jsDeleteAvistamento(<?= $this->entrevista['rat_id'] ?>, '<?= $this->url(array("controller" => "ratoeira", "action" => "deleteavistamento"), null, true) ?>', <?= $vRatoeiraAvistamento['avs_id'] ?>)">
+                                <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                    <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                </ul>
+                            </a> 
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </table>
@@ -280,9 +286,8 @@
          <fieldset class="noEditable" id="itemArteTipoRows"><legend>Dados Cadastrados:</legend>
                 <table id="especiesCapturadas">
                     <tr>
-                        
                         <th width="20%">Id Amostra</th>
-                        <th width="20%">Espécie</th>
+                        <th width="30%">Espécie</th>
                         <th width="20%">Comprimento</th>
                         <th width="10%">Sexo</th>
                         <th width="20%">Peso</th>
@@ -297,7 +302,13 @@
                             <td name="inputComp.Cabeca"> <?= $unidadePeixe['tbp_comprimento'] ?> </td>
                             <td name="inputSexo"> <?= $unidadePeixe['tbp_sexo'] ?> </td>
                             <td name="inputPeso"> <?= $unidadePeixe['tbp_peso'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeleteUnidade('<?= $this->url(array("controller" => "ratoeira", "action" => "deletebiopeixe"), null, true) ?>', '<?=$this->entrevista['rat_id']?>','<?= $unidadePeixe['tratbp_id'] ?>', '#base_peixe')"></td>
+                            <td class="td-botao">
+                                <a name="Excluir" class="button-del" onclick="jsDeleteUnidade('<?= $this->url(array("controller" => "ratoeira", "action" => "deletebiopeixe"), null, true) ?>', '<?=$this->entrevista['rat_id']?>','<?= $unidadePeixe['tratbp_id'] ?>', '#base_peixe')">
+                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                    </ul>
+                                </a> 
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
@@ -357,7 +368,13 @@
                             <td name="inputMaturidade"> <?= $unidadeCamarao['tmat_tipo'] ?> </td>
                             <td name="inputComp.Cabeca"> <?= $unidadeCamarao['tbc_comprimento_cabeca'] ?> </td>
                             <td name="inputPeso"> <?= $unidadeCamarao['tbc_peso'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeleteUnidade('<?= $this->url(array("controller" => "ratoeira", "action" => "deletebiocamarao"), null, true) ?>', '<?=$this->entrevista['rat_id']?>','<?= $unidadeCamarao['tratbc_id'] ?>', '#base_camarao')"></td>
+                            <td class="td-botao">
+                                <a name="Excluir" class="button-del" onclick="jsDeleteUnidade('<?= $this->url(array("controller" => "ratoeira", "action" => "deletebiocamarao"), null, true) ?>', '<?=$this->entrevista['rat_id']?>','<?= $unidadeCamarao['tratbc_id'] ?>', '#base_camarao')">
+                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                    </ul>
+                                </a> 
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </table>

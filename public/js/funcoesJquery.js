@@ -1638,30 +1638,141 @@ function ajax_pesqueiro(form, url, id_entrevista, tipo_entrevista){
             }
 }
 
+function ajax_avistamento(form, url, id_entrevista) {
+    // Create our XMLHttpRequest object
+    var hr = new XMLHttpRequest();
+
+    // Create some variables we need to send to our PHP file
+    var url = url;
+    var id_entrevista = id_entrevista;
+
+    if(form.SelectAvistamento.value === ""){
+        alert("Selecione um avistamento!");
+    }
+    else{
+        var vars = "id_entrevista="+id_entrevista+
+                "&SelectAvistamento="+form.SelectAvistamento.value;
+        
+        hr.open("POST", url, true);
+        // Set content type header information for sending url encoded variables in the request
+        hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        // Access the onreadystatechange event for the XMLHttpRequest object
+        hr.onreadystatechange = function() {
+                if(hr.readyState === 4 && hr.status === 200) {
+                var return_data = hr.responseText;
+                    document.getElementById("avistamento").innerHTML = return_data;
+                }
+        };
+        // Send the data to PHP now... and wait for response to update the status div
+        hr.send(vars); // Actually execute the request
+        document.getElementById("avistamento").innerHTML = "processando...";
+        resetFormValues("formEntrevistas");
+    }
+}
+
+function ajax_biopeixe(form, url, id_entrevista) {
+    // Create our XMLHttpRequest object
+    var hr = new XMLHttpRequest();
+
+    // Create some variables we need to send to our PHP file
+    var url = url;
+    var id_entrevista = id_entrevista;
+
+    if(form.comprimentoPeixe.value===""){
+        alert("Digite o Comprimento do Peixe");
+    }
+    else if(form.pesoPeixe.value === ""){
+        alert("Digite o Peso do Peixe");
+    }
+    else{
+        var vars = "id="+id_entrevista+
+                "&SelectEspecie="+form.SelectEspeciePeixe.value+
+                "&SelectSexo="+form.SelectSexoPeixe.value+
+                "&comprimento="+form.comprimentoPeixe.value+
+                "&peso="+form.pesoPeixe.value;
+        
+        hr.open("POST", url, true);
+        // Set content type header information for sending url encoded variables in the request
+        hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        // Access the onreadystatechange event for the XMLHttpRequest object
+        hr.onreadystatechange = function() {
+                if(hr.readyState === 4 && hr.status === 200) {
+                var return_data = hr.responseText;
+                    document.getElementById("biopeixe").innerHTML = return_data;
+                }
+        };
+        // Send the data to PHP now... and wait for response to update the status div
+        hr.send(vars); // Actually execute the request
+        document.getElementById("biopeixe").innerHTML = "processando...";
+        resetFormValues("formEntrevistas");
+    }
+}
+
+function ajax_biocamarao(form, url, id_entrevista) {
+    // Create our XMLHttpRequest object
+    var hr = new XMLHttpRequest();
+
+    // Create some variables we need to send to our PHP file
+    var url = url;
+    var id_entrevista = id_entrevista;
+
+    if(form.comprimentoCabeca.value===""){
+        alert("Digite o Comprimento da Cabeça");
+    }
+    else if(form.pesoCamarao.value === ""){
+        alert("Digite o Peso do Camarão");
+    }
+    else{
+        var vars = "id="+id_entrevista+
+                "&SelectEspecie="+form.SelectEspecieCamarao.value+
+                "&SelectSexo="+form.SelectSexoCamarao.value+
+                "&SelectMaturidade="+form.SelectMaturidade.value+
+                "&comprimentoCabeca="+form.comprimentoCabeca.value+
+                "&peso="+form.pesoCamarao.value;
+        
+        hr.open("POST", url, true);
+        // Set content type header information for sending url encoded variables in the request
+        hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        // Access the onreadystatechange event for the XMLHttpRequest object
+        hr.onreadystatechange = function() {
+                if(hr.readyState === 4 && hr.status === 200) {
+                var return_data = hr.responseText;
+                    document.getElementById("biocamarao").innerHTML = return_data;
+                }
+        };
+        // Send the data to PHP now... and wait for response to update the status div
+        hr.send(vars); // Actually execute the request
+        document.getElementById("biocamarao").innerHTML = "processando...";
+        resetFormValues("formEntrevistas");
+    }
+}
+
 function ajax_delete_entrevista_has(id_entrevista, url, id_entrevista_has, model){
-     // Create our XMLHttpRequest object
-            var hr = new XMLHttpRequest();
-            
-            // Create some variables we need to send to our PHP file
-            var url = url;            
-            var id_entrevista = id_entrevista;            
-            var vars;
-            
-            vars = "id_entrevista_has_"+model+"="+id_entrevista_has+"&id_entrevista="+id_entrevista;
-            
-            hr.open("POST", url, true);
-            // Set content type header information for sending url encoded variables in the request
-            hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            // Access the onreadystatechange event for the XMLHttpRequest object
-            hr.onreadystatechange = function() {
-                    if(hr.readyState === 4 && hr.status === 200) {
-                    var return_data = hr.responseText;
-                        document.getElementById(model).innerHTML = return_data;
-                    }
-            };
-            // Send the data to PHP now... and wait for response to update the status div
-            hr.send(vars); // Actually execute the request
-            document.getElementById(model).innerHTML = "processando...";
+    if (confirm("Realmente deseja excluir este item?")) {
+        // Create our XMLHttpRequest object
+        var hr = new XMLHttpRequest();
+
+        // Create some variables we need to send to our PHP file
+        var url = url;            
+        var id_entrevista = id_entrevista;            
+        var vars;
+
+        vars = "id_entrevista_has_"+model+"="+id_entrevista_has+"&id_entrevista="+id_entrevista;
+        
+        hr.open("POST", url, true);
+        // Set content type header information for sending url encoded variables in the request
+        hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        // Access the onreadystatechange event for the XMLHttpRequest object
+        hr.onreadystatechange = function() {
+                if(hr.readyState === 4 && hr.status === 200) {
+                var return_data = hr.responseText;
+                    document.getElementById(model).innerHTML = return_data;
+                }
+        };
+        // Send the data to PHP now... and wait for response to update the status div
+        hr.send(vars); // Actually execute the request
+        document.getElementById(model).innerHTML = "processando...";
+    }
 }
 
 function resetFormValues(formid) {
