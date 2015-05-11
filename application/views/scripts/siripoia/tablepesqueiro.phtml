@@ -15,7 +15,13 @@
                 <td name="inputPesqueiro" > <?= $vSiripoia['paf_pesqueiro'] ?> </td>
                 <td name="inputTempoaPesqueiro"> <?= $vSiripoia['t_tempoapesqueiro'] ?> </td>
                 <td name="inputTempoaPesqueiro"> <?= $vSiripoia['t_distapesqueiro'] ?> </td>
-                <td><input type="button" class="button-del" width="5%" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['sir_id'] ?>, '<?= $this->url(array("controller" => "siripoia", "action" => "deletepesqueiro"), null, true) ?>', <?= $vSiripoia['sir_paf_id'] ?>, 'pesqueiro')"></td>
+                <td class="td-botao">
+                    <a name="Excluir" class="button-del" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['sir_id'] ?>, '<?= $this->url(array("controller" => "siripoia", "action" => "deletepesqueiro"), null, true) ?>', <?= $vSiripoia['sir_paf_id'] ?>, 'pesqueiro')">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                        </ul>
+                    </a> 
+                </td>
                 </tr>
             <?php endforeach; ?>
         </table>

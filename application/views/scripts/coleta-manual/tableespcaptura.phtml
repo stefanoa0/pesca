@@ -2,12 +2,12 @@
     <fieldset class="noEditable" id="itemArteTipoRows"><legend>Espécies Capturadas:</legend>
         <table id="especiesCapturadas">
             <tr>
-            <th width="20%">Id Entrevista</th>
-            <th width="30%">Espécie Capturada</th>
-            <th width="20%">Quantidade</th>
-            <th width="20%">Peso (kg)</th>
-            <th width="20%">Preço por kg</th>
-            <th width="10%">Venda</th>
+            <th width="17%">Id Entrevista</th>
+            <th width="17%">Espécie Capturada</th>
+            <th width="17%">Quantidade</th>
+            <th width="17%">Peso (kg)</th>
+            <th width="17%">Preço por kg</th>
+            <th width="17%">Tipo de venda</th>
             </tr>
             <?php
             foreach ($this->vEspecieCapturadas as $key => $vEspecieCapturada):
@@ -19,7 +19,13 @@
                 <td name="inputPeso"> <?= $vEspecieCapturada['spc_peso_kg'] ?> </td>
                 <td name="inputPreco"> <?= $vEspecieCapturada['spc_preco'] ?> </td>
                 <td name="inputTVenda"> <?= $vEspecieCapturada['ttv_tipovenda'] ?></td>
-                <td><input type="button" class="button-del" width="5%" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['cml_id'] ?>, '<?= $this->url(array("controller" => "coleta-manual", "action" => "deletespecie"), null, true) ?>', <?= $vEspecieCapturada['spc_cml_id'] ?>, 'especie')"></td>
+                <td class="td-botao">
+                    <a name="Excluir" class="button-del" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['cml_id'] ?>, '<?= $this->url(array("controller" => "coleta-manual", "action" => "deletespecie"), null, true) ?>', <?= $vEspecieCapturada['spc_cml_id'] ?>, 'especie')">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                        </ul>
+                    </a> 
+                </td>
                 </tr>
             <?php endforeach; ?>
         </table>

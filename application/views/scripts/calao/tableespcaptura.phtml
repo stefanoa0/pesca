@@ -17,7 +17,13 @@
                 <td name="inputQuantidade"> <?= $vEspecieCapturada['spc_quantidade'].' Unidades' ?> </td>
                 <td name="inputPeso"> <?= $vEspecieCapturada['spc_peso_kg'].' kg' ?> </td>
                 <td name="inputPreco"> <?= 'R$ '.$vEspecieCapturada['spc_preco'] ?> </td>
-                <td><input type="button" class="button-del" width="5%" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['cal_id'] ?>, '<?= $this->url(array("controller" => "calao", "action" => "deletespecie"), null, true) ?>', <?= $vEspecieCapturada['spc_cal_id'] ?>, 'especie')"></td>
+                <td class="td-botao">
+                    <a name="Excluir" class="button-del" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['cal_id'] ?>, '<?= $this->url(array("controller" => "calao", "action" => "deletespecie"), null, true) ?>', <?= $vEspecieCapturada['spc_cal_id'] ?>, 'especie')">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                        </ul>
+                    </a> 
+                </td>
                 </tr>
             <?php endforeach; ?>
         </table>

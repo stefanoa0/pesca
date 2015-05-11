@@ -230,6 +230,7 @@
                 <br>
                 <?php include('tablepesqueiro.phtml'); ?>
             </fieldset>
+        <br /><br />
 <fieldset class="noEditable"><legend>Espécies Capturadas:</legend>
         <fieldset class="noEditable"><legend>Dados das Espécies Capturadas:</legend>
 
@@ -257,6 +258,7 @@
         <br>
          <?php include('tableespcaptura.phtml'); ?>
     </fieldset>
+        <br /><br />
     <fieldset class="noEditable"><legend>Avistamento:</legend>
         <fieldset class="noEditable"><legend>O Que foi avistado:</legend>
             <div id="base">
@@ -275,8 +277,8 @@
         <fieldset class="noEditable" id="itemArteTipoRows"><legend>Avistamentos:</legend>
             <table id="pesqueiros">
                 <tr>
-                    <th width="5%">Id Avistamento</th>
-                    <th width="50%">Avistamento</th>
+                    <th width="15%">Id Avistamento</th>
+                    <th width="85%">Avistamento</th>
                 </tr>
                 <?php
                 foreach ($this->vLinhaFundoAvistamento as $key => $vLinhaFundoAvistamento):
@@ -284,12 +286,19 @@
                     <tr id="itemLinhaFundoRows">
                         <td name="inputIdEntrevista"> <?= $vLinhaFundoAvistamento['avs_id'] ?> </td>
                         <td name="inputAvistamento" > <?= $vLinhaFundoAvistamento['avs_descricao'] ?> </td>
-                        <td><input type="button" class="button-del" width="5%" onclick="jsDeleteAvistamento(<?= $this->entrevista['lf_id'] ?>, '<?= $this->url(array("controller" => "linha-fundo", "action" => "deleteavistamento"), null, true) ?>', <?= $vLinhaFundoAvistamento['avs_id'] ?>)"></td>
+                        <td class="td-botao">
+                            <a name="Excluir" class="button-del" onclick="jsDeleteAvistamento(<?= $this->entrevista['lf_id'] ?>, '<?= $this->url(array("controller" => "linha-fundo", "action" => "deleteavistamento"), null, true) ?>', <?= $vLinhaFundoAvistamento['avs_id'] ?>)">
+                                <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                    <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                </ul>
+                            </a> 
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </table>
         </fieldset>
     </fieldset>
+        <br /><br />
     <!--////////////////////////////////////////////////////////AMOSTRAGEM PEIXES///////////////////////////////////////////////////////////-->
     <fieldset class="noEditable"><legend>Amostras de Peixes:</legend>
         <fieldset class="noEditable"><legend>Dados das Amostras:</legend>
@@ -331,18 +340,24 @@
                     foreach ($this->vBioPeixe as $key => $unidadePeixe):
                         ?>
                         <tr id="itemEmbarcacoesRows">
-                            
                             <td name="inputAmostra"> <?= $unidadePeixe['tlfbp_id'] ?> </td>
                             <td name="inputMaturidade"> <?= $unidadePeixe['esp_nome_comum'] ?> </td>
                             <td name="inputComp.Cabeca"> <?= $unidadePeixe['tbp_comprimento'] ?> </td>
                             <td name="inputSexo"> <?= $unidadePeixe['tbp_sexo'] ?> </td>
                             <td name="inputPeso"> <?= $unidadePeixe['tbp_peso'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeleteUnidade('<?= $this->url(array("controller" => "linha-fundo", "action" => "deletebiopeixe"), null, true) ?>', '<?=$this->entrevista['lf_id']?>','<?= $unidadePeixe['tlfbp_id'] ?>', '#base_peixe')"></td>
+                            <td class="td-botao">
+                                <a name="Excluir" class="button-del" onclick="jsDeleteUnidade('<?= $this->url(array("controller" => "linha-fundo", "action" => "deletebiopeixe"), null, true) ?>', '<?=$this->entrevista['lf_id']?>','<?= $unidadePeixe['tlfbp_id'] ?>', '#base_peixe')">
+                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                    </ul>
+                                </a> 
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
             </fieldset>
         </fieldset>
+        <br /><br />
 <!--////////////////////////////////////////////////////////AMOSTRAGEM PEIXES///////////////////////////////////////////////////////////-->
         <fieldset class="noEditable"><legend>Amostras de Camarão:</legend>
         <fieldset class="noEditable"><legend>Dados das Amostras:</legend>
@@ -390,14 +405,19 @@
                     foreach ($this->vBioCamarao as $key => $unidadeCamarao):
                         ?>
                         <tr id="itemEmbarcacoesRows">
-                            
                             <td name="inputAmostra"> <?= $unidadeCamarao['tlfbc_id'] ?> </td>
                             <td name="inputEspecie"> <?= $unidadeCamarao['esp_nome_comum'] ?> </td>
                             <td name="inputSexo"> <?= $unidadeCamarao['tbc_sexo'] ?> </td>
                             <td name="inputMaturidade"> <?= $unidadeCamarao['tmat_tipo'] ?> </td>
                             <td name="inputComp.Cabeca"> <?= $unidadeCamarao['tbc_comprimento_cabeca'] ?> </td>
                             <td name="inputPeso"> <?= $unidadeCamarao['tbc_peso'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeleteUnidade('<?= $this->url(array("controller" => "linha-fundo", "action" => "deletebiocamarao"), null, true) ?>', '<?=$this->entrevista['lf_id']?>','<?= $unidadeCamarao['tlfbc_id'] ?>', '#base_camarao')"></td>
+                            <td class="td-botao">
+                                <a name="Excluir" class="button-del" onclick="jsDeleteUnidade('<?= $this->url(array("controller" => "linha-fundo", "action" => "deletebiocamarao"), null, true) ?>', '<?=$this->entrevista['lf_id']?>','<?= $unidadeCamarao['tlfbc_id'] ?>', '#base_camarao')">
+                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                    </ul>
+                                </a> 
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
