@@ -479,4 +479,15 @@ class Application_Model_Tarrafa
         }
         return $dbTable->fetchAll($select)->toArray();        
     }
+    public function selectPesqueirosVisitados($where = null,$order = null, $limit = null){
+        $dbTable = new Application_Model_DbTable_VTarrafaHasPesqueiro();
+        
+        $select = $dbTable->select()->from('v_tarrafa_has_t_pesqueiro',array('count(tar_id)','paf_pesqueiro'))->
+                group('paf_pesqueiro')->order($order)->limit($limit);
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
 }

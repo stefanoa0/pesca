@@ -1229,5 +1229,184 @@ class Application_Model_Relatorios
         
         return $this->selectEmbarcacao->fetchAll($select)->toArray();
     }
-}
+    public function selectCalaoMonitoramentos($where = null, $order = null, $limit = null) {
+        $this->modelCalao = new Application_Model_DbTable_Calao();
+        $selectCalao = $this->modelCalao->select()->setIntegrityCheck(false)->
+                        from('v_entrevista_calao', array('v_entrevista_calao.cal_id','v_entrevista_calao.pto_nome', 'v_entrevista_calao.mnt_id', 'v_monitoramentobyficha.tap_artepesca'))
+                        ->join('v_monitoramentobyficha', 'v_entrevista_calao.mnt_id = v_monitoramentobyficha.mnt_id')->limit($limit)->order($order);
+        if (!is_null($where)) {
+            $selectCalao->where($where);
+        }
 
+        return $this->modelCalao->fetchAll($selectCalao)->toArray();
+    }
+
+    public function selectColetaMonitoramentos($where = null, $order = null, $limit = null) {
+        $this->modelColeta = new Application_Model_DbTable_ColetaManual();
+        $selectColeta = $this->modelColeta->select()->setIntegrityCheck(false)->
+                        from('v_entrevista_coletamanual', array('v_entrevista_coletamanual.cml_id','v_entrevista_coletamanual.pto_nome', 'v_entrevista_coletamanual.mnt_id', 'v_monitoramentobyficha.tap_artepesca'))
+                        ->join('v_monitoramentobyficha', 'v_entrevista_coletamanual.mnt_id = v_monitoramentobyficha.mnt_id')->limit($limit)->order($order);
+    
+        if (!is_null($where)) {
+            $selectColeta->where($where);
+        }
+
+        return $this->modelColeta->fetchAll($selectColeta)->toArray();
+    }
+
+    public function selectEmalheMonitoramentos($where = null, $order = null, $limit = null) {
+        $this->modelEmalhe = new Application_Model_DbTable_Emalhe();
+        $selectEmalhe = $this->modelEmalhe->select()->setIntegrityCheck(false)->
+                        from('v_entrevista_emalhe', array('v_entrevista_emalhe.em_id','v_entrevista_emalhe.pto_nome', 'v_entrevista_emalhe.mnt_id', 'v_monitoramentobyficha.tap_artepesca'))
+                        ->join('v_monitoramentobyficha', 'v_entrevista_emalhe.mnt_id = v_monitoramentobyficha.mnt_id')->limit($limit)->order($order);
+    
+        if (!is_null($where)) {
+            $selectEmalhe->where($where);
+        }
+
+        return $this->modelEmalhe->fetchAll($selectEmalhe)->toArray();
+    }
+
+    public function selectGrosseiraMonitoramentos($where = null, $order = null, $limit = null) {
+        $this->modelGrosseira = new Application_Model_DbTable_Grosseira();
+        $selectGrosseira = $this->modelGrosseira->select()->setIntegrityCheck(false)->
+                        from('v_entrevista_grosseira', array('v_entrevista_grosseira.grs_id','v_entrevista_grosseira.pto_nome', 'v_entrevista_grosseira.mnt_id', 'v_monitoramentobyficha.tap_artepesca'))
+                        ->join('v_monitoramentobyficha', 'v_entrevista_grosseira.mnt_id = v_monitoramentobyficha.mnt_id')->limit($limit)->order($order);
+    
+        if (!is_null($where)) {
+            $selectGrosseira->where($where);
+        }
+
+        return $this->modelGrosseira->fetchAll($selectGrosseira)->toArray();
+    }
+
+    public function selectJerereMonitoramentos($where = null, $order = null, $limit = null) {
+        $this->modelJerere = new Application_Model_DbTable_Jerere();
+        $selectJerere = $this->modelJerere->select()->setIntegrityCheck(false)->
+                        from('v_entrevista_jerere', array('v_entrevista_jerere.jre_id','v_entrevista_jerere.pto_nome', 'v_entrevista_jerere.mnt_id', 'v_monitoramentobyficha.tap_artepesca'))
+                        ->join('v_monitoramentobyficha', 'v_entrevista_jerere.mnt_id = v_monitoramentobyficha.mnt_id')->limit($limit)->order($order);
+    
+        if (!is_null($where)) {
+            $selectJerere->where($where);
+        }
+
+        return $this->modelJerere->fetchAll($selectJerere)->toArray();
+    }
+
+    public function selectLinhaMonitoramentos($where = null, $order = null, $limit = null) {
+        $this->modelLinha = new Application_Model_DbTable_Linha();
+        $selectLinha = $this->modelLinha->select()->setIntegrityCheck(false)->
+                        from('v_entrevista_linha', array('v_entrevista_linha.lin_id','v_entrevista_linha.pto_nome', 'v_entrevista_linha.mnt_id', 'v_monitoramentobyficha.tap_artepesca'))
+                        ->join('v_monitoramentobyficha', 'v_entrevista_linha.mnt_id = v_monitoramentobyficha.mnt_id')->limit($limit)->order($order);
+    
+        if (!is_null($where)) {
+            $selectLinha->where($where);
+        }
+
+        return $this->modelLinha->fetchAll($selectLinha)->toArray();
+    }
+
+    public function selectLinhaFundoMonitoramentos($where = null, $order = null, $limit = null) {
+        $this->modelLinhaFundo = new Application_Model_DbTable_LinhaFundo();
+        $selectLinhaFundo = $this->modelLinhaFundo->select()->setIntegrityCheck(false)->
+                        from('v_entrevista_linhafundo', array('v_entrevista_linhafundo.lf_id','v_entrevista_linhafundo.pto_nome', 'v_entrevista_linhafundo.mnt_id', 'v_monitoramentobyficha.tap_artepesca'))
+                        ->join('v_monitoramentobyficha', 'v_entrevista_linhafundo.mnt_id = v_monitoramentobyficha.mnt_id')->limit($limit)->order($order);
+    
+        if (!is_null($where)) {
+            $selectLinhaFundo->where($where);
+        }
+
+        return $this->modelLinhaFundo->fetchAll($selectLinhaFundo)->toArray();
+    }
+
+    public function selectManzuaMonitoramentos($where = null, $order = null, $limit = null) {
+        $this->modelManzua = new Application_Model_DbTable_Manzua();
+        $selectManzua = $this->modelManzua->select()->setIntegrityCheck(false)->
+                        from('v_entrevista_manzua', array('v_entrevista_manzua.man_id','v_entrevista_manzua.pto_nome', 'v_entrevista_manzua.mnt_id', 'v_monitoramentobyficha.tap_artepesca'))
+                        ->join('v_monitoramentobyficha', 'v_entrevista_manzua.mnt_id = v_monitoramentobyficha.mnt_id')->limit($limit)->order($order);
+    
+        if (!is_null($where)) {
+            $selectManzua->where($where);
+        }
+
+        return $this->modelManzua->fetchAll($selectManzua)->toArray();
+    }
+
+    public function selectMergulhoMonitoramentos($where = null, $order = null, $limit = null) {
+        $this->modelMergulho = new Application_Model_DbTable_Mergulho();
+        $selectMergulho = $this->modelMergulho->select()->setIntegrityCheck(false)->
+                        from('v_entrevista_mergulho', array('v_entrevista_mergulho.mer_id','v_entrevista_mergulho.pto_nome', 'v_entrevista_mergulho.mnt_id', 'v_monitoramentobyficha.tap_artepesca'))
+                        ->join('v_monitoramentobyficha', 'v_entrevista_mergulho.mnt_id = v_monitoramentobyficha.mnt_id')->limit($limit)->order($order);
+    
+        if (!is_null($where)) {
+            $selectMergulho->where($where);
+        }
+
+        return $this->modelMergulho->fetchAll($selectMergulho)->toArray();
+    }
+
+    public function selectRatoeiraMonitoramentos($where = null, $order = null, $limit = null) {
+        $this->modelRatoeira = new Application_Model_DbTable_Ratoeira();
+        $selectRatoeira = $this->modelRatoeira->select()->setIntegrityCheck(false)->
+                        from('v_entrevista_ratoeira', array('v_entrevista_ratoeira.rat_id','v_entrevista_ratoeira.pto_nome', 'v_entrevista_ratoeira.mnt_id', 'v_monitoramentobyficha.tap_artepesca'))
+                        ->join('v_monitoramentobyficha', 'v_entrevista_ratoeira.mnt_id = v_monitoramentobyficha.mnt_id')->limit($limit)->order($order);
+    
+        if (!is_null($where)) {
+            $selectRatoeira->where($where);
+        }
+
+        return $this->modelRatoeira->fetchAll($selectRatoeira)->toArray();
+    }
+
+    public function selectSiripoiaMonitoramentos($where = null, $order = null, $limit = null) {
+        $this->modelSiripoia = new Application_Model_DbTable_Siripoia();
+        $selectSiripoia = $this->modelSiripoia->select()->setIntegrityCheck(false)->
+                        from('v_entrevista_siripoia', array('v_entrevista_siripoia.sir_id','v_entrevista_siripoia.pto_nome', 'v_entrevista_siripoia.mnt_id', 'v_monitoramentobyficha.tap_artepesca'))
+                        ->join('v_monitoramentobyficha', 'v_entrevista_siripoia.mnt_id = v_monitoramentobyficha.mnt_id')->limit($limit)->order($order);
+    
+        if (!is_null($where)) {
+            $selectSiripoia->where($where);
+        }
+
+        return $this->modelSiripoia->fetchAll($selectSiripoia)->toArray();
+    }
+
+    public function selectTarrafaMonitoramentos($where = null, $order = null, $limit = null) {
+        $this->modelTarrafa = new Application_Model_DbTable_Tarrafa();
+        $selectTarrafa = $this->modelTarrafa->select()->setIntegrityCheck(false)->
+                        from('v_entrevista_tarrafa', array('v_entrevista_tarrafa.tar_id','v_entrevista_tarrafa.pto_nome', 'v_entrevista_tarrafa.mnt_id', 'v_monitoramentobyficha.tap_artepesca'))
+                        ->join('v_monitoramentobyficha', 'v_entrevista_tarrafa.mnt_id = v_monitoramentobyficha.mnt_id')->limit($limit)->order($order);
+    
+        if (!is_null($where)) {
+            $selectTarrafa->where($where);
+        }
+
+        return $this->modelTarrafa->fetchAll($selectTarrafa)->toArray();
+    }
+
+    public function selectVaraPescaMonitoramentos($where = null, $order = null, $limit = null) {
+        $this->modelVaraPesca = new Application_Model_DbTable_VaraPesca();
+        $selectVaraPesca = $this->modelVaraPesca->select()->setIntegrityCheck(false)->
+                        from('v_entrevista_varapesca', array('v_entrevista_varapesca.vp_id','v_entrevista_varapesca.pto_nome', 'v_entrevista_varapesca.mnt_id', 'v_monitoramentobyficha.tap_artepesca'))
+                        ->join('v_monitoramentobyficha', 'v_entrevista_varapesca.mnt_id = v_monitoramentobyficha.mnt_id')->limit($limit)->order($order);
+    
+        if (!is_null($where)) {
+            $selectVaraPesca->where($where);
+        }
+
+        return $this->modelVaraPesca->fetchAll($selectVaraPesca)->toArray();
+    }
+
+    public function selectArrastoMonitoramentos($where = null, $order = null, $limit = null) {
+        $this->modelArrasto = new Application_Model_DbTable_ArrastoFundo();
+        $selectArrasto = $this->modelArrasto->select()->setIntegrityCheck(false)->
+                        from('v_entrevista_arrasto', array('v_entrevista_arrasto.af_id','v_entrevista_arrasto.pto_nome', 'v_entrevista_arrasto.mnt_id', 'v_monitoramentobyficha.tap_artepesca'))
+                        ->join('v_monitoramentobyficha', 'v_entrevista_arrasto.mnt_id = v_monitoramentobyficha.mnt_id')->limit($limit)->order($order);
+        
+        if (!is_null($where)) {
+            $selectArrasto->where($where);
+        }
+        return $this->modelArrasto->fetchAll($selectArrasto)->toArray();
+    }
+
+}

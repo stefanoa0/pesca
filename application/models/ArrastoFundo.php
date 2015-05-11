@@ -439,6 +439,7 @@ class Application_Model_ArrastoFundo
         if(!is_null($where)){
             $select->where($where);
         }
+        
         return $dbTable->fetchAll($select)->toArray();
     }
     public function selectEntrevistasByPorto($where = null){
@@ -517,7 +518,7 @@ class Application_Model_ArrastoFundo
         $dbTable = new Application_Model_DbTable_VEntrevistaArrasto();
         
         $select = $dbTable->select()->
-                from('v_entrevista_arrasto', array('pto_nome', 'count(tp_nome)'))
+                from('v_entrevista_arrasto', array('pto_nome', 'count(af_id)'))
                 ->group(array('pto_nome'));
         
         if(!is_null($where)){
@@ -538,6 +539,17 @@ class Application_Model_ArrastoFundo
             $select->where($where);
         }
         return $dbTable->fetchAll($select)->toArray();        
+    }
+    public function selectPesqueirosVisitados($where = null,$order = null, $limit = null){
+        $dbTable = new Application_Model_DbTable_VArrastoFundoHasPesqueiro();
+        
+        $select = $dbTable->select()->from('v_arrasto_has_t_pesqueiro',array('count(af_id)','paf_pesqueiro'))->
+                group('paf_pesqueiro')->order($order)->limit($limit);
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
     }
     /*
     public function selectPescadoresByColonia(){

@@ -25,6 +25,7 @@ class RelatoriosController extends Zend_Controller_Action
         if($this->usuario['tp_id']==15 | $this->usuario['tp_id'] ==17 | $this->usuario['tp_id']==21){
             $this->_redirect('index');
         }
+        $this->modelRelatorios = new Application_Model_Relatorios();
     }
 
     public function indexAction(){
@@ -35,7 +36,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         $this->view->assign("portos", $porto);
         
-
+        
 
     }
     public function graficosAction(){
@@ -98,6 +99,7 @@ class RelatoriosController extends Zend_Controller_Action
             case 20:$this->_redirect("/relatorios/relatorioestimativas".$data.$datafim.$porto);break;
             case 21:$this->_redirect("/relatorios/relatoriocompletoresumido/".$rel.$data.$datafim.$porto);break;
         }
+        
     }
     
     public function verificaRelatorio($var){
@@ -5688,7 +5690,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrArrasto = $modelArrasto->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrArrasto = $modelArrasto->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrArrasto[0]['count']);
             $coluna++;
             //$linha++;
@@ -5726,7 +5728,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrColetaManual = $modelColetaManual->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrColetaManual = $modelColetaManual->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrColetaManual[0]['count']);
             $coluna++;
             //$linha++;
@@ -5735,7 +5737,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrEmalhe = $modelEmalhe->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrEmalhe = $modelEmalhe->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrEmalhe[0]['count']);
             $coluna++;
             //$linha++;
@@ -5744,7 +5746,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrGrosseira = $modelGrosseira->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrGrosseira = $modelGrosseira->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrGrosseira[0]['count']);
             $coluna++;
             //$linha++;
@@ -5753,7 +5755,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrJerere = $modelJerere->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrJerere = $modelJerere->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrJerere[0]['count']);
             $coluna++;
             //$linha++;
@@ -5762,7 +5764,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrLinha = $modelLinha->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrLinha = $modelLinha->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrLinha[0]['count']);
             $coluna++;
             //$linha++;
@@ -5771,7 +5773,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrLinhaFundo = $modelLinhaFundo->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrLinhaFundo = $modelLinhaFundo->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrLinhaFundo[0]['count']);
             $coluna++;
             //$linha++;
@@ -5780,7 +5782,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrManzua = $modelManzua->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrManzua = $modelManzua->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrManzua[0]['count']);
             $coluna++;
             //$linha++;
@@ -5789,7 +5791,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrMergulho = $modelMergulho->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrMergulho = $modelMergulho->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrMergulho[0]['count']);
             $coluna++;
             //$linha++;
@@ -5798,7 +5800,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrRatoeira = $modelRatoeira->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrRatoeira = $modelRatoeira->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrRatoeira[0]['count']);
             $coluna++;
             //$linha++;
@@ -5807,7 +5809,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrSiripoia = $modelSiripoia->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrSiripoia = $modelSiripoia->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrSiripoia[0]['count']);
             $coluna++;
             //$linha++;
@@ -5816,7 +5818,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrTarrafa = $modelTarrafa->selectEntrevistasByPorto("tar_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrTarrafa = $modelTarrafa->selectEntrevistasByPorto("tar_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrTarrafa[0]['count']);
             $coluna++;
             //$linha++;
@@ -5825,7 +5827,7 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
-            $quantEntrVaraPesca = $modelVaraPesca->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $quantEntrVaraPesca = $modelVaraPesca->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrVaraPesca[0]['count']);
             $coluna++;
             //$linha++;
@@ -6360,6 +6362,262 @@ class RelatoriosController extends Zend_Controller_Action
 
         header('Content-Type: application/vnd.ms-excel');
         header("Content-Disposition: attachment;filename='Estimativas de Captura.xls'");
+        header('Cache-Control: max-age=0');
+
+        ob_end_clean();
+        $objWriter->save('php://output');
+    }
+    
+    public function monitoramentosartepescaAction(){
+        set_time_limit(0);
+        if($this->usuario['tp_id']==5){
+            $this->_redirect('index');
+        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        
+        $porto = $this->_getParam('porto');
+           
+                
+        require_once "../library/Classes/PHPExcel.php";
+        
+        
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->setActiveSheetIndex(0);
+        $coluna = 0;
+        $linha = 1;
+//
+        if($porto != '999'){
+            $nomePorto = $this->verifporto($porto);
+            $arrasto =     $this->modelRelatorios->selectArrastoMonitoramentos   ("pto_nome ='".$nomePorto."'");
+            $calao =       $this->modelRelatorios->selectCalaoMonitoramentos     ("pto_nome ='".$nomePorto."'");
+            $coletamanual =$this->modelRelatorios->selectColetaMonitoramentos    ("pto_nome ='".$nomePorto."'");
+            $emalhe =      $this->modelRelatorios->selectEmalheMonitoramentos    ("pto_nome ='".$nomePorto."'");
+            $grosseira =   $this->modelRelatorios->selectGrosseiraMonitoramentos ("pto_nome ='".$nomePorto."'");
+            $jerere =      $this->modelRelatorios->selectJerereMonitoramentos    ("pto_nome ='".$nomePorto."'");
+            $pescalinha =  $this->modelRelatorios->selectLinhaMonitoramentos     ("pto_nome ='".$nomePorto."'");
+            $linhafundo =  $this->modelRelatorios->selectLinhaFundoMonitoramentos("pto_nome ='".$nomePorto."'");
+            $manzua =      $this->modelRelatorios->selectManzuaMonitoramentos    ("pto_nome ='".$nomePorto."'");
+            $mergulho =    $this->modelRelatorios->selectMergulhoMonitoramentos  ("pto_nome ='".$nomePorto."'");
+            $ratoeira =    $this->modelRelatorios->selectRatoeiraMonitoramentos  ("pto_nome ='".$nomePorto."'");
+            $siripoia =    $this->modelRelatorios->selectSiripoiaMonitoramentos  ("pto_nome ='".$nomePorto."'");
+            $tarrafa =     $this->modelRelatorios->selectTarrafaMonitoramentos   ("pto_nome ='".$nomePorto."'");
+            $varapesca =   $this->modelRelatorios->selectVaraPescaMonitoramentos ("pto_nome ='".$nomePorto."'");
+        }
+         else{
+            $arrasto =     $this->modelRelatorios->selectArrastoMonitoramentos   ();
+            $calao =       $this->modelRelatorios->selectCalaoMonitoramentos     ();
+            $coletamanual =$this->modelRelatorios->selectColetaMonitoramentos    ();
+            $emalhe =      $this->modelRelatorios->selectEmalheMonitoramentos    ();
+            $grosseira =   $this->modelRelatorios->selectGrosseiraMonitoramentos ();
+            $jerere =      $this->modelRelatorios->selectJerereMonitoramentos    ();
+            $pescalinha =  $this->modelRelatorios->selectLinhaMonitoramentos     ();
+            $linhafundo =  $this->modelRelatorios->selectLinhaFundoMonitoramentos();
+            $manzua =      $this->modelRelatorios->selectManzuaMonitoramentos    ();
+            $mergulho =    $this->modelRelatorios->selectMergulhoMonitoramentos  ();
+            $ratoeira =    $this->modelRelatorios->selectRatoeiraMonitoramentos  ();
+            $siripoia =    $this->modelRelatorios->selectSiripoiaMonitoramentos  ();
+            $tarrafa =     $this->modelRelatorios->selectTarrafaMonitoramentos   ();
+            $varapesca =   $this->modelRelatorios->selectVaraPescaMonitoramentos ();
+         }  
+            $arrayCompleto = array_merge_recursive($arrasto,
+                                                    $calao,
+                                                    $coletamanual,
+                                                    $emalhe,  
+                                                    $grosseira,
+                                                    $jerere, 
+                                                    $pescalinha,
+                                                    $linhafundo,
+                                                    $manzua,   
+                                                    $mergulho,  
+                                                    $ratoeira,  
+                                                    $siripoia,  
+                                                    $tarrafa,   
+                                                    $varapesca);
+            
+         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Arte');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Id da Entrevista');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Id Monitoramento');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte Monitorada');
+//         
+        $linha++;
+        $coluna = 0;
+         foreach ( $arrasto as $key => $consulta ):
+                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Arrasto de Fundo');
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                
+                $coluna=0;
+                $linha++;
+        endforeach; 
+         
+//        
+        foreach ( $calao as $key => $consulta ):
+                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Calão');
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+
+                $coluna=0;
+                $linha++;
+        endforeach; 
+//        
+        foreach ( $emalhe as $key => $consulta ):
+                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Emalhe');
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                $coluna=0;
+                $linha++;
+        endforeach; 
+//        
+        foreach ( $grosseira as $key => $consulta ):
+                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Espinhel/Groseira');
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                
+                $coluna=0;
+                $linha++;
+        endforeach;
+//        
+        foreach ( $jerere as $key => $consulta ):
+                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Jereré');
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                
+                $coluna=0;
+                $linha++;
+        endforeach;
+//        
+        foreach ( $pescalinha as $key => $consulta ):
+                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Linha');
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                $coluna=0;
+                $linha++;
+        endforeach;
+//        
+        foreach ( $linhafundo as $key => $consulta ):
+                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Linha de Fundo');
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                
+                $coluna=0;
+                $linha++;
+        endforeach;
+//        
+        foreach ( $manzua as $key => $consulta ):
+                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Manzuá');
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                
+                $coluna=0;
+                $linha++;
+        endforeach;
+//        
+        foreach ( $mergulho as $key => $consulta ):
+                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Mergulho');
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                
+                $coluna=0;
+                $linha++;
+        endforeach;
+        
+        foreach ( $tarrafa as $key => $consulta ):
+                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Tarrafa');
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                
+                $coluna=0;
+                $linha++;
+        endforeach;
+//        
+        foreach ( $varapesca as $key => $consulta ):
+                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Vara de Pesca');
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                
+                $coluna=0;
+                $linha++;
+        endforeach;
+       
+
+
+        foreach ( $coletamanual as $key => $consulta ):
+                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Coleta Manual');
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+
+                
+                $coluna=0;
+                $linha++;
+        endforeach; 
+        
+        foreach ( $ratoeira as $key => $consulta ):
+                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Ratoeira');
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                $coluna=0;
+                $linha++;
+        endforeach; 
+        
+        foreach ( $siripoia as $key => $consulta ):
+                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Siripoia');
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                
+                $coluna=0;
+                $linha++;
+        endforeach; 
+        
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        ob_end_clean();
+
+        header('Content-Type: application/vnd.ms-excel');
+        header("Content-Disposition: attachment;filename='Artes Por Monitoramentos.xls'");
         header('Cache-Control: max-age=0');
 
         ob_end_clean();

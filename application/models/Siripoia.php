@@ -477,5 +477,16 @@ class Application_Model_Siripoia
         }
         return $dbTable->fetchAll($select)->toArray();        
     }
+    public function selectPesqueirosVisitados($where = null,$order = null, $limit = null){
+        $dbTable = new Application_Model_DbTable_VSiripoiaHasPesqueiro();
+        
+        $select = $dbTable->select()->from('v_siripoia_has_t_pesqueiro',array('count(sir_id)','paf_pesqueiro'))->
+                group('paf_pesqueiro')->order($order)->limit($limit);
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $dbTable->fetchAll($select)->toArray();
+    }
 }
 

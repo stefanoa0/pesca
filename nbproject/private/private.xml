@@ -9,6 +9,11 @@
             <file>file:/C:/wamp/www/pesca/application/views/scripts/mergulho/tableespcaptura.phtml</file>
             <file>file:/C:/wamp/www/pesca/application/views/scripts/jerere/editar.phtml</file>
             <file>file:/C:/wamp/www/pesca/application/views/scripts/manzua/editar.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Mergulho.php</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/entrevista.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/cpue.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/EstatisticaController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/barco.phtml</file>
         </group>
     </open-files>
 </project-private>

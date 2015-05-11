@@ -1009,15 +1009,17 @@ class PescadorController extends Zend_Controller_Action {
     public function imprimirpescadorAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
-        $pescadorId = $this->_getParam('id_pescador');
 
-        $this->relpdfpescador();
+
+        $this->relpdfpescador("tp_dta_cad <= '2014-12-31'");
     }
     
     public function relpdfpescador( $where = null) {
+        set_time_limit(0);
+        ini_set('memory_limit', '-1');
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
-
+        
         $localModelPescador = new Application_Model_Pescador();
         $localPescador = $localModelPescador->selectView($where, array('pto_nome', 'tp_nome', 'tp_id'), NULL);
 
