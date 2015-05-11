@@ -296,6 +296,18 @@ class ColetaManualController extends Zend_Controller_Action
         $this->redirect("/coleta-manual/tableespcaptura/id/" . $idEntrevista);
         //$this->redirect("/coleta-manual/editar/id/" . $backUrl);
     }
+
+    public function tableavistamentoAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelColetaManual->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vColetaManualAvistamento = $this->modelColetaManual->selectColetaManualHasAvistamento('cml_id='.$idEntrevista); 
+
+        $this->view->assign('vColetaManualAvistamento', $vColetaManualAvistamento);
+    }    
     public function insertavistamentoAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -304,26 +316,34 @@ class ColetaManualController extends Zend_Controller_Action
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelColetaManual->insertAvistamento($idEntrevista, $avistamento);
 
-        $this->redirect("/coleta-manual/editar/id/" . $backUrl);
+        $this->redirect("/coleta-manual/tableavistamento/id/" . $idEntrevista);
     }
     public function deleteavistamentoAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idAvistamento = $this->_getParam("id_avistamento");
+        $idAvistamento = $this->_getParam("id_entrevista_has_avistamento");
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelColetaManual->deleteAvistamento($idAvistamento, $idEntrevista);
 
-        $this->redirect("/coleta-manual/editar/id/" . $backUrl);
+        $this->redirect("/coleta-manual/tableavistamento/id/" . $idEntrevista);
     }
+
+    public function tablebiocamaraoAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelColetaManual->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vBioCamarao = $this->modelColetaManual->selectVBioCamarao('tcml_id='.$idEntrevista);
+
+        $this->view->assign('vBioCamarao', $vBioCamarao);
+    }    
     public function insertbiocamaraoAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -340,25 +360,33 @@ class ColetaManualController extends Zend_Controller_Action
         
         $peso = $this->_getParam("peso");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelColetaManual->insertBioCamarao($idEntrevista, $idEspecie, $sexo, $maturidade, $compCabeca, $peso);
 
-        $this->redirect("/coleta-manual/editar/id/" . $backUrl);
+        $this->redirect("/coleta-manual/tablebiocamarao/id/" . $idEntrevista);
     }
     public function deletebiocamaraoAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idBiometria = $this->_getParam("id");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasBioCamarao = $this->_getParam("id_entrevista_has_biocamarao");
 
-        $backUrl = $this->_getParam("back_url");
+        $this->modelColetaManual->deleteBioCamarao($idEntrevistaHasBioCamarao);
 
-        $this->modelColetaManual->deleteBioCamarao($idBiometria);
-
-        $this->redirect("/coleta-manual/editar/id/" . $backUrl);
+        $this->redirect("/coleta-manual/tablebiocamarao/id/" . $idEntrevista);
     }
     
+    public function tablebiopeixeAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelColetaManual->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vBioPeixe = $this->modelColetaManual->selectVBioPeixe('tcml_id='.$idEntrevista);
+
+        $this->view->assign('vBioPeixe', $vBioPeixe);
+    }    
     public function insertbiopeixeAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -373,23 +401,20 @@ class ColetaManualController extends Zend_Controller_Action
         
         $peso = $this->_getParam("peso");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelColetaManual->insertBioPeixe($idEntrevista, $idEspecie, $sexo, $comprimento, $peso);
 
-        $this->redirect("/coleta-manual/editar/id/" . $backUrl);
+        $this->redirect("/coleta-manual/tablebiopeixe/id/" . $idEntrevista);
     }
     public function deletebiopeixeAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+        
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasBioPeixe = $this->_getParam("id_entrevista_has_biopeixe");
 
-        $idBiometria = $this->_getParam("id");
+        $this->modelColetaManual->deleteBioPeixe($idEntrevistaHasBioPeixe);
 
-        $backUrl = $this->_getParam("back_url");
-
-        $this->modelColetaManual->deleteBioPeixe($idBiometria);
-
-        $this->redirect("/coleta-manual/editar/id/" . $backUrl);
+        $this->redirect("/coleta-manual/tablebiopeixe/id/" . $idEntrevista);
     }
     public function relatoriolistaAction(){
 		$this->_helper->layout->disableLayout();

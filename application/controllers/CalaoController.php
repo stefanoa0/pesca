@@ -412,9 +412,9 @@ private $usuario;
         $this->_helper->viewRenderer->setNoRender(true);
         
         $idEntrevista = $this->_getParam("id_entrevista");
-        $idEntrevistaHasBioCamarao = $this->_getParam("id_entrevista_has_biopeixe");
+        $idEntrevistaHasBioPeixe = $this->_getParam("id_entrevista_has_biopeixe");
 
-        $this->modelCalao->deleteBioPeixe($idEntrevistaHasBioCamarao);
+        $this->modelCalao->deleteBioPeixe($idEntrevistaHasBioPeixe);
 
         $this->redirect("/calao/tablebiopeixe/id/" . $idEntrevista);
     }
