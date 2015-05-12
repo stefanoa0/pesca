@@ -102,7 +102,18 @@ class RelatoriosController extends Zend_Controller_Action
         }
         
     }
-    
+    public function listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel){
+        foreach($relatorioEspecies as $key => $especie):
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha,$especie['esp_nome_comum']);
+        endforeach;
+        return $coluna;
+    }
+    public function verificaTipoRel($espRel){
+            if(empty($espRel)){
+                $espRel = '0';
+            }
+            return $espRel;
+    }
     public function verificaRelatorio($var){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -208,8 +219,7 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspecies();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosArrasto();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-        $lastcolumn = $coluna;
+        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
@@ -261,21 +271,17 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectArrastoHasEspCapturadas('af_id = '.$consulta['af_id'], 'esp_nome_comum');
                 
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
+            for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                     if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $esp[$tipoRel]);
-                     }
-                 endforeach;
-                    if($coluna < $lastcolumn){
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                 }
-                 else{
-                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '');
-                 }
-                    
-            endforeach;
-            
+                }
+            endfor;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -346,8 +352,8 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesColetamanual();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosColetaManual();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-        $lastcolumn = $coluna;
+        
+        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
@@ -400,10 +406,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectColetaManualHasEspCapturadas('cml_id = '.$consulta['cml_id']);
                 
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn-1){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -474,8 +486,8 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesCalao();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosCalao();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-        $lastcolumn = $coluna;
+        
+        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
         
@@ -523,10 +535,16 @@ class RelatoriosController extends Zend_Controller_Action
             
             $coluna = $maxPesqueiros[0]['count']*2+$quant;
             $Relesp = $this->modelRelatorios->selectCalaoHasEspCapturadas('cal_id = '.$consulta['cal_id']);
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -600,8 +618,8 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesEmalhe();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosEmalhe();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-        $lastcolumn = $coluna;
+        
+        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
 
         $porto = $this->_getParam('porto');
         if($porto != '999'){
@@ -653,10 +671,16 @@ class RelatoriosController extends Zend_Controller_Action
             
             $coluna = $maxPesqueiros[0]['count']*2+$quant;
             $Relesp = $this->modelRelatorios->selectEmalheHasEspCapturadas('em_id = '.$consulta['em_id']);
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -682,7 +706,6 @@ class RelatoriosController extends Zend_Controller_Action
         
         
         $this->modelRelatorios = new Application_Model_Relatorios();
-        
         
         
         $var =  $this->_getParam('id');
@@ -727,8 +750,8 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesGrosseira();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosGrosseira();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-        $lastcolumn = $coluna;
+        
+        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
 
         $porto = $this->_getParam('porto');
         if($porto != '999'){
@@ -784,10 +807,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectGrosseiraHasEspCapturadas('grs_id = '.$consulta['grs_id']);
                 
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -852,12 +881,12 @@ class RelatoriosController extends Zend_Controller_Action
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
-
+        
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesJerere();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosJerere();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-        $lastcolumn = $coluna;
+        
+        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         
         
         $porto = $this->_getParam('porto');
@@ -913,10 +942,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectJerereHasEspCapturadas('jre_id = '.$consulta['jre_id']);
                 
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn-1){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -933,8 +968,7 @@ class RelatoriosController extends Zend_Controller_Action
     }
     
    public function relatoriocompletolinhaAction() {
-       
-        set_time_limit(300);
+        set_time_limit(0);
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
         }
@@ -986,8 +1020,8 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesLinha();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosLinha();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-        $lastcolumn = $coluna;
+        
+        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         
         
         $porto = $this->_getParam('porto');
@@ -1043,10 +1077,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectLinhaHasEspCapturadas('lin_id = '.$consulta['lin_id']);
                 
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1117,8 +1157,8 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesLinhaFundo();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosLinhaFundo();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-        $lastcolumn = $coluna;
+        
+        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
        
         
         $porto = $this->_getParam('porto');
@@ -1174,10 +1214,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectLinhaFundoHasEspCapturadas('lf_id = '.$consulta['lf_id']);
                 
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn-1){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1245,10 +1291,8 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesManzua();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosManzua();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        foreach($relatorioEspecies as $key => $especie):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha,$especie['esp_nome_comum']);
-        endforeach;
-        $lastcolumn = $coluna;
+        
+        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
@@ -1305,10 +1349,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectManzuaHasEspCapturadas('man_id = '.$consulta['man_id']);
                 
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn-1){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1374,8 +1424,8 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesMergulho();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosMergulho();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-        $lastcolumn = $coluna;
+        
+        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         
         
         $porto = $this->_getParam('porto');
@@ -1428,10 +1478,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectMergulhoHasEspCapturadas('mer_id = '.$consulta['mer_id']);
                 
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn-1){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1503,8 +1559,8 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesRatoeira();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosRatoeira();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-        $lastcolumn = $coluna;
+        
+        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         
         
         $porto = $this->_getParam('porto');
@@ -1560,10 +1616,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectRatoeiraHasEspCapturadas('rat_id = '.$consulta['rat_id']);
                 
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn-1){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1631,8 +1693,8 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesSiripoia();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosSiripoia();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-        $lastcolumn = $coluna;
+        
+        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         
         
         $porto = $this->_getParam('porto');
@@ -1686,10 +1748,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectSiripoiaHasEspCapturadas('sir_id = '.$consulta['sir_id']);
                 
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn-1){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1754,8 +1822,8 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesTarrafa();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosTarrafa();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-        $lastcolumn = $coluna;
+        
+        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
@@ -1803,10 +1871,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectTarrafaHasEspCapturadas('tar_id = '.$consulta['tar_id']);
                 
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1882,8 +1956,8 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesVaraPesca();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosVaraPesca();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-        $lastcolumn = $coluna;
+        
+        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
@@ -1943,10 +2017,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectVaraPescaHasEspCapturadas('vp_id = '.$consulta['vp_id']);
                 
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn-1){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1965,14 +2045,7 @@ class RelatoriosController extends Zend_Controller_Action
         $objWriter->save('php://output');
     }
     
-    public function listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel){
-        foreach($relatorioEspecies as $key => $especie):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha,$especie['esp_nome_comum']);
-        endforeach;
-    }
-    public function imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel){
-        
-    }
+    
     public function relatoriocompletoresumidoAction() {
         $inicio1 = microtime(true);
         set_time_limit(0);
@@ -2014,10 +2087,8 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspecies = $this->modelRelatorios->selectEspecies();
 
         $coluna++;
-        foreach ($relatorioEspecies as $key => $especie):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $especie['esp_nome_comum']);
-        endforeach;
-        $lastcolumn = $coluna;
+
+        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
 
         $porto = $this->_getParam('porto');
         if ($porto != '999') {
@@ -2046,10 +2117,16 @@ class RelatoriosController extends Zend_Controller_Action
 
             $coluna++;
             $Relesp = $this->modelRelatorios->selectArrastoHasEspCapturadas('af_id = ' . $consulta['af_id']);
-            foreach ($relatorioEspecies as $key => $especie):
-                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
             unset($consulta);
@@ -2083,10 +2160,16 @@ class RelatoriosController extends Zend_Controller_Action
 
             $coluna++;
             $Relesp = $this->modelRelatorios->selectCalaoHasEspCapturadas('cal_id = ' . $consulta['cal_id']);
-            foreach ($relatorioEspecies as $key => $especie):
-                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
             unset($consulta);
@@ -2118,11 +2201,16 @@ class RelatoriosController extends Zend_Controller_Action
 
             $coluna++;
             $Relesp = $this->modelRelatorios->selectColetaManualHasEspCapturadas('cml_id = ' . $consulta['cml_id']);
-            foreach ($relatorioEspecies as $key => $especie):
-                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
-
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
             unset($consulta);
@@ -2154,10 +2242,16 @@ class RelatoriosController extends Zend_Controller_Action
 
             $coluna++;
             $Relesp = $this->modelRelatorios->selectEmalheHasEspCapturadas('em_id = ' . $consulta['em_id']);
-            foreach ($relatorioEspecies as $key => $especie):
-                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
 
 
             $coluna = 0;
@@ -2191,10 +2285,16 @@ class RelatoriosController extends Zend_Controller_Action
 
             $coluna++;
             $Relesp = $this->modelRelatorios->selectGrosseiraHasEspCapturadas('grs_id = ' . $consulta['grs_id']);
-            foreach ($relatorioEspecies as $key => $especie):
-                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
 
             $coluna = 0;
             $linha++;
@@ -2229,10 +2329,16 @@ class RelatoriosController extends Zend_Controller_Action
             $Relesp = $this->modelRelatorios->selectJerereHasEspCapturadas('jre_id = ' . $consulta['jre_id']);
 
             $coluna++;
-            foreach ($relatorioEspecies as $key => $especie):
-                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
 
             $coluna = 0;
             $linha++;
@@ -2268,10 +2374,16 @@ class RelatoriosController extends Zend_Controller_Action
             $Relesp = $this->modelRelatorios->selectLinhaHasEspCapturadas('lin_id = ' . $consulta['lin_id']);
 
             $coluna++;
-            foreach ($relatorioEspecies as $key => $especie):
-                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
 
             $coluna = 0;
             $linha++;
@@ -2308,10 +2420,16 @@ class RelatoriosController extends Zend_Controller_Action
             $Relesp = $this->modelRelatorios->selectLinhaFundoHasEspCapturadas('lf_id = ' . $consulta['lf_id']);
 
             $coluna++;
-            foreach ($relatorioEspecies as $key => $especie):
-                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
 
             $coluna = 0;
             $linha++;
@@ -2349,10 +2467,16 @@ class RelatoriosController extends Zend_Controller_Action
             $Relesp = $this->modelRelatorios->selectManzuaHasEspCapturadas('man_id = ' . $consulta['man_id']);
 
             $coluna++;
-            foreach ($relatorioEspecies as $key => $especie):
-                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
 
             $coluna = 0;
             $linha++;
@@ -2389,10 +2513,16 @@ class RelatoriosController extends Zend_Controller_Action
             $Relesp = $this->modelRelatorios->selectMergulhoHasEspCapturadas('mer_id = ' . $consulta['mer_id']);
 
             $coluna++;
-            foreach ($relatorioEspecies as $key => $especie):
-                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
 
             $coluna = 0;
             $linha++;
@@ -2427,10 +2557,16 @@ class RelatoriosController extends Zend_Controller_Action
             $Relesp = $this->modelRelatorios->selectRatoeiraHasEspCapturadas('rat_id = ' . $consulta['rat_id']);
 
             $coluna++;
-            foreach ($relatorioEspecies as $key => $especie):
-                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
 
             $coluna = 0;
             $linha++;
@@ -2466,10 +2602,16 @@ class RelatoriosController extends Zend_Controller_Action
             $Relesp = $this->modelRelatorios->selectSiripoiaHasEspCapturadas('sir_id = ' . $consulta['sir_id']);
 
             $coluna++;
-            foreach ($relatorioEspecies as $key => $especie):
-                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
 
             $coluna = 0;
             $linha++;
@@ -2506,10 +2648,16 @@ class RelatoriosController extends Zend_Controller_Action
             $Relesp = $this->modelRelatorios->selectTarrafaHasEspCapturadas('tar_id = ' . $consulta['tar_id']);
 
             $coluna++;
-            foreach ($relatorioEspecies as $key => $especie):
-                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
             unset($consulta);
@@ -2547,10 +2695,16 @@ class RelatoriosController extends Zend_Controller_Action
             $Relesp = $this->modelRelatorios->selectVaraPescaHasEspCapturadas('vp_id = ' . $consulta['vp_id']);
 
             $coluna++;
-            foreach ($relatorioEspecies as $key => $especie):
-                $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
 
             $coluna = 0;
             $linha++;
@@ -2646,10 +2800,8 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspecies = $this->modelRelatorios->selectEspecies();
         
         $coluna = 2+$quant;
-        foreach($relatorioEspecies as $key => $especie):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha,$especie['esp_nome_comum']);
-        endforeach;
-        $lastcolumn = $coluna;
+        
+        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
@@ -2711,10 +2863,16 @@ class RelatoriosController extends Zend_Controller_Action
             
             $coluna = 2+$quant;
             $Relesp = $this->modelRelatorios->selectCalaoHasEspCapturadas('cal_id = '.$consulta['cal_id']);
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach; 
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna=0;
             $linha++;
         endforeach;
@@ -2781,10 +2939,16 @@ class RelatoriosController extends Zend_Controller_Action
             
             $coluna = 2+$quant;
             $Relesp = $this->modelRelatorios->selectColetaManualHasEspCapturadas('cml_id = '.$consulta['cml_id']);
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
             endforeach; 
@@ -2847,10 +3011,16 @@ class RelatoriosController extends Zend_Controller_Action
             
             $coluna = 2+$quant;
             $Relesp = $this->modelRelatorios->selectEmalheHasEspCapturadas('em_id = '.$consulta['em_id']);
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -2915,10 +3085,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectGrosseiraHasEspCapturadas('grs_id = '.$consulta['grs_id']);
                 
                 $coluna= 2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -2985,10 +3161,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectJerereHasEspCapturadas('jre_id = '.$consulta['jre_id']);
                 
                 $coluna= 2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -3057,10 +3239,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectLinhaHasEspCapturadas('lin_id = '.$consulta['lin_id']);
                 
                 $coluna= 2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -3128,10 +3316,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectLinhaFundoHasEspCapturadas('lf_id = '.$consulta['lf_id']);
                 
                 $coluna= 2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -3198,10 +3392,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectManzuaHasEspCapturadas('man_id = '.$consulta['man_id']);
                 
                 $coluna= 2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -3269,10 +3469,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectMergulhoHasEspCapturadas('mer_id = '.$consulta['mer_id']);
                 
                 $coluna= 2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -3339,10 +3545,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectRatoeiraHasEspCapturadas('rat_id = '.$consulta['rat_id']);
                 
                 $coluna= 2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -3410,10 +3622,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectSiripoiaHasEspCapturadas('sir_id = '.$consulta['sir_id']);
                 
                 $coluna= 2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -3476,10 +3694,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectTarrafaHasEspCapturadas('tar_id = '.$consulta['tar_id']);
                 
                 $coluna= 2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -3549,10 +3773,16 @@ class RelatoriosController extends Zend_Controller_Action
                 $Relesp = $this->modelRelatorios->selectVaraPescaHasEspCapturadas('vp_id = '.$consulta['vp_id']);
                 
                 $coluna= 2+$quant;
-            foreach($relatorioEspecies as $key => $especie):
-                 $this->imprimeEspecies($Relesp, $coluna, $linha, $tipoRel, $objPHPExcel);
-                $coluna++;
-            endforeach;
+            for($i=$coluna; $i<$lastcolumn; $i++):
+                foreach($Relesp as $key => $esp):
+                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    }
+                endforeach;
+                if($coluna < $lastcolumn){
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                }
+            endfor;
             $coluna = 0;
             $linha++;
         endforeach;
