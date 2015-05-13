@@ -285,6 +285,18 @@ class EmalheController extends Zend_Controller_Action
         $this->redirect("/emalhe/tableespcaptura/id/" . $idEntrevista);
         //$this->redirect("/emalhe/editar/id/" . $backUrl);
     }
+
+    public function tableavistamentoAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelEmalhe->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vEmalheAvistamento = $this->modelEmalhe->selectEmalheHasAvistamento('em_id='.$idEntrevista);
+
+        $this->view->assign('vEmalheAvistamento', $vEmalheAvistamento);
+    }    
     public function insertavistamentoAction(){
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
@@ -296,11 +308,9 @@ class EmalheController extends Zend_Controller_Action
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelEmalhe->insertAvistamento($idEntrevista, $avistamento);
 
-        $this->redirect("/emalhe/editar/id/" . $backUrl);
+        $this->redirect("/emalhe/tableavistamento/id/" . $idEntrevista);
     }
     public function deleteavistamentoAction(){
         if($this->usuario['tp_id']==5){
@@ -309,17 +319,25 @@ class EmalheController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idAvistamento = $this->_getParam("id_avistamento");
-
         $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasAvistamento = $this->_getParam("id_entrevista_has_avistamento");
 
-        $backUrl = $this->_getParam("back_url");
+        $this->modelEmalhe->deleteAvistamento($idEntrevistaHasAvistamento, $idEntrevista);
 
-        $this->modelEmalhe->deleteAvistamento($idAvistamento, $idEntrevista);
-
-        $this->redirect("/emalhe/editar/id/" . $backUrl);
+        $this->redirect("/emalhe/tableavistamento/id/" . $idEntrevista);
     }
     
+    public function tablebiocamaraoAction(){//Action para tablepesqueiro
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelEmalhe->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vBioCamarao = $this->modelEmalhe->selectVBioCamarao('tem_id='.$idEntrevista);
+        
+        $this->view->assign('vBioCamarao', $vBioCamarao);
+    }
     public function insertbiocamaraoAction() {
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
@@ -339,11 +357,9 @@ class EmalheController extends Zend_Controller_Action
         
         $peso = $this->_getParam("peso");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelEmalhe->insertBioCamarao($idEntrevista, $idEspecie, $sexo, $maturidade, $compCabeca, $peso);
 
-        $this->redirect("/emalhe/editar/id/" . $backUrl);
+        $this->redirect("/emalhe/tablebiocamarao/id/" . $idEntrevista);
     }
     public function deletebiocamaraoAction() {
         if($this->usuario['tp_id']==5){
@@ -352,15 +368,25 @@ class EmalheController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idBiometria = $this->_getParam("id");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasBioCamarao = $this->_getParam("id_entrevista_has_biocamarao");
+        
+        $this->modelEmalhe->deleteBioCamarao($idEntrevistaHasBioCamarao);
 
-        $backUrl = $this->_getParam("back_url");
-
-        $this->modelEmalhe->deleteBioCamarao($idBiometria);
-
-        $this->redirect("/emalhe/editar/id/" . $backUrl);
+        $this->redirect("/emalhe/tablebiocamarao/id/" . $idEntrevista);
     }
     
+    public function tablebiopeixeAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelEmalhe->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vBioPeixe = $this->modelEmalhe->selectVBioPeixe('tem_id='.$idEntrevista);
+
+        $this->view->assign('vBioPeixe', $vBioPeixe);
+    }
     public function insertbiopeixeAction() {
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
@@ -378,11 +404,9 @@ class EmalheController extends Zend_Controller_Action
         
         $peso = $this->_getParam("peso");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelEmalhe->insertBioPeixe($idEntrevista, $idEspecie, $sexo, $comprimento, $peso);
 
-        $this->redirect("/emalhe/editar/id/" . $backUrl);
+        $this->redirect("/emalhe/tablebiopeixe/id/" . $idEntrevista);
     }
     public function deletebiopeixeAction() {
         if($this->usuario['tp_id']==5){
@@ -390,14 +414,13 @@ class EmalheController extends Zend_Controller_Action
         }
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+        
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasBioPeixe = $this->_getParam("id_entrevista_has_biopeixe");
 
-        $idBiometria = $this->_getParam("id");
+        $this->modelEmalhe->deleteBioPeixe($idEntrevistaHasBioPeixe);
 
-        $backUrl = $this->_getParam("back_url");
-
-        $this->modelEmalhe->deleteBioPeixe($idBiometria);
-
-        $this->redirect("/emalhe/editar/id/" . $backUrl);
+        $this->redirect("/emalhe/tablebiopeixe/id/" . $idEntrevista);
     }
     public function relatoriolistaAction(){
         if($this->usuario['tp_id']==5){

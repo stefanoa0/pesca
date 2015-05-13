@@ -1,0 +1,32 @@
+<div id="biopeixe">
+    <fieldset class="noEditable" id="itemArteTipoRows"><legend>Dados Cadastrados:</legend>
+        <table id="especiesCapturadas">
+            <tr>
+            <th width="20%">Id Amostra</th>
+            <th width="30%">Espécie</th>
+            <th width="20%">Comprimento</th>
+            <th width="10%">Sexo</th>
+            <th width="20%">Peso</th>
+            </tr>
+            <?php
+            foreach ($this->vBioPeixe as $key => $unidadePeixe):
+                ?>
+                <tr id="itemEmbarcacoesRows">
+
+                <td name="inputAmostra"> <?= $unidadePeixe['tembp_id'] ?> </td>
+                <td name="inputMaturidade"> <?= $unidadePeixe['esp_nome_comum'] ?> </td>
+                <td name="inputComp.Cabeca"> <?= $unidadePeixe['tbp_comprimento'] ?> </td>
+                <td name="inputSexo"> <?= $unidadePeixe['tbp_sexo'] ?> </td>
+                <td name="inputPeso"> <?= $unidadePeixe['tbp_peso'] ?> </td>
+                <td class="td-botao">
+                    <a name="Excluir" class="button-del" onclick="ajax_delete_entrevista_has('<?= $this->entrevista['em_id'] ?>', '<?= $this->url(array("controller" => "emalhe", "action" => "deletebiopeixe"), null, true) ?>', '<?= $unidadePeixe['tembp_id'] ?>', 'biopeixe')">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                        </ul>
+                    </a> 
+                </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </fieldset>
+</div>

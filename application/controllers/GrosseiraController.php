@@ -289,6 +289,17 @@ private $usuario;
         $this->redirect("/grosseira/tableespcaptura/id/" . $idEntrevista);
         //$this->redirect("/grosseira/editar/id/" . $backUrl);
     }
+    public function tableavistamentoAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelGrosseira->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vGrosseiraAvistamento = $this->modelGrosseira->selectGrosseiraHasAvistamento('grs_id='.$idEntrevista);
+
+        $this->view->assign('vGrosseiraAvistamento', $vGrosseiraAvistamento);
+    }    
     public function insertavistamentoAction(){
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
@@ -300,11 +311,9 @@ private $usuario;
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelGrosseira->insertAvistamento($idEntrevista, $avistamento);
 
-        $this->redirect("/grosseira/editar/id/" . $backUrl);
+        $this->redirect("/grosseira/tableavistamento/id/" . $idEntrevista);
     }
     public function deleteavistamentoAction(){
         if($this->usuario['tp_id']==5){
@@ -313,15 +322,23 @@ private $usuario;
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idAvistamento = $this->_getParam("id_avistamento");
-
         $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasAvistamento = $this->_getParam("id_entrevista_has_avistamento");
+        
+        $this->modelGrosseira->deleteAvistamento($idEntrevistaHasAvistamento, $idEntrevista);
 
-        $backUrl = $this->_getParam("back_url");
-
-        $this->modelGrosseira->deleteAvistamento($idAvistamento, $idEntrevista);
-
-        $this->redirect("/grosseira/editar/id/" . $backUrl);
+        $this->redirect("/grosseira/tableavistamento/id/" . $idEntrevista);
+    }
+    public function tablebiocamaraoAction(){//Action para tablepesqueiro
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelGrosseira->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vBioCamarao = $this->modelGrosseira->selectVBioCamarao('tgrs_id='.$idEntrevista);
+        
+        $this->view->assign('vBioCamarao', $vBioCamarao);
     }
     public function insertbiocamaraoAction() {
         if($this->usuario['tp_id']==5){
@@ -342,11 +359,9 @@ private $usuario;
         
         $peso = $this->_getParam("peso");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelGrosseira->insertBioCamarao($idEntrevista, $idEspecie, $sexo, $maturidade, $compCabeca, $peso);
 
-        $this->redirect("/grosseira/editar/id/" . $backUrl);
+        $this->redirect("/grosseira/tablebiocamarao/id/" . $idEntrevista);
     }
     public function deletebiocamaraoAction() {
         if($this->usuario['tp_id']==5){
@@ -355,15 +370,25 @@ private $usuario;
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idBiometria = $this->_getParam("id");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasBioCamarao = $this->_getParam("id_entrevista_has_biocamarao");
 
-        $backUrl = $this->_getParam("back_url");
+        $this->modelGrosseira->deleteBioCamarao($idEntrevistaHasBioCamarao);
 
-        $this->modelGrosseira->deleteBioCamarao($idBiometria);
-
-        $this->redirect("/grosseira/editar/id/" . $backUrl);
+        $this->redirect("/grosseira/tablebiocamarao/id/" . $idEntrevista);
     }
     
+    public function tablebiopeixeAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelGrosseira->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vBioPeixe = $this->modelGrosseira->selectVBioPeixe('tgrs_id='.$idEntrevista);
+
+        $this->view->assign('vBioPeixe', $vBioPeixe);
+    }
     public function insertbiopeixeAction() {
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
@@ -381,11 +406,9 @@ private $usuario;
         
         $peso = $this->_getParam("peso");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelGrosseira->insertBioPeixe($idEntrevista, $idEspecie, $sexo, $comprimento, $peso);
 
-        $this->redirect("/grosseira/editar/id/" . $backUrl);
+        $this->redirect("/grosseira/tablebiopeixe/id/" . $idEntrevista);
     }
     public function deletebiopeixeAction() {
         if($this->usuario['tp_id']==5){
@@ -393,14 +416,13 @@ private $usuario;
         }
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+        
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasBioPeixe = $this->_getParam("id_entrevista_has_biopeixe");
 
-        $idBiometria = $this->_getParam("id");
+        $this->modelGrosseira->deleteBioPeixe($idEntrevistaHasBioPeixe);
 
-        $backUrl = $this->_getParam("back_url");
-
-        $this->modelGrosseira->deleteBioPeixe($idBiometria);
-
-        $this->redirect("/grosseira/editar/id/" . $backUrl);
+        $this->redirect("/grosseira/tablebiopeixe/id/" . $idEntrevista);
     }
     public function relatoriolistaAction(){
         if($this->usuario['tp_id']==5){

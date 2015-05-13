@@ -221,7 +221,7 @@
     <fieldset class="noEditable"><legend>Avistamento:</legend>
         <fieldset class="noEditable"><legend>O Que foi avistado:</legend>
             <div id="base">
-                <input class="responsivo" onclick="jsInsertAvistamento(this.form, '<?= $this->url(array("controller" => "emalhe", "action" => "insertavistamento"), null, true) ?>', '<?=$this->entrevista['em_id']?>')" type="button" value="Adicionar" />
+                <input class="responsivo" onclick="ajax_avistamento(this.form, '<?= $this->url(array("controller" => "emalhe", "action" => "insertavistamento"), null, true) ?>', '<?=$this->entrevista['em_id']?>')" type="button" value="Adicionar" />
                 
                 <select class="responsivo" style="float:left;" name="SelectAvistamento">
                     <option value="" selected></option>
@@ -234,29 +234,7 @@
 
         </fieldset>
         <br>
-        <fieldset class="noEditable" id="itemArteTipoRows"><legend>Avistamentos:</legend>
-            <table id="pesqueiros">
-                <tr>
-                    <th width="15%">Id Avistamento</th>
-                    <th width="85%">Avistamento</th>
-                </tr>
-                <?php
-                foreach ($this->vEmalheAvistamento as $key => $vEmalheAvistamento):
-                    ?>
-                    <tr id="itemEmalheRows">
-                        <td name="inputIdEntrevista"> <?= $vEmalheAvistamento['avs_id'] ?> </td>
-                        <td name="inputAvistamento" > <?= $vEmalheAvistamento['avs_descricao'] ?> </td>
-                        <td class="td-botao">
-                            <a name="Excluir" class="button-del" onclick="jsDeleteAvistamento(<?= $this->entrevista['em_id'] ?>, '<?= $this->url(array("controller" => "emalhe", "action" => "deleteavistamento"), null, true) ?>', <?= $vEmalheAvistamento['avs_id'] ?>)">
-                                <ul id="icons" class="ui-widget ui-helper-clearfix">
-                                    <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
-                                </ul>
-                            </a> 
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </table>
-        </fieldset>
+         <?php include ('tableavistamento.phtml') ?>
     </fieldset>
     <br /><br />
     <!--////////////////////////////////////////////////////////AMOSTRAGEM PEIXES///////////////////////////////////////////////////////////-->
@@ -264,7 +242,7 @@
         <fieldset class="noEditable"><legend>Dados das Amostras:</legend>
 
             <div id="base_peixe">
-                <input class="responsivo" onclick="jsInsertAmostraPeixe(this.form, '<?= $this->url(array("controller" => "emalhe", "action" => "insertbiopeixe"), null, true) ?>','<?=$this->entrevista['em_id']?>')" type="button" value="Adicionar" />
+                <input class="responsivo" onclick="ajax_biopeixe(this.form, '<?= $this->url(array("controller" => "emalhe", "action" => "insertbiopeixe"), null, true) ?>','<?=$this->entrevista['em_id']?>')" type="button" value="Adicionar" />
                 
                 <select class="responsivo" style="float:left;" name="SelectEspeciePeixe">
                     <?php foreach ($this->especies as $key => $especie): ?>
@@ -286,37 +264,7 @@
 
         </fieldset>
         <br>
-         <fieldset class="noEditable" id="itemArteTipoRows"><legend>Dados Cadastrados:</legend>
-                <table id="especiesCapturadas">
-                    <tr>
-                        
-                        <th width="20%">Id Amostra</th>
-                        <th width="30%">Espécie</th>
-                        <th width="20%">Comprimento</th>
-                        <th width="10%">Sexo</th>
-                        <th width="20%">Peso</th>
-                    </tr>
-                    <?php
-                    foreach ($this->vBioPeixe as $key => $unidadePeixe):
-                        ?>
-                        <tr id="itemEmbarcacoesRows">
-                            
-                            <td name="inputAmostra"> <?= $unidadePeixe['tembp_id'] ?> </td>
-                            <td name="inputMaturidade"> <?= $unidadePeixe['esp_nome_comum'] ?> </td>
-                            <td name="inputComp.Cabeca"> <?= $unidadePeixe['tbp_comprimento'] ?> </td>
-                            <td name="inputSexo"> <?= $unidadePeixe['tbp_sexo'] ?> </td>
-                            <td name="inputPeso"> <?= $unidadePeixe['tbp_peso'] ?> </td>
-                            <td class="td-botao">
-                                <a name="Excluir" class="button-del" onclick="jsDeleteUnidade('<?= $this->url(array("controller" => "emalhe", "action" => "deletebiopeixe"), null, true) ?>', '<?=$this->entrevista['em_id']?>','<?= $unidadePeixe['tembp_id'] ?>', '#base_peixe')">
-                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
-                                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
-                                    </ul>
-                                </a> 
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </table>
-            </fieldset>
+         <?php include ('tablebiopeixe.phtml') ?>
         </fieldset>
     <br /><br />
 <!--////////////////////////////////////////////////////////AMOSTRAGEM PEIXES///////////////////////////////////////////////////////////-->
@@ -324,7 +272,7 @@
         <fieldset class="noEditable"><legend>Dados das Amostras:</legend>
 
             <div id="base_camarao">
-                <input class="responsivo" onclick="jsInsertAmostraCamarao(this.form, '<?= $this->url(array("controller" => "emalhe", "action" => "insertbiocamarao"), null, true) ?>','<?=$this->entrevista['em_id']?>')" type="button" value="Adicionar" />
+                <input class="responsivo" onclick="ajax_biocamarao(this.form, '<?= $this->url(array("controller" => "emalhe", "action" => "insertbiocamarao"), null, true) ?>','<?=$this->entrevista['em_id']?>')" type="button" value="Adicionar" />
                 
                 <select class="responsivo" style="float:left;" name="SelectEspecieCamarao">
                     <?php foreach ($this->especieCamarao as $key => $especieCamarao): ?>
@@ -351,39 +299,7 @@
 
         </fieldset>
         <br>
-         <fieldset class="noEditable" id="itemArteTipoRows"><legend>Dados Cadastrados:</legend>
-                <table id="especiesCapturadas">
-                    <tr>
-                        
-                        <th width="20%">Id Amostra</th>
-                        <th width='20%'>Espécie</th>
-                        <th width="10%">Sexo</th>
-                        <th width="20%">Maturidade</th>
-                        <th width="20%">Comp.Carapaça</th>
-                        <th width="20%">Peso</th>
-                    </tr>
-                    <?php
-                    foreach ($this->vBioCamarao as $key => $unidadeCamarao):
-                        ?>
-                        <tr id="itemEmbarcacoesRows">
-                            
-                            <td name="inputAmostra"> <?= $unidadeCamarao['tembc_id'] ?> </td>
-                            <td name="inputEspecie"> <?= $unidadeCamarao['esp_nome_comum'] ?> </td>
-                            <td name="inputSexo"> <?= $unidadeCamarao['tbc_sexo'] ?> </td>
-                            <td name="inputMaturidade"> <?= $unidadeCamarao['tmat_tipo'] ?> </td>
-                            <td name="inputComp.Cabeca"> <?= $unidadeCamarao['tbc_comprimento_cabeca'] ?> </td>
-                            <td name="inputPeso"> <?= $unidadeCamarao['tbc_peso'] ?> </td>
-                            <td class="td-botao">
-                                <a name="Excluir" class="button-del" onclick="jsDeleteUnidade('<?= $this->url(array("controller" => "emalhe", "action" => "deletebiocamarao"), null, true) ?>', '<?=$this->entrevista['em_id']?>','<?= $unidadeCamarao['tembc_id'] ?>', '#base_camarao')">
-                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
-                                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
-                                    </ul>
-                                </a> 
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </table>
-            </fieldset>
+         <?php include ('tablebiocamarao.phtml') ?>
 </fieldset>
 </form>
     <br/> <br/>
