@@ -4,16 +4,6 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/wamp/www/pesca/public/js/funcoesJquery.js</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/manzua/tableespcaptura.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/manzua/tablepesqueiro.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/mergulho/tableespcaptura.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/jerere/editar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/manzua/editar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/models/Mergulho.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/entrevista.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/cpue.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/EstatisticaController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/barco.phtml</file>
         </group>
     </open-files>
 </project-private>
