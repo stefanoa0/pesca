@@ -611,8 +611,9 @@ class Application_Model_Relatorios
     public function selectCapturaByArteMergulho($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaMergulho();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_entrevista_mergulho', 'v_entrevista_mergulho.mer_id')->joinLeft('v_mergulho_has_t_especie_capturada', 'v_entrevista_mergulho.mer_id = v_mergulho_has_t_especie_capturada.mer_id',
-                        array('sum(v_mergulho_has_t_especie_capturada.spc_quantidade) as quant','sum(v_mergulho_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                from('v_entrevista_mergulho', 'v_entrevista_mergulho.mer_id')
+                ->joinLeft('v_mergulho_has_t_especie_capturada', 'v_entrevista_mergulho.mer_id = v_mergulho_has_t_especie_capturada.mer_id',
+                array('sum(v_mergulho_has_t_especie_capturada.spc_quantidade) as quant','sum(v_mergulho_has_t_especie_capturada.spc_peso_kg) as peso' ))->
                 group(array('v_entrevista_mergulho.mer_id'));
         
         if(!is_null($where)){

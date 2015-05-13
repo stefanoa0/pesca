@@ -400,7 +400,7 @@ input {
 .data{
     float: none;
     height: 22px;
-    width: 100%;
+    width: 30%;
     border-radius: 3px;
     border-color:#8b8386;
 }
