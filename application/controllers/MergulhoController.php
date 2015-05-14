@@ -287,6 +287,18 @@ class MergulhoController extends Zend_Controller_Action
         $this->redirect("/mergulho/tableespcaptura/id/" . $idEntrevista);
         //$this->redirect("/mergulho/editar/id/" . $backUrl);
     }
+    
+    public function tableavistamentoAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelMergulho->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vMergulhoAvistamento = $this->modelMergulho->selectMergulhoHasAvistamento('mer_id='.$idEntrevista);
+
+        $this->view->assign('vMergulhoAvistamento', $vMergulhoAvistamento);
+    }
     public function insertavistamentoAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -295,25 +307,32 @@ class MergulhoController extends Zend_Controller_Action
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelMergulho->insertAvistamento($idEntrevista, $avistamento);
 
-        $this->redirect("/mergulho/editar/id/" . $backUrl);
+        $this->redirect("/mergulho/tableavistamento/id/" . $idEntrevista);
     }
     public function deleteavistamentoAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idAvistamento = $this->_getParam("id_avistamento");
-
         $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasAvistamento = $this->_getParam("id_entrevista_has_avistamento");
 
-        $backUrl = $this->_getParam("back_url");
+        $this->modelMergulho->deleteAvistamento($idEntrevistaHasAvistamento, $idEntrevista);
 
-        $this->modelMergulho->deleteAvistamento($idAvistamento, $idEntrevista);
-
-        $this->redirect("/mergulho/editar/id/" . $backUrl);
+        $this->redirect("/mergulho/tableavistamento/id/" . $idEntrevista);
+    }
+    
+    public function tablebiocamaraoAction(){//Action para tablepesqueiro
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelMergulho->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vBioCamarao = $this->modelMergulho->selectVBioCamarao('tmer_id='.$idEntrevista);
+        
+        $this->view->assign('vBioCamarao', $vBioCamarao);
     }
     public function insertbiocamaraoAction() {
         $this->_helper->layout->disableLayout();
@@ -331,25 +350,33 @@ class MergulhoController extends Zend_Controller_Action
         
         $peso = $this->_getParam("peso");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelMergulho->insertBioCamarao($idEntrevista, $idEspecie, $sexo, $maturidade, $compCabeca, $peso);
 
-        $this->redirect("/mergulho/editar/id/" . $backUrl);
+        $this->redirect("/mergulho/tablebiocamarao/id/" . $idEntrevista);
     }
     public function deletebiocamaraoAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idBiometria = $this->_getParam("id");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasBioCamarao = $this->_getParam("id_entrevista_has_biocamarao");
 
-        $backUrl = $this->_getParam("back_url");
+        $this->modelMergulho->deleteBioCamarao($idEntrevistaHasBioCamarao);
 
-        $this->modelMergulho->deleteBioCamarao($idBiometria);
-
-        $this->redirect("/mergulho/editar/id/" . $backUrl);
+        $this->redirect("/mergulho/tablebiocamarao/id/" . $idEntrevista);
     }
     
+    public function tablebiopeixeAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelMergulho->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vBioPeixe = $this->modelMergulho->selectVBioPeixe('tmer_id='.$idEntrevista);
+
+        $this->view->assign('vBioPeixe', $vBioPeixe);
+    }
     public function insertbiopeixeAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -364,23 +391,20 @@ class MergulhoController extends Zend_Controller_Action
         
         $peso = $this->_getParam("peso");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelMergulho->insertBioPeixe($idEntrevista, $idEspecie, $sexo, $comprimento, $peso);
 
-        $this->redirect("/mergulho/editar/id/" . $backUrl);
+        $this->redirect("/mergulho/tablebiopeixe/id/" . $idEntrevista);
     }
     public function deletebiopeixeAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+        
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasBioPeixe = $this->_getParam("id_entrevista_has_biopeixe");
 
-        $idBiometria = $this->_getParam("id");
+        $this->modelMergulho->deleteBioPeixe($idEntrevistaHasBioPeixe);
 
-        $backUrl = $this->_getParam("back_url");
-
-        $this->modelMergulho->deleteBioPeixe($idBiometria);
-
-        $this->redirect("/mergulho/editar/id/" . $backUrl);
+        $this->redirect("/mergulho/tablebiopeixe/id/" . $idEntrevista);
     }
     public function relatoriolistaAction(){
 		$this->_helper->layout->disableLayout();
