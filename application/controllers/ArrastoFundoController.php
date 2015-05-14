@@ -204,7 +204,7 @@ class ArrastoFundoController extends Zend_Controller_Action {
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-
+        
         $this->modelArrastoFundo->insertPesqueiro($idEntrevista, $pesqueiro, $tempopesqueiro);
 
         $this->redirect("/arrasto-fundo/tablepesqueiro/id/" . $idEntrevista);

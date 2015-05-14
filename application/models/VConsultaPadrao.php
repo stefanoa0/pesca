@@ -53,7 +53,7 @@ class Application_Model_VConsultaPadrao
     }
     public function selectDiasByPorto(){
         $this->dbVFicha = new Application_Model_DbTable_VFichaDiaria();
-        $selectFicha = $this->dbVFicha->select()->from($this->dbVFicha, 'count(distinct fd_data), pto_nome')->order('pto_nome')->group('pto_nome');
+        $selectFicha = $this->dbVFicha->select()->from($this->dbVFicha, array( 'count' => new Zend_Db_Expr('count(distinct fd_data)'),'pto_nome'))->order('pto_nome')->group('pto_nome');
         
         
         return $this->dbVConsultaPadrao->fetchAll($selectFicha)->toArray();

@@ -47,7 +47,6 @@ class ConsultaPadraoController extends Zend_Controller_Action
         $diasByPorto = $consultaPadrao->selectDiasByPorto();
         $dias = $consultaPadrao->selectDias();
 
-	require_once "../library/ModeloRelatorio.php";
         $modeloRelatorio = new ModeloRelatorio();
         $modeloRelatorio->setTitulo('Relatório Consulta Padrão');
         
@@ -148,7 +147,6 @@ class ConsultaPadraoController extends Zend_Controller_Action
         
         $selectPortosByData = $consultaPadrao->selectPortosByData();
         
-        require_once "../library/Classes/PHPExcel.php";
 
         $objPHPExcel = new PHPExcel();
 
@@ -252,7 +250,7 @@ class ConsultaPadraoController extends Zend_Controller_Action
         ob_end_clean();
 
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="teste.xls"');
+        header('Content-Disposition: attachment;filename="Relatorio de Atividades.xls"');
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
@@ -269,8 +267,6 @@ class ConsultaPadraoController extends Zend_Controller_Action
         $modelConsulta = new Application_Model_VConsultaPadrao();
         
         $relatorioMensal = $modelConsulta->selectRelatorioMensal();
-        
-        require_once "../library/Classes/PHPExcel.php";
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
@@ -307,7 +303,6 @@ class ConsultaPadraoController extends Zend_Controller_Action
         
         $relatorioMensal = $modelConsulta->selectEntrevistaPesqueiro();
         
-        require_once "../library/Classes/PHPExcel.php";
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
@@ -346,7 +341,6 @@ class ConsultaPadraoController extends Zend_Controller_Action
         
         $relatorioMensal = $modelConsulta->selectEntrevistasByHora();
         
-        require_once "../library/Classes/PHPExcel.php";
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
@@ -390,7 +384,6 @@ class ConsultaPadraoController extends Zend_Controller_Action
         
         $relatorioMensal = $modelConsulta->selectFilogenia();
         
-        require_once "../library/Classes/PHPExcel.php";
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
@@ -447,7 +440,6 @@ class ConsultaPadraoController extends Zend_Controller_Action
         
 
         
-        require_once "../library/Classes/PHPExcel.php";
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
