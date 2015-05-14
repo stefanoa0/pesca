@@ -198,7 +198,7 @@ class Application_Model_ArrastoFundo
     {
         $this->dbTableTArrastoHasPesqueiro = new Application_Model_DbTable_ArrastoHasPesqueiro();
 
-
+        if(empty($tempopesqueiro)){  $tempopesqueiro = null;}
         $dadosPesqueiro = array(
             'af_id' => $idEntrevista,
             'paf_id' => $pesqueiro,

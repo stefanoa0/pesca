@@ -87,7 +87,23 @@
             </div>
     </fieldset>
     </div>
-</form>     
+</form> 
+
+<!--<fieldset>
+    <legend> Relatórios Gerados: </legend>
+    <ul>
+        <?php if($dh = opendir('files')){ 
+            while(($file = readdir($dh)) !== false){ 
+        
+                echo '<a href="files/'.$file.'" download>'.$file.'</a><br/>';
+            }
+            closedir($dh);
+            
+           } ?>
+    </ul>    -->
+    
+    
+</fieldset>
 <fieldset> 
     <legend>Relatórios de Atividades:</legend>
     <ul>

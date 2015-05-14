@@ -166,6 +166,11 @@ class RelatoriosController extends Zend_Controller_Action
     public function loadingAction(){
         
     }
+    public function formataDataPtbr($data){
+        $explode = explode('-',$data);
+        
+        return $explode[2].'/'.$explode[1].'/'.$explode[0];
+    }
     public function relatoriocompletoarrastoAction() {
         set_time_limit(0);
         if($this->usuario['tp_id']==5){
@@ -232,15 +237,14 @@ class RelatoriosController extends Zend_Controller_Action
         $linha = 2;
         $coluna= 0;
         
-
         foreach ( $relatorioArrasto as $key => $consulta ):
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $consulta['tl_local']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['fd_data']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_id']);
@@ -290,12 +294,12 @@ class RelatoriosController extends Zend_Controller_Action
         ob_end_clean();
 
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="relatorioArrasto.xls"');
+        header('Content-Disposition: attachment;filename="relatorioArrasto_'.$tipoRel.'.xls"');
         header('Cache-Control: max-age=0');
         
         ob_end_clean();
         $objWriter->save('php://output');
-        
+        $objWriter->save('files/relatorioArrasto_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.'.xls');
     }
     
     
@@ -370,10 +374,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_id']);
@@ -505,8 +509,8 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_data']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_tempogasto']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_id']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
@@ -636,10 +640,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['drecolhimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dlancamento']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['drecolhimento']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dlancamento']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hlancamento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['drecolhimento']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['drecolhimento']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hrecolhimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_id']);
@@ -768,10 +772,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['fd_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_id']);
@@ -905,10 +909,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['fd_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_tempogasto']);
@@ -1040,10 +1044,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['fd_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_id']);
@@ -1176,10 +1180,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['fd_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_tempogasto']);
@@ -1310,10 +1314,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['fd_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_tempogasto']);
@@ -1444,10 +1448,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_tempogasto']);
@@ -1579,10 +1583,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['fd_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_tempogasto']);
@@ -1712,10 +1716,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['fd_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_tempogasto']);
@@ -1975,10 +1979,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['fd_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_tempogasto']);
@@ -2104,8 +2108,8 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata = explode("-", $consulta['dvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
@@ -2147,10 +2151,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['cal_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['cal_data']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, '1');
-            $explodedata =  explode("-", $consulta['cal_data']);
+            $explodedata =  explode("-", $this->formataDataPtbr($consulta['cal_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['cal_id']);
@@ -2188,8 +2192,8 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
@@ -2229,8 +2233,8 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dlancamento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['drecolhimento']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dlancamento']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['drecolhimento']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['drecolhimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
@@ -2272,8 +2276,8 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
@@ -2314,8 +2318,8 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
@@ -2359,8 +2363,8 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
@@ -2404,8 +2408,8 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
@@ -2451,8 +2455,8 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
@@ -2498,8 +2502,8 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
@@ -2543,8 +2547,8 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
@@ -2588,8 +2592,8 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
@@ -2679,8 +2683,8 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
@@ -2818,10 +2822,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_data']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_data']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '1');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_tempogasto']);
@@ -2888,10 +2892,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             if($consulta['dias'] == '0'){
                 $consulta['dias']= '1';
@@ -2966,10 +2970,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['fd_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dlancamento']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dlancamento']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hlancamento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['drecolhimento']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['drecolhimento']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hrecolhimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
@@ -3036,10 +3040,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['fd_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
@@ -3111,10 +3115,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['fd_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_tempogasto']);
@@ -3187,10 +3191,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['fd_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
@@ -3265,10 +3269,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['fd_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_tempogasto']);
@@ -3342,10 +3346,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['fd_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_tempogasto']);
@@ -3418,10 +3422,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_tempogasto']);
@@ -3495,10 +3499,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['fd_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_tempogasto']);
@@ -3571,10 +3575,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['fd_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_tempogasto']);
@@ -3721,10 +3725,10 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['fd_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dsaida']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_tempogasto']);
@@ -4268,7 +4272,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tmat_tipo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbc_comprimento_cabeca']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbc_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
         endforeach; 
@@ -4393,7 +4397,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             
             $coluna=0;
             $linha++;
@@ -4420,7 +4424,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_data']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
             $coluna=0;
             $linha++;
         endforeach; 
@@ -4447,7 +4451,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
         endforeach; 
@@ -4476,7 +4480,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['drecolhimento']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['drecolhimento']));
             $coluna=0;
             $linha++;
         endforeach; 
@@ -4502,7 +4506,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
         endforeach; 
@@ -4528,7 +4532,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
         endforeach; 
@@ -4554,7 +4558,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
         endforeach; 
@@ -4580,7 +4584,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linhafundo++;
         endforeach; 
@@ -4607,7 +4611,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $manzua++;
         endforeach; 
@@ -4633,7 +4637,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $mergulho++;
         endforeach; 
@@ -4659,7 +4663,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $ratoeira++;
         endforeach; 
@@ -4685,7 +4689,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $siripoia++;
         endforeach; 
@@ -4737,7 +4741,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $varapesca++;
         endforeach; 
@@ -5128,9 +5132,9 @@ class RelatoriosController extends Zend_Controller_Action
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Arrasto de Fundo');
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $dataFormatada =$this->formataData($consulta['fd_data']);
+                $dataFormatada =$this->formataData($this->formataDataPtbr($consulta['fd_data']));
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $dataFormatada);
-                $explodeData = explode('-',$consulta['fd_data']);
+                $explodeData = explode('-',$this->formataDataPtbr($consulta['fd_data']));
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[1]);
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[0]);
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
@@ -5139,7 +5143,7 @@ class RelatoriosController extends Zend_Controller_Action
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']);
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']/1000);
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']/$consulta['dias']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
                 $coluna=0;
                 $linha++;
         endforeach; 
@@ -5152,9 +5156,9 @@ class RelatoriosController extends Zend_Controller_Action
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Calao');
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $dataFormatada =$this->formataData($consulta['fd_data']);
+                $dataFormatada =$this->formataData($this->formataDataPtbr($consulta['fd_data']));
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $dataFormatada);
-                $explodeData = explode('-',$consulta['fd_data']);
+                $explodeData = explode('-',$this->formataDataPtbr($consulta['fd_data']));
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[1]);
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[0]);
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '1');
@@ -5163,7 +5167,7 @@ class RelatoriosController extends Zend_Controller_Action
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']);
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']/1000);
                 $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_data']);
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
                 $coluna=0;
                 $linha++;
         endforeach; 
@@ -5177,9 +5181,9 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Coleta Manual');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $dataFormatada =$this->formataData($consulta['fd_data']);
+            $dataFormatada =$this->formataData($this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $dataFormatada);
-            $explodeData = explode('-',$consulta['fd_data']);
+            $explodeData = explode('-',$this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[1]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[0]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
@@ -5188,7 +5192,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['quant']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['quant']/1000);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['quant']/$consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
     endforeach;  
@@ -5200,9 +5204,9 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Emalhe');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $dataFormatada =$this->formataData($consulta['fd_data']);
+            $dataFormatada =$this->formataData($this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $dataFormatada);
-            $explodeData = explode('-',$consulta['fd_data']);
+            $explodeData = explode('-',$this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[1]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[0]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
@@ -5211,7 +5215,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']/1000);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']/$consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
     endforeach;
@@ -5222,9 +5226,9 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Groseira');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $dataFormatada =$this->formataData($consulta['fd_data']);
+            $dataFormatada =$this->formataData($this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $dataFormatada);
-            $explodeData = explode('-',$consulta['fd_data']);
+            $explodeData = explode('-',$this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[1]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[0]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
@@ -5233,7 +5237,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']/1000);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']/$consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
     endforeach;
@@ -5243,9 +5247,9 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Jereré');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $dataFormatada =$this->formataData($consulta['fd_data']);
+            $dataFormatada =$this->formataData($this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $dataFormatada);
-            $explodeData = explode('-',$consulta['fd_data']);
+            $explodeData = explode('-',$this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[1]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[0]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
@@ -5254,7 +5258,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']/1000);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']/$consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
     endforeach;
@@ -5265,9 +5269,9 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Linha');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $dataFormatada =$this->formataData($consulta['fd_data']);
+            $dataFormatada =$this->formataData($this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $dataFormatada);
-            $explodeData = explode('-',$consulta['fd_data']);
+            $explodeData = explode('-',$this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[1]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[0]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
@@ -5276,7 +5280,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']/1000);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']/$consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
     endforeach;
@@ -5287,9 +5291,9 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Linha de Fundo');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $dataFormatada =$this->formataData($consulta['fd_data']);
+            $dataFormatada =$this->formataData($this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $dataFormatada);
-            $explodeData = explode('-',$consulta['fd_data']);
+            $explodeData = explode('-',$this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[1]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[0]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
@@ -5298,7 +5302,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']/1000);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']/$consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
     endforeach;
@@ -5309,9 +5313,9 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Manzuá');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $dataFormatada =$this->formataData($consulta['fd_data']);
+            $dataFormatada =$this->formataData($this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $dataFormatada);
-            $explodeData = explode('-',$consulta['fd_data']);
+            $explodeData = explode('-',$this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[1]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[0]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
@@ -5320,7 +5324,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']/1000);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']/$consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
     endforeach;
@@ -5332,9 +5336,9 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Mergulho');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $dataFormatada =$this->formataData($consulta['fd_data']);
+            $dataFormatada =$this->formataData($this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $dataFormatada);
-            $explodeData = explode('-',$consulta['fd_data']);
+            $explodeData = explode('-',$this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[1]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[0]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
@@ -5343,7 +5347,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']/1000);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']/$consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
     endforeach;
@@ -5376,9 +5380,9 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'VaraPesca');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $dataFormatada =$this->formataData($consulta['fd_data']);
+            $dataFormatada =$this->formataData($this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $dataFormatada);
-            $explodeData = explode('-',$consulta['fd_data']);
+            $explodeData = explode('-',$this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[1]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[0]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
@@ -5387,7 +5391,7 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']/1000);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['peso']/$consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
     endforeach;
@@ -5416,9 +5420,9 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Coleta Manual');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $dataFormatada =$this->formataData($consulta['fd_data']);
+            $dataFormatada =$this->formataData($this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $dataFormatada);
-            $explodeData = explode('-',$consulta['fd_data']);
+            $explodeData = explode('-',$this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[1]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[0]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
@@ -5426,7 +5430,7 @@ class RelatoriosController extends Zend_Controller_Action
             $capturaTotal = $this->modelRel->selectCapturaByArteColeta('v_entrevista_coletamanual.cml_id='.$consulta['cml_id']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['quant']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['quant']/$consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
     endforeach;  
@@ -5435,9 +5439,9 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Ratoeira');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $dataFormatada =$this->formataData($consulta['fd_data']);
+            $dataFormatada =$this->formataData($this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $dataFormatada);
-            $explodeData = explode('-',$consulta['fd_data']);
+            $explodeData = explode('-',$this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[1]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[0]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
@@ -5445,7 +5449,7 @@ class RelatoriosController extends Zend_Controller_Action
             $capturaTotal = $this->modelRel->selectCapturaByArteRatoeira('v_entrevista_ratoeira.rat_id='.$consulta['rat_id']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['quant']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['quant']/$consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
     endforeach;
@@ -5456,9 +5460,9 @@ class RelatoriosController extends Zend_Controller_Action
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Siripoia');
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $dataFormatada =$this->formataData($consulta['fd_data']);
+            $dataFormatada =$this->formataData($this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $dataFormatada);
-            $explodeData = explode('-',$consulta['fd_data']);
+            $explodeData = explode('-',$this->formataDataPtbr($consulta['fd_data']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[1]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $explodeData[0]);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
@@ -5466,7 +5470,7 @@ class RelatoriosController extends Zend_Controller_Action
             $capturaTotal = $this->modelRel->selectCapturaByArteSiripoia('v_entrevista_siripoia.sir_id='.$consulta['sir_id']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['quant']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal[0]['quant']/$consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dvolta']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
     endforeach;

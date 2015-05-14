@@ -12,9 +12,7 @@
             <file>file:/C:/wamp/www/pesca/application/controllers/EstatisticaController.php</file>
             <file>file:/C:/wamp/www/pesca/application/controllers/PescadorController.php</file>
             <file>file:/C:/wamp/www/pesca/application/controllers/RelatoriosController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/barco.phtml</file>
-            <file>file:/C:/wamp/www/pesca/public/css/estilo-admin.css</file>
-            <file>file:/C:/wamp/www/pesca/application/models/Relatorios.php</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/relatorios/index.phtml</file>
         </group>
     </open-files>
 </project-private>

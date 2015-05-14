@@ -422,7 +422,7 @@ class Application_Model_Manzua
     public function selectCapturaByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEstimativaManzua();
         $select = $dbTable->select()->setIntegrityCheck(false)->
-                from('v_estimativa_manzua', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados)', 'sum(monitorados)', 'pesototal'=> new Zend_Db_Expr('sum(peso) as peso', 'mes', 'ano', '((sum(peso)/sum(monitorados))*sum(naomonitorados))+sum(peso)')))->
+                from('v_estimativa_manzua', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados)', 'sum(monitorados)', 'sum(peso) as peso', 'mes', 'ano', 'pesototal'=> new Zend_Db_Expr('((sum(peso)/sum(monitorados))*sum(naomonitorados))+sum(peso)')))->
                 group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
         
         if(!is_null($where)){

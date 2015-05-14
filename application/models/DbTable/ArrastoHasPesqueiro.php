@@ -4,7 +4,7 @@ class Application_Model_DbTable_ArrastoHasPesqueiro extends Zend_Db_Table_Abstra
 {
 
     protected $_name = 't_arrastofundo_has_t_pesqueiro';
-
+    protected $_primary = 'af_paf_id';
 
 }
 
