@@ -289,6 +289,18 @@ class SiripoiaController extends Zend_Controller_Action
         $this->redirect("/siripoia/tableespcaptura/id/" . $idEntrevista);
         //$this->redirect("/siripoia/editar/id/" . $backUrl);
     }
+    
+    public function tableavistamentoAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelSiripoia->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vSiripoiaAvistamento = $this->modelSiripoia->selectSiripoiaHasAvistamento('sir_id='.$idEntrevista);
+
+        $this->view->assign('vSiripoiaAvistamento', $vSiripoiaAvistamento);
+    }
     public function insertavistamentoAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -297,25 +309,32 @@ class SiripoiaController extends Zend_Controller_Action
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelSiripoia->insertAvistamento($idEntrevista, $avistamento);
 
-        $this->redirect("/siripoia/editar/id/" . $backUrl);
+        $this->redirect("/siripoia/tableavistamento/id/" . $idEntrevista);
     }
     public function deleteavistamentoAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idAvistamento = $this->_getParam("id_avistamento");
-
         $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasAvistamento = $this->_getParam("id_entrevista_has_avistamento");
 
-        $backUrl = $this->_getParam("back_url");
+        $this->modelSiripoia->deleteAvistamento($idEntrevistaHasAvistamento, $idEntrevista);
 
-        $this->modelSiripoia->deleteAvistamento($idAvistamento, $idEntrevista);
-
-        $this->redirect("/siripoia/editar/id/" . $backUrl);
+        $this->redirect("/siripoia/tableavistamento/id/" . $idEntrevista);
+    }
+    
+    public function tablebiocamaraoAction(){//Action para tablepesqueiro
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelSiripoia->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vBioCamarao = $this->modelSiripoia->selectVBioCamarao('tsir_id='.$idEntrevista);
+        
+        $this->view->assign('vBioCamarao', $vBioCamarao);
     }
     public function insertbiocamaraoAction() {
         $this->_helper->layout->disableLayout();
@@ -333,25 +352,33 @@ class SiripoiaController extends Zend_Controller_Action
         
         $peso = $this->_getParam("peso");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelSiripoia->insertBioCamarao($idEntrevista, $idEspecie, $sexo, $maturidade, $compCabeca, $peso);
 
-        $this->redirect("/siripoia/editar/id/" . $backUrl);
+        $this->redirect("/siripoia/tablebiocamarao/id/" . $idEntrevista);
     }
     public function deletebiocamaraoAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idBiometria = $this->_getParam("id");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasBioCamarao = $this->_getParam("id_entrevista_has_biocamarao");
 
-        $backUrl = $this->_getParam("back_url");
+        $this->modelSiripoia->deleteBioCamarao($idEntrevistaHasBioCamarao);
 
-        $this->modelSiripoia->deleteBioCamarao($idBiometria);
-
-        $this->redirect("/siripoia/editar/id/" . $backUrl);
+        $this->redirect("/siripoia/tablebiocamarao/id/" . $idEntrevista);
     }
     
+    public function tablebiopeixeAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelSiripoia->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vBioPeixe = $this->modelSiripoia->selectVBioPeixe('tsir_id='.$idEntrevista);
+
+        $this->view->assign('vBioPeixe', $vBioPeixe);
+    }
     public function insertbiopeixeAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -366,23 +393,20 @@ class SiripoiaController extends Zend_Controller_Action
         
         $peso = $this->_getParam("peso");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelSiripoia->insertBioPeixe($idEntrevista, $idEspecie, $sexo, $comprimento, $peso);
 
-        $this->redirect("/siripoia/editar/id/" . $backUrl);
+        $this->redirect("/siripoia/tablebiopeixe/id/" . $idEntrevista);
     }
     public function deletebiopeixeAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+        
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasBioPeixe = $this->_getParam("id_entrevista_has_biopeixe");
 
-        $idBiometria = $this->_getParam("id");
+        $this->modelSiripoia->deleteBioPeixe($idEntrevistaHasBioPeixe);
 
-        $backUrl = $this->_getParam("back_url");
-
-        $this->modelSiripoia->deleteBioPeixe($idBiometria);
-
-        $this->redirect("/siripoia/editar/id/" . $backUrl);
+        $this->redirect("/siripoia/tablebiopeixe/id/" . $idEntrevista);
     }
     public function relatoriolistaAction(){
 		$this->_helper->layout->disableLayout();
