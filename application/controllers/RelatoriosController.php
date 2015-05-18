@@ -114,6 +114,14 @@ class RelatoriosController extends Zend_Controller_Action
             }
             return $espRel;
     }
+    
+    public function deleterelatorioAction(){
+        $relatorio = $this->_getParam('nome');
+        $diretorio = $this->_getParam('diretorio');
+        
+        unlink($diretorio.'/'.$relatorio);
+        $this->redirect('relatorios/index');
+    }
     public function verificaRelatorio($var){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -299,7 +307,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         ob_end_clean();
         $objWriter->save('php://output');
-        $objWriter->save('files/relatorioArrasto_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.'.xls');
+        $objWriter->save('files/relatorioArrasto_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
     }
     
     

@@ -488,8 +488,7 @@ class EstatisticaController extends Zend_Controller_Action
         
         $this->view->assign("pesqVaraPesca", json_encode($pesqVaraPesca));
         $this->view->assign("quantVaraPesca", json_encode($quantVaraPesca));
-        
-            
+           
     }
     
     public function capturaAction()

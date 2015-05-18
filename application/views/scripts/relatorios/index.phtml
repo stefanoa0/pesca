@@ -89,19 +89,22 @@
     </div>
 </form> 
 
-<!--<fieldset>
+<fieldset>
     <legend> Relatórios Gerados: </legend>
     <ul>
         <?php if($dh = opendir('files')){ 
             while(($file = readdir($dh)) !== false){ 
-        
-                echo '<a href="files/'.$file.'" download>'.$file.'</a><br/>';
+                if($file !== '.' && $file !== '..'){
+                    echo '<a class="relatorio" href="files/'.$file.'" download>'.$file.'</a>'; 
+                    echo '  <a href="relatorios/deleterelatorio/nome/'.$file.'/diretorio/files">Deletar</a><br/>';
+                }
+                
             }
             closedir($dh);
             
            } ?>
-    </ul>    -->
-    
+    </ul>    
+</fieldset>   
     
 </fieldset>
 <fieldset> 
