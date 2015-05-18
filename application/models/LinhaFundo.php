@@ -103,7 +103,6 @@ class Application_Model_LinhaFundo
     
     public function update(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableLinhaFundo = new Application_Model_DbTable_LinhaFundo();
         
         $timestampSaida = $request['dataSaida']." ".$request['horaSaida'];

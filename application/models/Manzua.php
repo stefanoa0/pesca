@@ -26,7 +26,6 @@ class Application_Model_Manzua
     
     public function insert(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableManzua = new Application_Model_DbTable_Manzua();
         
         $timestampSaida = $request['dataSaida']." ".$request['horaSaida'];
@@ -82,7 +81,6 @@ class Application_Model_Manzua
     
     public function update(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableManzua = new Application_Model_DbTable_Manzua();
         
         $timestampSaida = $request['dataSaida']." ".$request['horaSaida'];

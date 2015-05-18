@@ -37,7 +37,6 @@ private $dbTableLinha;
     
     public function insert(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableLinha = new Application_Model_DbTable_Linha();
         
         

@@ -37,7 +37,6 @@ class Application_Model_Calao
     
     public function insert(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableCalao = new Application_Model_DbTable_Calao();
         
         
@@ -98,7 +97,6 @@ class Application_Model_Calao
     
     public function update(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableCalao = new Application_Model_DbTable_Calao();
         
         

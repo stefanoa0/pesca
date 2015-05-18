@@ -37,7 +37,6 @@ private $dbTableColetaManual;
     
     public function insert(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableColetaManual = new Application_Model_DbTable_ColetaManual();
         
         $timestampSaida = $request['dataSaida']." ".$request['horaSaida'];
@@ -87,7 +86,7 @@ private $dbTableColetaManual;
     public function update(array $request)
     {
         $this->dbTableColetaManual = new Application_Model_DbTable_ColetaManual();
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
+        
         $timestampSaida = $request['dataSaida']." ".$request['horaSaida'];
         $timestampVolta = $request['dataVolta']." ".$request['horaVolta'];
         

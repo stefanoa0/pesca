@@ -5,7 +5,9 @@
         <group>
             <file>file:/C:/wamp/www/pesca/application/controllers/EstatisticaController.php</file>
             <file>file:/C:/wamp/www/pesca/application/controllers/RelatoriosController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/VConsultaPadrao.php</file>
             <file>file:/C:/wamp/www/pesca/application/views/scripts/relatorios/index.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/ConsultaPadraoController.php</file>
         </group>
     </open-files>
 </project-private>

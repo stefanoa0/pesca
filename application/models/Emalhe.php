@@ -112,7 +112,6 @@ class Application_Model_Emalhe
     public function update(array $request)
     {
         $this->dbTableEmalhe = new Application_Model_DbTable_Emalhe();
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         
         $diesel = $request['diesel'];
         $oleo = $request['oleo'];

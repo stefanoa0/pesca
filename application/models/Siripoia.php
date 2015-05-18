@@ -25,7 +25,7 @@ class Application_Model_Siripoia
     
     public function insert(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
+
         $this->dbTableSiripoia = new Application_Model_DbTable_Siripoia();
         
         $timestampSaida = $request['dataSaida']." ".$request['horaSaida'];

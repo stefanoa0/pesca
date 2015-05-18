@@ -41,7 +41,6 @@ class Application_Model_ArrastoFundo
 
     public function insert(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableArrastoFundo = new Application_Model_DbTable_ArrastoFundo();
 
         $timestampSaida = $request['dataSaida']." ".$request['horaSaida'];
@@ -94,7 +93,6 @@ class Application_Model_ArrastoFundo
 
     public function update(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableArrastoFundo = new Application_Model_DbTable_ArrastoFundo();
         $this->modelMonitoramento = new Application_Model_Monitoramento();
         

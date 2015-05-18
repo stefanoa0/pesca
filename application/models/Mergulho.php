@@ -70,7 +70,6 @@ private $dbTableMergulho;
     
     public function update(array $request)
     {
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         $this->dbTableMergulho = new Application_Model_DbTable_Mergulho();
         
         

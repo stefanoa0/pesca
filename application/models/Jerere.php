@@ -81,7 +81,6 @@ class Application_Model_Jerere
     public function update(array $request)
     {
         $this->dbTableJerere = new Application_Model_DbTable_Jerere();
-        $this->dbTableSubamostra = new Application_Model_DbTable_Subamostra();
         
         
         $timestampSaida = $request['dataSaida']." ".$request['horaSaida'];

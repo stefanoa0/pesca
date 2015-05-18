@@ -8,7 +8,7 @@ class Application_Model_VConsultaPadrao
     public function select($where = null, $limit = null)
     {
         $this->dbVConsultaPadrao = new Application_Model_DbTable_VConsultaPadrao();
-        $select = $this->dbVConsultaPadrao->select()->from($this->dbVConsultaPadrao)->order('consulta')->order('pto_nome')->limit($limit)->where("consulta <> 'Quantidade de Fichas' AND consulta <> 'Monitoradas' AND consulta <> 'Não monitorados' AND consulta <> 'Subamostras'");
+        $select = $this->dbVConsultaPadrao->select()->from($this->dbVConsultaPadrao)->order('consulta')->order('pto_nome')->limit($limit)->where("consulta <> 'Quantidade de Fichas' AND consulta <> 'Monitoradas' AND consulta <> 'Não monitorados' AND consulta not Like 'Subamostras%'");
         if(!is_null($where)){
             $select->where($where);
         }
@@ -18,7 +18,7 @@ class Application_Model_VConsultaPadrao
     public function selectTotalEntrevistas($where = null, $limit = null)
     {
         $this->dbVConsultaPadrao = new Application_Model_DbTable_VConsultaPadrao();
-        $select = $this->dbVConsultaPadrao->select()->from($this->dbVConsultaPadrao, 'Sum(quantidade)')->limit($limit)->where("consulta <> 'Quantidade de Fichas' AND consulta <> 'Monitoradas' AND consulta <> 'Não monitorados' AND consulta <> 'Subamostras'");
+        $select = $this->dbVConsultaPadrao->select()->from($this->dbVConsultaPadrao, 'Sum(quantidade)')->limit($limit)->where("consulta <> 'Quantidade de Fichas' AND consulta <> 'Monitoradas' AND consulta <> 'Não monitorados' AND consulta not Like 'Subamostras%'");
         if(!is_null($where)){
             $select->where($where);
         }
@@ -28,7 +28,7 @@ class Application_Model_VConsultaPadrao
     public function selectTotalEntrevistasByPorto($where = null, $limit = null)
     {
         $this->dbVConsultaPadrao = new Application_Model_DbTable_VConsultaPadrao();
-        $select = $this->dbVConsultaPadrao->select()->from($this->dbVConsultaPadrao, 'Sum(quantidade)')->limit($limit)->where("consulta <> 'Quantidade de Fichas' AND consulta <> 'Monitoradas' AND consulta <> 'Não monitorados' AND consulta <> 'Subamostras'");
+        $select = $this->dbVConsultaPadrao->select()->from($this->dbVConsultaPadrao, 'Sum(quantidade)')->limit($limit)->where("consulta <> 'Quantidade de Fichas' AND consulta <> 'Monitoradas' AND consulta <> 'Não monitorados' AND consulta not Like 'Subamostras%'");
         if(!is_null($where)){
             $select->where($where);
         }
@@ -46,7 +46,7 @@ class Application_Model_VConsultaPadrao
     public function selectSubamostras()
     {
         $this->dbVConsultaPadrao = new Application_Model_DbTable_VConsultaPadrao();
-        $select = $this->dbVConsultaPadrao->select()->from($this->dbVConsultaPadrao)->order('consulta')->order('pto_nome')->where("consulta = 'Subamostras'");
+        $select = $this->dbVConsultaPadrao->select()->from($this->dbVConsultaPadrao)->order('pto_nome')->where("consulta Like 'Subamostras%'");
         
 
         return $this->dbVConsultaPadrao->fetchAll($select)->toArray();
