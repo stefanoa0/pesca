@@ -34,17 +34,7 @@ class Application_Model_Manzua
         if($timestampSaida > $timestampVolta){
             $timestampVolta = 'Erro';
         }
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['dataVolta']
-        );
-        
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
+
         $numArmadilhas = $request['numArmadilhas'];
         
         if(empty($numArmadilhas)){
@@ -64,9 +54,7 @@ class Application_Model_Manzua
             'man_dhvolta' => $timestampVolta,
             'man_dhsaida' => $timestampSaida, 
             'dp_id' => $request['destinoPescado'],
-            'man_subamostra' => $request['subamostra'],
             'man_obs' => $request['observacao'],
-            'sa_id' => $idSubamostra,
             'man_tempogasto' => $request['tempoGasto'],
             'man_numarmadilhas' => $numArmadilhas,
             'mnt_id' => $request['id_monitoramento'],
@@ -89,17 +77,6 @@ class Application_Model_Manzua
         if($timestampSaida > $timestampVolta){
             $timestampVolta = 'Erro';
         }
-        if($request['subamostra']==true){
-        $dadosSubamostra = array(
-            'sa_pescador' => $request['pescadorEntrevistado'],
-            'sa_datachegada' => $request['dataVolta']
-        );
-        
-       $idSubamostra =  $this->dbTableSubamostra->insert($dadosSubamostra);
-        }
-        else {
-            $idSubamostra = null;
-        }
         $combustivel = $request['combustivel'];
         if(empty($combustivel)){
             $combustivel = null;
@@ -120,9 +97,7 @@ class Application_Model_Manzua
             'man_quantpescadores' => $request['numPescadores'],
             'man_dhvolta' => $timestampVolta,
             'man_dhsaida' => $timestampSaida,  
-            'man_subamostra' => $request['subamostra'],
             'man_obs' => $request['observacao'],
-            'sa_id' => $idSubamostra,
             'man_tempogasto' => $request['tempoGasto'],
             'man_numarmadilhas' => $numArmadilhas,
             'mre_id' => $request['mare'],
