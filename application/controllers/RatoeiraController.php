@@ -284,6 +284,18 @@ private $usuario;
         $this->redirect("/ratoeira/tableespcaptura/id/" . $idEntrevista);
         //$this->redirect("/ratoeira/editar/id/" . $backUrl);
     }
+    
+    public function tableavistamentoAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelRatoeira->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vRatoeiraAvistamento = $this->modelRatoeira->selectRatoeiraHasAvistamento('rat_id='.$idEntrevista);
+
+        $this->view->assign('vRatoeiraAvistamento', $vRatoeiraAvistamento);
+    }
     public function insertavistamentoAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -292,25 +304,32 @@ private $usuario;
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelRatoeira->insertAvistamento($idEntrevista, $avistamento);
 
-        $this->redirect("/ratoeira/editar/id/" . $backUrl);
+        $this->redirect("/ratoeira/tableavistamento/id/" . $idEntrevista);
     }
     public function deleteavistamentoAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idAvistamento = $this->_getParam("id_avistamento");
-
         $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasAvistamento = $this->_getParam("id_entrevista_has_avistamento");
+        
+        $this->modelRatoeira->deleteAvistamento($idEntrevistaHasAvistamento, $idEntrevista);
 
-        $backUrl = $this->_getParam("back_url");
-
-        $this->modelRatoeira->deleteAvistamento($idAvistamento, $idEntrevista);
-
-        $this->redirect("/ratoeira/editar/id/" . $backUrl);
+        $this->redirect("/ratoeira/tableavistamento/id/" . $idEntrevista);
+    }
+    
+    public function tablebiocamaraoAction(){//Action para tablepesqueiro
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelRatoeira->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vBioCamarao = $this->modelRatoeira->selectVBioCamarao('trat_id='.$idEntrevista);
+        
+        $this->view->assign('vBioCamarao', $vBioCamarao);
     }
     public function insertbiocamaraoAction() {
         $this->_helper->layout->disableLayout();
@@ -328,25 +347,33 @@ private $usuario;
         
         $peso = $this->_getParam("peso");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelRatoeira->insertBioCamarao($idEntrevista, $idEspecie, $sexo, $maturidade, $compCabeca, $peso);
 
-        $this->redirect("/ratoeira/editar/id/" . $backUrl);
+        $this->redirect("/ratoeira/tablebiocamarao/id/" . $idEntrevista);
     }
     public function deletebiocamaraoAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idBiometria = $this->_getParam("id");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasBioCamarao = $this->_getParam("id_entrevista_has_biocamarao");
 
-        $backUrl = $this->_getParam("back_url");
+        $this->modelRatoeira->deleteBioCamarao($idEntrevistaHasBioCamarao);
 
-        $this->modelRatoeira->deleteBioCamarao($idBiometria);
-
-        $this->redirect("/ratoeira/editar/id/" . $backUrl);
+        $this->redirect("/ratoeira/tablebiocamarao/id/" . $idEntrevista);
     }
     
+    public function tablebiopeixeAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelRatoeira->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vBioPeixe = $this->modelRatoeira->selectVBioPeixe('trat_id='.$idEntrevista);
+
+        $this->view->assign('vBioPeixe', $vBioPeixe);
+    }
     public function insertbiopeixeAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -361,23 +388,20 @@ private $usuario;
         
         $peso = $this->_getParam("peso");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelRatoeira->insertBioPeixe($idEntrevista, $idEspecie, $sexo, $comprimento, $peso);
 
-        $this->redirect("/ratoeira/editar/id/" . $backUrl);
+        $this->redirect("/ratoeira/tablebiopeixe/id/" . $idEntrevista);
     }
     public function deletebiopeixeAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+        
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasBioPeixe = $this->_getParam("id_entrevista_has_biopeixe");
 
-        $idBiometria = $this->_getParam("id");
+        $this->modelRatoeira->deleteBioPeixe($idEntrevistaHasBioPeixe);
 
-        $backUrl = $this->_getParam("back_url");
-
-        $this->modelRatoeira->deleteBioPeixe($idBiometria);
-
-        $this->redirect("/ratoeira/editar/id/" . $backUrl);
+        $this->redirect("/ratoeira/tablebiopeixe/id/" . $idEntrevista);
     }
     public function relatoriolistaAction(){
 		$this->_helper->layout->disableLayout();

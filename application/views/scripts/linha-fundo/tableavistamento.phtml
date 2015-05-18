@@ -1,0 +1,25 @@
+<div id="avistamento">
+    <fieldset class="noEditable" id="itemArteTipoRows"><legend>Avistamentos:</legend>
+        <table id="pesqueiros">
+            <tr>
+            <th width="15%">Id Avistamento</th>
+            <th width="85%">Avistamento</th>
+            </tr>
+            <?php
+            foreach ($this->vLinhaFundoAvistamento as $key => $vLinhaFundoAvistamento):
+                ?>
+                <tr id="itemLinhaFundoRows">
+                <td name="inputIdEntrevista"> <?= $vLinhaFundoAvistamento['avs_id'] ?> </td>
+                <td name="inputAvistamento" > <?= $vLinhaFundoAvistamento['avs_descricao'] ?> </td>
+                <td class="td-botao">
+                    <a name="Excluir" class="button-del" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['lf_id'] ?>, '<?= $this->url(array("controller" => "linha-fundo", "action" => "deleteavistamento"), null, true) ?>', <?= $vLinhaFundoAvistamento['avs_id'] ?>, 'avistamento')">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                        </ul>
+                    </a> 
+                </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </fieldset>
+</div>

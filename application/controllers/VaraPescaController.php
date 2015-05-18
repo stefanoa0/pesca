@@ -304,6 +304,18 @@ class VaraPescaController extends Zend_Controller_Action
         $this->redirect("/vara-pesca/tableespcaptura/id/" . $idEntrevista);
         //$this->redirect("/vara-pesca/editar/id/" . $backUrl);
     }
+    
+    public function tableavistamentoAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelVaraPesca->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vVaraPescaAvistamento = $this->modelVaraPesca->selectVaraPescaHasAvistamento('vp_id='.$idEntrevista);
+
+        $this->view->assign('vVaraPescaAvistamento', $vVaraPescaAvistamento);
+    }
     public function insertavistamentoAction(){
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
@@ -315,11 +327,9 @@ class VaraPescaController extends Zend_Controller_Action
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelVaraPesca->insertAvistamento($idEntrevista, $avistamento);
 
-        $this->redirect("/vara-pesca/editar/id/" . $backUrl);
+        $this->redirect("/vara-pesca/tableavistamento/id/" . $idEntrevista);
     }
     public function deleteavistamentoAction(){
         if($this->usuario['tp_id']==5){
@@ -328,15 +338,24 @@ class VaraPescaController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idAvistamento = $this->_getParam("id_avistamento");
-
         $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasAvistamento = $this->_getParam("id_entrevista_has_avistamento");
 
-        $backUrl = $this->_getParam("back_url");
+        $this->modelVaraPesca->deleteAvistamento($idEntrevistaHasAvistamento, $idEntrevista);
 
-        $this->modelVaraPesca->deleteAvistamento($idAvistamento, $idEntrevista);
-
-        $this->redirect("/vara-pesca/editar/id/" . $backUrl);
+        $this->redirect("/vara-pesca/tableavistamento/id/" . $idEntrevista);
+    }
+    
+    public function tablebiocamaraoAction(){//Action para tablepesqueiro
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelVaraPesca->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vBioCamarao = $this->modelVaraPesca->selectVBioCamarao('tvp_id='.$idEntrevista);
+        
+        $this->view->assign('vBioCamarao', $vBioCamarao);
     }
     public function insertbiocamaraoAction() {
         if($this->usuario['tp_id']==5){
@@ -357,11 +376,9 @@ class VaraPescaController extends Zend_Controller_Action
         
         $peso = $this->_getParam("peso");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelVaraPesca->insertBioCamarao($idEntrevista, $idEspecie, $sexo, $maturidade, $compCabeca, $peso);
 
-        $this->redirect("/vara-pesca/editar/id/" . $backUrl);
+        $this->redirect("/vara-pesca/tablebiocamarao/id/" . $idEntrevista);
     }
     public function deletebiocamaraoAction() {
         if($this->usuario['tp_id']==5){
@@ -370,15 +387,25 @@ class VaraPescaController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $idBiometria = $this->_getParam("id");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasBioCamarao = $this->_getParam("id_entrevista_has_biocamarao");
 
-        $backUrl = $this->_getParam("back_url");
+        $this->modelVaraPesca->deleteBioCamarao($idEntrevistaHasBioCamarao);
 
-        $this->modelVaraPesca->deleteBioCamarao($idBiometria);
-
-        $this->redirect("/vara-pesca/editar/id/" . $backUrl);
+        $this->redirect("/vara-pesca/tablebiocamarao/id/" . $idEntrevista);
     }
     
+    public function tablebiopeixeAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+        //IMPORTANTE TER!!
+        $this->_helper->layout->disableLayout();
+        
+        $idEntrevista = $this->_getParam('id');
+        $entrevista = $this->modelVaraPesca->find($idEntrevista);
+        $this->view->assign("entrevista", $entrevista);
+        $vBioPeixe = $this->modelVaraPesca->selectVBioPeixe('tvp_id='.$idEntrevista);
+
+        $this->view->assign('vBioPeixe', $vBioPeixe);
+    }
     public function insertbiopeixeAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -393,23 +420,20 @@ class VaraPescaController extends Zend_Controller_Action
         
         $peso = $this->_getParam("peso");
 
-        $backUrl = $this->_getParam("back_url");
-
         $this->modelVaraPesca->insertBioPeixe($idEntrevista, $idEspecie, $sexo, $comprimento, $peso);
 
-        $this->redirect("/vara-pesca/editar/id/" . $backUrl);
+        $this->redirect("/vara-pesca/tablebiopeixe/id/" . $idEntrevista);
     }
     public function deletebiopeixeAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
+        
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaHasBioPeixe = $this->_getParam("id_entrevista_has_biopeixe");
 
-        $idBiometria = $this->_getParam("id");
+        $this->modelVaraPesca->deleteBioPeixe($idEntrevistaHasBioPeixe);
 
-        $backUrl = $this->_getParam("back_url");
-
-        $this->modelVaraPesca->deleteBioPeixe($idBiometria);
-
-        $this->redirect("/vara-pesca/editar/id/" . $backUrl);
+        $this->redirect("/vara-pesca/tablebiopeixe/id/" . $idEntrevista);
     }
    public function relatoriolistaAction(){
 		$this->_helper->layout->disableLayout();
