@@ -39,6 +39,7 @@ class RelatoriosController extends Zend_Controller_Action
         $this->view->assign("portos", $porto);
         
 
+
     }
     public function graficosAction(){
         
@@ -307,7 +308,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         ob_end_clean();
         $objWriter->save('php://output');
-        $objWriter->save('files/relatorioArrasto_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
+        //$objWriter->save('files/relatorioArrasto_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
     }
     
     
