@@ -24,7 +24,7 @@ class Application_Model_Login
             'tl_hashsenha'  => $senha
         );
         
-        $whereLogin = $dbTableLogin->getAdapter()->quoteInto('"tl_id" = ?', $login);
+        $whereLogin = $dbTableLogin->getAdapter()->quoteInto('"tl_login" = ?', $login);
         
         $dbTableLogin->update($dadosLogin, $whereLogin);
     }
