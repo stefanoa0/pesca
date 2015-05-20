@@ -22,6 +22,7 @@ class EsqueciSenhaController extends Zend_Controller_Action
         
         $usuario = $modelUsuario->select('"tu_email" = \''.$email.'\'');
         
+
         if ($usuario)
         {
             $token = sha1($usuario[0]['tu_email'] . time());
@@ -29,7 +30,7 @@ class EsqueciSenhaController extends Zend_Controller_Action
             $modelAlteracaoSenha->solicitar($usuario[0]['tu_id'], $token);
             
             $mensagem = "Clique no link a seguir para alterar a sua senha: ";
-            $mensagem .= "esqueci-senha/redefinir/". $token;
+            $mensagem .= "nbcgib.uesc.br/pesca/public/esqueci-senha/redefinir/token/". $token;
             $assunto = 'Redefinir a senha no Pesca.';
             
             $email = new Application_Model_Email($mensagem, $assunto, $usuario[0]['tu_email'], $usuario[0]['tu_nome']);
