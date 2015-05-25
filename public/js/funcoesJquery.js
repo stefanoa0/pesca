@@ -513,11 +513,11 @@ function jsInsertPescadorHasDependente( frm, pag )
     }
 }
 
-function jsDeletePescadorHasDependente(idDep, frm, pag)
+function jsDeletePescadorHasDependente(idDep, idPescador, pag)
 {
-    var TmpUrl = (+frm.idPescador.value + '#ancora_dependentes');
+    var TmpUrl = (+idPescador + '#ancora_dependentes');
 
-    var tmpUpdate = (pag + '/id/' + frm.idPescador.value + '/idDependente/' + idDep+'/back_url/' + TmpUrl);
+    var tmpUpdate = (pag + '/id/' + idPescador + '/idDependente/' + idDep+'/back_url/' + TmpUrl);
 
     if (confirm("Realmente deseja excluir este item?")) {
         location.replace(tmpUpdate);
@@ -534,11 +534,11 @@ function jsInsertPescadorHasRenda( frm, pag )
     location.replace(tmpUpdate);
 }
 
-function jsDeletePescadorHasRenda(idTipoRenda, idRenda, frm, pag)
+function jsDeletePescadorHasRenda(idTipoRenda, idRenda, idPescador, pag)
 {
-    var TmpUrl = (+frm.idPescador.value + '#ancora_rendas');
+    var TmpUrl = (+idPescador + '#ancora_rendas');
 
-    var tmpUpdate = (pag + '/id/'+frm.idPescador.value+'/idTipoRenda/'+idTipoRenda+'/idRenda/'+ idRenda+'/back_url/' + TmpUrl);
+    var tmpUpdate = (pag + '/id/'+idPescador+'/idTipoRenda/'+idTipoRenda+'/idRenda/'+ idRenda+'/back_url/' + TmpUrl);
 
     if (confirm("Realmente deseja excluir este item?")) {
         location.replace(tmpUpdate);
@@ -554,11 +554,11 @@ function jsInsertPescadorHasComunidade( frm, pag )
     location.replace(tmpUpdate);
 }
 
-function jsDeletePescadorHasComunidade( idComunidade, frm, pag)
+function jsDeletePescadorHasComunidade( idComunidade, idPescador, pag)
 {
-    var TmpUrl = (+frm.idPescador.value + '#ancora_comunidade');
+    var TmpUrl = (+idPescador + '#ancora_comunidade');
 
-    var tmpUpdate = (pag + '/id/'+frm.idPescador.value+'/idComunidade/'+idComunidade+'/back_url/' + TmpUrl);
+    var tmpUpdate = (pag + '/id/'+idPescador+'/idComunidade/'+idComunidade+'/back_url/' + TmpUrl);
 
     if (confirm("Realmente deseja excluir este item?")) {
         location.replace(tmpUpdate);
@@ -575,11 +575,11 @@ function jsInsertPescadorHasPorto( frm, pag )
     location.replace(tmpUpdate);
 }
 
-function jsDeletePescadorHasPorto( idPorto, frm, pag)
+function jsDeletePescadorHasPorto( idPorto, idPescador, pag)
 {
-    var TmpUrl = (+frm.idPescador.value + '#ancora_porto');
+    var TmpUrl = (+idPescador + '#ancora_porto');
 
-    var tmpUpdate = (pag + '/id/'+frm.idPescador.value+'/idPorto/'+idPorto+'/back_url/' + TmpUrl);
+    var tmpUpdate = (pag + '/id/'+idPescador+'/idPorto/'+idPorto+'/back_url/' + TmpUrl);
 
     if (confirm("Realmente deseja excluir este item?")) {
         location.replace(tmpUpdate);
@@ -596,11 +596,11 @@ function jsInsertPescadorHasProgramaSocial( frm, pag )
     location.replace(tmpUpdate);
 }
 
-function jsDeletePescadorHasProgramaSocial( idProgramaSocial, frm, pag)
+function jsDeletePescadorHasProgramaSocial( idProgramaSocial, idPescador, pag)
 {
-    var TmpUrl = (+frm.idPescador.value + '#ancora_programasocial');
+    var TmpUrl = (+idPescador + '#ancora_programasocial');
 
-    var tmpUpdate = (pag + '/id/'+frm.idPescador.value+'/idProgramaSocial/'+idProgramaSocial+'/back_url/' + TmpUrl);
+    var tmpUpdate = (pag + '/id/'+idPescador+'/idProgramaSocial/'+idProgramaSocial+'/back_url/' + TmpUrl);
 
     if (confirm("Realmente deseja excluir este item?")) {
         location.replace(tmpUpdate);
@@ -611,16 +611,16 @@ function jsInsertPescadorHasTelefone( frm, pag )
 {
     var TmpUrl = (+frm.idPescador.value + '#ancora_telefones');
 
-    var tmpUpdate = (pag + '/id/' + frm.idPescador.value + '/idTelenone/' + frm.selectTipoTelefone.value + '/nTelefone/' + frm.inputTelefone.value + '/back_url/' + TmpUrl);
+    var tmpUpdate = (pag + '/id/' + frm.idPescador + '/idTelenone/' + frm.selectTipoTelefone.value + '/nTelefone/' + frm.inputTelefone.value + '/back_url/' + TmpUrl);
 
     location.replace(tmpUpdate);
 }
 
-function jsDeletePescadorHasTelefone(idTeleone, frm, pag)
+function jsDeletePescadorHasTelefone(idTeleone, idPescador, pag)
 {
-    var TmpUrl = (+frm.idPescador.value + '#ancora_telefones');
+    var TmpUrl = (+idPescador + '#ancora_telefones');
 
-    var tmpUpdate = (pag + '/id/'+frm.idPescador.value+'/idTelenone/'+idTeleone+'/back_url/' + TmpUrl);
+    var tmpUpdate = (pag + '/id/'+idPescador+'/idTelenone/'+idTeleone+'/back_url/' + TmpUrl);
 
     if (confirm("Realmente deseja excluir este item?")) {
         location.replace(tmpUpdate);
@@ -637,11 +637,11 @@ function jsInsertPescadorHasColonia( frm, pag )
     location.replace(tmpUpdate);
 }
 
-function jsDeletePescadorHasColonia( idColonia, frm, pag )
+function jsDeletePescadorHasColonia( idColonia, idPescador, pag )
 {
-    var TmpUrl = (+frm.idPescador.value + '#ancora_colonias');
+    var TmpUrl = (+idPescador + '#ancora_colonias');
 
-    var tmpUpdate = (pag + '/id/'+frm.idPescador.value+'/idColonia/'+idColonia+'/back_url/' + TmpUrl);
+    var tmpUpdate = (pag + '/id/'+idPescador+'/idColonia/'+idColonia+'/back_url/' + TmpUrl);
 
     if (confirm("Realmente deseja excluir este item?")) {
         location.replace(tmpUpdate);
@@ -658,11 +658,11 @@ function jsInsertPescadorHasArea( frm, pag )
     location.replace(tmpUpdate);
 }
 
-function jsDeletePescadorHasArea( idArea, frm, pag )
+function jsDeletePescadorHasArea( idArea, idPescador, pag )
 {
-    var TmpUrl = (+frm.idPescador.value + '#ancora_areas');
+    var TmpUrl = (+idPescador + '#ancora_areas');
 
-    var tmpUpdate = (pag + '/id/'+frm.idPescador.value+'/idArea/'+idArea+'/back_url/' + TmpUrl);
+    var tmpUpdate = (pag + '/id/'+idPescador+'/idArea/'+idArea+'/back_url/' + TmpUrl);
 
     if (confirm("Realmente deseja excluir este item?")) {
         location.replace(tmpUpdate);
@@ -679,11 +679,11 @@ function jsInsertPescadorHasArteTipo( frm, pag )
     location.replace(tmpUpdate);
 }
 
-function jsDeletePescadorHasArteTipo( idArte, frm, pag )
+function jsDeletePescadorHasArteTipo( idArte, idPescador, pag )
 {
-    var TmpUrl = (+frm.idPescador.value + '#ancora_arte');
+    var TmpUrl = (+idPescador + '#ancora_arte');
 
-    var tmpUpdate = (pag + '/id/' + frm.idPescador.value + '/idArte/' + idArte +  '/back_url/' + TmpUrl);
+    var tmpUpdate = (pag + '/id/' + idPescador + '/idArte/' + idArte +  '/back_url/' + TmpUrl);
 
     if (confirm("Realmente deseja excluir este item?")) {
         location.replace(tmpUpdate);
@@ -699,11 +699,11 @@ function jsInsertPescadorHasTipoCapturada( frm, pag )
     location.replace(tmpUpdate);
 }
 
-function jsDeletePescadorHasTipoCapturada( idTipo, frm, pag )
+function jsDeletePescadorHasTipoCapturada( idTipo, idPescador, pag )
 {
-    var TmpUrl = (+frm.idPescador.value + '#ancora_tipos');
+    var TmpUrl = (+idPescador + '#ancora_tipos');
 
-    var tmpUpdate = (pag + '/id/' + frm.idPescador.value + '/idTipo/' + idTipo +  '/back_url/' + TmpUrl);
+    var tmpUpdate = (pag + '/id/' + idPescador + '/idTipo/' + idTipo +  '/back_url/' + TmpUrl);
 
     if (confirm("Realmente deseja excluir este item?")) {
         location.replace(tmpUpdate);
