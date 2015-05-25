@@ -982,12 +982,13 @@ function jsUpdateDynamic( id, valor, frm)
     if ( confirm("Realmente deseja EDITAR este item?") ) {
         frm.input_valor.value = valor;
         frm.input_id.value = id;
+        scrollTo('#Especialista');
     }
 }
 
 function jsReloadDynamic( frm , pag){
     if ( frm.input_valor.value || frm.input_id.value) {
-        location.replace(pag);
+        frm.reset();
     }
 }
 
