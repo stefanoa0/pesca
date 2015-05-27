@@ -250,8 +250,8 @@ $(function() {
             <fieldset class="noEditable"><legend>Dependentes:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Dependentes:</legend>
                     <div id="base">
-                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertPescadorHasDependente(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasdependente"), null, true) ?>')">
-
+                        <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertPescadorHasDependente(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasdependente"), null, true) ?>')">
+                        
                         <input type="number" required min="1" name="inputQuantidadeDependente" placeholder="Número de dependentes" size="20"  />
 
                         <select name="SelectDependente" id="Dependente">
@@ -275,22 +275,23 @@ $(function() {
                             <td name="inputTipoDependenteID[]"> <?= $vPescadorHasDependente['ttd_id'] ?> </td>
                             <td name="inputTipoDependente[]" > <?= $vPescadorHasDependente['ttd_tipodependente'] ?> </td>
                             <td name="inputQuantidadeDependente[]" > <?= $vPescadorHasDependente['tptd_quantidade'] ?> </td>
-                            <td>
-                                <input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasdependente"), null, true) ?>')">
-                            </td>
-                            
+                            <td class="td-botao">
+                                <a  name="Excluir"  onclick="jsDeletePescadorHasDependente(<?= $vPescadorHasDependente['ttd_id'] ?>, <?= $this->pescador['tp_id'] ?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasdependente"), null, true) ?>')">
+                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                    </ul>
+                                </a>
+                            </td>                            
                         </tr>
                     <?php endforeach; ?>
                 </table>
             </fieldset>
-            <fieldset class="noBorder">
-                <br/><input type="button" class="button-up" width="5%" onclick="scrollTo('top')">
-            </fieldset>
+            <br /><br />
             <!--//            /_/_/_/_/_/_/_/_/_/_/_/_/_/ Renda /_/_/_/_/_/_/_/_/_/_/_/_/_/-->
             <a id="ancora_rendas"></a><fieldset class="noEditable"><legend>Renda:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Renda:</legend>
                     <div id="base">
-                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertPescadorHasRenda(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasrenda"), null, true) ?>')">
+                        <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertPescadorHasRenda(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasrenda"), null, true) ?>')">
 
                         <select name="SelectRenda" id="Renda">
                             <?php foreach ($this->assignRendas as $key => $localRenda): ?>
@@ -322,20 +323,24 @@ $(function() {
                             <td name="inputRenda[]" > <?= $vPescadorHasRenda['ttr_descricao'] ?> </td>
                             <td name="inputTipoRendaID[]" > <?= $vPescadorHasRenda['ren_id'] ?> </td>
                             <td name="inputTipoRenda[]" > <?= $vPescadorHasRenda['ren_renda'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasRenda(<?= $vPescadorHasRenda['ttr_id'] ?>,<?= $vPescadorHasRenda['ren_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasrenda"), null, true) ?>')"></td>
+                            <td class="td-botao">
+                                <a  name="Excluir"  onclick="jsDeletePescadorHasRenda(<?= $vPescadorHasRenda['ttr_id'] ?>,<?= $vPescadorHasRenda['ren_id'] ?>, <?= $this->pescador['tp_id'] ?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasrenda"), null, true) ?>')">
+                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                    </ul>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
             </fieldset>
-            <fieldset class="noBorder">
-                <br/><input type="button" class="button-up" width="5%" onclick="scrollTo('top')">
-            </fieldset>
+            <br /><br />
             <!--//            /_/_/_/_/_/_/_/_/_/_/_/_/_/ Programa Social /_/_/_/_/_/_/_/_/_/_/_/_/_/-->
             <a id="ancora_programasocial"></a><fieldset class="noEditable"><legend>Programa Social:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Programa Social:</legend>
 
                     <div id="base">
-                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertPescadorHasProgramaSocial(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasprogramasocial"), null, true) ?>')">
+                        <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertPescadorHasProgramaSocial(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasprogramasocial"), null, true) ?>')">
                         <select name="selectProgramaSocial" id="programaSocial">
                             <?php foreach ($this->assignProgramaSocial as $key => $programaSocial): ?>
                                 <option value="<?= $programaSocial['prs_id']; ?>"><?= $programaSocial['prs_programa']; ?></option>
@@ -355,23 +360,25 @@ $(function() {
                         <tr id="linhaAreaPescaRows<?= $key ?>">
                             <td name="inputPS_ID[]"> <?= $vPescadorHasProgramaSocial['prs_id'] ?> </td>
                             <td name="inputPS[]" > <?= $vPescadorHasProgramaSocial['prs_programa'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasProgramaSocial(<?= $vPescadorHasProgramaSocial['prs_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasprogramasocial"), null, true) ?>')"></td>
+                            <td class="td-botao">
+                                <a  name="Excluir"  onclick="jsDeletePescadorHasProgramaSocial(<?= $vPescadorHasProgramaSocial['prs_id'] ?>, <?= $this->pescador['tp_id'] ?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasprogramasocial"), null, true) ?>')">
+                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                    </ul>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
 
             </fieldset>
-
-
-            <fieldset class="noBorder">
-                <br/><input type="button" class="button-up" width="5%" onclick="scrollTo('top')">
-            </fieldset>
+            <br /><br />
             <!--//            /_/_/_/_/_/_/_/_/_/_/_/_/_/ Comunidade /_/_/_/_/_/_/_/_/_/_/_/_/_/-->
             <a id="ancora_comunidade"></a><fieldset class="noEditable"><legend>Comunidade:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Comunidade:</legend>
 
                     <div id="base">
-                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertPescadorHasComunidade(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhascomunidade"), null, true) ?>')">
+                        <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertPescadorHasComunidade(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhascomunidade"), null, true) ?>')">
                         <select name="selectComunidade" id="selectComunidadeID">
                             <?php foreach ($this->assignComunidade as $key => $pescadorHasComunidade): ?>
                                 <option value="<?= $pescadorHasComunidade['tcom_id']; ?>"><?= $pescadorHasComunidade['tcom_nome']; ?></option>
@@ -391,23 +398,26 @@ $(function() {
                         <tr id="linhaAreaPescaRows<?= $key ?>">
                             <td name="inputComunidadeID[]"> <?= $vPescadorHasComunidade['tcom_id'] ?> </td>
                             <td name="inputComunidade[]" > <?= $vPescadorHasComunidade['tcom_nome'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasComunidade(<?= $vPescadorHasComunidade['tcom_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhascomunidade"), null, true) ?>')"></td>
+                            <td class="td-botao">
+                                <a  name="Excluir"  onclick="jsDeletePescadorHasComunidade(<?= $vPescadorHasComunidade['tcom_id'] ?>, <?= $this->pescador['tp_id'] ?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhascomunidade"), null, true) ?>')">
+                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                    </ul>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
 
             </fieldset>
-
-            <fieldset class="noBorder">
-                <br/><input type="button" class="button-up" width="5%" onclick="scrollTo('top')">
-            </fieldset>
+            <br /><br />
 
             <!--//            /_/_/_/_/_/_/_/_/_/_/_/_/_/ PORTO /_/_/_/_/_/_/_/_/_/_/_/_/_/-->
             <a id="ancora_porto"></a><fieldset class="noEditable"><legend>Porto de Desembarque:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Porto de Desembarque:</legend>
 
                     <div id="base">
-                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertPescadorHasPorto(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasporto"), null, true) ?>')">
+                        <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertPescadorHasPorto(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasporto"), null, true) ?>')">
                         <select name="selectPorto" id="selectPortoID">
                             <?php foreach ($this->assignPorto as $key => $pescadorHasPorto): ?>
                                 <option value="<?= $pescadorHasPorto['pto_id']; ?>"><?= $pescadorHasPorto['pto_nome']; ?></option>
@@ -427,23 +437,26 @@ $(function() {
                         <tr id="linhaAreaPescaRows<?= $key ?>">
                             <td name="inputPortoID[]"> <?= $vPescadorHasPorto['pto_id'] ?> </td>
                             <td name="inputPorto[]" > <?= $vPescadorHasPorto['pto_nome'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasPorto(<?= $vPescadorHasPorto['pto_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasporto"), null, true) ?>')"></td>
+                            <td class="td-botao">
+                                <a  name="Excluir"  onclick="jsDeletePescadorHasPorto(<?= $vPescadorHasPorto['pto_id'] ?>, <?= $this->pescador['tp_id'] ?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasporto"), null, true) ?>')">
+                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                    </ul>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
 
             </fieldset>
-
-            <fieldset class="noBorder">
-                <br/><input type="button" class="button-up" width="5%" onclick="scrollTo('top')">
-            </fieldset>
+            <br /><br />
             
             <!--//            /_/_/_/_/_/_/_/_/_/_/_/_/_/ Telefone /_/_/_/_/_/_/_/_/_/_/_/_/_/-->
             <a id="ancora_telefones"></a><fieldset class="noEditable"><legend>Telefones:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Telefone:</legend>
 
                     <div id="base">
-                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertPescadorHasTelefone(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhastelefone"), null, true) ?>')">
+                        <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertPescadorHasTelefone(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhastelefone"), null, true) ?>')">
                         <input type="text" name="inputTelefone" size="20" class="telefone" />
                         <select name="selectTipoTelefone" id="selectTipoTelefone" >
                             <?php foreach ($this->assignTipoTelefones as $key => $tipoTelefones): ?><option value="<?= $tipoTelefones['ttel_id']; ?>"><?= $tipoTelefones['ttel_desc']; ?></option><?php endforeach; ?>
@@ -463,20 +476,24 @@ $(function() {
                             <td name="inputTipoID[]"> <?= $vPescadorHasTelefone['tpt_ttel_id'] ?> </td>
                             <td name="inputTipo[]" > <?= $vPescadorHasTelefone['ttel_desc'] ?> </td>
                             <td name="inputTelefone[]" chass="telefone" > <?= $vPescadorHasTelefone['tpt_telefone'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasTelefone(<?= $vPescadorHasTelefone['tpt_ttel_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhastelefone"), null, true) ?>')"></td>
+                            <td class="td-botao">
+                                <a  name="Excluir"  onclick="jsDeletePescadorHasTelefone(<?= $vPescadorHasTelefone['tpt_ttel_id'] ?>, <?= $this->pescador['tp_id'] ?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhastelefone"), null, true) ?>')">
+                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                    </ul>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
 
             </fieldset>
-            <fieldset class="noBorder">
-                <br/><input type="button" class="button-up" width="5%" onclick="scrollTo('top')">
-            </fieldset>
+            <br /><br />
             <!--//            /_/_/_/_/_/_/_/_/_/_/_/_/_/ Colonias /_/_/_/_/_/_/_/_/_/_/_/_/_/-->
-            <a id="ancora_colonias"></a><fieldset class="noEditable"><legend>Colonias:</legend>
-                <fieldset class="noEditable"><legend>Adicionar Colonias:</legend>
+            <a id="ancora_colonias"></a><fieldset class="noEditable"><legend>Colônias:</legend>
+                <fieldset class="noEditable"><legend>Adicionar Colônias:</legend>
                     <div id="base">
-                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertPescadorHasColonia(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhascolonia"), null, true) ?>')">
+                        <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertPescadorHasColonia(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhascolonia"), null, true) ?>')">
                         <input type="date" name="inputDataInscricaoColonia" placeholder="Data Inscrição na Colonia" size="20"  />
 
                         <select name="SelectColonia" id="colonia">
@@ -500,21 +517,25 @@ $(function() {
                             <td name="inputColoniaID[]"> <?= $vPescadorHasColonia['tc_id'] ?> </td>
                             <td name="inputColonia[]" > <?= $vPescadorHasColonia['tc_nome'] ?> </td>
                             <td name="inputDataInscricaoColonia[]" > <?= $vPescadorHasColonia['tptc_datainsccolonia'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasColonia(<?= $vPescadorHasColonia['tc_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhascolonia"), null, true) ?>')"></td>
+                            <td class="td-botao">
+                                <a  name="Excluir"  onclick="jsDeletePescadorHasColonia(<?= $vPescadorHasColonia['tc_id'] ?>, <?= $this->pescador['tp_id'] ?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhascolonia"), null, true) ?>')">
+                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                    </ul>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
 
             </fieldset>
-            <fieldset class="noBorder">
-                <br/><input type="button" class="button-up" width="5%" onclick="scrollTo('top')">
-            </fieldset>
+            <br /><br />
             <!--//            /_/_/_/_/_/_/_/_/_/_/_/_/_/ Area de Pesca /_/_/_/_/_/_/_/_/_/_/_/_/_/-->
-            <a id="ancora_areas"></a><fieldset class="noEditable"><legend>Area de Pesca:</legend>
-                <fieldset class="noEditable"><legend>Adicionar Area de Pesca:</legend>
+            <a id="ancora_areas"></a><fieldset class="noEditable"><legend>Área de Pesca:</legend>
+                <fieldset class="noEditable"><legend>Adicionar Área de Pesca:</legend>
 
                     <div id="base">
-                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertPescadorHasArea(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasarea"), null, true) ?>')">
+                        <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertPescadorHasArea(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasarea"), null, true) ?>')">
                         <select name="selectAreaPesca" id="areaPesca">
                             <?php foreach ($this->areasPesca as $key => $areaPesca): ?>
                                 <option value="<?= $areaPesca['tareap_id']; ?>"><?= $areaPesca['tareap_areapesca']; ?></option>
@@ -534,23 +555,25 @@ $(function() {
                         <tr id="linhaAreaPescaRows<?= $key ?>">
                             <td name="inputAreaID[]"> <?= $vPescadorHasAreaPesca['tareap_id'] ?> </td>
                             <td name="inputArea[]" > <?= $vPescadorHasAreaPesca['tareap_areapesca'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasArea(<?= $vPescadorHasAreaPesca['tareap_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasarea"), null, true) ?>')"></td>
+                            <td class="td-botao">
+                                <a  name="Excluir"  onclick="jsDeletePescadorHasArea(<?= $vPescadorHasAreaPesca['tareap_id'] ?>, <?= $this->pescador['tp_id'] ?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasarea"), null, true) ?>')">
+                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                    </ul>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
 
             </fieldset>
-
-
-            <fieldset class="noBorder">
-                <br/><input type="button" class="button-up" width="5%" onclick="scrollTo('top')">
-            </fieldset>
+            <br /><br />
             <!--//            /_/_/_/_/_/_/_/_/_/_/_/_/_/ Arte de Pesca /_/_/_/_/_/_/_/_/_/_/_/_/_/-->
             <a id="ancora_arte"></a><fieldset class="noEditable"><legend>Artes de Pesca:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Artes de Pesca:</legend>
 
                     <div id="base">
-                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertPescadorHasArteTipo(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasartetipo"), null, true) ?>')">
+                        <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertPescadorHasArteTipo(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasartetipo"), null, true) ?>')">
 
                         <select name="SelectArtePesca" id="artePesca">
                             <?php foreach ($this->artesPesca as $key => $artePesca): ?>
@@ -571,21 +594,25 @@ $(function() {
                         <tr id="linhaArteTipoRows<?= $key ?>">
                             <td name="inputArteID[]"> <?= $vPescadorHasArteTipoArea['tap_id'] ?> </td>
                             <td name="inputArte[]" > <?= $vPescadorHasArteTipoArea['tap_artepesca'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasArteTipo(<?= $vPescadorHasArteTipoArea['tap_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasartetipo"), null, true) ?>')"></td>
+                            <td class="td-botao">
+                                <a  name="Excluir"  onclick="jsDeletePescadorHasArteTipo(<?= $vPescadorHasArteTipoArea['tap_id'] ?>, <?= $this->pescador['tp_id'] ?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasartetipo"), null, true) ?>')">
+                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                    </ul>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
 
             </fieldset>
-            <fieldset class="noBorder">
-                <br/><input type="button" class="button-up" width="5%" onclick="scrollTo('top')">
-            </fieldset>
+            <br /><br />
             <!--//            /_/_/_/_/_/_/_/_/_/_/_/_/_/ Tipo de Pesca /_/_/_/_/_/_/_/_/_/_/_/_/_/-->
             <a id="ancora_tipos"></a><fieldset class="noEditable"><legend>Tipos de Capturas:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Tipos de Capturas:</legend>
 
                     <div id="base">
-                        <input type="button" name="Add" class="button-confirm" onclick="jsInsertPescadorHasTipoCapturada(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhastipo"), null, true) ?>')">
+                        <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertPescadorHasTipoCapturada(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhastipo"), null, true) ?>')">
 
                         <select name="selectTipoCapturada" id="tipocapturada">
                             <?php foreach ($this->tipoCapturadas as $key => $tipoCapturadas): ?>
@@ -606,21 +633,25 @@ $(function() {
                         <tr id="linhaTipoCapturadaRows<?= $key ?>">
                             <td name="inputTipoID[]"> <?= $vPescadorHasTipoCapturada['itc_id'] ?> </td>
                             <td name="inputTipo[]" > <?= $vPescadorHasTipoCapturada['itc_tipo'] ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasTipoCapturada(<?= $vPescadorHasTipoCapturada['itc_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhastipo"), null, true) ?>')"></td>
+                            <td class="td-botao">
+                                <a  name="Excluir"  onclick="jsDeletePescadorHasTipoCapturada(<?= $vPescadorHasTipoCapturada['itc_id'] ?>, <?= $this->pescador['tp_id'] ?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhastipo"), null, true) ?>')">
+                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                    </ul>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
 
             </fieldset>
-            <fieldset class="noBorder">
-                <br/><input type="button" class="button-up" width="5%" onclick="scrollTo('top')">
-            </fieldset>
+            <br /><br />
             <!--//            /_/_/_/_/_/_/_/_/_/_/_/_/_/ Embarcações /_/_/_/_/_/_/_/_/_/_/_/_/_/-->
             <a id="ancora_embarcacoes"></a><fieldset class="noEditable"><legend>Embarcações e Porte das Embarcações:</legend>
                 <fieldset class="noEditable"><legend>Adicionar Embarcações:</legend>
 
                     <div id="base">
-                        <input type="button" class="button-confirm" onclick="jsInsertPescadorHasEmbarcacoes(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasembarcacoes"), null, true) ?>')">
+                        <input type="button" class="busca" value="Adicionar" onclick="jsInsertPescadorHasEmbarcacoes(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertpescadorhasembarcacoes"), null, true) ?>')">
 
                         <select name="selectMotorEmbarcacao" id="motorEmbarcacao" class="embarcacoes">
                             <option value="0" >Sem motor</option>
@@ -666,14 +697,18 @@ $(function() {
                             <td name="inputPorte[]" > <?= $vPescadorHasEmbarcacao['tpe_porte'] ?> </td>
                             <td name="inputMotorID[]"> <?= $vPescadorHasEmbarcacao['tpte_motor'] ?> </td>
                             <td name="inputMotor[]" > <?= ( $vPescadorHasEmbarcacao['tpte_motor'] == 0 ) ? 'Sem motor' : 'Com motor' ?> </td>
-                            <td><input type="button" class="button-del" width="5%" onclick="jsDeletePescadorHasEmbarcacoes(<?= $vPescadorHasEmbarcacao['tp_id'] ?>,<?= $vPescadorHasEmbarcacao['tpte_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasembarcacoes"), null, true) ?>')"></td>
+                            <td class="td-botao">
+                                <a  name="Excluir"  onclick="jsDeletePescadorHasEmbarcacoes(<?= $vPescadorHasEmbarcacao['tp_id'] ?>,<?= $vPescadorHasEmbarcacao['tpte_id'] ?>, this.form, '<?= $this->url(array("controller" => "pescador", "action" => "deletepescadorhasembarcacoes"), null, true) ?>')">
+                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                    </ul>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
             </fieldset>
-            <fieldset class="noBorder">
-                <br/><input type="button" class="button-up" width="5%" onclick="scrollTo('top')">
-            </fieldset>
+            <br /><br />
     
             <!--//            /_/_/_/_/_/_/_/_/_/_/_/_/_//_/_/_/_/_/_/_/_/_/_/_/_/_/-->
         
@@ -775,7 +810,7 @@ $(function() {
                         <fieldset id="dynamicInput">
 
                         <div id="base">
-                            <input type="button" name="Add" class="button-confirm" onclick="jsInsertEstruturaResidencial(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertestruturaresidencial"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_estrutura')">
+                            <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertEstruturaResidencial(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertestruturaresidencial"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_estrutura')">
                             <select name="selectValor"  >
                                 <?php foreach ($this->selectEstruturaResidencial as $key => $estruturaResidencial): ?>
                                     <option value="<?= $estruturaResidencial['terd_id']; ?>"><?= $estruturaResidencial['terd_estrutura']; ?></option>
@@ -797,7 +832,13 @@ $(function() {
                                 <tr id="linhaTipoCapturadaRows<?= $key ?>">
                                     <td name="inputTipoID[]"> <?= $vEstResidencial['terd_id'] ?> </td>
                                     <td name="inputTipo[]" > <?= $vEstResidencial['terd_estrutura'] ?> </td>
-                                    <td><input type="button" class="button-del" width="5%" onclick="jsDeleteDynamicEspecialista( <?=$vEstResidencial['terd_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deleteestruturaresidencial"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_estrutura')"></td>
+                                    <td class="td-botao">
+                                        <a  name="Excluir"  onclick="jsDeleteDynamicEspecialista( <?=$vEstResidencial['terd_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deleteestruturaresidencial"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_estrutura')">
+                                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                            </ul>
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
@@ -819,7 +860,7 @@ $(function() {
                             <fieldset>
 
                                 <div id="base">
-                                    <input type="button" name="Add" class="button-confirm" onclick="jsInsertProgramaSocial(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertprogramasocial"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '#pescador_especialista_progsocial')">
+                                    <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertProgramaSocial(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertprogramasocial"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '#pescador_especialista_progsocial')">
                                     <select name="selectProgramaSocial" id="dynamicInput">
                                         <?php foreach ($this->assignProgramaSocial as $key => $programaSocial): ?>
                                             <option value="<?= $programaSocial['prs_id']; ?>"><?= $programaSocial['prs_programa']; ?></option>
@@ -839,8 +880,13 @@ $(function() {
                                     <tr id="linhaAreaPescaRows<?= $key ?>">
                                         <td name="inputPS_ID[]"> <?= $vPescadorHasProgramaSocial['prs_id'] ?> </td>
                                         <td name="inputPS[]" > <?= $vPescadorHasProgramaSocial['prs_programa'] ?> </td>
-                                        <td><input type="button" class="button-del" width="5%" onclick="
-                                            jsDeleteDynamicEspecialista( <?=$vPescadorHasProgramaSocial['prs_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deleteprogramasocial"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_progsocial')"></td>
+                                        <td class="td-botao">
+                                            <a  name="Excluir"  onclick="jsDeleteDynamicEspecialista( <?=$vPescadorHasProgramaSocial['prs_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deleteprogramasocial"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_progsocial')">
+                                                <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                                    <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                                </ul>
+                                            </a>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </table>
@@ -878,7 +924,7 @@ $(function() {
                             <fieldset>
 
                                 <div id="base">
-                                    <input type="button" name="Add" class="button-confirm" onclick="jsInsertSeguroDefeso(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertsegurodefeso"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '#pescador_especialista_segdefeso')">
+                                    <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertSeguroDefeso(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertsegurodefeso"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '#pescador_especialista_segdefeso')">
                                     <select name="selectSeguroDefeso" id="dynamicInput">
                                         <?php foreach ($this->selectSeguroDefeso as $key => $selectSeguroDefeso): ?>
                                             <option value="<?= $selectSeguroDefeso['tsd_id']; ?>"><?= $selectSeguroDefeso['tsd_seguro']; ?></option>
@@ -898,8 +944,13 @@ $(function() {
                                     <tr id="linhaAreaPescaRows<?= $key ?>">
                                         <td name="inputPS_ID[]"> <?= $vSeguroDefeso['tsd_id'] ?> </td>
                                         <td name="inputPS[]" > <?= $vSeguroDefeso['tsd_seguro'] ?> </td>
-                                        <td><input type="button" class="button-del" width="5%" onclick="
-                                        jsDeleteDynamicEspecialista( <?=$vSeguroDefeso['tsd_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletesegurodefeso"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_segdefeso')"></td>
+                                        <td class="td-botao">
+                                            <a  name="Excluir"  onclick="jsDeleteDynamicEspecialista( <?=$vSeguroDefeso['tsd_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletesegurodefeso"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_segdefeso')">
+                                                <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                                    <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                                </ul>
+                                            </a>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </table>
@@ -909,7 +960,7 @@ $(function() {
                             <fieldset>
 
                                 <div id="base">
-                                    <input type="button" name="Add" class="button-confirm" onclick="jsInsertRendaDefeso(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertrendadefeso"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '#pescador_especialista_rendadefeso')">
+                                    <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertRendaDefeso(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertrendadefeso"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '#pescador_especialista_rendadefeso')">
                                     <select name="selectRendaDefeso" id="dynamicInput">
                                         <?php foreach ($this->assignTipoRendas as $key => $rendaSeguro): ?>
                                             <option value="<?= $rendaSeguro['ttr_id']; ?>"><?= $rendaSeguro['ttr_descricao']; ?></option>
@@ -929,8 +980,13 @@ $(function() {
                                     <tr id="linhaAreaPescaRows<?= $key ?>">
                                         <td name="inputPS_ID[]"> <?= $vRendaSeguro['ttr_id'] ?> </td>
                                         <td name="inputPS[]" > <?= $vRendaSeguro['ttr_descricao'] ?> </td>
-                                        <td><input type="button" class="button-del" width="5%" onclick="
-                                            jsDeleteDynamicEspecialista( <?=$vRendaSeguro['ttr_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deleterendadefeso"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_rendadefeso')"></td>
+                                        <td class="td-botao">
+                                            <a  name="Excluir"  onclick="jsDeleteDynamicEspecialista( <?=$vRendaSeguro['ttr_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deleterendadefeso"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_rendadefeso')">
+                                                <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                                    <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                                </ul>
+                                            </a>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </table>
@@ -968,7 +1024,7 @@ $(function() {
                         <fieldset>
 
                         <div id="base">
-                            <input type="button" name="Add" class="button-confirm" onclick="jsInsertMotivoPesca(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertmotivopesca"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_motivo')">
+                            <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertMotivoPesca(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertmotivopesca"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_motivo')">
 
                             <select name="selectMotivoPesca" id="dynamicInput">
                                 <?php foreach ($this->selectMotivoPesca as $key => $motivoPesca): ?>
@@ -989,8 +1045,13 @@ $(function() {
                                 <tr id="linhaTipoCapturadaRows<?= $key ?>">
                                     <td name="inputTipoID[]"> <?= $vMotivoPesca['tmp_id'] ?> </td>
                                     <td name="inputTipo[]" > <?= $vMotivoPesca['tmp_motivo'] ?> </td>
-                                    <td><input type="button" class="button-del" width="5%" onclick="
-                                        jsDeleteDynamicEspecialista( <?=$vMotivoPesca['tmp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletemotivopesca"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_motivo')"></td>
+                                    <td class="td-botao">
+                                        <a  name="Excluir"  onclick="jsDeleteDynamicEspecialista( <?=$vMotivoPesca['tmp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletemotivopesca"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_motivo')">
+                                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                            </ul>
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
@@ -1025,7 +1086,7 @@ $(function() {
                         <fieldset>
 
                         <div id="base">
-                            <input type="button" name="Add" class="button-confirm" onclick="jsInsertTransporte(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "inserttransporte"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_transporte')">
+                            <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertTransporte(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "inserttransporte"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_transporte')">
 
                             <select name="selectTransporte" id="dynamicInput">
                                 <?php foreach ($this->selectTipoTransporte as $key => $tipoTransporte): ?>
@@ -1046,8 +1107,13 @@ $(function() {
                                 <tr id="linhaTipoCapturadaRows<?= $key ?>">
                                     <td name="inputTipoID[]"> <?= $vTipoTransporte['ttr_id'] ?> </td>
                                     <td name="inputTipo[]" > <?= $vTipoTransporte['ttr_transporte'] ?> </td>
-                                    <td><input type="button" class="button-del" width="5%" onclick="
-                                        jsDeleteDynamicEspecialista( <?=$vTipoTransporte['ttr_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletetransporte"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_transporte')"></td>
+                                    <td class="td-botao">
+                                        <a  name="Excluir"  onclick="jsDeleteDynamicEspecialista( <?=$vTipoTransporte['ttr_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletetransporte"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_transporte')">
+                                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                            </ul>
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
@@ -1059,7 +1125,7 @@ $(function() {
                         <fieldset>
 
                         <div id="base">
-                            <input type="button" name="Add" class="button-confirm" onclick="jsInsertAcompanhado(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertacompanhado"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '#pescador_especialista_acompanhado')">
+                            <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertAcompanhado(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertacompanhado"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '#pescador_especialista_acompanhado')">
                             <input type="numeric" id="small" name="tp_qtdCompanhia" placeholder="Acompanhado de ___ Pessoas"/>
                         
                             <select name="selectAcompanhado" id="dynamicInput">
@@ -1084,8 +1150,13 @@ $(function() {
                                     <td name="inputTipoID[]"> <?= $vAcompanhado['tacp_id'] ?> </td>
                                     <td name="inputTipo[]" > <?= $vAcompanhado['tacp_companhia'] ?> </td>
                                     <td name="inputTipo[]" > <?= $vAcompanhado['tpstacp_quantidade'] ?> </td>
-                                    <td><input type="button" class="button-del" width="5%" onclick="
-                                        jsDeleteDynamicEspecialista( <?=$vAcompanhado['tacp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deleteacompanhado"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_acompanhado')"></td>
+                                    <td class="td-botao">
+                                        <a  name="Excluir"  onclick="jsDeleteDynamicEspecialista( <?=$vAcompanhado['tacp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deleteacompanhado"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_acompanhado')">
+                                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                            </ul>
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
@@ -1095,7 +1166,7 @@ $(function() {
                         <fieldset>
 
                         <div id="base">
-                            <input type="button" name="Add" class="button-confirm" onclick="jsInsertCompanhia(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertcompanhia"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_companhia')">
+                            <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertCompanhia(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertcompanhia"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_companhia')">
                             <input type="number" required id="small" name="tp_quantParente" min="0" placeholder="Quantos Companheiros"/>
                             
                             <select name="selectCompanhia" id="dynamicInput">
@@ -1120,8 +1191,13 @@ $(function() {
                                     <td name="inputTipoID[]"> <?= $vCompanhiaPesca['ttd_id'] ?> </td>
                                     <td name="inputTipo[]" > <?= $vCompanhiaPesca['ttd_tipodependente'] ?> </td>
                                     <td name="inputTipo[]" > <?= $vCompanhiaPesca['tpstcp_quantidade'] ?> </td>
-                                    <td><input type="button" class="button-del" width="5%" onclick="
-                                        jsDeleteDynamicEspecialista( <?=$vCompanhiaPesca['ttd_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletecompanhia"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_companhia')"></td>
+                                    <td class="td-botao">
+                                        <a  name="Excluir"  onclick="jsDeleteDynamicEspecialista( <?=$vCompanhiaPesca['ttd_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletecompanhia"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_companhia')">
+                                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                            </ul>
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
@@ -1152,7 +1228,7 @@ $(function() {
                         <fieldset>
 
                         <div id="base">
-                            <input type="button" name="Add" class="button-confirm" onclick="jsInsertFamiliaPescador(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertfamiliapescador"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_parentes')">
+                            <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertFamiliaPescador(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertfamiliapescador"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_parentes')">
                             <select name="selectFamiliaPescador" id="dynamicInput">
                                 <?php foreach ($this->assignTipoDependentes as $key => $familiarPescador): ?>
                                     <option value="<?= $familiarPescador['ttd_id']; ?>"><?= $familiarPescador['ttd_tipodependente']; ?></option>
@@ -1173,8 +1249,13 @@ $(function() {
                                 <tr id="linhaTipoCapturadaRows<?= $key ?>">
                                     <td name="inputTipoID[]"> <?= $vFamiliarPescador['ttd_id_parente'] ?> </td>
                                     <td name="inputTipo[]" > <?= $vFamiliarPescador['ttd_tipodependente'] ?> </td>
-                                    <td><input type="button" class="button-del" width="5%" onclick="
-                                        jsDeleteDynamicEspecialista( <?=$vFamiliarPescador['ttd_id_parente']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletefamiliapescador"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_parentes')"></td>
+                                    <td class="td-botao">
+                                        <a  name="Excluir"  onclick="jsDeleteDynamicEspecialista( <?=$vFamiliarPescador['ttd_id_parente']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletefamiliapescador"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_parentes')">
+                                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                            </ul>
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
@@ -1198,7 +1279,7 @@ $(function() {
                         <fieldset>
 
                         <div id="base">
-                            <input type="button" name="Add" class="button-confirm" onclick="jsInsertHorarioPesca(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "inserthorariopesca"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_horario')">
+                            <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertHorarioPesca(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "inserthorariopesca"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_horario')">
                             <select name="selectHorarioPesca" id="dynamicInput">
                                 <?php foreach ($this->selectHorarioPesca as $key => $horarioPesca): ?>
                                     <option value="<?= $horarioPesca['thp_id']; ?>"><?= $horarioPesca['thp_horario']; ?></option>
@@ -1219,8 +1300,13 @@ $(function() {
                                 <tr id="linhaTipoCapturadaRows<?= $key ?>">
                                     <td name="inputTipoID[]"> <?= $vHorario['thp_id'] ?> </td>
                                     <td name="inputTipo[]" > <?= $vHorario['thp_horario'] ?> </td>
-                                    <td><input type="button" class="button-del" width="5%" onclick="
-                                        jsDeleteDynamicEspecialista( <?=$vHorario['thp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletehorariopesca"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_horario')"></td>
+                                    <td class="td-botao">
+                                        <a  name="Excluir"  onclick="jsDeleteDynamicEspecialista( <?=$vHorario['thp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletehorariopesca"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_horario')">
+                                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                            </ul>
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
@@ -1254,7 +1340,7 @@ $(function() {
                         <fieldset>
 
                         <div id="base">
-                            <input type="button" name="Add" class="button-confirm" onclick="jsInsertInsumoPesca(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertinsumopesca"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_insumo')">
+                            <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertInsumoPesca(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertinsumopesca"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_insumo')">
                             <input type="number" required id="small" name="tp_valorInsumo" min="0" placeholder="Valor do Insumo"/>
                             <select name="selectInsumo" id="dynamicInput">
                                 <?php foreach ($this->selectInsumo as $key => $insumos): ?>
@@ -1279,8 +1365,13 @@ $(function() {
                                     <td name="inputTipoID[]"> <?= $vInsumo['tin_id'] ?> </td>
                                     <td name="inputTipo[]" > <?= $vInsumo['tin_insumo'] ?> </td>
                                     <td name="inputValor[]"> <?= $vInsumo['tin_valor_insumo'] ?> </td>
-                                    <td><input type="button" class="button-del" width="5%" onclick="
-                                        jsDeleteDynamicEspecialista( <?=$vInsumo['tin_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deleteinsumopesca"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_insumo')"></td>
+                                    <td class="td-botao">
+                                        <a  name="Excluir" onclick="jsDeleteDynamicEspecialista( <?=$vInsumo['tin_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deleteinsumopesca"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_insumo')">
+                                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                            </ul>
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
@@ -1292,7 +1383,7 @@ $(function() {
                         <fieldset>
 
                         <div id="base">
-                            <input type="button" name="Add" class="button-confirm" onclick="jsInsertFornecedorInsumo(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertfornecedorinsumo"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_fornecedor')">
+                            <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertFornecedorInsumo(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertfornecedorinsumo"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_fornecedor')">
                             <select name="selectFornecedorInsumo" id="dynamicInput">
                                 <?php foreach ($this->selectFornecedorInsumos as $key => $fornecedor): ?>
                                     <option value="<?= $fornecedor['tfi_id']; ?>"><?= $fornecedor['tfi_fornecedor']; ?></option>
@@ -1314,9 +1405,13 @@ $(function() {
                                 <tr id="linhaTipoCapturadaRows<?= $key ?>">
                                     <td name="inputTipoID[]"> <?= $vInsumo['tfi_id'] ?> </td>
                                     <td name="inputTipo[]" > <?= $vInsumo['tfi_fornecedor'] ?> </td>
-                                    
-                                    <td><input type="button" class="button-del" onclick="
-                                        jsDeleteDynamicEspecialista( <?=$vInsumo['tfi_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletefornecedorinsumo"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_fornecedor')"/></td>
+                                    <td class="td-botao">
+                                        <a  name="Excluir" onclick="jsDeleteDynamicEspecialista( <?=$vInsumo['tfi_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletefornecedorinsumo"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_fornecedor')"/>
+                                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                            </ul>
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
@@ -1328,7 +1423,7 @@ $(function() {
                         <fieldset>
 
                             <div id="base">
-                                <input type="button" name="Add" class="button-confirm" onclick="jsInsertRecursos(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertrecursos"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_recurso')">
+                                <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertRecursos(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertrecursos"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_recurso')">
                                 <select name="selectRecursos" id="dynamicInput">
                                     <?php foreach ($this->selectRecursos as $key => $recursos): ?>
                                         <option value="<?= $recursos['trec_id']; ?>"><?= $recursos['trec_recurso']; ?></option>
@@ -1350,8 +1445,13 @@ $(function() {
                                 <tr id="linhaTipoCapturadaRows<?= $key ?>">
                                     <td name="inputTipoID[]"> <?= $vRecurso['trec_id'] ?> </td>
                                     <td name="inputTipo[]" > <?= $vRecurso['trec_recurso'] ?> </td>
-                                    <td><input type="button" class="button-del" width="5%" onclick="
-                                        jsDeleteDynamicEspecialista( <?=$vRecurso['trec_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deleterecursos"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_recurso')"></td>
+                                    <td class="td-botao">
+                                        <a  name="Excluir" onclick="jsDeleteDynamicEspecialista( <?=$vRecurso['trec_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deleterecursos"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_recurso')">
+                                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                            </ul>
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
@@ -1363,7 +1463,7 @@ $(function() {
                         <fieldset>
 
                         <div id="base">
-                            <input type="button" name="Add" class="button-confirm" onclick="jsInsertDestinoPescadoEspecialista(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertdestinopescado"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_destino')">
+                            <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertDestinoPescadoEspecialista(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertdestinopescado"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_destino')">
                             <select name="selectDestinoPescado" id="dynamicInput">
                                 <?php foreach ($this->selectDestinoPescado as $key => $destinos): ?>
                                     <option value="<?= $destinos['dp_id']; ?>"><?= $destinos['dp_destino']; ?></option>
@@ -1385,8 +1485,13 @@ $(function() {
                                 <tr id="linhaTipoCapturadaRows<?= $key ?>">
                                     <td name="inputTipoID[]"> <?= $vDestino['dp_id_pescado'] ?> </td>
                                     <td name="inputTipo[]" > <?= $vDestino['dp_destino'] ?> </td>
-                                    <td><input type="button" class="button-del" width="5%" onclick="
-                                        jsDeleteDynamicEspecialista( <?=$vDestino['dp_id_pescado']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletedestinopescado"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_destino')"></td>
+                                    <td class="td-botao">
+                                        <a  name="Excluir" onclick="jsDeleteDynamicEspecialista( <?=$vDestino['dp_id_pescado']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletedestinopescado"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_destino')">
+                                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                            </ul>
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
@@ -1410,7 +1515,7 @@ $(function() {
                         <fieldset>
 
                         <div id="base">
-                            <input type="button" name="Add" class="button-confirm" onclick="jsInsertCompradorPescado(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertcompradorpescado"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_comprador')">
+                            <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertCompradorPescado(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertcompradorpescado"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_comprador')">
                             <select name="selectCompradorPescado" id="dynamicInput">
                                 <?php foreach ($this->selectDestinoPescado as $key => $destinos): ?>
                                     <option value="<?= $destinos['dp_id']; ?>"><?= $destinos['dp_destino']; ?></option>
@@ -1432,8 +1537,13 @@ $(function() {
                                 <tr id="linhaTipoCapturadaRows<?= $key ?>">
                                     <td name="inputTipoID[]"> <?= $vDestino['dp_id'] ?> </td>
                                     <td name="inputTipo[]" > <?= $vDestino['dp_destino'] ?> </td>
-                                    <td><input type="button" class="button-del" width="5%" onclick="
-                                        jsDeleteDynamicEspecialista( <?=$vDestino['dp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletecompradorpescado"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_comprador')"></td>
+                                    <td class="td-botao">
+                                        <a  name="Excluir" onclick="jsDeleteDynamicEspecialista( <?=$vDestino['dp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletecompradorpescado"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_comprador')">
+                                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                            </ul>
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
@@ -1519,7 +1629,7 @@ $(function() {
                         <fieldset>
 
                         <div id="base">
-                            <input type="button" name="Add" class="button-confirm" onclick="jsInsertDificuldadePesca(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertdificuldadearea"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_dificuldade')">
+                            <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertDificuldadePesca(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertdificuldadearea"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_dificuldade')">
                             <select name="selectDificuldadePesca" id="dynamicInput">
                                 <?php foreach ($this->selectDificuldade as $key => $dificuldade): ?>
                                     <option value="<?= $dificuldade['tdif_id']; ?>"><?= $dificuldade['tdif_dificuldade']; ?></option>
@@ -1541,8 +1651,13 @@ $(function() {
                                 <tr id="linhaTipoCapturadaRows<?= $key ?>">
                                     <td name="inputTipoID[]"> <?= $vDificuldade['tdif_id_area'] ?> </td>
                                     <td name="inputTipo[]" > <?= $vDificuldade['tdif_dificuldade'] ?> </td>
-                                    <td><input type="button" class="button-del" width="5%" onclick="
-                                        jsDeleteDynamicEspecialista( <?=$vDificuldade['tdif_id_area']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletedificuldadearea"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_dificuldade')"></td>
+                                    <td class="td-botao">
+                                        <a  name="Excluir" onclick="jsDeleteDynamicEspecialista( <?=$vDificuldade['tdif_id_area']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletedificuldadearea"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_dificuldade')">
+                                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                            </ul>
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
@@ -1554,7 +1669,7 @@ $(function() {
                         <fieldset>
 
                         <div id="base">
-                            <input type="button" name="Add" class="button-confirm" onclick="jsInsertHabilidades(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "inserthabilidade"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_habilidade')">
+                            <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertHabilidades(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "inserthabilidade"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_habilidade')">
                             <select name="selectHabilidades" id="dynamicInput">
                                 <?php foreach ($this->assignTipoRendas as $key => $habilidade): ?>
                                     <option value="<?= $habilidade['ttr_id']; ?>"><?= $habilidade['ttr_descricao']; ?></option>
@@ -1576,8 +1691,13 @@ $(function() {
                                 <tr id="linhaTipoCapturadaRows<?= $key ?>">
                                     <td name="inputTipoID[]"> <?= $vHabilidade['ttr_id'] ?> </td>
                                     <td name="inputTipo[]" > <?= $vHabilidade['ttr_descricao'] ?> </td>
-                                    <td><input type="button" class="button-del" width="5%" onclick="
-                                        jsDeleteDynamicEspecialista( <?=$vHabilidade['ttr_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletehabilidade"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_habilidade')"></td>
+                                    <td class="td-botao">
+                                        <a  name="Excluir"  onclick="jsDeleteDynamicEspecialista( <?=$vHabilidade['ttr_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletehabilidade"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_habilidade')">
+                                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                            </ul>
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
@@ -1635,7 +1755,7 @@ $(function() {
                         <fieldset>
 
                         <div id="base">
-                            <input type="button" name="Add" class="button-confirm" onclick="jsInsertEmbarcacoes(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertbarcos"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_barco')">
+                            <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertEmbarcacoes(this.form, '<?= $this->url(array("controller" => "pescador", "action" => "insertbarcos"), null, true) ?>', <?=$this->pescador['tp_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_barco')">
                             <select name="selectEmbarcacao" id="dynamicInput">
                                 <option value="0"> </option>
                                 <?php foreach ($this->assignBarcos as $key => $barcos): ?>
@@ -1658,8 +1778,13 @@ $(function() {
                                 <tr id="linhaTipoCapturadaRows<?= $key ?>">
                                     <td name="inputTipoID[]"> <?= $vBarco['bar_id'] ?> </td>
                                     <td name="inputTipo[]" > <?= $vBarco['bar_nome'] ?> </td>
-                                    <td><input type="button" class="button-del" width="5%" onclick="
-                                        jsDeleteDynamicEspecialista( <?=$vBarco['bar_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletebarcos"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_barco')"></td>
+                                    <td class="td-botao">
+                                        <a  name="Excluir" onclick="jsDeleteDynamicEspecialista( <?=$vBarco['bar_id']?>, <?=$this->assignEspecialista[0]['tp_id']?>, '<?= $this->url(array("controller" => "pescador", "action" => "deletebarcos"), null, true) ?>', <?=$this->assignEspecialista[0]['tp_id']?>,'#pescador_especialista_barco')">
+                                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                                            </ul>
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>

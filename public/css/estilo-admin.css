@@ -508,7 +508,7 @@ input.button-confirm {
 }
 
 input.button-edit {
-    background-image: url(../img/edit-icon.png);
+    background-image: url(../img/edit.png);
     background-color: transparent; /* make the button transparent */
     background-repeat: no-repeat;  /* make the background image appear only once */
     background-position: 0px 0px;  /* equivalent to 'top left' */
