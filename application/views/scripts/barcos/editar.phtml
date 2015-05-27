@@ -272,7 +272,7 @@
 <!--17. -------------------------------------------------------------->       
         <div class="form-dir">
             <label>Porto de Origem:</label>
-            <input type="text" name="portoOrigem" placeholder="Porto de Origem"/>
+            <input type="text" name="portoOrigem" placeholder="Porto de Origem" value="<?= $this->assignEmbarcacaoDetalhada['pto_id_origem'] ?>"/>
         </div>
         <br/>
 <!--17.1 -------------------------------------------------------------->  
@@ -947,7 +947,7 @@
  <!--55. -------------------------------------------------------------->              
         <div class="form-dir">
             <label>Data da entrevista:</label> 
-            <input type="date" name="dataEntrevista" placeholder="Data" value="<?= $this->assignAtuacao['tae_data'] ?>"/> <br />
+            <input type="date" name="dataEntrevista" placeholder="Data" value="<?php $date = explode(' ',$this->assignAtuacao['tae_data']); echo $date[0]; ?>"/> <br />
         </div>
  <!--56. -------------------------------------------------------------->              
         <div class="form-dir">

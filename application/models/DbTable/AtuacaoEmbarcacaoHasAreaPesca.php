@@ -4,7 +4,7 @@ class Application_Model_DbTable_AtuacaoEmbarcacaoHasAreaPesca extends Zend_Db_Ta
 {
 
     protected $_name = 't_atuacao_embarcacao_has_t_areapesca';
-
+    protected $_primary = 'taeap_id';
 
 }
 

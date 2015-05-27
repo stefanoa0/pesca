@@ -546,5 +546,26 @@ class Application_Model_LinhaFundo
         }
         return $dbTable->fetchAll($select)->toArray();
     }
+    
+    public function selectHistogramaBiometriaPeixe($tipo, $where = null, $order = null,$limit = null){
+        $this->dbTableLinhaFundoHasBioPeixe = new Application_Model_DbTable_VLinhaFundoHasBioPeixe();
+        $select = $this->dbTableLinhaFundoHasBioPeixe->select()
+                ->from($this->dbTableLinhaFundoHasBioPeixe,array( 'quantidade' => 'count(esp_id)', 'esp_nome_comum', $tipo = new Zend_Db_Expr('(Case When '.$tipo.'>=1 Then cast('.$tipo.' as integer) Else '.$tipo.' End)')))
+                ->group(array('esp_nome_comum', $tipo))->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableLinhaFundoHasBioPeixe->fetchAll($select)->toArray();
+    }
+
+    public function selectEspeciesPeixesBiometrias()
+    {
+        $this->dbTableLinhaFundoHasBioPeixe = new Application_Model_DbTable_VLinhaFundoHasBioPeixe();
+        $select = $this->dbTableLinhaFundoHasBioPeixe->select()->from($this->dbTableLinhaFundoHasBioPeixe, array('esp_nome_comum'=>new Zend_Db_Expr('distinct(esp_nome_comum)'), 'esp_id'))->order('esp_nome_comum');
+    
+        return $this->dbTableLinhaFundoHasBioPeixe->fetchAll($select)->toArray();
+    }   
 }
 

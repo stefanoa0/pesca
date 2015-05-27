@@ -106,52 +106,60 @@ private $dbTableBarcos;
         );
         
         $idEmbarcacao = $this->dbTableBarcos->insert($dadosEmbarcacao);
-        
-        $dadosMotor = array(
-            'ted_id'=> $idEmbarcacao,
-            'tmot_id'=>$request['tipoMotor'],
-            'tmod_id'=>$request['modelo'],
-            'tmar_id'=>$request['marca'],
-            'tme_propulsao'=>$request['tipoPropulsao'],
-            'tme_potencia'=>$request['potenciaMotor'],
-            'tme_combustivel'=>$request['tipoCombustivel'],
-            'tme_armazenamento'=>$request['capacidadeCombustivel'],
-            'tpc_id'=>$request['postoCombustivel'],
-            'tme_ano_motor'=>$request['anoCompraMotor'],
-            'tme_estado_motor'=>$request['estadoMotor'],
-            'tme_pagamento_motor'=>$request['jaPagoMotor'],
-            'tpg_id_motor'=>$request['tipoPagamentoMotor'],
-            'tfin_id'=>$request['financiadorMotor'],
-            'tme_ano_motor_fabricacao'=>$request['anoFabricacao'],
-            'tme_obs'=>$request['obs'],
-            'tme_gasto_mensal'=>$request['gastoMensalMotor']
+        if(!empty($idEmbarcacao)){
+            $dadosMotor = array(
+                'ted_id'=> $idEmbarcacao,
+                'tmot_id'=>$request['tipoMotor'],
+                'tmod_id'=>$request['modelo'],
+                'tmar_id'=>$request['marca'],
+                'tme_propulsao'=>$request['tipoPropulsao'],
+                'tme_potencia'=>$request['potenciaMotor'],
+                'tme_combustivel'=>$request['tipoCombustivel'],
+                'tme_armazenamento'=>$request['capacidadeCombustivel'],
+                'tpc_id'=>$request['postoCombustivel'],
+                'tme_ano_motor'=>$request['anoCompraMotor'],
+                'tme_estado_motor'=>$request['estadoMotor'],
+                'tme_pagamento_motor'=>$request['jaPagoMotor'],
+                'tpg_id_motor'=>$request['tipoPagamentoMotor'],
+                'tfin_id'=>$request['financiadorMotor'],
+                'tme_ano_motor_fabricacao'=>$request['anoFabricacao'],
+                'tme_obs'=>$request['obs'],
+                'tme_gasto_mensal'=>$request['gastoMensalMotor']
 
-        );
+            );
+
+            $this->dbTableMotor->insert($dadosMotor);
+
+            $dadosAtuacao = array(
+                'ted_id'=>$idEmbarcacao,
+                'tae_atuacao_batimatrica'=>$request['atuacaoBatimetrica'],
+                'tae_autonomia'=>$request['autonomiaMar'],
+                'tfp_id_pesca'=>$request['frequenciaPesca'],
+                'thp_id_pesca'=>$request['horarioPesca'],
+                'tae_capacidade'=>$request['capacidadeArmazenamento'],
+                'tcp_id_pescado'=>$request['conservacaoPescado'],
+                'dp_id'=>$request['destinoPescado'],
+                'dp_id_venda'=>$request['compradorPescado'],
+                'ttr_id_renda'=>$request['outraAtividade'],
+                'tea_id_maior'=>$request['maiorQuantidade'],
+                'tea_id_menor'=>$request['menorQuantidade'],
+                'tae_concorrencia'=>$request['competicaoPescadores'],
+                'tae_tempo_atividade'=>$request['tempoAtuacao'],
+                'tae_data'=>$request['dataEntrevista'],
+                'tu_entrevistador'=>$request['entrevistador'],
+                'tu_digitador'=>$request['lancador']
+            );
         
-        $this->dbTableMotor->insert($dadosMotor);
-        
-        $dadosAtuacao = array(
-            'ted_id'=>$idEmbarcacao,
-            'tae_atuacao_batimatrica'=>$request['atuacaoBatimetrica'],
-            'tae_autonomia'=>$request['autonomiaMar'],
-            'tfp_id_pesca'=>$request['frequenciaPesca'],
-            'thp_id_pesca'=>$request['horarioPesca'],
-            'tae_capacidade'=>$request['capacidadeArmazenamento'],
-            'tcp_id_pescado'=>$request['conservacaoPescado'],
-            'dp_id'=>$request['destinoPescado'],
-            'dp_id_venda'=>$request['compradorPescado'],
-            'ttr_id_renda'=>$request['outraAtividade'],
-            'tea_id_maior'=>$request['maiorQuantidade'],
-            'tea_id_menor'=>$request['menorQuantidade'],
-            'tae_concorrencia'=>$request['competicaoPescadores'],
-            'tae_tempo_atividade'=>$request['tempoAtuacao'],
-            'tae_data'=>$request['dataEntrevista'],
-            'tu_entrevistador'=>$request['entrevistador'],
-            'tu_digitador'=>$request['lancador']
-        );
-        
+
          $this->dbTableAtuacao->insert($dadosAtuacao);
-         
+        }
+        else{
+            $whereBarcos = $this->dbTableBarcos->getAdapter()
+                ->quoteInto('"ted_id" = ?', $idEmbarcacao);
+            $this->dbTableBarcos->_cascadeDelete($whereBarcos);
+            $this->dbTableMotor->_cascadeDelete($whereBarcos);
+            $this->dbTableAtuacao->_cascadeDelete($whereBarcos);
+        }
          return $request['embarcacao'];
     }
     

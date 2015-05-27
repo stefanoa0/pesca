@@ -4,7 +4,7 @@ class Application_Model_DbTable_AtuacaoEmbarcacaoHasFornecedorPetrechos extends 
 {
 
     protected $_name = 't_atuacao_embarcacao_has_t_fornecedor_petrechos';
-
+    protected $_primary = 'taefp_id';
 
 }
 

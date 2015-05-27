@@ -560,4 +560,44 @@ class Application_Model_ArrastoFundo
         
     }
      */
+    public function selectEspeciesCamaraoBiometrias()
+    {
+        $this->dbTableArrastoHasBioCamarao = new Application_Model_DbTable_VArrastoFundoHasBioCamarao();
+        $select = $this->dbTableArrastoHasBioCamarao->select()->from($this->dbTableArrastoHasBioCamarao, array('esp_nome_comum'=>new Zend_Db_Expr('distinct(esp_nome_comum)'), 'esp_id'))->order('esp_nome_comum');
+    
+        return $this->dbTableArrastoHasBioCamarao->fetchAll($select)->toArray();
+    }
+    public function selectHistogramaBiometriaCamarao($tipo,$where = null, $order = null,$limit = null){
+        $this->dbTableArrastoHasBioCamarao = new Application_Model_DbTable_VArrastoFundoHasBioCamarao();
+        $select = $this->dbTableArrastoHasBioCamarao->select()
+                ->from($this->dbTableArrastoHasBioCamarao,array( 'quantidade' => 'count(esp_id)', 'esp_nome_comum', $tipo = new Zend_Db_Expr('(Case When '.$tipo.'>=1 Then cast('.$tipo.' as integer) Else '.$tipo.' End)')))
+                ->group(array('esp_nome_comum', $tipo))->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableArrastoHasBioCamarao->fetchAll($select)->toArray();
+    }
+    
+    public function selectEspeciesPeixesBiometrias()
+    {
+        $this->dbTableArrastoHasBioPeixe = new Application_Model_DbTable_VArrastoFundoHasBioPeixe();
+        $select = $this->dbTableArrastoHasBioPeixe->select()->from($this->dbTableArrastoHasBioPeixe, array('esp_nome_comum'=>new Zend_Db_Expr('distinct(esp_nome_comum)'), 'esp_id'))->order('esp_nome_comum');
+    
+        return $this->dbTableArrastoHasBioPeixe->fetchAll($select)->toArray();
+    }
+    
+    public function selectHistogramaBiometriaPeixe($tipo, $where = null, $order = null,$limit = null){
+        $this->dbTableArrastoFundoHasBioPeixe = new Application_Model_DbTable_VArrastoFundoHasBioPeixe();
+        $select = $this->dbTableArrastoFundoHasBioPeixe->select()
+                ->from($this->dbTableArrastoFundoHasBioPeixe,array( 'quantidade' => 'count(esp_id)', 'esp_nome_comum', $tipo = new Zend_Db_Expr('(Case When '.$tipo.'>=1 Then cast('.$tipo.' as integer) Else '.$tipo.' End)')))
+                ->group(array('esp_nome_comum', $tipo))->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableArrastoFundoHasBioPeixe->fetchAll($select)->toArray();
+    }
 }
