@@ -111,7 +111,7 @@ class ColetaManualController extends Zend_Controller_Action
         $mare = $this->modelMare->select();
         $destinos = $this->modelDestinoPescado->select(null, 'dp_destino');
         $tipoVenda = $this->modelTipoVenda->select(null, 'ttv_tipovenda');
-
+        $porto = $this->modelColetaManual->selectEntrevistaColetaManual($entrevista['cml_id'].'= cml_id');
 
         $idEntrevista = $this->_getParam('id');
         $this->naoexiste($idEntrevista);
@@ -151,6 +151,7 @@ class ColetaManualController extends Zend_Controller_Action
         $this->view->assign('pesqueiros',$pesqueiros);
         $this->view->assign('especies',$especies);
         $this->view->assign('tipovenda', $tipoVenda);
+        $this->view->assign('porto', $porto[0]);
     }
 
 

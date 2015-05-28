@@ -117,7 +117,8 @@ class LinhaFundoController extends Zend_Controller_Action
         $mare = $this->modelMare->select();
         $destinos = $this->modelDestinoPescado->select(null, 'dp_destino');
         $tipoVenda = $this->modelTipoVenda->select(null, 'ttv_tipovenda');
-
+        $porto = $this->modelLinhaFundo->selectEntrevistaLinhaFundo($entrevista['lf_id'].'= lf_id');
+        
         $idEntrevista = $this->_getParam('id');
         $datahoraSaida[] = explode(" ",$entrevista['lf_dhsaida']);
         $datahoraVolta[] = explode(" ",$entrevista['lf_dhvolta']);
@@ -155,6 +156,7 @@ class LinhaFundoController extends Zend_Controller_Action
         $this->view->assign('pesqueiros',$pesqueiros);
         $this->view->assign('especies',$especies);
         $this->view->assign('tipovenda', $tipoVenda);
+        $this->view->assign('porto', $porto[0]);
     }
     public function criarAction(){
         if($this->usuario['tp_id'] == 5){

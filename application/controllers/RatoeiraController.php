@@ -115,7 +115,8 @@ private $usuario;
         $mare = $this->modelMare->select();
         $destinos = $this->modelDestinoPescado->select(null, 'dp_destino');
         $tipoVenda = $this->modelTipoVenda->select(null, 'ttv_tipovenda');
-
+        $porto = $this->modelRatoeira->selectEntrevistaRatoeira($entrevista['rat_id'].'= rat_id');
+        
         $idEntrevista = $this->_getParam('id');
         $datahoraSaida[] = explode(" ",$entrevista['rat_dhsaida']);
         $datahoraVolta[] = explode(" ",$entrevista['rat_dhvolta']);
@@ -152,6 +153,7 @@ private $usuario;
         $this->view->assign('pesqueiros',$pesqueiros);
         $this->view->assign('especies',$especies);
         $this->view->assign('tipovenda', $tipoVenda);
+        $this->view->assign('porto', $porto[0]);
     }
     public function criarAction(){
         if($this->usuario['tp_id']==5){

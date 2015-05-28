@@ -112,7 +112,8 @@ public function visualizarAction() {
         $avistamentos = $this->modelAvistamento->select(null, 'avs_descricao');
         $destinos = $this->modelDestinoPescado->select(null, 'dp_destino');
         $tipoVenda = $this->modelTipoVenda->select(null, 'ttv_tipovenda');
-
+        $porto = $this->modelManzua->selectEntrevistaManzua($entrevista['man_id'].'= man_id');
+        
         $mare = $this->modelMare->select();
         $idEntrevista = $this->_getParam('id');
         $datahoraSaida[] = explode(" ",$entrevista['man_dhsaida']);
@@ -150,6 +151,7 @@ public function visualizarAction() {
         $this->view->assign('pesqueiros',$pesqueiros);
         $this->view->assign('especies',$especies);
         $this->view->assign('tipovenda', $tipoVenda);
+        $this->view->assign('porto', $porto[0]);
     }
     public function criarAction(){
         $idManzua = $this->modelManzua->insert($this->_getAllParams());

@@ -250,7 +250,7 @@ class PortoController extends Zend_Controller_Action
         elseif($porto === 'Aritaguá'){
             $back_porto = 'aritagua';
         }
-        elseif($porto === 'Juerana rio'){
+        elseif($porto === 'Juerana'){
             $back_porto = 'juerana';
         }
         elseif($porto === 'Mamoã'){
@@ -378,27 +378,7 @@ class PortoController extends Zend_Controller_Action
 
         return $new_array;
     }
-    public function verificaEspecies($array){
-        
-        foreach($array as $campo){
-            if($campo['esp_nome_comum'] == 'Rosinha'){
-                $rosinha = $campo['peso'];
-            }
-            if($campo['esp_nome_comum'] == 'Rosa'){
-                $rosa = array(
-                'esp_nome_comum' => 'Rosa',
-                'peso' => $campo['peso']+$rosinha,
-                'quant' => $campo['quant']
-                );
-               
-
-            }
-            //print_r($campo);
-        }
-       
-        array_push($array, $rosa);
-        return $array;
-    }
+    
     //Gera as quantidade de captura por porto, mês e ano
     public function gerarquantcaptura($porto, $ano, $arte){
         
@@ -1351,8 +1331,7 @@ class PortoController extends Zend_Controller_Action
         
         switch($arte){
             case 'Arrasto':
-                $arrayEsp = $this->modelArrasto->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
-                $arrayQuantCaptura = $this->verificaEspecies($arrayEsp);
+                $arrayQuantCaptura = $this->modelArrasto->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
             break;
             case 'Calao':
                 $arrayQuantCaptura =$this->modelCalao->selectQuantCapturaByPorto("pto_nome='".$porto."' And Extract(YEAR FROM fd_data) = ".$ano);
@@ -1401,7 +1380,7 @@ class PortoController extends Zend_Controller_Action
         $arrayQuantCapturaOrdenado = $this->array_sort($arrayQuantCaptura, 'peso', SORT_DESC);
         $i=0;
         foreach($arrayQuantCapturaOrdenado as $quant):
-            if($i<=10 && $quant['esp_nome_comum'] != 'Rosinha'){
+            if($i<=10){
                 $quantCaptura[] = $quant['quant'];
 		$pesoCaptura[] = $quant['peso'];
                 $labelCaptura[] = $quant['esp_nome_comum'];
@@ -1823,7 +1802,7 @@ class PortoController extends Zend_Controller_Action
         if($ano == ""){
             $ano = 2014;
         }
-        $porto = "Juerana rio";
+        $porto = "Jueranas";
         
         /* Artes desse porto:
          * Linha

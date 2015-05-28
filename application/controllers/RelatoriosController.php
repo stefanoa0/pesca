@@ -5532,7 +5532,7 @@ class RelatoriosController extends Zend_Controller_Action
         $porto = $this->_getParam('porto');
            
                 
-        $arrayPortos = array('Amendoeira','Pontal','Prainha','Terminal Pesqueiro','Porto da Barra','São Miguel','Mamoã','Ponta da Tulha','Ponta do Ramo','Aritaguá','Juerana rio','Sambaituba','Urucutuca','Pé de Serra','Sobradinho','Vila Badu','Porto da Concha','Porto do Forte');
+        $arrayPortos = array('Amendoeira','Pontal','Prainha','Terminal Pesqueiro','Porto da Barra','São Miguel','Mamoã','Ponta da Tulha','Ponta do Ramo','Aritaguá','Juerana','Sambaituba','Urucutuca','Pé de Serra','Sobradinho','Vila Badu','Porto da Concha','Porto do Forte');
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
@@ -5567,7 +5567,7 @@ class RelatoriosController extends Zend_Controller_Action
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ponta da Tulha');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ponta do Ramo');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Aritaguá');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Juerana rio');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Juerana');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Sambaituba');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Urucutuca');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Pé de Serra');
@@ -5774,7 +5774,7 @@ class RelatoriosController extends Zend_Controller_Action
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ponta da Tulha');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ponta do Ramo');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Aritaguá');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Juerana rio');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Juerana');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Sambaituba');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Urucutuca');
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Pé de Serra');

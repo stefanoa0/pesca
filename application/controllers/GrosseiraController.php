@@ -108,7 +108,7 @@ private $usuario;
         $avistamentos = $this->modelAvistamento->select(null, 'avs_descricao');
         $iscas = $this->modelIsca->select(null, 'isc_tipo');
         $destinos = $this->modelDestinoPescado->select(null, 'dp_destino');
-
+        $porto = $this->modelGrosseira->selectEntrevistaGrosseira($entrevista['grs_id'].'= grs_id');
         
         $idEntrevista = $this->_getParam('id');
         $datahoraSaida[] = explode(" ",$entrevista['grs_dhsaida']);
@@ -145,6 +145,7 @@ private $usuario;
         $this->view->assign('tipoEmbarcacoes',$tipoEmbarcacoes);
         $this->view->assign('pesqueiros',$pesqueiros);
         $this->view->assign('especies',$especies);
+        $this->view->assign('porto', $porto[0]);
 
     }
     public function criarAction(){
