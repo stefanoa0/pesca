@@ -1635,7 +1635,7 @@ function ajax_pesqueiro(form, url, id_entrevista, tipo_entrevista){
                 // Send the data to PHP now... and wait for response to update the status div
                 hr.send(vars); // Actually execute the request
                 document.getElementById("pesqueiro").innerHTML = "processando...";
-                resetFormValues("formEntrevistas");
+                //resetFormValues("formEntrevistas");
             }
 }
 
