@@ -951,7 +951,7 @@ function jsInsertAmostraPeixe(frm, pag, idEntrevista){
 //Insert para views dinâmicas
 function jsInsertDynamic(frm, pag, pag_update)
 {
-    document.getElementsByName('Add').value = "Adicionar";
+    frm.Add.value = "Adicionar";
     if (frm.input_id.value) {
 
         var tmpUpdate = (pag_update + '/id/' + frm.input_id.value + '/valor/'+frm.input_valor.value);
@@ -983,7 +983,7 @@ function jsUpdateDynamic( id, valor, frm)
     if ( confirm("Realmente deseja EDITAR este item?") ) {
         frm.input_valor.value = valor;
         frm.input_id.value = id;
-        document.getElementsByName('Add').value = "Atualizar";
+        frm.Add.value = "Atualizar";
         scrollTo('#Especialista');
     }
 }
