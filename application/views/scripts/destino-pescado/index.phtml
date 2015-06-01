@@ -1,12 +1,12 @@
-<form method="post">
+<form method="post" id="destino-pescado">
     <fieldset id="dadosDesembarque"></fieldset>
 
     <a id="ancora_destinopescado"></a>
     <fieldset class="noEditable"><legend>Destino do Pescado:</legend>
         <fieldset class="noEditable"><legend>Adicionar Destino do Pescado:</legend>
             <div id="base">
-                <input type="button" name="Add" class="button-confirm" onclick="jsInsertDestinoPescado(this.form, '<?= $this->url(array("controller" => "destino-pescado", "action" => "insert"), null, true) ?>')">
-                <input type="button" name="Reload" class="button-clear" onclick="jsReloadDestinoPescado(this.form)">
+                <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertDestinoPescado(this.form, '<?= $this->url(array("controller" => "destino-pescado", "action" => "insert"), null, true) ?>')">
+                <input type="button" name="Reload" class="busca" value="Limpar campos" onclick="jsReloadDestinoPescado(this.form)">
 
                 <input type="text" name="inputdp_destino" placeholder="Destino do Pescado" size="40"  />
                 <input readonly="" type="text" name="inputdp_id" />
@@ -17,16 +17,26 @@
         <table id="tblDestinoPescado">
             <tr>
                 <th width="15%">ID </th>
-                <th width="65%">Perfil</th>
-                <th width="5%"></th>
-                <th width="5%"></th>
+                <th width="85%">Perfil</th>
             </tr>
             <?php foreach ($this->assignDestinoPescado as $key => $dadosDestinoPescado): ?>
                 <tr id="rowNumDestinoPescado<?= $key ?>">
                     <td><?= $dadosDestinoPescado['dp_id'] ?></td>
                     <td><?= $dadosDestinoPescado['dp_destino'] ?></td>
-                    <td><input type="button" class="button-edit" width="5%" onclick="jsUpdateDestinoPescado('<?= $dadosDestinoPescado['dp_id'] ?>', '<?= $dadosDestinoPescado['dp_destino'] ?>', this.form)"></td>
-                    <td><input type="button" class="button-del" width="5%" onclick="jsDeleteDestinoPescado(<?= $dadosDestinoPescado['dp_id'] ?>, '<?= $this->url(array("controller" => "destino-pescado", "action" => "delete"), null, true) ?>')"></td>
+                    <td class="td-botao">
+                        <a onclick="jsUpdateDestinoPescado('<?= $dadosDestinoPescado['dp_id'] ?>', '<?= $dadosDestinoPescado['dp_destino'] ?>', document.getElementById('destino-pescado'))">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+                    <td class="td-botao">
+                        <a onclick="jsDeleteDestinoPescado(<?= $dadosDestinoPescado['dp_id'] ?>, '<?= $this->url(array("controller" => "destino-pescado", "action" => "delete"), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </table>

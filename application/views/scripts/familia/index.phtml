@@ -22,7 +22,6 @@
                 <td><?= $familia['fam_tipo'] ?></td>
                 <td><?= $familia['fam_caracteristica'] ?></td>
                 <td><?= $familia['ord_id'] ?></td>
-
                 <td class="td-botao">
                     <a href="<?= $this->url(array("controller" => "familia", "action" => "editar", "id" => $familia['fam_id']), null, true) ?>">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
@@ -30,11 +29,13 @@
                         </ul>
                     </a>
                 </td>
-
                 <td class="td-botao">
-                    <input type="button" value="Excluir" onclick="beforeDelete('<?= $this->url(array("controller" => "familia", "action" => "excluir", "id" => $familia['fam_id']), null, true) ?>')">
+                    <a onclick="beforeDelete('<?= $this->url(array("controller" => "familia", "action" => "excluir", "id" => $familia['fam_id']), null, true) ?>')">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                        </ul>
+                    </a>
                 </td>
-
             </tr>
         <?php endforeach; ?>
     </table>

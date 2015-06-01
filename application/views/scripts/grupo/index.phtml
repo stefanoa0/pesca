@@ -16,7 +16,6 @@
             <tr>
                 <td><?= $grupo['grp_id'] ?></td>
                 <td><?= $grupo['grp_nome'] ?></td>
-
                 <td class="td-botao">
                     <a href="<?= $this->url(array("controller" => "grupo", "action" => "editar", "id" => $grupo['grp_id']), null, true) ?>">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
@@ -24,12 +23,13 @@
                         </ul>
                     </a>
                 </td>
-
-
                 <td class="td-botao">
-                    <input type="button" value="Excluir" onclick="beforeDelete('<?= $this->url(array("controller" => "grupo", "action" => "excluir", "id" => $grupo['grp_id']), null, true) ?>')">
+                    <a onclick="beforeDelete('<?= $this->url(array("controller" => "grupo", "action" => "excluir", "id" => $grupo['grp_id']), null, true) ?>')">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                        </ul>
+                    </a>
                 </td>
-
             </tr>
         <?php endforeach; ?>
     </table>
