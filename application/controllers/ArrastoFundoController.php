@@ -52,6 +52,11 @@ class ArrastoFundoController extends Zend_Controller_Action {
         $this->view->assign('pescadores', $pescadores);
         $this->view->assign('barcos', $barcos);
         $this->view->assign('tipoEmbarcacoes', $tipoEmbarcacoes);
+        
+        $idBarco = $this->_getParam('bar_id');
+        if($idBarco){
+        $this->redirect('arrasto-fundo/pescadores/id/'.$fichadiaria['fd_id'].'/idMonitoramento/'.$monitoramento['fd_id'].'/bar_id/'.$idBarco);
+        }
     }
     
     public function naoexiste($var){
@@ -91,6 +96,8 @@ class ArrastoFundoController extends Zend_Controller_Action {
 
         $entrevista = $this->modelArrastoFundo->find($this->_getParam('id'));
         $this->naoexiste($entrevista);
+        
+        
         $pescadores = $this->modelPescador->select(null, 'tp_nome');
         $barcos = $this->modelBarcos->select(null, 'bar_nome');
         $tipoEmbarcacoes = $this->modelTipoEmbarcacao->select(null, 'tte_tipoembarcacao');
@@ -135,8 +142,23 @@ class ArrastoFundoController extends Zend_Controller_Action {
         $this->view->assign('pesqueiros', $pesqueiros);
         $this->view->assign('especies', $especies);
         $this->view->assign('porto', $porto[0]);
+        
+        
     }
+    
+    public function pescadoresAction(){
+        
+        $this->_helper->layout->disableLayout();
+        $idBarco = $this->_getParam('bar_id');
 
+        $pescadores = $this->modelArrastoFundo->selectPescadoresByBarco('bar_id = '.$idBarco, 'tp_nome');
+        if(empty($pescadores)){
+            $pescadores = $this->modelPescador->select(null, 'tp_nome');
+        }
+        
+        //print_r($idBarco);
+        $this->view->assign('pescadores', $pescadores);
+    }
     public function atualizarAction() {
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');

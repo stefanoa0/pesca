@@ -600,4 +600,17 @@ class Application_Model_ArrastoFundo
 
         return $this->dbTableArrastoFundoHasBioPeixe->fetchAll($select)->toArray();
     }
+    
+    public function selectPescadoresByBarco($where = null, $order = null, $limit = null){
+        $this->dbTableArrasto = new Application_Model_DbTable_VEntrevistaArrasto();
+        
+        $select = $this->dbTableArrasto->select()->
+                from($this->dbTableArrasto, array( 'bar_id' => 'distinct(bar_id)', 'bar_nome','tp_id'=> 'tp_id_entrevistado', 'tp_nome', 'tp_apelido'))->order($order)->limit($limit);
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        
+        return $this->dbTableArrasto->fetchAll($select)->toArray();
+    }
 }
