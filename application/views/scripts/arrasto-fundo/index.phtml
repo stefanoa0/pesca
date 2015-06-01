@@ -36,7 +36,6 @@
                     <label>Barco:</label>
                     <select name="nomeBarco"  required="true" onchange="ajax_busca_pescador_by_barco(this.value,'<?=$this->url(array("controller"=>"arrasto-fundo","action"=>"index", "id" =>$this->fichaDiaria['fd_id'], "idMonitoramento" => $this->monitoramento['mnt_id'] ),null,true)?>')"/>
                     <option value="" selected></option>
-                    <b><option value="Limpar">Limpar Selecionados</option></b>
                     <?php
                     foreach ($this->barcos as $key => $barco):
                         ?>

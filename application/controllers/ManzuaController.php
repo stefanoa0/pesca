@@ -67,7 +67,11 @@ class ManzuaController extends Zend_Controller_Action
         $this->view->assign('tipoEmbarcacoes',$tipoEmbarcacoes);
         $this->view->assign('pesqueiros',$pesqueiros);
         $this->view->assign('especies',$especies);
-
+        
+        $idBarco = $this->_getParam('bar_id');
+        if($idBarco){
+            $this->redirect('manzua/pescadores/id/'.$fichadiaria['fd_id'].'/idMonitoramento/'.$monitoramento['fd_id'].'/bar_id/'.$idBarco);
+        }
     }
 
 public function visualizarAction() {
@@ -158,6 +162,20 @@ public function visualizarAction() {
 
 
         $this->_redirect('manzua/editar/id/'.$idManzua);
+    }
+    
+    public function pescadoresAction(){
+        
+        $this->_helper->layout->disableLayout();
+        $idBarco = $this->_getParam('bar_id');
+
+        $pescadores = $this->modelManzua->selectPescadoresByBarco('bar_id = '.$idBarco, 'tp_nome');
+        if(empty($pescadores)){
+            $pescadores = $this->modelPescador->select(null, 'tp_nome');
+        }
+        
+        //print_r($idBarco);
+        $this->view->assign('pescadores', $pescadores);
     }
     public function atualizarAction(){
         if($this->usuario['tp_id']==5){

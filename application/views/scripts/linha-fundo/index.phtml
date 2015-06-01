@@ -33,7 +33,7 @@
                 </div>
                 <div class="form-esq">
                     <label>Barco:</label>
-                    <select name="nomeBarco" required />
+                    <select name="nomeBarco" required="true" onchange="ajax_busca_pescador_by_barco(this.value,'<?=$this->url(array("controller"=>"linha-fundo","action"=>"index", "id" =>$this->fichaDiaria['fd_id'], "idMonitoramento" => $this->monitoramento['mnt_id'] ),null,true)?>')"/>
                         <option value="" selected></option>
                     <?php
                     foreach ($this->barcos as $key => $barco):
@@ -47,7 +47,7 @@
                 </div>
                 <div class="form-esq">
                     <label>Tipo de Barco:</label>
-                    <select name="tipoBarco" required/>
+                    <select name="tipoBarco" required />
                         <option value="" selected></option>
                     <?php
                     foreach ($this->tipoEmbarcacoes as $key => $tipoEmbarcacao):
@@ -63,8 +63,7 @@
             </div>
             <div class="direita-entrevista">
                 
-                
-                <?php include('pescadores.phtml'); ?>
+                <?php include('pescadores.phtml')?>
                 
                 
                 <div class="form-esq">
