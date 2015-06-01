@@ -66,7 +66,11 @@ class LinhaFundoController extends Zend_Controller_Action
         $this->view->assign('pesqueiros',$pesqueiros);
         $this->view->assign('especies',$especies);
         $this->view->assign('iscas', $isca);
-
+        
+        $idBarco = $this->_getParam('bar_id');
+        if($idBarco){
+            $this->redirect('linha-fundo/pescadores/id/'.$fichadiaria['fd_id'].'/idMonitoramento/'.$monitoramento['fd_id'].'/bar_id/'.$idBarco);
+        }
     }
     
     public function naoexiste($var){
@@ -166,6 +170,20 @@ class LinhaFundoController extends Zend_Controller_Action
 
 
         $this->_redirect('linha-fundo/editar/id/'.$idLinhaFundo);
+    }
+    
+    public function pescadoresAction(){
+        
+        $this->_helper->layout->disableLayout();
+        $idBarco = $this->_getParam('bar_id');
+
+        $pescadores = $this->modelLinhaFundo->selectPescadoresByBarco('bar_id = '.$idBarco, 'tp_nome');
+        if(empty($pescadores)){
+            $pescadores = $this->modelPescador->select(null, 'tp_nome');
+        }
+        
+        //print_r($idBarco);
+        $this->view->assign('pescadores', $pescadores);
     }
 
     public function atualizarAction(){
