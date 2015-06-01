@@ -58,6 +58,11 @@ private $usuario;
         $this->view->assign('pescadores',$pescadores);
         $this->view->assign('barcos',$barcos);
         $this->view->assign('tipoEmbarcacoes',$tipoEmbarcacoes);
+        
+         $idBarco = $this->_getParam('bar_id');
+        if($idBarco){
+        $this->redirect('calao/pescadores/id/'.$fichadiaria['fd_id'].'/idMonitoramento/'.$monitoramento['fd_id'].'/bar_id/'.$idBarco);
+        }
 
     }
     public function naoexiste($var){
@@ -140,6 +145,20 @@ private $usuario;
         $this->view->assign('especies',$especies);
         $this->view->assign('porto', $porto[0]);
 
+    }
+    
+    public function pescadoresAction(){
+        
+        $this->_helper->layout->disableLayout();
+        $idBarco = $this->_getParam('bar_id');
+
+        $pescadores = $this->modelCalao->selectPescadoresByBarco('bar_id = '.$idBarco, 'tp_nome');
+        if(empty($pescadores)){
+            $pescadores = $this->modelPescador->select(null, 'tp_nome');
+        }
+        
+        //print_r($idBarco);
+        $this->view->assign('pescadores', $pescadores);
     }
     public function criarAction(){
         if($this->usuario['tp_id']==5){

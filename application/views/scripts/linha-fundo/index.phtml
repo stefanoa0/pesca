@@ -62,19 +62,11 @@
 
             </div>
             <div class="direita-entrevista">
-                <div class="form-esq">    
-                    <label>Pescador Entrevistado:</label>
-                    <select name="pescadorEntrevistado" required/>
-                        <option value="" selected></option>
-                    <?php
-                    foreach ($this->pescadores as $key => $pescador):
-                        ?>
-                        <option value="<?= $pescador['tp_id'] ?>"><?= $pescador['tp_nome'] .' ( '. $pescador['tp_apelido']. ' )' ?></option>
-                        <?php
-                    endforeach;
-                    ?>
-                    </select><br />
-                </div>
+                
+                
+                <?php include('pescadores.phtml'); ?>
+                
+                
                 <div class="form-esq">
                     <label>Quant. de Pescadores:</label>
                     <input type="text"  name="numPescadores" min="1" placeholder="Quantidade de Pescadores" required/><br />
