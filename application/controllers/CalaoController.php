@@ -107,6 +107,7 @@ private $usuario;
         $avistamentos = $this->modelAvistamento->select(null, 'avs_descricao');
         $destinos = $this->modelDestinoPescado->select(null, 'dp_destino');
         $tipocalao = $this->modelTipoCalao->select(null, 'tcat_id');
+        $porto = $this->modelCalao->selectEntrevistaCalao($entrevista['cal_id'].'= cal_id');
         
         $idEntrevista = $this->_getParam('id');
         
@@ -137,6 +138,7 @@ private $usuario;
         $this->view->assign('tipoEmbarcacoes',$tipoEmbarcacoes);
         $this->view->assign('pesqueiros',$pesqueiros);
         $this->view->assign('especies',$especies);
+        $this->view->assign('porto', $porto[0]);
 
     }
     public function criarAction(){

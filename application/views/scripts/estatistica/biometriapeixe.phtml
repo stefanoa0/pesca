@@ -1,0 +1,94 @@
+<h2>Relatórios Estatísticos - Biometrias da espécie de Peixe <?=$this->especie?></h2>
+
+<script src="js/Chart.min.js"></script>
+<p> Quantidade total de Espécies Registradas: <b><?=$this->totalRegistrado ?></b> </p>
+<p> Média de Comprimento: <b><?= round($this->mediatbp_comprimento,2) ?>cm</b> </p>
+<p> Comprimento Máximo: <b><?=$this->maxtbp_comprimento ?>cm</b> </p>
+<p> Comprimento Mínimo: <b><?=$this->mintbp_comprimento ?>cm</b> </p>
+
+<script type="text/javascript">
+    
+    var azulClaro = "rgba(89,130,149,.8)";
+    var azulEscuro = "rgba(38,60,91,1)";
+    var azul = "rgba(0,0,255,1)";
+    var vermelhoClaro = "rgba(217,86,104,.8)";
+    var vermelhoEscuro = "rgba(144,36,36,1)";
+    var vermelho = "rgba(255,0,0,1)";
+    var verde = "rgba(0,180,0,1)";
+    var verdeClaro = "rgba(153,222,157,1)";
+    var verdeEscuro = "rgba(32,94,36,1)";
+    var marromRachy = "rgba(95,48,43,.8)";
+    var marromEscuroRachy = "rgba(68,37,33,1)";
+    var laranja = "rgba(255,122,4,.5)";
+    var laranjaEscuro = "rgba(255,122,12,1);";
+    var azulCeleste = "rgba(102,113,199,1)";
+    var azulCelesteClaro = "rgba(102,113,199,1)";
+    var cinza = "rgba(205,205,205,1)";
+    var cinzaEscuro = "rgba(168,168,168,1)";
+    
+    var options = {
+        responsive:true,
+        scaleOverride: false,
+        animation: false
+    };
+
+    var responsive_false = {
+        responsive:false
+    };
+    var embarcacoesByPorto = {
+       labels: <?= $this->jsLabelsComprimento ?>,
+       datasets: [
+           {
+               label: "Quantidade de Embarcações Por Porto",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->jsDadosComprimento ?>
+           }
+       ]
+   };
+   
+   var embarcacoesByConstr = {
+       labels: <?= $this->jsLabelsPeso ?>,
+       datasets: [
+           {
+               label: "Quantidade de Embarcações Por Porto",
+               fillColor: "rgba(95,48,43,.8)",
+               strokeColor: "rgba(95,48,43,1)",
+               pointColor: "rgba(95,48,43,1)",
+               pointStrokeColor: "#fff",
+               pointHighlightFill: "#fff",
+               pointHighlightStroke: "rgba(95,48,43,1)",
+               data: <?= $this->jsDadosPeso ?>
+           }
+       ]
+   };
+   
+   window.onload = function(){
+        var id_barcos = document.getElementById("embByPorto").getContext("2d");
+        var GenChart = new Chart(id_barcos).Bar(embarcacoesByPorto, options);
+        
+        var id_barcos = document.getElementById("embByConser").getContext("2d");
+        var GenChartA = new Chart(id_barcos).Bar(embarcacoesByConstr, options);
+    };
+    
+</script>
+
+<div class="box-chart">
+    <legend>Gráfico 1: Frequência do Peixe <?=$this->especie ?> por classes de comprimento padrão (mm) </legend>
+  <canvas id="embByPorto" style="width:100%;"></canvas>
+</div>
+<br/>
+<p> Média de Peso: <b><?= round($this->mediatbp_peso,2) ?>g</b> </p>
+<p> Peso Máximo: <b><?=$this->maxtbp_peso ?>g</b> </p>
+<p> Peso Mínimo: <b><?=$this->mintbp_peso ?>g</b> </p>
+<br/>
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 2: Frequência do Peixe <?=$this->especie ?> por classes de peso padrão (g)</legend>
+  <canvas id="embByConser" style="width:100%;"></canvas>
+</div>
+<br/>

@@ -103,8 +103,8 @@ class EmalheController extends Zend_Controller_Action
         $monitoramento = $this->modelMonitoramento->find($entrevista['mnt_id']);
         $avistamentos = $this->modelAvistamento->select(null, 'avs_descricao');
         $destinos = $this->modelDestinoPescado->select(null, 'dp_destino');
-
-
+        $porto = $this->modelEmalhe->selectEntrevistaEmalhe($entrevista['em_id'].'= em_id');
+        
         $idEntrevista = $this->_getParam('id');
         
         
@@ -142,6 +142,7 @@ class EmalheController extends Zend_Controller_Action
         $this->view->assign('tipoEmbarcacoes',$tipoEmbarcacoes);
         $this->view->assign('pesqueiros',$pesqueiros);
         $this->view->assign('especies',$especies);
+        $this->view->assign('porto', $porto[0]);
 
     }
     public function criarAction(){

@@ -545,5 +545,26 @@ private $dbTableGrosseira;
         }
         return $dbTable->fetchAll($select)->toArray();
     }
+    
+    public function selectHistogramaBiometriaPeixe($tipo, $where = null, $order = null,$limit = null){
+        $this->dbTableGrosseiraHasBioPeixe = new Application_Model_DbTable_VGrosseiraHasBioPeixe();
+        $select = $this->dbTableGrosseiraHasBioPeixe->select()
+                ->from($this->dbTableGrosseiraHasBioPeixe,array( 'quantidade' => 'count(esp_id)', 'esp_nome_comum', $tipo = new Zend_Db_Expr('(Case When '.$tipo.'>=1 Then cast('.$tipo.' as integer) Else '.$tipo.' End)')))
+                ->group(array('esp_nome_comum', $tipo))->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableGrosseiraHasBioPeixe->fetchAll($select)->toArray();
+    }
+
+    public function selectEspeciesPeixesBiometrias()
+    {
+        $this->dbTableGrosseiraHasBioPeixe = new Application_Model_DbTable_VGrosseiraHasBioPeixe();
+        $select = $this->dbTableGrosseiraHasBioPeixe->select()->from($this->dbTableGrosseiraHasBioPeixe, array('esp_nome_comum'=>new Zend_Db_Expr('distinct(esp_nome_comum)'), 'esp_id'))->order('esp_nome_comum');
+    
+        return $this->dbTableGrosseiraHasBioPeixe->fetchAll($select)->toArray();
+    }
 }
 

@@ -119,7 +119,8 @@ class SiripoiaController extends Zend_Controller_Action
         $mare = $this->modelMare->select();
         $destinos = $this->modelDestinoPescado->select(null, 'dp_destino');
         $tipoVenda = $this->modelTipoVenda->select(null, 'ttv_tipovenda');
-
+        $porto = $this->modelSiripoia->selectEntrevistaSiripoia($entrevista['sir_id'].'= sir_id');
+        
         $idEntrevista = $this->_getParam('id');
         $datahoraSaida[] = explode(" ",$entrevista['sir_dhsaida']);
         $datahoraVolta[] = explode(" ",$entrevista['sir_dhvolta']);
@@ -156,6 +157,7 @@ class SiripoiaController extends Zend_Controller_Action
         $this->view->assign('pesqueiros',$pesqueiros);
         $this->view->assign('especies',$especies);
         $this->view->assign('tipovenda', $tipoVenda);
+        $this->view->assign('porto', $porto[0]);
     }
     public function criarAction(){
         if($this->usuario['tp_id']==5){

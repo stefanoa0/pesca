@@ -544,5 +544,26 @@ private $dbTableLinha;
         }
         return $dbTable->fetchAll($select)->toArray();
     }
+    
+    public function selectHistogramaBiometriaPeixe($tipo, $where = null, $order = null,$limit = null){
+        $this->dbTableLinhaHasBioPeixe = new Application_Model_DbTable_VLinhaHasBioPeixe();
+        $select = $this->dbTableLinhaHasBioPeixe->select()
+                ->from($this->dbTableLinhaHasBioPeixe,array( 'quantidade' => 'count(esp_id)', 'esp_nome_comum', $tipo = new Zend_Db_Expr('(Case When '.$tipo.'>=1 Then cast('.$tipo.' as integer) Else '.$tipo.' End)')))
+                ->group(array('esp_nome_comum', $tipo))->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableLinhaHasBioPeixe->fetchAll($select)->toArray();
+    }
+
+    public function selectEspeciesPeixesBiometrias()
+    {
+        $this->dbTableLinhaHasBioPeixe = new Application_Model_DbTable_VLinhaHasBioPeixe();
+        $select = $this->dbTableLinhaHasBioPeixe->select()->from($this->dbTableLinhaHasBioPeixe, array('esp_nome_comum'=>new Zend_Db_Expr('distinct(esp_nome_comum)'), 'esp_id'))->order('esp_nome_comum');
+    
+        return $this->dbTableLinhaHasBioPeixe->fetchAll($select)->toArray();
+    }
 }
 

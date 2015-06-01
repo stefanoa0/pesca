@@ -116,7 +116,8 @@ class MergulhoController extends Zend_Controller_Action
         $mare = $this->modelMare->select();
         $destinos = $this->modelDestinoPescado->select(null, 'dp_destino');
         $tipoVenda = $this->modelTipoVenda->select(null, 'ttv_tipovenda');
-
+        $porto = $this->modelMergulho->selectEntrevistaMergulho($entrevista['mer_id'].'= mer_id');
+        
         $idEntrevista = $this->_getParam('id');
         $datahoraSaida[] = explode(" ",$entrevista['mer_dhsaida']);
         $datahoraVolta[] = explode(" ",$entrevista['mer_dhvolta']);
@@ -153,6 +154,7 @@ class MergulhoController extends Zend_Controller_Action
         $this->view->assign('pesqueiros',$pesqueiros);
         $this->view->assign('especies',$especies);
         $this->view->assign('tipovenda', $tipoVenda);
+        $this->view->assign('porto', $porto[0]);
 
     }
 

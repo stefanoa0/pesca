@@ -201,7 +201,6 @@ class BarcosController extends Zend_Controller_Action
         $this->modelEmbarcacaoDetalhada = new Application_Model_EmbarcacaoDetalhada();
         $embarcacaoDetalhada = $this->modelEmbarcacaoDetalhada->select('bar_id = '.$idBarco);
         $this->view->assign("assignEmbarcacaoDetalhada", $embarcacaoDetalhada[0]);
-        print_r($embarcacaoDetalhada[0]['ted_id']);
         
         $this->modelMotor = new Application_Model_MotorEmbarcacao();
         $motorEmbarcacao = $this->modelMotor->select('ted_id = '.$embarcacaoDetalhada[0]['ted_id']);

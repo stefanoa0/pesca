@@ -23,7 +23,7 @@ class EstatisticaController extends Zend_Controller_Action
         $this->usuario = $this->modelUsuario->selectLogin($identity2['tl_id']);
         $this->view->assign("usuario", $this->usuario);
         
-         $this->modelPescador =   new Application_Model_Pescador();
+        $this->modelPescador =   new Application_Model_Pescador();
         $this->modelArrasto =    new Application_Model_ArrastoFundo();
         $this->modelCalao =      new Application_Model_Calao();
         $this->modelColeta =     new Application_Model_ColetaManual();
@@ -38,12 +38,65 @@ class EstatisticaController extends Zend_Controller_Action
         $this->modelSiripoia =   new Application_Model_Siripoia();
         $this->modelTarrafa =    new Application_Model_Tarrafa();
         $this->modelVaraPesca =  new Application_Model_VaraPesca();
+        $this->modelEspecies = new Application_Model_Especie();
     }
 
     public function indexAction()
     {
         // action body
     }
+    public function indexbiometriasAction(){
+        $especies_camarao = $this->modelArrasto->selectEspeciesCamaraoBiometrias();
+        $this->view->assign('especiesCamarao',$especies_camarao);
+        
+        $especiesPeixeArrasto      = $this->modelArrasto->selectEspeciesPeixesBiometrias(null, 'esp_nome_comum'); 
+        $especiesPeixeCalao        = $this->modelCalao->selectEspeciesPeixesBiometrias(null, 'esp_nome_comum');    
+        $especiesPeixeColetaManual = $this->modelColeta->selectEspeciesPeixesBiometrias(null, 'esp_nome_comum'); 
+        $especiesPeixeEmalhe       = $this->modelEmalhe->selectEspeciesPeixesBiometrias(null, 'esp_nome_comum');  
+        $especiesPeixeGrosseira    = $this->modelGroseira->selectEspeciesPeixesBiometrias(null, 'esp_nome_comum'); 
+        $especiesPeixeJerere       = $this->modelJerere->selectEspeciesPeixesBiometrias(null, 'esp_nome_comum'); 
+        $especiesPeixeLinha        = $this->modelLinha->selectEspeciesPeixesBiometrias(null, 'esp_nome_comum'); 
+        $especiesPeixeLinhaFundo   = $this->modelLinhaFundo->selectEspeciesPeixesBiometrias(null, 'esp_nome_comum'); 
+        $especiesPeixeManzua       = $this->modelManzua->selectEspeciesPeixesBiometrias(null, 'esp_nome_comum');  
+        $especiesPeixeMergulho     = $this->modelMergulho->selectEspeciesPeixesBiometrias(null, 'esp_nome_comum'); 
+        $especiesPeixeRatoeira     = $this->modelRatoeira->selectEspeciesPeixesBiometrias(null, 'esp_nome_comum'); 
+        $especiesPeixeSiripoia     = $this->modelSiripoia->selectEspeciesPeixesBiometrias(null, 'esp_nome_comum'); 
+        $especiesPeixeTarrafa      = $this->modelTarrafa->selectEspeciesPeixesBiometrias(null, 'esp_nome_comum'); 
+        $especiesPeixeVaraPesca    = $this->modelVaraPesca->selectEspeciesPeixesBiometrias(null, 'esp_nome_comum');
+        
+        $array_especiesBiometrias = array_merge_recursive($especiesPeixeArrasto,     
+                                                        $especiesPeixeCalao,       
+                                                        $especiesPeixeColetaManual,
+                                                        $especiesPeixeEmalhe,      
+                                                        $especiesPeixeGrosseira,   
+                                                        $especiesPeixeJerere,      
+                                                        $especiesPeixeLinha,       
+                                                        $especiesPeixeLinhaFundo,  
+                                                        $especiesPeixeManzua,      
+                                                        $especiesPeixeMergulho,    
+                                                        $especiesPeixeRatoeira,    
+                                                        $especiesPeixeSiripoia,    
+                                                        $especiesPeixeTarrafa,    
+                                                        $especiesPeixeVaraPesca);
+        
+        
+        $especies_unique = array_map('unserialize', array_unique(array_map('serialize', $array_especiesBiometrias)));
+        $arrayOrdenadoEspecies = $this->array_sort($especies_unique, 'esp_nome_comum');
+        $this->view->assign('especiesPeixes',$arrayOrdenadoEspecies);
+        
+    }
+    
+    public function gerarAction(){
+        $especie = $this->_getParam('especie');
+        $biometria = $this->_getParam('biometria');
+        
+        $especieBiometria = $this->modelEspecies->find($biometria);
+        switch($especie):
+            case 'peixe': $this->redirect('estatistica/biometriapeixe/especie/'.$especieBiometria['esp_nome_comum']);
+            case 'camarao': $this->redirect('estatistica/biometriacamarao/especie/'.$especieBiometria['esp_nome_comum']);    
+        endswitch;
+    }
+    
     function array_sort($array, $on, $order = SORT_ASC) {
         $new_array = array();
         $sortable_array = array();
@@ -77,6 +130,21 @@ class EstatisticaController extends Zend_Controller_Action
 
         return $new_array;
     }
+    function array_sum_values($array, $key, $sum_key) {
+        $results = array();
+        foreach ($array as $value)
+        {
+          if( ! isset($results[$value[$key]]) )
+          {
+             $results[$value[$key]] = 0;
+          }
+
+          $results[$value[$key]] += $value[$sum_key];
+
+        }
+        return $results;
+    }
+    
     public function separaArrayPescadores($arrayPescadores){
         
         foreach($arrayPescadores as $consulta):
@@ -87,36 +155,7 @@ class EstatisticaController extends Zend_Controller_Action
         $this->countPescadores = $count;
         $this->portoPescadores = $porto;
     }
-    
-    public function pescadorAction()
-    {
-        $this->modelPescador =   new Application_Model_Pescador();
-        $this->modelArrasto =    new Application_Model_ArrastoFundo();
-        $this->modelCalao =      new Application_Model_Calao();
-        $this->modelColeta =     new Application_Model_ColetaManual();
-        $this->modelEmalhe =     new Application_Model_Emalhe();
-        $this->modelGroseira =   new Application_Model_Grosseira();
-        $this->modelJerere =     new Application_Model_Jerere();
-        $this->modelLinha =      new Application_Model_Linha();
-        $this->modelLinhaFundo = new Application_Model_LinhaFundo();
-        $this->modelManzua =     new Application_Model_Manzua();
-        $this->modelMergulho =   new Application_Model_Mergulho();
-        $this->modelRatoeira =   new Application_Model_Ratoeira();
-        $this->modelSiripoia =   new Application_Model_Siripoia();
-        $this->modelTarrafa =    new Application_Model_Tarrafa();
-        $this->modelVaraPesca =  new Application_Model_VaraPesca();
-        //Quantidade de Pescadores
-        $pescadores = $this->modelPescador->selectView();
-        $quantPescador = count($pescadores);
-        $this->view->assign("quantPescadores", $quantPescador);
-        
-        //Quantidade de Pescadores por gênero
-        $consultaGenero = $this->modelPescador->selectPescadorBySexo();
-        $masc[] = $consultaGenero['masculino'];
-        $fem[] = $consultaGenero['feminino'];
-        $this->view->assign("Masculino", $masc[0]);
-        $this->view->assign("Feminino", $fem[0]);
-        
+    public function unidadecapturaAction(){
         //Quantidade de Pescadores por porto e por arte de pesca
         //Arrasto de Fundo
         $arrastoPescadoresPorto = $this->modelArrasto->selectPescadoresByPorto();
@@ -215,6 +254,23 @@ class EstatisticaController extends Zend_Controller_Action
         $this->separaArrayPescadores($varapescaPescadoresPorto);//O retorno dessa função altera as variaveis globais portoPescadores/countPescadores
         $this->view->assign("portosVaraPesca", json_encode($this->portoPescadores));
         $this->view->assign("pescByPortoVaraPesca", json_encode($this->countPescadores));
+        
+    }
+    public function pescadorAction()
+    {
+
+        //Quantidade de Pescadores
+        $pescadores = $this->modelPescador->selectView();
+        $quantPescador = count($pescadores);
+        $this->view->assign("quantPescadores", $quantPescador);
+        
+        //Quantidade de Pescadores por gênero
+        $consultaGenero = $this->modelPescador->selectPescadorBySexo();
+        $masc[] = $consultaGenero['masculino'];
+        $fem[] = $consultaGenero['feminino'];
+        $this->view->assign("Masculino", $masc[0]);
+        $this->view->assign("Feminino", $fem[0]);
+        
         
         //Comunidade
         $comunidadePescadores = $this->modelPescador->select_Pescador_group_comunidade();
@@ -493,12 +549,255 @@ class EstatisticaController extends Zend_Controller_Action
     
     public function capturaAction()
     {
-        // action body
+        
     }
     
     public function avistamentoAction()
     {
-        // action body
+       $avistamentosArrasto      = $this->modelArrasto->selectArrastoHasAvistamento();
+        $avistamentosCalao        = $this->modelCalao->selectCalaoHasAvistamento();    
+        $avistamentosColetaManual = $this->modelColeta->selectColetaManualHasAvistamento(); 
+        $avistamentosEmalhe       = $this->modelEmalhe->selectEmalheHasAvistamento();  
+        $avistamentosGrosseira    = $this->modelGroseira->selectGrosseiraHasAvistamento(); 
+        $avistamentosJerere       = $this->modelJerere->selectJerereHasAvistamento(); 
+        $avistamentosLinha        = $this->modelLinha->selectLinhaHasAvistamento(); 
+        $avistamentosLinhaFundo   = $this->modelLinhaFundo->selectLinhaFundoHasAvistamento(); 
+        $avistamentosManzua       = $this->modelManzua->selectManzuaHasAvistamento();  
+        $avistamentosMergulho     = $this->modelMergulho->selectMergulhoHasAvistamento(); 
+        $avistamentosRatoeira     = $this->modelRatoeira->selectRatoeiraHasAvistamento(); 
+        $avistamentosSiripoia     = $this->modelSiripoia->selectSiripoiaHasAvistamento(); 
+        $avistamentosTarrafa      = $this->modelTarrafa->selectTarrafaHasAvistamento(); 
+        $avistamentosVaraPesca    = $this->modelVaraPesca->selectVaraPescaHasAvistamento();
+        
+        $type_count = 0;
+        foreach($avistamentosArrasto as $dados) {
+            $type_count[] = count(array_keys($avistamentosArrasto,'avs_descricao'));
+        }
+       
+        
+        
+        print_r($type_count);
+        
+        
     }
+    public function dadosBiometriaCamarao($tipo,$especie){
+        $biometriasCamaraoArrasto      = $this->modelArrasto->selectVBioCamarao("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasCamaraoCalao        = $this->modelCalao->selectVBioCamarao("esp_nome_comum = '".$especie."'", $order = null, $limit = null);    
+        $biometriasCamaraoColetaManual = $this->modelColeta->selectVBioCamarao("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasCamaraoEmalhe       = $this->modelEmalhe->selectVBioCamarao("esp_nome_comum = '".$especie."'", $order = null, $limit = null);  
+        $biometriasCamaraoGrosseira    = $this->modelGroseira->selectVBioCamarao("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasCamaraoJerere       = $this->modelJerere->selectVBioCamarao("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasCamaraoLinha        = $this->modelLinha->selectVBioCamarao("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasCamaraoLinhaFundo   = $this->modelLinhaFundo->selectVBioCamarao("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasCamaraoManzua       = $this->modelManzua->selectVBioCamarao("esp_nome_comum = '".$especie."'", $order = null, $limit = null);  
+        $biometriasCamaraoMergulho     = $this->modelMergulho->selectVBioCamarao("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasCamaraoRatoeira     = $this->modelRatoeira->selectVBioCamarao("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasCamaraoSiripoia     = $this->modelSiripoia->selectVBioCamarao("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasCamaraoTarrafa      = $this->modelTarrafa->selectVBioCamarao("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasCamaraoVaraPesca    = $this->modelVaraPesca->selectVBioCamarao("esp_nome_comum = '".$especie."'", $order = null, $limit = null);
+    
+        
+        $arrayBiometrias = array_merge_recursive($biometriasCamaraoArrasto,
+                                                $biometriasCamaraoCalao,    
+                                                $biometriasCamaraoColetaManual,
+                                                $biometriasCamaraoEmalhe,
+                                                $biometriasCamaraoGrosseira,
+                                                $biometriasCamaraoJerere,
+                                                $biometriasCamaraoLinha,
+                                                $biometriasCamaraoLinhaFundo,
+                                                $biometriasCamaraoManzua, 
+                                                $biometriasCamaraoMergulho, 
+                                                $biometriasCamaraoRatoeira, 
+                                                $biometriasCamaraoSiripoia,
+                                                $biometriasCamaraoTarrafa,
+                                                $biometriasCamaraoVaraPesca);
+        $i=0;
+        $soma=0;
+        $max = 0;
+        $min = PHP_INT_MAX;
+        
+        foreach($arrayBiometrias as $key=> $dados):
+            $soma += $dados[$tipo];
+            $i++;
+            if($dados[$tipo]>=$max){
+                $max = $dados[$tipo];
+            }
+            if($dados[$tipo]<=$min){
+                $min = $dados[$tipo];
+            }
+        endforeach;
+        
+        $this->view->assign("totalRegistrado", count($arrayBiometrias));
+        $this->view->assign("media".$tipo, $soma/$i);
+        $this->view->assign("max".$tipo, $max);
+        $this->view->assign("min".$tipo, $min);
+    
+    }
+    
+    public function biometriacamaraoAction()
+    {
+        $tipo_comprimento = 'tbc_comprimento_cabeca';
+        $tipo_peso = 'tbc_peso';
+        
+        $especie = $this->_getParam('especie');
+        $biometriasArrastoComprimento = $this->modelArrasto->selectHistogramaBiometriaCamarao($tipo_comprimento,"esp_nome_comum = '".$especie."'",$tipo_comprimento,null);
+        
+        $biometriasArrastoPeso = $this->modelArrasto->selectHistogramaBiometriaCamarao($tipo_peso,"esp_nome_comum = '".$especie."'",$tipo_peso,null);        
+    
+        foreach($biometriasArrastoComprimento as $dados):
+            if($dados['tbc_comprimento_cabeca'] == '0'){
+                $dados['tbc_comprimento_cabeca'] = '<1';
+            }
+            $quantidadeComprimento[] = $dados['quantidade'];
+            $comprimento[] = $dados['tbc_comprimento_cabeca'].'mm';
+        endforeach;
+        //print_r($biometriasArrastoPeso);
+        foreach($biometriasArrastoPeso as $dados):
+            if($dados['tbc_peso'] == '0'){
+                $dados['tbc_peso'] = '<1';
+            }
+            $quantidadePeso[] = $dados['quantidade'];
+            $peso[] = $dados['tbc_peso'].'g';
+        endforeach;
+        
+        $this->dadosBiometriaCamarao($tipo_comprimento,$especie);
+        $this->dadosBiometriaCamarao($tipo_peso, $especie);
+        $this->view->assign('especie', $especie);
+        $this->view->assign("jsDadosComprimento", json_encode($quantidadeComprimento));
+        $this->view->assign("jsDadosPeso", json_encode($quantidadePeso));
+        
+        $this->view->assign("jsLabelsComprimento", json_encode($comprimento));
+        $this->view->assign("jsLabelsPeso", json_encode($peso));
+    }
+    
+    public function dadosBiometriaPeixe($tipo,$especie){
+        $biometriasPeixeArrasto      = $this->modelArrasto->selectVBioPeixe("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasPeixeCalao        = $this->modelCalao->selectVBioPeixe("esp_nome_comum = '".$especie."'", $order = null, $limit = null);    
+        $biometriasPeixeColetaManual = $this->modelColeta->selectVBioPeixe("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasPeixeEmalhe       = $this->modelEmalhe->selectVBioPeixe("esp_nome_comum = '".$especie."'", $order = null, $limit = null);  
+        $biometriasPeixeGrosseira    = $this->modelGroseira->selectVBioPeixe("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasPeixeJerere       = $this->modelJerere->selectVBioPeixe("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasPeixeLinha        = $this->modelLinha->selectVBioPeixe("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasPeixeLinhaFundo   = $this->modelLinhaFundo->selectVBioPeixe("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasPeixeManzua       = $this->modelManzua->selectVBioPeixe("esp_nome_comum = '".$especie."'", $order = null, $limit = null);  
+        $biometriasPeixeMergulho     = $this->modelMergulho->selectVBioPeixe("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasPeixeRatoeira     = $this->modelRatoeira->selectVBioPeixe("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasPeixeSiripoia     = $this->modelSiripoia->selectVBioPeixe("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasPeixeTarrafa      = $this->modelTarrafa->selectVBioPeixe("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
+        $biometriasPeixeVaraPesca    = $this->modelVaraPesca->selectVBioPeixe("esp_nome_comum = '".$especie."'", $order = null, $limit = null);
+    
+        
+        $arrayBiometrias = array_merge_recursive($biometriasPeixeArrasto,
+                                                $biometriasPeixeCalao,    
+                                                $biometriasPeixeColetaManual,
+                                                $biometriasPeixeEmalhe,
+                                                $biometriasPeixeGrosseira,
+                                                $biometriasPeixeJerere,
+                                                $biometriasPeixeLinha,
+                                                $biometriasPeixeLinhaFundo,
+                                                $biometriasPeixeManzua, 
+                                                $biometriasPeixeMergulho, 
+                                                $biometriasPeixeRatoeira, 
+                                                $biometriasPeixeSiripoia,
+                                                $biometriasPeixeTarrafa,
+                                                $biometriasPeixeVaraPesca);
+        $i=0;
+        $soma=0;
+        $max = 0;
+        $min = 999999;
+        foreach($arrayBiometrias as $key=> $dados):
+            $soma += $dados[$tipo];
+            $i++;
+            if($dados[$tipo]>=$max){
+                $max = $dados[$tipo];
+            }
+            if($dados[$tipo]<=$min){
+                $min = $dados[$tipo];
+            }
+        endforeach;
+        
+        $this->view->assign("totalRegistrado", count($arrayBiometrias));
+        $this->view->assign("media".$tipo, $soma/$i);
+        $this->view->assign("max".$tipo, $max);
+        $this->view->assign("min".$tipo, $min);
+    }
+    public function biometriapeixebytipo($tipo,$especie){
+        
+        $biometriasPeixeArrasto      = $this->modelArrasto->selectHistogramaBiometriaPeixe($tipo,"esp_nome_comum = '".$especie."'",$tipo,null); 
+        $biometriasPeixeCalao        = $this->modelCalao->selectHistogramaBiometriaPeixe($tipo,"esp_nome_comum = '".$especie."'",$tipo,null);    
+        $biometriasPeixeColetaManual = $this->modelColeta->selectHistogramaBiometriaPeixe($tipo,"esp_nome_comum = '".$especie."'",$tipo,null); 
+        $biometriasPeixeEmalhe       = $this->modelEmalhe->selectHistogramaBiometriaPeixe($tipo,"esp_nome_comum = '".$especie."'",$tipo,null);  
+        $biometriasPeixeGrosseira    = $this->modelGroseira->selectHistogramaBiometriaPeixe($tipo,"esp_nome_comum = '".$especie."'",$tipo,null); 
+        $biometriasPeixeJerere       = $this->modelJerere->selectHistogramaBiometriaPeixe($tipo,"esp_nome_comum = '".$especie."'",$tipo,null); 
+        $biometriasPeixeLinha        = $this->modelLinha->selectHistogramaBiometriaPeixe($tipo,"esp_nome_comum = '".$especie."'",$tipo,null); 
+        $biometriasPeixeLinhaFundo   = $this->modelLinhaFundo->selectHistogramaBiometriaPeixe($tipo,"esp_nome_comum = '".$especie."'",$tipo,null); 
+        $biometriasPeixeManzua       = $this->modelManzua->selectHistogramaBiometriaPeixe($tipo,"esp_nome_comum = '".$especie."'",$tipo,null);  
+        $biometriasPeixeMergulho     = $this->modelMergulho->selectHistogramaBiometriaPeixe($tipo,"esp_nome_comum = '".$especie."'",$tipo,null); 
+        $biometriasPeixeRatoeira     = $this->modelRatoeira->selectHistogramaBiometriaPeixe($tipo,"esp_nome_comum = '".$especie."'",$tipo,null); 
+        $biometriasPeixeSiripoia     = $this->modelSiripoia->selectHistogramaBiometriaPeixe($tipo,"esp_nome_comum = '".$especie."'",$tipo,null); 
+        $biometriasPeixeTarrafa      = $this->modelTarrafa->selectHistogramaBiometriaPeixe($tipo,"esp_nome_comum = '".$especie."'",$tipo,null); 
+        $biometriasPeixeVaraPesca    = $this->modelVaraPesca->selectHistogramaBiometriaPeixe($tipo,"esp_nome_comum = '".$especie."'",$tipo,null);
+        
+        $arrayBiometrias = array_merge_recursive($biometriasPeixeArrasto,     
+                                                $biometriasPeixeCalao,
+                                                $biometriasPeixeColetaManual,
+                                                $biometriasPeixeEmalhe,   
+                                                $biometriasPeixeGrosseira,
+                                                $biometriasPeixeJerere,
+                                                $biometriasPeixeLinha,  
+                                                $biometriasPeixeLinhaFundo,
+                                                $biometriasPeixeManzua,
+                                                $biometriasPeixeMergulho,
+                                                $biometriasPeixeRatoeira,
+                                                $biometriasPeixeSiripoia,
+                                                $biometriasPeixeTarrafa, 
+                                                $biometriasPeixeVaraPesca);
+        
+       $arrayBiometriasOrdenado = $this->array_sort($arrayBiometrias, $tipo);
+       $arrayBiometriasSum = $this->array_sum_values($arrayBiometriasOrdenado, $tipo, 'quantidade');
+       
+       return $arrayBiometriasSum;
+    }
+    
+    
+    public function biometriapeixeAction()
+    {   
+        $tipo_comprimento = 'tbp_comprimento';
+        $tipo_peso = 'tbp_peso';
+        $especie = $this->_getParam('especie');
+       
+        $arrayComprimento = $this->biometriapeixebytipo($tipo_comprimento,$especie);
+        $arrayPeso = $this->biometriapeixebytipo($tipo_peso, $especie);
+        
+        
+        foreach($arrayComprimento as $key => $dados):
+            if($key == '0'){
+                $key = '<1';
+            }
+            $comprimento[] = $key.'cm';
+        endforeach;
+        
+        
+        foreach($arrayPeso as $key=> $dados):
+            if($key == '0'){
+                $key = '<1';
+            }
+            $peso[] = $key.'g';
+        endforeach;
+        
+        $this->dadosBiometriaPeixe($tipo_comprimento,$especie);
+        $this->dadosBiometriaPeixe($tipo_peso,$especie);
+        
+        $this->view->assign("especie", $especie);
+        $this->view->assign('jsDadosComprimento', json_encode($arrayComprimento));
+        $this->view->assign('jsLabelsComprimento', json_encode($comprimento));
+        
+        $this->view->assign('jsLabelsPeso', json_encode($peso));
+        $this->view->assign('jsDadosPeso', json_encode($arrayPeso));
+
+    }
+    
+    
+
 }
 

@@ -1554,6 +1554,14 @@ function ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista){ //url é
             var peso = form.peso.value;
             var preco = form.precokg.value;
             var id_entrevista = id_entrevista;
+            
+            if(peso.search(",")){
+                peso = peso.replace(",",".");
+            }
+            if(preco.search(",")){
+                preco = preco.replace(",",".");
+            }
+            
             if(especie === ""){
                 alert("Selecione uma espécie!");
             }
@@ -1688,11 +1696,21 @@ function ajax_biopeixe(form, url, id_entrevista) {
         alert("Digite o Peso do Peixe");
     }
     else{
+        var comprimento = form.comprimentoPeixe.value;
+        var peso = form.pesoPeixe.value;
+        
+        if(peso.search(",")){
+                peso = peso.replace(",",".");
+            }
+        if(comprimento.search(",")){
+           comprimento = comprimento.replace(",",".");
+        }
+            
         var vars = "id="+id_entrevista+
                 "&SelectEspecie="+form.SelectEspeciePeixe.value+
                 "&SelectSexo="+form.SelectSexoPeixe.value+
-                "&comprimento="+form.comprimentoPeixe.value+
-                "&peso="+form.pesoPeixe.value;
+                "&comprimento="+comprimento+
+                "&peso="+peso;
         
         hr.open("POST", url, true);
         // Set content type header information for sending url encoded variables in the request
@@ -1726,12 +1744,22 @@ function ajax_biocamarao(form, url, id_entrevista) {
         alert("Digite o Peso do Camarão");
     }
     else{
+        var comprimento = form.comprimentoCabeca.value;
+        var peso = form.pesoCamarao.value;
+        
+        if(peso.search(",")){
+                peso = peso.replace(",",".");
+            }
+        if(comprimento.search(",")){
+           comprimento = comprimento.replace(",",".");
+        }
+        
         var vars = "id="+id_entrevista+
                 "&SelectEspecie="+form.SelectEspecieCamarao.value+
                 "&SelectSexo="+form.SelectSexoCamarao.value+
                 "&SelectMaturidade="+form.SelectMaturidade.value+
-                "&comprimentoCabeca="+form.comprimentoCabeca.value+
-                "&peso="+form.pesoCamarao.value;
+                "&comprimentoCabeca="+comprimento+
+                "&peso="+peso;
         
         hr.open("POST", url, true);
         // Set content type header information for sending url encoded variables in the request
