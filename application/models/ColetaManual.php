@@ -71,17 +71,17 @@ private $dbTableColetaManual;
         return $insertColetaManual;
     }
     public function updatePescador($idPescador,$idMantido){
-        $this->dbTableArrastoFundo = new Application_Model_DbTable_ColetaManual();
+        $this->dbTableColetaManualFundo = new Application_Model_DbTable_ColetaManual();
         
         $dados = array(
                 'tp_id_entrevistado' => $idMantido
                );
         
-        $wherePescador = $this->dbTableArrastoFundo->getAdapter()
+        $wherePescador = $this->dbTableColetaManualFundo->getAdapter()
                 ->quoteInto('"tp_id_entrevistado" = ?', $idPescador);
 
 
-        $this->dbTableArrastoFundo->update($dados, $wherePescador);
+        $this->dbTableColetaManualFundo->update($dados, $wherePescador);
     }
     public function update(array $request)
     {
@@ -506,6 +506,19 @@ private $dbTableColetaManual;
         $select = $this->dbTableColetaManualHasBioPeixe->select()->from($this->dbTableColetaManualHasBioPeixe, array('esp_nome_comum'=>new Zend_Db_Expr('distinct(esp_nome_comum)'), 'esp_id'))->order('esp_nome_comum');
     
         return $this->dbTableColetaManualHasBioPeixe->fetchAll($select)->toArray();
+    }
+    
+    public function selectPescadoresByBarco($where = null, $order = null, $limit = null){
+        $this->dbTableColetaManual = new Application_Model_DbTable_VEntrevistaColetaManual();
+        
+        $select = $this->dbTableColetaManual->select()->
+                from($this->dbTableColetaManual, array( 'bar_id' => 'distinct(bar_id)', 'bar_nome','tp_id'=> 'tp_id_entrevistado', 'tp_nome', 'tp_apelido'))->order($order)->limit($limit);
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        
+        return $this->dbTableColetaManual->fetchAll($select)->toArray();
     }
 }
 

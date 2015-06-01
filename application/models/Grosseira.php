@@ -98,8 +98,8 @@ private $dbTableGrosseira;
             
         );
         
-        $insertArrasto = $this->dbTableGrosseira->insert($dadosGrosseira);
-        return $insertArrasto;
+        $insertGrosseira = $this->dbTableGrosseira->insert($dadosGrosseira);
+        return $insertGrosseira;
     }
     
     public function update(array $request)
@@ -172,17 +172,17 @@ private $dbTableGrosseira;
         $this->dbTableGrosseira->update($dadosGrosseira, $whereGrosseira);
     }
     public function updatePescador($idPescador,$idMantido){
-        $this->dbTableArrastoFundo = new Application_Model_DbTable_Grosseira();
+        $this->dbTableGrosseiraFundo = new Application_Model_DbTable_Grosseira();
         
         $dados = array(
                 'tp_id_entrevistado' => $idMantido
                );
         
-        $wherePescador = $this->dbTableArrastoFundo->getAdapter()
+        $wherePescador = $this->dbTableGrosseiraFundo->getAdapter()
                 ->quoteInto('"tp_id_entrevistado" = ?', $idPescador);
 
 
-        $this->dbTableArrastoFundo->update($dados, $wherePescador);
+        $this->dbTableGrosseiraFundo->update($dados, $wherePescador);
     }
     public function delete($idGrosseira)
     {
@@ -565,6 +565,19 @@ private $dbTableGrosseira;
         $select = $this->dbTableGrosseiraHasBioPeixe->select()->from($this->dbTableGrosseiraHasBioPeixe, array('esp_nome_comum'=>new Zend_Db_Expr('distinct(esp_nome_comum)'), 'esp_id'))->order('esp_nome_comum');
     
         return $this->dbTableGrosseiraHasBioPeixe->fetchAll($select)->toArray();
+    }
+    
+    public function selectPescadoresByBarco($where = null, $order = null, $limit = null){
+        $this->dbTableGrosseira = new Application_Model_DbTable_VEntrevistaGrosseira();
+        
+        $select = $this->dbTableGrosseira->select()->
+                from($this->dbTableGrosseira, array( 'bar_id' => 'distinct(bar_id)', 'bar_nome','tp_id'=> 'tp_id_entrevistado', 'tp_nome', 'tp_apelido'))->order($order)->limit($limit);
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        
+        return $this->dbTableGrosseira->fetchAll($select)->toArray();
     }
 }
 

@@ -97,8 +97,8 @@ private $dbTableLinha;
             
         );
         
-        $insertArrasto = $this->dbTableLinha->insert($dadosLinha);
-        return $insertArrasto;
+        $insertLinha = $this->dbTableLinha->insert($dadosLinha);
+        return $insertLinha;
     }
     
     public function update(array $request)
@@ -169,17 +169,17 @@ private $dbTableLinha;
         $this->dbTableLinha->update($dadosLinha, $whereLinha);
     }
     public function updatePescador($idPescador,$idMantido){
-        $this->dbTableArrastoFundo = new Application_Model_DbTable_Linha();
+        $this->dbTableLinhaFundo = new Application_Model_DbTable_Linha();
         
         $dados = array(
                 'tp_id_entrevistado' => $idMantido
                );
         
-        $wherePescador = $this->dbTableArrastoFundo->getAdapter()
+        $wherePescador = $this->dbTableLinhaFundo->getAdapter()
                 ->quoteInto('"tp_id_entrevistado" = ?', $idPescador);
 
 
-        $this->dbTableArrastoFundo->update($dados, $wherePescador);
+        $this->dbTableLinhaFundo->update($dados, $wherePescador);
     }
     public function delete($idLinha)
     {
@@ -564,6 +564,19 @@ private $dbTableLinha;
         $select = $this->dbTableLinhaHasBioPeixe->select()->from($this->dbTableLinhaHasBioPeixe, array('esp_nome_comum'=>new Zend_Db_Expr('distinct(esp_nome_comum)'), 'esp_id'))->order('esp_nome_comum');
     
         return $this->dbTableLinhaHasBioPeixe->fetchAll($select)->toArray();
+    }
+    
+    public function selectPescadoresByBarco($where = null, $order = null, $limit = null){
+        $this->dbTableLinha = new Application_Model_DbTable_VEntrevistaLinha();
+        
+        $select = $this->dbTableLinha->select()->
+                from($this->dbTableLinha, array( 'bar_id' => 'distinct(bar_id)', 'bar_nome','tp_id'=> 'tp_id_entrevistado', 'tp_nome', 'tp_apelido'))->order($order)->limit($limit);
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        
+        return $this->dbTableLinha->fetchAll($select)->toArray();
     }
 }
 

@@ -86,8 +86,8 @@ class Application_Model_VaraPesca
             'vp_mreviva' => $request['mareviva']
         );
         
-        $insertArrasto = $this->dbTableVaraPesca->insert($dadosVaraPesca);
-        return $insertArrasto;
+        $insertVaraPesca = $this->dbTableVaraPesca->insert($dadosVaraPesca);
+        return $insertVaraPesca;
     }
     
     public function update(array $request)
@@ -162,17 +162,17 @@ class Application_Model_VaraPesca
         $this->dbTableVaraPesca->update($dadosVaraPesca, $whereVaraPesca);
     }
     public function updatePescador($idPescador,$idMantido){
-        $this->dbTableArrastoFundo = new Application_Model_DbTable_VaraPesca();
+        $this->dbTableVaraPescaFundo = new Application_Model_DbTable_VaraPesca();
         
         $dados = array(
                 'tp_id_entrevistado' => $idMantido
                );
         
-        $wherePescador = $this->dbTableArrastoFundo->getAdapter()
+        $wherePescador = $this->dbTableVaraPescaFundo->getAdapter()
                 ->quoteInto('"tp_id_entrevistado" = ?', $idPescador);
 
 
-        $this->dbTableArrastoFundo->update($dados, $wherePescador);
+        $this->dbTableVaraPescaFundo->update($dados, $wherePescador);
     }
     public function delete($idVaraPesca)
     {
@@ -563,6 +563,19 @@ public function selectEspeciesPeixesBiometrias()
         $select = $this->dbTableVaraPescaHasBioPeixe->select()->from($this->dbTableVaraPescaHasBioPeixe, array('esp_nome_comum'=>new Zend_Db_Expr('distinct(esp_nome_comum)'), 'esp_id'))->order('esp_nome_comum');
     
         return $this->dbTableVaraPescaHasBioPeixe->fetchAll($select)->toArray();
+    }
+    
+    public function selectPescadoresByBarco($where = null, $order = null, $limit = null){
+        $this->dbTableVaraPesca = new Application_Model_DbTable_VEntrevistaVaraPesca();
+        
+        $select = $this->dbTableVaraPesca->select()->
+                from($this->dbTableVaraPesca, array( 'bar_id' => 'distinct(bar_id)', 'bar_nome','tp_id'=> 'tp_id_entrevistado', 'tp_nome', 'tp_apelido'))->order($order)->limit($limit);
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        
+        return $this->dbTableVaraPesca->fetchAll($select)->toArray();
     }
 }
 

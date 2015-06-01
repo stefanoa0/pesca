@@ -159,17 +159,17 @@ class Application_Model_Calao
         $this->dbTableCalao->update($dadosCalao, $whereCalao);
     }
     public function updatePescador($idPescador,$idMantido){
-        $this->dbTableArrastoFundo = new Application_Model_DbTable_Calao();
+        $this->dbTableCalao = new Application_Model_DbTable_Calao();
         
         $dados = array(
                 'tp_id_entrevistado' => $idMantido
                );
         
-        $wherePescador = $this->dbTableArrastoFundo->getAdapter()
+        $wherePescador = $this->dbTableCalao->getAdapter()
                 ->quoteInto('"tp_id_entrevistado" = ?', $idPescador);
 
 
-        $this->dbTableArrastoFundo->update($dados, $wherePescador);
+        $this->dbTableCalao->update($dados, $wherePescador);
     }
     public function delete($idCalao)
     {
@@ -543,6 +543,19 @@ class Application_Model_Calao
         $select = $this->dbTableCalaoHasBioPeixe->select()->from($this->dbTableCalaoHasBioPeixe, array('esp_nome_comum'=>new Zend_Db_Expr('distinct(esp_nome_comum)'), 'esp_id'))->order('esp_nome_comum');
     
         return $this->dbTableCalaoHasBioPeixe->fetchAll($select)->toArray();
+    }
+    
+    public function selectPescadoresByBarco($where = null, $order = null, $limit = null){
+        $this->dbTableCalao = new Application_Model_DbTable_VEntrevistaCalao();
+        
+        $select = $this->dbTableCalao->select()->
+                from($this->dbTableCalao, array( 'bar_id' => 'distinct(bar_id)', 'bar_nome','tp_id'=> 'tp_id_entrevistado', 'tp_nome', 'tp_apelido'))->order($order)->limit($limit);
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        
+        return $this->dbTableCalao->fetchAll($select)->toArray();
     }
 }
 

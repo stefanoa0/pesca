@@ -951,6 +951,7 @@ function jsInsertAmostraPeixe(frm, pag, idEntrevista){
 //Insert para views dinâmicas
 function jsInsertDynamic(frm, pag, pag_update)
 {
+    frm.Add.value = "Adicionar";
     if (frm.input_id.value) {
 
         var tmpUpdate = (pag_update + '/id/' + frm.input_id.value + '/valor/'+frm.input_valor.value);
@@ -982,6 +983,7 @@ function jsUpdateDynamic( id, valor, frm)
     if ( confirm("Realmente deseja EDITAR este item?") ) {
         frm.input_valor.value = valor;
         frm.input_id.value = id;
+        frm.Add.value = "Atualizar";
         scrollTo('#Especialista');
     }
 }
@@ -1643,7 +1645,7 @@ function ajax_pesqueiro(form, url, id_entrevista, tipo_entrevista){
                 // Send the data to PHP now... and wait for response to update the status div
                 hr.send(vars); // Actually execute the request
                 document.getElementById("pesqueiro").innerHTML = "processando...";
-                resetFormValues("formEntrevistas");
+                //resetFormValues("formEntrevistas");
             }
 }
 

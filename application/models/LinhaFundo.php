@@ -97,8 +97,8 @@ class Application_Model_LinhaFundo
             'lf_mreviva' => $request['mareviva']
         );
         
-        $insertArrasto = $this->dbTableLinhaFundo->insert($dadosLinhaFundo);
-        return $insertArrasto;
+        $insertLinhaFundo = $this->dbTableLinhaFundo->insert($dadosLinhaFundo);
+        return $insertLinhaFundo;
     }
     
     public function update(array $request)
@@ -170,17 +170,17 @@ class Application_Model_LinhaFundo
         $this->dbTableLinhaFundo->update($dadosLinhaFundo, $whereLinhaFundo);
     }
     public function updatePescador($idPescador,$idMantido){
-        $this->dbTableArrastoFundo = new Application_Model_DbTable_ArrastoFundo();
+        $this->dbTableLinhaFundoFundo = new Application_Model_DbTable_LinhaFundoFundo();
         
         $dados = array(
                 'tp_id_entrevistado' => $idMantido
                );
         
-        $wherePescador = $this->dbTableArrastoFundo->getAdapter()
+        $wherePescador = $this->dbTableLinhaFundoFundo->getAdapter()
                 ->quoteInto('"tp_id_entrevistado" = ?', $idPescador);
 
 
-        $this->dbTableArrastoFundo->update($dados, $wherePescador);
+        $this->dbTableLinhaFundoFundo->update($dados, $wherePescador);
     }
     public function delete($idLinhaFundo)
     {
@@ -566,6 +566,19 @@ class Application_Model_LinhaFundo
         $select = $this->dbTableLinhaFundoHasBioPeixe->select()->from($this->dbTableLinhaFundoHasBioPeixe, array('esp_nome_comum'=>new Zend_Db_Expr('distinct(esp_nome_comum)'), 'esp_id'))->order('esp_nome_comum');
     
         return $this->dbTableLinhaFundoHasBioPeixe->fetchAll($select)->toArray();
-    }   
+    }
+    
+    public function selectPescadoresByBarco($where = null, $order = null, $limit = null){
+        $this->dbTableLinhaFundo = new Application_Model_DbTable_VEntrevistaLinhaFundo();
+        
+        $select = $this->dbTableLinhaFundo->select()->
+                from($this->dbTableLinhaFundo, array( 'bar_id' => 'distinct(bar_id)', 'bar_nome','tp_id'=> 'tp_id_entrevistado', 'tp_nome', 'tp_apelido'))->order($order)->limit($limit);
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        
+        return $this->dbTableLinhaFundo->fetchAll($select)->toArray();
+    }
 }
 

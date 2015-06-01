@@ -74,8 +74,8 @@ class Application_Model_Jerere
             'jre_combustivel' => $combustivel
         );
         
-        $insertArrasto = $this->dbTableJerere->insert($dadosJerere);
-        return $insertArrasto;
+        $insertJerere = $this->dbTableJerere->insert($dadosJerere);
+        return $insertJerere;
     }
     
     public function update(array $request)
@@ -127,17 +127,17 @@ class Application_Model_Jerere
         $this->dbTableJerere->update($dadosJerere, $whereJerere);
     }
     public function updatePescador($idPescador,$idMantido){
-        $this->dbTableArrastoFundo = new Application_Model_DbTable_Jerere();
+        $this->dbTableJerereFundo = new Application_Model_DbTable_Jerere();
         
         $dados = array(
                 'tp_id_entrevistado' => $idMantido
                );
         
-        $wherePescador = $this->dbTableArrastoFundo->getAdapter()
+        $wherePescador = $this->dbTableJerereFundo->getAdapter()
                 ->quoteInto('"tp_id_entrevistado" = ?', $idPescador);
 
 
-        $this->dbTableArrastoFundo->update($dados, $wherePescador);
+        $this->dbTableJerereFundo->update($dados, $wherePescador);
     }
     public function delete($idJerere)
     {
@@ -527,6 +527,17 @@ class Application_Model_Jerere
         return $this->dbTableJerereHasBioPeixe->fetchAll($select)->toArray();
     }
     
-    
+    public function selectPescadoresByBarco($where = null, $order = null, $limit = null){
+        $this->dbTableJerere = new Application_Model_DbTable_VEntrevistaJerere();
+        
+        $select = $this->dbTableJerere->select()->
+                from($this->dbTableJerere, array( 'bar_id' => 'distinct(bar_id)', 'bar_nome','tp_id'=> 'tp_id_entrevistado', 'tp_nome', 'tp_apelido'))->order($order)->limit($limit);
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        
+        return $this->dbTableJerere->fetchAll($select)->toArray();
+    }
 }
 

@@ -63,8 +63,8 @@ class Application_Model_Manzua
             'man_combustivel' => $combustivel
         );
         
-        $insertArrasto = $this->dbTableManzua->insert($dadosManzua);
-        return $insertArrasto;
+        $insertManzua = $this->dbTableManzua->insert($dadosManzua);
+        return $insertManzua;
     }
     
     public function update(array $request)
@@ -112,17 +112,17 @@ class Application_Model_Manzua
         $this->dbTableManzua->update($dadosManzua, $whereManzua);
     }
     public function updatePescador($idPescador,$idMantido){
-        $this->dbTableArrastoFundo = new Application_Model_DbTable_Manzua();
+        $this->dbTableManzuaFundo = new Application_Model_DbTable_Manzua();
         
         $dados = array(
                 'tp_id_entrevistado' => $idMantido
                );
         
-        $wherePescador = $this->dbTableArrastoFundo->getAdapter()
+        $wherePescador = $this->dbTableManzuaFundo->getAdapter()
                 ->quoteInto('"tp_id_entrevistado" = ?', $idPescador);
 
 
-        $this->dbTableArrastoFundo->update($dados, $wherePescador);
+        $this->dbTableManzuaFundo->update($dados, $wherePescador);
     }
     public function delete($idManzua)
     {
@@ -509,6 +509,19 @@ class Application_Model_Manzua
         $select = $this->dbTableManzuaHasBioPeixe->select()->from($this->dbTableManzuaHasBioPeixe, array('esp_nome_comum'=>new Zend_Db_Expr('distinct(esp_nome_comum)'), 'esp_id'))->order('esp_nome_comum');
     
         return $this->dbTableManzuaHasBioPeixe->fetchAll($select)->toArray();
+    }
+    
+    public function selectPescadoresByBarco($where = null, $order = null, $limit = null){
+        $this->dbTableManzua = new Application_Model_DbTable_VEntrevistaManzua();
+        
+        $select = $this->dbTableManzua->select()->
+                from($this->dbTableManzua, array( 'bar_id' => 'distinct(bar_id)', 'bar_nome','tp_id'=> 'tp_id_entrevistado', 'tp_nome', 'tp_apelido'))->order($order)->limit($limit);
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        
+        return $this->dbTableManzua->fetchAll($select)->toArray();
     }
 }
 

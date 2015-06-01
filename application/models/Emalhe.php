@@ -105,8 +105,8 @@ class Application_Model_Emalhe
             'mnt_id' => $request['id_monitoramento']
         );
         
-       $insertArrasto = $this->dbTableEmalhe->insert($dadosEmalhe);
-        return $insertArrasto;
+       $insertEmalhe = $this->dbTableEmalhe->insert($dadosEmalhe);
+        return $insertEmalhe;
     }
     
     public function update(array $request)
@@ -197,17 +197,17 @@ class Application_Model_Emalhe
         $this->dbTableEmalhe->update($dadosEmalhe, $whereEmalhe);
     }
     public function updatePescador($idPescador,$idMantido){
-        $this->dbTableArrastoFundo = new Application_Model_DbTable_Emalhe();
+        $this->dbTableEmalheFundo = new Application_Model_DbTable_Emalhe();
         
         $dados = array(
                 'tp_id_entrevistado' => $idMantido
                );
         
-        $wherePescador = $this->dbTableArrastoFundo->getAdapter()
+        $wherePescador = $this->dbTableEmalheFundo->getAdapter()
                 ->quoteInto('"tp_id_entrevistado" = ?', $idPescador);
 
 
-        $this->dbTableArrastoFundo->update($dados, $wherePescador);
+        $this->dbTableEmalheFundo->update($dados, $wherePescador);
     }
     public function delete($idEmalhe)
     {
@@ -585,6 +585,19 @@ class Application_Model_Emalhe
         $select = $this->dbTableEmalheHasBioPeixe->select()->from($this->dbTableEmalheHasBioPeixe, array('esp_nome_comum'=>new Zend_Db_Expr('distinct(esp_nome_comum)'), 'esp_id'))->order('esp_nome_comum');
     
         return $this->dbTableEmalheHasBioPeixe->fetchAll($select)->toArray();
+    }
+    
+    public function selectPescadoresByBarco($where = null, $order = null, $limit = null){
+        $this->dbTableEmalhe = new Application_Model_DbTable_VEntrevistaEmalhe();
+        
+        $select = $this->dbTableEmalhe->select()->
+                from($this->dbTableEmalhe, array( 'bar_id' => 'distinct(bar_id)', 'bar_nome','tp_id'=> 'tp_id_entrevistado', 'tp_nome', 'tp_apelido'))->order($order)->limit($limit);
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        
+        return $this->dbTableEmalhe->fetchAll($select)->toArray();
     }
 }
 

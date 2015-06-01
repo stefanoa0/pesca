@@ -63,8 +63,8 @@ class Application_Model_Siripoia
             'sir_combustivel' => $combustivel
         );
         
-        $insertArrasto = $this->dbTableSiripoia->insert($dadosSiripoia);
-        return $insertArrasto;
+        $insertSiripoia = $this->dbTableSiripoia->insert($dadosSiripoia);
+        return $insertSiripoia;
     }
     
     public function update(array $request)
@@ -113,17 +113,17 @@ class Application_Model_Siripoia
         $this->dbTableSiripoia->update($dadosSiripoia, $whereSiripoia);
     }
     public function updatePescador($idPescador,$idMantido){
-        $this->dbTableArrastoFundo = new Application_Model_DbTable_Siripoia();
+        $this->dbTableSiripoiaFundo = new Application_Model_DbTable_Siripoia();
         
         $dados = array(
                 'tp_id_entrevistado' => $idMantido
                );
         
-        $wherePescador = $this->dbTableArrastoFundo->getAdapter()
+        $wherePescador = $this->dbTableSiripoiaFundo->getAdapter()
                 ->quoteInto('"tp_id_entrevistado" = ?', $idPescador);
 
 
-        $this->dbTableArrastoFundo->update($dados, $wherePescador);
+        $this->dbTableSiripoiaFundo->update($dados, $wherePescador);
     }
     public function delete($idSiripoia)
     {
@@ -508,6 +508,19 @@ class Application_Model_Siripoia
         $select = $this->dbTableSiripoiaHasBioPeixe->select()->from($this->dbTableSiripoiaHasBioPeixe, array('esp_nome_comum'=>new Zend_Db_Expr('distinct(esp_nome_comum)'), 'esp_id'))->order('esp_nome_comum');
     
         return $this->dbTableSiripoiaHasBioPeixe->fetchAll($select)->toArray();
+    }
+    
+    public function selectPescadoresByBarco($where = null, $order = null, $limit = null){
+        $this->dbTableSiripoia = new Application_Model_DbTable_VEntrevistaSiripoia();
+        
+        $select = $this->dbTableSiripoia->select()->
+                from($this->dbTableSiripoia, array( 'bar_id' => 'distinct(bar_id)', 'bar_nome','tp_id'=> 'tp_id_entrevistado', 'tp_nome', 'tp_apelido'))->order($order)->limit($limit);
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        
+        return $this->dbTableSiripoia->fetchAll($select)->toArray();
     }
 }
 

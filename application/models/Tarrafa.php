@@ -68,8 +68,8 @@ class Application_Model_Tarrafa
             'mnt_id' => $request['id_monitoramento']
         );
 
-        $insertArrasto = $this->dbTableTarrafa->insert($dadosTarrafa);
-        return $insertArrasto;
+        $insertTarrafa = $this->dbTableTarrafa->insert($dadosTarrafa);
+        return $insertTarrafa;
     }
 
     public function update(array $request)
@@ -124,17 +124,17 @@ class Application_Model_Tarrafa
         $this->dbTableTarrafa->update($dadosTarrafa, $whereTarrafa);
     }
     public function updatePescador($idPescador,$idMantido){
-        $this->dbTableArrastoFundo = new Application_Model_DbTable_Tarrafa();
+        $this->dbTableTarrafaFundo = new Application_Model_DbTable_Tarrafa();
         
         $dados = array(
                 'tp_id_entrevistado' => $idMantido
                );
         
-        $wherePescador = $this->dbTableArrastoFundo->getAdapter()
+        $wherePescador = $this->dbTableTarrafaFundo->getAdapter()
                 ->quoteInto('"tp_id_entrevistado" = ?', $idPescador);
 
 
-        $this->dbTableArrastoFundo->update($dados, $wherePescador);
+        $this->dbTableTarrafaFundo->update($dados, $wherePescador);
     }
     public function delete($idTarrafa)
     {
@@ -510,5 +510,18 @@ class Application_Model_Tarrafa
         $select = $this->dbTableTarrafaHasBioPeixe->select()->from($this->dbTableTarrafaHasBioPeixe, array('esp_nome_comum'=>new Zend_Db_Expr('distinct(esp_nome_comum)'), 'esp_id'))->order('esp_nome_comum');
     
         return $this->dbTableTarrafaHasBioPeixe->fetchAll($select)->toArray();
+    }
+    
+    public function selectPescadoresByBarco($where = null, $order = null, $limit = null){
+        $this->dbTableTarrafa = new Application_Model_DbTable_VEntrevistaTarrafa();
+        
+        $select = $this->dbTableTarrafa->select()->
+                from($this->dbTableTarrafa, array( 'bar_id' => 'distinct(bar_id)', 'bar_nome','tp_id'=> 'tp_id_entrevistado', 'tp_nome', 'tp_apelido'))->order($order)->limit($limit);
+        
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        
+        return $this->dbTableTarrafa->fetchAll($select)->toArray();
     }
 }
