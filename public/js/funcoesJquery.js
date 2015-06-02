@@ -951,7 +951,7 @@ function jsInsertAmostraPeixe(frm, pag, idEntrevista){
 //Insert para views dinâmicas
 function jsInsertDynamic(frm, pag, pag_update)
 {
-    frm.Add.value = "Adicionar";
+    //frm.Add.value = "Adicionar";
     if (frm.input_id.value) {
 
         var tmpUpdate = (pag_update + '/id/' + frm.input_id.value + '/valor/'+frm.input_valor.value);
