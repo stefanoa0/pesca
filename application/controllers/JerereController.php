@@ -101,9 +101,7 @@ private $usuario;
 
 
     public function editarAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+       
          //$avistamentoJerere = new Application_Model_DbTable_VJerereHasAvistamento();
         $entrevista = $this->modelJerere->find($this->_getParam('id'));
         $this->naoexiste($entrevista);
@@ -173,18 +171,14 @@ private $usuario;
         $this->view->assign('pescadores', $pescadores);
     }
     public function criarAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idJerere = $this->modelJerere->insert($this->_getAllParams());
 
 
         $this->_redirect('jerere/editar/id/'.$idJerere);
     }
     public function atualizarAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idJerere = $this->_getParam('id_entrevista');
         
         $monitoramento = $this->modelMonitoramento->select('mnt_id='.$this->_getParam('id_monitoramento'));
@@ -199,9 +193,7 @@ private $usuario;
         }
     }
     public function excluirAction() {
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->modelJerere->delete($this->_getParam('id'));
 
         $idFicha = $this->_getParam('id_ficha');
@@ -225,9 +217,7 @@ private $usuario;
     }
     
      public function insertpesqueiroAction(){
-         if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -248,9 +238,7 @@ private $usuario;
         $this->redirect("/jerere/tablepesqueiro/id/" . $idEntrevista);
     }
     public function deletepesqueiroAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -278,9 +266,7 @@ private $usuario;
     }
     
     public function insertespeciecapturadaAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -305,9 +291,7 @@ private $usuario;
         $this->redirect("/jerere/tableespcaptura/id/" . $idEntrevista);
     }
     public function deletespecieAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -333,9 +317,7 @@ private $usuario;
         $this->view->assign('vJerereAvistamento', $vJerereAvistamento);
     }    
     public function insertavistamentoAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -348,9 +330,7 @@ private $usuario;
         $this->redirect("/jerere/tableavistamento/id/" . $idEntrevista);
     }
     public function deleteavistamentoAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -373,9 +353,7 @@ private $usuario;
         $this->view->assign('vBioCamarao', $vBioCamarao);
     }
     public function insertbiocamaraoAction() {
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
@@ -396,9 +374,7 @@ private $usuario;
         $this->redirect("/jerere/tablebiocamarao/id/" . $idEntrevista);
     }
     public function deletebiocamaraoAction() {
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -422,9 +398,7 @@ private $usuario;
         $this->view->assign('vBioPeixe', $vBioPeixe);
     }
     public function insertbiopeixeAction() {
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
@@ -443,9 +417,7 @@ private $usuario;
         $this->redirect("/jerere/tablebiopeixe/id/" . $idEntrevista);
     }
     public function deletebiopeixeAction() {
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
@@ -457,9 +429,7 @@ private $usuario;
         $this->redirect("/jerere/tablebiopeixe/id/" . $idEntrevista);
     }
    public function relatoriolistaAction(){
-       if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+       //$this->acesso();
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 
@@ -492,9 +462,7 @@ private $usuario;
 		echo $pdf->render();
     }
     public function relatorioAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 

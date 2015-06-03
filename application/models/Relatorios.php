@@ -53,7 +53,7 @@ class Application_Model_Relatorios
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_entrevista_arrasto', 'v_entrevista_arrasto.af_id')->
                         joinLeft('v_arrastofundo_has_t_especie_capturada', 'v_entrevista_arrasto.af_id = v_arrastofundo_has_t_especie_capturada.af_id',
-                        array('sum(v_arrastofundo_has_t_especie_capturada.spc_quantidade) as quant','sum(CASE When v_arrastofundo_has_t_especie_capturada.esp_id = 4532 Or v_arrastofundo_has_t_especie_capturada.esp_id = 4533 Or v_arrastofundo_has_t_especie_capturada.esp_id = 4534 Or v_arrastofundo_has_t_especie_capturada.esp_id = 4536 THEN v_arrastofundo_has_t_especie_capturada.spc_peso_kg Else 0 END ) as peso' ))->
+                        array('quant' =>  new Zend_Db_Expr('sum(v_arrastofundo_has_t_especie_capturada.spc_quantidade)'), 'peso' => new Zend_Db_Expr('sum(CASE When v_arrastofundo_has_t_especie_capturada.esp_id = 4532 Or v_arrastofundo_has_t_especie_capturada.esp_id = 4533 Or v_arrastofundo_has_t_especie_capturada.esp_id = 4534 Or v_arrastofundo_has_t_especie_capturada.esp_id = 4536 THEN v_arrastofundo_has_t_especie_capturada.spc_peso_kg Else 0 END )') ))->
                         group(array('v_entrevista_arrasto.af_id'));
         
         if(!is_null($where)){
@@ -115,7 +115,7 @@ class Application_Model_Relatorios
         $dbTable = new Application_Model_DbTable_VEntrevistaCalao();
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_entrevista_calao', 'v_entrevista_calao.cal_id')->joinLeft('v_calao_has_t_especie_capturada', 'v_entrevista_calao.cal_id = v_calao_has_t_especie_capturada.cal_id',
-                        array('sum(v_calao_has_t_especie_capturada.spc_quantidade) as quant','sum(v_calao_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                        array('quant' => new Zend_Db_Expr('sum(v_calao_has_t_especie_capturada.spc_quantidade)'),'peso' => new Zend_Db_Expr('sum(v_calao_has_t_especie_capturada.spc_peso_kg)') ))->
                 group(array('v_entrevista_calao.cal_id'));
         
         if(!is_null($where)){
@@ -178,7 +178,7 @@ class Application_Model_Relatorios
         $dbTable = new Application_Model_DbTable_VEntrevistaColetaManual();
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_entrevista_coletamanual', 'v_entrevista_coletamanual.cml_id')->joinLeft('v_coletamanual_has_t_especie_capturada', 'v_entrevista_coletamanual.cml_id = v_coletamanual_has_t_especie_capturada.cml_id',
-                        array('sum(v_coletamanual_has_t_especie_capturada.spc_quantidade) as quant','sum(v_coletamanual_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                        array('quant' => new Zend_Db_Expr('sum(v_coletamanual_has_t_especie_capturada.spc_quantidade)'), 'peso' => new Zend_Db_Expr('sum(v_coletamanual_has_t_especie_capturada.spc_peso_kg)') ))->
                 group(array('v_entrevista_coletamanual.cml_id'));
         
         if(!is_null($where)){
@@ -242,7 +242,7 @@ class Application_Model_Relatorios
         $dbTable = new Application_Model_DbTable_VEntrevistaEmalhe();
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_entrevista_emalhe', 'v_entrevista_emalhe.em_id')->joinLeft('v_emalhe_has_t_especie_capturada', 'v_entrevista_emalhe.em_id = v_emalhe_has_t_especie_capturada.em_id',
-                        array('sum(v_emalhe_has_t_especie_capturada.spc_quantidade) as quant','sum(v_emalhe_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                        array('quant' => new Zend_Db_Expr('sum(v_emalhe_has_t_especie_capturada.spc_quantidade)'), 'peso' => new Zend_Db_Expr('sum(v_emalhe_has_t_especie_capturada.spc_peso_kg)') ))->
                 group(array('v_entrevista_emalhe.em_id'));
         
         if(!is_null($where)){
@@ -303,7 +303,7 @@ class Application_Model_Relatorios
         $dbTable = new Application_Model_DbTable_VEntrevistaGrosseira();
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_entrevista_grosseira', 'v_entrevista_grosseira.grs_id')->joinLeft('v_grosseira_has_t_especie_capturada', 'v_entrevista_grosseira.grs_id = v_grosseira_has_t_especie_capturada.grs_id',
-                        array('sum(v_grosseira_has_t_especie_capturada.spc_quantidade) as quant','sum(v_grosseira_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                        array('quant' => new Zend_Db_Expr('sum(v_grosseira_has_t_especie_capturada.spc_quantidade)'), 'peso' => new Zend_Db_Expr('sum(v_grosseira_has_t_especie_capturada.spc_peso_kg)') ))->
                 group(array('v_entrevista_grosseira.grs_id'));
         
         if(!is_null($where)){
@@ -365,7 +365,7 @@ class Application_Model_Relatorios
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_entrevista_jerere', 'v_entrevista_jerere.jre_id')->
                 joinLeft('v_jerere_has_t_especie_capturada', 'v_entrevista_jerere.jre_id = v_jerere_has_t_especie_capturada.jre_id',
-                        array('sum(v_jerere_has_t_especie_capturada.spc_quantidade) as quant','sum( CASE When v_jerere_has_t_especie_capturada.esp_id = 4596 THEN v_jerere_has_t_especie_capturada.spc_peso_kg Else 0 END) as peso' ))->
+                        array('quant' => new Zend_Db_Expr('sum(v_jerere_has_t_especie_capturada.spc_quantidade)'), 'peso' => new Zend_Db_Expr('sum( CASE When v_jerere_has_t_especie_capturada.esp_id = 4596 THEN v_jerere_has_t_especie_capturada.spc_peso_kg Else 0 END)') ))->
                 group(array('v_entrevista_jerere.jre_id'));
         
         if(!is_null($where)){
@@ -428,7 +428,7 @@ class Application_Model_Relatorios
         $dbTable = new Application_Model_DbTable_VEntrevistaLinha();
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_entrevista_linha', 'v_entrevista_linha.lin_id')->joinLeft('v_linha_has_t_especie_capturada', 'v_entrevista_linha.lin_id = v_linha_has_t_especie_capturada.lin_id',
-                        array('sum(v_linha_has_t_especie_capturada.spc_quantidade) as quant','sum(v_linha_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                        array('quant' => new Zend_Db_Expr('sum(v_linha_has_t_especie_capturada.spc_quantidade)'), 'peso' => new Zend_Db_Expr('sum(v_linha_has_t_especie_capturada.spc_peso_kg)') ))->
                 group(array('v_entrevista_linha.lin_id'));
         
         if(!is_null($where)){
@@ -490,7 +490,7 @@ class Application_Model_Relatorios
         $dbTable = new Application_Model_DbTable_VEntrevistaLinhaFundo();
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_entrevista_linhafundo', 'v_entrevista_linhafundo.lf_id')->joinLeft('v_linhafundo_has_t_especie_capturada', 'v_entrevista_linhafundo.lf_id = v_linhafundo_has_t_especie_capturada.lf_id',
-                        array('sum(v_linhafundo_has_t_especie_capturada.spc_quantidade) as quant','sum(v_linhafundo_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                        array('quant' => new Zend_Db_Expr('sum(v_linhafundo_has_t_especie_capturada.spc_quantidade)'), 'peso' => new Zend_Db_Expr('sum(v_linhafundo_has_t_especie_capturada.spc_peso_kg)') ))->
                 group(array('v_entrevista_linhafundo.lf_id'));
         
         if(!is_null($where)){
@@ -551,7 +551,7 @@ class Application_Model_Relatorios
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_entrevista_manzua', 'v_entrevista_manzua.man_id')->
                 joinLeft('v_manzua_has_t_especie_capturada', 'v_entrevista_manzua.man_id = v_manzua_has_t_especie_capturada.man_id',
-                        array('sum(v_manzua_has_t_especie_capturada.spc_quantidade) as quant','sum(CASE When v_manzua_has_t_especie_capturada.esp_id = 4596 THEN v_manzua_has_t_especie_capturada.spc_peso_kg Else 0 END) as peso' ))->
+                        array('quant' => new Zend_Db_Expr('sum(v_manzua_has_t_especie_capturada.spc_quantidade)'), 'peso' => new Zend_Db_Expr('sum(CASE When v_manzua_has_t_especie_capturada.esp_id = 4596 THEN v_manzua_has_t_especie_capturada.spc_peso_kg Else 0 END)') ))->
                 group(array('v_entrevista_manzua.man_id'));
         
         if(!is_null($where)){
@@ -613,7 +613,7 @@ class Application_Model_Relatorios
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_entrevista_mergulho', 'v_entrevista_mergulho.mer_id')
                 ->joinLeft('v_mergulho_has_t_especie_capturada', 'v_entrevista_mergulho.mer_id = v_mergulho_has_t_especie_capturada.mer_id',
-                array('sum(v_mergulho_has_t_especie_capturada.spc_quantidade) as quant','sum(v_mergulho_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                array('quant' => new Zend_Db_Expr('sum(v_mergulho_has_t_especie_capturada.spc_quantidade)'), 'peso' => new Zend_Db_Expr('sum(v_mergulho_has_t_especie_capturada.spc_peso_kg)') ))->
                 group(array('v_entrevista_mergulho.mer_id'));
         
         if(!is_null($where)){
@@ -677,7 +677,7 @@ class Application_Model_Relatorios
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_entrevista_ratoeira', 'v_entrevista_ratoeira.rat_id')->
                 joinLeft('v_ratoeira_has_t_especie_capturada', 'v_entrevista_ratoeira.rat_id = v_ratoeira_has_t_especie_capturada.rat_id',
-                        array('sum(v_ratoeira_has_t_especie_capturada.spc_quantidade) as quant','sum(CASE When v_ratoeira_has_t_especie_capturada.esp_id = 4580 THEN v_ratoeira_has_t_especie_capturada.spc_peso_kg Else 0 END) as peso' ))->
+                        array('quant' => new Zend_Db_Expr('sum(v_ratoeira_has_t_especie_capturada.spc_quantidade)'), 'peso' => new Zend_Db_Expr('sum(CASE When v_ratoeira_has_t_especie_capturada.esp_id = 4580 THEN v_ratoeira_has_t_especie_capturada.spc_peso_kg Else 0 END)') ))->
                 group(array('v_entrevista_ratoeira.rat_id'));
         
         if(!is_null($where)){
@@ -738,7 +738,7 @@ class Application_Model_Relatorios
         $dbTable = new Application_Model_DbTable_VEntrevistaSiripoia();
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_entrevista_siripoia', 'v_entrevista_siripoia.sir_id')->joinLeft('v_siripoia_has_t_especie_capturada', 'v_entrevista_siripoia.sir_id = v_siripoia_has_t_especie_capturada.sir_id',
-                        array('sum(v_siripoia_has_t_especie_capturada.spc_quantidade) as quant','sum(v_siripoia_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                        array('quant' => new Zend_Db_Expr('sum(v_siripoia_has_t_especie_capturada.spc_quantidade)'), 'peso' => new Zend_Db_Expr('sum(v_siripoia_has_t_especie_capturada.spc_peso_kg)') ))->
                 group(array('v_entrevista_siripoia.sir_id'));
         
         if(!is_null($where)){
@@ -801,7 +801,7 @@ class Application_Model_Relatorios
         $dbTable = new Application_Model_DbTable_VEntrevistaTarrafa();
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_entrevista_tarrafa', 'v_entrevista_tarrafa.tar_id')->joinLeft('v_tarrafa_has_t_especie_capturada', 'v_entrevista_tarrafa.tar_id = v_tarrafa_has_t_especie_capturada.tar_id',
-                        array('sum(v_tarrafa_has_t_especie_capturada.spc_quantidade) as quant','sum(v_tarrafa_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                        array('quant' => new Zend_Db_Expr('sum(v_tarrafa_has_t_especie_capturada.spc_quantidade)'), 'peso' => new Zend_Db_Expr('sum(v_tarrafa_has_t_especie_capturada.spc_peso_kg)') ))->
                 group(array('v_entrevista_tarrafa.tar_id'));
         
         if(!is_null($where)){
@@ -861,7 +861,7 @@ class Application_Model_Relatorios
         $dbTable = new Application_Model_DbTable_VEntrevistaVaraPesca();
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_entrevista_varapesca', 'v_entrevista_varapesca.vp_id')->joinLeft('v_varapesca_has_t_especie_capturada', 'v_entrevista_varapesca.vp_id = v_varapesca_has_t_especie_capturada.vp_id',
-                        array('sum(v_varapesca_has_t_especie_capturada.spc_quantidade) as quant','sum(v_varapesca_has_t_especie_capturada.spc_peso_kg) as peso' ))->
+                        array('quant' => new Zend_Db_Expr('sum(v_varapesca_has_t_especie_capturada.spc_quantidade)'), 'peso' => new Zend_Db_Expr('sum(v_varapesca_has_t_especie_capturada.spc_peso_kg)') ))->
                 group(array('v_entrevista_varapesca.vp_id'));
         
         if(!is_null($where)){

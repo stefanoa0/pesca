@@ -167,18 +167,14 @@ public function visualizarAction() {
     }
     
     public function criarAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idLinha = $this->modelLinha->insert($this->_getAllParams());
 
 
         $this->_redirect('linha/editar/id/'.$idLinha);
     }
     public function atualizarAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idLinha = $this->_getParam('id_entrevista');
         $monitoramento = $this->modelMonitoramento->select('mnt_id='.$this->_getParam('id_monitoramento'));
         
@@ -192,9 +188,7 @@ public function visualizarAction() {
         }
     }
     public function excluirAction() {
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->modelLinha->delete($this->_getParam('id'));
 
         $idFicha = $this->_getParam('id_ficha');
@@ -217,9 +211,7 @@ public function visualizarAction() {
         $this->view->assign('vLinha', $vLinha);
     }
     public function insertpesqueiroAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -237,9 +229,7 @@ public function visualizarAction() {
         $this->redirect("/linha/tablepesqueiro/id/" . $idEntrevista);
     }
     public function deletepesqueiroAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -266,9 +256,7 @@ public function visualizarAction() {
         $this->view->assign('vEspecieCapturadas', $vEspecieCapturadas);
     }
     public function insertespeciecapturadaAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -291,9 +279,7 @@ public function visualizarAction() {
         $this->redirect("/linha/tableespcaptura/id/" . $idEntrevista);
     }
     public function deletespecieAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -319,9 +305,7 @@ public function visualizarAction() {
         $this->view->assign('vLinhaAvistamento', $vLinhaAvistamento);
     }    
     public function insertavistamentoAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -334,9 +318,7 @@ public function visualizarAction() {
         $this->redirect("/linha/tableavistamento/id/" . $idEntrevista);
     }
     public function deleteavistamentoAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -359,9 +341,7 @@ public function visualizarAction() {
         $this->view->assign('vBioCamarao', $vBioCamarao);
     }
     public function insertbiocamaraoAction() {
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
@@ -382,9 +362,7 @@ public function visualizarAction() {
         $this->redirect("/linha/tablebiocamarao/id/" . $idEntrevista);
     }
     public function deletebiocamaraoAction() {
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -408,9 +386,7 @@ public function visualizarAction() {
         $this->view->assign('vBioPeixe', $vBioPeixe);
     }
     public function insertbiopeixeAction() {
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
@@ -429,9 +405,7 @@ public function visualizarAction() {
         $this->redirect("/linha/tablebiopeixe/id/" . $idEntrevista);
     }
     public function deletebiopeixeAction() {
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
@@ -443,101 +417,97 @@ public function visualizarAction() {
         $this->redirect("/linha/tablebiopeixe/id/" . $idEntrevista);
     }
    public function relatoriolistaAction(){
-       if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
+        //$this->acesso();
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $localModelLinha = new Application_Model_Linha();
+        $localLinha = $localModelLinha->selectEntrevistaLinha(NULL, array('fd_id', 'mnt_id', 'lin_id'), NULL);
+
+        require_once "../library/ModeloRelatorio.php";
+        $modeloRelatorio = new ModeloRelatorio();
+        $modeloRelatorio->setTitulo('Relatório Entrevista de Linha');
+        $modeloRelatorio->setLegenda(30, 'Ficha');
+        $modeloRelatorio->setLegenda(80, 'Monit.');
+        $modeloRelatorio->setLegenda(130, 'Linha');
+        $modeloRelatorio->setLegenda(180, 'Pescador');
+        $modeloRelatorio->setLegenda(350, 'Embarcação');
+
+        foreach ( $localLinha as $key => $localData ) {
+                $modeloRelatorio->setValueAlinhadoDireita(30, 40, $localData['fd_id']);
+                $modeloRelatorio->setValueAlinhadoDireita(80, 40, $localData['mnt_id']);
+                $modeloRelatorio->setValueAlinhadoDireita(130, 40, $localData['lin_id']);
+                $modeloRelatorio->setValue(180, $localData['tp_nome']);
+                $modeloRelatorio->setValue(350, $localData['bar_nome']);
+                $modeloRelatorio->setNewLine();
         }
-		$this->_helper->layout->disableLayout();
-		$this->_helper->viewRenderer->setNoRender(true);
+        $modeloRelatorio->setNewLine();
+        $pdf = $modeloRelatorio->getRelatorio();
 
-		$localModelLinha = new Application_Model_Linha();
-		$localLinha = $localModelLinha->selectEntrevistaLinha(NULL, array('fd_id', 'mnt_id', 'lin_id'), NULL);
-
-		require_once "../library/ModeloRelatorio.php";
-		$modeloRelatorio = new ModeloRelatorio();
-		$modeloRelatorio->setTitulo('Relatório Entrevista de Linha');
-		$modeloRelatorio->setLegenda(30, 'Ficha');
-		$modeloRelatorio->setLegenda(80, 'Monit.');
-		$modeloRelatorio->setLegenda(130, 'Linha');
-		$modeloRelatorio->setLegenda(180, 'Pescador');
-		$modeloRelatorio->setLegenda(350, 'Embarcação');
-
-		foreach ( $localLinha as $key => $localData ) {
-			$modeloRelatorio->setValueAlinhadoDireita(30, 40, $localData['fd_id']);
-			$modeloRelatorio->setValueAlinhadoDireita(80, 40, $localData['mnt_id']);
-			$modeloRelatorio->setValueAlinhadoDireita(130, 40, $localData['lin_id']);
-			$modeloRelatorio->setValue(180, $localData['tp_nome']);
-			$modeloRelatorio->setValue(350, $localData['bar_nome']);
-			$modeloRelatorio->setNewLine();
-		}
-		$modeloRelatorio->setNewLine();
-		$pdf = $modeloRelatorio->getRelatorio();
-
-		ob_end_clean();
-		header('Content-Disposition: attachment;filename="rel_lista_entrevista_linha.pdf"');
-		header("Content-type: application/x-pdf");
-		echo $pdf->render();
+        ob_end_clean();
+        header('Content-Disposition: attachment;filename="rel_lista_entrevista_linha.pdf"');
+        header("Content-type: application/x-pdf");
+        echo $pdf->render();
     }
 
     public function relatorioAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
+        //$this->acesso();
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $localModelLinha = new Application_Model_Linha();
+        $localLinha = $localModelLinha->selectEntrevistaLinha(NULL, array('fd_id', 'mnt_id', 'lin_id'), NULL);
+
+        $localPesqueiro = $localModelLinha->selectLinhaHasPesqueiro(NULL, array('lin_id', 'paf_pesqueiro'), NULL);
+        $localEspecie = $localModelLinha->selectLinhaHasEspCapturadas(NULL, array('lin_id', 'esp_nome_comum'), NULL);
+        $localAvist = $localModelLinha->selectLinhaHasAvistamento(NULL, array('lin_id', 'avs_descricao'), NULL);
+
+        require_once "../library/ModeloRelatorio.php";
+        $modeloRelatorio = new ModeloRelatorio();
+        $modeloRelatorio->setTitulo('Relatório Entrevista de Linha');
+        $modeloRelatorio->setLegendaOff();
+
+        foreach ( $localLinha as $key => $localData ) {
+                $modeloRelatorio->setLegValueAlinhadoDireita(30, 60, 'Ficha:', $localData['fd_id']);
+                $modeloRelatorio->setLegValueAlinhadoDireita(90, 60, 'Monit.:',  $localData['mnt_id']);
+                $modeloRelatorio->setLegValueAlinhadoDireita(150, 70, 'Linha:', $localData['lin_id']);
+                $modeloRelatorio->setLegValue(220, 'Pescador: ', $localData['tp_nome']);
+                $modeloRelatorio->setLegValue(450, 'Barco: ', $localData['bar_nome']);
+                $modeloRelatorio->setNewLine();
+
+                foreach ( $localPesqueiro as $key => $localDataPesqueiro ) {
+                        if ( $localDataPesqueiro['lin_id'] ==  $localData['lin_id'] ) {
+                                $modeloRelatorio->setLegValue(80, 'Pesqueiro: ',  $localDataPesqueiro['paf_pesqueiro']);
+                                if($localDataPesqueiro['t_tempoapesqueiro'] !== NULL){
+                                        $modeloRelatorio->setLegValueAlinhadoDireita(350, 90, 'Tempo (H:M):', date_format(date_create($localDataPesqueiro['t_tempoapesqueiro']), 'H:i'));
+                                }
+                                else{
+                                        $modeloRelatorio->setLegValueAlinhadoDireita(350, 90, 'Tempo (H:M):', "00:00", 'H:i');
+                                }
+                                $modeloRelatorio->setLegValueAlinhadoDireita(450, 120, 'Distância:', number_format($localDataPesqueiro['t_distapesqueiro'], 2, ',', ' '));
+                                $modeloRelatorio->setNewLine();
+                        }
+                }
+                foreach ( $localEspecie as $key => $localDataEspecie ) {
+                        if ( $localDataEspecie['lin_id'] ==  $localData['lin_id'] ) {
+                                $modeloRelatorio->setLegValue(80, 'Espécie: ',  $localDataEspecie['esp_nome_comum']);
+                                $modeloRelatorio->setLegValueAlinhadoDireita(280, 60, 'Quant:', $localDataEspecie['spc_quantidade']);
+                                $modeloRelatorio->setLegValueAlinhadoDireita(350, 90, 'Peso(kg):', number_format($localDataEspecie['spc_peso_kg'], 2, ',', ' '));
+                                $modeloRelatorio->setLegValueAlinhadoDireita(450, 120, 'Preço(R$/kg):', number_format($localDataEspecie['spc_preco'], 2, ',', ' '));
+                                $modeloRelatorio->setNewLine();
+                        }
+                }
+                foreach ( $localAvist as $key => $localDataAvist ) {
+                        if ( $localDataAvist['lin_id'] ==  $localData['lin_id'] ) {
+                                $modeloRelatorio->setLegValue(80, 'Avist.: ',  $localDataAvist['avs_descricao']);
+                                $modeloRelatorio->setNewLine();
+                        }
+                }
         }
-		$this->_helper->layout->disableLayout();
-		$this->_helper->viewRenderer->setNoRender(true);
+        $modeloRelatorio->setNewLine();
+        $pdf = $modeloRelatorio->getRelatorio();
 
-		$localModelLinha = new Application_Model_Linha();
-		$localLinha = $localModelLinha->selectEntrevistaLinha(NULL, array('fd_id', 'mnt_id', 'lin_id'), NULL);
-
-		$localPesqueiro = $localModelLinha->selectLinhaHasPesqueiro(NULL, array('lin_id', 'paf_pesqueiro'), NULL);
-		$localEspecie = $localModelLinha->selectLinhaHasEspCapturadas(NULL, array('lin_id', 'esp_nome_comum'), NULL);
-		$localAvist = $localModelLinha->selectLinhaHasAvistamento(NULL, array('lin_id', 'avs_descricao'), NULL);
-
-		require_once "../library/ModeloRelatorio.php";
-		$modeloRelatorio = new ModeloRelatorio();
-		$modeloRelatorio->setTitulo('Relatório Entrevista de Linha');
-		$modeloRelatorio->setLegendaOff();
-
-		foreach ( $localLinha as $key => $localData ) {
-			$modeloRelatorio->setLegValueAlinhadoDireita(30, 60, 'Ficha:', $localData['fd_id']);
-			$modeloRelatorio->setLegValueAlinhadoDireita(90, 60, 'Monit.:',  $localData['mnt_id']);
-			$modeloRelatorio->setLegValueAlinhadoDireita(150, 70, 'Linha:', $localData['lin_id']);
-			$modeloRelatorio->setLegValue(220, 'Pescador: ', $localData['tp_nome']);
-			$modeloRelatorio->setLegValue(450, 'Barco: ', $localData['bar_nome']);
-			$modeloRelatorio->setNewLine();
-
-			foreach ( $localPesqueiro as $key => $localDataPesqueiro ) {
-				if ( $localDataPesqueiro['lin_id'] ==  $localData['lin_id'] ) {
-					$modeloRelatorio->setLegValue(80, 'Pesqueiro: ',  $localDataPesqueiro['paf_pesqueiro']);
-					if($localDataPesqueiro['t_tempoapesqueiro'] !== NULL){
-						$modeloRelatorio->setLegValueAlinhadoDireita(350, 90, 'Tempo (H:M):', date_format(date_create($localDataPesqueiro['t_tempoapesqueiro']), 'H:i'));
-					}
-					else{
-						$modeloRelatorio->setLegValueAlinhadoDireita(350, 90, 'Tempo (H:M):', "00:00", 'H:i');
-					}
-					$modeloRelatorio->setLegValueAlinhadoDireita(450, 120, 'Distância:', number_format($localDataPesqueiro['t_distapesqueiro'], 2, ',', ' '));
-					$modeloRelatorio->setNewLine();
-				}
-			}
-			foreach ( $localEspecie as $key => $localDataEspecie ) {
-				if ( $localDataEspecie['lin_id'] ==  $localData['lin_id'] ) {
-					$modeloRelatorio->setLegValue(80, 'Espécie: ',  $localDataEspecie['esp_nome_comum']);
-					$modeloRelatorio->setLegValueAlinhadoDireita(280, 60, 'Quant:', $localDataEspecie['spc_quantidade']);
-					$modeloRelatorio->setLegValueAlinhadoDireita(350, 90, 'Peso(kg):', number_format($localDataEspecie['spc_peso_kg'], 2, ',', ' '));
-					$modeloRelatorio->setLegValueAlinhadoDireita(450, 120, 'Preço(R$/kg):', number_format($localDataEspecie['spc_preco'], 2, ',', ' '));
-					$modeloRelatorio->setNewLine();
-				}
-			}
-			foreach ( $localAvist as $key => $localDataAvist ) {
-				if ( $localDataAvist['lin_id'] ==  $localData['lin_id'] ) {
-					$modeloRelatorio->setLegValue(80, 'Avist.: ',  $localDataAvist['avs_descricao']);
-					$modeloRelatorio->setNewLine();
-				}
-			}
-		}
-		$modeloRelatorio->setNewLine();
-		$pdf = $modeloRelatorio->getRelatorio();
-
-		ob_end_clean();
+        ob_end_clean();
         header('Content-Disposition: attachment;filename="rel_entrevista_linha.pdf"');
         header("Content-type: application/x-pdf");
         echo $pdf->render();
