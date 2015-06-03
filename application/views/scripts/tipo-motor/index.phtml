@@ -1,15 +1,15 @@
 <h2>Desembarque -> Tipos de Motor</h2>
-<form method="post">
+<form method="post" id="tipo-motor">
 <fieldset id="dadosEmbarcacao"></fieldset>
 
     <a id="ancora_tipo-motor"></a>
     <fieldset class="noEditable"><legend>Tipos de Motor:</legend>
         <fieldset class="noEditable"><legend>Adicionar Tipos de Motor:</legend>
             <div id="base">
-                <input type="button" name="Add" class="button-confirm" onclick="jsInsertDynamic(this.form, '<?= $this->url(array("controller" => "tipo-motor", "action" => "insert"), null, true) ?>', '<?= $this->url(array("controller" => "tipo-motor", "action" => "update"), null, true) ?>')">
-                <input type="button" name="Reload" class="button-clear" onclick="jsReloadDynamic(this.form)">
+                <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertDynamic(this.form, '<?= $this->url(array("controller" => "tipo-motor", "action" => "insert"), null, true) ?>', '<?= $this->url(array("controller" => "tipo-motor", "action" => "update"), null, true) ?>')">
+                <input type="button" name="Reload" class="busca" value="Limpar campos" onclick="jsReloadDynamic(this.form)">
 
-                <input type="text" name="input_valor" placeholder="Pagamento" size="40"  />
+                <input type="text" name="input_valor" placeholder="Tipo de motor" size="40"  />
                 <input readonly="" type="text" name="input_id" />
             </div>
         </fieldset>
@@ -18,22 +18,31 @@
         <table id="tblPerfil">
             <tr>
                 <th width="15%">ID </th>
-                <th width="65%">Motor</th>
-                <th width="5%"></th>
-                <th width="5%"></th>
+                <th width="85%">Motor</th>
             </tr>
             <?php foreach ($this->assignTipoMotor as $key => $dados): ?>
                 <tr id="rowNumPeril<?= $key ?>">
                     <td><?= $dados['tmot_id'] ?></td>
                     <td><?= $dados['tmot_tipo'] ?></td>
-                    <td><input type="button" class="button-edit" width="5%" onclick="jsUpdateDynamic('<?= $dados['tmot_id'] ?>', '<?= $dados['tmot_tipo'] ?>', this.form)"></td>
-                    <td><input type="button" class="button-del" width="5%" onclick="jsDeleteDynamic(<?= $dados['tmot_id'] ?>, '<?= $this->url(array("controller" => "tipo-motor", "action" => "delete"), null, true) ?>')"></td>
+                    <td class="td-botao">
+                        <a onclick="jsUpdateDynamic('<?= $dados['tmot_id'] ?>', '<?= $dados['tmot_tipo'] ?>', document.getElementById('tipo-motor'))">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+                    <td class="td-botao">
+                        <a onclick="jsDeleteDynamic(<?= $dados['tmot_id'] ?>, '<?= $this->url(array("controller" => "tipo-motor", "action" => "delete"), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </table>
     </fieldset>
     <fieldset class="noBorder">
-        <br><input type="button" class="button-up" width="5%" onclick="scrollTo('top')">
         <a href="<?= $this->url(array("controller" => "tipo-motor", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório - Lista</a>
     </fieldset>
 </form>

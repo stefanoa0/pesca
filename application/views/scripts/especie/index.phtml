@@ -21,7 +21,6 @@
                 <td><?= $especie['esp_descritor'] ?></td>
                 <td><?= $especie['esp_nome_comum'] ?></td>
                 <td><?= $especie['gen_id'] ?></td>
-
                 <td class="td-botao">
                     <a href="<?= $this->url(array("controller" => "especie", "action" => "editar", "id" => $especie['esp_id']), null, true) ?>">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
@@ -29,11 +28,13 @@
                         </ul>
                     </a>
                 </td>
-
                 <td class="td-botao">
-                    <input type="button" value="Excluir" onclick="beforeDelete('<?= $this->url(array("controller" => "especie", "action" => "excluir", "id" => $especie['esp_id']), null, true) ?>')">
+                    <a onclick="beforeDelete('<?= $this->url(array("controller" => "especie", "action" => "excluir", "id" => $especie['esp_id']), null, true) ?>')">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                        </ul>
+                    </a>
                 </td>
-
             </tr>
         <?php endforeach; ?>
     </table>

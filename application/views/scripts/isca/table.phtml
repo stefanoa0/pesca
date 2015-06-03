@@ -10,8 +10,11 @@
                     <td><?= $isca['isc_id'] ?></td>
                     <td><?= $isca['isc_tipo'] ?></td>
                     <td class="td-botao">
-                        <input type="button" name="Excluir" class="button-del" onclick="jsDeleteIsca(<?= $isca['isc_id'] ?>,'<?= $this->url(array("controller" => "isca", "action" => "delete"), null, true) ?>')">
-
+                        <a onclick="jsDeleteIsca(<?= $isca['isc_id'] ?>,'<?= $this->url(array("controller" => "isca", "action" => "delete"), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a>
                     </td>
                     </tr>
                 <?php endforeach; ?>

@@ -1,13 +1,13 @@
 <h2>Desembarque -> Marcas</h2>
-<form method="post">
+<form method="post" id="marca">
 <fieldset id="dadosEmbarcacao"></fieldset>
 
     <a id="anmarcaa_marca"></a>
     <fieldset class="noEditable"><legend>Marcas:</legend>
         <fieldset class="noEditable"><legend>Adicionar Marcas:</legend>
             <div id="base">
-                <input type="button" name="Add" class="button-confirm" onclick="jsInsertDynamic(this.form, '<?= $this->url(array("controller" => "marca", "action" => "insert"), null, true) ?>', '<?= $this->url(array("controller" => "marca", "action" => "update"), null, true) ?>')">
-                <input type="button" name="Reload" class="button-clear" onclick="jsReloadDynamic(this.form)">
+                <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertDynamic(this.form, '<?= $this->url(array("controller" => "marca", "action" => "insert"), null, true) ?>', '<?= $this->url(array("controller" => "marca", "action" => "update"), null, true) ?>')">
+                <input type="button" name="Reload" class="busca" value="Limpar campos" onclick="jsReloadDynamic(this.form)">
 
                 <input type="text" name="input_valor" placeholder="Marca" size="40"  />
                 <input readonly="" type="text" name="input_id" />
@@ -18,22 +18,31 @@
         <table id="tblPerfil">
             <tr>
                 <th width="15%">ID </th>
-                <th width="65%">Marca</th>
-                <th width="5%"></th>
-                <th width="5%"></th>
+                <th width="85%">Marca</th>
             </tr>
             <?php foreach ($this->assignMarca as $key => $dados): ?>
                 <tr id="rowNumPeril<?= $key ?>">
                     <td><?= $dados['tmar_id'] ?></td>
                     <td><?= $dados['tmar_marca'] ?></td>
-                    <td><input type="button" class="button-edit" width="5%" onclick="jsUpdateDynamic('<?= $dados['tmar_id'] ?>', '<?= $dados['tmar_marca'] ?>', this.form)"></td>
-                    <td><input type="button" class="button-del" width="5%" onclick="jsDeleteDynamic(<?= $dados['tmar_id'] ?>, '<?= $this->url(array("controller" => "marca", "action" => "delete"), null, true) ?>')"></td>
+                    <td class="td-botao">
+                        <a onclick="jsUpdateDynamic('<?= $dados['tmar_id'] ?>', '<?= $dados['tmar_marca'] ?>', document.getElementById('marca'))">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+                    <td class="td-botao">
+                        <a onclick="jsDeleteDynamic(<?= $dados['tmar_id'] ?>, '<?= $this->url(array("controller" => "marca", "action" => "delete"), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </table>
     </fieldset>
     <fieldset class="noBorder">
-        <br><input type="button" class="button-up" width="5%" onclick="scrollTo('top')">
         <a href="<?= $this->url(array("controller" => "marca", "action" => "relatorio"), null, true) ?>" id="botao-anmarcaa" target="_blank">Gerar Relatório - Lista</a>
     </fieldset>
 </form>

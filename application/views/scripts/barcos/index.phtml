@@ -1,14 +1,14 @@
 
     <h2>Desembarque->Embarcações</h2>
-<form method="post">
+<form method="post" id="barcos">
     <fieldset id="Desembarque"></fieldset>
  
     <a id="ancora_barcos"></a>
     <fieldset class="noEditable"><legend>Embarcações:</legend>
         <fieldset class="noEditable"><legend>Adicionar Embarcações:</legend>
             <div id="base">
-                <input type="button" name="Add" class="button-confirm" onclick="jsInsertDynamic(this.form, '<?= $this->url(array("controller" => "barcos", "action" => "insert"), null, true) ?>', '<?= $this->url(array("controller" => "barcos", "action" => "update"), null, true) ?>')">
-                <input type="button" name="Reload" class="button-clear" onclick="jsReloadDynamic(this.form)">
+                <input type="button" name="Add" class="busca" value="Adicionar" onclick="jsInsertDynamic(this.form, '<?= $this->url(array("controller" => "barcos", "action" => "insert"), null, true) ?>', '<?= $this->url(array("controller" => "barcos", "action" => "update"), null, true) ?>')">
+                <input type="button" name="Reload" class="busca" value="Limpar campos" onclick="jsReloadDynamic(this.form)">
 
                 <input type="text" name="input_valor" placeholder="Embarcação" size="40"  />
                 <input readonly="" type="text" name="input_id" />
@@ -19,18 +19,27 @@
         <table id="tblPerfil">
             <tr>
                 <th width="15%">ID </th>
-                <th width="65%">Conservação</th>
-                <th width="5%"></th>
-                <th width="5%"></th>
-                <th width="5%"></th>
+                <th width="85%">Conservação</th>
             </tr>
             <?php foreach ($this->barcos as $key => $dados): ?>
                 <tr id="rowNumPeril<?= $key ?>">
                     <td><?= $dados['bar_id'] ?></td>
                     <td><?= $dados['bar_nome'] ?></td>
-                    <td><input type="button" class="button-edit" width="5%" onclick="jsUpdateDynamic('<?= $dados['bar_id'] ?>', '<?= $dados['bar_nome'] ?>', this.form)"></td>
-                    <td><input type="button" class="button-del" width="5%" onclick="jsDeleteDynamic(<?= $dados['bar_id'] ?>, '<?= $this->url(array("controller" => "barcos", "action" => "delete"), null, true) ?>')"></td>
-                    <td><a id="botao-ancora" href="<?=$this->url(array("controller"=>"barcos","action"=>"novo", "id" => $dados['bar_id'] ),null,true)?>">Cadastro </a>
+                    <td><a id="botao-ancora" href="<?=$this->url(array("controller"=>"barcos","action"=>"novo", "id" => $dados['bar_id'] ),null,true)?>">Cadastro</a></td>
+                    <td class="td-botao">
+                        <a onclick="jsUpdateDynamic('<?= $dados['bar_id'] ?>', '<?= $dados['bar_nome'] ?>', document.getElementById('barcos'))">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+                    <td class="td-botao">
+                        <a onclick="jsDeleteDynamic(<?= $dados['bar_id'] ?>, '<?= $this->url(array("controller" => "barcos", "action" => "delete"), null, true) ?>')">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                            </ul>
+                        </a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </table>
