@@ -102,8 +102,9 @@ class RelatoriosController extends Zend_Controller_Action
         
     }
     public function listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel){
+        $sheet =$objPHPExcel->getActiveSheet();
         foreach($relatorioEspecies as $key => $especie):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha,$especie['esp_nome_comum']);
+            $sheet->setCellValueByColumnAndRow($coluna++, $linha,$especie['esp_nome_comum']);
         endforeach;
         return $coluna;
     }
@@ -205,27 +206,29 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna = 0;
         $linha = 1;
         $quant= 21;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Chegada');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Chegada');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Diesel');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Óleo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Alimento');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Gelo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
+        
+        $sheet = $objPHPExcel->getActiveSheet();
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Chegada');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Chegada');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Diesel');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Óleo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Alimento');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Gelo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
         
         
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspecies();
@@ -245,38 +248,38 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna= 0;
         
         foreach ( $relatorioArrasto as $key => $consulta ):
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_quantpescadores']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_diesel']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_oleo']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_alimento']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_gelo']);
+                $sheet->setCellValueByColumnAndRow($coluna, $linha,  $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_quantpescadores']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_diesel']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_oleo']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_alimento']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_gelo']);
                 $consulta['af_motor'] = $this->motor($consulta['af_motor']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_motor']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_obs']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_motor']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_obs']);
 
                 $Pesqueiros = $this->modelRelatorios->selectArrastoHasPesqueiro('af_id = '.$consulta['af_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= $maxPesqueiros[0]['count']+$quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempopesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempopesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectArrastoHasEspCapturadas('af_id = '.$consulta['af_id'], 'esp_nome_comum');
@@ -284,12 +287,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
                 
@@ -331,34 +334,32 @@ class RelatoriosController extends Zend_Controller_Action
         
         $data = $this->dataInicial($date);
         $datafim = $this->dataFinal($datend);
-        
-        
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
-        
+        $sheet = $objPHPExcel->getActiveSheet();
         $quant = 19;
         $coluna = 0;
         $linha = 1;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Chegada');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Chegada');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Maré');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado da maré');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Chegada');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Chegada');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Maré');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado da maré');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
 
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesColetamanual();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosColetaManual();
@@ -378,40 +379,40 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna= 0;
 
         foreach ( $relatorioColetaManual as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
             $consulta['cml_mreviva'] = $this->mare($consulta['cml_mreviva']);
 
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_mreviva']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_mreviva']);
             $consulta['cml_motor'] = $this->motor($consulta['cml_motor']);
 
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_obs']);
             
             $Pesqueiros = $this->modelRelatorios->selectColetaManualHasPesqueiro('cml_id = '.$consulta['cml_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= $maxPesqueiros[0]['count']+$quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectColetaManualHasEspCapturadas('cml_id = '.$consulta['cml_id']);
@@ -419,12 +420,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn-1){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -468,30 +469,31 @@ class RelatoriosController extends Zend_Controller_Action
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
         $quant = 21;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data do Calão');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Num panos');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tamanhos');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Altura');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Malha');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Malha2');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Malha3');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Calão');
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data do Calão');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Num panos');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tamanhos');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Altura');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Malha');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Malha2');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Malha3');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Calão');
 
         
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesCalao();
@@ -513,47 +515,47 @@ class RelatoriosController extends Zend_Controller_Action
         }
 
         foreach ( $relatorioCalao as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_tempogasto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_npanos']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_tamanho']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_altura']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_malha']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_malha1']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_malha2']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_tempogasto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_npanos']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_tamanho']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_altura']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_malha']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_malha1']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_malha2']);
             $consulta['cal_motor'] = $this->motor($consulta['cal_motor']);
 
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_obs']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tcat_tipo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tcat_tipo']);
             
             $Pesqueiros = $this->modelRelatorios->selectCalaoHasPesqueiro('cal_id = '.$consulta['cal_id']);
                 
             $coluna++;
             foreach($Pesqueiros as $key => $nome):
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
             endforeach;
             
             $coluna = $maxPesqueiros[0]['count']*2+$quant;
             $Relesp = $this->modelRelatorios->selectCalaoHasEspCapturadas('cal_id = '.$consulta['cal_id']);
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -600,31 +602,31 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna = 0;
         $linha = 1;
         $quant = 25;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Lançamento');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Lançamento');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Recolhimento');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Recolhimento');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Diesel');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Óleo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Alimento');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Gelo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tamanho');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Altura');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Panos');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Malha');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Lançamento');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Lançamento');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Recolhimento');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Recolhimento');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Diesel');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Óleo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Alimento');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Gelo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tamanho');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Altura');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Panos');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Malha');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
 
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesEmalhe();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosEmalhe();
@@ -644,39 +646,39 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna= 0;
 
         foreach ( $relatorioEmalhe as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['drecolhimento']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dlancamento']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hlancamento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['drecolhimento']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hrecolhimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_diesel']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_oleo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_alimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_gelo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_tamanho']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_altura']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_numpanos']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_malha']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['drecolhimento']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dlancamento']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hlancamento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['drecolhimento']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hrecolhimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_diesel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_oleo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_alimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_gelo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_tamanho']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_altura']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_numpanos']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_malha']);
             
             $consulta['em_motor'] = $this->motor($consulta['em_motor']);
 
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_obs']);
 
             $Pesqueiros = $this->modelRelatorios->selectEmalheHasPesqueiro('em_id = '.$consulta['em_id']);
              $coluna++;
             foreach($Pesqueiros as $key => $nome):
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
             endforeach;
             
             
@@ -684,12 +686,12 @@ class RelatoriosController extends Zend_Controller_Action
             $Relesp = $this->modelRelatorios->selectEmalheHasEspCapturadas('em_id = '.$consulta['em_id']);
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -730,33 +732,34 @@ class RelatoriosController extends Zend_Controller_Action
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
         $quant= 24;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Volta');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Volta');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Diesel');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Óleo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Alimento');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Gelo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Linhas');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Anzóis por Linha');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Isca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Volta');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Volta');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Diesel');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Óleo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Alimento');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Gelo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Linhas');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Anzóis por Linha');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Isca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
         
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesGrosseira();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosGrosseira();
@@ -776,43 +779,43 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna= 0;
 
         foreach ( $relatorioGrosseira as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_numpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_diesel']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_oleo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_alimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_gelo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_numlinhas']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_numanzoisplinha']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['isc_tipo']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_numpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_diesel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_oleo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_alimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_gelo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_numlinhas']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_numanzoisplinha']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['isc_tipo']);
             
             $consulta['grs_motor'] = $this->motor($consulta['grs_motor']);
 
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_obs']);
 
             $Pesqueiros = $this->modelRelatorios->selectGrosseiraHasPesqueiro('grs_id = '.$consulta['grs_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= $maxPesqueiros[0]['count']+$quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectGrosseiraHasEspCapturadas('grs_id = '.$consulta['grs_id']);
@@ -820,12 +823,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -867,31 +870,32 @@ class RelatoriosController extends Zend_Controller_Action
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
         $quant = 22;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Volta');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Volta');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Armadilhas');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Maré');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado da Maré');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Combustível');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Volta');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Volta');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Armadilhas');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Maré');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado da Maré');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Combustível');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
         
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesJerere();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosJerere();
@@ -913,41 +917,41 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna= 0;
 
         foreach ( $relatorioJerere as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_tempogasto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_numarmadilhas']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_tempogasto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_numarmadilhas']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
             $consulta['jre_mreviva'] = $this->mare($consulta['jre_mreviva']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_mreviva']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_combustivel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_mreviva']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_combustivel']);
             $consulta['jre_motor'] = $this->motor($consulta['jre_motor']);
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_obs']);
             
             $Pesqueiros = $this->modelRelatorios->selectJerereHasPesqueiro('jre_id = '.$consulta['jre_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= $maxPesqueiros[0]['count']+$quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectJerereHasEspCapturadas('jre_id = '.$consulta['jre_id']);
@@ -955,12 +959,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn-1){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -1000,33 +1004,34 @@ class RelatoriosController extends Zend_Controller_Action
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
         $quant = 24;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Volta');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Volta');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Diesel');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Óleo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Alimento');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Gelo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Linhas');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Anzóis por Linha');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Isca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Volta');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Volta');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Diesel');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Óleo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Alimento');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Gelo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Linhas');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Anzóis por Linha');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Isca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
 
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesLinha();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosLinha();
@@ -1048,41 +1053,41 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna= 0;
 
         foreach ( $relatorioLinha as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_numpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_diesel']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_oleo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_alimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_gelo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_numlinhas']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_numanzoisplinha']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['isc_tipo']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_numpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_diesel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_oleo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_alimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_gelo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_numlinhas']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_numanzoisplinha']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['isc_tipo']);
             $consulta['lin_motor'] = $this->motor($consulta['lin_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_obs']);
 
             $Pesqueiros = $this->modelRelatorios->selectLinhaHasPesqueiro('lin_id = '.$consulta['lin_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= $maxPesqueiros[0]['count']+$quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectLinhaHasEspCapturadas('lin_id = '.$consulta['lin_id']);
@@ -1090,12 +1095,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -1136,34 +1141,35 @@ class RelatoriosController extends Zend_Controller_Action
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
         $quant = 25;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Volta');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Volta');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Diesel');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Óleo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Alimento');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Gelo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Linhas');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Anzóis por Linha');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Isca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Volta');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Volta');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Diesel');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Óleo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Alimento');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Gelo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Linhas');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Anzóis por Linha');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Isca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
         
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesLinhaFundo();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosLinhaFundo();
@@ -1184,42 +1190,42 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna= 0;
 
         foreach ( $relatorioLinhaFundo as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_tempogasto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_diesel']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_oleo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_alimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_gelo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_numlinhas']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_numanzoisplinha']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['isc_tipo']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_tempogasto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_diesel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_oleo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_alimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_gelo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_numlinhas']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_numanzoisplinha']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['isc_tipo']);
             $consulta['lf_motor'] = $this->motor($consulta['lf_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_obs']);
             
             $Pesqueiros = $this->modelRelatorios->selectLinhaFundoHasPesqueiro('lf_id = '.$consulta['lf_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= $maxPesqueiros[0]['count']+$quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectLinhaFundoHasEspCapturadas('lf_id = '.$consulta['lf_id']);
@@ -1227,12 +1233,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn-1){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -1273,31 +1279,32 @@ class RelatoriosController extends Zend_Controller_Action
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
         $quant = 22;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Volta');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Volta');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Combustível');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Armadilhas');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Maré');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Maré');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Volta');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Volta');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Combustível');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Armadilhas');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Maré');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Maré');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
 
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesManzua();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosManzua();
@@ -1318,43 +1325,43 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna= 0;
 
         foreach ( $relatorioManzua as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_tempogasto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_combustivel']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_numarmadilhas']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_tempogasto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_combustivel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_numarmadilhas']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
             $consulta['man_mreviva'] = $this->mare($consulta['man_mreviva']);
 
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_mreviva']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_mreviva']);
             
             $consulta['man_motor'] = $this->motor($consulta['man_motor']);
 
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_obs']);
             
             $Pesqueiros = $this->modelRelatorios->selectManzuaHasPesqueiro('man_id = '.$consulta['man_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= $maxPesqueiros[0]['count']+$quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectManzuaHasEspCapturadas('man_id = '.$consulta['man_id']);
@@ -1362,12 +1369,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn-1){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -1408,29 +1415,30 @@ class RelatoriosController extends Zend_Controller_Action
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
         $quant = 19;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Chegada');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Chegada');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Maré');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado da maré');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Chegada');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Chegada');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Maré');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado da maré');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
 
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesMergulho();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosMergulho();
@@ -1452,38 +1460,38 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna= 0;
 
         foreach ( $relatorioMergulho as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_tempogasto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_tempogasto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
             $consulta['mer_mreviva'] = $this->mare($consulta['mer_mreviva']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_mreviva']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_mreviva']);
             $consulta['mer_motor'] = $this->motor($consulta['mer_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_obs']);
             
            $Pesqueiros = $this->modelRelatorios->selectMergulhoHasPesqueiro('mer_id = '.$consulta['mer_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= $maxPesqueiros[0]['count']+$quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectMergulhoHasEspCapturadas('mer_id = '.$consulta['mer_id']);
@@ -1491,12 +1499,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn-1){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -1540,31 +1548,32 @@ class RelatoriosController extends Zend_Controller_Action
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
         $quant = 22;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Volta');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Volta');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Armadilhas');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Maré');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado da Maré');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Combustível');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Volta');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Volta');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Armadilhas');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Maré');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado da Maré');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Combustível');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
 
         
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesRatoeira();
@@ -1587,41 +1596,41 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna= 0;
 
         foreach ( $relatorioRatoeira as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_tempogasto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_numarmadilhas']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_tempogasto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_numarmadilhas']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
             $consulta['rat_mreviva'] = $this->mare($consulta['rat_mreviva']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_mreviva']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_combustivel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_mreviva']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_combustivel']);
             $consulta['rat_motor'] = $this->motor($consulta['rat_motor']);
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_obs']);
             
             $Pesqueiros = $this->modelRelatorios->selectRatoeiraHasPesqueiro('rat_id = '.$consulta['rat_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= $maxPesqueiros[0]['count']+$quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectRatoeiraHasEspCapturadas('rat_id = '.$consulta['rat_id']);
@@ -1629,12 +1638,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn-1){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -1675,31 +1684,32 @@ class RelatoriosController extends Zend_Controller_Action
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
         $quant = 22;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Volta');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Volta');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Armadilhas');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Maré');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado da Maré');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Combustível');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Volta');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Volta');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Armadilhas');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Maré');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado da Maré');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Combustível');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
         
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesSiripoia();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosSiripoia();
@@ -1720,40 +1730,40 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna= 0;
 
         foreach ( $relatorioSiripoia as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_tempogasto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_numarmadilhas']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_tempogasto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_numarmadilhas']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
             $consulta['sir_mreviva'] = $this->mare($consulta['sir_mreviva']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_mreviva']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_combustivel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_mreviva']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_combustivel']);
             $consulta['sir_motor'] = $this->motor($consulta['sir_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_obs']);
             
             $Pesqueiros = $this->modelRelatorios->selectSiripoiaHasPesqueiro('sir_id = '.$consulta['sir_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= $maxPesqueiros[0]['count']+$quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectSiripoiaHasEspCapturadas('sir_id = '.$consulta['sir_id']);
@@ -1761,12 +1771,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn-1){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -1808,27 +1818,28 @@ class RelatoriosController extends Zend_Controller_Action
         
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
         $quant = 18;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data da Tarrafa');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Roda');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Altura');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Malha');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Lances');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data da Tarrafa');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Roda');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Altura');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Malha');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Lances');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
         
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesTarrafa();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosTarrafa();
@@ -1848,35 +1859,35 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna= 0;
 
         foreach ( $relatorioTarrafa as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_tempogasto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_roda']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_altura']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_malha']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_numlances']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_data']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_data']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_tempogasto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_roda']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_altura']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_malha']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_numlances']);
             $consulta['tar_motor'] = $this->motor($consulta['tar_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_obs']);
             
             $Pesqueiros = $this->modelRelatorios->selectTarrafaHasPesqueiro('tar_id = '.$consulta['tar_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= $maxPesqueiros[0]['count']+$quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectTarrafaHasEspCapturadas('tar_id = '.$consulta['tar_id']);
@@ -1884,12 +1895,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -1932,36 +1943,37 @@ class RelatoriosController extends Zend_Controller_Action
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
         $quant = 28;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Volta');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Volta');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Diesel');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Óleo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Alimentos');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Gelo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Linhas');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Anzois Por linha');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Isca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Maré');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado da Maré');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow(++$coluna,   $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saída');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Volta');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Volta');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Diesel');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Óleo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Alimentos');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Gelo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Linhas');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Anzois Por linha');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Isca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Maré');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado da Maré');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
 
         
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesVaraPesca();
@@ -1983,46 +1995,46 @@ class RelatoriosController extends Zend_Controller_Action
 
         foreach ( $relatorioVaraPesca as $key => $consulta ):
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_tempogasto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_diesel']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_oleo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_alimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_gelo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_numlinhas']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_numanzoisplinha']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['isc_tipo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_tempogasto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_diesel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_oleo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_alimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_gelo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_numlinhas']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_numanzoisplinha']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['isc_tipo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
             $consulta['vp_mreviva'] = $this->mare($consulta['vp_mreviva']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_mreviva']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_mreviva']);
             $consulta['vp_motor'] = $this->motor($consulta['vp_motor']);
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_obs']);
             
             $Pesqueiros = $this->modelRelatorios->selectVaraPescaHasPesqueiro('vp_id = '.$consulta['vp_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= $maxPesqueiros[0]['count']+$quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectVaraPescaHasEspCapturadas('vp_id = '.$consulta['vp_id']);
@@ -2030,12 +2042,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn-1){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -2080,20 +2092,21 @@ class RelatoriosController extends Zend_Controller_Action
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, 'Arte de pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, 'Data Saida');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, 'Data Volta');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, 'Mês');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, 'Ano');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, 'Código');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, 'Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, 'Mestre');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, 'Tipo de Calão');
+        $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Arte de pesca');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Data Saida');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Data Volta');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Mês');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Ano');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Código');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Barco');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Mestre');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Tipo de Calão');
 
         $relatorioEspecies = $this->modelRelatorios->selectEspecies();
 
@@ -2112,30 +2125,30 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna = 0;
 
         foreach ($relatorioArrasto as $key => $consulta):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata = explode("-", $consulta['dvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['af_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['af_id']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
             $coluna++;
 
             $coluna++;
             $Relesp = $this->modelRelatorios->selectArrastoHasEspCapturadas('af_id = ' . $consulta['af_id']);
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -2155,30 +2168,30 @@ class RelatoriosController extends Zend_Controller_Action
         }
 
         foreach ($relatorioCalao as $key => $consulta):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, '1');
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '1');
             $explodedata =  explode("-", $this->formataDataPtbr($consulta['cal_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['cal_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tcat_tipo']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['cal_id']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tcat_tipo']);
 
             $coluna++;
             $Relesp = $this->modelRelatorios->selectCalaoHasEspCapturadas('cal_id = ' . $consulta['cal_id']);
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -2196,30 +2209,30 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioColeta = $this->modelRelatorios->selectColetaManual("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioColeta as $key => $consulta):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['cml_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['cml_id']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
 
             $coluna++;
             $Relesp = $this->modelRelatorios->selectColetaManualHasEspCapturadas('cml_id = ' . $consulta['cml_id']);
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -2237,30 +2250,30 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioEmalhe as $key => $consulta):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dlancamento']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['drecolhimento']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dlancamento']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['drecolhimento']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['drecolhimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['em_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['em_id']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
 
             $coluna++;
             $Relesp = $this->modelRelatorios->selectEmalheHasEspCapturadas('em_id = ' . $consulta['em_id']);
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
 
@@ -2280,30 +2293,30 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioGrosseira as $key => $consulta):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['grs_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['grs_id']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
 
             $coluna++;
             $Relesp = $this->modelRelatorios->selectGrosseiraHasEspCapturadas('grs_id = ' . $consulta['grs_id']);
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
 
@@ -2322,19 +2335,19 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioJerere as $key => $consulta):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['jre_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['jre_id']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
 
 
             $Relesp = $this->modelRelatorios->selectJerereHasEspCapturadas('jre_id = ' . $consulta['jre_id']);
@@ -2342,12 +2355,12 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
 
@@ -2367,19 +2380,19 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioLinha as $key => $consulta):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['lin_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['lin_id']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
 
 
             $Relesp = $this->modelRelatorios->selectLinhaHasEspCapturadas('lin_id = ' . $consulta['lin_id']);
@@ -2387,12 +2400,12 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
 
@@ -2412,20 +2425,20 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioLinhaFundo as $key => $consulta):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['lf_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['lf_id']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
 
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
 
 
             $Relesp = $this->modelRelatorios->selectLinhaFundoHasEspCapturadas('lf_id = ' . $consulta['lf_id']);
@@ -2433,12 +2446,12 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
 
@@ -2459,20 +2472,20 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioManzua as $key => $consulta):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['man_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['man_id']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
 
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
 
 
             $Relesp = $this->modelRelatorios->selectManzuaHasEspCapturadas('man_id = ' . $consulta['man_id']);
@@ -2480,12 +2493,12 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
 
@@ -2506,19 +2519,19 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioMergulho as $key => $consulta):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['mer_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['mer_id']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
 
 
             $Relesp = $this->modelRelatorios->selectMergulhoHasEspCapturadas('mer_id = ' . $consulta['mer_id']);
@@ -2526,12 +2539,12 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
 
@@ -2551,31 +2564,31 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioRatoeira as $key => $consulta):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['rat_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['rat_id']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
 
             $Relesp = $this->modelRelatorios->selectRatoeiraHasEspCapturadas('rat_id = ' . $consulta['rat_id']);
 
             $coluna++;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
 
@@ -2596,31 +2609,31 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioSiripoia as $key => $consulta):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['sir_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['sir_id']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
 
             $Relesp = $this->modelRelatorios->selectSiripoiaHasEspCapturadas('sir_id = ' . $consulta['sir_id']);
 
             $coluna++;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
 
@@ -2641,32 +2654,32 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioTarrafa as $key => $consulta):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tar_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tar_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, '1');
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tar_data']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tar_data']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '1');
             $explodedata =  explode("-", $consulta['tar_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tar_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tar_id']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
 
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
 
             $Relesp = $this->modelRelatorios->selectTarrafaHasEspCapturadas('tar_id = ' . $consulta['tar_id']);
 
             $coluna++;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -2687,20 +2700,20 @@ class RelatoriosController extends Zend_Controller_Action
         }
         foreach ($relatorioVaraPesca as $key => $consulta):
 
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
             $explodedata =  explode("-", $consulta['dvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['vp_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[1]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodedata[0]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['vp_id']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
 
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow( ++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
 
 
             $Relesp = $this->modelRelatorios->selectVaraPescaHasEspCapturadas('vp_id = ' . $consulta['vp_id']);
@@ -2708,12 +2721,12 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
 
@@ -2730,7 +2743,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         $fim1 = microtime(true);
 
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(1, $linha, $fim1 - $inicio1);
+        $sheet->setCellValueByColumnAndRow(1, $linha, $fim1 - $inicio1);
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
 
@@ -2765,46 +2778,47 @@ class RelatoriosController extends Zend_Controller_Action
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
         $quant = 37;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saida');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saida');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Volta');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Volta');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Combustivel');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Oleo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Alimento');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Gelo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Lances');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de panos');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Roda');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tamanhos');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Altura');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Malha');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Malha2');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Malha3');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Linhas');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Anzóis Por Linha');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Armadilhas');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Isca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Maré');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado da Maré');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Calão');
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Entrevista');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saida');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Saida');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Volta');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Hora Volta');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo Gasto');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Pescadores');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Combustivel');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Oleo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Alimento');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Gelo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Lances');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de panos');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Roda');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tamanhos');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Altura');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Malha');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Malha2');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Malha3');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Linhas');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Anzóis Por Linha');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Armadilhas');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Isca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Maré');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado da Maré');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Calão');
 
         
         
@@ -2826,62 +2840,62 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna= 0;
 
         foreach ( $relatorioCalao as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '1');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_tempogasto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_npanos']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_tamanho']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_altura']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_malha']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_malha1']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_malha2']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '1');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_tempogasto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_npanos']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_tamanho']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_altura']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_malha']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_malha1']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_malha2']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
             $consulta['cal_motor'] = $this->motor($consulta['cal_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tcat_tipo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tcat_tipo']);
             
             $Pesqueiros = $this->modelRelatorios->selectCalaoHasPesqueiro('cal_id = '.$consulta['cal_id']);
                 
             $coluna++;
             foreach($Pesqueiros as $key => $nome):
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
             endforeach;
             
             $coluna = 2+$quant;
             $Relesp = $this->modelRelatorios->selectCalaoHasEspCapturadas('cal_id = '.$consulta['cal_id']);
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna=0;
@@ -2896,68 +2910,68 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioColeta = $this->modelRelatorios->selectColetaManual("fd_data between '". $data."'"." and '".$datafim."'");
         }
         foreach ( $relatorioColeta as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
             if($consulta['dias'] == '0'){
                 $consulta['dias']= '1';
             }
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_tempogasto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_tempogasto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
             $consulta['cml_mreviva'] = $this->mare($consulta['cml_mreviva']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_mreviva']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_mreviva']);
             $consulta['cml_motor'] = $this->motor($consulta['cml_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_obs']);
             
             
             $Pesqueiros = $this->modelRelatorios->selectColetaManualHasPesqueiro('cml_id = '.$consulta['cml_id']);
                 
             $coluna++;
             foreach($Pesqueiros as $key => $nome):
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
             endforeach;
             
             $coluna = 2+$quant;
             $Relesp = $this->modelRelatorios->selectColetaManualHasEspCapturadas('cml_id = '.$consulta['cml_id']);
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -2974,49 +2988,49 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("fd_data between '". $data."'"." and '".$datafim."'");
         }
         foreach($relatorioEmalhe as $key=> $consulta):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dlancamento']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hlancamento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['drecolhimento']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hrecolhimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_diesel']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_oleo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_alimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_gelo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');            
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_numpanos']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_tamanho']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_altura']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_malha']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dlancamento']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hlancamento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['drecolhimento']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hrecolhimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_diesel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_oleo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_alimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_gelo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');            
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_numpanos']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_tamanho']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_altura']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_malha']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
             $consulta['em_motor'] = $this->motor($consulta['em_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_obs']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
 
             $Pesqueiros = $this->modelRelatorios->selectEmalheHasPesqueiro('em_id = '.$consulta['em_id']);
              $coluna++;
             foreach($Pesqueiros as $key => $nome):
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
             endforeach;
             
             
@@ -3024,12 +3038,12 @@ class RelatoriosController extends Zend_Controller_Action
             $Relesp = $this->modelRelatorios->selectEmalheHasEspCapturadas('em_id = '.$consulta['em_id']);
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -3044,53 +3058,53 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."'");
         }
         foreach ( $relatorioGrosseira as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_numpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_diesel']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_oleo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_alimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_gelo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_numlinhas']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_numanzoisplinha']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_numanzoisplinha']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['isc_id']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_numpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_diesel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_oleo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_alimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_gelo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_numlinhas']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_numanzoisplinha']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_numanzoisplinha']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['isc_id']);
             $consulta['grs_motor'] = $this->motor($consulta['grs_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_obs']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
             $Pesqueiros = $this->modelRelatorios->selectGrosseiraHasPesqueiro('grs_id = '.$consulta['grs_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= 2+$quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectGrosseiraHasEspCapturadas('grs_id = '.$consulta['grs_id']);
@@ -3098,12 +3112,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= 2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -3119,54 +3133,54 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."'");
         }
         foreach ( $relatorioJerere as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_tempogasto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_combustivel']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_numarmadilhas']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_numarmadilhas']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_tempogasto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_combustivel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_numarmadilhas']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_numarmadilhas']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
             $consulta['jre_motor'] = $this->motor($consulta['jre_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
             $consulta['jre_mreviva'] = $this->mare($consulta['jre_mreviva']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_mreviva']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_obs']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_mreviva']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
             $Pesqueiros = $this->modelRelatorios->selectJerereHasPesqueiro('jre_id = '.$consulta['jre_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= 2+$quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectJerereHasEspCapturadas('jre_id = '.$consulta['jre_id']);
@@ -3174,12 +3188,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= 2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -3195,56 +3209,56 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."'");
         }
         foreach ( $relatorioLinha as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_numpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_diesel']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_oleo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_alimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_gelo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_numlinhas']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_numanzoisplinha']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['isc_tipo']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_numpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_diesel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_oleo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_alimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_gelo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_numlinhas']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_numanzoisplinha']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['isc_tipo']);
             
             $consulta['lin_motor'] = $this->motor($consulta['lin_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
 	
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_obs']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
 
             $Pesqueiros = $this->modelRelatorios->selectLinhaHasPesqueiro('lin_id = '.$consulta['lin_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= $quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectLinhaHasEspCapturadas('lin_id = '.$consulta['lin_id']);
@@ -3252,12 +3266,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= 2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -3273,55 +3287,55 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."'");
         }
         foreach ( $relatorioLinhaFundo as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_tempogasto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_diesel']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_oleo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_alimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_gelo']);
-	    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');            
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_numlinhas']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_numanzoisplinha']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['isc_tipo']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_tempogasto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_diesel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_oleo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_alimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_gelo']);
+	    $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');            
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_numlinhas']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_numanzoisplinha']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['isc_tipo']);
             
             $consulta['lf_motor'] = $this->motor($consulta['lf_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_obs']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
             
             $Pesqueiros = $this->modelRelatorios->selectLinhaFundoHasPesqueiro('lf_id = '.$consulta['lf_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= $quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectLinhaFundoHasEspCapturadas('lf_id = '.$consulta['lf_id']);
@@ -3329,12 +3343,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= 2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -3350,54 +3364,54 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."'");
         }
         foreach ( $relatorioManzua as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_tempogasto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_combustivel']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_numarmadilhas']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_tempogasto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_combustivel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_numarmadilhas']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
             $consulta['man_motor'] = $this->motor($consulta['man_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
             $consulta['man_mreviva'] = $this->mare($consulta['man_mreviva']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_mreviva']);  
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_obs']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_mreviva']);  
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
             $Pesqueiros = $this->modelRelatorios->selectManzuaHasPesqueiro('man_id = '.$consulta['man_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= +$quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectManzuaHasEspCapturadas('man_id = '.$consulta['man_id']);
@@ -3405,12 +3419,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= 2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -3426,55 +3440,55 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."'");
         }
         foreach ( $relatorioMergulho as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_tempogasto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_tempogasto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
             $consulta['mer_motor'] = $this->motor($consulta['mer_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
             $consulta['mer_mreviva'] = $this->mare($consulta['mer_mreviva']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_mreviva']);      
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_obs']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_mreviva']);      
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
             
             $Pesqueiros = $this->modelRelatorios->selectMergulhoHasPesqueiro('mer_id = '.$consulta['mer_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= $quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectMergulhoHasEspCapturadas('mer_id = '.$consulta['mer_id']);
@@ -3482,12 +3496,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= 2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -3503,54 +3517,54 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."'");
         }
         foreach ( $relatorioRatoeira as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_tempogasto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_combustivel']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_numarmadilhas']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_tempogasto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_combustivel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_numarmadilhas']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
             $consulta['rat_motor'] = $this->motor($consulta['rat_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
             $consulta['rat_mreviva'] = $this->mare($consulta['rat_mreviva']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_mreviva']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_obs']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_mreviva']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
             $Pesqueiros = $this->modelRelatorios->selectRatoeiraHasPesqueiro('rat_id = '.$consulta['rat_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= $quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectRatoeiraHasEspCapturadas('rat_id = '.$consulta['rat_id']);
@@ -3558,12 +3572,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= 2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -3579,55 +3593,55 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."'");
         }
         foreach ( $relatorioSiripoia as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_tempogasto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_combustivel']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_numarmadilhas']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_tempogasto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_combustivel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_numarmadilhas']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
             $consulta['sir_motor'] = $this->motor($consulta['sir_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
             $consulta['sir_mreviva'] = $this->mare($consulta['sir_mreviva']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_mreviva']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_obs']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_mreviva']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
             
             $Pesqueiros = $this->modelRelatorios->selectSiripoiaHasPesqueiro('sir_id = '.$consulta['sir_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= $quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectSiripoiaHasEspCapturadas('sir_id = '.$consulta['sir_id']);
@@ -3635,12 +3649,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= 2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -3656,49 +3670,49 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."'");
         }
         foreach ( $relatorioTarrafa as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '1');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_tempogasto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_numlances']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_roda']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_altura']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_malha']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_data']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_data']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '1');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_tempogasto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_numlances']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_roda']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_altura']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_malha']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
             $consulta['tar_motor'] = $this->motor($consulta['tar_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
             $Pesqueiros = $this->modelRelatorios->selectTarrafaHasPesqueiro('tar_id = '.$consulta['tar_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= $quant;
                 
@@ -3707,12 +3721,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= 2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -3729,56 +3743,56 @@ class RelatoriosController extends Zend_Controller_Action
         }
         foreach ( $relatorioVaraPesca as $key => $consulta ):
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_tempogasto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_quantpescadores']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_diesel']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_oleo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_alimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_gelo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_numlinhas']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_numanzoisplinha']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['isc_tipo']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['fd_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hsaida']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['hvolta']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_tempogasto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_quantpescadores']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_diesel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_oleo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_alimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_gelo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_numlinhas']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_numanzoisplinha']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['isc_tipo']);
             $consulta['vp_motor'] = $this->motor($consulta['vp_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
             $consulta['vp_mreviva'] = $this->mare($consulta['vp_mreviva']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_mreviva']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_mreviva']);
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_obs']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
             
             $Pesqueiros = $this->modelRelatorios->selectVaraPescaHasPesqueiro('vp_id = '.$consulta['vp_id']);
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 $coluna= $quant;
                 foreach($Pesqueiros as $key => $tempo):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
                 $Relesp = $this->modelRelatorios->selectVaraPescaHasEspCapturadas('vp_id = '.$consulta['vp_id']);
@@ -3786,12 +3800,12 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= 2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
                 if($coluna < $lastcolumn){
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna++, $linha, '0');
+                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
             $coluna = 0;
@@ -3800,7 +3814,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         $fim1 = microtime(true);
         
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(1, $linha, $fim1-$inicio1);
+        $sheet->setCellValueByColumnAndRow(1, $linha, $fim1-$inicio1);
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
 
@@ -3830,27 +3844,28 @@ class RelatoriosController extends Zend_Controller_Action
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mês');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Não Monitorados');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Contagem de Entrevistas Monitoradas');
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mês');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Não Monitorados');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Contagem de Entrevistas Monitoradas');
         
         $coluna= 0;
         $linha++;
         foreach ( $monitoramentos as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
             if($consulta['monitorados'] == ''){
                 $consulta['monitorados'] = 0;
             }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
             $coluna=0;
             $linha++;
         endforeach;    
@@ -3883,24 +3898,25 @@ class RelatoriosController extends Zend_Controller_Action
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Espécie');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Nome Comum');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Peso Total');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Quantidade Total');
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Espécie');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Nome Comum');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Peso Total');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Quantidade Total');
         
         $coluna= 0;
         $linha++;
         foreach ( $monitoramentos as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['arte']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['quantidade']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['arte']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['quantidade']);
             $coluna=0;
             $linha++;
         endforeach;    
@@ -3932,24 +3948,25 @@ class RelatoriosController extends Zend_Controller_Action
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mês/Ano');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Nome Comum');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Peso Total');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Quantidade Total');
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte de pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mês/Ano');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Nome Comum');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Peso Total');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Quantidade Total');
         
         $coluna= 0;
         $linha++;
         foreach ( $monitoramentos as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['arte']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes'].'/'.$consulta['ano']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['quantidade']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['arte']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes'].'/'.$consulta['ano']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['quantidade']);
             $coluna=0;
             $linha++;
         endforeach;    
@@ -3982,33 +3999,34 @@ class RelatoriosController extends Zend_Controller_Action
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Porto de Desembarque');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Pescador');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Projeto');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Monitoramentos em Arrasto de Fundo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Calão');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Coleta Manual');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Emalhe');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Grosseira');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Jereré');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Linha');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Linha de Fundo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Manzuá');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mergulho');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ratoeira');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Siripoia');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tarrafa');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Vara de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Total de Monitoramentos');
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Porto de Desembarque');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Pescador');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Projeto');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Monitoramentos em Arrasto de Fundo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Calão');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Coleta Manual');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Emalhe');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Grosseira');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Jereré');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Linha');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Linha de Fundo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Manzuá');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mergulho');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Ratoeira');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Siripoia');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tarrafa');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Vara de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Total de Monitoramentos');
         
         $coluna= 0;
         $linha++;
         foreach ( $pescadores as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tpr_descricao']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tpr_descricao']);
             $coluna=0;
             $linha++;
         endforeach;
@@ -4017,7 +4035,7 @@ class RelatoriosController extends Zend_Controller_Action
         $linha = 2;
         $coluna+=3;
         foreach ( $arrasto as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
             $linha++;
         endforeach;
         $linha = 2;
@@ -4025,7 +4043,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         $calao = $this->modelRelatorios->selectPescadorByCalao();
         foreach ( $calao as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
             $linha++;
         endforeach;
         $linha = 2;
@@ -4033,7 +4051,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         $coleta = $this->modelRelatorios->selectPescadorByColeta();
         foreach ( $coleta as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
             $linha++;
         endforeach;
         $linha = 2;
@@ -4041,7 +4059,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         $emalhe = $this->modelRelatorios->selectPescadorByEmalhe();
         foreach ( $emalhe as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
             $linha++;
         endforeach;
         $linha = 2;
@@ -4049,7 +4067,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         $grosseira = $this->modelRelatorios->selectPescadorByGrosseira();
         foreach ( $grosseira as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
             $linha++;
         endforeach;
         $linha = 2;
@@ -4057,7 +4075,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         $jerere = $this->modelRelatorios->selectPescadorByJerere();
         foreach ( $jerere as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
             $linha++;
         endforeach;
         $linha = 2;
@@ -4065,7 +4083,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         $linha_pesca = $this->modelRelatorios->selectPescadorByLinha();
         foreach ( $linha_pesca as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
             $linha++;
         endforeach;
         $linha = 2;
@@ -4073,7 +4091,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         $linhafundo = $this->modelRelatorios->selectPescadorByLinhaFundo();
         foreach ( $linhafundo as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
             $linha++;
         endforeach;
         $linha = 2;
@@ -4081,7 +4099,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         $manzua = $this->modelRelatorios->selectPescadorByManzua();
         foreach ( $manzua as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
             $linha++;
         endforeach;
         $linha = 2;
@@ -4089,7 +4107,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         $mergulho = $this->modelRelatorios->selectPescadorByMergulho();
         foreach ( $mergulho as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
             $linha++;
         endforeach;
         $linha = 2;
@@ -4097,7 +4115,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         $ratoeira = $this->modelRelatorios->selectPescadorByRatoeira();
         foreach ( $ratoeira as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
             $linha++;
         endforeach;
         $linha = 2;
@@ -4105,7 +4123,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         $siripoia = $this->modelRelatorios->selectPescadorBySiripoia();
         foreach ( $siripoia as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
             $linha++;
         endforeach;
         $linha = 2;
@@ -4113,7 +4131,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         $tarrafa = $this->modelRelatorios->selectPescadorByTarrafa();
         foreach ( $tarrafa as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
             $linha++;
         endforeach;
         $linha = 2;
@@ -4121,7 +4139,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         $varapesca = $this->modelRelatorios->selectPescadorByVaraPesca();
         foreach ( $varapesca as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['quantidade']);
             $linha++;
         endforeach;
         $ultimaLinha = $linha;
@@ -4132,12 +4150,12 @@ class RelatoriosController extends Zend_Controller_Action
         $j = 2;
         for($i; $i < $ultimaLinha; $i++):
             $formula = '=SUM(D'.$i.':Q'.$i.')';
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $formula);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $formula);
             $linha++;
         endfor;
         
         $formula = '=SUM(R'.$j.':R'.($i-1).')';
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $formula);
+        $sheet->setCellValueByColumnAndRow($coluna, $linha, $formula);
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
@@ -4167,22 +4185,23 @@ class RelatoriosController extends Zend_Controller_Action
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna,   $linha, 'Espécie');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Valor Máximo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Valor Mínimo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Média Geral');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'ID');
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Espécie');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Valor Máximo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Valor Mínimo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Média Geral');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'ID');
         
         $coluna= 0;
         $linha++;
         foreach ( $monitoramentos as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['esp_nome_comum']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['max']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['min']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['media']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_id']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['esp_nome_comum']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['max']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['min']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['media']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_id']);
             $coluna=0;
             $linha++;
         endforeach;    
@@ -4242,18 +4261,19 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna = 0;
         $linha = 1;
         
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Arrasto de Fundo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Pesqueiro');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Espécie');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Nome Comum');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Sexo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Maturidade');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Comprimento da Carapaça');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Peso');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data da Entrevista');
+        $sheet = $objPHPExcel->getActiveSheet();
+        $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Arrasto de Fundo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Entrevista');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Pesqueiro');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Espécie');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Nome Comum');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Sexo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Maturidade');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Comprimento da Carapaça');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Peso');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data da Entrevista');
 
         
         $coluna= 0;
@@ -4261,25 +4281,25 @@ class RelatoriosController extends Zend_Controller_Action
         
         foreach ( $arrasto as $key => $consulta ):
             $pesqueiroArrasto = $modelArrasto->selectArrastoHasPesqueiro('af_id = '.$consulta['af_id'],null, 1);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  "Arrasto de Fundo");
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_id']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  "Arrasto de Fundo");
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_id']);
             if(empty($pesqueiroArrasto)){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
                 }
             else{
                 foreach($pesqueiroArrasto as $key => $pesqueiro):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
                 endforeach;
             }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbc_sexo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tmat_tipo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbc_comprimento_cabeca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbc_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbc_sexo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tmat_tipo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbc_comprimento_cabeca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbc_peso']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
         endforeach; 
@@ -4370,16 +4390,17 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna = 0;
         $linha = 1;
         
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Arte de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Pesqueiro');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Espécie');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Nome Comum');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Sexo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Comprimento');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Peso');
+        $sheet = $objPHPExcel->getActiveSheet();
+        $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Arte de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Entrevista');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Pesqueiro');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Espécie');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Nome Comum');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Sexo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Comprimento');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Peso');
 
         
         $coluna= 0;
@@ -4387,24 +4408,24 @@ class RelatoriosController extends Zend_Controller_Action
         
         foreach ( $arrasto as $key => $consulta ):
             $pesqueiroArrasto = $modelArrasto->selectArrastoHasPesqueiro('af_id = '.$consulta['af_id'],null, 1);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Arrasto de Fundo');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_id']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Arrasto de Fundo');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_id']);
             if(empty($pesqueiroArrasto)){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
                 }
             else{
                 foreach($pesqueiroArrasto as $key => $pesqueiro):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
                 endforeach;
                 }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             
             $coluna=0;
             $linha++;
@@ -4414,24 +4435,24 @@ class RelatoriosController extends Zend_Controller_Action
         
         foreach ( $calao as $key => $consulta ):
             $pesqueirocalao = $modelCalao->selectCalaoHasPesqueiro('cal_id = '.$consulta['cal_id'],null, 1);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Calão');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_id']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Calão');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_id']);
             if(empty($pesqueirocalao)){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
             }
             else{
                 foreach($pesqueirocalao as $key => $pesqueiro):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
                 endforeach;
             }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
             $coluna=0;
             $linha++;
         endforeach; 
@@ -4441,24 +4462,24 @@ class RelatoriosController extends Zend_Controller_Action
         
         foreach ( $coletamanual as $key => $consulta ):
             $pesqueirocoletamanual = $modelColetaManual->selectColetaManualHasPesqueiro('cml_id = '.$consulta['cml_id'],null, 1);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Coleta Manual');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_id']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Coleta Manual');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_id']);
             if(empty($pesqueirocoletamanual)){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
                 }
             else{
                 foreach($pesqueirocoletamanual as $key => $pesqueiro):
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
+                        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
                 endforeach;
             }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
         endforeach; 
@@ -4470,24 +4491,24 @@ class RelatoriosController extends Zend_Controller_Action
         
         foreach ( $emalhe as $key => $consulta ):
             $pesqueiroemalhe = $modelEmalhe->selectEmalheHasPesqueiro('em_id = '.$consulta['em_id'],null, 1);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Emalhe');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_id']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Emalhe');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_id']);
             if(empty($pesqueiroemalhe)){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
                 }
             else{
                 foreach($pesqueiroemalhe as $key => $pesqueiro):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
                 endforeach;
             }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['drecolhimento']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['drecolhimento']));
             $coluna=0;
             $linha++;
         endforeach; 
@@ -4496,24 +4517,24 @@ class RelatoriosController extends Zend_Controller_Action
         
         foreach ( $grosseira as $key => $consulta ):
             $pesqueirogrosseira = $modelGrosseira->selectGrosseiraHasPesqueiro('grs_id = '.$consulta['grs_id'],null, 1);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Groseira');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_id']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Groseira');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_id']);
             if(empty($pesqueirogrosseira)){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
                 }
             else{    
                 foreach($pesqueirogrosseira as $key => $pesqueiro):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
                 endforeach;
                 }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
         endforeach; 
@@ -4522,24 +4543,24 @@ class RelatoriosController extends Zend_Controller_Action
         
         foreach ( $jerere as $key => $consulta ):
             $pesqueirojerere = $modelJerere->selectJerereHasPesqueiro('jre_id = '.$consulta['jre_id'],null, 1);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Jereré');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_id']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Jereré');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_id']);
             if(empty($pesqueirogrosseira)){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
                 }
             else{
                 foreach($pesqueirojerere as $key => $pesqueiro):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
                 endforeach;
                 }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
         endforeach; 
@@ -4548,24 +4569,24 @@ class RelatoriosController extends Zend_Controller_Action
         
         foreach ( $pescalinha as $key => $consulta ):
             $pesqueirolinha = $modelLinha->selectLinhaHasPesqueiro('lin_id = '.$consulta['lin_id'],null, 1);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Linha');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_id']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Linha');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_id']);
             if(empty($pesqueirolinha)){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
                 }
             else{
                 foreach($pesqueirolinha as $key => $pesqueiro):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
                 endforeach;
             }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
             $linha++;
         endforeach; 
@@ -4574,26 +4595,26 @@ class RelatoriosController extends Zend_Controller_Action
         
         foreach ( $linhafundo as $key => $consulta ):
             $pesqueirolinhafundo = $modelLinhaFundo->selectLinhaFundoHasPesqueiro('lf_id = '.$consulta['lf_id'],null, 1);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Linha de Fundo');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_id']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Linha de Fundo');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_id']);
             if(empty($pesqueirolinhafundo)){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
                 }
             else{
                 foreach($pesqueirolinhafundo as $key => $pesqueiro):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
                 endforeach;
             }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
-            $linhafundo++;
+            $linha++;
         endforeach; 
         
         
@@ -4601,156 +4622,156 @@ class RelatoriosController extends Zend_Controller_Action
         
         foreach ( $manzua as $key => $consulta ):
             $pesqueiromanzua = $modelManzua->selectManzuaHasPesqueiro('man_id = '.$consulta['man_id'],null, 1);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Manzuá');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_id']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Manzuá');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_id']);
             if(empty($pesqueiromanzua)){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
                 }
             else{
                 foreach($pesqueiromanzua as $key => $pesqueiro):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
                 endforeach;
                 }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
-            $manzua++;
+            $linha++;
         endforeach; 
         
         
         
         foreach ( $mergulho as $key => $consulta ):
             $pesqueiromergulho = $modelMergulho->selectMergulhoHasPesqueiro('mer_id = '.$consulta['mer_id'],null, 1);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Mergulho');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_id']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Mergulho');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_id']);
             if(empty($pesqueiromergulho)){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
                 }
             else{
                 foreach($pesqueiromergulho as $key => $pesqueiro):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
                 endforeach;
                 }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
-            $mergulho++;
+            $linha++;
         endforeach; 
         
         
         
         foreach ( $ratoeira as $key => $consulta ):
             $pesqueiroratoeira = $modelRatoeira->selectRatoeiraHasPesqueiro('rat_id = '.$consulta['rat_id'],null, 1);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Ratoeira');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_id']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Ratoeira');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_id']);
             if(empty($pesqueiroratoeira)){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
                 }
             else{
                 foreach($pesqueiroratoeira as $key => $pesqueiro):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
                 endforeach;
             }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
-            $ratoeira++;
+            $linha++;
         endforeach; 
         
         
         
         foreach ( $siripoia as $key => $consulta ):
             $pesqueirosiripoia = $modelSiripoia->selectSiripoiaHasPesqueiro('sir_id = '.$consulta['sir_id'],null, 1);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Siripóia');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_id']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Siripóia');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_id']);
             if(empty($pesqueirosiripoia)){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
                 }
             else{
                 foreach($pesqueirosiripoia as $key => $pesqueiro):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
                 endforeach;
                 }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
-            $siripoia++;
+            $linha++;
         endforeach; 
         
         
         
         foreach ( $tarrafa as $key => $consulta ):
             $pesqueirotarrafa = $modelTarrafa->selectTarrafaHasPesqueiro('tar_id = '.$consulta['tar_id'],null, 1);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Tarrafa');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_id']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Tarrafa');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_id']);
             if(empty($pesqueirotarrafa)){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
                 }
             else{
                 foreach($pesqueirotarrafa as $key => $pesqueiro):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
                 endforeach;
             }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_data']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_data']);
             $coluna=0;
-            $tarrafa++;
+            $linha++;
         endforeach; 
         
         
         
         foreach ( $varapesca as $key => $consulta ):
             $pesqueirovarapesca = $modelVaraPesca->selectVaraPescaHasPesqueiro('vp_id = '.$consulta['vp_id'],null, 1);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Vara de Pesca');
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_id']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Vara de Pesca');
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_id']);
             if(empty($pesqueirovarapesca)){
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, '');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
                 }
             else{
                 foreach($pesqueirovarapesca as $key => $pesqueiro):
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
+                    $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $pesqueiro['paf_pesqueiro']);
                 endforeach;
             }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esp_nome_comum']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna=0;
-            $varapesca++;
+            $linha++;
         endforeach; 
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
@@ -4799,82 +4820,83 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna = 0;
         $linha = 1;
         
-         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'ID Embarcacao');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Proprietario');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Possui Outras Embarcacoes?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Maximo de Tripulantes');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tripulacao');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Cozinheiro?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Comprimento Total');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Comprimento da Boca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Comprimento do Calado');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arqueadura');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Registro');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto de Origem');
-	$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Casco');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano de Compra');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado de Conservação');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado da Embarcacao');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Está Paga?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Como foi o Pagamento');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Financiador');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano da Construção');
+        $sheet =$objPHPExcel->getActiveSheet();
+        $sheet->setCellValueByColumnAndRow($coluna, $linha, 'ID Embarcacao');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Proprietario');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mestre');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Possui Outras Embarcacoes?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Maximo de Tripulantes');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tripulacao');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Cozinheiro?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Barco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Comprimento Total');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Comprimento da Boca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Comprimento do Calado');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arqueadura');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Número de Registro');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto de Origem');
+	$sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Casco');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano de Compra');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado de Conservação');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado da Embarcacao');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Está Paga?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Como foi o Pagamento');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Financiador');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano da Construção');
         
         
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Propulsao');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Motor');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Modelo do Motor');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Marca do Motor');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Potencia');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Combustivel');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Capacidade de Armazenamento');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Posto de Combustivel');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano do motor');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado do Motor');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Já está pago?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Como foi o Pagamento?');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Finaciador');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano de Fabricacao do Motor');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Gasto Mensal com Manutencao');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Propulsao');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Motor');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Modelo do Motor');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Marca do Motor');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Potencia');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Combustivel');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Capacidade de Armazenamento');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Posto de Combustivel');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano do motor');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado do Motor');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Já está pago?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Como foi o Pagamento?');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Finaciador');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano de Fabricacao do Motor');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Gasto Mensal com Manutencao');
         
         
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Atuacao Batimetrica');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Autonomia no Mar');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Frequencia de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Horario de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Capacidade de Armazenamento');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Conservacao do Pescado');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Colonia');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino do Pescado');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Outra Renda');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Estação que mais pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Estação que menos pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Concorrência');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo de Atividade');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Data da entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Entrevistador');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Digitador');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Para quem vende');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Atuacao Batimetrica');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Autonomia no Mar');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Frequencia de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Horario de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Capacidade de Armazenamento');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Conservacao do Pescado');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Colonia');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino do Pescado');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Outra Renda');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Estação que mais pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Estação que menos pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Concorrência');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tempo de Atividade');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data da entrevista');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Entrevistador');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Digitador');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Para quem vende');
         
         $coluna= 0;
         $linha++;
         
         foreach ( $embarcacao as $key => $consulta ):
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['bar_id']);
-            //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   $consulta['pto_id_desembarque']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-            //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_id_proprietario']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['proprietario']);
-            //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_id_mestre']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mestre']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_quant_embarcacoes']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_max_tripulantes']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['bar_id']);
+            //$sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['pto_id_desembarque']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+            //$sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_id_proprietario']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['proprietario']);
+            //$sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_id_mestre']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mestre']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_quant_embarcacoes']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_max_tripulantes']);
             if($consulta['ted_tripulacao'] == '0'){
                 $consulta['ted_tripulacao'] = 'Não Informado';
             }
@@ -4885,7 +4907,7 @@ class RelatoriosController extends Zend_Controller_Action
                 $consulta['ted_tripulacao'] = 'Fixa';
             }
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_tripulacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_tripulacao']);
             if($consulta['ted_cozinheiro'] == '0'){
                 $consulta['ted_cozinheiro'] = 'Não Informado';
             }
@@ -4895,16 +4917,16 @@ class RelatoriosController extends Zend_Controller_Action
             else if($consulta['ted_cozinheiro'] == '2'){
                 $consulta['ted_cozinheiro'] = 'Sim';
             }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_cozinheiro']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_comp_total']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_comp_boca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_altura_calado']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_arqueadura']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_num_registro']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_id_origem']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tcas_tipo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_ano_compra']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_cozinheiro']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tte_tipoembarcacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_comp_total']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_comp_boca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_altura_calado']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_arqueadura']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_num_registro']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_id_origem']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tcas_tipo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_ano_compra']);
             if($consulta['ted_estado_conservacao'] == '0'){
                 $consulta['ted_estado_conservacao'] = 'Não Informado';
             }
@@ -4914,7 +4936,7 @@ class RelatoriosController extends Zend_Controller_Action
             else if($consulta['ted_estado_conservacao'] == '2'){
                 $consulta['ted_estado_conservacao'] = 'Usada';
             }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_estado_conservacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_estado_conservacao']);
             if($consulta['ted_estado'] == '0'){
                 $consulta['ted_estado'] = 'Não Informado';
             }
@@ -4927,7 +4949,7 @@ class RelatoriosController extends Zend_Controller_Action
             else if($consulta['ted_estado'] == '3'){
                 $consulta['ted_estado'] = 'Péssimo';
             }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_estado']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_estado']);
             if($consulta['ted_pagamento'] == '0'){
                 $consulta['ted_pagamento'] = 'Não Informado';
             }
@@ -4937,10 +4959,10 @@ class RelatoriosController extends Zend_Controller_Action
             else if($consulta['ted_pagamento'] == '2'){
                 $consulta['ted_pagamento'] = 'Sim';
             }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_pagamento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tpg_pagamento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tfin_financiador']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_ano_construcao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_pagamento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tpg_pagamento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tfin_financiador']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ted_ano_construcao']);
             
             $motor = $modelRelatorios->selectMotorEmbarcacao('ted_id ='. $consulta['ted_id']);
             if($consulta['tme_propulsao'] == '0'){
@@ -4955,11 +4977,11 @@ class RelatoriosController extends Zend_Controller_Action
             else if($consulta['tme_propulsao'] == '3'){
                 $consulta['tme_propulsao'] = 'Remo';
             }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_propulsao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tmot_tipo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tmod_modelo']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tmar_marca']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_potencia']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_propulsao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tmot_tipo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tmod_modelo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tmar_marca']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_potencia']);
             if($consulta['tme_combustivel'] == '0'){
                 $consulta['tme_combustivel'] = 'Não Informado';
             }
@@ -4972,36 +4994,36 @@ class RelatoriosController extends Zend_Controller_Action
             else if($consulta['tme_combustivel'] == '3'){
                 $consulta['tme_combustivel'] = 'Remo';
             }
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_combustivel']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_armazenamento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tpc_posto']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_ano_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_estado_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_pagamento_motor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tpg_pagamento']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tfin_financiador']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_ano_motor_fabricacao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_obs']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_gasto_mensal']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_combustivel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_armazenamento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tpc_posto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_ano_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_estado_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_pagamento_motor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tpg_pagamento']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tfin_financiador']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_ano_motor_fabricacao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_obs']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $motor[0]['tme_gasto_mensal']);
             
             $atuacao = $modelRelatorios->selectAtuacaoEmbarcacao('ted_id ='. $consulta['ted_id']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['tae_atuacao_batimatrica']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['tae_autonomia']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['tfp_frequencia']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['thp_horario']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['tae_capacidade']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['tcp_conserva']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['tc_nome']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['dp_destino']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['ttr_descricao']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['maior']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['menor']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['tae_concorrencia']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['tae_tempo_atividade']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['tae_data']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['entrevistador']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['digitador']);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['dp_id_venda']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['tae_atuacao_batimatrica']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['tae_autonomia']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['tfp_frequencia']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['thp_horario']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['tae_capacidade']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['tcp_conserva']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['tc_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['dp_destino']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['ttr_descricao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['maior']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['menor']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['tae_concorrencia']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['tae_tempo_atividade']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['tae_data']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['entrevistador']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['digitador']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['dp_id_venda']);
 
 
             $coluna=0;
@@ -5515,48 +5537,48 @@ class RelatoriosController extends Zend_Controller_Action
         $coluna = 0;
         $linha = 1;
         
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   'Arte de Pesca (n)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Arrasto de Fundo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Arrasto de Praia');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Arrasto de Rio');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Calão');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Coleta Manual');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Emalhe');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Groseira');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Jereré');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Linha');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Linha de Fundo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Manzuá');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Mergulho');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Ratoeira');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Siripoia');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Tarrafa');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'VaraPesca');
+        $sheet->setCellValueByColumnAndRow($coluna, $linha,   'Arte de Pesca (n)');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Arrasto de Fundo');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Arrasto de Praia');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Arrasto de Rio');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Calão');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Coleta Manual');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Emalhe');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Groseira');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Jereré');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Linha');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Linha de Fundo');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Manzuá');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Mergulho');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Ratoeira');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Siripoia');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Tarrafa');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'VaraPesca');
         $linha = 1;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Amendoeira');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Pontal');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Prainha');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Terminal Pesqueiro');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto da Barra');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'São Miguel');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mamoã');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ponta da Tulha');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ponta do Ramo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Aritaguá');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Juerana');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Sambaituba');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Urucutuca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Pé de Serra');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Sobradinho');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Vila Badu');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto da Concha');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto do Forte');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Amendoeira');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Pontal');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Prainha');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Terminal Pesqueiro');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto da Barra');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'São Miguel');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mamoã');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Ponta da Tulha');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Ponta do Ramo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Aritaguá');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Juerana');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Sambaituba');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Urucutuca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Pé de Serra');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Sobradinho');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Vila Badu');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto da Concha');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto do Forte');
 
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
             $quantEntrArrasto = $modelArrasto->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrArrasto[0]['count']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrArrasto[0]['count']);
             $coluna++;
             //$linha++;
         endforeach;
@@ -5567,7 +5589,7 @@ class RelatoriosController extends Zend_Controller_Action
         $linha++;
         foreach ( $arrayPortos as $porto ):
             $quantEntrAP = $modelCalao->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND  pto_nome = '".$porto."' And tcat_tipo = 'Arrasto de Praia'");
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrAP[0]['count']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrAP[0]['count']);
             $coluna++;
             //$linha++;
         endforeach; 
@@ -5576,7 +5598,7 @@ class RelatoriosController extends Zend_Controller_Action
         $linha++;
         foreach ( $arrayPortos as $porto ):
             $quantEntrAR = $modelCalao->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."' And tcat_tipo = 'Arrasto de Rio'");
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrAR[0]['count']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrAR[0]['count']);
             $coluna++;
             //$linha++;
         endforeach;
@@ -5585,7 +5607,7 @@ class RelatoriosController extends Zend_Controller_Action
         $linha++;
         foreach ( $arrayPortos as $porto ):
             $quantEntrCalao = $modelCalao->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."' And tcat_tipo = 'Calão'");
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrCalao[0]['count']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrCalao[0]['count']);
             $coluna++;
             //$linha++;
         endforeach; 
@@ -5594,7 +5616,7 @@ class RelatoriosController extends Zend_Controller_Action
         $linha++;
         foreach ( $arrayPortos as $porto ):
             $quantEntrColetaManual = $modelColetaManual->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrColetaManual[0]['count']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrColetaManual[0]['count']);
             $coluna++;
             //$linha++;
         endforeach; 
@@ -5603,7 +5625,7 @@ class RelatoriosController extends Zend_Controller_Action
         $linha++;
         foreach ( $arrayPortos as $porto ):
             $quantEntrEmalhe = $modelEmalhe->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrEmalhe[0]['count']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrEmalhe[0]['count']);
             $coluna++;
             //$linha++;
         endforeach; 
@@ -5612,7 +5634,7 @@ class RelatoriosController extends Zend_Controller_Action
         $linha++;
         foreach ( $arrayPortos as $porto ):
             $quantEntrGrosseira = $modelGrosseira->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrGrosseira[0]['count']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrGrosseira[0]['count']);
             $coluna++;
             //$linha++;
         endforeach; 
@@ -5621,7 +5643,7 @@ class RelatoriosController extends Zend_Controller_Action
         $linha++;
         foreach ( $arrayPortos as $porto ):
             $quantEntrJerere = $modelJerere->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrJerere[0]['count']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrJerere[0]['count']);
             $coluna++;
             //$linha++;
         endforeach; 
@@ -5630,7 +5652,7 @@ class RelatoriosController extends Zend_Controller_Action
         $linha++;
         foreach ( $arrayPortos as $porto ):
             $quantEntrLinha = $modelLinha->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrLinha[0]['count']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrLinha[0]['count']);
             $coluna++;
             //$linha++;
         endforeach; 
@@ -5639,7 +5661,7 @@ class RelatoriosController extends Zend_Controller_Action
         $linha++;
         foreach ( $arrayPortos as $porto ):
             $quantEntrLinhaFundo = $modelLinhaFundo->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrLinhaFundo[0]['count']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrLinhaFundo[0]['count']);
             $coluna++;
             //$linha++;
         endforeach; 
@@ -5648,7 +5670,7 @@ class RelatoriosController extends Zend_Controller_Action
         $linha++;
         foreach ( $arrayPortos as $porto ):
             $quantEntrManzua = $modelManzua->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrManzua[0]['count']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrManzua[0]['count']);
             $coluna++;
             //$linha++;
         endforeach; 
@@ -5657,7 +5679,7 @@ class RelatoriosController extends Zend_Controller_Action
         $linha++;
         foreach ( $arrayPortos as $porto ):
             $quantEntrMergulho = $modelMergulho->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrMergulho[0]['count']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrMergulho[0]['count']);
             $coluna++;
             //$linha++;
         endforeach; 
@@ -5666,7 +5688,7 @@ class RelatoriosController extends Zend_Controller_Action
         $linha++;
         foreach ( $arrayPortos as $porto ):
             $quantEntrRatoeira = $modelRatoeira->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrRatoeira[0]['count']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrRatoeira[0]['count']);
             $coluna++;
             //$linha++;
         endforeach; 
@@ -5675,7 +5697,7 @@ class RelatoriosController extends Zend_Controller_Action
         $linha++;
         foreach ( $arrayPortos as $porto ):
             $quantEntrSiripoia = $modelSiripoia->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrSiripoia[0]['count']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrSiripoia[0]['count']);
             $coluna++;
             //$linha++;
         endforeach; 
@@ -5684,7 +5706,7 @@ class RelatoriosController extends Zend_Controller_Action
         $linha++;
         foreach ( $arrayPortos as $porto ):
             $quantEntrTarrafa = $modelTarrafa->selectEntrevistasByPorto("tar_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrTarrafa[0]['count']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrTarrafa[0]['count']);
             $coluna++;
             //$linha++;
         endforeach; 
@@ -5693,79 +5715,79 @@ class RelatoriosController extends Zend_Controller_Action
         $linha++;
         foreach ( $arrayPortos as $porto ):
             $quantEntrVaraPesca = $modelVaraPesca->selectEntrevistasByPorto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto."'");
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrVaraPesca[0]['count']);
+            $sheet->setCellValueByColumnAndRow($coluna, $linha,  $quantEntrVaraPesca[0]['count']);
             $coluna++;
             //$linha++;
         endforeach; 
         
         $coluna=0;
         $linha++;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,  'Total');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(B2:B17)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(C2:C17)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(D2:D17)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(E2:E17)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(F2:F17)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(G2:G17)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(H2:H17)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(I2:I17)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(J2:J17)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(K2:K17)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(L2:L17)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(M2:M17)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(N2:N17)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(O2:O17)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(P2:P17)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(Q2:Q17)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(R2:R17)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(S2:S17)');
+        $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Total');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(B2:B17)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(C2:C17)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(D2:D17)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(E2:E17)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(F2:F17)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(G2:G17)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(H2:H17)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(I2:I17)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(J2:J17)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(K2:K17)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(L2:L17)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(M2:M17)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(N2:N17)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(O2:O17)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(P2:P17)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(Q2:Q17)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(R2:R17)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha,  '=SUM(S2:S17)');
         
         $linha+=2;
         $coluna = 0;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha,   'Arte de Pesca (%)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Arrasto de Fundo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Arrasto de Praia');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Arrasto de Rio');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Calão');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Coleta Manual');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Emalhe');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Groseira');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Jereré');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Linha');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Linha de Fundo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Manzuá');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Mergulho');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Ratoeira');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Siripoia');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'Tarrafa');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, ++$linha, 'VaraPesca');
+        $sheet->setCellValueByColumnAndRow($coluna, $linha,   'Arte de Pesca (%)');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Arrasto de Fundo');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Arrasto de Praia');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Arrasto de Rio');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Calão');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Coleta Manual');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Emalhe');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Groseira');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Jereré');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Linha');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Linha de Fundo');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Manzuá');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Mergulho');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Ratoeira');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Siripoia');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'Tarrafa');
+        $sheet->setCellValueByColumnAndRow($coluna, ++$linha, 'VaraPesca');
         $linha -=16;
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Amendoeira');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Pontal');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Prainha');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Terminal Pesqueiro');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto da Barra');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'São Miguel');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mamoã');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ponta da Tulha');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ponta do Ramo');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Aritaguá');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Juerana');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Sambaituba');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Urucutuca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Pé de Serra');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Sobradinho');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Vila Badu');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto da Concha');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto do Forte');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Amendoeira');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Pontal');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Prainha');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Terminal Pesqueiro');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto da Barra');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'São Miguel');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mamoã');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Ponta da Tulha');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Ponta do Ramo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Aritaguá');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Juerana');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Sambaituba');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Urucutuca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Pé de Serra');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Sobradinho');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Vila Badu');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto da Concha');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto do Forte');
         $linha++;
 
         
         for($linhaAux=2; $linhaAux<19; $linhaAux++){
             for($coluna=1; $coluna<19; $coluna++){
-                $valEntrevistas = $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, $linhaAux)->getFormattedValue();
-                $valTotal = $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($coluna, 18)->getFormattedValue();
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $valEntrevistas/$valTotal*100);
+                $valEntrevistas = $sheet->getCellByColumnAndRow($coluna, $linhaAux)->getFormattedValue();
+                $valTotal = $sheet->getCellByColumnAndRow($coluna, 18)->getFormattedValue();
+                $sheet->setCellValueByColumnAndRow($coluna, $linha, $valEntrevistas/$valTotal*100);
             }
             $linha++;
         }
@@ -5840,6 +5862,7 @@ class RelatoriosController extends Zend_Controller_Action
         // Attach the "My Data" worksheet as the first worksheet in the PHPExcel object
         $objPHPExcel->addSheet($myWorkSheet, 0);
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
 
@@ -5877,39 +5900,39 @@ class RelatoriosController extends Zend_Controller_Action
             $varapesca =$modelVaraPesca->selectEstimativaByPorto();
          }  
 
-         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Artes de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mês');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Monitoradoss (n)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Monitorada (kg)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Média');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Não Monitorados');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Não Monitorada (kg)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Total de Monitoramentos');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Total Estimada (kg)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Total Estimada (t)');
+         $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Artes de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mês');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Monitoradoss (n)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Monitorada (kg)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Média');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Não Monitorados');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Não Monitorada (kg)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Total de Monitoramentos');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Total Estimada (kg)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Total Estimada (t)');
          
         $linha++;
         $coluna = 0;
          foreach ( $arrasto as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
                 $media = $this->divisao($consulta['peso'],$consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $media);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $media);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
                 $capturaNaoMonitorada = $media*$consulta['naomonitorados'];
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
                 $capturaTotal = $consulta['peso']+$capturaNaoMonitorada;
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
                 
                 $coluna=0;
                 $linha++;
@@ -5917,220 +5940,220 @@ class RelatoriosController extends Zend_Controller_Action
          
         
         foreach ( $calao as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
                 $media = $this->divisao($consulta['peso'],$consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $media);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $media);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
                 $capturaNaoMonitorada = $media*$consulta['naomonitorados'];
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
                 $capturaTotal = $consulta['peso']+$capturaNaoMonitorada;
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
                 
                 $coluna=0;
                 $linha++;
         endforeach; 
         
         foreach ( $emalhe as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
                 $media = $this->divisao($consulta['peso'],$consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $media);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $media);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
                 $capturaNaoMonitorada = $media*$consulta['naomonitorados'];
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
                 $capturaTotal = $consulta['peso']+$capturaNaoMonitorada;
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
                 
                 $coluna=0;
                 $linha++;
         endforeach; 
         
         foreach ( $grosseira as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
                 $media = $this->divisao($consulta['peso'],$consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $media);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $media);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
                 $capturaNaoMonitorada = $media*$consulta['naomonitorados'];
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
                 $capturaTotal = $consulta['peso']+$capturaNaoMonitorada;
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
                 
                 $coluna=0;
                 $linha++;
         endforeach;
         
         foreach ( $jerere as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
                 $media = $this->divisao($consulta['peso'],$consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $media);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $media);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
                 $capturaNaoMonitorada = $media*$consulta['naomonitorados'];
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
                 $capturaTotal = $consulta['peso']+$capturaNaoMonitorada;
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
                 
                 $coluna=0;
                 $linha++;
         endforeach;
         
         foreach ( $pescalinha as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
                 $media = $this->divisao($consulta['peso'],$consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $media);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $media);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
                 $capturaNaoMonitorada = $media*$consulta['naomonitorados'];
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
                 $capturaTotal = $consulta['peso']+$capturaNaoMonitorada;
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
                 
                 $coluna=0;
                 $linha++;
         endforeach;
         
         foreach ( $linhafundo as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
                 $media = $this->divisao($consulta['peso'],$consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $media);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $media);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
                 $capturaNaoMonitorada = $media*$consulta['naomonitorados'];
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
                 $capturaTotal = $consulta['peso']+$capturaNaoMonitorada;
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
                 
                 $coluna=0;
                 $linha++;
         endforeach;
         
         foreach ( $manzua as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
                 $media = $this->divisao($consulta['peso'],$consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $media);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $media);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
                 $capturaNaoMonitorada = $media*$consulta['naomonitorados'];
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
                 $capturaTotal = $consulta['peso']+$capturaNaoMonitorada;
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
                 
                 $coluna=0;
                 $linha++;
         endforeach;
         
         foreach ( $mergulho as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
                 $media = $this->divisao($consulta['peso'],$consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $media);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $media);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
                 $capturaNaoMonitorada = $media*$consulta['naomonitorados'];
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
                 $capturaTotal = $consulta['peso']+$capturaNaoMonitorada;
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
                 
                 $coluna=0;
                 $linha++;
         endforeach;
         
         foreach ( $tarrafa as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
                 $media = $this->divisao($consulta['peso'],$consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $media);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $media);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
                 $capturaNaoMonitorada = $media*$consulta['naomonitorados'];
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
                 $capturaTotal = $consulta['peso']+$capturaNaoMonitorada;
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
                 
                 $coluna=0;
                 $linha++;
         endforeach;
         
         foreach ( $varapesca as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
                 $media = $this->divisao($consulta['peso'],$consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $media);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $media);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
                 $capturaNaoMonitorada = $media*$consulta['naomonitorados'];
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
                 $capturaTotal = $consulta['peso']+$capturaNaoMonitorada;
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
                 
                 $coluna=0;
                 $linha++;
@@ -6144,78 +6167,78 @@ class RelatoriosController extends Zend_Controller_Action
         $objPHPExcel->setActiveSheetIndex(1);
         $linha = 1;
         
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Local');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Artes de Pesca');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Mês');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Monitorados (n)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Monitorada (n)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Média');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Não Monitorados');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Não Monitorada (n)');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Total de Monitoramentos');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Total Estimada (n)');
+        $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Local');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Artes de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mês');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Monitorados (n)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Monitorada (n)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Média');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Não Monitorados');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Não Monitorada (n)');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Total de Monitoramentos');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Total Estimada (n)');
         
         $linha++;
         $coluna=0;
         foreach ( $coletamanual as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['quantidade']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['quantidade']);
                 $media = $this->divisao($consulta['quantidade'],$consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $media);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $media);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
                 $capturaNaoMonitorada = $media*$consulta['naomonitorados'];
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
                 $capturaTotal = $consulta['quantidade']+$capturaNaoMonitorada;
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
                 
                 $coluna=0;
                 $linha++;
         endforeach; 
         foreach ( $ratoeira as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['quantidade']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['quantidade']);
                 $media = $this->divisao($consulta['quantidade'],$consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $media);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $media);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
                 $capturaNaoMonitorada = $media*$consulta['naomonitorados'];
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
                 $capturaTotal = $consulta['quantidade']+$capturaNaoMonitorada;
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
                 
                 $coluna=0;
                 $linha++;
         endforeach; 
         
         foreach ( $siripoia as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['quantidade']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['quantidade']);
                 $media = $this->divisao($consulta['quantidade'],$consulta['monitorados']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $media);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $media);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
                 $capturaNaoMonitorada = $media*$consulta['naomonitorados'];
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
                 $capturaTotal = $consulta['quantidade']+$capturaNaoMonitorada;
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
                 
                 $coluna=0;
                 $linha++;
@@ -6245,6 +6268,7 @@ class RelatoriosController extends Zend_Controller_Action
            
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
 //
@@ -6296,21 +6320,21 @@ class RelatoriosController extends Zend_Controller_Action
                                                     $tarrafa,   
                                                     $varapesca);
             
-         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Arte');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Id da Entrevista');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Id Monitoramento');
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte Monitorada');
+         $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Arte');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Id da Entrevista');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Id Monitoramento');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Arte Monitorada');
 //         
         $linha++;
         $coluna = 0;
          foreach ( $arrasto as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Arrasto de Fundo');
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Arrasto de Fundo');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
                 
                 $coluna=0;
                 $linha++;
@@ -6318,118 +6342,118 @@ class RelatoriosController extends Zend_Controller_Action
          
 //        
         foreach ( $calao as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Calão');
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Calão');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
 
                 $coluna=0;
                 $linha++;
         endforeach; 
 //        
         foreach ( $emalhe as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Emalhe');
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Emalhe');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
                 $coluna=0;
                 $linha++;
         endforeach; 
 //        
         foreach ( $grosseira as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Espinhel/Groseira');
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Espinhel/Groseira');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
                 
                 $coluna=0;
                 $linha++;
         endforeach;
 //        
         foreach ( $jerere as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Jereré');
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Jereré');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['jre_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
                 
                 $coluna=0;
                 $linha++;
         endforeach;
 //        
         foreach ( $pescalinha as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Linha');
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Linha');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
                 $coluna=0;
                 $linha++;
         endforeach;
 //        
         foreach ( $linhafundo as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Linha de Fundo');
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Linha de Fundo');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lf_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
                 
                 $coluna=0;
                 $linha++;
         endforeach;
 //        
         foreach ( $manzua as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Manzuá');
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Manzuá');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
                 
                 $coluna=0;
                 $linha++;
         endforeach;
 //        
         foreach ( $mergulho as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Mergulho');
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Mergulho');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mer_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
                 
                 $coluna=0;
                 $linha++;
         endforeach;
         
         foreach ( $tarrafa as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Tarrafa');
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Tarrafa');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
                 
                 $coluna=0;
                 $linha++;
         endforeach;
 //        
         foreach ( $varapesca as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Vara de Pesca');
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Vara de Pesca');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['vp_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
                 
                 $coluna=0;
                 $linha++;
@@ -6438,12 +6462,12 @@ class RelatoriosController extends Zend_Controller_Action
 
 
         foreach ( $coletamanual as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Coleta Manual');
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Coleta Manual');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
 
                 
                 $coluna=0;
@@ -6451,23 +6475,23 @@ class RelatoriosController extends Zend_Controller_Action
         endforeach; 
         
         foreach ( $ratoeira as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Ratoeira');
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Ratoeira');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['rat_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
                 $coluna=0;
                 $linha++;
         endforeach; 
         
         foreach ( $siripoia as $key => $consulta ):
-                //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($coluna, $linha, 'Siripoia');
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
-                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Siripoia');
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['sir_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
                 
                 $coluna=0;
                 $linha++;
