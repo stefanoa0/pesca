@@ -474,11 +474,13 @@ private $usuario;
         header("Content-type: application/x-pdf");
 		echo $pdf->render();
     }
-
-    public function relatorioAction(){
+    public function acesso(){
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
         }
+    }
+    public function relatorioAction(){
+        
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 

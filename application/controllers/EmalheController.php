@@ -61,6 +61,11 @@ class EmalheController extends Zend_Controller_Action
         $this->redirect('emalhe/pescadores/id/'.$fichadiaria['fd_id'].'/idMonitoramento/'.$monitoramento['fd_id'].'/bar_id/'.$idBarco);
         }
     }
+    public function acesso(){
+    if($this->usuario['tp_id']==5){
+            $this->_redirect('index');
+        }
+    }
     public function naoexiste($var){
         if(empty($var)){
             $this->redirect('exception/naoexiste');

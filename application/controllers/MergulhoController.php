@@ -101,11 +101,13 @@ class MergulhoController extends Zend_Controller_Action
 
         $this->view->assign("dados", $dados);
     }
-
-    public function editarAction(){
+    public function acesso(){
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
         }
+    }
+    public function editarAction(){
+        $this->acesso();
         //$avistamentoMergulho = new Application_Model_DbTable_VMergulhoHasAvistamento();
         $entrevista = $this->modelMergulho->find($this->_getParam('id'));
         $this->naoexiste($entrevista);

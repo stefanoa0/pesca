@@ -38,7 +38,11 @@ private $usuario;
         $this->modelTipoVenda = new Application_Model_TipoVenda();
         $this->modelMaturidade = new Application_Model_Maturidade();
     }
-
+    public function acesso(){
+    if($this->usuario['tp_id']==5){
+            $this->_redirect('index');
+        }
+    }
     public function indexAction()
     {
         $pescadores = $this->modelPescador->select(null, 'tp_nome');

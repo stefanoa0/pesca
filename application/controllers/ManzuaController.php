@@ -43,6 +43,11 @@ class ManzuaController extends Zend_Controller_Action
             $this->redirect('exception/naoexiste');
         }
     }
+    public function acesso(){
+    if($this->usuario['tp_id']==5){
+            $this->_redirect('index');
+        }
+    }
     public function indexAction()
     {
         $pescadores = $this->modelPescador->select(null, 'tp_nome');

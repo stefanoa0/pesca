@@ -37,6 +37,12 @@ class LinhaController extends Zend_Controller_Action
         $this->modelMaturidade = new Application_Model_Maturidade();
 
     }
+    
+    public function acesso(){
+        if($this->usuario['tp_id']==5){
+            $this->_redirect('index');
+        }
+    }
     public function indexAction()
     {
         $pescadores = $this->modelPescador->select(null, 'tp_nome');
@@ -124,7 +130,7 @@ class LinhaController extends Zend_Controller_Action
         $this->view->assign('especies',$especies);
         $this->view->assign('porto', $porto[0]);
     }
-
+    
 public function visualizarAction() {
         $ent_id = $this->_getParam("ent_id");
         $ent_pescador = $this->_getParam("tp_nome");
