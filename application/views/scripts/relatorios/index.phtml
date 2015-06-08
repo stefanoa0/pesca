@@ -90,12 +90,12 @@
 </form> 
 
 <fieldset>
-    <legend> Relatórios Gerados: </legend>
+    <legend> Histórico de Relatórios Gerados: </legend>
     <ul>
         <?php if($dh = opendir('files')){ 
             while(($file = readdir($dh)) !== false){ 
                 if($file !== '.' && $file !== '..'){
-                    echo '<a class="relatorio" href="files/'.$file.'" download>'.$file.'</a>'; 
+                    echo '<img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="files/'.$file.'" download>'.$file.'</a>'; 
                     echo '  <a href="relatorios/deleterelatorio/nome/'.$file.'/diretorio/files">Deletar</a><br/>';
                 }
                 
@@ -166,4 +166,7 @@
     <p><span> Os relatórios com o ícone </span><img src="img/pdf-icon.png" class="icon-relatorios"/> <span>estão no formato PDF.</span></p>
 <p><span> Os relatórios com o ícone </span><img src="img/xls-icon.png" class="icon-relatorios"/> <span>estão no formato XLS (EXCEL).</span></p>
 <p><span>Alguns relatórios possuem consultas complexas, demorando assim de serem gerados.</span></p>
+<p><span>Os Relatórios Gerados serão adicionados na área de Histórico de Relatorios Gerados, no qual podem ser baixados novamente.</span></p>
+<p><span>O formato do nome dos Relatórios é: relatórioArteDePesca_Data que foi gerado_Tipo de Relatório_Parâmetros de Data inicial e final_Porto Escolhido  </span></p>
+
 </div>
