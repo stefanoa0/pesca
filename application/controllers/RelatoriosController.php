@@ -116,6 +116,9 @@ class RelatoriosController extends Zend_Controller_Action
     }
     
     public function deleterelatorioAction(){
+        if($this->usuario['tp_id']==5){
+            $this->_redirect('index');
+        }
         $relatorio = $this->_getParam('nome');
         $diretorio = $this->_getParam('diretorio');
         
@@ -309,7 +312,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         ob_end_clean();
         $objWriter->save('php://output');
-        //$objWriter->save('files/relatorioArrasto_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
+        $objWriter->save('files/relatorioArrasto_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
     }
     
     
