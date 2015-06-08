@@ -183,6 +183,7 @@ class RelatoriosController extends Zend_Controller_Action
         return $explode[2].'/'.$explode[1].'/'.$explode[0];
     }
     public function relatoriocompletoarrastoAction() {
+        $inicio1 = microtime(true);
         set_time_limit(0);
 //        if($this->usuario['tp_id']==5){
 //            $this->_redirect('index');
@@ -247,6 +248,8 @@ class RelatoriosController extends Zend_Controller_Action
         else{
             $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."'");
         }
+        $Pesqueiros = $this->modelRelatorios->selectArrastoHasPesqueiro();
+        $Relesp = $this->modelRelatorios->selectArrastoHasEspCapturadas(null, 'esp_nome_comum');
         $linha = 2;
         $coluna= 0;
         
@@ -274,23 +277,27 @@ class RelatoriosController extends Zend_Controller_Action
                 $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
                 $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_obs']);
 
-                $Pesqueiros = $this->modelRelatorios->selectArrastoHasPesqueiro('af_id = '.$consulta['af_id']);
+                
                 
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
+                    if($nome['af_id'] == $consulta['af_id']):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    endif;
                 endforeach;
                 $coluna= $maxPesqueiros[0]['count']+$quant;
                 foreach($Pesqueiros as $key => $tempo):
+                    if($tempo['af_id'] == $consulta['af_id']):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempopesqueiro']);
+                    endif;
                 endforeach;
                 
-                $Relesp = $this->modelRelatorios->selectArrastoHasEspCapturadas('af_id = '.$consulta['af_id'], 'esp_nome_comum');
+                
                 
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                   if($esp['af_id'] == $consulta['af_id'] && $esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
                         $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
@@ -302,7 +309,10 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna = 0;
             $linha++;
         endforeach;
-
+        
+        $fim1 = microtime(true);
+        
+        $sheet->setCellValueByColumnAndRow(1, $linha, $fim1-$inicio1);
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
 
@@ -311,8 +321,9 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
         
         ob_end_clean();
+        $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
-        $objWriter->save('files/relatorioArrasto_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
+        $objWriter->save('files/relatorioArrasto_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
     }
     
     
@@ -444,6 +455,7 @@ class RelatoriosController extends Zend_Controller_Action
 
         ob_end_clean();
         $objWriter->save('php://output');
+        $objWriter->save('files/relatorioColetaManual_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
     }
     
     
@@ -575,7 +587,10 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
+        $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
+        $objWriter->save('files/relatorioCalao_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
+
     }
     
     public function relatoriocompletoemalheAction() {
@@ -602,6 +617,7 @@ class RelatoriosController extends Zend_Controller_Action
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
         $quant = 25;
@@ -709,7 +725,10 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
+        $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
+        $objWriter->save('files/relatorioEmalhe_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
+
     }
     
     public function relatoriocompletogroseiraAction() {
@@ -846,7 +865,9 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
+        $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
+        $objWriter->save('files/relatorioGroseira_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
     }
     
     public function relatoriocompletojerereAction() {
@@ -982,7 +1003,10 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
+        $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
+        $objWriter->save('files/relatorioJerere_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
+
     }
     
    public function relatoriocompletolinhaAction() {
@@ -1118,7 +1142,10 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
+        $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
+        $objWriter->save('files/relatorioLinha_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
+
     }
     
     public function relatoriocompletolinhafundoAction() {
@@ -1256,7 +1283,10 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
+        $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
+        $objWriter->save('files/relatorioLinhaFundo_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
+
     }
     
      public function relatoriocompletomanzuaAction() {
@@ -1392,7 +1422,10 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
+        $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
+        $objWriter->save('files/relatorioManzua_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
+
     }
     
     public function relatoriocompletomergulhoAction() {
@@ -1524,7 +1557,10 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
+        $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
+        $objWriter->save('files/relatorioMergulho_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
+
     }
     
     
@@ -1661,7 +1697,10 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
+        $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
+        $objWriter->save('files/relatorioRatoeira_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
+
     }
     
     public function relatoriocompletosiripoiaAction() {
@@ -1794,7 +1833,10 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
+        $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
+        $objWriter->save('files/relatorioSiripoia_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
+
     }
     
     public function relatoriocompletotarrafaAction() {
@@ -1920,7 +1962,10 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
+        $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
+        $objWriter->save('files/relatorioTarrafa_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
+
     }
     
     public function relatoriocompletovarapescaAction() {
@@ -2068,7 +2113,10 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
+        $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
+        $objWriter->save('files/relatorioVaraPesca_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
+
     }
     
     
@@ -2755,7 +2803,10 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
+        $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
+        $objWriter->save('files/relatorioCompletoResumido_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
+
     }
 
     public function relatoriocompletoAction() {
@@ -4317,7 +4368,9 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
+        $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
+        $objWriter->save('files/relatorioBiometriasCamarao_'.$dataGerado.'_De_'.$data.'_Ate_'.$datafim.'.xls');
     }
     
     public function biometriaspeixeAction(){
@@ -4746,7 +4799,7 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_sexo']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_comprimento']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tbp_peso']);
-            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tar_data']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['tar_data']));
             $coluna=0;
             $linha++;
         endforeach; 
@@ -4785,7 +4838,10 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
+        $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
+        $objWriter->save('files/relatorioBiometriasPeixe_'.$dataGerado.'_De_'.$data.'_Ate_'.$datafim.'.xls');
+
     }
     
     public function embarcacaodetalhadaAction(){
@@ -5041,7 +5097,9 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
+        $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
+        $objWriter->save('files/relatorioEmbarcacaoDetalhada_'.$dataGerado.'.xls');
     }
     
     public function formataData($data){
@@ -5496,7 +5554,9 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
+        $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
+        $objWriter->save('files/relatorioCPUE_'.$dataGerado.'_De_'.$data.'_Ate_'.$datafim.'.xls');
     }
     
     
@@ -5537,6 +5597,7 @@ class RelatoriosController extends Zend_Controller_Action
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
         
@@ -6255,7 +6316,10 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
 
         ob_end_clean();
+        $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
+        $objWriter->save('files/relatorioEstimativasCapturas_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
+
     }
     
     public function monitoramentosartepescaAction(){

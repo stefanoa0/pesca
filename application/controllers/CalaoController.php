@@ -440,9 +440,9 @@ private $usuario;
         $this->redirect("/calao/tablebiopeixe/id/" . $idEntrevista);
     }
     public function relatoriolistaAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+//        if($this->usuario['tp_id']==5){
+//            $this->_redirect('index');
+//        }
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 
