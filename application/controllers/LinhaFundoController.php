@@ -38,7 +38,11 @@ class LinhaFundoController extends Zend_Controller_Action
         $this->modelTipoVenda = new Application_Model_TipoVenda();
         $this->modelMaturidade = new Application_Model_Maturidade();
     }
-
+    public function acesso(){
+        if($this->usuario['tp_id'] == 5){
+            $this->_redirect('index');
+        }
+    }
     public function indexAction()
     {
         $pescadores = $this->modelPescador->select(null, 'tp_nome');
@@ -163,9 +167,8 @@ class LinhaFundoController extends Zend_Controller_Action
         $this->view->assign('porto', $porto[0]);
     }
     public function criarAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        
+        $this->acesso();
         $idLinhaFundo = $this->modelLinhaFundo->insert($this->_getAllParams());
 
 
@@ -187,9 +190,7 @@ class LinhaFundoController extends Zend_Controller_Action
     }
 
     public function atualizarAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idLinhaFundo = $this->_getParam('id_entrevista');
         $monitoramento = $this->modelMonitoramento->select('mnt_id='.$this->_getParam('id_monitoramento'));
         
@@ -204,9 +205,7 @@ class LinhaFundoController extends Zend_Controller_Action
     }
 
     public function excluirAction() {
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->modelLinhaFundo->delete($this->_getParam('id'));
 
         $idFicha = $this->_getParam('id_ficha');
@@ -229,9 +228,7 @@ class LinhaFundoController extends Zend_Controller_Action
         $this->view->assign('vLinhaFundo', $vLinhaFundo);
     }
     public function insertpesqueiroAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -250,9 +247,7 @@ class LinhaFundoController extends Zend_Controller_Action
         $this->redirect("/linha-fundo/tablepesqueiro/id/" . $idEntrevista);
     }
     public function deletepesqueiroAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -279,9 +274,7 @@ class LinhaFundoController extends Zend_Controller_Action
         $this->view->assign('vEspecieCapturadas', $vEspecieCapturadas);
     }
     public function insertespeciecapturadaAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -305,9 +298,7 @@ class LinhaFundoController extends Zend_Controller_Action
         $this->redirect("/linha-fundo/tableespcaptura/id/" . $idEntrevista);
     }
     public function deletespecieAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -333,9 +324,7 @@ class LinhaFundoController extends Zend_Controller_Action
         $this->view->assign('vLinhaFundoAvistamento', $vLinhaFundoAvistamento);
     }    
     public function insertavistamentoAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -348,9 +337,7 @@ class LinhaFundoController extends Zend_Controller_Action
         $this->redirect("/linha-fundo/tableavistamento/id/" . $idEntrevista);
     }
     public function deleteavistamentoAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -373,9 +360,7 @@ class LinhaFundoController extends Zend_Controller_Action
         $this->view->assign('vBioCamarao', $vBioCamarao);
     }
     public function insertbiocamaraoAction() {
-    if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
@@ -396,9 +381,7 @@ class LinhaFundoController extends Zend_Controller_Action
         $this->redirect("/linha-fundo/tablebiocamarao/id/" . $idEntrevista);
     }
     public function deletebiocamaraoAction() {
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -422,9 +405,7 @@ class LinhaFundoController extends Zend_Controller_Action
         $this->view->assign('vBioPeixe', $vBioPeixe);
     }
     public function insertbiopeixeAction() {
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
@@ -443,9 +424,7 @@ class LinhaFundoController extends Zend_Controller_Action
         $this->redirect("/linha-fundo/tablebiopeixe/id/" . $idEntrevista);
     }
     public function deletebiopeixeAction() {
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
@@ -457,9 +436,7 @@ class LinhaFundoController extends Zend_Controller_Action
         $this->redirect("/linha-fundo/tablebiopeixe/id/" . $idEntrevista);
     }
    public function relatoriolistaAction(){
-                if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+            //$this->acesso();
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 
@@ -493,9 +470,7 @@ class LinhaFundoController extends Zend_Controller_Action
 		echo $pdf->render();
     }
     public function relatorioAction(){
-        if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
+        //$this->acesso();
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 

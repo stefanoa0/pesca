@@ -427,36 +427,35 @@ class MergulhoController extends Zend_Controller_Action
         $this->redirect("/mergulho/tablebiopeixe/id/" . $idEntrevista);
     }
     public function relatoriolistaAction(){
-		$this->_helper->layout->disableLayout();
-		$this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
 
-		$localModelMergulho = new Application_Model_Mergulho();
-		$localMergulho = $localModelMergulho->selectEntrevistaMergulho(NULL, array('fd_id', 'mnt_id', 'mer_id'), NULL);
+        $localModelMergulho = new Application_Model_Mergulho();
+        $localMergulho = $localModelMergulho->selectEntrevistaMergulho(NULL, array('fd_id', 'mnt_id', 'mer_id'), NULL);
 
-		require_once "../library/ModeloRelatorio.php";
-		$modeloRelatorio = new ModeloRelatorio();
-		$modeloRelatorio->setTitulo('Relatório Entrevista de Mergulho');
-		$modeloRelatorio->setLegenda(30, 'Ficha');
-		$modeloRelatorio->setLegenda(80, 'Monit.');
-		$modeloRelatorio->setLegenda(130, 'Mergulho');
-		$modeloRelatorio->setLegenda(180, 'Pescador');
-		$modeloRelatorio->setLegenda(350, 'Embarcação');
+        $modeloRelatorio = new ModeloRelatorio();
+        $modeloRelatorio->setTitulo('Relatório Entrevista de Mergulho');
+        $modeloRelatorio->setLegenda(30, 'Ficha');
+        $modeloRelatorio->setLegenda(80, 'Monit.');
+        $modeloRelatorio->setLegenda(130, 'Mergulho');
+        $modeloRelatorio->setLegenda(180, 'Pescador');
+        $modeloRelatorio->setLegenda(350, 'Embarcação');
 
-		foreach ( $localMergulho as $key => $localData ) {
-			$modeloRelatorio->setValueAlinhadoDireita(30, 40, $localData['fd_id']);
-			$modeloRelatorio->setValueAlinhadoDireita(80, 40, $localData['mnt_id']);
-			$modeloRelatorio->setValueAlinhadoDireita(130, 40, $localData['mer_id']);
-			$modeloRelatorio->setValue(180, $localData['tp_nome']);
-			$modeloRelatorio->setValue(350, $localData['bar_nome']);
-			$modeloRelatorio->setNewLine();
-		}
-		$modeloRelatorio->setNewLine();
-		$pdf = $modeloRelatorio->getRelatorio();
+        foreach ( $localMergulho as $key => $localData ) {
+                $modeloRelatorio->setValueAlinhadoDireita(30, 40, $localData['fd_id']);
+                $modeloRelatorio->setValueAlinhadoDireita(80, 40, $localData['mnt_id']);
+                $modeloRelatorio->setValueAlinhadoDireita(130, 40, $localData['mer_id']);
+                $modeloRelatorio->setValue(180, $localData['tp_nome']);
+                $modeloRelatorio->setValue(350, $localData['bar_nome']);
+                $modeloRelatorio->setNewLine();
+        }
+        $modeloRelatorio->setNewLine();
+        $pdf = $modeloRelatorio->getRelatorio();
 
-		ob_end_clean();
-		header('Content-Disposition: attachment;filename="rel_lista_entrevista_mergulho.pdf"');
-		header("Content-type: application/x-pdf");
-		echo $pdf->render();
+        ob_end_clean();
+        header('Content-Disposition: attachment;filename="rel_lista_entrevista_mergulho.pdf"');
+        header("Content-type: application/x-pdf");
+        echo $pdf->render();
     }
    public function relatorioAction(){
 		$this->_helper->layout->disableLayout();
@@ -469,7 +468,6 @@ class MergulhoController extends Zend_Controller_Action
 		$localEspecie = $localModelMergulho->selectMergulhoHasEspCapturadas(NULL, array('mer_id', 'esp_nome_comum'), NULL);
 		$localAvist = $localModelMergulho->selectMergulhoHasAvistamento(NULL, array('mer_id', 'avs_descricao'), NULL);
 
-		require_once "../library/ModeloRelatorio.php";
 		$modeloRelatorio = new ModeloRelatorio();
 		$modeloRelatorio->setTitulo('Relatório Entrevista de Mergulho');
 		$modeloRelatorio->setLegendaOff();

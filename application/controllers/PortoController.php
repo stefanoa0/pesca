@@ -1802,7 +1802,7 @@ class PortoController extends Zend_Controller_Action
         if($ano == ""){
             $ano = 2014;
         }
-        $porto = "Jueranas";
+        $porto = "Juerana";
         
         /* Artes desse porto:
          * Linha

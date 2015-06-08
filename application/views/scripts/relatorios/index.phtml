@@ -9,7 +9,7 @@
 <div id="titulos">
     <h2>Relatórios</h2>
 </div>
-<form action="<?= $this->url(array("controller" => "relatorios", "action" => "gerar"), null, true) ?>">
+<form action="<?= $this->url(array("controller" => "relatorios", "action" => "gerar"), null, true) ?>" target="_blank" method="post">
     <div class="esquerda">
     <fieldset>
         <legend>Entrevistas:</legend>
@@ -89,7 +89,7 @@
     </div>
 </form> 
 
-<!--<fieldset>
+<fieldset>
     <legend> Relatórios Gerados: </legend>
     <ul>
         <?php if($dh = opendir('files')){ 
@@ -104,7 +104,7 @@
             
            } ?>
     </ul>    
-</fieldset>   -->
+</fieldset>
     
 </fieldset>
 <fieldset> 

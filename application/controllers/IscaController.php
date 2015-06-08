@@ -24,7 +24,12 @@ class IscaController extends Zend_Controller_Action
         $contextSwitch = $this->_helper->getHelper('contextSwitch');
         $contextSwitch->addActionContext('insert', 'json')->initContext();
     }
-
+    public function acesso(){
+        if($this->usuario['tp_id']==15 | $this->usuario['tp_id'] ==17 | $this->usuario['tp_id']==21 | $this->usuario['tp_id'] == 5){
+            
+            $this->_redirect('index');
+        }
+    }
     public function indexAction()
     {
      $dadosIsca = $this->modelIsca->select(NULL, 'isc_tipo', NULL);
@@ -40,10 +45,7 @@ class IscaController extends Zend_Controller_Action
     }
     
     public function insertAction() {
-        if($this->usuario['tp_id']==15 | $this->usuario['tp_id'] ==17 | $this->usuario['tp_id']==21 | $this->usuario['tp_id'] == 5){
-            
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -56,51 +58,46 @@ class IscaController extends Zend_Controller_Action
         return;
     }
     public function deleteAction() {
-        if($this->usuario['tp_id']==15 | $this->usuario['tp_id'] ==17 | $this->usuario['tp_id']==21 | $this->usuario['tp_id'] == 5){
-           
-            $this->_redirect('index');
-        }
-        else{
+        $this->acesso();
+
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
         $this->modelIsca->delete($this->_getParam('isc_id'));
 
         $this->_redirect('isca/index');
-        }
+
     }
    	public function relatoriolistaAction() {
-            if($this->usuario['tp_id'] == 5){
-            $this->_redirect('index');
-        }
-		$this->_helper->layout->disableLayout();
-		$this->_helper->viewRenderer->setNoRender(true);
+            $this->acesso();
+            $this->_helper->layout->disableLayout();
+            $this->_helper->viewRenderer->setNoRender(true);
 
-		$localModelIsca = new Application_Model_Isca();
+            $localModelIsca = new Application_Model_Isca();
 
-		$localIsca = $localModelIsca->select(NULL, array('isc_tipo'), NULL);
+            $localIsca = $localModelIsca->select(NULL, array('isc_tipo'), NULL);
 
-		require_once "../library/ModeloRelatorio.php";
-		$modeloRelatorio = new ModeloRelatorio();
-		$modeloRelatorio->setTitulo('Relatório de Iscas');
+            require_once "../library/ModeloRelatorio.php";
+            $modeloRelatorio = new ModeloRelatorio();
+            $modeloRelatorio->setTitulo('Relatório de Iscas');
 
-		$modeloRelatorio->setLegenda(30, 'Código', '');
-		$modeloRelatorio->setLegenda(80, 'Isca', '');
+            $modeloRelatorio->setLegenda(30, 'Código', '');
+            $modeloRelatorio->setLegenda(80, 'Isca', '');
 
-		foreach ( $localIsca as $key => $localData ) {
-			$modeloRelatorio->setValueAlinhadoDireita(30, 40, $localData['isc_id']);
-			$modeloRelatorio->setValue(80, $localData['isc_tipo']);
+            foreach ( $localIsca as $key => $localData ) {
+                    $modeloRelatorio->setValueAlinhadoDireita(30, 40, $localData['isc_id']);
+                    $modeloRelatorio->setValue(80, $localData['isc_tipo']);
 
-			$modeloRelatorio->setNewLine();
-		}
+                    $modeloRelatorio->setNewLine();
+            }
 
-		$modeloRelatorio->setNewLine();
-		$pdf = $modeloRelatorio->getRelatorio();
+            $modeloRelatorio->setNewLine();
+            $pdf = $modeloRelatorio->getRelatorio();
 
-		ob_end_clean();
-		header('Content-Disposition: attachment;filename="rel_iscas.pdf"');
-		header("Content-type: application/x-pdf");
-		echo $pdf->render();
+            ob_end_clean();
+            header('Content-Disposition: attachment;filename="rel_iscas.pdf"');
+            header("Content-type: application/x-pdf");
+            echo $pdf->render();
    }
 }
 
