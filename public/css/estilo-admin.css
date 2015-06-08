@@ -407,6 +407,13 @@ input {
 input.tamanho{
     width: 50px;
 }
+input.tamanhoMalha{
+    width: 50px;
+    margin-top: -5px;
+}
+input.numlances{
+    margin-top: -12px;
+}
 input:focus{
     border-color: #af3333;
 }
