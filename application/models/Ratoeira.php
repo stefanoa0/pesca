@@ -505,7 +505,20 @@ class Application_Model_Ratoeira
 
         return $this->dbTableRatoeiraHasBioPeixe->fetchAll($select)->toArray();
     }
+    
+    public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
+        $this->dbTableRatoeiraHasBioPeixe = new Application_Model_DbTable_VRatoeiraHasBioPeixe();
+        $select = $this->dbTableRatoeiraHasBioPeixe->select()
+                ->from($this->dbTableRatoeiraHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->order($order)->limit($limit);
 
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableRatoeiraHasBioPeixe->fetchAll($select)->toArray();
+    }
+    
     public function selectEspeciesPeixesBiometrias()
     {
         $this->dbTableRatoeiraHasBioPeixe = new Application_Model_DbTable_VRatoeiraHasBioPeixe();

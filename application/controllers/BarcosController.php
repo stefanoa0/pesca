@@ -23,6 +23,42 @@ class BarcosController extends Zend_Controller_Action
         $this->usuario = $this->modelUsuario->selectLogin($identity2['tl_id']);
         $this->view->assign("usuario",$this->usuario);
         $this->modelBarcos = new Application_Model_Barcos();
+        $this->modelEmbarcacaoDetalhada = new Application_Model_EmbarcacaoDetalhada();
+        $this->modelPorto = new Application_Model_Porto();
+        $this->modelPescador = new Application_Model_Pescador();
+        $this->modelTipoBarcos = new Application_Model_TipoEmbarcacao();
+        $this->modelSeguroDefeso = new Application_Model_SeguroDefeso();
+        $this->modelMaterial = new Application_Model_Material();
+        $this->modelTipoCasco = new Application_Model_TipoCasco();
+        $this->modelTipoPagamento = new Application_Model_TipoPagamento();
+        $this->modelEquipamento = new Application_Model_Equipamento();
+        $this->modelFinanciador = new Application_Model_Financiador();
+        $this->modelTipoMotor = new Application_Model_TipoMotor();
+        $this->modelModelos = new Application_Model_Modelo();
+        $this->modelMarcas = new Application_Model_Marca();
+        $this->modelPostosCombustivel = new Application_Model_PostoCombustivel();
+        $this->modelFrequenciaPesca = new Application_Model_FrequenciaPesca();
+        $this->modelHorarioPesca = new Application_Model_HorarioPesca();
+        $this->modelColonia = new Application_Model_Colonia();
+        $this->modelConservacaoPescado = new Application_Model_ConservacaoPescado();
+        $this->modelDestinoPescado = new Application_Model_DestinoPescado();
+        $this->modelEstacaoAno = new Application_Model_EstacaoAno();
+        $this->modelTipoRenda = new Application_Model_TipoRenda();
+        
+        $this->modelArrasto = new Application_Model_ArrastoFundo();
+        $this->modelCalao= new Application_Model_Calao();
+        $this->modelColeta= new Application_Model_ColetaManual();
+        $this->modelEmalhe= new Application_Model_Emalhe();
+        $this->modelGrosseira= new Application_Model_Grosseira();
+        $this->modelJerere= new Application_Model_Jerere();
+        $this->modelLinha= new Application_Model_Linha();
+        $this->modelLinhaFundo= new Application_Model_LinhaFundo();
+        $this->modelManzua= new Application_Model_Manzua();
+        $this->modelMergulho= new Application_Model_Mergulho();
+        $this->modelRatoeira= new Application_Model_Ratoeira();
+        $this->modelSiripoia= new Application_Model_Siripoia();
+        $this->modelTarrafa= new Application_Model_Tarrafa();
+        $this->modelVaraPesca =  new Application_Model_VaraPesca();
     }
 
     public function indexAction()
@@ -87,7 +123,7 @@ class BarcosController extends Zend_Controller_Action
         $idBarco = $this->_getParam('id');
         $barco = $this->modelBarcos->select('bar_id = '.$idBarco);
         
-        $this->modelEmbarcacaoDetalhada = new Application_Model_EmbarcacaoDetalhada();
+        
         $embarcacaoDetalhada = $this->modelEmbarcacaoDetalhada->select('bar_id = '.$idBarco);
        
         
@@ -98,91 +134,71 @@ class BarcosController extends Zend_Controller_Action
         $this->view->assign("assignBarco", $barco);
         
     //DADOS DA EMBARÇAO----------------------------------------------------------------------        
-        $this->modelPorto = new Application_Model_Porto();
+        
         $portos = $this->modelPorto->select(null, 'pto_nome');
         $this->view->assign("assignPortos", $portos);
-        
-        $this->modelPescador = new Application_Model_Pescador();
+                
         $pescadores = $this->modelPescador->select(null, 'tp_nome');
         $this->view->assign("assignPescadores", $pescadores);
-        
-        $this->modelTipoBarcos = new Application_Model_TipoEmbarcacao();
+                
         $tipobarcos = $this->modelTipoBarcos->select(null,'tte_tipoembarcacao');
         $this->view->assign("assignTipoBarcos", $tipobarcos);
-        
-        $this->modelSeguroDefeso = new Application_Model_SeguroDefeso();
+                
         $segurodefeso = $this->modelSeguroDefeso->select(null, 'tsd_seguro');
         $this->view->assign("assignSeguroDefeso", $segurodefeso);
-        
-        $this->modelMaterial = new Application_Model_Material();
+               
         $material = $this->modelMaterial->select(null, 'tmt_material');
         $this->view->assign("assignMaterial", $material);
-        
-        $this->modelTipoCasco = new Application_Model_TipoCasco();
+               
         $tipocasco = $this->modelTipoCasco->select(null, 'tcas_tipo');
         $this->view->assign("assignTipoCasco", $tipocasco);
-        
-        $this->modelTipoPagamento = new Application_Model_TipoPagamento();
+                
         $tipopagamento = $this->modelTipoPagamento->select(null, 'tpg_pagamento');
         $this->view->assign("assignTipoPagamento", $tipopagamento);
-        
-        $this->modelEquipamento = new Application_Model_Equipamento();
+                
         $equipamento = $this->modelEquipamento->select(null, 'teq_equipamento');
         $this->view->assign("assignEquipamento", $equipamento);
-        
-        $this->modelFinanciador = new Application_Model_Financiador();
+                
         $financiador = $this->modelFinanciador->select(null, 'tfin_financiador');
         $this->view->assign("assignFinanciador", $financiador);
         
 //DADOS DO MOTOR ---------------------------------------------------------------------- 
-        
-        $this->modelTipoMotor = new Application_Model_TipoMotor();
+               
         $tipomotor = $this->modelTipoMotor->select(null, 'tmot_tipo');
         $this->view->assign("assignTipoMotor", $tipomotor);
-        
-        $this->modelModelos = new Application_Model_Modelo();
+               
         $modelos = $this->modelModelos->select(null, 'tmod_modelo');
         $this->view->assign("assignModelos", $modelos);
-        
-        $this->modelMarcas = new Application_Model_Marca();
+              
         $marcas = $this->modelMarcas->select(null, 'tmar_marca');
         $this->view->assign("assignMarcas", $marcas);
-        
-        $this->modelPostosCombustivel = new Application_Model_PostoCombustivel();
+               
         $postos = $this->modelPostosCombustivel->select(null, 'tpc_posto');
         $this->view->assign("assignPostosCombustivel", $postos);
         
 //DADOS DA ATUAÇÃO --------------------------------------------------------------------
         
-        $this->modelFrequenciaPesca = new Application_Model_FrequenciaPesca();
         $frequenciapesca = $this->modelFrequenciaPesca->select(null, 'tfp_frequencia');
         $this->view->assign("assignFrequenciaPesca", $frequenciapesca);
         
-        $this->modelHorarioPesca = new Application_Model_HorarioPesca();
         $horariopesca = $this->modelHorarioPesca->select(null, 'thp_horario');
         $this->view->assign("assignHorarioPesca", $horariopesca);
-        
-        $this->modelColonia = new Application_Model_Colonia();
+         
         $colonia = $this->modelColonia->select(null, 'tc_nome');
         $this->view->assign("assignColonia", $colonia);
-        
-        $this->modelConservacaoPescado = new Application_Model_ConservacaoPescado();
+              
         $conservacaopescado = $this->modelConservacaoPescado->select(null, 'tcp_conserva');
         $this->view->assign("assignConservacaoPescado", $conservacaopescado);
-        
-        $this->modelDestinoPescado = new Application_Model_DestinoPescado();
+               
         $destinopescado = $this->modelDestinoPescado->select(null, 'dp_destino');
         $this->view->assign("assignDestinoPescado", $destinopescado);
-        
-        $this->modelEstacaoAno = new Application_Model_EstacaoAno();
+              
         $estacaoano = $this->modelEstacaoAno->select(null, 'tea_estacao');
         $this->view->assign("assignEstacaoAno", $estacaoano);
-        
-        $this->modelTipoRenda = new Application_Model_TipoRenda();
+             
         $outratividade = $this->modelTipoRenda->select(null, 'ttr_descricao');
         $this->view->assign("assignOutraAtividade", $outratividade);
-        
-        $this->modelUsuarios = new Application_Model_Usuario();
+              
         $usuarios = $this->modelUsuarios->select(null, 'tu_nome');
         $this->view->assign("assignUsuarios", $usuarios);
         }
@@ -492,7 +508,87 @@ class BarcosController extends Zend_Controller_Action
     }
     
     public function indexrelatorioAction() {
+        $barco = $this->modelBarcos->select(null, 'bar_nome');
+        $this->view->assign("barcos", $barco);
+        
+        $bar_id = $this->_getParam('bar_id');
+        if(empty($bar_id)){
+            $bar_id = 0;
+        }
+        $arrayBarcosArrasto = $this->modelArrasto->selectEntrevistaArrasto('bar_id = '. $bar_id);
+        $arrayBarcosCalao = $this->modelCalao->selectEntrevistaCalao('bar_id = '. $bar_id);
+        $arrayBarcosColeta = $this->modelColeta->selectEntrevistaColetaManual('bar_id = '. $bar_id);
+        $arrayBarcosEmalhe = $this->modelEmalhe->selectEntrevistaEmalhe('bar_id = '. $bar_id);
+        $arrayBarcosGrosseira = $this->modelGrosseira->selectEntrevistaGrosseira('bar_id = '. $bar_id);
+        $arrayBarcosJerere = $this->modelJerere->selectEntrevistaJerere('bar_id = '. $bar_id);
+        $arrayBarcosLinha = $this->modelLinha->selectEntrevistaLinha('bar_id = '. $bar_id);
+        $arrayBarcosLinhaFundo = $this->modelLinhaFundo->selectEntrevistaLinhaFundo('bar_id = '. $bar_id);
+        $arrayBarcosManzua = $this->modelManzua->selectEntrevistaManzua('bar_id = '. $bar_id);
+        $arrayBarcosMergulho = $this->modelMergulho->selectEntrevistaMergulho('bar_id = '. $bar_id); 
+        $arrayBarcosRatoeira = $this->modelRatoeira->selectEntrevistaRatoeira('bar_id = '. $bar_id); 
+        $arrayBarcosSiripoia = $this->modelSiripoia->selectEntrevistaSiripoia('bar_id = '. $bar_id);
+        $arrayBarcosTarrafa = $this->modelTarrafa->selectEntrevistaTarrafa('bar_id = '. $bar_id); 
+        $arrayBarcosVaraPesca = $this->modelVaraPesca ->selectEntrevistaVaraPesca('bar_id = '. $bar_id);  
+        
+       
+        $this->view->assign("arrayBarArrasto",   $arrayBarcosArrasto);
+        $this->view->assign("arrayBarCalao",     $arrayBarcosCalao);
+        $this->view->assign("arrayBarColeta",    $arrayBarcosColeta); 
+        $this->view->assign("arrayBarEmalhe",    $arrayBarcosEmalhe);
+        $this->view->assign("arrayBarGrosseira", $arrayBarcosGrosseira);
+        $this->view->assign("arrayBarJerere",    $arrayBarcosJerere);
+        $this->view->assign("arrayBarLinha",     $arrayBarcosLinha);
+        $this->view->assign("arrayBarLinhaFundo",$arrayBarcosLinhaFundo);
+        $this->view->assign("arrayBarManzua",    $arrayBarcosManzua);
+        $this->view->assign("arrayBarMergulho",  $arrayBarcosMergulho );
+        $this->view->assign("arrayBarRatoeira",  $arrayBarcosRatoeira );
+        $this->view->assign("arrayBarSiripoia",  $arrayBarcosSiripoia );
+        $this->view->assign("arrayBarTarrafa",   $arrayBarcosTarrafa );
+        $this->view->assign("arrayBarVaraPesca", $arrayBarcosVaraPesca);
+    }
+    
+    public function selectbarcosAction(){
+        $bar_id = $this->_getParam('bar_id');
 
+        $this->_redirect('barcos/tablebarcos/bar_id/'.$bar_id);
+    }
+    public function tablebarcosAction() {
+        $this->_helper->layout->disableLayout();
+        
+        $bar_id = $this->_getParam('bar_id');
+        if(empty($bar_id)){
+            $bar_id = 0;
+        }
+        $arrayBarcosArrasto = $this->modelArrasto->selectEntrevistaArrasto('bar_id = '. $bar_id);
+        $arrayBarcosCalao = $this->modelCalao->selectEntrevistaCalao('bar_id = '. $bar_id);
+        $arrayBarcosColeta = $this->modelColeta->selectEntrevistaColetaManual('bar_id = '. $bar_id);
+        $arrayBarcosEmalhe = $this->modelEmalhe->selectEntrevistaEmalhe('bar_id = '. $bar_id);
+        $arrayBarcosGrosseira = $this->modelGrosseira->selectEntrevistaGrosseira('bar_id = '. $bar_id);
+        $arrayBarcosJerere = $this->modelJerere->selectEntrevistaJerere('bar_id = '. $bar_id);
+        $arrayBarcosLinha = $this->modelLinha->selectEntrevistaLinha('bar_id = '. $bar_id);
+        $arrayBarcosLinhaFundo = $this->modelLinhaFundo->selectEntrevistaLinhaFundo('bar_id = '. $bar_id);
+        $arrayBarcosManzua = $this->modelManzua->selectEntrevistaManzua('bar_id = '. $bar_id);
+        $arrayBarcosMergulho = $this->modelMergulho->selectEntrevistaMergulho('bar_id = '. $bar_id); 
+        $arrayBarcosRatoeira = $this->modelRatoeira->selectEntrevistaRatoeira('bar_id = '. $bar_id); 
+        $arrayBarcosSiripoia = $this->modelSiripoia->selectEntrevistaSiripoia('bar_id = '. $bar_id);
+        $arrayBarcosTarrafa = $this->modelTarrafa->selectEntrevistaTarrafa('bar_id = '. $bar_id); 
+        $arrayBarcosVaraPesca = $this->modelVaraPesca ->selectEntrevistaVaraPesca('bar_id = '. $bar_id);  
+        
+       
+        $this->view->assign("arrayBarArrasto",   $arrayBarcosArrasto);
+        $this->view->assign("arrayBarCalao",     $arrayBarcosCalao);
+        $this->view->assign("arrayBarColeta",    $arrayBarcosColeta); 
+        $this->view->assign("arrayBarEmalhe",    $arrayBarcosEmalhe);
+        $this->view->assign("arrayBarGrosseira", $arrayBarcosGrosseira);
+        $this->view->assign("arrayBarJerere",    $arrayBarcosJerere);
+        $this->view->assign("arrayBarLinha",     $arrayBarcosLinha);
+        $this->view->assign("arrayBarLinhaFundo",$arrayBarcosLinhaFundo);
+        $this->view->assign("arrayBarManzua",    $arrayBarcosManzua);
+        $this->view->assign("arrayBarMergulho",  $arrayBarcosMergulho );
+        $this->view->assign("arrayBarRatoeira",  $arrayBarcosRatoeira );
+        $this->view->assign("arrayBarSiripoia",  $arrayBarcosSiripoia );
+        $this->view->assign("arrayBarTarrafa",   $arrayBarcosTarrafa );
+        $this->view->assign("arrayBarVaraPesca", $arrayBarcosVaraPesca);
     }
     public function deletecorAction(){
         $this->_helper->layout->disableLayout();

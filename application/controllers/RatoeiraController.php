@@ -69,7 +69,7 @@ private $usuario;
         }
     }
     public function acesso(){
-    if($this->usuario['tp_id']==5){
+        if($this->usuario['tp_id']==5){
             $this->_redirect('index');
         }
     }
@@ -107,9 +107,7 @@ private $usuario;
     }
 
     public function editarAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $entrevista = $this->modelRatoeira->find($this->_getParam('id'));
         $this->naoexiste($entrevista);
         $pescadores = $this->modelPescador->select(null, 'tp_nome');
@@ -164,9 +162,7 @@ private $usuario;
         $this->view->assign('porto', $porto[0]);
     }
     public function criarAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idRatoeira = $this->modelRatoeira->insert($this->_getAllParams());
 
 
@@ -187,9 +183,7 @@ private $usuario;
         $this->view->assign('pescadores', $pescadores);
     }
     public function atualizarAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idRatoeira = $this->_getParam('id_entrevista');
         $monitoramento = $this->modelMonitoramento->select('mnt_id='.$this->_getParam('id_monitoramento'));
         
@@ -203,9 +197,7 @@ private $usuario;
         }
     }
     public function excluirAction() {
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->modelRatoeira->delete($this->_getParam('id'));
 
         $idFicha = $this->_getParam('id_ficha');

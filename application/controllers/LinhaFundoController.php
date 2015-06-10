@@ -110,6 +110,7 @@ class LinhaFundoController extends Zend_Controller_Action
     }
 
     public function editarAction(){
+        $this->acesso();
          //$avistamentoLinhaFundo = new Application_Model_DbTable_VLinhaFundoHasAvistamento();
         $entrevista = $this->modelLinhaFundo->find($this->_getParam('id'));
         $this->naoexiste($entrevista);

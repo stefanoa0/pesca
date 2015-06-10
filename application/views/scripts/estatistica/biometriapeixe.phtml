@@ -1,6 +1,7 @@
 <h2>Relatórios Estatísticos - Biometrias da espécie de Peixe <?=$this->especie?></h2>
 
 <script src="js/Chart.min.js"></script>
+<script src="js/Chart.Scatter.min.js"></script>
 <p> Quantidade total de Espécies Registradas: <b><?=$this->totalRegistrado ?></b> </p>
 <p> Média de Comprimento: <b><?= round($this->mediatbp_comprimento,2) ?>cm</b> </p>
 <p> Comprimento Máximo: <b><?=$this->maxtbp_comprimento ?>cm</b> </p>
@@ -35,11 +36,23 @@
     var responsive_false = {
         responsive:false
     };
+    var scatter = {
+        responsive:true,
+        datasetStroke: false,
+        bezierCurve: true,
+        showTooltips: true,
+        scaleShowHorizontalLines: true,
+        scaleShowLabels: true,
+        scaleLabel: "<%=value%>cm",
+        scaleArgLabel: "<%=value%>g",
+        scaleBeginAtZero: true,
+        animation: false
+    };
     var embarcacoesByPorto = {
        labels: <?= $this->jsLabelsComprimento ?>,
        datasets: [
            {
-               label: "Quantidade de Embarcações Por Porto",
+               label: "Comprimento da Espécie",
                fillColor: "rgba(95,48,43,.8)",
                strokeColor: "rgba(95,48,43,1)",
                pointColor: "rgba(95,48,43,1)",
@@ -51,28 +64,24 @@
        ]
    };
    
-   var embarcacoesByConstr = {
-       labels: <?= $this->jsLabelsPeso ?>,
-       datasets: [
-           {
-               label: "Quantidade de Embarcações Por Porto",
-               fillColor: "rgba(95,48,43,.8)",
-               strokeColor: "rgba(95,48,43,1)",
-               pointColor: "rgba(95,48,43,1)",
-               pointStrokeColor: "#fff",
-               pointHighlightFill: "#fff",
-               pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->jsDadosPeso ?>
-           }
-       ]
-   };
+   var dadosBiometriaPeixe = [
+        {
+            
+            label: 'peso/comprimento',
+            strokeColor: 'rgba(95,48,43,.8)',
+            data: 
+                    <?= $this->DadosPeixes ?>
+            
+        }
+        
+        ];
    
    window.onload = function(){
         var id_barcos = document.getElementById("embByPorto").getContext("2d");
         var GenChart = new Chart(id_barcos).Bar(embarcacoesByPorto, options);
         
         var id_barcos = document.getElementById("embByConser").getContext("2d");
-        var GenChartA = new Chart(id_barcos).Bar(embarcacoesByConstr, options);
+        var GenChartA = new Chart(id_barcos).Scatter(dadosBiometriaPeixe, scatter);
     };
     
 </script>

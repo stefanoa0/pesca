@@ -105,7 +105,7 @@ private $usuario;
 
 
     public function editarAction(){
-       
+        $this->acesso();
          //$avistamentoJerere = new Application_Model_DbTable_VJerereHasAvistamento();
         $entrevista = $this->modelJerere->find($this->_getParam('id'));
         $this->naoexiste($entrevista);

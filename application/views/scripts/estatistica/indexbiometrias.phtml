@@ -1,6 +1,24 @@
 <div id="titulos">
     <h2>Biometrias</h2>
 </div>
+
+<div id="esquerda_base">
+        <form>
+            <label>Buscar Biometrias da Espécie: </label>
+            <input class="responsivo" onclick="ajax_busca_esp_capturada(this.form, '<?= $this->url(array("controller" => "estatistica", "action" => "selectespecies"), null, true) ?>')" type="button" value="Buscar Entrevistas"/>
+            
+            <select class="responsivo"  name="nome_comum">
+                <?php foreach ($this->especiesPeixes as $key => $especie): ?>
+                    <option value="<?= $especie['esp_id']; ?>" ><?= $especie['esp_nome_comum']; ?></option>
+                <?php endforeach; ?>
+            </select>
+            <br/>
+
+        </form>
+    </div>
+    
+    <?php include('tableesp.phtml'); ?>
+    
 <form action="<?= $this->url(array("controller" => "estatistica", "action" => "gerar", "especie" => "camarao"), null, true) ?>">
     <div class="esquerda">
     <fieldset>

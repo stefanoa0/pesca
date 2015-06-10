@@ -526,7 +526,18 @@ class Application_Model_Jerere
     
         return $this->dbTableJerereHasBioPeixe->fetchAll($select)->toArray();
     }
-    
+    public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
+        $this->dbTableJerereHasBioPeixe = new Application_Model_DbTable_VJerereHasBioPeixe();
+        $select = $this->dbTableJerereHasBioPeixe->select()
+                ->from($this->dbTableJerereHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableJerereHasBioPeixe->fetchAll($select)->toArray();
+    }
     public function selectPescadoresByBarco($where = null, $order = null, $limit = null){
         $this->dbTableJerere = new Application_Model_DbTable_VEntrevistaJerere();
         

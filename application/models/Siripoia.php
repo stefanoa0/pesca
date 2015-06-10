@@ -501,7 +501,20 @@ class Application_Model_Siripoia
 
         return $this->dbTableSiripoiaHasBioPeixe->fetchAll($select)->toArray();
     }
+    
+    public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
+        $this->dbTableSiripoiaHasBioPeixe = new Application_Model_DbTable_VSiripoiaHasBioPeixe();
+        $select = $this->dbTableSiripoiaHasBioPeixe->select()
+                ->from($this->dbTableSiripoiaHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->order($order)->limit($limit);
 
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableSiripoiaHasBioPeixe->fetchAll($select)->toArray();
+    }
+    
     public function selectEspeciesPeixesBiometrias()
     {
         $this->dbTableSiripoiaHasBioPeixe = new Application_Model_DbTable_VSiripoiaHasBioPeixe();

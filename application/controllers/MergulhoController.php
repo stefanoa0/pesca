@@ -165,9 +165,7 @@ class MergulhoController extends Zend_Controller_Action
     }
 
     public function criarAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idMergulho = $this->modelMergulho->insert($this->_getAllParams());
 
 
@@ -188,9 +186,7 @@ class MergulhoController extends Zend_Controller_Action
         $this->view->assign('pescadores', $pescadores);
     }
     public function atualizarAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idMergulho = $this->_getParam('id_entrevista');
         $monitoramento = $this->modelMonitoramento->select('mnt_id='.$this->_getParam('id_monitoramento'));
         
@@ -204,9 +200,7 @@ class MergulhoController extends Zend_Controller_Action
         }
     }
     public function excluirAction() {
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->modelMergulho->delete($this->_getParam('id'));
         
         $idFicha = $this->_getParam('id_ficha');

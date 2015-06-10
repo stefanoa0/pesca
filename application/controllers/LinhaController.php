@@ -78,6 +78,7 @@ class LinhaController extends Zend_Controller_Action
     }
     
     public function editarAction(){
+        $this->acesso();
          //$avistamentoLinha = new Application_Model_DbTable_VLinhaHasAvistamento();
         $entrevista = $this->modelLinha->find($this->_getParam('id'));
         $this->naoexiste($entrevista);

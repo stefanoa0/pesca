@@ -502,7 +502,18 @@ class Application_Model_Manzua
 
         return $this->dbTableManzuaHasBioPeixe->fetchAll($select)->toArray();
     }
+    public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
+        $this->dbTableManzuaHasBioPeixe = new Application_Model_DbTable_VManzuaHasBioPeixe();
+        $select = $this->dbTableManzuaHasBioPeixe->select()
+                ->from($this->dbTableManzuaHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->order($order)->limit($limit);
 
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableManzuaHasBioPeixe->fetchAll($select)->toArray();
+    }
     public function selectEspeciesPeixesBiometrias()
     {
         $this->dbTableManzuaHasBioPeixe = new Application_Model_DbTable_VManzuaHasBioPeixe();
@@ -510,6 +521,7 @@ class Application_Model_Manzua
     
         return $this->dbTableManzuaHasBioPeixe->fetchAll($select)->toArray();
     }
+    
     
     public function selectPescadoresByBarco($where = null, $order = null, $limit = null){
         $this->dbTableManzua = new Application_Model_DbTable_VEntrevistaManzua();

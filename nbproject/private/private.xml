@@ -3,18 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/pesca/public/js/funcoesJquery.js</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/cor/index.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/tipo-pagamento/index.phtml</file>
-            <file>file:/C:/wamp/www/pesca/public/index.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/CalaoController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/LinhaController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/models/Linha.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/especie/tableespc.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/RelatoriosController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/relatorios/index.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/models/Relatorios.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/MergulhoController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/biometriacamarao.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/biometriapeixe.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/EstatisticaController.php</file>
         </group>
     </open-files>
 </project-private>

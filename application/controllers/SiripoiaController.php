@@ -109,9 +109,7 @@ class SiripoiaController extends Zend_Controller_Action
     }
 
     public function editarAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
          //$avistamentoSiripoia = new Application_Model_DbTable_VSiripoiaHasAvistamento();
         $entrevista = $this->modelSiripoia->find($this->_getParam('id'));
         $this->naoexiste($entrevista);
@@ -168,9 +166,7 @@ class SiripoiaController extends Zend_Controller_Action
         $this->view->assign('porto', $porto[0]);
     }
     public function criarAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idSiripoia = $this->modelSiripoia->insert($this->_getAllParams());
 
 
@@ -191,9 +187,7 @@ class SiripoiaController extends Zend_Controller_Action
         $this->view->assign('pescadores', $pescadores);
     }
     public function atualizarAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idSiripoia = $this->_getParam('id_entrevista');
         $monitoramento = $this->modelMonitoramento->select('mnt_id='.$this->_getParam('id_monitoramento'));
         
@@ -208,9 +202,7 @@ class SiripoiaController extends Zend_Controller_Action
         }
     }
     public function excluirAction() {
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->modelSiripoia->delete($this->_getParam('id'));
 
         $idFicha = $this->_getParam('id_ficha');

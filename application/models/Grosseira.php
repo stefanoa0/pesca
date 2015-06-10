@@ -559,6 +559,18 @@ private $dbTableGrosseira;
         return $this->dbTableGrosseiraHasBioPeixe->fetchAll($select)->toArray();
     }
 
+    public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
+        $this->dbTableGrosseiraHasBioPeixe = new Application_Model_DbTable_VGrosseiraHasBioPeixe();
+        $select = $this->dbTableGrosseiraHasBioPeixe->select()
+                ->from($this->dbTableGrosseiraHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableGrosseiraHasBioPeixe->fetchAll($select)->toArray();
+    }
     public function selectEspeciesPeixesBiometrias()
     {
         $this->dbTableGrosseiraHasBioPeixe = new Application_Model_DbTable_VGrosseiraHasBioPeixe();

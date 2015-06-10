@@ -3,19 +3,19 @@
         <tr>
         <th>Arte de Pesca </th>
         <th>Espécie</th>
-        <th>Quantidade (n)</th>
-        <th>Peso (kg)</th>
-        <th>Preco</th>
+        <th>Comprimento (cm)</th>
+        <th>Peso (g)</th>
+        <th>Sexo</th>
         <th>Número da Entrevista</th>
         </tr>
 
-        <?php foreach ($this->arrayEspArrasto as $key => $entrevista): ?>
+        <?php foreach ($this->arrayBioArrasto as $key => $entrevista): ?>
             <tr>
             <td>Arrasto de Fundo</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['spc_quantidade'] ?></td>
-            <td><?= $entrevista['spc_peso_kg'] ?></td>
-            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['tbp_comprimento'] ?></td>
+            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['af_id'] ?></td>
             <td class="td-botao">
                         <a href="<?= $this->url(array("controller" => "arrasto-fundo", "action" => "editar", "id" => $entrevista['af_id']), null, true) ?>">
@@ -28,13 +28,13 @@
             </tr>
         <?php endforeach; ?>
 
-        <?php foreach ($this->arrayEspCalao as $key => $entrevista): ?>
+        <?php foreach ($this->arrayBioCalao as $key => $entrevista): ?>
             <tr>
             <td>Calão</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['spc_quantidade'] ?></td>
-            <td><?= $entrevista['spc_peso_kg'] ?></td>
-            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['tbp_comprimento'] ?></td>
+            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['cal_id'] ?></td>
             <td class="td-botao">
                 <a href="<?= $this->url(array("controller" => "calao", "action" => "editar", "id" => $entrevista['cal_id']), null, true) ?>">
@@ -48,13 +48,13 @@
         <?php endforeach; ?>
 
 
-        <?php foreach ($this->arrayEspColeta as $key => $entrevista): ?>
+        <?php foreach ($this->arrayBioColetaManual as $key => $entrevista): ?>
             <tr>
             <td>Coleta Manual</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['spc_quantidade'] ?></td>
-            <td><?= $entrevista['spc_peso_kg'] ?></td>
-            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['tbp_comprimento'] ?></td>
+            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['cml_id'] ?></td>
             <td class="td-botao">
                 <a href="<?= $this->url(array("controller" => "coleta-manual", "action" => "editar", "id" => $entrevista['cml_id']), null, true) ?>">
@@ -67,13 +67,13 @@
             </tr>
         <?php endforeach; ?>
 
-        <?php foreach ($this->arrayEspEmalhe as $key => $entrevista): ?>
+        <?php foreach ($this->arrayBioEmalhe as $key => $entrevista): ?>
             <tr>
             <td>Emalhe</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['spc_quantidade'] ?></td>
-            <td><?= $entrevista['spc_peso_kg'] ?></td>
-            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['tbp_comprimento'] ?></td>
+            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['em_id'] ?></td>
             <td class="td-botao">
                 <a href="<?= $this->url(array("controller" => "emalhe", "action" => "editar", "id" => $entrevista['em_id']), null, true) ?>">
@@ -86,13 +86,13 @@
             </tr>
         <?php endforeach; ?>
 
-        <?php foreach ($this->arrayEspGrosseira as $key => $entrevista): ?>
+        <?php foreach ($this->arrayBioGrosseira as $key => $entrevista): ?>
             <tr>
             <td>Groseira/Espinhel</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['spc_quantidade'] ?></td>
-            <td><?= $entrevista['spc_peso_kg'] ?></td>
-            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['tbp_comprimento'] ?></td>
+            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['grs_id'] ?></td>
             <td class="td-botao">
                 <a href="<?= $this->url(array("controller" => "grosseira", "action" => "editar", "id" => $entrevista['grs_id']), null, true) ?>">
@@ -105,13 +105,13 @@
             </tr>
         <?php endforeach; ?>
 
-        <?php foreach ($this->arrayEspJerere as $key => $entrevista): ?>
+        <?php foreach ($this->arrayBioJerere as $key => $entrevista): ?>
             <tr>
             <td>Jereré</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['spc_quantidade'] ?></td>
-            <td><?= $entrevista['spc_peso_kg'] ?></td>
-            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['tbp_comprimento'] ?></td>
+            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['jre_id'] ?></td>
             <td class="td-botao">
                 <a href="<?= $this->url(array("controller" => "jerere", "action" => "editar", "id" => $entrevista['jre_id']), null, true) ?>">
@@ -124,13 +124,13 @@
             </tr>
         <?php endforeach; ?>
 
-        <?php foreach ($this->arrayEspLinha as $key => $entrevista): ?>
+        <?php foreach ($this->arrayBioLinha as $key => $entrevista): ?>
             <tr>
             <td>Pesca de Linha</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['spc_quantidade'] ?></td>
-            <td><?= $entrevista['spc_peso_kg'] ?></td>
-            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['tbp_comprimento'] ?></td>
+            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['lin_id'] ?></td>
             <td class="td-botao">
                 <a href="<?= $this->url(array("controller" => "linha", "action" => "editar", "id" => $entrevista['lin_id']), null, true) ?>">
@@ -143,13 +143,13 @@
             </tr>
         <?php endforeach; ?>
 
-        <?php foreach ($this->arrayEspLinhaFundo as $key => $entrevista): ?>
+        <?php foreach ($this->arrayBioLinhaFundo as $key => $entrevista): ?>
             <tr>
             <td>Linha de Fundo</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['spc_quantidade'] ?></td>
-            <td><?= $entrevista['spc_peso_kg'] ?></td>
-            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['tbp_comprimento'] ?></td>
+            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['lf_id'] ?></td>
             <td class="td-botao">
                 <a href="<?= $this->url(array("controller" => "linha-fundo", "action" => "editar", "id" => $entrevista['lf_id']), null, true) ?>">
@@ -162,13 +162,13 @@
             </tr>
         <?php endforeach; ?>
 
-        <?php foreach ($this->arrayEspManzua as $key => $entrevista): ?>
+        <?php foreach ($this->arrayBioManzua as $key => $entrevista): ?>
             <tr>
             <td>Manzua</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['spc_quantidade'] ?></td>
-            <td><?= $entrevista['spc_peso_kg'] ?></td>
-            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['tbp_comprimento'] ?></td>
+            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['man_id'] ?></td>
             <td class="td-botao">
                 <a href="<?= $this->url(array("controller" => "manzua", "action" => "editar", "id" => $entrevista['man_id']), null, true) ?>">
@@ -182,13 +182,13 @@
         <?php endforeach; ?>
 
 
-        <?php foreach ($this->arrayEspMergulho as $key => $entrevista): ?>
+        <?php foreach ($this->arrayBioMergulho as $key => $entrevista): ?>
             <tr>
             <td>Mergulho</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['spc_quantidade'] ?></td>
-            <td><?= $entrevista['spc_peso_kg'] ?></td>
-            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['tbp_comprimento'] ?></td>
+            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['mer_id'] ?></td>
             <td class="td-botao">
                 <a href="<?= $this->url(array("controller" => "mergulho", "action" => "editar", "id" => $entrevista['mer_id']), null, true) ?>">
@@ -201,13 +201,13 @@
             </tr>
         <?php endforeach; ?>
 
-        <?php foreach ($this->arrayEspRatoeira as $key => $entrevista): ?>
+        <?php foreach ($this->arrayBioRatoeira as $key => $entrevista): ?>
             <tr>
             <td>Ratoeira</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['spc_quantidade'] ?></td>
-            <td><?= $entrevista['spc_peso_kg'] ?></td>
-            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['tbp_comprimento'] ?></td>
+            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['rat_id'] ?></td>
             <td class="td-botao">
                 <a href="<?= $this->url(array("controller" => "ratoeira", "action" => "editar", "id" => $entrevista['rat_id']), null, true) ?>">
@@ -221,13 +221,13 @@
         <?php endforeach; ?>
 
 
-        <?php foreach ($this->arrayEspSiripoia as $key => $entrevista): ?>
+        <?php foreach ($this->arrayBioSiripoia as $key => $entrevista): ?>
             <tr>
             <td>Siripoia</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['spc_quantidade'] ?></td>
-            <td><?= $entrevista['spc_peso_kg'] ?></td>
-            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['tbp_comprimento'] ?></td>
+            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['sir_id'] ?></td>
             <td class="td-botao">
                 <a href="<?= $this->url(array("controller" => "siripoia", "action" => "editar", "id" => $entrevista['sir_id']), null, true) ?>">
@@ -240,13 +240,13 @@
             </tr>
         <?php endforeach; ?>
 
-        <?php foreach ($this->arrayEspTarrafa as $key => $entrevista): ?>
+        <?php foreach ($this->arrayBioTarrafa as $key => $entrevista): ?>
             <tr>
             <td>Tarrafa</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['spc_quantidade'] ?></td>
-            <td><?= $entrevista['spc_peso_kg'] ?></td>
-            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['tbp_comprimento'] ?></td>
+            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['tar_id'] ?></td>
             <td class="td-botao">
                 <a href="<?= $this->url(array("controller" => "tarrafa", "action" => "editar", "id" => $entrevista['tar_id']), null, true) ?>">
@@ -259,13 +259,13 @@
             </tr>
         <?php endforeach; ?>
 
-        <?php foreach ($this->arrayEspVaraPesca as $key => $entrevista): ?>
+        <?php foreach ($this->arrayBioVaraPesca as $key => $entrevista): ?>
             <tr>
             <td>Vara de Pesca</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['spc_quantidade'] ?></td>
-            <td><?= $entrevista['spc_peso_kg'] ?></td>
-            <td><?= $entrevista['spc_preco'] ?></td>
+            <td><?= $entrevista['tbp_comprimento'] ?></td>
+            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['vp_id'] ?></td>
             <td class="td-botao">
                 <a href="<?= $this->url(array("controller" => "vara-pesca", "action" => "editar", "id" => $entrevista['vp_id']), null, true) ?>">
@@ -281,3 +281,5 @@
 
     </table>
 </div>
+
+<br/>
