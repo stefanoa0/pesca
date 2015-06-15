@@ -3,20 +3,23 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/coleta-manual/editar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/ratoeira/editar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/emalhe/editar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/linha-fundo/editar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/mergulho/editar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/calao/editar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/linha/editar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/tarrafa/editar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/grosseira/editar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/siripoia/editar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/jerere/editar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/vara-pesca/editar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/arrasto-fundo/editar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/manzua/editar.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/relatorioindex.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/pescador.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/ficha-diaria/index.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/ficha-diaria/editar.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/biometriapeixe.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/pescador/relatorio.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/ficha-diaria/novo.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/index.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/relatorios/index.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/entrevista.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/especie/indexrelatorio.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/barcos/indexrelatorio.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/indexbiometrias.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/biometriacamarao.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/barcos/index.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/barco.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/unidadecaptura.phtml</file>
         </group>
     </open-files>
 </project-private>

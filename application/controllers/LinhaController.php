@@ -150,7 +150,7 @@ public function visualizarAction() {
             $dados = $this->modelLinha->selectEntrevistaLinha("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'lin_id DESC'), 20);
         }
         elseif($ent_all){
-            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
+            $dados = $this->modelLinha->selectEntrevistaLinha(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelLinha->selectEntrevistaLinha(null, array('fd_id DESC', 'tp_nome'),20);

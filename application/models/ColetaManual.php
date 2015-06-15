@@ -531,5 +531,16 @@ private $dbTableColetaManual;
         
         return $this->dbTableColetaManual->fetchAll($select)->toArray();
     }
+    
+    public function selectMediaEspecies($where = null, $order = null, $limit = null)
+    {
+        $this->dbTableColetaManualMedia = new Application_Model_DbTable_VMediaEspeciesColetaManual();
+        $select = $this->dbTableColetaManualMedia->select()->
+                from()->order($order)->limit($limit);
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $this->dbTableColetaManualMedia->fetchAll($select)->toArray();
+    }
 }
 

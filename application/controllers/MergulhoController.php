@@ -93,7 +93,7 @@ class MergulhoController extends Zend_Controller_Action
             $dados = $this->modelMergulho->selectEntrevistaMergulho("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'mer_id v'), 20);
         }
         elseif($ent_all){
-            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
+            $dados = $this->modelMergulho->selectEntrevistaMergulho(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelMergulho->selectEntrevistaMergulho(null, array('fd_id DESC', 'tp_nome'),20);

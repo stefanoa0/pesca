@@ -589,5 +589,16 @@ private $dbTableLinha;
         
         return $this->dbTableLinha->fetchAll($select)->toArray();
     }
+    
+    public function selectMediaEspecies($where = null, $order = null, $limit = null)
+    {
+        $this->dbTableLinhaMedia = new Application_Model_DbTable_VMediaEspeciesLinha();
+        $select = $this->dbTableLinhaMedia->select()->
+                from()->order($order)->limit($limit);
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $this->dbTableLinhaMedia->fetchAll($select)->toArray();
+    }
 }
 

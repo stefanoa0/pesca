@@ -87,7 +87,7 @@ private $usuario;
             $dados = $this->modelTarrafa->selectEntrevistaTarrafa("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'tar_id DESC'), 20);
         }
         elseif($ent_all){
-            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
+            $dados = $this->modelTarrafa->selectEntrevistaTarrafa(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelTarrafa->selectEntrevistaTarrafa(null, array('fd_id DESC', 'tp_nome'),20);

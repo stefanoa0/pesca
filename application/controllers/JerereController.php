@@ -94,7 +94,7 @@ private $usuario;
             $dados = $this->modelJerere->selectEntrevistaJerere("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'jre_id DESC'), 20);
         }
         elseif($ent_all){
-            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
+            $dados = $this->modelJerere->selectEntrevistaJerere(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelJerere->selectEntrevistaJerere(null, array('fd_id DESC', 'tp_nome'),20);

@@ -1,5 +1,15 @@
 <?php
-
+/** 
+ * Model Arte de Pesca - Tarrafa
+ * 
+ * @package Pesca
+ * @subpackage Models
+ * @author Stefano Azevedo Silva <stefanouesc@gmail.com>
+ * @author Marcelo Ossamu Honda <mohonda@uesc.com>
+ * @version 1.0
+ * @access public
+ *
+ */
 class Application_Model_Tarrafa
 {
     private $dbTableTarrafa;
@@ -536,5 +546,15 @@ class Application_Model_Tarrafa
         }
         
         return $this->dbTableTarrafa->fetchAll($select)->toArray();
+    }
+    public function selectMediaEspecies($where = null, $order = null, $limit = null)
+    {
+        $this->dbTableTarrafaMedia = new Application_Model_DbTable_VMediaEspeciesTarrafa();
+        $select = $this->dbTableTarrafaMedia->select()->
+                from()->order($order)->limit($limit);
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $this->dbTableTarrafaMedia->fetchAll($select)->toArray();
     }
 }

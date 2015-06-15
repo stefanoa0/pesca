@@ -3,18 +3,35 @@
         <tr>
         <th>Arte de Pesca </th>
         <th>Espécie</th>
-        <th>Comprimento (cm)</th>
-        <th>Peso (g)</th>
+        <th>Comprimento</th>
+        <th>Peso</th>
         <th>Sexo</th>
         <th>Número da Entrevista</th>
         </tr>
-
+        <?php foreach ($this->arrayBioCamarao as $key => $entrevista): ?>
+            <tr>
+            <td>Arrasto de Fundo</td>
+            <td><?= $entrevista['esp_nome_comum'] ?></td>
+            <td><?= $entrevista['tbc_comprimento_cabeca']." mm" ?></td>
+            <td><?= $entrevista['tbc_peso']." g" ?></td>
+            <td><?= $entrevista['tbc_sexo'] ?></td>
+            <td><?= $entrevista['af_id'] ?></td>
+            <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "arrasto-fundo", "action" => "editar", "id" => $entrevista['af_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
+            </a>
+            </tr>
+        <?php endforeach; ?>
         <?php foreach ($this->arrayBioArrasto as $key => $entrevista): ?>
             <tr>
             <td>Arrasto de Fundo</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['tbp_comprimento'] ?></td>
-            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_comprimento']." cm" ?></td>
+            <td><?= $entrevista['tbp_peso']." g" ?></td>
             <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['af_id'] ?></td>
             <td class="td-botao">
@@ -32,8 +49,8 @@
             <tr>
             <td>Calão</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['tbp_comprimento'] ?></td>
-            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_comprimento']." cm" ?></td>
+            <td><?= $entrevista['tbp_peso']." g" ?></td>
             <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['cal_id'] ?></td>
             <td class="td-botao">
@@ -52,8 +69,8 @@
             <tr>
             <td>Coleta Manual</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['tbp_comprimento'] ?></td>
-            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_comprimento']." cm" ?></td>
+            <td><?= $entrevista['tbp_peso']." g" ?></td>
             <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['cml_id'] ?></td>
             <td class="td-botao">
@@ -71,8 +88,8 @@
             <tr>
             <td>Emalhe</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['tbp_comprimento'] ?></td>
-            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_comprimento']." cm" ?></td>
+            <td><?= $entrevista['tbp_peso']." g" ?></td>
             <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['em_id'] ?></td>
             <td class="td-botao">
@@ -90,8 +107,8 @@
             <tr>
             <td>Groseira/Espinhel</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['tbp_comprimento'] ?></td>
-            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_comprimento']." cm" ?></td>
+            <td><?= $entrevista['tbp_peso']." g" ?></td>
             <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['grs_id'] ?></td>
             <td class="td-botao">
@@ -109,8 +126,8 @@
             <tr>
             <td>Jereré</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['tbp_comprimento'] ?></td>
-            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_comprimento']." cm" ?></td>
+            <td><?= $entrevista['tbp_peso']." g" ?></td>
             <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['jre_id'] ?></td>
             <td class="td-botao">
@@ -128,8 +145,8 @@
             <tr>
             <td>Pesca de Linha</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['tbp_comprimento'] ?></td>
-            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_comprimento']." cm" ?></td>
+            <td><?= $entrevista['tbp_peso']." g" ?></td>
             <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['lin_id'] ?></td>
             <td class="td-botao">
@@ -147,8 +164,8 @@
             <tr>
             <td>Linha de Fundo</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['tbp_comprimento'] ?></td>
-            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_comprimento']." cm" ?></td>
+            <td><?= $entrevista['tbp_peso']." g" ?></td>
             <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['lf_id'] ?></td>
             <td class="td-botao">
@@ -166,8 +183,8 @@
             <tr>
             <td>Manzua</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['tbp_comprimento'] ?></td>
-            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_comprimento']." cm" ?></td>
+            <td><?= $entrevista['tbp_peso']." g" ?></td>
             <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['man_id'] ?></td>
             <td class="td-botao">
@@ -186,8 +203,8 @@
             <tr>
             <td>Mergulho</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['tbp_comprimento'] ?></td>
-            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_comprimento']." cm" ?></td>
+            <td><?= $entrevista['tbp_peso']." g" ?></td>
             <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['mer_id'] ?></td>
             <td class="td-botao">
@@ -205,8 +222,8 @@
             <tr>
             <td>Ratoeira</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['tbp_comprimento'] ?></td>
-            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_comprimento']." cm" ?></td>
+            <td><?= $entrevista['tbp_peso']." g" ?></td>
             <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['rat_id'] ?></td>
             <td class="td-botao">
@@ -225,8 +242,8 @@
             <tr>
             <td>Siripoia</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['tbp_comprimento'] ?></td>
-            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_comprimento']." cm" ?></td>
+            <td><?= $entrevista['tbp_peso']." g" ?></td>
             <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['sir_id'] ?></td>
             <td class="td-botao">
@@ -244,8 +261,8 @@
             <tr>
             <td>Tarrafa</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['tbp_comprimento'] ?></td>
-            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_comprimento']." cm" ?></td>
+            <td><?= $entrevista['tbp_peso']." g" ?></td>
             <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['tar_id'] ?></td>
             <td class="td-botao">
@@ -263,8 +280,8 @@
             <tr>
             <td>Vara de Pesca</td>
             <td><?= $entrevista['esp_nome_comum'] ?></td>
-            <td><?= $entrevista['tbp_comprimento'] ?></td>
-            <td><?= $entrevista['tbp_peso'] ?></td>
+            <td><?= $entrevista['tbp_comprimento']." cm" ?></td>
+            <td><?= $entrevista['tbp_peso']." g" ?></td>
             <td><?= $entrevista['tbp_sexo'] ?></td>
             <td><?= $entrevista['vp_id'] ?></td>
             <td class="td-botao">

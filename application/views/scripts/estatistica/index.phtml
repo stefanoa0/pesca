@@ -1,6 +1,8 @@
 <div id="titulos">
-    <h2>Relatórios->Estatísticos</h2>
-</div>
+        <h2>Relatórios</h2>
+        <h3>Espécies</h3>
+    </div>
+ <a href="<?= $this->url(array("controller" => "index-admin", "action" => "index"), null, true) ?>" id="botao-ancora">Voltar</a><br/><br/>
 <a class="relatorio" href="<?= $this->url(array("controller" => "estatistica", "action" => "pescador"), null, true) ?>">Pescadores</a><br/>
 <a class="relatorio" href="<?= $this->url(array("controller" => "estatistica", "action" => "unidadecaptura"), null, true) ?>">Unidade de Captura</a><br/>
 <a class="relatorio" href="<?= $this->url(array("controller" => "estatistica", "action" => "barco"), null, true) ?>">Embarcações</a><br/>

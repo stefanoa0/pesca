@@ -1,5 +1,8 @@
 <h2>Relatórios Estatísticos - Biometrias da espécie de Peixe <?=$this->especie?></h2>
 
+
+ <a href="<?= $this->url(array("controller" => "estatistica", "action" => "indexbiometrias"), null, true) ?>" id="botao-ancora">Voltar</a><br/><br/>
+
 <script src="js/Chart.min.js"></script>
 <script src="js/Chart.Scatter.min.js"></script>
 <p> Quantidade total de Espécies Registradas: <b><?=$this->totalRegistrado ?></b> </p>

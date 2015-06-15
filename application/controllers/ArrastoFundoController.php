@@ -83,7 +83,7 @@ class ArrastoFundoController extends Zend_Controller_Action {
             $dados = $this->modelArrastoFundo->selectEntrevistaArrasto("tp_apelido ~*'".$ent_apelido."'", array('tp_apelido', 'af_id DESC'));
         }
         elseif($ent_all){
-            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
+            $dados = $this->modelArrastoFundo->selectEntrevistaArrasto(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelArrastoFundo->selectEntrevistaArrasto(null, array('fd_id DESC', 'tp_nome'), 20);

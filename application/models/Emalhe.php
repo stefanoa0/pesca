@@ -610,5 +610,16 @@ class Application_Model_Emalhe
         
         return $this->dbTableEmalhe->fetchAll($select)->toArray();
     }
+    
+    public function selectMediaEspecies($where = null, $order = null, $limit = null)
+    {
+        $this->dbTableEmalheMedia = new Application_Model_DbTable_VMediaEspeciesEmalhe();
+        $select = $this->dbTableEmalheMedia->select()->
+                from()->order($order)->limit($limit);
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $this->dbTableEmalheMedia->fetchAll($select)->toArray();
+    }
 }
 

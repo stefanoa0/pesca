@@ -569,5 +569,16 @@ class Application_Model_Calao
         
         return $this->dbTableCalao->fetchAll($select)->toArray();
     }
+    
+    public function selectMediaEspecies($where = null, $order = null, $limit = null)
+    {
+        $this->dbTableCalaoMedia = new Application_Model_DbTable_VMediaEspeciesCalao();
+        $select = $this->dbTableCalaoMedia->select()->
+                from()->order($order)->limit($limit);
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $this->dbTableCalaoMedia->fetchAll($select)->toArray();
+    }
 }
 

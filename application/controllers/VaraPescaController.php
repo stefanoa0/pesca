@@ -95,7 +95,7 @@ class VaraPescaController extends Zend_Controller_Action
             $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'vp_id DESC'), 20);
         }
         elseif($ent_all){
-            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
+            $dados = $this->modelVarapesca->selectEntrevistaVaraPesca(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca(null, array('fd_id DESC', 'tp_nome'),20);

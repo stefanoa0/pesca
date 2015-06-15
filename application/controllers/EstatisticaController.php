@@ -86,25 +86,30 @@ class EstatisticaController extends Zend_Controller_Action
         $arrayOrdenadoEspecies = $this->array_sort($especies_unique, 'esp_nome_comum');
         $this->view->assign('especiesPeixes',$arrayOrdenadoEspecies);
         
+        
+        $arrayCompletoEspecies = array_merge_recursive($especies_camarao,$arrayOrdenadoEspecies);
+        $this->view->assign('especiesPeixesCamarao',$arrayCompletoEspecies);
         $especie = $this->_getParam('esp_id');
         if(empty($especie)){
             $especie = 0;
         }
-        $biometriasPeixeArrasto      = $this->modelArrasto->selectVBioPeixe("esp_id = '".$especie."'", $order = null, $limit = null); 
-        $biometriasPeixeCalao        = $this->modelCalao->selectVBioPeixe("esp_id = '".$especie."'", $order = null, $limit = null);    
-        $biometriasPeixeColetaManual = $this->modelColeta->selectVBioPeixe("esp_id = '".$especie."'", $order = null, $limit = null); 
-        $biometriasPeixeEmalhe       = $this->modelEmalhe->selectVBioPeixe("esp_id = '".$especie."'", $order = null, $limit = null);  
-        $biometriasPeixeGrosseira    = $this->modelGroseira->selectVBioPeixe("esp_id = '".$especie."'", $order = null, $limit = null); 
-        $biometriasPeixeJerere       = $this->modelJerere->selectVBioPeixe("esp_id = '".$especie."'", $order = null, $limit = null); 
-        $biometriasPeixeLinha        = $this->modelLinha->selectVBioPeixe("esp_id = '".$especie."'", $order = null, $limit = null); 
-        $biometriasPeixeLinhaFundo   = $this->modelLinhaFundo->selectVBioPeixe("esp_id = '".$especie."'", $order = null, $limit = null); 
-        $biometriasPeixeManzua       = $this->modelManzua->selectVBioPeixe("esp_id = '".$especie."'", $order = null, $limit = null);  
-        $biometriasPeixeMergulho     = $this->modelMergulho->selectVBioPeixe("esp_id = '".$especie."'", $order = null, $limit = null); 
-        $biometriasPeixeRatoeira     = $this->modelRatoeira->selectVBioPeixe("esp_id = '".$especie."'", $order = null, $limit = null); 
-        $biometriasPeixeSiripoia     = $this->modelSiripoia->selectVBioPeixe("esp_id = '".$especie."'", $order = null, $limit = null); 
-        $biometriasPeixeTarrafa      = $this->modelTarrafa->selectVBioPeixe("esp_id = '".$especie."'", $order = null, $limit = null); 
-        $biometriasPeixeVaraPesca    = $this->modelVaraPesca->selectVBioPeixe("esp_id = '".$especie."'", $order = null, $limit = null);
+        $biometriasCamaraoArrasto = $this->modelArrasto->selectVBioCamarao("esp_id = '".$especie."'");
+        $biometriasPeixeArrasto      = $this->modelArrasto->selectVBioPeixe("esp_id = '".$especie."'"); 
+        $biometriasPeixeCalao        = $this->modelCalao->selectVBioPeixe("esp_id = '".$especie."'");    
+        $biometriasPeixeColetaManual = $this->modelColeta->selectVBioPeixe("esp_id = '".$especie."'"); 
+        $biometriasPeixeEmalhe       = $this->modelEmalhe->selectVBioPeixe("esp_id = '".$especie."'");  
+        $biometriasPeixeGrosseira    = $this->modelGroseira->selectVBioPeixe("esp_id = '".$especie."'"); 
+        $biometriasPeixeJerere       = $this->modelJerere->selectVBioPeixe("esp_id = '".$especie."'"); 
+        $biometriasPeixeLinha        = $this->modelLinha->selectVBioPeixe("esp_id = '".$especie."'"); 
+        $biometriasPeixeLinhaFundo   = $this->modelLinhaFundo->selectVBioPeixe("esp_id = '".$especie."'"); 
+        $biometriasPeixeManzua       = $this->modelManzua->selectVBioPeixe("esp_id = '".$especie."'");  
+        $biometriasPeixeMergulho     = $this->modelMergulho->selectVBioPeixe("esp_id = '".$especie."'"); 
+        $biometriasPeixeRatoeira     = $this->modelRatoeira->selectVBioPeixe("esp_id = '".$especie."'"); 
+        $biometriasPeixeSiripoia     = $this->modelSiripoia->selectVBioPeixe("esp_id = '".$especie."'"); 
+        $biometriasPeixeTarrafa      = $this->modelTarrafa->selectVBioPeixe("esp_id = '".$especie."'"); 
+        $biometriasPeixeVaraPesca    = $this->modelVaraPesca->selectVBioPeixe("esp_id = '".$especie."'");
     
+        $this->view->assign('arrayBioCamarao', $biometriasCamaraoArrasto);
         $this->view->assign('arrayBioArrasto', $biometriasPeixeArrasto);    
         $this->view->assign('arrayBioCalao', $biometriasPeixeCalao); 
         $this->view->assign('arrayBioColetaManual', $biometriasPeixeColetaManual);
