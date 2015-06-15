@@ -1,5 +1,15 @@
 <?php
-
+/** 
+ * Model Arte de Pesca - Ratoeira
+ * 
+ * @package Pesca
+ * @subpackage Models
+ * @author Stefano Azevedo Silva <stefanouesc@gmail.com>
+ * @author Marcelo Ossamu Honda <mohonda@uesc.com>
+ * @version 1.0
+ * @access public
+ *
+ */
 class Application_Model_Ratoeira
 {    
    private $dbTableRatoeira;
@@ -505,7 +515,20 @@ class Application_Model_Ratoeira
 
         return $this->dbTableRatoeiraHasBioPeixe->fetchAll($select)->toArray();
     }
+    
+    public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
+        $this->dbTableRatoeiraHasBioPeixe = new Application_Model_DbTable_VRatoeiraHasBioPeixe();
+        $select = $this->dbTableRatoeiraHasBioPeixe->select()
+                ->from($this->dbTableRatoeiraHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->order($order)->limit($limit);
 
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableRatoeiraHasBioPeixe->fetchAll($select)->toArray();
+    }
+    
     public function selectEspeciesPeixesBiometrias()
     {
         $this->dbTableRatoeiraHasBioPeixe = new Application_Model_DbTable_VRatoeiraHasBioPeixe();
@@ -525,6 +548,17 @@ class Application_Model_Ratoeira
         }
         
         return $this->dbTableRatoeira->fetchAll($select)->toArray();
+    }
+    
+    public function selectMediaEspecies($where = null, $order = null, $limit = null)
+    {
+        $this->dbTableRatoeiraMedia = new Application_Model_DbTable_VMediaEspeciesRatoeira();
+        $select = $this->dbTableRatoeiraMedia->select()->
+                from()->order($order)->limit($limit);
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $this->dbTableRatoeiraMedia->fetchAll($select)->toArray();
     }
 }
 

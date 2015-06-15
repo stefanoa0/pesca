@@ -66,7 +66,11 @@ class VaraPescaController extends Zend_Controller_Action
             $this->redirect('vara-pesca/pescadores/id/'.$fichadiaria['fd_id'].'/idMonitoramento/'.$monitoramento['fd_id'].'/bar_id/'.$idBarco);
         }
     }
-    
+    public function acesso(){
+    if($this->usuario['tp_id']==5){
+            $this->_redirect('index');
+        }
+    }
     public function naoexiste($var){
         if(empty($var)){
             $this->redirect('exception/naoexiste');
@@ -91,7 +95,7 @@ class VaraPescaController extends Zend_Controller_Action
             $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'vp_id DESC'), 20);
         }
         elseif($ent_all){
-            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
+            $dados = $this->modelVarapesca->selectEntrevistaVaraPesca(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca(null, array('fd_id DESC', 'tp_nome'),20);
@@ -101,9 +105,7 @@ class VaraPescaController extends Zend_Controller_Action
     }
 
     public function editarAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $entrevista = $this->modelVaraPesca->find($this->_getParam('id'));
         $this->naoexiste($entrevista);
         $pescadores = $this->modelPescador->select(null, 'tp_nome');
@@ -162,9 +164,7 @@ class VaraPescaController extends Zend_Controller_Action
 
 
     public function criarAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idVaraPesca = $this->modelVaraPesca->insert($this->_getAllParams());
 
 
@@ -185,9 +185,7 @@ class VaraPescaController extends Zend_Controller_Action
         $this->view->assign('pescadores', $pescadores);
     }
     public function atualizarAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idVaraPesca = $this->_getParam('id_entrevista');
         $monitoramento = $this->modelMonitoramento->select('mnt_id='.$this->_getParam('id_monitoramento'));
         
@@ -202,9 +200,7 @@ class VaraPescaController extends Zend_Controller_Action
         }
     }
     public function excluirAction() {
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $id = $this->_getParam('id');
         if($this->usuario['tp_id']==1){
             $this->modelVaraPesca->deletePesqueiro($id);

@@ -567,6 +567,18 @@ class Application_Model_ArrastoFundo
     
         return $this->dbTableArrastoHasBioCamarao->fetchAll($select)->toArray();
     }
+    public function selectDadosBiometriaCamarao($where = null, $order = null,$limit = null){
+        $this->dbTableArrastoHasBioCamarao = new Application_Model_DbTable_VArrastoFundoHasBioCamarao();
+        $select = $this->dbTableArrastoHasBioCamarao->select()
+                ->from($this->dbTableArrastoHasBioCamarao,array('x'=>'tbc_peso', 'y'=>'tbc_comprimento_cabeca'))
+                ->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableArrastoHasBioCamarao->fetchAll($select)->toArray();
+    }
     public function selectHistogramaBiometriaCamarao($tipo,$where = null, $order = null,$limit = null){
         $this->dbTableArrastoHasBioCamarao = new Application_Model_DbTable_VArrastoFundoHasBioCamarao();
         $select = $this->dbTableArrastoHasBioCamarao->select()
@@ -579,7 +591,18 @@ class Application_Model_ArrastoFundo
 
         return $this->dbTableArrastoHasBioCamarao->fetchAll($select)->toArray();
     }
-    
+    public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
+        $this->dbTableArrastoHasBioPeixe = new Application_Model_DbTable_VArrastoFundoHasBioPeixe();
+        $select = $this->dbTableArrastoHasBioPeixe->select()
+                ->from($this->dbTableArrastoHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableArrastoHasBioPeixe->fetchAll($select)->toArray();
+    }
     public function selectEspeciesPeixesBiometrias()
     {
         $this->dbTableArrastoHasBioPeixe = new Application_Model_DbTable_VArrastoFundoHasBioPeixe();
@@ -612,5 +635,16 @@ class Application_Model_ArrastoFundo
         }
         
         return $this->dbTableArrasto->fetchAll($select)->toArray();
+    }
+    
+    public function selectMediaEspecies($where = null, $order = null, $limit = null)
+    {
+        $this->dbTableArrastoMedia = new Application_Model_DbTable_VMediaEspeciesArrastoFundo();
+        $select = $this->dbTableArrastoMedia->select()->
+                from()->order($order)->limit($limit);
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $this->dbTableArrastoMedia->fetchAll($select)->toArray();
     }
 }

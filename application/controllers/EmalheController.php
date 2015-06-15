@@ -61,6 +61,11 @@ class EmalheController extends Zend_Controller_Action
         $this->redirect('emalhe/pescadores/id/'.$fichadiaria['fd_id'].'/idMonitoramento/'.$monitoramento['fd_id'].'/bar_id/'.$idBarco);
         }
     }
+    public function acesso(){
+    if($this->usuario['tp_id']==5){
+            $this->_redirect('index');
+        }
+    }
     public function naoexiste($var){
         if(empty($var)){
             $this->redirect('exception/naoexiste');
@@ -94,6 +99,7 @@ class EmalheController extends Zend_Controller_Action
     }
 
     public function editarAction(){
+        $this->acesso();
         //$avistamentoEmalhe = new Application_Model_DbTable_VEmalheHasAvistamento();
         $entrevista = $this->modelEmalhe->find($this->_getParam('id'));
         $this->naoexiste($entrevista);
@@ -163,18 +169,14 @@ class EmalheController extends Zend_Controller_Action
         $this->view->assign('pescadores', $pescadores);
     }
     public function criarAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idEmalhe = $this->modelEmalhe->insert($this->_getAllParams());
 
 
         $this->_redirect('emalhe/editar/id/'.$idEmalhe);
     }
     public function atualizarAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idEmalhe = $this->_getParam('id_entrevista');
         $monitoramento = $this->modelMonitoramento->select('mnt_id='.$this->_getParam('id_monitoramento'));
         
@@ -189,9 +191,7 @@ class EmalheController extends Zend_Controller_Action
         }
     }
     public function excluirAction() {
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->modelEmalhe->delete($this->_getParam('id'));
         
         $idFicha = $this->_getParam('id_ficha');
@@ -214,9 +214,7 @@ class EmalheController extends Zend_Controller_Action
     }
     
     public function insertpesqueiroAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -233,9 +231,7 @@ class EmalheController extends Zend_Controller_Action
         $this->redirect("/emalhe/tablepesqueiro/id/" . $idEntrevista);
     }
     public function deletepesqueiroAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -262,9 +258,7 @@ class EmalheController extends Zend_Controller_Action
     }
     
     public function insertespeciecapturadaAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -287,9 +281,7 @@ class EmalheController extends Zend_Controller_Action
         $this->redirect("/emalhe/tableespcaptura/id/" . $idEntrevista);
     }
     public function deletespecieAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -316,9 +308,7 @@ class EmalheController extends Zend_Controller_Action
         $this->view->assign('vEmalheAvistamento', $vEmalheAvistamento);
     }    
     public function insertavistamentoAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -331,9 +321,7 @@ class EmalheController extends Zend_Controller_Action
         $this->redirect("/emalhe/tableavistamento/id/" . $idEntrevista);
     }
     public function deleteavistamentoAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -357,9 +345,7 @@ class EmalheController extends Zend_Controller_Action
         $this->view->assign('vBioCamarao', $vBioCamarao);
     }
     public function insertbiocamaraoAction() {
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
@@ -380,9 +366,7 @@ class EmalheController extends Zend_Controller_Action
         $this->redirect("/emalhe/tablebiocamarao/id/" . $idEntrevista);
     }
     public function deletebiocamaraoAction() {
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -406,9 +390,7 @@ class EmalheController extends Zend_Controller_Action
         $this->view->assign('vBioPeixe', $vBioPeixe);
     }
     public function insertbiopeixeAction() {
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
@@ -427,9 +409,7 @@ class EmalheController extends Zend_Controller_Action
         $this->redirect("/emalhe/tablebiopeixe/id/" . $idEntrevista);
     }
     public function deletebiopeixeAction() {
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
@@ -441,9 +421,7 @@ class EmalheController extends Zend_Controller_Action
         $this->redirect("/emalhe/tablebiopeixe/id/" . $idEntrevista);
     }
     public function relatoriolistaAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 
@@ -477,60 +455,58 @@ class EmalheController extends Zend_Controller_Action
     }
 
     public function relatorioAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
-		$this->_helper->layout->disableLayout();
-		$this->_helper->viewRenderer->setNoRender(true);
+        
+            $this->_helper->layout->disableLayout();
+            $this->_helper->viewRenderer->setNoRender(true);
 
-		$localModelEmalhe = new Application_Model_Emalhe();
-		$localEmalhe = $localModelEmalhe->selectEntrevistaEmalhe(NULL, array('fd_id', 'mnt_id', 'em_id'), NULL);
+            $localModelEmalhe = new Application_Model_Emalhe();
+            $localEmalhe = $localModelEmalhe->selectEntrevistaEmalhe(NULL, array('fd_id', 'mnt_id', 'em_id'), NULL);
 
-		$localPesqueiro = $localModelEmalhe->selectEmalheHasPesqueiro(NULL, array('em_id', 'paf_pesqueiro'), NULL);
-		$localEspecie = $localModelEmalhe->selectEmalheHasEspCapturadas(NULL, array('em_id', 'esp_nome_comum'), NULL);
-		$localAvist = $localModelEmalhe->selectEmalheHasAvistamento(NULL, array('em_id', 'avs_descricao'), NULL);
+            $localPesqueiro = $localModelEmalhe->selectEmalheHasPesqueiro(NULL, array('em_id', 'paf_pesqueiro'), NULL);
+            $localEspecie = $localModelEmalhe->selectEmalheHasEspCapturadas(NULL, array('em_id', 'esp_nome_comum'), NULL);
+            $localAvist = $localModelEmalhe->selectEmalheHasAvistamento(NULL, array('em_id', 'avs_descricao'), NULL);
 
-		require_once "../library/ModeloRelatorio.php";
-		$modeloRelatorio = new ModeloRelatorio();
-		$modeloRelatorio->setTitulo('Relatório Entrevista de Emalhe');
-		$modeloRelatorio->setLegendaOff();
+            require_once "../library/ModeloRelatorio.php";
+            $modeloRelatorio = new ModeloRelatorio();
+            $modeloRelatorio->setTitulo('Relatório Entrevista de Emalhe');
+            $modeloRelatorio->setLegendaOff();
 
-		foreach ( $localEmalhe as $key => $localData ) {
-			$modeloRelatorio->setLegValueAlinhadoDireita(30, 60, 'Ficha:', $localData['fd_id']);
-			$modeloRelatorio->setLegValueAlinhadoDireita(90, 60, 'Monit.:',  $localData['mnt_id']);
-			$modeloRelatorio->setLegValueAlinhadoDireita(150, 70, 'Emalhe:', $localData['em_id']);
-			$modeloRelatorio->setLegValue(220, 'Pescador: ', $localData['tp_nome']);
-			$modeloRelatorio->setLegValue(450, 'Barco: ', $localData['bar_nome']);
-			$modeloRelatorio->setNewLine();
+            foreach ( $localEmalhe as $key => $localData ) {
+                    $modeloRelatorio->setLegValueAlinhadoDireita(30, 60, 'Ficha:', $localData['fd_id']);
+                    $modeloRelatorio->setLegValueAlinhadoDireita(90, 60, 'Monit.:',  $localData['mnt_id']);
+                    $modeloRelatorio->setLegValueAlinhadoDireita(150, 70, 'Emalhe:', $localData['em_id']);
+                    $modeloRelatorio->setLegValue(220, 'Pescador: ', $localData['tp_nome']);
+                    $modeloRelatorio->setLegValue(450, 'Barco: ', $localData['bar_nome']);
+                    $modeloRelatorio->setNewLine();
 
-			foreach ( $localPesqueiro as $key => $localDataPesqueiro ) {
-				if ( $localDataPesqueiro['em_id'] ==  $localData['em_id'] ) {
-					$modeloRelatorio->setLegValue(80, 'Pesqueiro: ',  $localDataPesqueiro['paf_pesqueiro']);
-					$modeloRelatorio->setNewLine();
-				}
-			}
-			foreach ( $localEspecie as $key => $localDataEspecie ) {
-				if ( $localDataEspecie['em_id'] ==  $localData['em_id'] ) {
-					$modeloRelatorio->setLegValue(80, 'Espécie: ',  $localDataEspecie['esp_nome_comum']);
-					$modeloRelatorio->setLegValueAlinhadoDireita(280, 60, 'Quant:', $localDataEspecie['spc_quantidade']);
-					$modeloRelatorio->setLegValueAlinhadoDireita(350, 90, 'Peso(kg):', number_format($localDataEspecie['spc_peso_kg'], 2, ',', ' '));
-					$modeloRelatorio->setLegValueAlinhadoDireita(450, 120, 'Preço(R$/kg):', number_format($localDataEspecie['spc_preco'], 2, ',', ' '));
-					$modeloRelatorio->setNewLine();
-				}
-			}
-			foreach ( $localAvist as $key => $localDataAvist ) {
-				if ( $localDataAvist['em_id'] ==  $localData['em_id'] ) {
-					$modeloRelatorio->setLegValue(80, 'Avist.: ',  $localDataAvist['avs_descricao']);
-					$modeloRelatorio->setNewLine();
-				}
-			}
-		}
-		$modeloRelatorio->setNewLine();
-		$pdf = $modeloRelatorio->getRelatorio();
+                    foreach ( $localPesqueiro as $key => $localDataPesqueiro ) {
+                            if ( $localDataPesqueiro['em_id'] ==  $localData['em_id'] ) {
+                                    $modeloRelatorio->setLegValue(80, 'Pesqueiro: ',  $localDataPesqueiro['paf_pesqueiro']);
+                                    $modeloRelatorio->setNewLine();
+                            }
+                    }
+                    foreach ( $localEspecie as $key => $localDataEspecie ) {
+                            if ( $localDataEspecie['em_id'] ==  $localData['em_id'] ) {
+                                    $modeloRelatorio->setLegValue(80, 'Espécie: ',  $localDataEspecie['esp_nome_comum']);
+                                    $modeloRelatorio->setLegValueAlinhadoDireita(280, 60, 'Quant:', $localDataEspecie['spc_quantidade']);
+                                    $modeloRelatorio->setLegValueAlinhadoDireita(350, 90, 'Peso(kg):', number_format($localDataEspecie['spc_peso_kg'], 2, ',', ' '));
+                                    $modeloRelatorio->setLegValueAlinhadoDireita(450, 120, 'Preço(R$/kg):', number_format($localDataEspecie['spc_preco'], 2, ',', ' '));
+                                    $modeloRelatorio->setNewLine();
+                            }
+                    }
+                    foreach ( $localAvist as $key => $localDataAvist ) {
+                            if ( $localDataAvist['em_id'] ==  $localData['em_id'] ) {
+                                    $modeloRelatorio->setLegValue(80, 'Avist.: ',  $localDataAvist['avs_descricao']);
+                                    $modeloRelatorio->setNewLine();
+                            }
+                    }
+            }
+            $modeloRelatorio->setNewLine();
+            $pdf = $modeloRelatorio->getRelatorio();
 
-		ob_end_clean();
-        header('Content-Disposition: attachment;filename="rel_entrevista_emalhe.pdf"');
-        header("Content-type: application/x-pdf");
-        echo $pdf->render();
+            ob_end_clean();
+    header('Content-Disposition: attachment;filename="rel_entrevista_emalhe.pdf"');
+    header("Content-type: application/x-pdf");
+    echo $pdf->render();
     }
 }

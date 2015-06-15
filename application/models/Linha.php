@@ -565,7 +565,18 @@ private $dbTableLinha;
     
         return $this->dbTableLinhaHasBioPeixe->fetchAll($select)->toArray();
     }
-    
+    public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
+        $this->dbTableLinhaHasBioPeixe = new Application_Model_DbTable_VLinhaHasBioPeixe();
+        $select = $this->dbTableLinhaHasBioPeixe->select()
+                ->from($this->dbTableLinhaHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableLinhaHasBioPeixe->fetchAll($select)->toArray();
+    }
     public function selectPescadoresByBarco($where = null, $order = null, $limit = null){
         $this->dbTableLinha = new Application_Model_DbTable_VEntrevistaLinha();
         
@@ -577,6 +588,17 @@ private $dbTableLinha;
         }
         
         return $this->dbTableLinha->fetchAll($select)->toArray();
+    }
+    
+    public function selectMediaEspecies($where = null, $order = null, $limit = null)
+    {
+        $this->dbTableLinhaMedia = new Application_Model_DbTable_VMediaEspeciesLinha();
+        $select = $this->dbTableLinhaMedia->select()->
+                from()->order($order)->limit($limit);
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $this->dbTableLinhaMedia->fetchAll($select)->toArray();
     }
 }
 

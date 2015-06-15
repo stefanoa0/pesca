@@ -1,5 +1,15 @@
 <?php
-
+/** 
+ * Model Arte de Pesca - Manzuá
+ * 
+ * @package Pesca
+ * @subpackage Models
+ * @author Stefano Azevedo Silva <stefanouesc@gmail.com>
+ * @author Marcelo Ossamu Honda <mohonda@uesc.com>
+ * @version 1.0
+ * @access public
+ *
+ */
 class Application_Model_Manzua
 {    
    private $dbTableManzua;
@@ -502,7 +512,18 @@ class Application_Model_Manzua
 
         return $this->dbTableManzuaHasBioPeixe->fetchAll($select)->toArray();
     }
+    public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
+        $this->dbTableManzuaHasBioPeixe = new Application_Model_DbTable_VManzuaHasBioPeixe();
+        $select = $this->dbTableManzuaHasBioPeixe->select()
+                ->from($this->dbTableManzuaHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->order($order)->limit($limit);
 
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableManzuaHasBioPeixe->fetchAll($select)->toArray();
+    }
     public function selectEspeciesPeixesBiometrias()
     {
         $this->dbTableManzuaHasBioPeixe = new Application_Model_DbTable_VManzuaHasBioPeixe();
@@ -510,6 +531,7 @@ class Application_Model_Manzua
     
         return $this->dbTableManzuaHasBioPeixe->fetchAll($select)->toArray();
     }
+    
     
     public function selectPescadoresByBarco($where = null, $order = null, $limit = null){
         $this->dbTableManzua = new Application_Model_DbTable_VEntrevistaManzua();
@@ -522,6 +544,17 @@ class Application_Model_Manzua
         }
         
         return $this->dbTableManzua->fetchAll($select)->toArray();
+    }
+    
+    public function selectMediaEspecies($where = null, $order = null, $limit = null)
+    {
+        $this->dbTableManzuaMedia = new Application_Model_DbTable_VMediaEspeciesManzua();
+        $select = $this->dbTableManzuaMedia->select()->
+                from()->order($order)->limit($limit);
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $this->dbTableManzuaMedia->fetchAll($select)->toArray();
     }
 }
 

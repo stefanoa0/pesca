@@ -499,7 +499,18 @@ private $dbTableColetaManual;
 
         return $this->dbTableColetaManualHasBioPeixe->fetchAll($select)->toArray();
     }
+    public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
+        $this->dbTableColetaManualHasBioPeixe = new Application_Model_DbTable_VColetaManualHasBioPeixe();
+        $select = $this->dbTableColetaManualHasBioPeixe->select()
+                ->from($this->dbTableColetaManualHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->order($order)->limit($limit);
 
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableColetaManualHasBioPeixe->fetchAll($select)->toArray();
+    }
     public function selectEspeciesPeixesBiometrias()
     {
         $this->dbTableColetaManualHasBioPeixe = new Application_Model_DbTable_VColetaManualHasBioPeixe();
@@ -519,6 +530,17 @@ private $dbTableColetaManual;
         }
         
         return $this->dbTableColetaManual->fetchAll($select)->toArray();
+    }
+    
+    public function selectMediaEspecies($where = null, $order = null, $limit = null)
+    {
+        $this->dbTableColetaManualMedia = new Application_Model_DbTable_VMediaEspeciesColetaManual();
+        $select = $this->dbTableColetaManualMedia->select()->
+                from()->order($order)->limit($limit);
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $this->dbTableColetaManualMedia->fetchAll($select)->toArray();
     }
 }
 

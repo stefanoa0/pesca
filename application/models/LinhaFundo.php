@@ -559,7 +559,18 @@ class Application_Model_LinhaFundo
 
         return $this->dbTableLinhaFundoHasBioPeixe->fetchAll($select)->toArray();
     }
+    public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
+        $this->dbTableLinhaFundoHasBioPeixe = new Application_Model_DbTable_VLinhaFundoHasBioPeixe();
+        $select = $this->dbTableLinhaFundoHasBioPeixe->select()
+                ->from($this->dbTableLinhaFundoHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->order($order)->limit($limit);
 
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableLinhaFundoHasBioPeixe->fetchAll($select)->toArray();
+    }
     public function selectEspeciesPeixesBiometrias()
     {
         $this->dbTableLinhaFundoHasBioPeixe = new Application_Model_DbTable_VLinhaFundoHasBioPeixe();
@@ -579,6 +590,17 @@ class Application_Model_LinhaFundo
         }
         
         return $this->dbTableLinhaFundo->fetchAll($select)->toArray();
+    }
+    
+    public function selectMediaEspecies($where = null, $order = null, $limit = null)
+    {
+        $this->dbTableLinhaFundoMedia = new Application_Model_DbTable_VMediaEspeciesLinhaFundo();
+        $select = $this->dbTableLinhaFundoMedia->select()->
+                from()->order($order)->limit($limit);
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $this->dbTableLinhaFundoMedia->fetchAll($select)->toArray();
     }
 }
 

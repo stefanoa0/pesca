@@ -1,5 +1,15 @@
 <?php
-
+/** 
+ * Model Arte de Pesca - Vara de Pesca
+ * 
+ * @package Pesca
+ * @subpackage Models
+ * @author Stefano Azevedo Silva <stefanouesc@gmail.com>
+ * @author Marcelo Ossamu Honda <mohonda@uesc.com>
+ * @version 1.0
+ * @access public
+ *
+ */
 class Application_Model_VaraPesca
 {
     private $dbTableVaraPesca;
@@ -557,7 +567,20 @@ class Application_Model_VaraPesca
         return $this->dbTableVaraPescaHasBioPeixe->fetchAll($select)->toArray();
     }
 
-public function selectEspeciesPeixesBiometrias()
+    public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
+        $this->dbTableVaraPescaHasBioPeixe = new Application_Model_DbTable_VVaraPescaHasBioPeixe();
+        $select = $this->dbTableVaraPescaHasBioPeixe->select()
+                ->from($this->dbTableVaraPescaHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableVaraPescaHasBioPeixe->fetchAll($select)->toArray();
+    }
+    
+    public function selectEspeciesPeixesBiometrias()
     {
         $this->dbTableVaraPescaHasBioPeixe = new Application_Model_DbTable_VVaraPescaHasBioPeixe();
         $select = $this->dbTableVaraPescaHasBioPeixe->select()->from($this->dbTableVaraPescaHasBioPeixe, array('esp_nome_comum'=>new Zend_Db_Expr('distinct(esp_nome_comum)'), 'esp_id'))->order('esp_nome_comum');
@@ -576,6 +599,17 @@ public function selectEspeciesPeixesBiometrias()
         }
         
         return $this->dbTableVaraPesca->fetchAll($select)->toArray();
+    }
+    
+    public function selectMediaEspecies($where = null, $order = null, $limit = null)
+    {
+        $this->dbTableVaraPescaMedia = new Application_Model_DbTable_VMediaEspeciesVaraPesca();
+        $select = $this->dbTableVaraPescaMedia->select()->
+                from()->order($order)->limit($limit);
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $this->dbTableVaraPescaMedia->fetchAll($select)->toArray();
     }
 }
 

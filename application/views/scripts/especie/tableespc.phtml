@@ -17,7 +17,13 @@
             <td><?= $entrevista['spc_peso_kg'] ?></td>
             <td><?= $entrevista['spc_preco'] ?></td>
             <td><?= $entrevista['af_id'] ?></td>
-
+            <td class="td-botao">
+                        <a href="<?= $this->url(array("controller" => "arrasto-fundo", "action" => "editar", "id" => $entrevista['af_id']), null, true) ?>">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a>
+                    </td>
             </a>
             </tr>
         <?php endforeach; ?>
@@ -30,7 +36,13 @@
             <td><?= $entrevista['spc_peso_kg'] ?></td>
             <td><?= $entrevista['spc_preco'] ?></td>
             <td><?= $entrevista['cal_id'] ?></td>
-
+            <td class="td-botao">
+                <a href="<?= $this->url(array("controller" => "calao", "action" => "editar", "id" => $entrevista['cal_id']), null, true) ?>">
+                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                        <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                    </ul>
+                </a>
+            </td>
             </a>
             </tr>
         <?php endforeach; ?>
@@ -44,7 +56,13 @@
             <td><?= $entrevista['spc_peso_kg'] ?></td>
             <td><?= $entrevista['spc_preco'] ?></td>
             <td><?= $entrevista['cml_id'] ?></td>
-
+            <td class="td-botao">
+                <a href="<?= $this->url(array("controller" => "coleta-manual", "action" => "editar", "id" => $entrevista['cml_id']), null, true) ?>">
+                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                        <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                    </ul>
+                </a>
+            </td>
             </a>
             </tr>
         <?php endforeach; ?>
@@ -57,7 +75,13 @@
             <td><?= $entrevista['spc_peso_kg'] ?></td>
             <td><?= $entrevista['spc_preco'] ?></td>
             <td><?= $entrevista['em_id'] ?></td>
-
+            <td class="td-botao">
+                <a href="<?= $this->url(array("controller" => "emalhe", "action" => "editar", "id" => $entrevista['em_id']), null, true) ?>">
+                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                        <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                    </ul>
+                </a>
+            </td>
             </a>
             </tr>
         <?php endforeach; ?>
@@ -70,7 +94,13 @@
             <td><?= $entrevista['spc_peso_kg'] ?></td>
             <td><?= $entrevista['spc_preco'] ?></td>
             <td><?= $entrevista['grs_id'] ?></td>
-
+            <td class="td-botao">
+                <a href="<?= $this->url(array("controller" => "grosseira", "action" => "editar", "id" => $entrevista['grs_id']), null, true) ?>">
+                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                        <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                    </ul>
+                </a>
+            </td>
             </a>
             </tr>
         <?php endforeach; ?>
@@ -83,7 +113,13 @@
             <td><?= $entrevista['spc_peso_kg'] ?></td>
             <td><?= $entrevista['spc_preco'] ?></td>
             <td><?= $entrevista['jre_id'] ?></td>
-
+            <td class="td-botao">
+                <a href="<?= $this->url(array("controller" => "jerere", "action" => "editar", "id" => $entrevista['jre_id']), null, true) ?>">
+                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                        <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                    </ul>
+                </a>
+            </td>
             </a>
             </tr>
         <?php endforeach; ?>
@@ -96,7 +132,13 @@
             <td><?= $entrevista['spc_peso_kg'] ?></td>
             <td><?= $entrevista['spc_preco'] ?></td>
             <td><?= $entrevista['lin_id'] ?></td>
-
+            <td class="td-botao">
+                <a href="<?= $this->url(array("controller" => "linha", "action" => "editar", "id" => $entrevista['lin_id']), null, true) ?>">
+                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                        <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                    </ul>
+                </a>
+            </td>
             </a>
             </tr>
         <?php endforeach; ?>
@@ -109,7 +151,13 @@
             <td><?= $entrevista['spc_peso_kg'] ?></td>
             <td><?= $entrevista['spc_preco'] ?></td>
             <td><?= $entrevista['lf_id'] ?></td>
-
+            <td class="td-botao">
+                <a href="<?= $this->url(array("controller" => "linha-fundo", "action" => "editar", "id" => $entrevista['lf_id']), null, true) ?>">
+                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                        <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                    </ul>
+                </a>
+            </td>
             </a>
             </tr>
         <?php endforeach; ?>
@@ -122,7 +170,13 @@
             <td><?= $entrevista['spc_peso_kg'] ?></td>
             <td><?= $entrevista['spc_preco'] ?></td>
             <td><?= $entrevista['man_id'] ?></td>
-
+            <td class="td-botao">
+                <a href="<?= $this->url(array("controller" => "manzua", "action" => "editar", "id" => $entrevista['man_id']), null, true) ?>">
+                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                        <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                    </ul>
+                </a>
+            </td>
             </a>
             </tr>
         <?php endforeach; ?>
@@ -136,7 +190,13 @@
             <td><?= $entrevista['spc_peso_kg'] ?></td>
             <td><?= $entrevista['spc_preco'] ?></td>
             <td><?= $entrevista['mer_id'] ?></td>
-
+            <td class="td-botao">
+                <a href="<?= $this->url(array("controller" => "mergulho", "action" => "editar", "id" => $entrevista['mer_id']), null, true) ?>">
+                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                        <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                    </ul>
+                </a>
+            </td>
             </a>
             </tr>
         <?php endforeach; ?>
@@ -149,7 +209,13 @@
             <td><?= $entrevista['spc_peso_kg'] ?></td>
             <td><?= $entrevista['spc_preco'] ?></td>
             <td><?= $entrevista['rat_id'] ?></td>
-
+            <td class="td-botao">
+                <a href="<?= $this->url(array("controller" => "ratoeira", "action" => "editar", "id" => $entrevista['rat_id']), null, true) ?>">
+                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                        <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                    </ul>
+                </a>
+            </td>
             </a>
             </tr>
         <?php endforeach; ?>
@@ -163,7 +229,13 @@
             <td><?= $entrevista['spc_peso_kg'] ?></td>
             <td><?= $entrevista['spc_preco'] ?></td>
             <td><?= $entrevista['sir_id'] ?></td>
-
+            <td class="td-botao">
+                <a href="<?= $this->url(array("controller" => "siripoia", "action" => "editar", "id" => $entrevista['sir_id']), null, true) ?>">
+                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                        <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                    </ul>
+                </a>
+            </td>
             </a>
             </tr>
         <?php endforeach; ?>
@@ -176,7 +248,13 @@
             <td><?= $entrevista['spc_peso_kg'] ?></td>
             <td><?= $entrevista['spc_preco'] ?></td>
             <td><?= $entrevista['tar_id'] ?></td>
-
+            <td class="td-botao">
+                <a href="<?= $this->url(array("controller" => "tarrafa", "action" => "editar", "id" => $entrevista['tar_id']), null, true) ?>">
+                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                        <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                    </ul>
+                </a>
+            </td>
             </a>
             </tr>
         <?php endforeach; ?>
@@ -189,7 +267,13 @@
             <td><?= $entrevista['spc_peso_kg'] ?></td>
             <td><?= $entrevista['spc_preco'] ?></td>
             <td><?= $entrevista['vp_id'] ?></td>
-
+            <td class="td-botao">
+                <a href="<?= $this->url(array("controller" => "vara-pesca", "action" => "editar", "id" => $entrevista['vp_id']), null, true) ?>">
+                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                        <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                    </ul>
+                </a>
+            </td>
             </a>
             </tr>
         <?php endforeach; ?>

@@ -93,7 +93,7 @@ class MergulhoController extends Zend_Controller_Action
             $dados = $this->modelMergulho->selectEntrevistaMergulho("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'mer_id v'), 20);
         }
         elseif($ent_all){
-            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
+            $dados = $this->modelMergulho->selectEntrevistaMergulho(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelMergulho->selectEntrevistaMergulho(null, array('fd_id DESC', 'tp_nome'),20);
@@ -101,11 +101,13 @@ class MergulhoController extends Zend_Controller_Action
 
         $this->view->assign("dados", $dados);
     }
-
-    public function editarAction(){
+    public function acesso(){
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
         }
+    }
+    public function editarAction(){
+        $this->acesso();
         //$avistamentoMergulho = new Application_Model_DbTable_VMergulhoHasAvistamento();
         $entrevista = $this->modelMergulho->find($this->_getParam('id'));
         $this->naoexiste($entrevista);
@@ -163,9 +165,7 @@ class MergulhoController extends Zend_Controller_Action
     }
 
     public function criarAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idMergulho = $this->modelMergulho->insert($this->_getAllParams());
 
 
@@ -186,9 +186,7 @@ class MergulhoController extends Zend_Controller_Action
         $this->view->assign('pescadores', $pescadores);
     }
     public function atualizarAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idMergulho = $this->_getParam('id_entrevista');
         $monitoramento = $this->modelMonitoramento->select('mnt_id='.$this->_getParam('id_monitoramento'));
         
@@ -202,9 +200,7 @@ class MergulhoController extends Zend_Controller_Action
         }
     }
     public function excluirAction() {
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->modelMergulho->delete($this->_getParam('id'));
         
         $idFicha = $this->_getParam('id_ficha');

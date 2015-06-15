@@ -100,7 +100,7 @@ class LinhaFundoController extends Zend_Controller_Action
             $dados = $this->modelLinhaFundo->selectEntrevistaLinhaFundo("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'lf_id DESC'), 20);
         }
         elseif($ent_all){
-            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
+            $dados = $this->modelLinhaFundo->selectEntrevistaLinhaFundo(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelLinhaFundo->selectEntrevistaLinhaFundo(null, array('fd_id DESC', 'tp_nome'),20);
@@ -110,6 +110,7 @@ class LinhaFundoController extends Zend_Controller_Action
     }
 
     public function editarAction(){
+        $this->acesso();
          //$avistamentoLinhaFundo = new Application_Model_DbTable_VLinhaFundoHasAvistamento();
         $entrevista = $this->modelLinhaFundo->find($this->_getParam('id'));
         $this->naoexiste($entrevista);

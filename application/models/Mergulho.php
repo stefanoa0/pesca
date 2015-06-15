@@ -1,4 +1,16 @@
 <?php
+/** 
+ * Model Arte de Pesca - Mergulho
+ * 
+ * @package Pesca
+ * @subpackage Models
+ * @author Stefano Azevedo Silva <stefanouesc@gmail.com>
+ * @author Marcelo Ossamu Honda <mohonda@uesc.com>
+ * @version 1.0
+ * @access public
+ *
+ */
+
 
 class Application_Model_Mergulho
 {
@@ -519,7 +531,18 @@ private $dbTableMergulho;
     
         return $this->dbTableMergulhoHasBioPeixe->fetchAll($select)->toArray();
     }
-    
+    public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
+        $this->dbTableMergulhoHasBioPeixe = new Application_Model_DbTable_VMergulhoHasBioPeixe();
+        $select = $this->dbTableMergulhoHasBioPeixe->select()
+                ->from($this->dbTableMergulhoHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->order($order)->limit($limit);
+
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableMergulhoHasBioPeixe->fetchAll($select)->toArray();
+    }
     public function selectPescadoresByBarco($where = null, $order = null, $limit = null){
         $this->dbTableMergulho = new Application_Model_DbTable_VEntrevistaMergulho();
         
@@ -531,5 +554,16 @@ private $dbTableMergulho;
         }
         
         return $this->dbTableMergulho->fetchAll($select)->toArray();
+    }
+    
+    public function selectMediaEspecies($where = null, $order = null, $limit = null)
+    {
+        $this->dbTableMergulhoMedia = new Application_Model_DbTable_VMediaEspeciesMergulho();
+        $select = $this->dbTableMergulhoMedia->select()->
+                from()->order($order)->limit($limit);
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $this->dbTableMergulhoMedia->fetchAll($select)->toArray();
     }
 }

@@ -3,6 +3,24 @@
     <h3>Barcos</h3>
 </div>
 
+     <a href="<?= $this->url(array("controller" => "index-admin", "action" => "index"), null, true) ?>" id="botao-ancora">Voltar</a><br/><br/>  
+<div id="esquerda_base">
+        <form>
+            <label>Buscar entrevistas por Barco: </label>
+            <input class="responsivo" onclick="ajax_busca_barco(this.form, '<?= $this->url(array("controller" => "barcos", "action" => "selectbarcos"), null, true) ?>')" type="button" value="Buscar Entrevistas"/>
+            
+            <select class="responsivo"  name="nome_barco">
+                <?php foreach ($this->barcos as $key => $barco): ?>
+                    <option value="<?= $barco['bar_id']; ?>" ><?= $barco['bar_nome']; ?></option>
+                <?php endforeach; ?>
+            </select>
+            <br/>
+
+        </form>
+    </div>
+
+<?php include('tablebarcos.phtml'); ?>
+
 <h3>Relatórios</h3>
 <ul>
     <li><img src="img/xls-icon.png" class="icon-relatorios"/><a href="<?= $this->url(array("controller" => "relatorios", "action" => "embarcacaodetalhada"), null, true) ?>" target="_blank" class="relatorio">Embarcações Detalhadas</a></li>

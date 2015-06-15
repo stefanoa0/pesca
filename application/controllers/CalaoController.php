@@ -71,7 +71,6 @@ private $usuario;
         }
     }
     
-    
     public function visualizarAction() {
         $ent_id = $this->_getParam("ent_id");
         $ent_pescador = $this->_getParam("tp_nome");
@@ -100,6 +99,7 @@ private $usuario;
     }
 
     public function editarAction(){
+        $this->acesso();
         $entrevista = $this->modelCalao->find($this->_getParam('id'));
         $this->naoexiste($entrevista);
         $pescadores = $this->modelPescador->select(null, 'tp_nome');
@@ -161,18 +161,14 @@ private $usuario;
         $this->view->assign('pescadores', $pescadores);
     }
     public function criarAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idCalao = $this->modelCalao->insert($this->_getAllParams());
 
 
         $this->_redirect('calao/editar/id/'.$idCalao);
     }
     public function atualizarAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idCalao = $this->_getParam('id_entrevista');
         
         $monitoramento = $this->modelMonitoramento->select('mnt_id='.$this->_getParam('id_monitoramento'));
@@ -189,10 +185,7 @@ private $usuario;
     }
 
     public function excluirAction() {
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
-        
+       $this->acesso();
         
         $this->modelCalao->delete($this->_getParam('id'));
         $idFicha = $this->_getParam('id_ficha');
@@ -216,9 +209,7 @@ private $usuario;
     }
     
     public function insertpesqueiroAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -232,9 +223,7 @@ private $usuario;
         $this->redirect("/calao/tablepesqueiro/id/" . $idEntrevista);
     }
     public function deletepesqueiroAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -262,9 +251,7 @@ private $usuario;
     }
     
     public function insertespeciecapturadaAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -287,9 +274,7 @@ private $usuario;
         $this->redirect("/calao/tableespcaptura/id/" . $idEntrevista);
     }
     public function deletespecieAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -316,9 +301,7 @@ private $usuario;
         $this->view->assign('vCalaoAvistamento', $vCalaoAvistamento);
     }    
     public function insertavistamentoAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -331,9 +314,7 @@ private $usuario;
         $this->redirect("/calao/tableavistamento/id/" . $idEntrevista);
     }
     public function deleteavistamentoAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -355,9 +336,7 @@ private $usuario;
         $this->view->assign('vBioCamarao', $vBioCamarao);
     }
     public function insertbiocamaraoAction() {
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
@@ -378,9 +357,7 @@ private $usuario;
         $this->redirect("/calao/tablebiocamarao/id/" . $idEntrevista);
     }
     public function deletebiocamaraoAction() {
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -405,9 +382,7 @@ private $usuario;
     }    
     
     public function insertbiopeixeAction() {
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
@@ -426,9 +401,7 @@ private $usuario;
         $this->redirect("/calao/tablebiopeixe/id/" . $idEntrevista);
     }
     public function deletebiopeixeAction() {
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
@@ -474,11 +447,13 @@ private $usuario;
         header("Content-type: application/x-pdf");
 		echo $pdf->render();
     }
-
-    public function relatorioAction(){
+    public function acesso(){
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
         }
+    }
+    public function relatorioAction(){
+        
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 

@@ -37,6 +37,12 @@ class LinhaController extends Zend_Controller_Action
         $this->modelMaturidade = new Application_Model_Maturidade();
 
     }
+    
+    public function acesso(){
+        if($this->usuario['tp_id']==5){
+            $this->_redirect('index');
+        }
+    }
     public function indexAction()
     {
         $pescadores = $this->modelPescador->select(null, 'tp_nome');
@@ -72,6 +78,7 @@ class LinhaController extends Zend_Controller_Action
     }
     
     public function editarAction(){
+        $this->acesso();
          //$avistamentoLinha = new Application_Model_DbTable_VLinhaHasAvistamento();
         $entrevista = $this->modelLinha->find($this->_getParam('id'));
         $this->naoexiste($entrevista);
@@ -124,7 +131,7 @@ class LinhaController extends Zend_Controller_Action
         $this->view->assign('especies',$especies);
         $this->view->assign('porto', $porto[0]);
     }
-
+    
 public function visualizarAction() {
         $ent_id = $this->_getParam("ent_id");
         $ent_pescador = $this->_getParam("tp_nome");
@@ -143,7 +150,7 @@ public function visualizarAction() {
             $dados = $this->modelLinha->selectEntrevistaLinha("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'lin_id DESC'), 20);
         }
         elseif($ent_all){
-            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
+            $dados = $this->modelLinha->selectEntrevistaLinha(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelLinha->selectEntrevistaLinha(null, array('fd_id DESC', 'tp_nome'),20);

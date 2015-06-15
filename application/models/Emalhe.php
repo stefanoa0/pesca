@@ -578,7 +578,18 @@ class Application_Model_Emalhe
 
         return $this->dbTableEmalheHasBioPeixe->fetchAll($select)->toArray();
     }
+    public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
+        $this->dbTableEmalheHasBioPeixe = new Application_Model_DbTable_VEmalheHasBioPeixe();
+        $select = $this->dbTableEmalheHasBioPeixe->select()
+                ->from($this->dbTableEmalheHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->order($order)->limit($limit);
 
+        if(!is_null($where)){
+            $select->where($where);
+        }
+
+        return $this->dbTableEmalheHasBioPeixe->fetchAll($select)->toArray();
+    }
     public function selectEspeciesPeixesBiometrias()
     {
         $this->dbTableEmalheHasBioPeixe = new Application_Model_DbTable_VEmalheHasBioPeixe();
@@ -598,6 +609,17 @@ class Application_Model_Emalhe
         }
         
         return $this->dbTableEmalhe->fetchAll($select)->toArray();
+    }
+    
+    public function selectMediaEspecies($where = null, $order = null, $limit = null)
+    {
+        $this->dbTableEmalheMedia = new Application_Model_DbTable_VMediaEspeciesEmalhe();
+        $select = $this->dbTableEmalheMedia->select()->
+                from()->order($order)->limit($limit);
+        if(!is_null($where)){
+            $select->where($where);
+        }
+        return $this->dbTableEmalheMedia->fetchAll($select)->toArray();
     }
 }
 

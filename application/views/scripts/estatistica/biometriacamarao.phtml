@@ -1,6 +1,9 @@
 <h2>Relatórios Estatísticos - Biometrias da espécie Camarão <?=$this->especie?></h2>
 
+ <a href="<?= $this->url(array("controller" => "estatistica", "action" => "indexbiometrias"), null, true) ?>" id="botao-ancora">Voltar</a><br/><br/>
+
 <script src="js/Chart.min.js"></script>
+<script src="js/Chart.Scatter.js"></script>
 <p> Quantidade total de Espécies Registradas: <b><?=$this->totalRegistrado ?></b> </p>
 <p> Média de Comprimento: <b><?= round($this->mediatbc_comprimento_cabeca,2) ?>mm</b> </p>
 <p> Comprimento Máximo: <b><?=$this->maxtbc_comprimento_cabeca ?>mm</b> </p>
@@ -36,6 +39,19 @@
     var responsive_false = {
         responsive:false
     };
+    
+    var scatter = {
+        responsive:true,
+        datasetStroke: false,
+        bezierCurve: true,
+        showTooltips: true,
+        scaleShowHorizontalLines: true,
+        scaleShowLabels: true,
+        scaleLabel: "<%=value%>mm",
+        scaleArgLabel: "<%=value%>g",
+        scaleBeginAtZero: true,
+        animation: false
+    };
     var comprCamarao = {
        labels: <?= $this->jsLabelsComprimento ?>,
        datasets: [
@@ -52,28 +68,24 @@
        ]
    };
    
-   var pesoCamarao = {
-       labels: <?= $this->jsLabelsPeso ?>,
-       datasets: [
-           {
-               label: "Quantidade de Embarcações Por Porto",
-               fillColor: "rgba(95,48,43,.8)",
-               strokeColor: "rgba(95,48,43,1)",
-               pointColor: "rgba(95,48,43,1)",
-               pointStrokeColor: "#fff",
-               pointHighlightFill: "#fff",
-               pointHighlightStroke: "rgba(95,48,43,1)",
-               data: <?= $this->jsDadosPeso ?>
-           }
-       ]
-   };
+   var pesoCamarao = [
+        {
+            
+            label: 'peso/comprimento',
+            strokeColor: 'rgba(95,48,43,.8)',
+            data: 
+                    <?= $this->DadosCamarao ?>
+            
+        }
+        
+        ];
    
    window.onload = function(){
         var id_barcos = document.getElementById("graf1").getContext("2d");
         var GenChart = new Chart(id_barcos).Bar(comprCamarao, options);
         
-        var id_barcos = document.getElementById("graf2").getContext("2d");
-        var GenChartA = new Chart(id_barcos).Bar(pesoCamarao, options);
+        var grafico_dispersao = document.getElementById("graf2").getContext("2d");
+        var GenChartA = new Chart(grafico_dispersao).Scatter(pesoCamarao, scatter);
     };
     
 </script>
@@ -88,7 +100,7 @@
 <p> Peso Mínimo: <b><?=$this->mintbc_peso ?>g</b> </p>
 <br/>
 <div class="box-chart">
-    <legend>Gráfico 2: Frequência de Camarão <?=$this->especie ?> por classes de peso padrão (g)</legend>
+    <legend>Gráfico 2: Gráfico de Disperção do Camarão <?=$this->especie ?> do comprimento da carapaça (mm) pelo peso (g)</legend>
   <canvas id="graf2" style="width:100%;"></canvas>
 </div>
 <br/>

@@ -90,7 +90,7 @@ class ColetaManualController extends Zend_Controller_Action
             $dados = $this->modelColetaManual->selectEntrevistaColetaManual("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'cml_id DESC'), 20);
         }
         elseif($ent_all){
-            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
+            $dados = $this->modelColetaManual->selectEntrevistaColetaManual(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelColetaManual->selectEntrevistaColetaManual(null, array('fd_id DESC', 'tp_nome'),20);

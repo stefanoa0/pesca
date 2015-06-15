@@ -43,6 +43,11 @@ class ManzuaController extends Zend_Controller_Action
             $this->redirect('exception/naoexiste');
         }
     }
+    public function acesso(){
+    if($this->usuario['tp_id']==5){
+            $this->_redirect('index');
+        }
+    }
     public function indexAction()
     {
         $pescadores = $this->modelPescador->select(null, 'tp_nome');
@@ -92,7 +97,7 @@ public function visualizarAction() {
             $dados = $this->modelManzua->selectEntrevistaManzua("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'man_id DESC'), 20);
         }
         elseif($ent_all){
-            $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
+            $dados = $this->modelManzua->selectEntrevistaManzua(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
             $dados = $this->modelManzua->selectEntrevistaManzua(null, array('fd_id DESC', 'tp_nome'),20);
@@ -101,9 +106,7 @@ public function visualizarAction() {
         $this->view->assign("dados", $dados);
     }
     public function editarAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $entrevista = $this->modelManzua->find($this->_getParam('id'));
         $this->naoexiste($entrevista);
         $pescadores = $this->modelPescador->select(null, 'tp_nome');
@@ -178,9 +181,7 @@ public function visualizarAction() {
         $this->view->assign('pescadores', $pescadores);
     }
     public function atualizarAction(){
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $idManzua = $this->_getParam('id_entrevista');
         $monitoramento = $this->modelMonitoramento->select('mnt_id='.$this->_getParam('id_monitoramento'));
         
@@ -194,9 +195,7 @@ public function visualizarAction() {
         }
     }
     public function excluirAction() {
-        if($this->usuario['tp_id']==5){
-            $this->_redirect('index');
-        }
+        $this->acesso();
         $this->modelManzua->delete($this->_getParam('id'));
 
         $idFicha = $this->_getParam('id_ficha');
