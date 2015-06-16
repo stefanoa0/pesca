@@ -266,5 +266,26 @@ Figura: Ponta da Tulha.
 </div>
 <br/>
 
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 7: Total de Capturas em kg por Mês na Pesca de <?= $this->segArteMaisPescada?></legend>
+  <canvas id="CapturaByMes2" style="width:100%;"></canvas>
+</div>
+<br/>
+
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 8: Espécies Mais Capturadas na Pesca de <?= $this->segArteMaisPescada?></legend>
+  <canvas id="EspeciesCapturadas2" style="width:100%;"></canvas>
+</div>
+<br/>
+
+<br/>
+<div class="box-chart">
+    <legend>Gráfico 9: Embarcacoes Monitoradas na Pesca de <?= $this->segArteMaisPescada?></legend>
+  <canvas id="BarcosMonitorados2" style="width:100%;"></canvas>
+</div>
+<br/>
+
 <a href="<?= $this->url(array("controller" => "porto", "action" => "cpue", "ano" => $this->ano, "arte" => $this->arteMaisPescada, "porto" => $this->porto ), null, true) ?>" id="botao-ancora">Gráfico de CPUE em <?=$this->arteMaisPescada?></a><br/>
 <a href="<?= $this->url(array("controller" => "porto", "action" => "cpue", "ano" => $this->ano, "arte" => $this->segArteMaisPescada, "porto" => $this->porto ), null, true) ?>" id="botao-ancora">Gráfico de CPUE em <?=$this->segArteMaisPescada?></a><br/>
