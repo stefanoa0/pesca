@@ -193,7 +193,7 @@
                     <?php endforeach; ?>
                 </select>
                 <input class="responsivo" style="float:left;" type="text" name="quantidade" placeholder="Quantidade" size="10px">
-                <input class="responsivo" style="float:left;" type="text" name="peso" placeholder="Peso (g)" size="10px">
+                <input class="responsivo" style="float:left;" type="text" name="peso" placeholder="Peso (g)" size="10px" >
                 <input class="responsivo" style="float:left;" type="text" name="precokg" placeholder="Preço" size="10px">
 
                 <input type="hidden" name="id_entrevista"  value="<?= $this->entrevista['af_id'] ?>"/>
@@ -294,4 +294,10 @@
  </form>
 <br/> <br/>
 <a href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "editar","id" => $this->monitoramento['fd_id']), null, true) ?>" id="botao-ancora">Voltar à Ficha-Diária</a>
-    
+<script>
+    var  medias = JSON.parse(decodeURIComponent("<?= $this->medias ?>"));
+    Object.keys(medias).forEach(function(key) {
+        document.write(key, medias[key]);
+    });
+</script>
+<button onclick="select_peso_permitido(this.form, medias)">Try it</button>

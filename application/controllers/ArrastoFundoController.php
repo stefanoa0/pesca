@@ -120,7 +120,8 @@ class ArrastoFundoController extends Zend_Controller_Action {
         $vBioCamarao = $this->modelArrastoFundo->selectVBioCamarao('taf_id='.$idEntrevista);
         $vBioPeixe = $this->modelArrastoFundo->selectVBioPeixe('taf_id='.$idEntrevista);
         $maturidade = $this->modelMaturidade->select(null,'tmat_tipo');
-        
+        //$arrayMedias = $this->modelArrastoFundo->selectMediaEspecies();
+        //print_r($arrayMedias);
         $this->view->assign('vBioCamarao', $vBioCamarao);
         $this->view->assign('vBioPeixe', $vBioPeixe);
         $this->view->assign('maturidade', $maturidade);
@@ -142,8 +143,10 @@ class ArrastoFundoController extends Zend_Controller_Action {
         $this->view->assign('pesqueiros', $pesqueiros);
         $this->view->assign('especies', $especies);
         $this->view->assign('porto', $porto[0]);
-        
-        
+        //$this->view->assign('medias', json_encode($arrayMedias, JSON_FORCE_OBJECT));
+        //print_r(json_encode($arrayMedias, JSON_FORCE_OBJECT));
+        //print_r(json_encode($arrayMedias));
+        //print_r($this->modelArrastoFundo->selectMediaEspecies());
     }
     
     public function pescadoresAction(){
@@ -388,12 +391,19 @@ class ArrastoFundoController extends Zend_Controller_Action {
         $preco = $this->_getParam("precokg");
 
         $idEntrevista = $this->_getParam("id_entrevista");
-
+        
+        //$confirm = $this->_getParam("confirm");
         //$backUrl = $this->_getParam("back_url");
-
-        $this->modelArrastoFundo->insertEspCapturada($idEntrevista, $especie, $quantidade, $peso, $preco);
-
-        $this->redirect("/arrasto-fundo/tableespcaptura/id/" . $idEntrevista);
+//        $arrayMedias = $this->modelArrastoFundo->selectMediaEspecies('esp_id ='.$especie );
+//        if($arrayMedias[0]['max_permitido_peso'] < $peso && $confirm ==1){
+//            $this->redirect("/arrasto-fundo/tableespcaptura/id/" . $idEntrevista);
+//            return false;
+//        }
+//        else{
+            $this->modelArrastoFundo->insertEspCapturada($idEntrevista, $especie, $quantidade, $peso, $preco);
+        
+            $this->redirect("/arrasto-fundo/tableespcaptura/id/" . $idEntrevista);
+//        }
     }
 
     public function deletespecieAction() {
@@ -459,6 +469,19 @@ class ArrastoFundoController extends Zend_Controller_Action {
 
         $this->redirect("/arrasto-fundo/tableavistamento/id/" . $idEntrevista);
         //$this->redirect("/arrasto-fundo/editar/id/" . $backUrl);
+    }
+    
+    public function mediaespecieAction(){
+        $especie = $this->_getParam("selectEspecie");
+        $peso = $this->_getParam("pesokg");
+        $mensagem = false;
+        
+        $arrayMedia = $this->modelArrastoFundo->selectMediaEspecies('esp_id = '.$especie);
+        
+        if(intval($arrayMedia[0]['max_peso']) < intval($peso)){
+            $mensagem = true;
+        }
+        return $mensagem;
     }
 
     public function relatoriolistaAction() {
