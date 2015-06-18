@@ -84,21 +84,25 @@ class VaraPescaController extends Zend_Controller_Action
         $ent_apelido = $this->_getParam("tp_apelido");
         $ent_all = $this->_getParam("ent_all");
         
+        $orderby = $this->_getParam("orderby");
+        if(empty($orderby)){
+            $orderby = null;
+        }      
         if ($ent_id > 0) {
-            $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca("vp_id>=" . $ent_id, array('vp_id'),50);
+            $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca("vp_id>=" . $ent_id, $orderby,50);
         } elseif ($ent_pescador) {
-            $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca("tp_nome ~* '" . $ent_pescador . "'", array('tp_nome', 'vp_id DESC'));
+            $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca("tp_nome ~* '" . $ent_pescador . "'", $orderby);
         } elseif ($ent_barco) {
-            $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca("bar_nome ~* '" . $ent_barco . "'", array('bar_nome', 'vp_id DESC'));
+            $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca("bar_nome ~* '" . $ent_barco . "'", $orderby);
        }
         elseif ($ent_apelido){
-            $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'vp_id DESC'), 20);
+            $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca("tp_apelido ~* '" . $ent_apelido . "'", $orderby, 20);
         }
         elseif($ent_all){
-            $dados = $this->modelVarapesca->selectEntrevistaVaraPesca(null, array('fd_id DESC', 'tp_nome'));
+            $dados = $this->modelVarapesca->selectEntrevistaVaraPesca(null, $orderby);
         }
         else {
-            $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca(null, array('fd_id DESC', 'tp_nome'),20);
+            $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca(null, $orderby,20);
         }
 
         $this->view->assign("dados", $dados);

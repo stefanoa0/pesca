@@ -88,21 +88,25 @@ class SiripoiaController extends Zend_Controller_Action
         $ent_apelido = $this->_getParam("tp_apelido");
         $ent_all = $this->_getParam("ent_all");
         
+        $orderby = $this->_getParam("orderby");
+        if(empty($orderby)){
+            $orderby = null;
+        }      
         if ($ent_id > 0) {
-            $dados = $this->modelSiripoia->selectEntrevistaSiripoia("sir_id>=" . $ent_id, array('sir_id'),50);
+            $dados = $this->modelSiripoia->selectEntrevistaSiripoia("sir_id>=" . $ent_id, $orderby,50);
         } elseif ($ent_pescador) {
-            $dados = $this->modelSiripoia->selectEntrevistaSiripoia("tp_nome ~* '" . $ent_pescador . "'", array('tp_nome', 'sir_id DESC'));
+            $dados = $this->modelSiripoia->selectEntrevistaSiripoia("tp_nome ~* '" . $ent_pescador . "'", $orderby);
         } elseif ($ent_barco) {
-            $dados = $this->modelSiripoia->selectEntrevistaSiripoia("bar_nome ~* '" . $ent_barco . "'", array('bar_nome', 'sir_id DESC'));
+            $dados = $this->modelSiripoia->selectEntrevistaSiripoia("bar_nome ~* '" . $ent_barco . "'", $orderby);
        }
         elseif ($ent_apelido){
-            $dados = $this->modelSiripoia->selectEntrevistaSiripoia("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'sir_id DESC'), 20);
+            $dados = $this->modelSiripoia->selectEntrevistaSiripoia("tp_apelido ~* '" . $ent_apelido . "'", $orderby, 20);
         }
         elseif($ent_all){
-            $dados = $this->modelSiripoia->selectEntrevistaSiripoia(null, array('fd_id DESC', 'tp_nome'));
+            $dados = $this->modelSiripoia->selectEntrevistaSiripoia(null, $orderby);
         }
         else {
-            $dados = $this->modelSiripoia->selectEntrevistaSiripoia(null, array('fd_id DESC', 'tp_nome'),20);
+            $dados = $this->modelSiripoia->selectEntrevistaSiripoia(null, $orderby,20);
         }
 
         $this->view->assign("dados", $dados);

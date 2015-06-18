@@ -76,21 +76,25 @@ private $usuario;
         $ent_apelido = $this->_getParam("tp_apelido");
         $ent_all = $this->_getParam("ent_all");
 
+        $orderby = $this->_getParam("orderby");
+        if(empty($orderby)){
+            $orderby = null;
+        }      
         if ($ent_id > 0) {
-            $dados = $this->modelTarrafa->selectEntrevistaTarrafa("tar_id>=" . $ent_id, array('tar_id'),50);
+            $dados = $this->modelTarrafa->selectEntrevistaTarrafa("tar_id>=" . $ent_id, $orderby,50);
         } elseif ($ent_pescador) {
-            $dados = $this->modelTarrafa->selectEntrevistaTarrafa("tp_nome ~* '" . $ent_pescador . "'", array('tp_nome', 'tar_id DESC'));
+            $dados = $this->modelTarrafa->selectEntrevistaTarrafa("tp_nome ~* '" . $ent_pescador . "'", $orderby);
         } elseif ($ent_barco) {
-            $dados = $this->modelTarrafa->selectEntrevistaTarrafa("bar_nome ~* '" . $ent_barco . "'", array('bar_nome', 'tar_id DESC'));
+            $dados = $this->modelTarrafa->selectEntrevistaTarrafa("bar_nome ~* '" . $ent_barco . "'", $orderby);
        }
        elseif ($ent_apelido){
-            $dados = $this->modelTarrafa->selectEntrevistaTarrafa("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'tar_id DESC'), 20);
+            $dados = $this->modelTarrafa->selectEntrevistaTarrafa("tp_apelido ~* '" . $ent_apelido . "'", $orderby, 20);
         }
         elseif($ent_all){
-            $dados = $this->modelTarrafa->selectEntrevistaTarrafa(null, array('fd_id DESC', 'tp_nome'));
+            $dados = $this->modelTarrafa->selectEntrevistaTarrafa(null, $orderby);
         }
         else {
-            $dados = $this->modelTarrafa->selectEntrevistaTarrafa(null, array('fd_id DESC', 'tp_nome'),20);
+            $dados = $this->modelTarrafa->selectEntrevistaTarrafa(null, $orderby,20);
         }
 
         $this->view->assign("dados", $dados);

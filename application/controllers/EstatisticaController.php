@@ -93,6 +93,7 @@ class EstatisticaController extends Zend_Controller_Action
         if(empty($especie)){
             $especie = 0;
         }
+        
         $biometriasCamaraoArrasto = $this->modelArrasto->selectVBioCamarao("esp_id = '".$especie."'");
         $biometriasPeixeArrasto      = $this->modelArrasto->selectVBioPeixe("esp_id = '".$especie."'"); 
         $biometriasPeixeCalao        = $this->modelCalao->selectVBioPeixe("esp_id = '".$especie."'");    

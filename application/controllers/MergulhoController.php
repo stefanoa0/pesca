@@ -82,21 +82,25 @@ class MergulhoController extends Zend_Controller_Action
         $ent_apelido = $this->_getParam("tp_apelido");
         $ent_all = $this->_getParam("ent_all");
         
+        $orderby = $this->_getParam("orderby");
+        if(empty($orderby)){
+            $orderby = null;
+        }      
         if ($ent_id > 0) {
-            $dados = $this->modelMergulho->selectEntrevistaMergulho("mer_id>=" . $ent_id, array('mer_id'),50);
+            $dados = $this->modelMergulho->selectEntrevistaMergulho("mer_id>=" . $ent_id, $orderby,50);
         } elseif ($ent_pescador) {
-            $dados = $this->modelMergulho->selectEntrevistaMergulho("tp_nome ~* '" . $ent_pescador . "'", array('tp_nome', 'mer_id DESC'));
+            $dados = $this->modelMergulho->selectEntrevistaMergulho("tp_nome ~* '" . $ent_pescador . "'", $orderby);
         } elseif ($ent_barco) {
-            $dados = $this->modelMergulho->selectEntrevistaMergulho("bar_nome ~* '" . $ent_barco . "'", array('bar_nome', 'mer_id DESC'));
+            $dados = $this->modelMergulho->selectEntrevistaMergulho("bar_nome ~* '" . $ent_barco . "'", $orderby);
        }
         elseif ($ent_apelido){
-            $dados = $this->modelMergulho->selectEntrevistaMergulho("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'mer_id v'), 20);
+            $dados = $this->modelMergulho->selectEntrevistaMergulho("tp_apelido ~* '" . $ent_apelido . "'", $orderby, 20);
         }
         elseif($ent_all){
-            $dados = $this->modelMergulho->selectEntrevistaMergulho(null, array('fd_id DESC', 'tp_nome'));
+            $dados = $this->modelMergulho->selectEntrevistaMergulho(null, $orderby);
         }
         else {
-            $dados = $this->modelMergulho->selectEntrevistaMergulho(null, array('fd_id DESC', 'tp_nome'),20);
+            $dados = $this->modelMergulho->selectEntrevistaMergulho(null, $orderby,20);
         }
 
         $this->view->assign("dados", $dados);
