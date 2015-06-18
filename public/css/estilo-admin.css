@@ -102,7 +102,13 @@ body{
     text-align: justify;
 }
 
-
+.seta-ordem{
+    text-decoration:none;
+    color: #fff;
+}
+.seta-ordem a{
+    
+}
 
 #titulos{
     width: 350px;
@@ -161,7 +167,8 @@ body{
     display: block;
 }
 
-#menu-lateral a:hover { background: #462420;}//#4F4F4F; }
+#menu-lateral a:hover { 
+    background: #462420;}//#4F4F4F; }
 
 
 

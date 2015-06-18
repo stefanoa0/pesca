@@ -63,36 +63,34 @@ class FichaDiariaController extends Zend_Controller_Action {
         $fd_estagiario = $this->_getParam("fd_estagiario");
         $fd_monitor = $this->_getParam("fd_monitor");
         
-        
-        
+        $orderby = $this->_getParam("orderby");
+        if(empty($orderby)){
+            $orderby = null;
+        }
         if ( $fd_id > 0 ) {
-            $dados = $this->modelFichaDiaria->selectView("fd_id>=". $fd_id, array('fd_id'), 25);
+            $dados = $this->modelFichaDiaria->selectView("fd_id>=". $fd_id, $orderby, 25);
         } 
         elseif ( $pto_id ) {
-            $dados = $this->modelFichaDiaria->selectView("pto_nome ~*'".$pto_id."'" , NULL);
+            $dados = $this->modelFichaDiaria->selectView("pto_nome ~*'".$pto_id."'" ,$orderby, NULL);
         }
         elseif ( $fd_data ) {
              $data = date('Y-m-d', strtotime($fd_data));
-             $dados = $this->modelFichaDiaria->selectView("fd_data = '". $data."'" , NULL);            
+             $dados = $this->modelFichaDiaria->selectView("fd_data = '". $data."'" ,$orderby, NULL);            
         }
         elseif ( $fd_estagiario ) {
-             $dados = $this->modelFichaDiaria->selectView("t_estagiario ~*'". $fd_estagiario."'" , NULL);            
+             $dados = $this->modelFichaDiaria->selectView("t_estagiario ~*'". $fd_estagiario."'" ,$orderby, NULL);            
         }
         elseif ( $fd_monitor ) {
-             $dados = $this->modelFichaDiaria->selectView("t_monitor ~*'". $fd_monitor."'" , NULL);            
+             $dados = $this->modelFichaDiaria->selectView("t_monitor ~*'". $fd_monitor."'" ,$orderby, NULL);            
         }
         elseif($fd_all){
             $dados = $this->modelFichaDiaria->selectView(NULL, "fd_id DESC");  
         }
         else {
-            $dados = $this->modelFichaDiaria->selectView(NULL, "fd_id DESC", 25);
+            $dados = $this->modelFichaDiaria->selectView(NULL, $orderby, 25);
         }
         
-        
-        
         $dadosPorto = $this->modelPorto->select();
-        
-        
         $this->view->assign("assignDadosPorto", $dadosPorto);
         $this->view->assign("dados", $dados);
     }
