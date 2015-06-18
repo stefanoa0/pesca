@@ -1544,6 +1544,47 @@ function ajax_monitoramento(form, url, data){
             }
      }
      
+     function select_peso_permitido(form, arrayMedias){
+         //var especie = form.selectEspecie.value;
+         //var peso = form.peso.value;
+         alert(arrayMedias);
+//         for (var key in arrayMedias) {
+//            if (arrayMedias.hasOwnProperty(key)) {
+//                var obj = arrayMedias[key];
+//                 for (var prop in obj) {
+//                   // important check that this is objects own property 
+//                   // not from prototype prop inherited
+//                   if(obj.hasOwnProperty(prop)){
+//                     document.write(prop + " = " + obj[prop]);
+//                   }
+//                }
+//             }
+//        }
+     }
+function ajax_select_peso_permitido(form,url, id_entrevista, tipo_entrevista, url_media){
+                //var peso = form.peso.value;
+                var especie = form.selectEspecie.value;
+                var hr = new XMLHttpRequest();
+                hr.open("POST", url_media, true);
+                
+                var vars = "selectEspecie="+especie;
+                // Set content type header information for sending url encoded variables in the request
+                hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                // Access the onreadystatechange event for the XMLHttpRequest object
+                
+                hr.onreadystatechange = function() {
+                        if(hr.readyState === 4 && hr.status === 200) {
+                            var return_data = hr.responseText;
+                            document.getElementById("media").innerHTML = return_data;
+                        }
+                };
+                //alert(vars);
+                hr.send(vars);
+                    // Send the data to PHP now... and wait for response to update the status div
+                 // Actually execute the request
+                document.getElementById("especie").innerHTML = "processando...";
+                resetFormValues("formEntrevistas");
+}
 function ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista){ //url é o link do controller destino
             // Create our XMLHttpRequest object
             var hr = new XMLHttpRequest();
@@ -1586,7 +1627,7 @@ function ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista){ //url é
                 // Access the onreadystatechange event for the XMLHttpRequest object
                 hr.onreadystatechange = function() {
                         if(hr.readyState === 4 && hr.status === 200) {
-                        var return_data = hr.responseText;
+                            var return_data = hr.responseText;
                             document.getElementById("especie").innerHTML = return_data;
                         }
                 };

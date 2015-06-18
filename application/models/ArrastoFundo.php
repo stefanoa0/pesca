@@ -640,8 +640,8 @@ class Application_Model_ArrastoFundo
     public function selectMediaEspecies($where = null, $order = null, $limit = null)
     {
         $this->dbTableArrastoMedia = new Application_Model_DbTable_VMediaEspeciesArrastoFundo();
-        $select = $this->dbTableArrastoMedia->select()->
-                from()->order($order)->limit($limit);
+        $select = $this->dbTableArrastoMedia->select()->from($this->dbTableArrastoMedia, array('esp_id', 'max_permitido_peso'))->
+                order($order)->limit($limit);
         if(!is_null($where)){
             $select->where($where);
         }

@@ -276,9 +276,6 @@ class RelatoriosController extends Zend_Controller_Action
                 $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_motor']);
                 $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
                 $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_obs']);
-
-                
-                
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
                     if($nome['af_id'] == $consulta['af_id']):
@@ -312,7 +309,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         $fim1 = microtime(true);
         
-        $sheet->setCellValueByColumnAndRow(1, $linha, $fim1-$inicio1);
+        //$sheet->setCellValueByColumnAndRow(1, $linha, $fim1-$inicio1);
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
 

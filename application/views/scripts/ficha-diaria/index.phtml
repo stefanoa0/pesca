@@ -13,27 +13,28 @@
         <option value="4">Por Porto</option>
         <option value="5">Por Estagiário</option>
         <option value="6">Por Monitor</option>
+        <option value="7">Listar Todas</option>
      </select>
             <input class="busca"  name="buscaFicha" placeholder="Buscar Ficha Diária"/><br/>
 <table id="tabelaComEstilo">
     <tr>
-        <th>ID</th>
-        <th>Data</th>
-        <th>Turno</th>
-        <th>Porto</th>
-        <th>Estagiário</th>
-        <th>Monitor</th>
+        <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "fd_id DESC"), null, true) ?>">▼</a>        <a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "fd_id ASC"), null, true) ?>">▲</a>ID</th>
+        <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "fd_data DESC"), null, true) ?>">▼</a>      <a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "fd_data ASC"), null, true) ?>">▲</a>Data</a></th>
+        <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "fd_turno DESC"), null, true) ?>">▼</a>     <a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "fd_turno ASC"), null, true) ?>">▲</a>Turno</a></th>
+        <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "fd_porto DESC"), null, true) ?>">▼</a>     <a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "fd_porto ASC"), null, true) ?>">▲</a>Porto</th>
+        <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "t_estagiario DESC"), null, true) ?>">▼</a> <a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "t_estagiario ASC"), null, true) ?>">▲</a>Estagiário</th>
+        <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "t_monitor DESC"), null, true) ?>">▼</a>    <a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "t_monitor ASC"), null, true) ?>">▲</a>Monitor</th>
 
     </tr>
 
     <?php foreach ($this->dados as $key => $fichadiaria): ?>
     <tr>
-        <td width="10%"><?= $fichadiaria['fd_id'] ?></td>
-        <td width="10%"><?= date("d-m-Y", strtotime($fichadiaria['fd_data']))  ?></td>
-        <td width="5%"><?= $fichadiaria['fd_turno'] ?></td>
-        <td width="10%"><?= $fichadiaria['pto_nome'] ?></td>
-        <td width="30%"><?= $fichadiaria['t_estagiario'] ?></td>
-        <td width="20%"><?= $fichadiaria['t_monitor'] ?></td>
+        <td ><?= $fichadiaria['fd_id'] ?></td>
+        <td ><?= date("d-m-Y", strtotime($fichadiaria['fd_data']))  ?></td>
+        <td ><?= $fichadiaria['fd_turno'] ?></td>
+        <td ><?= $fichadiaria['pto_nome'] ?></td>
+        <td ><?= $fichadiaria['t_estagiario'] ?></td>
+        <td ><?= $fichadiaria['t_monitor'] ?></td>
         <td class="td-botao">
             <a href="<?=$this->url(array("controller"=>"ficha-diaria","action"=>"editar", "id" => $fichadiaria['fd_id']),null,true)?>">
                 <ul id="icons" class="ui-widget ui-helper-clearfix">
