@@ -473,15 +473,11 @@ class ArrastoFundoController extends Zend_Controller_Action {
     
     public function mediaespecieAction(){
         $especie = $this->_getParam("selectEspecie");
-        $peso = $this->_getParam("pesokg");
-        $mensagem = false;
+
         
         $arrayMedia = $this->modelArrastoFundo->selectMediaEspecies('esp_id = '.$especie);
         
-        if(intval($arrayMedia[0]['max_peso']) < intval($peso)){
-            $mensagem = true;
-        }
-        return $mensagem;
+        $this->view->assign("media", $arrayMedia);
     }
 
     public function relatoriolistaAction() {

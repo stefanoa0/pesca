@@ -1561,39 +1561,30 @@ function ajax_monitoramento(form, url, data){
 //             }
 //        }
      }
-//function ajax_select_peso_permitido(form,url, id_entrevista, tipo_entrevista, url_media){
-//                var peso = form.peso.value;
-//                var especie = form.selectEspecie.value;
-//                var hr = new XMLHttpRequest();
-//                hr.open("POST", url_media, true);
-//                
-//                var vars = "selectEspecie="+especie;
-//                // Set content type header information for sending url encoded variables in the request
-//                hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-//                // Access the onreadystatechange event for the XMLHttpRequest object
-//                
-//                hr.onreadystatechange = function() {
-//                        if(hr.readyState === 4 && hr.status === 200) {
-//                            var return_data = hr.responseText;
-//                            //if(return_data <= peso){
-//                                //alert(return_data);
-//                                if(confirm("Peso Inválido")){
-//                                    ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista);
-//                                //}
-//                            }
-//                            else{
-//                                ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista);
-//                            }
-//                            
-//                        }
-//                };
-//                alert(vars);
-//                hr.send(vars);
-//                    // Send the data to PHP now... and wait for response to update the status div
-//                 // Actually execute the request
-//                document.getElementById("especie").innerHTML = "processando...";
-//                resetFormValues("formEntrevistas");
-//}
+function ajax_select_peso_permitido(form,url, id_entrevista, tipo_entrevista, url_media){
+                //var peso = form.peso.value;
+                var especie = form.selectEspecie.value;
+                var hr = new XMLHttpRequest();
+                hr.open("POST", url_media, true);
+                
+                var vars = "selectEspecie="+especie;
+                // Set content type header information for sending url encoded variables in the request
+                hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                // Access the onreadystatechange event for the XMLHttpRequest object
+                
+                hr.onreadystatechange = function() {
+                        if(hr.readyState === 4 && hr.status === 200) {
+                            var return_data = hr.responseText;
+                            document.getElementById("media").innerHTML = return_data;
+                        }
+                };
+                //alert(vars);
+                hr.send(vars);
+                    // Send the data to PHP now... and wait for response to update the status div
+                 // Actually execute the request
+                document.getElementById("especie").innerHTML = "processando...";
+                resetFormValues("formEntrevistas");
+}
 function ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista){ //url é o link do controller destino
             // Create our XMLHttpRequest object
             var hr = new XMLHttpRequest();

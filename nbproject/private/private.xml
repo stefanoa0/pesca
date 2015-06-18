@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/wamp/www/pesca/public/js/funcoesJquery.js</file>
-<<<<<<< HEAD
             <file>file:/C:/wamp/www/pesca/application/controllers/PortoController.php</file>
             <file>file:/C:/wamp/www/pesca/application/controllers/EstatisticaController.php</file>
             <file>file:/C:/wamp/www/pesca/application/controllers/RelatoriosController.php</file>
@@ -12,10 +10,6 @@
             <file>file:/C:/wamp/www/pesca/application/controllers/ArrastoFundoController.php</file>
             <file>file:/C:/wamp/www/pesca/application/models/ArrastoFundo.php</file>
             <file>file:/C:/wamp/www/pesca/application/views/scripts/arrasto-fundo/editar.phtml</file>
-=======
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/cor/index.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/tipo-pagamento/index.phtml</file>
->>>>>>> d7bd8ad4d9c9fbb3f1b607cdc2ba8ea7b7ece345
         </group>
     </open-files>
 </project-private>
