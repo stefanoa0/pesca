@@ -551,7 +551,7 @@ class Application_Model_Tarrafa
     {
         $this->dbTableTarrafaMedia = new Application_Model_DbTable_VMediaEspeciesTarrafa();
         $select = $this->dbTableTarrafaMedia->select()->
-                from()->order($order)->limit($limit);
+                order($order)->limit($limit);
         if(!is_null($where)){
             $select->where($where);
         }

@@ -197,7 +197,7 @@
         <fieldset class="noEditable"><legend>Dados das Espécies Capturadas:</legend>
 
             <div >
-                <input class="responsivo" onclick="ajax_esp_capturada(this.form, '<?= $this->url(array("controller" => "jerere", "action" => "insertespeciecapturada"), null, true) ?>','<?=$this->entrevista['jre_id']?>','venda')" type="button" value="Adicionar" />
+                <input class="responsivo" onclick="ajax_select_peso_permitido(this.form, '<?= $this->url(array("controller" => "jerere", "action" => "insertespeciecapturada"), null, true) ?>', <?= $this->entrevista['jre_id'] ?>, '','<?= $this->url(array("controller" => "jerere", "action" => "verificaespecie"), null, true) ?>')" type="button" value="Adicionar" />
                 <select class="responsivo-esp" style="float:left;" name="selectEspecie" class="espc">
                     <option value="" selected></option>
                     <?php foreach ($this->especies as $key => $especie): ?>
@@ -214,7 +214,7 @@
                 </select>
 
                 <input  type="hidden" name="id_entrevista"  value="<?= $this->entrevista['jre_id'] ?>"/>
-
+                <?php include('mediaespecies.phtml'); ?>
             </div>
 
         </fieldset>

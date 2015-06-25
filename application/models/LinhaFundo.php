@@ -596,7 +596,7 @@ class Application_Model_LinhaFundo
     {
         $this->dbTableLinhaFundoMedia = new Application_Model_DbTable_VMediaEspeciesLinhaFundo();
         $select = $this->dbTableLinhaFundoMedia->select()->
-                from()->order($order)->limit($limit);
+                order($order)->limit($limit);
         if(!is_null($where)){
             $select->where($where);
         }

@@ -556,7 +556,7 @@ class Application_Model_Jerere
     {
         $this->dbTableJerereMedia = new Application_Model_DbTable_VMediaEspeciesJerere();
         $select = $this->dbTableJerereMedia->select()->
-                from()->order($order)->limit($limit);
+                order($order)->limit($limit);
         if(!is_null($where)){
             $select->where($where);
         }

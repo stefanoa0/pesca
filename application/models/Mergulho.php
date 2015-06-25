@@ -560,7 +560,7 @@ private $dbTableMergulho;
     {
         $this->dbTableMergulhoMedia = new Application_Model_DbTable_VMediaEspeciesMergulho();
         $select = $this->dbTableMergulhoMedia->select()->
-                from()->order($order)->limit($limit);
+                order($order)->limit($limit);
         if(!is_null($where)){
             $select->where($where);
         }

@@ -230,6 +230,29 @@ private $usuario;
         $this->redirect("/tarrafa/tablepesqueiro/id/" . $idEntrevista);//
         //$this->redirect("/tarrafa/editar/id/" . $backUrl);
     }
+    
+    public function mediaespeciesAction(){
+        $this->_helper->layout->disableLayout();
+        $especie = $this->_getParam("esp_id");
+
+        //$arrayMedias = $this->modelArrastoFundo->selectMediaEspecies();
+        $arrayMedia = $this->modelTarrafa->selectMediaEspecies('esp_id = '.$especie);
+        if(empty($arrayMedia[0]['max_permitido_peso'])){
+            $arrayMedia[0]['max_permitido_peso'] = -1;
+        }
+        $this->view->assign("media", intval($arrayMedia[0]['max_permitido_peso']));
+    }
+    public function verificaespecieAction(){
+         if($this->usuario['tp_id']==5){
+            $this->_redirect('index');
+        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $especie = $this->_getParam("selectEspecie");
+        
+        $this->redirect("/tarrafa/mediaespecies/esp_id/" . $especie);
+    }
     public function tableespcapturaAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
         //IMPORTANTE TER!!
         $this->_helper->layout->disableLayout();

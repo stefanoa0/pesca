@@ -1543,47 +1543,125 @@ function ajax_monitoramento(form, url, data){
                 document.getElementById("monitoramentos").innerHTML = "processando...";
             }
      }
-     
-     function select_peso_permitido(form, arrayMedias){
-         //var especie = form.selectEspecie.value;
-         //var peso = form.peso.value;
-         alert(arrayMedias);
-//         for (var key in arrayMedias) {
-//            if (arrayMedias.hasOwnProperty(key)) {
-//                var obj = arrayMedias[key];
-//                 for (var prop in obj) {
-//                   // important check that this is objects own property 
-//                   // not from prototype prop inherited
-//                   if(obj.hasOwnProperty(prop)){
-//                     document.write(prop + " = " + obj[prop]);
-//                   }
-//                }
-//             }
-//        }
-     }
+function ajax_select_quantidade_permitido(form,url, id_entrevista, tipo_entrevista, url_media){
+                //var peso = form.peso.value;
+                var especie = form.selectEspecie.value;
+                var peso = form.peso.value;
+                var quant = form.quantidade.value;
+                
+                var hr = new XMLHttpRequest();
+                hr.open("POST", url_media, true);
+                if(especie === ""){
+                    alert("Selecione uma espécie!");
+                }
+                else if(quant === "" && peso === ""){
+                    alert("A Quantidade e o Peso não podem ser vazios, por favor insira um deles!");
+                }
+                else{
+                    var vars = "selectEspecie="+especie;
+                    // Set content type header information for sending url encoded variables in the request
+                    hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    // Access the onreadystatechange event for the XMLHttpRequest object
+
+                    hr.onreadystatechange = function() {
+                            if(hr.readyState === 4 && hr.status === 200) {
+                                var return_data = hr.responseText;
+                                document.getElementById("mediaespecie").innerHTML = return_data;
+                            }
+                    };
+                    //alert(vars);
+                    hr.send(vars);
+                        // Send the data to PHP now... and wait for response to update the status div
+                     // Actually execute the request
+                    //document.getElementById("especie").innerHTML = "processando...";
+                    compara_quantidades(form, url, id_entrevista,tipo_entrevista);
+                }
+}
 function ajax_select_peso_permitido(form,url, id_entrevista, tipo_entrevista, url_media){
                 //var peso = form.peso.value;
                 var especie = form.selectEspecie.value;
+                var peso = form.peso.value;
+                var quant = form.quantidade.value;
+                
                 var hr = new XMLHttpRequest();
                 hr.open("POST", url_media, true);
-                
-                var vars = "selectEspecie="+especie;
-                // Set content type header information for sending url encoded variables in the request
-                hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                // Access the onreadystatechange event for the XMLHttpRequest object
-                
-                hr.onreadystatechange = function() {
-                        if(hr.readyState === 4 && hr.status === 200) {
-                            var return_data = hr.responseText;
-                            document.getElementById("media").innerHTML = return_data;
-                        }
-                };
-                //alert(vars);
-                hr.send(vars);
-                    // Send the data to PHP now... and wait for response to update the status div
-                 // Actually execute the request
-                document.getElementById("especie").innerHTML = "processando...";
+                if(especie === ""){
+                    alert("Selecione uma espécie!");
+                }
+                else if(quant === "" && peso === ""){
+                    alert("A Quantidade e o Peso não podem ser vazios, por favor insira um deles!");
+                }
+                else{
+                    var vars = "selectEspecie="+especie;
+                    // Set content type header information for sending url encoded variables in the request
+                    hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    // Access the onreadystatechange event for the XMLHttpRequest object
+
+                    hr.onreadystatechange = function() {
+                            if(hr.readyState === 4 && hr.status === 200) {
+                                var return_data = hr.responseText;
+                                document.getElementById("mediaespecie").innerHTML = return_data;
+                            }
+                    };
+                    //alert(vars);
+                    hr.send(vars);
+                        // Send the data to PHP now... and wait for response to update the status div
+                     // Actually execute the request
+                    //document.getElementById("especie").innerHTML = "processando...";
+                    compara_pesos(form, url, id_entrevista,tipo_entrevista);
+                }
+}
+function compara_quantidades(form, url, id_entrevista,tipo_entrevista){
+        var quantidadePermitido = document.getElementById("inputMedia").value;
+        var quant = parseInt(form.quantidade.value);
+        
+        
+        if(quant>quantidadePermitido){
+            if(quantidadePermitido === "-1"){
+                if(confirm("Esta Espécie nunca foi capturada nesta arte, deseja continuar?")){
+                    ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista);
+                }
+                else{
+                    resetFormValues("formEntrevistas");
+                }
+            }
+            
+            else if(confirm("O valor da quantidade é maior que a permitida, deseja continuar?")){
+                ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista);
+            }
+            else{
                 resetFormValues("formEntrevistas");
+            }
+        }
+        else{
+            ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista);
+        }
+}
+function compara_pesos(form, url, id_entrevista,tipo_entrevista){
+        var pesoPermitido = document.getElementById("inputMedia").value;
+        var peso = parseInt(form.peso.value);
+        
+        
+        if(peso>pesoPermitido){
+            if(pesoPermitido === "-1"){
+                if(confirm("Esta Espécie nunca foi capturada nesta arte, deseja continuar?")){
+                    ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista);
+                }
+                else{
+                    resetFormValues("formEntrevistas");
+                }
+            }
+            
+            else if(confirm("O valor do peso é maior que o permitido, deseja continuar?")){
+                ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista);
+            }
+            else{
+                resetFormValues("formEntrevistas");
+            }
+        }
+        else{
+            ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista);
+        }
 }
 function ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista){ //url é o link do controller destino
             // Create our XMLHttpRequest object
@@ -1603,39 +1681,32 @@ function ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista){ //url é
                 preco = preco.replace(",",".");
             }
             
-            if(especie === ""){
-                alert("Selecione uma espécie!");
-            }
-            else if(quant === "" && peso === ""){
-                alert("A Quantidade e o Peso não podem ser vazios, por favor insira um deles!");
-            }
+            var vars;
+            //var ln = document.getElementById("last_name").value;
+            if(tipo_entrevista === 'venda'){
+                var tipo_venda = form.tipoVenda.value;
+                vars = "selectEspecie="+especie+"&quantidade="+quant+"&id_tipovenda="+tipo_venda+
+                    "&peso="+peso+"&precokg="+preco+"&id_entrevista="+id_entrevista;
+            }   
             else{
-                var vars;
-                //var ln = document.getElementById("last_name").value;
-                if(tipo_entrevista === 'venda'){
-                    var tipo_venda = form.tipoVenda.value;
-                    vars = "selectEspecie="+especie+"&quantidade="+quant+"&id_tipovenda="+tipo_venda+
-                        "&peso="+peso+"&precokg="+preco+"&id_entrevista="+id_entrevista;
-                }   
-                else{
-                    vars = "selectEspecie="+especie+"&quantidade="+quant+
-                        "&peso="+peso+"&precokg="+preco+"&id_entrevista="+id_entrevista;
-                }
-                hr.open("POST", url, true);
-                // Set content type header information for sending url encoded variables in the request
-                hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                // Access the onreadystatechange event for the XMLHttpRequest object
-                hr.onreadystatechange = function() {
-                        if(hr.readyState === 4 && hr.status === 200) {
-                            var return_data = hr.responseText;
-                            document.getElementById("especie").innerHTML = return_data;
-                        }
-                };
-                    // Send the data to PHP now... and wait for response to update the status div
-                hr.send(vars); // Actually execute the request
-                document.getElementById("especie").innerHTML = "processando...";
-                resetFormValues("formEntrevistas");
+                vars = "selectEspecie="+especie+"&quantidade="+quant+
+                    "&peso="+peso+"&precokg="+preco+"&id_entrevista="+id_entrevista;
             }
+            hr.open("POST", url, true);
+            // Set content type header information for sending url encoded variables in the request
+            hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            // Access the onreadystatechange event for the XMLHttpRequest object
+            hr.onreadystatechange = function() {
+                    if(hr.readyState === 4 && hr.status === 200) {
+                        var return_data = hr.responseText;
+                        document.getElementById("especie").innerHTML = return_data;
+                    }
+            };
+                // Send the data to PHP now... and wait for response to update the status div
+            hr.send(vars); // Actually execute the request
+            document.getElementById("especie").innerHTML = "processando...";
+            resetFormValues("formEntrevistas");
+            
      }  
 
 

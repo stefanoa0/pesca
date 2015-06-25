@@ -550,7 +550,7 @@ class Application_Model_Siripoia
     {
         $this->dbTableSiripoiaMedia = new Application_Model_DbTable_VMediaEspeciesSiripoia();
         $select = $this->dbTableSiripoiaMedia->select()->
-                from()->order($order)->limit($limit);
+                order($order)->limit($limit);
         if(!is_null($where)){
             $select->where($where);
         }

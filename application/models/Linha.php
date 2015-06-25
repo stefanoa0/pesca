@@ -594,7 +594,7 @@ private $dbTableLinha;
     {
         $this->dbTableLinhaMedia = new Application_Model_DbTable_VMediaEspeciesLinha();
         $select = $this->dbTableLinhaMedia->select()->
-                from()->order($order)->limit($limit);
+                order($order)->limit($limit);
         if(!is_null($where)){
             $select->where($where);
         }

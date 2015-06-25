@@ -550,7 +550,7 @@ class Application_Model_Manzua
     {
         $this->dbTableManzuaMedia = new Application_Model_DbTable_VMediaEspeciesManzua();
         $select = $this->dbTableManzuaMedia->select()->
-                from()->order($order)->limit($limit);
+                order($order)->limit($limit);
         if(!is_null($where)){
             $select->where($where);
         }

@@ -17,12 +17,13 @@
         <table>
             <tr>
                 <th>Contagem</th>
-                <th>Ficha Diária</th>
-                <th>Monitoramento</th>
-                <th>Entrevista</th>
-                <th>Pescador</th>
-                <th>Apelido</th>
-                <th>Barco</th>
+                <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "linha", "action" => "visualizar", "orderby" => "fd_id DESC"), null, true) ?>">▼</a>     <a class="seta-ordem" href="<?= $this->url(array("controller" => "linha", "action" => "visualizar", "orderby" => "fd_id ASC"), null, true) ?>">▲</a>Ficha Diária</th>
+                <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "linha", "action" => "visualizar", "orderby" => "mnt_id DESC"), null, true) ?>">▼</a>    <a class="seta-ordem" href="<?= $this->url(array("controller" => "linha", "action" => "visualizar", "orderby" => "mnt_id ASC"), null, true) ?>">▲</a>Monitoramento</th>
+                <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "linha", "action" => "visualizar", "orderby" => "lin_id DESC"),  null, true) ?>">▼</a>   <a class="seta-ordem" href="<?= $this->url(array("controller" => "linha", "action" => "visualizar", "orderby" => "lin_id ASC"), null, true) ?>">▲</a>Entrevista</th>
+                <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "linha", "action" => "visualizar", "orderby" => "tp_nome DESC"), null, true) ?>">▼</a>   <a class="seta-ordem" href="<?= $this->url(array("controller" => "linha", "action" => "visualizar", "orderby" => "tp_nome ASC"), null, true) ?>">▲</a>Pescador</th>
+                <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "linha", "action" => "visualizar", "orderby" => "tp_apelido DESC"), null, true) ?>">▼</a><a class="seta-ordem" href="<?= $this->url(array("controller" => "linha", "action" => "visualizar", "orderby" => "tp_apelido ASC"), null, true) ?>">▲</a>Apelido</th>
+                <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "linha", "action" => "visualizar", "orderby" => "bar_nome DESC"), null, true) ?>">▼</a>  <a class="seta-ordem" href="<?= $this->url(array("controller" => "linha", "action" => "visualizar", "orderby" => "bar_nome ASC"), null, true) ?>">▲</a>Barco</th>
+
             </tr>
 
             <?php $i=1; foreach ($this->dados as $key => $entrevista): ?>
