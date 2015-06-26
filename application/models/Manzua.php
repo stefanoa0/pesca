@@ -515,7 +515,7 @@ class Application_Model_Manzua
     public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
         $this->dbTableManzuaHasBioPeixe = new Application_Model_DbTable_VManzuaHasBioPeixe();
         $select = $this->dbTableManzuaHasBioPeixe->select()
-                ->from($this->dbTableManzuaHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->from($this->dbTableManzuaHasBioPeixe,array('x'=>'tbp_comprimento', 'y'=>'tbp_peso'))
                 ->order($order)->limit($limit);
 
         if(!is_null($where)){
@@ -555,6 +555,20 @@ class Application_Model_Manzua
             $select->where($where);
         }
         return $this->dbTableManzuaMedia->fetchAll($select)->toArray();
+    }
+    
+    public function selectAvistamentoByTipo($where = null, $limit = null)
+    {
+ 
+        $this->dbTableManzuaAvistamento = new Application_Model_DbTable_VManzuaHasAvistamento();
+        $selectAvist = $this->dbTableManzuaAvistamento->select()->group('avs_descricao')
+                ->from($this->dbTableManzuaAvistamento, array('quantAvist' => 'count(*)','avs_descricao'))->order('quantAvist DESC')->limit($limit);
+
+        if(!is_null($where)){
+            $selectAvist->where($where);
+        }
+
+        return $this->dbTableManzuaAvistamento->fetchAll($selectAvist)->toArray();
     }
 }
 

@@ -517,7 +517,7 @@ class Application_Model_Tarrafa
     public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
         $this->dbTableTarrafaHasBioPeixe = new Application_Model_DbTable_VTarrafaHasBioPeixe();
         $select = $this->dbTableTarrafaHasBioPeixe->select()
-                ->from($this->dbTableTarrafaHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->from($this->dbTableTarrafaHasBioPeixe,array('x'=>'tbp_comprimento', 'y'=>'tbp_peso'))
                 ->order($order)->limit($limit);
 
         if(!is_null($where)){
@@ -556,5 +556,18 @@ class Application_Model_Tarrafa
             $select->where($where);
         }
         return $this->dbTableTarrafaMedia->fetchAll($select)->toArray();
+    }
+    public function selectAvistamentoByTipo($where = null, $limit = null)
+    {
+ 
+        $this->dbTableTarrafaAvistamento = new Application_Model_DbTable_VTarrafaHasAvistamento();
+        $selectAvist = $this->dbTableTarrafaAvistamento->select()->group('avs_descricao')
+                ->from($this->dbTableTarrafaAvistamento, array('quantAvist' => 'count(*)','avs_descricao'))->order('quantAvist DESC')->limit($limit);
+
+        if(!is_null($where)){
+            $selectAvist->where($where);
+        }
+
+        return $this->dbTableTarrafaAvistamento->fetchAll($selectAvist)->toArray();
     }
 }

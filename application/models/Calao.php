@@ -539,7 +539,7 @@ class Application_Model_Calao
     public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
         $this->dbTableCalaoHasBioPeixe = new Application_Model_DbTable_VCalaoHasBioPeixe();
         $select = $this->dbTableCalaoHasBioPeixe->select()
-                ->from($this->dbTableCalaoHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->from($this->dbTableCalaoHasBioPeixe,array('x'=>'tbp_comprimento', 'y'=>'tbp_peso'))
                 ->order($order)->limit($limit);
 
         if(!is_null($where)){
@@ -579,6 +579,20 @@ class Application_Model_Calao
             $select->where($where);
         }
         return $this->dbTableCalaoMedia->fetchAll($select)->toArray();
+    }
+    
+    public function selectAvistamentoByTipo($where = null, $limit = null)
+    {
+ 
+        $this->dbTableCalaoAvistamento = new Application_Model_DbTable_VCalaoHasAvistamento();
+        $selectAvist = $this->dbTableCalaoAvistamento->select()->group('avs_descricao')
+                ->from($this->dbTableCalaoAvistamento, array('quantAvist' => 'count(*)','avs_descricao'))->order('quantAvist DESC')->limit($limit);
+
+        if(!is_null($where)){
+            $selectAvist->where($where);
+        }
+
+        return $this->dbTableCalaoAvistamento->fetchAll($selectAvist)->toArray();
     }
 }
 
