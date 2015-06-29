@@ -91,7 +91,7 @@ private $usuario;
             $orderby = null;
         }
         if ($ent_id > 0) {
-            $dados = $this->modelRatoeira->selectEntrevistaRatoeira("rat_id>=" . $ent_id,$orderby,50);
+            $dados = $this->modelRatoeira->selectEntrevistaRatoeira("rat_id =" . $ent_id);
         } elseif ($ent_pescador) {
             $dados = $this->modelRatoeira->selectEntrevistaRatoeira("tp_nome ~* '" . $ent_pescador . "'", $orderby);
         } elseif ($ent_barco) {

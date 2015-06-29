@@ -89,7 +89,7 @@ class VaraPescaController extends Zend_Controller_Action
             $orderby = null;
         }      
         if ($ent_id > 0) {
-            $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca("vp_id>=" . $ent_id, $orderby,50);
+            $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca("vp_id =" . $ent_id);
         } elseif ($ent_pescador) {
             $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca("tp_nome ~* '" . $ent_pescador . "'", $orderby);
         } elseif ($ent_barco) {

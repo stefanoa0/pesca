@@ -81,7 +81,7 @@ private $usuario;
             $orderby = null;
         }      
         if ($ent_id > 0) {
-            $dados = $this->modelTarrafa->selectEntrevistaTarrafa("tar_id>=" . $ent_id, $orderby,50);
+            $dados = $this->modelTarrafa->selectEntrevistaTarrafa("tar_id =" . $ent_id);
         } elseif ($ent_pescador) {
             $dados = $this->modelTarrafa->selectEntrevistaTarrafa("tp_nome ~* '" . $ent_pescador . "'", $orderby);
         } elseif ($ent_barco) {

@@ -89,7 +89,7 @@ private $usuario;
             $orderby = "jre_id DESC";
         }
         if ($ent_id > 0) {
-            $dados = $this->modelJerere->selectEntrevistaJerere("jre_id>=" . $ent_id, $orderby,50);
+            $dados = $this->modelJerere->selectEntrevistaJerere("jre_id =" . $ent_id);
         } elseif ($ent_pescador) {
             $dados = $this->modelJerere->selectEntrevistaJerere("tp_nome ~* '" . $ent_pescador . "'", $orderby);
         } elseif ($ent_barco) {

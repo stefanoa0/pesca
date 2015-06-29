@@ -84,7 +84,7 @@ private $usuario;
             $orderby = "cal_id DESC";
         }
         if ($ent_id > 0) {
-            $dados = $this->modelCalao->selectEntrevistaCalao("cal_id>=" . $ent_id, $orderby,50);
+            $dados = $this->modelCalao->selectEntrevistaCalao("cal_id =" . $ent_id);
         } elseif ($ent_pescador) {
             $dados = $this->modelCalao->selectEntrevistaCalao("tp_nome ~* '" . $ent_pescador . "'", $orderby);
         } elseif ($ent_barco) {

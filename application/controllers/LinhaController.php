@@ -145,7 +145,7 @@ public function visualizarAction() {
         }
         
         if ($ent_id > 0) {
-            $dados = $this->modelLinha->selectEntrevistaLinha("lin_id>=" . $ent_id, $orderby,50);
+            $dados = $this->modelLinha->selectEntrevistaLinha("lin_id =" . $ent_id);
         } elseif ($ent_pescador) {
             $dados = $this->modelLinha->selectEntrevistaLinha("tp_nome ~* '" . $ent_pescador . "'", $orderby);
         } elseif ($ent_barco) {

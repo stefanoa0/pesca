@@ -87,7 +87,7 @@ class MergulhoController extends Zend_Controller_Action
             $orderby = null;
         }      
         if ($ent_id > 0) {
-            $dados = $this->modelMergulho->selectEntrevistaMergulho("mer_id>=" . $ent_id, $orderby,50);
+            $dados = $this->modelMergulho->selectEntrevistaMergulho("mer_id =" . $ent_id);
         } elseif ($ent_pescador) {
             $dados = $this->modelMergulho->selectEntrevistaMergulho("tp_nome ~* '" . $ent_pescador . "'", $orderby);
         } elseif ($ent_barco) {

@@ -85,7 +85,7 @@ class ColetaManualController extends Zend_Controller_Action
         }
         
         if ($ent_id > 0) {
-            $dados = $this->modelColetaManual->selectEntrevistaColetaManual("cml_id>=" . $ent_id, $orderby,50);
+            $dados = $this->modelColetaManual->selectEntrevistaColetaManual("cml_id =" . $ent_id);
         } elseif ($ent_pescador) {
             $dados = $this->modelColetaManual->selectEntrevistaColetaManual("tp_nome ~* '" . $ent_pescador . "'", $orderby);
         } elseif ($ent_barco) {

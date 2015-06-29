@@ -78,7 +78,7 @@ class ArrastoFundoController extends Zend_Controller_Action {
         }
         
         if ($ent_id > 0) {
-            $dados = $this->modelArrastoFundo->selectEntrevistaArrasto("af_id>=" . $ent_id, $orderby, 50);
+            $dados = $this->modelArrastoFundo->selectEntrevistaArrasto("af_id =" . $ent_id);
         } elseif ($ent_pescador) {
             $dados = $this->modelArrastoFundo->selectEntrevistaArrasto("tp_nome ~*'" . $ent_pescador . "'", $orderby);
         } elseif ($ent_barco) {

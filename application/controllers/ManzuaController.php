@@ -91,7 +91,7 @@ public function visualizarAction() {
             $orderby = null;
         }      
         if ($ent_id > 0) {
-            $dados = $this->modelManzua->selectEntrevistaManzua("man_id>=" . $ent_id, $orderby,50);
+            $dados = $this->modelManzua->selectEntrevistaManzua("man_id =" . $ent_id);
         } elseif ($ent_pescador) {
             $dados = $this->modelManzua->selectEntrevistaManzua("tp_nome ~* '" . $ent_pescador . "'", $orderby);
         } elseif ($ent_barco) {
