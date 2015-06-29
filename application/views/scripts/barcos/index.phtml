@@ -1,4 +1,31 @@
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#tblPerfil').DataTable(
+        {
+            emptyTable:     "No data available in table",
+            info:           "Mostrando de _START_ a _END_ de _TOTAL_ resultados",
+            infoEmpty:      "Showing 0 to 0 of 0 entries",
+            infoFiltered:   "(filtered from _MAX_ total entries)",
+            infoPostFix:    "",
+            thousands:      ",",
+            loadingRecords: "Loading...",
+            processing:     "Processing...",
+            search:         "Pesquisar:",
+            zeroRecords:    "No matching records found",
+            paginate: {
+                first:      "First",
+                last:       "Last",
+                next:       "Next",
+                previous:   "Previous"
+            },
+            aria: {
+                sortAscending:  ": activate to sort column ascending",
+                sortDescending: ": activate to sort column descending"
+            }
+        }        
+        );
+    } );
+</script>
     <h2>Desembarque->Embarcações</h2>
     
 
@@ -18,11 +45,17 @@
         </fieldset>
         <br>
 
-        <table id="tblPerfil">
+        <table id="tblPerfil" class="display" cellspacing="0" width="100%">
+            <thead>
             <tr>
-                <th width="15%">ID </th>
-                <th width="85%">Conservação</th>
+                <th colspan="1">ID </th>
+                <th colspan="1">Nome do barco</th>
+                <th colspan="1"></th>
+                <th colspan="1"></th>
+                <th colspan="1"></th>
             </tr>
+            </thead>
+            <tbody>
             <?php foreach ($this->barcos as $key => $dados): ?>
                 <tr id="rowNumPeril<?= $key ?>">
                     <td><?= $dados['bar_id'] ?></td>
@@ -44,6 +77,7 @@
                     </td>
                 </tr>
             <?php endforeach; ?>
+            </tbody>
         </table>
     </fieldset>
     <fieldset class="noBorder">
