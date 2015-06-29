@@ -82,21 +82,26 @@ private $usuario;
         $ent_apelido = $this->_getParam("tp_apelido");
         $ent_all = $this->_getParam("ent_all");
         
+        
+        $orderby = $this->_getParam("orderby");
+        if(empty($orderby)){
+            $orderby = "grs_id DESC";
+        }
         if ($ent_id > 0) {
-            $dados = $this->modelGrosseira->selectEntrevistaGrosseira("grs_id>=" . $ent_id, array('grs_id'),50);
+            $dados = $this->modelGrosseira->selectEntrevistaGrosseira("grs_id>=" . $ent_id, $orderby,50);
         } elseif ($ent_pescador) {
-            $dados = $this->modelGrosseira->selectEntrevistaGrosseira("tp_nome ~* '" . $ent_pescador . "'", array('tp_nome', 'grs_id DESC'));
+            $dados = $this->modelGrosseira->selectEntrevistaGrosseira("tp_nome ~* '" . $ent_pescador . "'", $orderby);
         } elseif ($ent_barco) {
-            $dados = $this->modelGrosseira->selectEntrevistaGrosseira("bar_nome ~* '" . $ent_barco . "'", array('bar_nome', 'grs_id DESC'));
+            $dados = $this->modelGrosseira->selectEntrevistaGrosseira("bar_nome ~* '" . $ent_barco . "'", $orderby);
        }
         elseif ($ent_apelido){
-            $dados = $this->modelGrosseira->selectEntrevistaGrosseira("tp_apelido ~* '" . $ent_apelido . "'", array('tp_apelido', 'grs_id DESC'), 20);
+            $dados = $this->modelGrosseira->selectEntrevistaGrosseira("tp_apelido ~* '" . $ent_apelido . "'", $orderby, 20);
         }
         elseif($ent_all){
             $dados = $this->modelGrosseira->selectEntrevistaGrosseira(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
-            $dados = $this->modelGrosseira->selectEntrevistaGrosseira(null, array('fd_id DESC', 'tp_nome'),20);
+            $dados = $this->modelGrosseira->selectEntrevistaGrosseira(null, $orderby,20);
         }
 
         $this->view->assign("dados", $dados);
@@ -249,7 +254,28 @@ private $usuario;
         $this->redirect("/grosseira/tablepesqueiro/id/" . $idEntrevista);
         //$this->redirect("/grosseira/editar/id/" . $backUrl);
     }
-    
+    public function mediaespeciesAction(){
+        $this->_helper->layout->disableLayout();
+        $especie = $this->_getParam("esp_id");
+
+        //$arrayMedias = $this->modelArrastoFundo->selectMediaEspecies();
+        $arrayMedia = $this->modelGrosseira->selectMediaEspecies('esp_id = '.$especie);
+        if(empty($arrayMedia[0]['max_permitido_peso'])){
+            $arrayMedia[0]['max_permitido_peso'] = -1;
+        }
+        $this->view->assign("media", intval($arrayMedia[0]['max_permitido_peso']));
+    }
+    public function verificaespecieAction(){
+         if($this->usuario['tp_id']==5){
+            $this->_redirect('index');
+        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $especie = $this->_getParam("selectEspecie");
+        
+        $this->redirect("/grosseira/mediaespecies/esp_id/" . $especie);
+    }
     public function tableespcapturaAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
         //IMPORTANTE TER!!
         $this->_helper->layout->disableLayout();

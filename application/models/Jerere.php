@@ -529,7 +529,7 @@ class Application_Model_Jerere
     public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
         $this->dbTableJerereHasBioPeixe = new Application_Model_DbTable_VJerereHasBioPeixe();
         $select = $this->dbTableJerereHasBioPeixe->select()
-                ->from($this->dbTableJerereHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->from($this->dbTableJerereHasBioPeixe,array('x'=>'tbp_comprimento', 'y'=>'tbp_peso'))
                 ->order($order)->limit($limit);
 
         if(!is_null($where)){
@@ -556,11 +556,24 @@ class Application_Model_Jerere
     {
         $this->dbTableJerereMedia = new Application_Model_DbTable_VMediaEspeciesJerere();
         $select = $this->dbTableJerereMedia->select()->
-                from()->order($order)->limit($limit);
+                order($order)->limit($limit);
         if(!is_null($where)){
             $select->where($where);
         }
         return $this->dbTableJerereMedia->fetchAll($select)->toArray();
+    }
+    public function selectAvistamentoByTipo($where = null, $limit = null)
+    {
+ 
+        $this->dbTableJerereAvistamento = new Application_Model_DbTable_VJerereHasAvistamento();
+        $selectAvist = $this->dbTableJerereAvistamento->select()->group('avs_descricao')
+                ->from($this->dbTableJerereAvistamento, array('quantAvist' => 'count(*)','avs_descricao'))->order('quantAvist DESC')->limit($limit);
+
+        if(!is_null($where)){
+            $selectAvist->where($where);
+        }
+
+        return $this->dbTableJerereAvistamento->fetchAll($selectAvist)->toArray();
     }
 }
 

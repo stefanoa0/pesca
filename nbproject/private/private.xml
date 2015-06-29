@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/pesca/public/js/funcoesJquery.js</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/porto/urucutuca.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/cor/index.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/tipo-pagamento/index.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/PortoController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Mergulho.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Linha.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Manzua.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/VaraPesca.php</file>
             <file>file:/C:/wamp/www/pesca/application/controllers/EstatisticaController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/RelatoriosController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/biometriapeixe.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Calao.php</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/index.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/models/ColetaManual.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Jerere.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Ratoeira.php</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/indexbiometrias.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/avistamento.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/biometriacamarao.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Tarrafa.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Siripoia.php</file>
             <file>file:/C:/wamp/www/pesca/application/models/Emalhe.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/LinhaFundo.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Grosseira.php</file>
             <file>file:/C:/wamp/www/pesca/application/controllers/ArrastoFundoController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/unidadecaptura.phtml</file>
             <file>file:/C:/wamp/www/pesca/application/models/ArrastoFundo.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/arrasto-fundo/editar.phtml</file>
         </group>
     </open-files>
 </project-private>

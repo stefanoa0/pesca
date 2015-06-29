@@ -570,7 +570,7 @@ class Application_Model_ArrastoFundo
     public function selectDadosBiometriaCamarao($where = null, $order = null,$limit = null){
         $this->dbTableArrastoHasBioCamarao = new Application_Model_DbTable_VArrastoFundoHasBioCamarao();
         $select = $this->dbTableArrastoHasBioCamarao->select()
-                ->from($this->dbTableArrastoHasBioCamarao,array('x'=>'tbc_peso', 'y'=>'tbc_comprimento_cabeca'))
+                ->from($this->dbTableArrastoHasBioCamarao,array('x'=>'tbc_comprimento_cabeca', 'y'=>'tbc_peso'))
                 ->order($order)->limit($limit);
 
         if(!is_null($where)){
@@ -594,7 +594,7 @@ class Application_Model_ArrastoFundo
     public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
         $this->dbTableArrastoHasBioPeixe = new Application_Model_DbTable_VArrastoFundoHasBioPeixe();
         $select = $this->dbTableArrastoHasBioPeixe->select()
-                ->from($this->dbTableArrastoHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->from($this->dbTableArrastoHasBioPeixe,array('x'=>'tbp_comprimento', 'y'=>'tbp_peso'))
                 ->order($order)->limit($limit);
 
         if(!is_null($where)){
@@ -646,5 +646,19 @@ class Application_Model_ArrastoFundo
             $select->where($where);
         }
         return $this->dbTableArrastoMedia->fetchAll($select)->toArray();
+    }
+    
+    public function selectAvistamentoByTipo($where = null, $limit = null)
+    {
+ 
+        $this->dbTableArrastoFundoAvistamento = new Application_Model_DbTable_VArrastoFundoHasAvistamento();
+        $selectAvist = $this->dbTableArrastoFundoAvistamento->select()->group('avs_descricao')
+                ->from($this->dbTableArrastoFundoAvistamento, array('quantAvist' => 'count(*)','avs_descricao'))->order('quantAvist DESC')->limit($limit);
+
+        if(!is_null($where)){
+            $selectAvist->where($where);
+        }
+
+        return $this->dbTableArrastoFundoAvistamento->fetchAll($selectAvist)->toArray();
     }
 }

@@ -536,11 +536,24 @@ private $dbTableColetaManual;
     {
         $this->dbTableColetaManualMedia = new Application_Model_DbTable_VMediaEspeciesColetaManual();
         $select = $this->dbTableColetaManualMedia->select()->
-                from()->order($order)->limit($limit);
+                order($order)->limit($limit);
         if(!is_null($where)){
             $select->where($where);
         }
         return $this->dbTableColetaManualMedia->fetchAll($select)->toArray();
+    }
+    public function selectAvistamentoByTipo($where = null, $limit = null)
+    {
+ 
+        $this->dbTableColetaManualAvistamento = new Application_Model_DbTable_VColetaManualHasAvistamento();
+        $selectAvist = $this->dbTableColetaManualAvistamento->select()->group('avs_descricao')
+                ->from($this->dbTableColetaManualAvistamento, array('quantAvist' => 'count(*)','avs_descricao'))->order('quantAvist DESC')->limit($limit);
+
+        if(!is_null($where)){
+            $selectAvist->where($where);
+        }
+
+        return $this->dbTableColetaManualAvistamento->fetchAll($selectAvist)->toArray();
     }
 }
 

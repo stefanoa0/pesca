@@ -570,7 +570,7 @@ class Application_Model_VaraPesca
     public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
         $this->dbTableVaraPescaHasBioPeixe = new Application_Model_DbTable_VVaraPescaHasBioPeixe();
         $select = $this->dbTableVaraPescaHasBioPeixe->select()
-                ->from($this->dbTableVaraPescaHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->from($this->dbTableVaraPescaHasBioPeixe,array('x'=>'tbp_comprimento', 'y'=>'tbp_peso'))
                 ->order($order)->limit($limit);
 
         if(!is_null($where)){
@@ -605,11 +605,25 @@ class Application_Model_VaraPesca
     {
         $this->dbTableVaraPescaMedia = new Application_Model_DbTable_VMediaEspeciesVaraPesca();
         $select = $this->dbTableVaraPescaMedia->select()->
-                from()->order($order)->limit($limit);
+                order($order)->limit($limit);
         if(!is_null($where)){
             $select->where($where);
         }
         return $this->dbTableVaraPescaMedia->fetchAll($select)->toArray();
+    }
+    
+    public function selectAvistamentoByTipo($where = null, $limit = null)
+    {
+ 
+        $this->dbTableVaraPescaAvistamento = new Application_Model_DbTable_VVaraPescaHasAvistamento();
+        $selectAvist = $this->dbTableVaraPescaAvistamento->select()->group('avs_descricao')
+                ->from($this->dbTableVaraPescaAvistamento, array('quantAvist' => 'count(*)','avs_descricao'))->order('quantAvist DESC')->limit($limit);
+
+        if(!is_null($where)){
+            $selectAvist->where($where);
+        }
+
+        return $this->dbTableVaraPescaAvistamento->fetchAll($selectAvist)->toArray();
     }
 }
 

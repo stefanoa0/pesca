@@ -562,7 +562,7 @@ class Application_Model_LinhaFundo
     public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
         $this->dbTableLinhaFundoHasBioPeixe = new Application_Model_DbTable_VLinhaFundoHasBioPeixe();
         $select = $this->dbTableLinhaFundoHasBioPeixe->select()
-                ->from($this->dbTableLinhaFundoHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->from($this->dbTableLinhaFundoHasBioPeixe,array('x'=>'tbp_comprimento', 'y'=>'tbp_peso'))
                 ->order($order)->limit($limit);
 
         if(!is_null($where)){
@@ -596,11 +596,25 @@ class Application_Model_LinhaFundo
     {
         $this->dbTableLinhaFundoMedia = new Application_Model_DbTable_VMediaEspeciesLinhaFundo();
         $select = $this->dbTableLinhaFundoMedia->select()->
-                from()->order($order)->limit($limit);
+                order($order)->limit($limit);
         if(!is_null($where)){
             $select->where($where);
         }
         return $this->dbTableLinhaFundoMedia->fetchAll($select)->toArray();
+    }
+    
+    public function selectAvistamentoByTipo($where = null, $limit = null)
+    {
+ 
+        $this->dbTableLinhaFundoAvistamento = new Application_Model_DbTable_VLinhaFundoHasAvistamento();
+        $selectAvist = $this->dbTableLinhaFundoAvistamento->select()->group('avs_descricao')
+                ->from($this->dbTableLinhaFundoAvistamento, array('quantAvist' => 'count(*)','avs_descricao'))->order('quantAvist DESC')->limit($limit);
+
+        if(!is_null($where)){
+            $selectAvist->where($where);
+        }
+
+        return $this->dbTableLinhaFundoAvistamento->fetchAll($selectAvist)->toArray();
     }
 }
 

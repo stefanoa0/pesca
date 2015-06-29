@@ -269,6 +269,29 @@ class VaraPescaController extends Zend_Controller_Action
         $this->redirect("/vara-pesca/tablepesqueiro/id/" . $idEntrevista);
         //$this->redirect("/vara-pesca/editar/id/" . $backUrl);
     }
+    
+    public function mediaespeciesAction(){
+        $this->_helper->layout->disableLayout();
+        $especie = $this->_getParam("esp_id");
+
+        //$arrayMedias = $this->modelArrastoFundo->selectMediaEspecies();
+        $arrayMedia = $this->modelVaraPesca->selectMediaEspecies('esp_id = '.$especie);
+        if(empty($arrayMedia[0]['max_permitido_peso'])){
+            $arrayMedia[0]['max_permitido_peso'] = -1;
+        }
+        $this->view->assign("media", intval($arrayMedia[0]['max_permitido_peso']));
+    }
+    public function verificaespecieAction(){
+         if($this->usuario['tp_id']==5){
+            $this->_redirect('index');
+        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $especie = $this->_getParam("selectEspecie");
+        
+        $this->redirect("/vara-pesca/mediaespecies/esp_id/" . $especie);
+    }
     public function tableespcapturaAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
         //IMPORTANTE TER!!
         $this->_helper->layout->disableLayout();

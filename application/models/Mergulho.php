@@ -534,7 +534,7 @@ private $dbTableMergulho;
     public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
         $this->dbTableMergulhoHasBioPeixe = new Application_Model_DbTable_VMergulhoHasBioPeixe();
         $select = $this->dbTableMergulhoHasBioPeixe->select()
-                ->from($this->dbTableMergulhoHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->from($this->dbTableMergulhoHasBioPeixe,array('x'=>'tbp_comprimento', 'y'=>'tbp_peso'))
                 ->order($order)->limit($limit);
 
         if(!is_null($where)){
@@ -560,10 +560,24 @@ private $dbTableMergulho;
     {
         $this->dbTableMergulhoMedia = new Application_Model_DbTable_VMediaEspeciesMergulho();
         $select = $this->dbTableMergulhoMedia->select()->
-                from()->order($order)->limit($limit);
+                order($order)->limit($limit);
         if(!is_null($where)){
             $select->where($where);
         }
         return $this->dbTableMergulhoMedia->fetchAll($select)->toArray();
+    }
+    
+    public function selectAvistamentoByTipo($where = null, $limit = null)
+    {
+ 
+        $this->dbTableMergulhoAvistamento = new Application_Model_DbTable_VMergulhoHasAvistamento();
+        $selectAvist = $this->dbTableMergulhoAvistamento->select()->group('avs_descricao')
+                ->from($this->dbTableMergulhoAvistamento, array('quantAvist' => 'count(*)','avs_descricao'))->order('quantAvist DESC')->limit($limit);
+
+        if(!is_null($where)){
+            $selectAvist->where($where);
+        }
+
+        return $this->dbTableMergulhoAvistamento->fetchAll($selectAvist)->toArray();
     }
 }

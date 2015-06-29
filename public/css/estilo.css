@@ -15,20 +15,20 @@ body
 {
 	height: 100px;
 }
+#topo {
+    height: 100px;
+    background: #f8f8ff;
+}
 #topoLeft
 {
 	height: 100px;
 	width: 350px;
-	background-image: url('/img/Rachycentronlogo.png');
-	background-repeat: no-repeat;
 	float: left;
 }
 #topoRight
 {
 	height: 100px;
 	width: 150px;
-	background-image: url('/img/mpesca.png');
-	background-repeat: no-repeat;
 	float: right;
 }
 

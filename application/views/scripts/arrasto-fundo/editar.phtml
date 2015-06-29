@@ -179,13 +179,15 @@
         </fieldset>
         <br>
         <?php include('tablepesqueiro.phtml'); ?>
+        
+        
     </fieldset>
     <br /><br />
     <fieldset class="noEditable"><legend>Espécies Capturadas:</legend>
         <fieldset class="noEditable"><legend>Dados das Espécies Capturadas:</legend>
 
             <div id="base">
-                <input class="responsivo" onclick="ajax_esp_capturada(this.form, '<?= $this->url(array("controller" => "arrasto-fundo", "action" => "insertespeciecapturada"), null, true) ?>', <?= $this->entrevista['af_id'] ?>, '')" type="button" value="Adicionar" />
+                <input class="responsivo" onclick="ajax_select_peso_permitido(this.form, '<?= $this->url(array("controller" => "arrasto-fundo", "action" => "insertespeciecapturada"), null, true) ?>', <?= $this->entrevista['af_id'] ?>, '','<?= $this->url(array("controller" => "arrasto-fundo", "action" => "verificaespecie"), null, true) ?>')" type="button" value="Adicionar" />
                 <select class="responsivo" style="float:left;" name="selectEspecie">
                     <option value="" selected></option>
                     <?php foreach ($this->especies as $key => $especie): ?>
@@ -197,7 +199,7 @@
                 <input class="responsivo" style="float:left;" type="text" name="precokg" placeholder="Preço" size="10px">
 
                 <input type="hidden" name="id_entrevista"  value="<?= $this->entrevista['af_id'] ?>"/>
-
+                <?php include('mediaespecies.phtml'); ?>
             </div>
 
         </fieldset>
@@ -246,7 +248,7 @@
                     <option value="I">Indefinido</option>
                 </select>
                 
-                <input class="responsivo" style="float:left;" type="text" name="pesoPeixe" placeholder="Peso (g)" size="10px">
+                <input class="responsivo" style="float:left;" type="text" name="pesoPeixe" placeholder="Peso (kg)" size="10px">
 
                 
             </div>
@@ -295,10 +297,3 @@
  </form>
 <br/> <br/>
 <a href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "editar","id" => $this->monitoramento['fd_id']), null, true) ?>" id="botao-ancora">Voltar à Ficha-Diária</a>
-<script>
-    var  medias = JSON.parse(decodeURIComponent("<?= $this->medias ?>"));
-    Object.keys(medias).forEach(function(key) {
-        document.write(key, medias[key]);
-    });
-</script>
-<button onclick="select_peso_permitido(this.form, medias)">Try it</button>

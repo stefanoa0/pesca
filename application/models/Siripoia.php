@@ -515,7 +515,7 @@ class Application_Model_Siripoia
     public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
         $this->dbTableSiripoiaHasBioPeixe = new Application_Model_DbTable_VSiripoiaHasBioPeixe();
         $select = $this->dbTableSiripoiaHasBioPeixe->select()
-                ->from($this->dbTableSiripoiaHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->from($this->dbTableSiripoiaHasBioPeixe,array('x'=>'tbp_comprimento', 'y'=>'tbp_peso'))
                 ->order($order)->limit($limit);
 
         if(!is_null($where)){
@@ -550,11 +550,24 @@ class Application_Model_Siripoia
     {
         $this->dbTableSiripoiaMedia = new Application_Model_DbTable_VMediaEspeciesSiripoia();
         $select = $this->dbTableSiripoiaMedia->select()->
-                from()->order($order)->limit($limit);
+                order($order)->limit($limit);
         if(!is_null($where)){
             $select->where($where);
         }
         return $this->dbTableSiripoiaMedia->fetchAll($select)->toArray();
+    }
+    public function selectAvistamentoByTipo($where = null, $limit = null)
+    {
+ 
+        $this->dbTableSiripoiaAvistamento = new Application_Model_DbTable_VSiripoiaHasAvistamento();
+        $selectAvist = $this->dbTableSiripoiaAvistamento->select()->group('avs_descricao')
+                ->from($this->dbTableSiripoiaAvistamento, array('quantAvist' => 'count(*)','avs_descricao'))->order('quantAvist DESC')->limit($limit);
+
+        if(!is_null($where)){
+            $selectAvist->where($where);
+        }
+
+        return $this->dbTableSiripoiaAvistamento->fetchAll($selectAvist)->toArray();
     }
 }
 

@@ -562,7 +562,7 @@ private $dbTableGrosseira;
     public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
         $this->dbTableGrosseiraHasBioPeixe = new Application_Model_DbTable_VGrosseiraHasBioPeixe();
         $select = $this->dbTableGrosseiraHasBioPeixe->select()
-                ->from($this->dbTableGrosseiraHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->from($this->dbTableGrosseiraHasBioPeixe,array('x'=>'tbp_comprimento', 'y'=>'tbp_peso'))
                 ->order($order)->limit($limit);
 
         if(!is_null($where)){
@@ -596,11 +596,25 @@ private $dbTableGrosseira;
     {
         $this->dbTableGrosseiraMedia = new Application_Model_DbTable_VMediaEspeciesGrosseira();
         $select = $this->dbTableGrosseiraMedia->select()->
-                from()->order($order)->limit($limit);
+                order($order)->limit($limit);
         if(!is_null($where)){
             $select->where($where);
         }
         return $this->dbTableGrosseiraMedia->fetchAll($select)->toArray();
+    }
+    
+    public function selectAvistamentoByTipo($where = null, $limit = null)
+    {
+ 
+        $this->dbTableGrosseiraAvistamento = new Application_Model_DbTable_VGrosseiraHasAvistamento();
+        $selectAvist = $this->dbTableGrosseiraAvistamento->select()->group('avs_descricao')
+                ->from($this->dbTableGrosseiraAvistamento, array('quantAvist' => 'count(*)','avs_descricao'))->order('quantAvist DESC')->limit($limit);
+
+        if(!is_null($where)){
+            $selectAvist->where($where);
+        }
+
+        return $this->dbTableGrosseiraAvistamento->fetchAll($selectAvist)->toArray();
     }
 }
 

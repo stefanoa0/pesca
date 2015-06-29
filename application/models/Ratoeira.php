@@ -519,7 +519,7 @@ class Application_Model_Ratoeira
     public function selectDadosBiometriaPeixe($where = null, $order = null,$limit = null){
         $this->dbTableRatoeiraHasBioPeixe = new Application_Model_DbTable_VRatoeiraHasBioPeixe();
         $select = $this->dbTableRatoeiraHasBioPeixe->select()
-                ->from($this->dbTableRatoeiraHasBioPeixe,array('x'=>'tbp_peso', 'y'=>'tbp_comprimento'))
+                ->from($this->dbTableRatoeiraHasBioPeixe,array('x'=>'tbp_comprimento', 'y'=>'tbp_peso'))
                 ->order($order)->limit($limit);
 
         if(!is_null($where)){
@@ -554,11 +554,24 @@ class Application_Model_Ratoeira
     {
         $this->dbTableRatoeiraMedia = new Application_Model_DbTable_VMediaEspeciesRatoeira();
         $select = $this->dbTableRatoeiraMedia->select()->
-                from()->order($order)->limit($limit);
+                order($order)->limit($limit);
         if(!is_null($where)){
             $select->where($where);
         }
         return $this->dbTableRatoeiraMedia->fetchAll($select)->toArray();
+    }
+    public function selectAvistamentoByTipo($where = null, $limit = null)
+    {
+ 
+        $this->dbTableRatoeiraAvistamento = new Application_Model_DbTable_VRatoeiraHasAvistamento();
+        $selectAvist = $this->dbTableRatoeiraAvistamento->select()->group('avs_descricao')
+                ->from($this->dbTableRatoeiraAvistamento, array('quantAvist' => 'count(*)','avs_descricao'))->order('quantAvist DESC')->limit($limit);
+
+        if(!is_null($where)){
+            $selectAvist->where($where);
+        }
+
+        return $this->dbTableRatoeiraAvistamento->fetchAll($selectAvist)->toArray();
     }
 }
 

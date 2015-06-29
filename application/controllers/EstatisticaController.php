@@ -38,7 +38,7 @@ class EstatisticaController extends Zend_Controller_Action
         $this->modelSiripoia =   new Application_Model_Siripoia();
         $this->modelTarrafa =    new Application_Model_Tarrafa();
         $this->modelVaraPesca =  new Application_Model_VaraPesca();
-        $this->modelEspecies = new Application_Model_Especie();
+        $this->modelEspecies =   new Application_Model_Especie();
     }
 
     public function indexAction()
@@ -603,33 +603,51 @@ class EstatisticaController extends Zend_Controller_Action
     {
         
     }
-    
+    public function assignArrayGraficos($array, $varDados, $varCount, $varNome, $arte){
+        if(empty($array)){
+            $vetorDados = array('Sem '.$varNome);
+            $vetorCount = array('0');
+        }
+        else{
+            foreach($array as $dados):
+                $vetorDados[] = $dados[$varDados];
+                $vetorCount[] = $dados[$varCount];    
+            endforeach;
+        }
+            $this->view->assign($varNome.$arte, json_encode($vetorDados));
+            $this->view->assign($varNome.$arte.'Count', json_encode($vetorCount));
+    }
     public function avistamentoAction()
     {
-        $avistamentosArrasto      = $this->modelArrasto->selectArrastoHasAvistamento();
-        $avistamentosCalao        = $this->modelCalao->selectCalaoHasAvistamento();    
-        $avistamentosColetaManual = $this->modelColeta->selectColetaManualHasAvistamento(); 
-        $avistamentosEmalhe       = $this->modelEmalhe->selectEmalheHasAvistamento();  
-        $avistamentosGrosseira    = $this->modelGroseira->selectGrosseiraHasAvistamento(); 
-        $avistamentosJerere       = $this->modelJerere->selectJerereHasAvistamento(); 
-        $avistamentosLinha        = $this->modelLinha->selectLinhaHasAvistamento(); 
-        $avistamentosLinhaFundo   = $this->modelLinhaFundo->selectLinhaFundoHasAvistamento(); 
-        $avistamentosManzua       = $this->modelManzua->selectManzuaHasAvistamento();  
-        $avistamentosMergulho     = $this->modelMergulho->selectMergulhoHasAvistamento(); 
-        $avistamentosRatoeira     = $this->modelRatoeira->selectRatoeiraHasAvistamento(); 
-        $avistamentosSiripoia     = $this->modelSiripoia->selectSiripoiaHasAvistamento(); 
-        $avistamentosTarrafa      = $this->modelTarrafa->selectTarrafaHasAvistamento(); 
-        $avistamentosVaraPesca    = $this->modelVaraPesca->selectVaraPescaHasAvistamento();
+        $avistamentosArrasto      = $this->modelArrasto->selectAvistamentoByTipo();
+        $avistamentosCalao        = $this->modelCalao->selectAvistamentoByTipo();    
+        $avistamentosColetaManual = $this->modelColeta->selectAvistamentoByTipo(); 
+        $avistamentosEmalhe       = $this->modelEmalhe->selectAvistamentoByTipo();  
+        $avistamentosGrosseira    = $this->modelGroseira->selectAvistamentoByTipo(); 
+        $avistamentosJerere       = $this->modelJerere->selectAvistamentoByTipo(); 
+        $avistamentosLinha        = $this->modelLinha->selectAvistamentoByTipo(); 
+        $avistamentosLinhaFundo   = $this->modelLinhaFundo->selectAvistamentoByTipo(); 
+        $avistamentosManzua       = $this->modelManzua->selectAvistamentoByTipo();  
+        $avistamentosMergulho     = $this->modelMergulho->selectAvistamentoByTipo(); 
+        $avistamentosRatoeira     = $this->modelRatoeira->selectAvistamentoByTipo(); 
+        $avistamentosSiripoia     = $this->modelSiripoia->selectAvistamentoByTipo(); 
+        $avistamentosTarrafa      = $this->modelTarrafa->selectAvistamentoByTipo(); 
+        $avistamentosVaraPesca    = $this->modelVaraPesca->selectAvistamentoByTipo();
         
-        $type_count = 0;
-        foreach($avistamentosArrasto as $dados) {
-            $type_count[] = count(array_keys($avistamentosArrasto,'avs_descricao'));
-        }
-       
-        
-        
-        print_r($type_count);
-        
+        $this->assignArrayGraficos($avistamentosArrasto     , 'avs_descricao', 'quantAvist', 'avistamentos', 'ArrastoFundo');
+        $this->assignArrayGraficos($avistamentosCalao       , 'avs_descricao', 'quantAvist', 'avistamentos', 'Calao');
+        $this->assignArrayGraficos($avistamentosColetaManual, 'avs_descricao', 'quantAvist', 'avistamentos', 'ColetaManual');
+        $this->assignArrayGraficos($avistamentosEmalhe      , 'avs_descricao', 'quantAvist', 'avistamentos', 'Emalhe');
+        $this->assignArrayGraficos($avistamentosGrosseira   , 'avs_descricao', 'quantAvist', 'avistamentos', 'Grosseira');
+        $this->assignArrayGraficos($avistamentosJerere      , 'avs_descricao', 'quantAvist', 'avistamentos', 'Jerere');
+        $this->assignArrayGraficos($avistamentosLinha       , 'avs_descricao', 'quantAvist', 'avistamentos', 'Linha');
+        $this->assignArrayGraficos($avistamentosLinhaFundo  , 'avs_descricao', 'quantAvist', 'avistamentos', 'LinhaFundo');
+        $this->assignArrayGraficos($avistamentosManzua      , 'avs_descricao', 'quantAvist', 'avistamentos', 'Manzua');
+        $this->assignArrayGraficos($avistamentosMergulho    , 'avs_descricao', 'quantAvist', 'avistamentos', 'Mergulho');
+        $this->assignArrayGraficos($avistamentosRatoeira    , 'avs_descricao', 'quantAvist', 'avistamentos', 'Ratoeira');
+        $this->assignArrayGraficos($avistamentosSiripoia    , 'avs_descricao', 'quantAvist', 'avistamentos', 'Siripoia');
+        $this->assignArrayGraficos($avistamentosTarrafa     , 'avs_descricao', 'quantAvist', 'avistamentos', 'Tarrafa');
+        $this->assignArrayGraficos($avistamentosVaraPesca   , 'avs_descricao', 'quantAvist', 'avistamentos', 'VaraPesca');
         
     }
     public function dadosBiometriaCamarao($tipo,$especie){
@@ -648,7 +666,7 @@ class EstatisticaController extends Zend_Controller_Action
         $biometriasCamaraoTarrafa      = $this->modelTarrafa->selectVBioCamarao("esp_nome_comum = '".$especie."'", $order = null, $limit = null); 
         $biometriasCamaraoVaraPesca    = $this->modelVaraPesca->selectVBioCamarao("esp_nome_comum = '".$especie."'", $order = null, $limit = null);
     
-        
+        //Concatenando vetores em um array
         $arrayBiometrias = array_merge_recursive($biometriasCamaraoArrasto,
                                                 $biometriasCamaraoCalao,    
                                                 $biometriasCamaraoColetaManual,
@@ -664,9 +682,9 @@ class EstatisticaController extends Zend_Controller_Action
                                                 $biometriasCamaraoTarrafa,
                                                 $biometriasCamaraoVaraPesca);
         $i=0;
-        $soma=0;
-        $max = 0;
-        $min = PHP_INT_MAX;
+        $soma=0;//variavel para soma
+        $max = 0;//variavel para o valor máximo
+        $min = PHP_INT_MAX; //variávelo para o valor mínimo
         
         foreach($arrayBiometrias as $key=> $dados):
             $soma += $dados[$tipo];
@@ -758,7 +776,7 @@ class EstatisticaController extends Zend_Controller_Action
         $i=0;
         $soma=0;
         $max = 0;
-        $min = 999999;
+        $min = PHP_INT_MAX;
         foreach($arrayBiometrias as $key=> $dados):
             $soma += $dados[$tipo];
             $i++;
