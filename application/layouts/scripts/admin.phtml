@@ -6,9 +6,11 @@
         <?php
         $this->headLink()->prependStylesheet('css/estilo-admin.css');
         $this->headLink()->appendStylesheet('css/smoothness/jquery-ui-1.10.3.custom.min.css');
+        $this->headLink()->appendStylesheet('css/jquery.dataTables.css');
         $this->headScript()->prependFile('js/jquery-1.10.2.min.js');
         $this->headScript()->appendFile('js/jquery-ui-1.10.3.custom.min.js');
         $this->headScript()->appendFile('js/jquery-ui-functions.js');
+        $this->headScript()->appendFile('js/jquery.dataTables.min.js');
         $this->headScript()->appendFile('js/funcoesJquery.js');
         $this->headScript()->appendFile('js/formValidation.js');
         echo $this->headLink() . "\n";
