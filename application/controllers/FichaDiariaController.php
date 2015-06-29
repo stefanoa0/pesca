@@ -68,7 +68,7 @@ class FichaDiariaController extends Zend_Controller_Action {
             $orderby = null;
         }
         if ( $fd_id > 0 ) {
-            $dados = $this->modelFichaDiaria->selectView("fd_id>=". $fd_id, $orderby, 25);
+            $dados = $this->modelFichaDiaria->selectView("fd_id = ". $fd_id, $orderby);
         } 
         elseif ( $pto_id ) {
             $dados = $this->modelFichaDiaria->selectView("pto_nome ~*'".$pto_id."'" ,$orderby, NULL);

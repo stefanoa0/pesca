@@ -19,6 +19,7 @@ class IndexAdminController extends Zend_Controller_Action
         $this->usuario = $this->modelUsuario->selectLogin($identity2['tl_id']);
         $this->view->assign("usuario",$this->usuario);
         }
+        
     }
 
     public function indexAction()
