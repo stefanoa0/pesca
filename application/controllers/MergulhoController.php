@@ -84,7 +84,7 @@ class MergulhoController extends Zend_Controller_Action
         
         $orderby = $this->_getParam("orderby");
         if(empty($orderby)){
-            $orderby = null;
+            $orderby = 'mer_id DESC';
         }      
         if ($ent_id > 0) {
             $dados = $this->modelMergulho->selectEntrevistaMergulho("mer_id =" . $ent_id);
@@ -100,7 +100,7 @@ class MergulhoController extends Zend_Controller_Action
             $dados = $this->modelMergulho->selectEntrevistaMergulho(null, $orderby);
         }
         else {
-            $dados = $this->modelMergulho->selectEntrevistaMergulho(null, $orderby,20);
+            $dados = $this->modelMergulho->selectEntrevistaMergulho(null, $orderby,200);
         }
 
         $this->view->assign("dados", $dados);

@@ -1,6 +1,6 @@
 <h2>Desembarque -> Savatagem</h2>
 <form method="post" id="savatagem">
-<fieldset id="dadosEmbarcacao"></fieldset>
+    <fieldset id="dadosEmbarcacao"></fieldset>
 
     <a id="ansavatagema_savatagem"></a>
     <fieldset class="noEditable"><legend>Savatagem:</legend>
@@ -15,31 +15,37 @@
         </fieldset>
         <br>
 
-        <table id="tblPerfil">
-            <tr>
+        <table id="dataTable" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
                 <th width="15%">ID </th>
                 <th width="85%">Savatagem</th>
-            </tr>
-            <?php foreach ($this->assignSavatagem as $key => $dados): ?>
-                <tr id="rowNumPeril<?= $key ?>">
+                <th></th>
+                <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->assignSavatagem as $key => $dados): ?>
+                    <tr id="rowNumPeril<?= $key ?>">
                     <td><?= $dados['tsav_id'] ?></td>
                     <td><?= $dados['tsav_savatagem'] ?></td>
-                    <td class="td-botao">
+                    <td >
                         <a onclick="jsUpdateDynamic('<?= $dados['tsav_id'] ?>', '<?= $dados['tsav_savatagem'] ?>', document.getElementById('savatagem'))">
                             <ul id="icons" class="ui-widget ui-helper-clearfix">
                                 <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
                             </ul>
                         </a>
                     </td>
-                    <td class="td-botao">
+                    <td >
                         <a onclick="jsDeleteDynamic(<?= $dados['tsav_id'] ?>, '<?= $this->url(array("controller" => "savatagem", "action" => "delete"), null, true) ?>')">
                             <ul id="icons" class="ui-widget ui-helper-clearfix">
                                 <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
                             </ul>
                         </a>
                     </td>
-                </tr>
-            <?php endforeach; ?>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
         </table>
     </fieldset>
     <fieldset class="noBorder">

@@ -1,61 +1,68 @@
 <fieldset id="Entrevista"></fieldset>
-    <form name="calao" method="post">
+<form name="calao" method="post">
 
-        <h2>Entrevistas Cadastradas->Pesca de Calão (lista limitada em 20)</h2>
-        
-        <input type="button" class="busca" value="Limpar" onClick="jsClearBusca('<?= $this->url(array("controller" => "calao", "action" => "visualizar"), null, true) ?>')"/>
-        <input type="button" class="busca" value="Buscar" onClick="jsBuscaEntrevistas(this.form, '<?= $this->url(array("controller" => "calao", "action" => "visualizar"), null, true) ?>')"/>
-            <select  class="busca" name="tipoBusca">
-                <option value="1">Por ID</option>
-                <option value="2">Por Pescador</option>
-                <option value="3">Por Barco</option>
-                <option value="4">Por Apelido</option>
-                <option value="6">Listar Todas</option>
-            </select>
-        <input class="busca" name="buscaEntrevistas" placeholder="Buscar Entrevista"/><br/>
-        <table>
+    <h2>Entrevistas Cadastradas->Pesca de Calão (lista limitada em 200)</h2>
+
+    <input type="button" class="busca" value="Limpar" onClick="jsClearBusca('<?= $this->url(array("controller" => "calao", "action" => "visualizar"), null, true) ?>')"/>
+    <input type="button" class="busca" value="Buscar" onClick="jsBuscaEntrevistas(this.form, '<?= $this->url(array("controller" => "calao", "action" => "visualizar"), null, true) ?>')"/>
+    <select  class="busca" name="tipoBusca">
+        <option value="1">Por ID</option>
+        <option value="2">Por Pescador</option>
+        <option value="3">Por Barco</option>
+        <option value="4">Por Apelido</option>
+        <option value="6">Listar Todas</option>
+    </select>
+    <input class="busca" name="buscaEntrevistas" placeholder="Buscar Entrevista"/><br/>
+    <table id="dataTable" class="display" cellspacing="0" width="100%">
+        <thead>
             <tr>
-                <th>Contagem</th>
-                <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "calao", "action" => "visualizar", "orderby" => "fd_id DESC"), null, true) ?>">▼</a>     <a class="seta-ordem" href="<?= $this->url(array("controller" => "calao", "action" => "visualizar", "orderby" => "fd_id ASC"), null, true) ?>">▲</a>Ficha Diária</th>
-                <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "calao", "action" => "visualizar", "orderby" => "mnt_id DESC"), null, true) ?>">▼</a>    <a class="seta-ordem" href="<?= $this->url(array("controller" => "calao", "action" => "visualizar", "orderby" => "mnt_id ASC"), null, true) ?>">▲</a>Monitoramento</th>
-                <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "calao", "action" => "visualizar", "orderby" => "cal_id DESC"),  null, true) ?>">▼</a>   <a class="seta-ordem" href="<?= $this->url(array("controller" => "calao", "action" => "visualizar", "orderby" => "cal_id ASC"), null, true) ?>">▲</a>Entrevista</th>
-                <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "calao", "action" => "visualizar", "orderby" => "tp_nome DESC"), null, true) ?>">▼</a>   <a class="seta-ordem" href="<?= $this->url(array("controller" => "calao", "action" => "visualizar", "orderby" => "tp_nome ASC"), null, true) ?>">▲</a>Pescador</th>
-                <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "calao", "action" => "visualizar", "orderby" => "tp_apelido DESC"), null, true) ?>">▼</a><a class="seta-ordem" href="<?= $this->url(array("controller" => "calao", "action" => "visualizar", "orderby" => "tp_apelido ASC"), null, true) ?>">▲</a>Apelido</th>
-                <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "calao", "action" => "visualizar", "orderby" => "bar_nome DESC"), null, true) ?>">▼</a>  <a class="seta-ordem" href="<?= $this->url(array("controller" => "calao", "action" => "visualizar", "orderby" => "bar_nome ASC"), null, true) ?>">▲</a>Barco</th>
+            <th>Contagem</th>
+            <th>Ficha Diária</th>
+            <th>Monitoramento</th>
+            <th>Entrevista</th>
+            <th>Pescador</th>
+            <th>Apelido</th>
+            <th>Barco</th>
+            <th></th>
+            <th></th>
             </tr>
+        </thead>
+        <tbody>
 
-            <?php $i=1; foreach ($this->dados as $key => $entrevista): ?>
+            <?php $i = 1;
+            foreach ($this->dados as $key => $entrevista): ?>
                 <tr>
-                    <td><?= $i++ ?></td>
-                    <td><?= $entrevista['fd_id']?></td>
-                    <td><?= $entrevista['mnt_id'] ?></td>
-                    <td><?= $entrevista['cal_id'] ?></td>
-                    <td><?= $entrevista['tp_nome'] ?></td>
-                    <td><?= $entrevista['tp_apelido']?></td>
-                    <td><?= $entrevista['bar_nome'] ?></td>
+                <td><?= $i++ ?></td>
+                <td><?= $entrevista['fd_id'] ?></td>
+                <td><?= $entrevista['mnt_id'] ?></td>
+                <td><?= $entrevista['cal_id'] ?></td>
+                <td><?= $entrevista['tp_nome'] ?></td>
+                <td><?= $entrevista['tp_apelido'] ?></td>
+                <td><?= $entrevista['bar_nome'] ?></td>
 
-                    <td class="td-botao">
-                        <a href="<?= $this->url(array("controller" => "calao", "action" => "editar", "id" => $entrevista['cal_id']), null, true) ?>">
-                            <ul id="icons" class="ui-widget ui-helper-clearfix">
-                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
-                            </ul>
-                        </a>
-                    </td>
-
-                    <td class="td-botao">
-                        <a name="Excluir" class="button-del" onclick="beforeDelete('<?= $this->url(array("controller" => "calao", "action" => "excluir", "id" => $entrevista['cal_id']), null, true) ?>')">
-                            <ul id="icons" class="ui-widget ui-helper-clearfix">
-                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
-                            </ul>
-                        </a> 
-                    </td>
-
+                <td>
+                    <a href="<?= $this->url(array("controller" => "calao", "action" => "editar", "id" => $entrevista['cal_id']), null, true) ?>">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                        </ul>
                     </a>
+                </td>
+
+                <td>
+                    <a name="Excluir" class="button-del" onclick="beforeDelete('<?= $this->url(array("controller" => "calao", "action" => "excluir", "id" => $entrevista['cal_id']), null, true) ?>')">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                        </ul>
+                    </a> 
+                </td>
+
+                </a>
 
                 </tr>
             <?php endforeach; ?>
-        </table>
-        <br/><br/>
-        <a href="<?= $this->url(array("controller" => "pescador", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório</a>
-    </form>
+        </tbody>
+    </table>
+    <br/><br/>
+    <a href="<?= $this->url(array("controller" => "pescador", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório</a>
+</form>
 </html>

@@ -97,7 +97,7 @@ class EmalheController extends Zend_Controller_Action
             $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
-            $dados = $this->modelEmalhe->selectEntrevistaEmalhe(null, $orderby,20);
+            $dados = $this->modelEmalhe->selectEntrevistaEmalhe(null, $orderby,200);
         }
 
         $this->view->assign("dados", $dados);

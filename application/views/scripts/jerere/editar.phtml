@@ -84,7 +84,7 @@
                 <div class="form-esq">
 
                     <label>Data:</label>
-                    <input type="date" name="dataSaida" min="2013-11-01" value="<?= $this->dataSaida?>"/>
+                    <input type="date" name="dataSaida" min="2013-11-01"  max = "<?= date("Y-m-d"); ?>" value="<?= $this->dataSaida?>"/>
                 </div>
                 <div class="form-esq">
                     <label>Horas:</label>
@@ -94,7 +94,7 @@
             <div class="direita-entrevista">
                 <div class="form-esq">
                     <label>Data:</label>
-                    <input type="date" name="dataVolta" min="2013-11-01" value="<?= $this->dataVolta?>"/>
+                    <input type="date" name="dataVolta" min="2013-11-01"  max = "<?= date("Y-m-d"); ?>" value="<?= $this->dataVolta?>"/>
                 </div>
                 <div class="form-esq">
                     <label>Horas:</label>

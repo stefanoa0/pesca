@@ -2022,7 +2022,7 @@ function ajax_busca_pescador_by_barco(str, url){
 }
 
     $(document).ready(function() {
-        $('#tblPerfil').DataTable(
+        $('#dataTable').DataTable(
         {
             "oLanguage": { 
                 "sProcessing": "Processando...", 

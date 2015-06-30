@@ -91,7 +91,7 @@ class ArrastoFundoController extends Zend_Controller_Action {
             $dados = $this->modelArrastoFundo->selectEntrevistaArrasto(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
-            $dados = $this->modelArrastoFundo->selectEntrevistaArrasto(null, $orderby, 20);
+            $dados = $this->modelArrastoFundo->selectEntrevistaArrasto(null, $orderby, 200);
         }
 
         $this->view->assign("dados", $dados);

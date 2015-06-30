@@ -1,25 +1,30 @@
 <div id="status">   
-            <table >
-                <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                </tr>
+    <table id="dataTable" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th></th>
+            </tr>
+        </thead>
+        <tbody>
 
-                <?php foreach ($this->dadosIscas as $key => $isca): ?>
-                    <tr>
-                    <td><?= $isca['isc_id'] ?></td>
-                    <td><?= $isca['isc_tipo'] ?></td>
-                    <td class="td-botao">
-                        <a onclick="jsDeleteIsca(<?= $isca['isc_id'] ?>,'<?= $this->url(array("controller" => "isca", "action" => "delete"), null, true) ?>')">
-                            <ul id="icons" class="ui-widget ui-helper-clearfix">
-                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
-                            </ul>
-                        </a>
-                    </td>
-                    </tr>
-                <?php endforeach; ?>
-            </table>
-            <br/><br/>
-            
-            <a id="last" href="<?= $this->url(array("controller" => "isca", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório</a>
+            <?php foreach ($this->dadosIscas as $key => $isca): ?>
+                <tr>
+                <td><?= $isca['isc_id'] ?></td>
+                <td><?= $isca['isc_tipo'] ?></td>
+                <td >
+                    <a onclick="jsDeleteIsca(<?= $isca['isc_id'] ?>, '<?= $this->url(array("controller" => "isca", "action" => "delete"), null, true) ?>')">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                        </ul>
+                    </a>
+                </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <br/><br/>
+
+    <a id="last" href="<?= $this->url(array("controller" => "isca", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório</a>
 </div>

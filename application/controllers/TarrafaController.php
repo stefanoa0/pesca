@@ -78,7 +78,7 @@ private $usuario;
 
         $orderby = $this->_getParam("orderby");
         if(empty($orderby)){
-            $orderby = null;
+            $orderby = 'tar_id DESC';
         }      
         if ($ent_id > 0) {
             $dados = $this->modelTarrafa->selectEntrevistaTarrafa("tar_id =" . $ent_id);
@@ -94,7 +94,7 @@ private $usuario;
             $dados = $this->modelTarrafa->selectEntrevistaTarrafa(null, $orderby);
         }
         else {
-            $dados = $this->modelTarrafa->selectEntrevistaTarrafa(null, $orderby,20);
+            $dados = $this->modelTarrafa->selectEntrevistaTarrafa(null, $orderby,200);
         }
 
         $this->view->assign("dados", $dados);

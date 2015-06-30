@@ -102,7 +102,7 @@ private $usuario;
             $dados = $this->modelJerere->selectEntrevistaJerere(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
-            $dados = $this->modelJerere->selectEntrevistaJerere(null, $orderby,20);
+            $dados = $this->modelJerere->selectEntrevistaJerere(null, $orderby,200);
         }
 
         $this->view->assign("dados", $dados);

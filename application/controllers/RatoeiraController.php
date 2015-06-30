@@ -88,7 +88,7 @@ private $usuario;
         
         $orderby = $this->_getParam("orderby");
         if(empty($orderby)){
-            $orderby = null;
+            $orderby = 'rat_id DESC';
         }
         if ($ent_id > 0) {
             $dados = $this->modelRatoeira->selectEntrevistaRatoeira("rat_id =" . $ent_id);
@@ -104,7 +104,7 @@ private $usuario;
             $dados = $this->modelRatoeira->selectEntrevistaRatoeira(null, $orderby);
         }
         else {
-            $dados = $this->modelRatoeira->selectEntrevistaRatoeira(null, $orderby,20);
+            $dados = $this->modelRatoeira->selectEntrevistaRatoeira(null, $orderby,200);
         }
 
         $this->view->assign("dados", $dados);

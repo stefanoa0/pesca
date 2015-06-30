@@ -82,7 +82,7 @@
                 <legend><h4>Tempo:</h4></legend>
                 <div class="form-esq">
                     <label>Data:</label>
-                    <input type="date" name="data" min="2013-11-01" value="<?=$this->entrevista['tar_data']?>"/>
+                    <input type="date" name="data" min="2013-11-01"  max = "<?= date("Y-m-d"); ?>" value="<?=$this->entrevista['tar_data']?>"/>
                 </div>
                 <div class="form-esq">
                     <label>Tempo Gasto:</label>

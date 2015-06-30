@@ -91,7 +91,7 @@ class LinhaFundoController extends Zend_Controller_Action
         
         $orderby = $this->_getParam("orderby");
         if(empty($orderby)){
-            $orderby = null;
+            $orderby = 'lf_id DESC';
         }        
         if ($ent_id > 0) {
             $dados = $this->modelLinhaFundo->selectEntrevistaLinhaFundo("lf_id =" . $ent_id);
@@ -107,7 +107,7 @@ class LinhaFundoController extends Zend_Controller_Action
             $dados = $this->modelLinhaFundo->selectEntrevistaLinhaFundo(null, $orderby);
         }
         else {
-            $dados = $this->modelLinhaFundo->selectEntrevistaLinhaFundo(null, $orderby,20);
+            $dados = $this->modelLinhaFundo->selectEntrevistaLinhaFundo(null, $orderby,200);
         }
 
         $this->view->assign("dados", $dados);
