@@ -3,28 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/pesca/application/models/Mergulho.php</file>
-            <file>file:/C:/wamp/www/pesca/application/models/Linha.php</file>
-            <file>file:/C:/wamp/www/pesca/application/models/Manzua.php</file>
-            <file>file:/C:/wamp/www/pesca/application/models/VaraPesca.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/EstatisticaController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/biometriapeixe.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/models/Calao.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/index.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/models/ColetaManual.php</file>
-            <file>file:/C:/wamp/www/pesca/application/models/Jerere.php</file>
-            <file>file:/C:/wamp/www/pesca/application/models/Ratoeira.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/indexbiometrias.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/avistamento.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/biometriacamarao.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/models/Tarrafa.php</file>
-            <file>file:/C:/wamp/www/pesca/application/models/Siripoia.php</file>
-            <file>file:/C:/wamp/www/pesca/application/models/Emalhe.php</file>
-            <file>file:/C:/wamp/www/pesca/application/models/LinhaFundo.php</file>
-            <file>file:/C:/wamp/www/pesca/application/models/Grosseira.php</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/CalaoController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/SiripoiaController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/VaraPescaController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/EmalheController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/LinhaController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/ManzuaController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/TarrafaController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/JerereController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/RatoeiraController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/LinhaFundoController.php</file>
             <file>file:/C:/wamp/www/pesca/application/controllers/ArrastoFundoController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/estatistica/unidadecaptura.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/models/ArrastoFundo.php</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/ColetaManualController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/MergulhoController.php</file>
         </group>
     </open-files>
 </project-private>

@@ -1,31 +1,4 @@
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#tblPerfil').DataTable(
-        {
-            emptyTable:     "No data available in table",
-            info:           "Mostrando de _START_ a _END_ de _TOTAL_ resultados",
-            infoEmpty:      "Showing 0 to 0 of 0 entries",
-            infoFiltered:   "(filtered from _MAX_ total entries)",
-            infoPostFix:    "",
-            thousands:      ",",
-            loadingRecords: "Loading...",
-            processing:     "Processing...",
-            search:         "Pesquisar:",
-            zeroRecords:    "No matching records found",
-            paginate: {
-                first:      "First",
-                last:       "Last",
-                next:       "Next",
-                previous:   "Previous"
-            },
-            aria: {
-                sortAscending:  ": activate to sort column ascending",
-                sortDescending: ": activate to sort column descending"
-            }
-        }        
-        );
-    } );
-</script>
+
     <h2>Desembarque->Embarcações</h2>
     
 
@@ -61,14 +34,14 @@
                     <td><?= $dados['bar_id'] ?></td>
                     <td><?= $dados['bar_nome'] ?></td>
                     <td><a id="botao-ancora" href="<?=$this->url(array("controller"=>"barcos","action"=>"novo", "id" => $dados['bar_id'] ),null,true)?>">Cadastro</a></td>
-                    <td class="td-botao">
+                    <td>
                         <a onclick="jsUpdateDynamic('<?= $dados['bar_id'] ?>', '<?= $dados['bar_nome'] ?>', document.getElementById('barcos'))">
                             <ul id="icons" class="ui-widget ui-helper-clearfix">
                                 <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
                             </ul>
                         </a>
                     </td>
-                    <td class="td-botao">
+                    <td>
                         <a onclick="jsDeleteDynamic(<?= $dados['bar_id'] ?>, '<?= $this->url(array("controller" => "barcos", "action" => "delete"), null, true) ?>')">
                             <ul id="icons" class="ui-widget ui-helper-clearfix">
                                 <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
@@ -81,7 +54,7 @@
         </table>
     </fieldset>
     <fieldset class="noBorder">
-        <br><input type="button" class="button-up" width="5%" onclick="scrollTo('top')">
+        
         <a href="<?= $this->url(array("controller" => "barcos", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório - Lista</a>
     </fieldset>
 </form>

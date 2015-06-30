@@ -1,11 +1,12 @@
+
 <h2>Desembarque->Ficha Diária</h2>
 
 <fieldset id="Desembarque"></fieldset>
  <form name="indexFichaDiaria" method="post">
 
      <a href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
-        
-     <input type="button" class="tam_medio" value="Limpar" onClick="jsClearBusca('<?= $this->url(array("controller" => "ficha-diaria", "action" => "index"), null, true) ?>')"/>
+     <br/><br/>   
+<!--<input type="button" class="tam_medio" value="Limpar" onClick="jsClearBusca('<?= $this->url(array("controller" => "ficha-diaria", "action" => "index"), null, true) ?>')"/>
      <input type="button" class="tam_medio" value="Buscar" onClick="jsBuscaFichaDiaria(this.form, '<?= $this->url(array("controller" => "ficha-diaria", "action" => "index"), null, true) ?>')"/>
      <select class="busca" name="tipoBusca">
         <option value="1">Por ID</option>
@@ -14,52 +15,57 @@
         <option value="5">Por Estagiário</option>
         <option value="6">Por Monitor</option>
         <option value="7">Listar Todas</option>
-     </select>
-            <input class="busca"  name="buscaFicha" placeholder="Buscar Ficha Diária"/><br/>
-<table id="tabelaComEstilo">
-    <tr>
-        <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "fd_id DESC"), null, true) ?>">▼</a>        <a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "fd_id ASC"), null, true) ?>">▲</a>ID</th>
-        <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "fd_data DESC"), null, true) ?>">▼</a>      <a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "fd_data ASC"), null, true) ?>">▲</a>Data</th>
-        <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "fd_turno DESC"), null, true) ?>">▼</a>     <a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "fd_turno ASC"), null, true) ?>">▲</a>Turno</th>
-        <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "fd_porto DESC"), null, true) ?>">▼</a>     <a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "fd_porto ASC"), null, true) ?>">▲</a>Porto</th>
-        <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "t_estagiario DESC"), null, true) ?>">▼</a> <a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "t_estagiario ASC"), null, true) ?>">▲</a>Estagiário</th>
-        <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "t_monitor DESC"), null, true) ?>">▼</a>    <a class="seta-ordem" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "index", "orderby" => "t_monitor ASC"), null, true) ?>">▲</a>Monitor</th>
+     </select>-->
+     <!--<input class="busca"  name="buscaFicha" placeholder="Buscar Ficha Diária"/><br/>-->
+<table id="tblPerfil" class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th colspan="1">ID</th>
+            <th colspan="1">Data</th>
+            <th colspan="1">Turno</th>
+            <th colspan="1">Porto</th>
+            <th colspan="1">Estagiário</th>
+            <th colspan="1">Monitor</th>
+            <th colspan="1"></th>
+            <th colspan="1"></th>
+            <th colspan="1"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->dados as $key => $fichadiaria): ?>
+        <tr id="rowNumPeril<?= $key ?>" >
+            <td ><?= $fichadiaria['fd_id'] ?></td>
+            <td ><?= date("d-m-Y", strtotime($fichadiaria['fd_data']))  ?></td>
+            <td ><?= $fichadiaria['fd_turno'] ?></td>
+            <td ><?= $fichadiaria['pto_nome'] ?></td>
+            <td ><?= $fichadiaria['t_estagiario'] ?></td>
+            <td ><?= $fichadiaria['t_monitor'] ?></td>
+            <td class="td-botao">
+                <a href="<?=$this->url(array("controller"=>"ficha-diaria","action"=>"editar", "id" => $fichadiaria['fd_id']),null,true)?>">
+                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                        <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                    </ul>
+                </a>
+            </td>
 
-    </tr>
+            <td  class="td-botao">
+                <a type="button" value="Excluir" onclick="beforeDelete('<?= $this->url(array("controller" => "ficha-diaria", "action" => "excluir", "id" => $fichadiaria['fd_id']), null, true) ?>')">
+                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                    </ul>
+                 </a>
 
-    <?php foreach ($this->dados as $key => $fichadiaria): ?>
-    <tr>
-        <td ><?= $fichadiaria['fd_id'] ?></td>
-        <td ><?= date("d-m-Y", strtotime($fichadiaria['fd_data']))  ?></td>
-        <td ><?= $fichadiaria['fd_turno'] ?></td>
-        <td ><?= $fichadiaria['pto_nome'] ?></td>
-        <td ><?= $fichadiaria['t_estagiario'] ?></td>
-        <td ><?= $fichadiaria['t_monitor'] ?></td>
-        <td class="td-botao">
-            <a href="<?=$this->url(array("controller"=>"ficha-diaria","action"=>"editar", "id" => $fichadiaria['fd_id']),null,true)?>">
-                <ul id="icons" class="ui-widget ui-helper-clearfix">
-                    <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
-                </ul>
-            </a>
-        </td>
-        
-        <td  class="td-botao">
-            <a type="button" value="Excluir" onclick="beforeDelete('<?= $this->url(array("controller" => "ficha-diaria", "action" => "excluir", "id" => $fichadiaria['fd_id']), null, true) ?>')">
-                <ul id="icons" class="ui-widget ui-helper-clearfix">
-                    <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
-                </ul>
-             </a>
-            
-        </td>
-        <td  class="td-botao">
-            <a href="<?=$this->url(array("controller"=>"ficha-diaria","action"=>"imprimirfichaid", "id" => $fichadiaria['fd_id']),null,true)?>">
-                <ul id="icons" class="ui-widget ui-helper-clearfix">
-                    <li class="ui-state-default ui-corner-all" title="Imprimir"><span class="ui-icon ui-icon-print"></span></li>
-                </ul>
-            </a>
-        </td>
-    </tr>
-    <?php endforeach; ?>
+            </td>
+            <td  class="td-botao">
+                <a href="<?=$this->url(array("controller"=>"ficha-diaria","action"=>"imprimirfichaid", "id" => $fichadiaria['fd_id']),null,true)?>">
+                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                        <li class="ui-state-default ui-corner-all" title="Imprimir"><span class="ui-icon ui-icon-print"></span></li>
+                    </ul>
+                </a>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
 </table>
             <br/>
             <br/>
