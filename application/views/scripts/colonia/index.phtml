@@ -4,12 +4,17 @@
 
 <a href="<?= $this->url(array("controller" => "colonia", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
 <fieldset id="dadosSocial"></fieldset>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Colonia</th>
-    </tr>
-
+<table id="tblPerfil" class="display" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Colonia</th>
+            <th colspan="1"></th>
+            <th colspan="1"></th>
+            <th colspan="1"></th>
+            </tr>
+        </thead>
+        <tbody>
     <?php
     foreach ($this->dados as $key => $colonia):
         ?>
@@ -17,7 +22,7 @@
             <td><?= $colonia['tc_id'] ?></td>
             <td><?= $colonia['tc_nome'] ?></td>
 
-            <td class="td-botao">
+            <td>
                 <a href="<?= $this->url(array("controller" => "colonia", "action" => "visualizar", "id" => $colonia['tc_id']), null, true) ?>">
                     <ul id="icons" class="ui-widget ui-helper-clearfix">
                         <li class="ui-state-default ui-corner-all" title="Visualizar"><span class="ui-icon ui-icon-search"></span></li>
@@ -25,7 +30,7 @@
                 </a>
             </td>
 
-            <td class="td-botao">
+            <td>
                 <a href="<?= $this->url(array("controller" => "colonia", "action" => "editar", "id" => $colonia['tc_id']), null, true) ?>">
                     <ul id="icons" class="ui-widget ui-helper-clearfix">
                         <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
@@ -33,7 +38,7 @@
                 </a>
             </td>
 
-            <td class="td-botao">
+            <td>
                 <a value="Excluir" onclick="beforeDelete('<?= $this->url(array("controller" => "colonia", "action" => "excluir", "id" => $colonia['tc_id']), null, true) ?>')">
                     <ul id="icons" class="ui-widget ui-helper-clearfix">
                                 <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
@@ -43,6 +48,7 @@
 
         </tr>
     <?php endforeach; ?>
+        </tbody>
 </table>
 <br/><br/>
 <a href="<?= $this->url(array("controller" => "colonia", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório</a>
