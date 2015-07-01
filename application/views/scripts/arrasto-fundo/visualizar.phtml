@@ -16,26 +16,24 @@
     <table id="dataTable" class="display" cellspacing="0" width="100%">
         <thead>
             <tr>
-            <th>Contagem</th>
-            <th></a>Ficha Diária</th>
-            <th></a>Monitoramento</th>
-            <th></a>Entrevista</th>
-            <th></a>Pescador</th>
-            <th></a>Apelido</th>
-            <th></a>Barco</th>
+            <th>Entrevista</th>
+            <th>Ficha Diária</th>
+            <th>Monitoramento</th>
+            <th>Pescador</th>
+            <th>Apelido</th>
+            <th>Barco</th>
             <th></th>
             <th></th>
             </tr>
         </thead>
         <tbody>
 
-            <?php $i = 1;
+            <?php 
             foreach ($this->dados as $key => $entrevista): ?>
                 <tr>
-                <td><?= $i++ ?></td>
+                <td><?= $entrevista['af_id'] ?></td>
                 <td><?= $entrevista['fd_id'] ?></td>
                 <td><?= $entrevista['mnt_id'] ?></td>
-                <td><?= $entrevista['af_id'] ?></td>
                 <td><?= $entrevista['tp_nome'] ?></td>
                 <td><?= $entrevista['tp_apelido'] ?></td>
                 <td><?= $entrevista['bar_nome'] ?></td>

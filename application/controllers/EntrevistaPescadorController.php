@@ -52,7 +52,7 @@ class EntrevistaPescadorController extends Zend_Controller_Action
             $dados = $this->modelEntrevistas->select("date(data) = '".$data. "'" , array('data'));
         }
         else {
-            $dados = $this->modelEntrevistas->select(null, array('artepesca', 'tp_nome'), 50);
+            $dados = $this->modelEntrevistas->select(null, array('artepesca', 'tp_nome'), 200);
         }
 
         $this->view->assign("dados", $dados);

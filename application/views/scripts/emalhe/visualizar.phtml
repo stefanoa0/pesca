@@ -13,24 +13,26 @@
                 <option value="6">Listar Todas</option>
             </select>
         <input class="busca" name="buscaEntrevistas" placeholder="Buscar Entrevista"/><br/>
-        <table>
+        <table id="dataTable" class="display" cellspacing="0" width="100%">
+        <thead>
             <tr>
-                <th>Contagem</th>
-                <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "coleta-manual", "action" => "visualizar", "orderby" => "fd_id DESC"), null, true) ?>">▼</a>     <a class="seta-ordem" href="<?= $this->url(array("controller" => "emalhe", "action" => "visualizar", "orderby" => "fd_id ASC"), null, true) ?>">▲</a>Ficha Diária</th>
-                <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "emalhe", "action" => "visualizar", "orderby" => "mnt_id DESC"), null, true) ?>">▼</a>    <a class="seta-ordem" href="<?= $this->url(array("controller" => "emalhe", "action" => "visualizar", "orderby" => "mnt_id ASC"), null, true) ?>">▲</a>Monitoramento</th>
-                <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "emalhe", "action" => "visualizar", "orderby" => "em_id DESC"),  null, true) ?>">▼</a>   <a class="seta-ordem" href="<?= $this->url(array("controller" => "emalhe", "action" => "visualizar", "orderby" => "em_id ASC"), null, true) ?>">▲</a>Entrevista</th>
-                <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "emalhe", "action" => "visualizar", "orderby" => "tp_nome DESC"), null, true) ?>">▼</a>   <a class="seta-ordem" href="<?= $this->url(array("controller" => "emalhe", "action" => "visualizar", "orderby" => "tp_nome ASC"), null, true) ?>">▲</a>Pescador</th>
-                <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "emalhe", "action" => "visualizar", "orderby" => "tp_apelido DESC"), null, true) ?>">▼</a><a class="seta-ordem" href="<?= $this->url(array("controller" => "emalhe", "action" => "visualizar", "orderby" => "tp_apelido ASC"), null, true) ?>">▲</a>Apelido</th>
-                <th><a class="seta-ordem" href="<?= $this->url(array("controller" => "emalhe", "action" => "visualizar", "orderby" => "bar_nome DESC"), null, true) ?>">▼</a>  <a class="seta-ordem" href="<?= $this->url(array("controller" => "emalhe", "action" => "visualizar", "orderby" => "bar_nome ASC"), null, true) ?>">▲</a>Barco</th>
-
+            <th>>Entrevista</th>
+            <th>>Ficha Diária</th>
+            <th>>Monitoramento</th>
+            <th>>Pescador</th>
+            <th>>Apelido</th>
+            <th>>Barco</th>
+            <th></th>
+            <th></th>
             </tr>
+        </thead>
+        <tbody>
 
-            <?php $i=1; foreach ($this->dados as $key => $entrevista): ?>
+            <?php foreach ($this->dados as $key => $entrevista): ?>
                 <tr>
-                    <td><?= $i++ ?></td>
+                    <td><?= $entrevista['em_id'] ?></td>
                     <td><?= $entrevista['fd_id']?></td>
                     <td><?= $entrevista['mnt_id'] ?></td>
-                    <td><?= $entrevista['em_id'] ?></td>
                     <td><?= $entrevista['tp_nome'] ?></td>
                     <td><?= $entrevista['tp_apelido'] ?></td>
                     <td><?= $entrevista['bar_nome'] ?></td>
@@ -55,6 +57,7 @@
 
                 </tr>
             <?php endforeach; ?>
+        </tbody>
         </table>
         <br/><br/>
         <a href="<?= $this->url(array("controller" => "pescador", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório</a>
