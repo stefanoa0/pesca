@@ -2,6 +2,20 @@
 <h2>Perfil Social->Tipo de Embarcação</h2>
 
 
+<<<<<<< HEAD
+    <a href="<?= $this->url(array("controller" => "tipo-embarcacao", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
+    <fieldset id="dadosSocial"></fieldset>
+    <table id="tblPerfil" class="display" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tipo de Embarcação</th>
+            <th colspan="1"></th>
+            <th colspan="1"></th>
+        </tr>
+        </thead>
+        <tbody>
+=======
 <a href="<?= $this->url(array("controller" => "tipo-embarcacao", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
 <fieldset id="dadosSocial"></fieldset>
 <table id="dataTable" class="display" cellspacing="0" width="100%">
@@ -15,32 +29,32 @@
     </thead>
     <tbody>
 
+>>>>>>> 958cb5cb9aced3b1aede511ff03357484f8b5990
         <?php
         foreach ($this->dados as $key => $tipoEmbarcacao):
             ?>
             <tr>
-            <td><?= $tipoEmbarcacao['tte_id'] ?></td>
-            <td><?= $tipoEmbarcacao['tte_tipoembarcacao'] ?></td>
+                <td><?= $tipoEmbarcacao['tte_id'] ?></td>
+                <td><?= $tipoEmbarcacao['tte_tipoembarcacao'] ?></td>
+                <td>
+                    <a href="<?= $this->url(array("controller" => "tipo-embarcacao", "action" => "editar", "id" => $tipoEmbarcacao['tte_id']), null, true) ?>">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                        </ul>
+                    </a>
+                </td>
 
-            <td >
-                <a href="<?= $this->url(array("controller" => "tipo-embarcacao", "action" => "editar", "id" => $tipoEmbarcacao['tte_id']), null, true) ?>">
-                    <ul id="icons" class="ui-widget ui-helper-clearfix">
-                        <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
-                    </ul>
-                </a>
-            </td>
-
-            <td >
-                <a value="Excluir" onclick="beforeDelete('<?= $this->url(array("controller" => "tipo-embarcacao", "action" => "excluir", "id" => $tipoEmbarcacao['tte_id']), null, true) ?>')">
-                    <ul id="icons" class="ui-widget ui-helper-clearfix">
-                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
-                    </ul>
-                </a> 
-            </td>
+                <td>
+                    <a value="Excluir" onclick="beforeDelete('<?= $this->url(array("controller" => "tipo-embarcacao", "action" => "excluir", "id" => $tipoEmbarcacao['tte_id']), null, true) ?>')">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                        </ul>
+                    </a> 
+                </td>
 
             </tr>
         <?php endforeach; ?>
-    </tbody>
-</table>
-<br/><br/>
-<a href="<?= $this->url(array("controller" => "tipo-embarcacao", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório</a>
+        </tbody>
+    </table>
+    <br/><br/>
+    <a href="<?= $this->url(array("controller" => "tipo-embarcacao", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório</a>

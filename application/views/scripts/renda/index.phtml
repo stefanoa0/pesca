@@ -4,14 +4,18 @@
 
     <a href="<?= $this->url(array("controller" => "renda", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
     <fieldset id="dadosSocial"></fieldset>
-    <table>
+    <table id="tblPerfil" class="display" cellspacing="0" width="100%">
+        <thead>
         <tr>
             <th>ID</th>
             <th>Renda</th>
             <th>Fator Mínimo</th>
             <th>Fator Máximo</th>
+            <th colspan="1"></th>
+            <th colspan="1"></th>
         </tr>
-
+        </thead>
+        <tbody>
         <?php foreach ($this->rendas as $key => $renda): ?>
             <tr>
                 <td><?= $renda['ren_id'] ?></td>
@@ -19,7 +23,7 @@
                 <td><?= $renda['ren_fatormin'] ?></td>
                 <td><?= $renda['ren_fatormax'] ?></td>
 
-                <td class="td-botao">
+                <td>
                     <a href="<?= $this->url(array("controller" => "renda", "action" => "editar", "id" => $renda['ren_id']), null, true) ?>">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
                             <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
@@ -27,7 +31,7 @@
                     </a>
                 </td>
 
-                <td class="td-botao">
+                <td>
                     <a value="Excluir" onclick="beforeDelete('<?= $this->url(array("controller" => "renda", "action" => "excluir", "id" => $renda['ren_id']), null, true) ?>')">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
                                 <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
@@ -37,6 +41,7 @@
 
             </tr>
         <?php endforeach; ?>
+        </tbody>
     </table>
     <br/><br/>
     <a href="<?= $this->url(array("controller" => "Renda", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório</a>

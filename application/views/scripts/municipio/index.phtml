@@ -3,13 +3,17 @@
 
     <a href="<?= $this->url(array("controller" => "municipio", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
     <fieldset id="dadosSocial"></fieldset>
-    <table>
+    <table id="tblPerfil" class="display" cellspacing="0" width="100%">
+        <thead>
         <tr>
             <th>ID</th>
             <th>Municipio</th>
             <th>Estado</th>
+            <th colspan="1"></th>
+            <th colspan="1"></th>
         </tr>
-
+        </thead>
+        <tbody>
         <?php
         foreach ($this->dados as $key => $municipio):
             ?>
@@ -18,7 +22,7 @@
                 <td><?= $municipio['tmun_municipio'] ?></td>
                 <td><?= $municipio['tuf_sigla'] ?></td>
 
-                <td class="td-botao">
+                <td>
                     <a href="<?= $this->url(array("controller" => "municipio", "action" => "editar", "id" => $municipio['tmun_id']), null, true) ?>">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
                             <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
@@ -26,7 +30,7 @@
                     </a>
                 </td>
 
-                <td class="td-botao">
+                <td>
                     <a value="Excluir" onclick="beforeDelete('<?= $this->url(array("controller" => "municipio", "action" => "excluir", "id" => $municipio['tmun_id']), null, true) ?>')">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
                                 <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
@@ -37,6 +41,7 @@
 
             </tr>
         <?php endforeach; ?>
+        </tbody>
     </table>
     <br/><br/>
     <a href="<?= $this->url(array("controller" => "municipio", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório</a>
