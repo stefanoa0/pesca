@@ -98,7 +98,7 @@ class ColetaManualController extends Zend_Controller_Action
             $dados = $this->modelColetaManual->selectEntrevistaColetaManual(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
-            $dados = $this->modelColetaManual->selectEntrevistaColetaManual(null, $orderby,20);
+            $dados = $this->modelColetaManual->selectEntrevistaColetaManual(null, $orderby,200);
         }
 
         $this->view->assign("dados", $dados);

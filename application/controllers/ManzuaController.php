@@ -88,7 +88,7 @@ public function visualizarAction() {
         
         $orderby = $this->_getParam("orderby");
         if(empty($orderby)){
-            $orderby = null;
+            $orderby = 'man_id DESC';
         }      
         if ($ent_id > 0) {
             $dados = $this->modelManzua->selectEntrevistaManzua("man_id =" . $ent_id);
@@ -104,7 +104,7 @@ public function visualizarAction() {
             $dados = $this->modelManzua->selectEntrevistaManzua(null, $orderby);
         }
         else {
-            $dados = $this->modelManzua->selectEntrevistaManzua(null, $orderby,20);
+            $dados = $this->modelManzua->selectEntrevistaManzua(null, $orderby,200);
         }
 
         $this->view->assign("dados", $dados);

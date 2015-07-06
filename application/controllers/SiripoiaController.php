@@ -90,7 +90,7 @@ class SiripoiaController extends Zend_Controller_Action
         
         $orderby = $this->_getParam("orderby");
         if(empty($orderby)){
-            $orderby = null;
+            $orderby = 'sir_id DESC';
         }      
         if ($ent_id > 0) {
             $dados = $this->modelSiripoia->selectEntrevistaSiripoia("sir_id =" . $ent_id);
@@ -106,7 +106,7 @@ class SiripoiaController extends Zend_Controller_Action
             $dados = $this->modelSiripoia->selectEntrevistaSiripoia(null, $orderby);
         }
         else {
-            $dados = $this->modelSiripoia->selectEntrevistaSiripoia(null, $orderby,20);
+            $dados = $this->modelSiripoia->selectEntrevistaSiripoia(null, $orderby,200);
         }
 
         $this->view->assign("dados", $dados);

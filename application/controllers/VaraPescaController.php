@@ -86,7 +86,7 @@ class VaraPescaController extends Zend_Controller_Action
         
         $orderby = $this->_getParam("orderby");
         if(empty($orderby)){
-            $orderby = null;
+            $orderby = 'vp_id DESC';
         }      
         if ($ent_id > 0) {
             $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca("vp_id =" . $ent_id);
@@ -102,7 +102,7 @@ class VaraPescaController extends Zend_Controller_Action
             $dados = $this->modelVarapesca->selectEntrevistaVaraPesca(null, $orderby);
         }
         else {
-            $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca(null, $orderby,20);
+            $dados = $this->modelVaraPesca->selectEntrevistaVaraPesca(null, $orderby,200);
         }
 
         $this->view->assign("dados", $dados);

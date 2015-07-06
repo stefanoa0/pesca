@@ -1,7 +1,7 @@
 <fieldset id="Entrevista"></fieldset>
     <form name="arrasto-fundo" method="post">
 
-        <h2>Todas Entrevistas Cadastradas - Limite(50)</h2>
+        <h2>Todas Entrevistas Cadastradas - Limite(200)</h2>
              
             <input type="button" class="busca" value="Limpar" onClick="jsClearBusca('<?= $this->url(array("controller" => "entrevista-pescador", "action" => "index"), null, true) ?>')"/>
             <input type="button" class="busca" value="Buscar" onClick="jsBuscaTodasEntrevistas(this.form, '<?= $this->url(array("controller" => "entrevista-pescador", "action" => "index"), null, true) ?>')"/>
@@ -14,23 +14,25 @@
                 <option value="6">Listar Todas</option>
             </select>
             <input class="busca" name="buscaEntrevistas" placeholder="Buscar Entrevista"/><br/>
-        <table>
+        <table id="dataTable" class="display" cellspacing="0" width="100%">
+        <thead>
             <tr>
-                <th>Número</th>
-                <th>Arte de Pesca</th>
                 <th>Entrevista</th>
+                <th>Arte de Pesca</th>
                 <th>Pescador</th>
                 <th>Apelido</th>
                 <th>Barco</th>
                 <th>Porto</th>
                 <th>Data</th>
+            <th></th>
             </tr>
+        </thead>
+        <tbody>
 
-            <?php $i=1; foreach ($this->dados as $key => $entrevista): ?>
+            <?php foreach ($this->dados as $key => $entrevista): ?>
                 <tr>
-                    <td><?= $i++?></td>
+                   <td><?= $entrevista['id'] ?></td>
                     <td><b><?= $entrevista['artepesca']?></b></td>
-                    <td><?= $entrevista['id'] ?></td>
                     <td><?= $entrevista['tp_nome'] ?></td>
                     <td><?= $entrevista['tp_apelido'] ?></td>
                     <td><?= $entrevista['bar_nome'] ?></td>
@@ -53,6 +55,7 @@
 
                 </tr>
             <?php endforeach; ?>
+        </tbody>
         </table>
         <br/><br/>
     </form>

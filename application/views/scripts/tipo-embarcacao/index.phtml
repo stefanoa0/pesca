@@ -1,7 +1,8 @@
 
-    <h2>Perfil Social->Tipo de Embarcação</h2>
+<h2>Perfil Social->Tipo de Embarcação</h2>
 
 
+<<<<<<< HEAD
     <a href="<?= $this->url(array("controller" => "tipo-embarcacao", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
     <fieldset id="dadosSocial"></fieldset>
     <table id="tblPerfil" class="display" cellspacing="0" width="100%">
@@ -14,13 +15,27 @@
         </tr>
         </thead>
         <tbody>
+=======
+<a href="<?= $this->url(array("controller" => "tipo-embarcacao", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
+<fieldset id="dadosSocial"></fieldset>
+<table id="dataTable" class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+        <th>ID</th>
+        <th>Tipo de Embarcação</th>
+        <th></th>
+        <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+>>>>>>> 958cb5cb9aced3b1aede511ff03357484f8b5990
         <?php
         foreach ($this->dados as $key => $tipoEmbarcacao):
             ?>
             <tr>
                 <td><?= $tipoEmbarcacao['tte_id'] ?></td>
                 <td><?= $tipoEmbarcacao['tte_tipoembarcacao'] ?></td>
-
                 <td>
                     <a href="<?= $this->url(array("controller" => "tipo-embarcacao", "action" => "editar", "id" => $tipoEmbarcacao['tte_id']), null, true) ?>">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">

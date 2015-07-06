@@ -101,7 +101,7 @@ private $usuario;
             $dados = $this->modelGrosseira->selectEntrevistaGrosseira(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
-            $dados = $this->modelGrosseira->selectEntrevistaGrosseira(null, $orderby,20);
+            $dados = $this->modelGrosseira->selectEntrevistaGrosseira(null, $orderby,200);
         }
 
         $this->view->assign("dados", $dados);

@@ -1,6 +1,6 @@
 <h2>Desembarque -> Conservação do Pescado</h2>
 <form method="post" id="conservacao-pescado">
-<fieldset id="dadosEmbarcacao"></fieldset>
+    <fieldset id="dadosEmbarcacao"></fieldset>
 
     <a id="ancora_conservacao-pescado"></a>
     <fieldset class="noEditable"><legend>Conservação do Pescado:</legend>
@@ -15,31 +15,37 @@
         </fieldset>
         <br>
 
-        <table id="tblPerfil">
-            <tr>
-                <th width="15%">ID </th>
-                <th width="85%">Conservação</th>
-            </tr>
-            <?php foreach ($this->assignConservacaoPescado as $key => $dados): ?>
-                <tr id="rowNumPeril<?= $key ?>">
+        <table id="dataTable" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                <th>ID </th>
+                <th>Conservação</th>
+                <th></th>
+                <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->assignConservacaoPescado as $key => $dados): ?>
+                    <tr id="rowNumPeril<?= $key ?>">
                     <td><?= $dados['tcp_id'] ?></td>
                     <td><?= $dados['tcp_conserva'] ?></td>
-                    <td class="td-botao">
+                    <td >
                         <a onclick="jsUpdateDynamic('<?= $dados['tcp_id'] ?>', '<?= $dados['tcp_conserva'] ?>', document.getElementById('conservacao-pescado'))">
                             <ul id="icons" class="ui-widget ui-helper-clearfix">
                                 <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
                             </ul>
                         </a>
                     </td>
-                    <td class="td-botao">
+                    <td >
                         <a onclick="jsDeleteDynamic(<?= $dados['tcp_id'] ?>, '<?= $this->url(array("controller" => "conservacao-pescado", "action" => "delete"), null, true) ?>')">
                             <ul id="icons" class="ui-widget ui-helper-clearfix">
                                 <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
                             </ul>
                         </a>
                     </td>
-                </tr>
-            <?php endforeach; ?>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
         </table>
     </fieldset>
     <fieldset class="noBorder">

@@ -4,9 +4,8 @@
 <fieldset id="Desembarque"></fieldset>
  <form name="indexFichaDiaria" method="post">
 
-     <a href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
-     <br/><br/>   
-<!--<input type="button" class="tam_medio" value="Limpar" onClick="jsClearBusca('<?= $this->url(array("controller" => "ficha-diaria", "action" => "index"), null, true) ?>')"/>
+     <a id="botao-ancora" href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "novo"), null, true) ?>" >Novo</a>   
+<input type="button" class="tam_medio" value="Limpar" onClick="jsClearBusca('<?= $this->url(array("controller" => "ficha-diaria", "action" => "index"), null, true) ?>')"/>
      <input type="button" class="tam_medio" value="Buscar" onClick="jsBuscaFichaDiaria(this.form, '<?= $this->url(array("controller" => "ficha-diaria", "action" => "index"), null, true) ?>')"/>
      <select class="busca" name="tipoBusca">
         <option value="1">Por ID</option>
@@ -15,9 +14,10 @@
         <option value="5">Por Estagiário</option>
         <option value="6">Por Monitor</option>
         <option value="7">Listar Todas</option>
-     </select>-->
-     <!--<input class="busca"  name="buscaFicha" placeholder="Buscar Ficha Diária"/><br/>-->
-<table id="tblPerfil" class="display" cellspacing="0" width="100%">
+     </select>
+     <input class="busca"  name="buscaFicha" placeholder="Buscar Todas"/><br/>
+     
+<table id="dataTable" class="display" cellspacing="0" width="100%">
     <thead>
         <tr>
             <th colspan="1">ID</th>
@@ -40,7 +40,7 @@
             <td ><?= $fichadiaria['pto_nome'] ?></td>
             <td ><?= $fichadiaria['t_estagiario'] ?></td>
             <td ><?= $fichadiaria['t_monitor'] ?></td>
-            <td class="td-botao">
+            <td>
                 <a href="<?=$this->url(array("controller"=>"ficha-diaria","action"=>"editar", "id" => $fichadiaria['fd_id']),null,true)?>">
                     <ul id="icons" class="ui-widget ui-helper-clearfix">
                         <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
@@ -48,7 +48,7 @@
                 </a>
             </td>
 
-            <td  class="td-botao">
+            <td>
                 <a type="button" value="Excluir" onclick="beforeDelete('<?= $this->url(array("controller" => "ficha-diaria", "action" => "excluir", "id" => $fichadiaria['fd_id']), null, true) ?>')">
                     <ul id="icons" class="ui-widget ui-helper-clearfix">
                         <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
@@ -56,7 +56,7 @@
                  </a>
 
             </td>
-            <td  class="td-botao">
+            <td>
                 <a href="<?=$this->url(array("controller"=>"ficha-diaria","action"=>"imprimirfichaid", "id" => $fichadiaria['fd_id']),null,true)?>">
                     <ul id="icons" class="ui-widget ui-helper-clearfix">
                         <li class="ui-state-default ui-corner-all" title="Imprimir"><span class="ui-icon ui-icon-print"></span></li>

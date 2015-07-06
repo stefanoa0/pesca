@@ -1,36 +1,41 @@
 
-    <h2>Desembarque->Tipos de Maré</h2>
+<h2>Desembarque->Tipos de Maré</h2>
 
-    <a href="<?= $this->url(array("controller" => "mare", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
-    <fieldset id="dadosDesembarque"></fieldset>
-    <table>
+<a href="<?= $this->url(array("controller" => "mare", "action" => "novo"), null, true) ?>" id="botao-ancora">Novo</a>
+<fieldset id="dadosDesembarque"></fieldset>
+<table id="dataTable" class="display" cellspacing="0" width="100%">
+    <thead>
         <tr>
-            <th>ID</th>
-            <th>Tipo</th>
+        <th>ID</th>
+        <th>Tipo</th>
+        <th></th>
+        <th></th>
         </tr>
-
+    </thead>
+    <tbody>
         <?php
         foreach ($this->dados as $key => $mare):
             ?>
             <tr>
-                <td><?= $mare['mre_id'] ?></td>
-                <td><?= $mare['mre_tipo'] ?></td>
-                <td class="td-botao">
-                    <a href="<?= $this->url(array("controller" => "mare", "action" => "editar", "id" => $mare['mre_id']), null, true) ?>">
-                        <ul id="icons" class="ui-widget ui-helper-clearfix">
-                            <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
-                        </ul>
-                    </a>
-                </td>
-                <td class="td-botao">
-                    <a onclick="beforeDelete('<?= $this->url(array("controller" => "mare", "action" => "excluir", "id" => $mare['mre_id']), null, true) ?>')">
-                        <ul id="icons" class="ui-widget ui-helper-clearfix">
-                            <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
-                        </ul>
-                    </a>
-                </td>
+            <td><?= $mare['mre_id'] ?></td>
+            <td><?= $mare['mre_tipo'] ?></td>
+            <td >
+                <a href="<?= $this->url(array("controller" => "mare", "action" => "editar", "id" => $mare['mre_id']), null, true) ?>">
+                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                        <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                    </ul>
+                </a>
+            </td>
+            <td >
+                <a onclick="beforeDelete('<?= $this->url(array("controller" => "mare", "action" => "excluir", "id" => $mare['mre_id']), null, true) ?>')">
+                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                        <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
+                    </ul>
+                </a>
+            </td>
             </tr>
         <?php endforeach; ?>
-    </table>
-    <br/><br/>
-    <a href="<?= $this->url(array("controller" => "mare", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório</a>
+    </tbody>
+</table>
+<br/><br/>
+<a href="<?= $this->url(array("controller" => "mare", "action" => "relatorio"), null, true) ?>" id="botao-ancora" target="_blank">Gerar Relatório</a>

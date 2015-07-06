@@ -97,7 +97,7 @@ private $usuario;
             $dados = $this->modelCalao->selectEntrevistaCalao(null, array('fd_id DESC', 'tp_nome'));
         }
         else {
-            $dados = $this->modelCalao->selectEntrevistaCalao(null, $orderby,20);
+            $dados = $this->modelCalao->selectEntrevistaCalao(null, $orderby,200);
         }
 
         $this->view->assign("dados", $dados);

@@ -2022,8 +2022,9 @@ function ajax_busca_pescador_by_barco(str, url){
 }
 
     $(document).ready(function() {
-        $('#tblPerfil').DataTable(
+        $('#dataTable').DataTable(
         {
+            "order": [[ 0, 'desc' ]],
             "oLanguage": { 
                 "sProcessing": "Processando...", 
                 "sLengthMenu": "Mostrar _MENU_ registros", 
@@ -2039,8 +2040,10 @@ function ajax_busca_pescador_by_barco(str, url){
                     "sPrevious": "Anterior", 
                     "sNext": "Seguinte", 
                     "sLast": "Último" 
-                } 
+                }
+                
             }
+            
         }        
         );
     } );
