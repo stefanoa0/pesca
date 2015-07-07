@@ -998,7 +998,7 @@ class PescadorController extends Zend_Controller_Action {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $this->relpdfpescador( 'tpr_id = 1' );
+        $this->relpdfpescador();
     }
 
     public function imprimirpescadoridAction() {
@@ -1202,6 +1202,7 @@ class PescadorController extends Zend_Controller_Action {
         ob_end_clean();
         header('Content-Disposition: attachment;filename="rel_pescador.pdf"');
         header("Content-type: application/x-pdf");
+        ob_end_clean();
         echo $pdf->render();
     }
 
@@ -1209,7 +1210,7 @@ class PescadorController extends Zend_Controller_Action {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $this->relatorioListaPescador(array('tp_nome'), "tpr_id=1" );
+        $this->relatorioListaPescador(array('tp_nome') );
     }
     public function imprimirpescadordesembarqueAction(){
         $this->_helper->layout->disableLayout();
@@ -1221,28 +1222,28 @@ class PescadorController extends Zend_Controller_Action {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $this->relatorioListaPescador( array('tp_id'), "tpr_id=2");
+        $this->relatorioListaPescador( array('tp_id'));
     }
 
     public function imprimirlistanomeAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $this->relatorioListaPescador( array('tp_nome') , "tpr_id=2");
+        $this->relatorioListaPescador( array('tp_nome'));
     }
 
     public function imprimirlistacomunidadeAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $this->relatorioListaPescadorComunidade( array('tcom_nome','tp_nome'), "tpr_id=2" );
+        $this->relatorioListaPescadorComunidade( array('tcom_nome','tp_nome'));
     }
 
     public function imprimirlistacoloniaAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $this->relatorioListaPescadorColonia( array('tc_nome','tp_nome'), "tpr_id=2" );
+        $this->relatorioListaPescadorColonia( array('tc_nome','tp_nome'));
     }
 
     public function relatorioListaPescador( $order = null, $where = null ) {
@@ -1270,6 +1271,7 @@ class PescadorController extends Zend_Controller_Action {
         ob_end_clean();
         header('Content-Disposition: attachment;filename="rel_lista_pescador.pdf"');
         header("Content-type: application/x-pdf");
+        ob_end_clean();
         echo $pdf->render();
     }
 
@@ -1302,6 +1304,7 @@ class PescadorController extends Zend_Controller_Action {
         ob_end_clean();
         header('Content-Disposition: attachment;filename="rel_lista_pescador_comunidade.pdf"');
         header("Content-type: application/x-pdf");
+        ob_end_clean();
         echo $pdf->render();
     }
 
@@ -1334,6 +1337,7 @@ class PescadorController extends Zend_Controller_Action {
         ob_end_clean();
         header('Content-Disposition: attachment;filename="rel_lista_pescador_colonia.pdf"');
         header("Content-type: application/x-pdf");
+        ob_end_clean();
         echo $pdf->render();
     }
 
