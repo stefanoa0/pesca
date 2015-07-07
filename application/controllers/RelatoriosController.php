@@ -4032,7 +4032,111 @@ class RelatoriosController extends Zend_Controller_Action
         ob_end_clean();
         $objWriter->save('php://output');
     }
-    
+     public function relatoriopescadoresAction(){
+        set_time_limit(0);
+//        if($this->usuario['tp_id']==5){
+//            $this->_redirect('index');
+//        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        
+       $this->modelPescador = new Application_Model_Pescador();
+        
+       $pescadores = $this->modelPescador->selectView('tpr_id = 2');
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
+        $coluna = 0;
+        $linha = 1;
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'Id');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Nome');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Apelido');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Sexo');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Naturalidade');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Estado Naturalidade');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mãe');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Pai');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'RG');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'CPF');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Matrícula');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'INSS');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'CTPS');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'RGP/MAA/IBAMA');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'PIS');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'CIR-Captania dos Portos');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'NIT/CEI');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data de nascimento');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'CMA');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Projeto Cadastrado');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Nível de Escolaridade');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Logradouro');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Numero da Casa');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Complemento');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Bairro');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Colônia');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Comunidade');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Municipio');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'CEP');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Local de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Responsável pelo Cadastro');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Responsável pela Digitação');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data de Cadastro');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observação');
+        
+        $coluna= 0;
+        $linha++;
+        foreach ( $pescadores as $key => $consulta ):
+            $sheet->setCellValueByColumnAndRow($coluna,   $linha, $consulta['tp_id']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_apelido']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_sexo']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['munnat']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['signat']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_filiacaomae']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_filiacaopai']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_rg']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_cpf']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_matricula']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_inss']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_ctps']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_rgb_maa_ibama']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_pis']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_cir_cap_porto']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nit_cei']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_datanasc']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_cma']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tpr_descricao']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['esc_nivel']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['te_logradouro']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['te_numero']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['te_comp']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['te_bairro']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tc_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tcom_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tmun_municipio']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['te_cep']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tu_nome_cad']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tu_nome_lan']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_dta_cad']);
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_obs']);
+            $coluna=0;
+            $linha++;
+        endforeach;
+        
+         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        ob_end_clean();
+
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="Pescadores.xls"');
+        header('Cache-Control: max-age=0');
+
+        ob_end_clean();
+        $objWriter->save('php://output');
+     }
     public function relatoriocompletopescadoresAction(){
         set_time_limit(0);
 //        if($this->usuario['tp_id']==5){
