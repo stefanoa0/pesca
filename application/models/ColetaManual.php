@@ -106,7 +106,6 @@ private $dbTableColetaManual;
             'cml_dhsaida' => $timestampSaida,
             'cml_dhvolta' => $timestampVolta,
             'cml_tempogasto' => $request['tempoGasto'],
-            'cml_subamostra' => $request['subamostra'],
             'cml_obs' => $request['observacao'],
             'mre_id' => $request['mare'],
             'dp_id' => $request['destinoPescado'],
