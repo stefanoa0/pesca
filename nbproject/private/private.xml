@@ -2,21 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/wamp/www/pesca/application/controllers/CalaoController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/SiripoiaController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/GrosseiraController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/VaraPescaController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/EmalheController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/LinhaController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/ManzuaController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/TarrafaController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/JerereController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/RatoeiraController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/LinhaFundoController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/ArrastoFundoController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/ColetaManualController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/MergulhoController.php</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
