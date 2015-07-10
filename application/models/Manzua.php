@@ -192,6 +192,25 @@ class Application_Model_Manzua
         $this->dbTableTManzuaHasPesqueiro->delete($whereManzuaHasPesqueiro);
         
     }
+     public function updatePesqueiro($idEntrevistaPesqueiro,$idEntrevista,$pesqueiro, $tempoapesqueiro, $distapesqueiro)
+    {
+        $this->dbTableTManzuaHasPesqueiro = new Application_Model_DbTable_ManzuaHasPesqueiro();
+
+        if(empty($tempoapesqueiro)){  $tempoapesqueiro = null;}
+        $dadosPesqueiro = array(
+            'man_id' => $idEntrevista,
+            'paf_id' => $pesqueiro,
+            't_tempoapesqueiro' => $tempoapesqueiro,
+            't_distapesqueiro' => $distapesqueiro
+        );
+
+        $wherePescador = $this->dbTableTManzuaHasPesqueiro->getAdapter()
+                ->quoteInto('"man_paf_id" = ?', $idEntrevistaPesqueiro);
+
+
+        $this->dbTableTManzuaHasPesqueiro->update($dadosPesqueiro, $wherePescador);
+    }
+    
     public function selectManzuaHasEspCapturadas($where = null, $order = null, $limit = null){
         $this->dbTableManzuaHasEspCapturada = new Application_Model_DbTable_VManzuaHasEspecieCapturada();
         
@@ -242,6 +261,39 @@ class Application_Model_Manzua
         
         $this->dbTableTManzuaHasEspCapturada->delete($whereManzuaHasEspCapturada);
     }
+    public function updateEspCapturada($idEntrevistaEspecie,$idEntrevista, $especie, $quantidade, $peso, $precokg, $idTipoVenda)
+    {
+        $this->dbTableTManzuaHasEspCapturada = new Application_Model_DbTable_ManzuaHasEspecieCapturada();
+
+        if(empty($quantidade) && empty($peso)){
+            $quantidade = 'Erro';
+        }
+        if(empty($quantidade)){
+            $quantidade = NULL;
+        }
+        if(empty($peso)){
+            $peso = NULL;
+        }
+        if(empty($precokg)){
+            $precokg = NULL;
+        }
+        $dadosEspecie = array(
+            'man_id' => $idEntrevista,
+            'esp_id' => $especie,
+            'spc_quantidade' => $quantidade,
+            'spc_peso_kg' => $peso,
+            'spc_preco' => $precokg,
+            'ttv_id' => $idTipoVenda
+        );
+
+        $wherePescador = $this->dbTableTManzuaHasEspCapturada->getAdapter()
+                ->quoteInto('"spc_man_id" = ?', $idEntrevistaEspecie);
+
+
+        $this->dbTableTManzuaHasEspCapturada->update($dadosEspecie, $wherePescador);
+    }
+    
+    
     public function selectEntrevistaManzua($where = null, $order = null, $limit = null)
     {
         $this->dbTableManzua = new Application_Model_DbTable_VEntrevistaManzua();
@@ -368,7 +420,12 @@ class Application_Model_Manzua
         $this->dbTableTManzuaHasBioPeixe->delete($whereManzuaHasBiometria);
         
     }
-    
+    public function updateBioPeixe($idEntrevistaPeixe, $idEntrevista, $idEspecie,$sexo, $comprimento, $peso) {
+	$this->dbTableManzuaHasBioPeixe = new Application_Model_DbTable_ManzuaHasBioPeixe();
+	$dadosPesqueiro = array( 'tman_id' => $idEntrevista, 'esp_id' => $idEspecie, 'tbp_sexo' => $sexo, 'tbp_comprimento' => $comprimento, 'tbp_peso' => $peso );
+	$wherePescador = $this->dbTableManzuaHasBioPeixe->getAdapter() ->quoteInto('"tmanbp_id" = ?', $idEntrevistaPeixe);
+	$this->dbTableManzuaHasBioPeixe->update($dadosPesqueiro, $wherePescador);
+    }
     public function selectPescadoresByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaManzua();
         $select = $dbTable->select()->

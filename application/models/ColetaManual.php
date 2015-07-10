@@ -179,6 +179,25 @@ private $dbTableColetaManual;
         $this->dbTableTColetaManualHasPesqueiro->delete($whereColetaManualHasPesqueiro);
         
     }
+    public function updatePesqueiro($idEntrevistaPesqueiro,$idEntrevista,$pesqueiro, $tempoapesqueiro, $distapesqueiro)
+    {
+        $this->dbTableTColetaManualHasPesqueiro = new Application_Model_DbTable_ColetaManualHasPesqueiro();
+
+        if(empty($tempoapesqueiro)){  $tempoapesqueiro = null;}
+        $dadosPesqueiro = array(
+            'cml_id' => $idEntrevista,
+            'paf_id' => $pesqueiro,
+            't_tempoapesqueiro' => $tempoapesqueiro,
+            't_distapesqueiro' => $distapesqueiro
+        );
+
+        $wherePescador = $this->dbTableTColetaManualHasPesqueiro->getAdapter()
+                ->quoteInto('"cml_paf_id" = ?', $idEntrevistaPesqueiro);
+
+
+        $this->dbTableTColetaManualHasPesqueiro->update($dadosPesqueiro, $wherePescador);
+    }
+    
     public function selectColetaManualHasEspCapturadas($where = null, $order = null, $limit = null){
         $this->dbTableColetaManualHasEspCapturada = new Application_Model_DbTable_VColetaManualHasEspecieCapturada();
         
@@ -215,7 +234,7 @@ private $dbTableColetaManual;
             'spc_quantidade' => $quantidade,
             'spc_peso_kg' => $peso,
             'spc_preco' => $precokg,
-            'ttv_id' => $idTipoVenda,
+            'ttv_id' => $idTipoVenda
         );
         
         $this->dbTableTColetaManualHasEspCapturada->insert($dadosEspecie);
@@ -229,6 +248,38 @@ private $dbTableColetaManual;
         
         $this->dbTableTColetaManualHasEspCapturada->delete($whereColetaManualHasEspCapturada);
     }
+    public function updateEspCapturada($idEntrevistaEspecie,$idEntrevista, $especie, $quantidade, $peso, $precokg,$idTipoVenda)
+    {
+        $this->dbTableTColetaManualHasEspCapturada = new Application_Model_DbTable_ColetaManualHasEspecieCapturada();
+
+        if(empty($quantidade) && empty($peso)){
+            $quantidade = 'Erro';
+        }
+        if(empty($quantidade)){
+            $quantidade = NULL;
+        }
+        if(empty($peso)){
+            $peso = NULL;
+        }
+        if(empty($precokg)){
+            $precokg = NULL;
+        }
+        $dadosEspecie = array(
+            'cml_id' => $idEntrevista,
+            'esp_id' => $especie,
+            'spc_quantidade' => $quantidade,
+            'spc_peso_kg' => $peso,
+            'spc_preco' => $precokg,
+            'ttv_id' => $idTipoVenda
+        );
+
+        $wherePescador = $this->dbTableTColetaManualHasEspCapturada->getAdapter()
+                ->quoteInto('"spc_cml_id" = ?', $idEntrevistaEspecie);
+
+
+        $this->dbTableTColetaManualHasEspCapturada->update($dadosEspecie, $wherePescador);
+    }
+    
     public function selectEntrevistaColetaManual($where = null, $order = null, $limit = null)
     {
         $this->dbTableColetaManual = new Application_Model_DbTable_VEntrevistaColetaManual();
@@ -355,7 +406,12 @@ private $dbTableColetaManual;
         $this->dbTableTColetaManualHasBioPeixe->delete($whereColetaManualHasBiometria);
         
     }
-    
+    public function updateBioPeixe($idEntrevistaPeixe, $idEntrevista, $idEspecie,$sexo, $comprimento, $peso) {
+	$this->dbTableColetaManualHasBioPeixe = new Application_Model_DbTable_ColetaManualHasBioPeixe();
+	$dadosPesqueiro = array( 'tcml_id' => $idEntrevista, 'esp_id' => $idEspecie, 'tbp_sexo' => $sexo, 'tbp_comprimento' => $comprimento, 'tbp_peso' => $peso );
+	$wherePescador = $this->dbTableColetaManualHasBioPeixe->getAdapter() ->quoteInto('"tcmlbp_id" = ?', $idEntrevistaPeixe);
+	$this->dbTableColetaManualHasBioPeixe->update($dadosPesqueiro, $wherePescador);
+    }
     public function selectPescadoresByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaColetaManual();
         $select = $dbTable->select()->

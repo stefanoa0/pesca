@@ -331,6 +331,22 @@ class MergulhoController extends Zend_Controller_Action
         //$this->redirect("/mergulho/editar/id/" . $backUrl);
     }
     
+    public function updateespeciecapturadaAction() {
+        if ($this->usuario['tp_id'] == 5) {
+        $this->_redirect('index');
+        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $especie = $this->_getParam("selectEspecie");
+        $quantidade = $this->_getParam("quantidade");
+        $peso = $this->_getParam("peso");
+        $preco = $this->_getParam("precokg");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaEspecie = $this->_getParam("id_entrevista_has_especie");
+        $this->modelMergulho->updateEspCapturada($idEntrevistaEspecie,$idEntrevista, $especie, $quantidade, $peso, $preco);
+        $this->redirect("/mergulho/tableespcaptura/id/" . $idEntrevista);
+        }
+    
     public function tableavistamentoAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
         //IMPORTANTE TER!!
         $this->_helper->layout->disableLayout();
@@ -449,6 +465,22 @@ class MergulhoController extends Zend_Controller_Action
 
         $this->redirect("/mergulho/tablebiopeixe/id/" . $idEntrevista);
     }
+    public function updatebiopeixeAction() {
+if($this->usuario['tp_id']==5){
+$this->_redirect('index');
+}
+$this->_helper->layout->disableLayout();
+$this->_helper->viewRenderer->setNoRender(true);
+$idEntrevista = $this->_getParam("id");
+$idEspecie = $this->_getParam("SelectEspecie");
+$sexo = $this->_getParam("SelectSexo");
+$comprimento = $this->_getParam("comprimento");
+$peso = $this->_getParam("peso");
+$idEntrevistaPeixe = $this->_getParam("idEntrevistaPeixe");
+$this->modelMergulho->updateBioPeixe($idEntrevistaPeixe,$idEntrevista, $idEspecie, $sexo, $comprimento, $peso);
+//$this->redirect("/mergulho/editar/id/" . $backUrl);
+$this->redirect("/mergulho/tablebiopeixe/id/" . $idEntrevista);
+}
     public function relatoriolistaAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);

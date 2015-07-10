@@ -42,55 +42,52 @@ class ArrastoFundoController extends Zend_Controller_Action {
 
         $monitoramento = $this->modelMonitoramento->find($this->_getParam("idMonitoramento"));
         $this->naoexiste($monitoramento);
-        
+
         $fichadiaria = $this->modelFichaDiaria->find($this->_getParam('id'));
         $this->naoexiste($fichadiaria);
-        
+
         $this->view->assign('destinos', $destinos);
         $this->view->assign('fichaDiaria', $fichadiaria);
         $this->view->assign('monitoramento', $monitoramento);
         $this->view->assign('pescadores', $pescadores);
         $this->view->assign('barcos', $barcos);
         $this->view->assign('tipoEmbarcacoes', $tipoEmbarcacoes);
-        
+
         $idBarco = $this->_getParam('bar_id');
-        if($idBarco){
-        $this->redirect('arrasto-fundo/pescadores/id/'.$fichadiaria['fd_id'].'/idMonitoramento/'.$monitoramento['fd_id'].'/bar_id/'.$idBarco);
+        if ($idBarco) {
+            $this->redirect('arrasto-fundo/pescadores/id/' . $fichadiaria['fd_id'] . '/idMonitoramento/' . $monitoramento['fd_id'] . '/bar_id/' . $idBarco);
         }
     }
-    
-    public function naoexiste($var){
-        if(empty($var)){
+
+    public function naoexiste($var) {
+        if (empty($var)) {
             $this->redirect('exception/naoexiste');
         }
     }
-    
+
     public function visualizarAction() {
         $ent_id = $this->_getParam("ent_id");
         $ent_pescador = $this->_getParam("tp_nome");
         $ent_barco = $this->_getParam("bar_nome");
         $ent_apelido = $this->_getParam("tp_apelido");
         $ent_all = $this->_getParam("ent_all");
-        
+
         $orderby = $this->_getParam("orderby");
-        if(empty($orderby)){
+        if (empty($orderby)) {
             $orderby = "af_id DESC";
         }
-        
+
         if ($ent_id > 0) {
             $dados = $this->modelArrastoFundo->selectEntrevistaArrasto("af_id =" . $ent_id);
         } elseif ($ent_pescador) {
             $dados = $this->modelArrastoFundo->selectEntrevistaArrasto("tp_nome ~*'" . $ent_pescador . "'", $orderby);
         } elseif ($ent_barco) {
             $dados = $this->modelArrastoFundo->selectEntrevistaArrasto("bar_nome ~* '" . $ent_barco . "'", $orderby);
-       }
-        elseif ($ent_apelido){
-            $dados = $this->modelArrastoFundo->selectEntrevistaArrasto("tp_apelido ~*'".$ent_apelido."'", $orderby);
-        }
-        elseif($ent_all){
+        } elseif ($ent_apelido) {
+            $dados = $this->modelArrastoFundo->selectEntrevistaArrasto("tp_apelido ~*'" . $ent_apelido . "'", $orderby);
+        } elseif ($ent_all) {
             $dados = $this->modelArrastoFundo->selectEntrevistaArrasto(null, array('fd_id DESC', 'tp_nome'));
-        }
-        else {
+        } else {
             $dados = $this->modelArrastoFundo->selectEntrevistaArrasto(null, $orderby, 200);
         }
 
@@ -101,8 +98,8 @@ class ArrastoFundoController extends Zend_Controller_Action {
 
         $entrevista = $this->modelArrastoFundo->find($this->_getParam('id'));
         $this->naoexiste($entrevista);
-        
-        
+
+
         $pescadores = $this->modelPescador->select(null, 'tp_nome');
         $barcos = $this->modelBarcos->select(null, 'bar_nome');
         $tipoEmbarcacoes = $this->modelTipoEmbarcacao->select(null, 'tte_tipoembarcacao');
@@ -112,20 +109,20 @@ class ArrastoFundoController extends Zend_Controller_Action {
         $monitoramento = $this->modelMonitoramento->find($entrevista['mnt_id']);
         $avistamentos = $this->modelAvistamento->select(null, 'avs_descricao');
         $destinos = $this->modelDestinoPescado->select(null, 'dp_destino');
-        $porto = $this->modelArrastoFundo->selectEntrevistaArrasto($entrevista['af_id'].'= af_id');
-        
+        $porto = $this->modelArrastoFundo->selectEntrevistaArrasto($entrevista['af_id'] . '= af_id');
+
         $idEntrevista = $this->_getParam('id');
-        
-        
+
+
         $datahoraSaida[] = explode(" ", $entrevista['af_dhsaida']);
         $datahoraVolta[] = explode(" ", $entrevista['af_dhvolta']);
         $vArrastoFundo = $this->modelArrastoFundo->selectArrastoHasPesqueiro('af_id=' . $idEntrevista);
         $vEspecieCapturadas = $this->modelArrastoFundo->selectArrastoHasEspCapturadas('af_id=' . $idEntrevista);
-        $vArrastoAvistamento = $this->modelArrastoFundo->selectArrastoHasAvistamento('af_id=' . $idEntrevista);           
-        $vBioCamarao = $this->modelArrastoFundo->selectVBioCamarao('taf_id='.$idEntrevista);
-        $vBioPeixe = $this->modelArrastoFundo->selectVBioPeixe('taf_id='.$idEntrevista);
-        $maturidade = $this->modelMaturidade->select(null,'tmat_tipo');
-        
+        $vArrastoAvistamento = $this->modelArrastoFundo->selectArrastoHasAvistamento('af_id=' . $idEntrevista);
+        $vBioCamarao = $this->modelArrastoFundo->selectVBioCamarao('taf_id=' . $idEntrevista);
+        $vBioPeixe = $this->modelArrastoFundo->selectVBioPeixe('taf_id=' . $idEntrevista);
+        $maturidade = $this->modelMaturidade->select(null, 'tmat_tipo');
+
         //print_r($arrayMedias);
         $this->view->assign('vBioCamarao', $vBioCamarao);
         $this->view->assign('vBioPeixe', $vBioPeixe);
@@ -153,77 +150,78 @@ class ArrastoFundoController extends Zend_Controller_Action {
         //print_r(json_encode($arrayMedias));
         //print_r($this->modelArrastoFundo->selectMediaEspecies());
     }
-    
-    public function pescadoresAction(){
-        
+
+    public function pescadoresAction() {
+
         $this->_helper->layout->disableLayout();
         $idBarco = $this->_getParam('bar_id');
 
-        $pescadores = $this->modelArrastoFundo->selectPescadoresByBarco('bar_id = '.$idBarco, 'tp_nome');
-        if(empty($pescadores)){
+        $pescadores = $this->modelArrastoFundo->selectPescadoresByBarco('bar_id = ' . $idBarco, 'tp_nome');
+        if (empty($pescadores)) {
             $pescadores = $this->modelPescador->select(null, 'tp_nome');
         }
-        
+
         //print_r($idBarco);
         $this->view->assign('pescadores', $pescadores);
     }
+
     public function atualizarAction() {
-        if($this->usuario['tp_id']==5){
+        if ($this->usuario['tp_id'] == 5) {
             $this->_redirect('index');
         }
         $idArrasto = $this->_getParam('id_entrevista');
-        
-        $monitoramento = $this->modelMonitoramento->select('mnt_id='.$this->_getParam('id_monitoramento'));
-        
-        
-        if($monitoramento[0]['fd_id'] != $this->_getParam('id_fichaDiaria')){
-            $this->_redirect('arrasto-fundo/error');  
-        }
-        else{
+
+        $monitoramento = $this->modelMonitoramento->select('mnt_id=' . $this->_getParam('id_monitoramento'));
+
+
+        if ($monitoramento[0]['fd_id'] != $this->_getParam('id_fichaDiaria')) {
+            $this->_redirect('arrasto-fundo/error');
+        } else {
             $this->modelArrastoFundo->update($this->_getAllParams());
         }
         $this->_redirect('arrasto-fundo/editar/id/' . $idArrasto);
     }
 
-    public function errorAction(){
+    public function errorAction() {
         
     }
-    
+
     public function criarAction() {
-        if($this->usuario['tp_id']==5){
+        if ($this->usuario['tp_id'] == 5) {
             $this->_redirect('index');
         }
         $idArrasto = $this->modelArrastoFundo->insert($this->_getAllParams());
 
         $this->_redirect('arrasto-fundo/editar/id/' . $idArrasto);
     }
+
     public function excluirAction() {
-        if($this->usuario['tp_id']==5){
+        if ($this->usuario['tp_id'] == 5) {
             $this->_redirect('index');
         }
         $this->modelArrastoFundo->delete($this->_getParam('id'));
 
         $idFicha = $this->_getParam('id_ficha');
-        if(empty($idFicha)){
+        if (empty($idFicha)) {
             $this->_redirect('arrasto-fundo/visualizar');
+        } else {
+            $this->_redirect('ficha-diaria/editar/id/' . $idFicha);
         }
-        else{
-            $this->_redirect('ficha-diaria/editar/id/'.$idFicha);
-        }
-
     }
-    public function tablepesqueiroAction(){//Action para tablepesqueiro
+
+    public function tablepesqueiroAction() {//Action para tablepesqueiro
         //IMPORTANTE TER!!
         $this->_helper->layout->disableLayout();
-        
+
         $idEntrevista = $this->_getParam('id');
         $entrevista = $this->modelArrastoFundo->find($idEntrevista);
         $this->view->assign("entrevista", $entrevista);
         $vArrastoFundo = $this->modelArrastoFundo->selectArrastoHasPesqueiro('af_id=' . $idEntrevista);
         $this->view->assign('vArrastoFundo', $vArrastoFundo);
     }
+
     public function insertpesqueiroAction() {
-        if($this->usuario['tp_id']==5){
+        if ($this->usuario['tp_id'] == 5) {
             $this->_redirect('index');
         }
         $this->_helper->layout->disableLayout();
@@ -235,13 +233,14 @@ class ArrastoFundoController extends Zend_Controller_Action {
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        
+
         $this->modelArrastoFundo->insertPesqueiro($idEntrevista, $pesqueiro, $tempopesqueiro);
 
         $this->redirect("/arrasto-fundo/tablepesqueiro/id/" . $idEntrevista);
     }
+
     public function updatepesqueiroAction() {
-        if($this->usuario['tp_id']==5){
+        if ($this->usuario['tp_id'] == 5) {
             $this->_redirect('index');
         }
         $this->_helper->layout->disableLayout();
@@ -254,13 +253,14 @@ class ArrastoFundoController extends Zend_Controller_Action {
         $idEntrevista = $this->_getParam("id_entrevista");
 
         $idEntrevistaPesqueiro = $this->_getParam("id_entrevista_pesqueiro");
-        
-        $this->modelArrastoFundo->updatePesqueiro($idEntrevistaPesqueiro,$idEntrevista, $pesqueiro, $tempopesqueiro);
+
+        $this->modelArrastoFundo->updatePesqueiro($idEntrevistaPesqueiro, $idEntrevista, $pesqueiro, $tempopesqueiro);
 
         $this->redirect("/arrasto-fundo/tablepesqueiro/id/" . $idEntrevista);
     }
+
     public function deletepesqueiroAction() {
-        if($this->usuario['tp_id']==5){
+        if ($this->usuario['tp_id'] == 5) {
             $this->_redirect('index');
         }
         $this->_helper->layout->disableLayout();
@@ -277,33 +277,35 @@ class ArrastoFundoController extends Zend_Controller_Action {
 
         $this->redirect("/arrasto-fundo/tablepesqueiro/id/" . $idEntrevista);
     }
-    public function tablebiocamaraoAction(){//Action para tablepesqueiro
+
+    public function tablebiocamaraoAction() {//Action para tablepesqueiro
         //IMPORTANTE TER!!
         $this->_helper->layout->disableLayout();
-        
+
         $idEntrevista = $this->_getParam('id');
         $entrevista = $this->modelArrastoFundo->find($idEntrevista);
         $this->view->assign("entrevista", $entrevista);
-        $vBioCamarao = $this->modelArrastoFundo->selectVBioCamarao('taf_id='.$idEntrevista);
+        $vBioCamarao = $this->modelArrastoFundo->selectVBioCamarao('taf_id=' . $idEntrevista);
         $this->view->assign('vBioCamarao', $vBioCamarao);
     }
+
     public function insertbiocamaraoAction() {
-        if($this->usuario['tp_id']==5){
+        if ($this->usuario['tp_id'] == 5) {
             $this->_redirect('index');
         }
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
-        
+
         $idEntrevista = $this->_getParam("id");
-        
-        $idEspecie  = $this->_getParam("SelectEspecie");
-        
+
+        $idEspecie = $this->_getParam("SelectEspecie");
+
         $sexo = $this->_getParam("SelectSexo");
 
         $maturidade = $this->_getParam("SelectMaturidade");
 
         $compCabeca = $this->_getParam("comprimentoCabeca");
-        
+
         $peso = $this->_getParam("peso");
 
         //$backUrl = $this->_getParam("back_url");
@@ -314,8 +316,9 @@ class ArrastoFundoController extends Zend_Controller_Action {
 
         $this->redirect("/arrasto-fundo/tablebiocamarao/id/" . $idEntrevista);
     }
+
     public function deletebiocamaraoAction() {
-        if($this->usuario['tp_id']==5){
+        if ($this->usuario['tp_id'] == 5) {
             $this->_redirect('index');
         }
         $this->_helper->layout->disableLayout();
@@ -331,33 +334,34 @@ class ArrastoFundoController extends Zend_Controller_Action {
         $this->redirect("/arrasto-fundo/tablebiocamarao/id/" . $idEntrevista);
         //$this->redirect("/arrasto-fundo/editar/id/" . $backUrl);
     }
-    
-    public function tablebiopeixeAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+
+    public function tablebiopeixeAction() { //ACTION PARA REDIRECIONAR SEM LAYOUT
         //IMPORTANTE TER!!
         $this->_helper->layout->disableLayout();
-        
+
         $idEntrevista = $this->_getParam('id');
         $entrevista = $this->modelArrastoFundo->find($idEntrevista);
         $this->view->assign("entrevista", $entrevista);
-        $vBioPeixe = $this->modelArrastoFundo->selectVBioPeixe('taf_id='.$idEntrevista);
+        $vBioPeixe = $this->modelArrastoFundo->selectVBioPeixe('taf_id=' . $idEntrevista);
 
         $this->view->assign('vBioPeixe', $vBioPeixe);
-    }    
+    }
+
     public function insertbiopeixeAction() {
-        if($this->usuario['tp_id']==5){
+        if ($this->usuario['tp_id'] == 5) {
             $this->_redirect('index');
         }
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
-        
+
         $idEntrevista = $this->_getParam("id");
-        
-        $idEspecie  = $this->_getParam("SelectEspecie");
-        
+
+        $idEspecie = $this->_getParam("SelectEspecie");
+
         $sexo = $this->_getParam("SelectSexo");
 
         $comprimento = $this->_getParam("comprimento");
-        
+
         $peso = $this->_getParam("peso");
 
         //$backUrl = $this->_getParam("back_url");
@@ -367,8 +371,9 @@ class ArrastoFundoController extends Zend_Controller_Action {
         //$this->redirect("/arrasto-fundo/editar/id/" . $backUrl);
         $this->redirect("/arrasto-fundo/tablebiopeixe/id/" . $idEntrevista);
     }
+
     public function deletebiopeixeAction() {
-        if($this->usuario['tp_id']==5){
+        if ($this->usuario['tp_id'] == 5) {
             $this->_redirect('index');
         }
         $this->_helper->layout->disableLayout();
@@ -384,44 +389,63 @@ class ArrastoFundoController extends Zend_Controller_Action {
         $this->redirect("/arrasto-fundo/tablebiopeixe/id/" . $idEntrevista);
         //$this->redirect("/arrasto-fundo/editar/id/" . $backUrl);
     }
-    
-    public function tableespcapturaAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+
+    public function updatebiopeixeAction() {
+        if ($this->usuario['tp_id'] == 5) {
+            $this->_redirect('index');
+        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $idEntrevista = $this->_getParam("id");
+        $idEspecie = $this->_getParam("SelectEspecie");
+        $sexo = $this->_getParam("SelectSexo");
+        $comprimento = $this->_getParam("comprimento");
+        $peso = $this->_getParam("peso");
+        $idEntrevistaPeixe = $this->_getParam("idEntrevistaPeixe");
+        $this->modelArrastoFundo->updateBioPeixe($idEntrevistaPeixe, $idEntrevista, $idEspecie, $sexo, $comprimento, $peso);
+//$this->redirect("/arrasto-fundo/editar/id/" . $backUrl);
+        $this->redirect("/arrasto-fundo/tablebiopeixe/id/" . $idEntrevista);
+    }
+
+    public function tableespcapturaAction() { //ACTION PARA REDIRECIONAR SEM LAYOUT
         //IMPORTANTE TER!!
         $this->_helper->layout->disableLayout();
-        
-        
+
+
         $idEntrevista = $this->_getParam('id');
         $entrevista = $this->modelArrastoFundo->find($idEntrevista);
         $this->view->assign("entrevista", $entrevista);
         $vEspecieCapturadas = $this->modelArrastoFundo->selectArrastoHasEspCapturadas('af_id=' . $idEntrevista);
-    
+
         $this->view->assign('vEspecieCapturadas', $vEspecieCapturadas);
     }
-    
-    public function mediaespeciesAction(){
+
+    public function mediaespeciesAction() {
         $this->_helper->layout->disableLayout();
         $especie = $this->_getParam("esp_id");
 
         //$arrayMedias = $this->modelArrastoFundo->selectMediaEspecies();
-        $arrayMedia = $this->modelArrastoFundo->selectMediaEspecies('esp_id = '.$especie);
-        if(empty($arrayMedia[0]['max_permitido_peso'])){
+        $arrayMedia = $this->modelArrastoFundo->selectMediaEspecies('esp_id = ' . $especie);
+        if (empty($arrayMedia[0]['max_permitido_peso'])) {
             $arrayMedia[0]['max_permitido_peso'] = -1;
         }
         $this->view->assign("media", intval($arrayMedia[0]['max_permitido_peso']));
     }
-    public function verificaespecieAction(){
-         if($this->usuario['tp_id']==5){
+
+    public function verificaespecieAction() {
+        if ($this->usuario['tp_id'] == 5) {
             $this->_redirect('index');
         }
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
         $especie = $this->_getParam("selectEspecie");
-        
+
         $this->redirect("/arrasto-fundo/mediaespecies/esp_id/" . $especie);
     }
+
     public function insertespeciecapturadaAction() {
-        if($this->usuario['tp_id']==5){
+        if ($this->usuario['tp_id'] == 5) {
             $this->_redirect('index');
         }
         $this->_helper->layout->disableLayout();
@@ -436,20 +460,22 @@ class ArrastoFundoController extends Zend_Controller_Action {
         $preco = $this->_getParam("precokg");
 
         $idEntrevista = $this->_getParam("id_entrevista");
-        
+
         $this->modelArrastoFundo->insertEspCapturada($idEntrevista, $especie, $quantidade, $peso, $preco);
-        
+
         $this->redirect("/arrasto-fundo/tableespcaptura/id/" . $idEntrevista);
     }
-    public function resetfieldespeciecapturadaAction(){
+
+    public function resetfieldespeciecapturadaAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
-        
+
         $idEntrevista = $this->_getParam("id_entrevista");
         $this->redirect("/arrasto-fundo/tableespcaptura/id/" . $idEntrevista);
     }
+
     public function deletespecieAction() {
-        if($this->usuario['tp_id']==5){
+        if ($this->usuario['tp_id'] == 5) {
             $this->_redirect('index');
         }
         $this->_helper->layout->disableLayout();
@@ -465,20 +491,37 @@ class ArrastoFundoController extends Zend_Controller_Action {
         $this->redirect("/arrasto-fundo/tableespcaptura/id/" . $idEntrevista);
         //$this->redirect("/arrasto-fundo/editar/id/" . $backUrl);
     }
-
-    public function tableavistamentoAction(){ //ACTION PARA REDIRECIONAR SEM LAYOUT
+    
+    public function updateespeciecapturadaAction() {
+        if ($this->usuario['tp_id'] == 5) {
+            $this->_redirect('index');
+        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $especie = $this->_getParam("selectEspecie");
+        $quantidade = $this->_getParam("quantidade");
+        $peso = $this->_getParam("peso");
+        $preco = $this->_getParam("precokg");
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaEspecie = $this->_getParam("id_entrevista_has_especie");
+        $this->modelArrastoFundo->updateEspCapturada($idEntrevistaEspecie,$idEntrevista, $especie, $quantidade, $peso, $preco);
+        $this->redirect("/arrasto-fundo/tableespcaptura/id/" . $idEntrevista);
+     }
+    
+    public function tableavistamentoAction() { //ACTION PARA REDIRECIONAR SEM LAYOUT
         //IMPORTANTE TER!!
         $this->_helper->layout->disableLayout();
-        
+
         $idEntrevista = $this->_getParam('id');
         $entrevista = $this->modelArrastoFundo->find($idEntrevista);
         $this->view->assign("entrevista", $entrevista);
-        $vArrastoAvistamento = $this->modelArrastoFundo->selectArrastoHasAvistamento('af_id=' . $idEntrevista);   
+        $vArrastoAvistamento = $this->modelArrastoFundo->selectArrastoHasAvistamento('af_id=' . $idEntrevista);
 
         $this->view->assign('vArrastoAvistamento', $vArrastoAvistamento);
-    }    
+    }
+
     public function insertavistamentoAction() {
-        if($this->usuario['tp_id']==5){
+        if ($this->usuario['tp_id'] == 5) {
             $this->_redirect('index');
         }
         $this->_helper->layout->disableLayout();
@@ -496,7 +539,7 @@ class ArrastoFundoController extends Zend_Controller_Action {
     }
 
     public function deleteavistamentoAction() {
-        if($this->usuario['tp_id']==5){
+        if ($this->usuario['tp_id'] == 5) {
             $this->_redirect('index');
         }
         $this->_helper->layout->disableLayout();
@@ -512,11 +555,9 @@ class ArrastoFundoController extends Zend_Controller_Action {
         $this->redirect("/arrasto-fundo/tableavistamento/id/" . $idEntrevista);
         //$this->redirect("/arrasto-fundo/editar/id/" . $backUrl);
     }
-    
-    
 
     public function relatoriolistaAction() {
-        if($this->usuario['tp_id']==5){
+        if ($this->usuario['tp_id'] == 5) {
             $this->_redirect('index');
         }
         $this->_helper->layout->disableLayout();
@@ -552,7 +593,7 @@ class ArrastoFundoController extends Zend_Controller_Action {
     }
 
     public function relatorioAction() {
-        if($this->usuario['tp_id']==5){
+        if ($this->usuario['tp_id'] == 5) {
             $this->_redirect('index');
         }
         $this->_helper->layout->disableLayout();
@@ -579,31 +620,31 @@ class ArrastoFundoController extends Zend_Controller_Action {
             $modeloRelatorio->setNewLine();
 
             foreach ($localPesqueiro as $key => $localDataPesqueiro) {
-				if ( $localDataPesqueiro['af_id'] ==  $localData['af_id'] ) {
-					$modeloRelatorio->setLegValue(80, 'Pesqueiro: ', $localDataPesqueiro['paf_pesqueiro']);
-					if ($localDataPesqueiro['t_tempopesqueiro'] !== NULL) {
-						$modeloRelatorio->setLegValueAlinhadoDireita(350, 90, 'Tempo (H:M):', date_format(date_create($localDataPesqueiro['t_tempopesqueiro']), 'H:i'));
-					} else {
-						$modeloRelatorio->setLegValueAlinhadoDireita(350, 90, 'Tempo (H:M):', "00:00");
-					}
-					$modeloRelatorio->setLegValueAlinhadoDireita(450, 120, 'Distância:', number_format($localDataPesqueiro['t_distapesqueiro'], 2, ',', ' '));
-					$modeloRelatorio->setNewLine();
-				}
+                if ($localDataPesqueiro['af_id'] == $localData['af_id']) {
+                    $modeloRelatorio->setLegValue(80, 'Pesqueiro: ', $localDataPesqueiro['paf_pesqueiro']);
+                    if ($localDataPesqueiro['t_tempopesqueiro'] !== NULL) {
+                        $modeloRelatorio->setLegValueAlinhadoDireita(350, 90, 'Tempo (H:M):', date_format(date_create($localDataPesqueiro['t_tempopesqueiro']), 'H:i'));
+                    } else {
+                        $modeloRelatorio->setLegValueAlinhadoDireita(350, 90, 'Tempo (H:M):', "00:00");
+                    }
+                    $modeloRelatorio->setLegValueAlinhadoDireita(450, 120, 'Distância:', number_format($localDataPesqueiro['t_distapesqueiro'], 2, ',', ' '));
+                    $modeloRelatorio->setNewLine();
+                }
             }
             foreach ($localEspecie as $key => $localDataEspecie) {
-				if ( $localDataEspecie['af_id'] ==  $localData['af_id'] ) {
-					$modeloRelatorio->setLegValue(80, 'Espécie: ', $localDataEspecie['esp_nome_comum']);
-					$modeloRelatorio->setLegValueAlinhadoDireita(280, 60, 'Quant:', $localDataEspecie['spc_quantidade']);
-					$modeloRelatorio->setLegValueAlinhadoDireita(350, 90, 'Peso(kg):', number_format($localDataEspecie['spc_peso_kg'], 2, ',', ' '));
-					$modeloRelatorio->setLegValueAlinhadoDireita(450, 120, 'Preço(R$/kg):', number_format($localDataEspecie['spc_preco'], 2, ',', ' '));
-					$modeloRelatorio->setNewLine();
-				}
+                if ($localDataEspecie['af_id'] == $localData['af_id']) {
+                    $modeloRelatorio->setLegValue(80, 'Espécie: ', $localDataEspecie['esp_nome_comum']);
+                    $modeloRelatorio->setLegValueAlinhadoDireita(280, 60, 'Quant:', $localDataEspecie['spc_quantidade']);
+                    $modeloRelatorio->setLegValueAlinhadoDireita(350, 90, 'Peso(kg):', number_format($localDataEspecie['spc_peso_kg'], 2, ',', ' '));
+                    $modeloRelatorio->setLegValueAlinhadoDireita(450, 120, 'Preço(R$/kg):', number_format($localDataEspecie['spc_preco'], 2, ',', ' '));
+                    $modeloRelatorio->setNewLine();
+                }
             }
             foreach ($localAvist as $key => $localDataAvist) {
-				if ( $localDataAvist['af_id'] ==  $localData['af_id'] ) {
-					$modeloRelatorio->setLegValue(80, 'Avist.: ', $localDataAvist['avs_descricao']);
-					$modeloRelatorio->setNewLine();
-				}
+                if ($localDataAvist['af_id'] == $localData['af_id']) {
+                    $modeloRelatorio->setLegValue(80, 'Avist.: ', $localDataAvist['avs_descricao']);
+                    $modeloRelatorio->setNewLine();
+                }
             }
         }
         $modeloRelatorio->setNewLine();
@@ -616,7 +657,7 @@ class ArrastoFundoController extends Zend_Controller_Action {
     }
 
     public function relatoriogroupespeciecapturadaAction() {
-        if($this->usuario['tp_id']==5){
+        if ($this->usuario['tp_id'] == 5) {
             $this->_redirect('index');
         }
         $this->_helper->layout->disableLayout();
@@ -637,7 +678,7 @@ class ArrastoFundoController extends Zend_Controller_Action {
         $tmpQuant = 0;
         foreach ($localArrastoFundo as $key => $localData) {
             $modeloRelatorio->setValueAlinhadoDireita(30, 40, $localData['count']);
-            $tmpQuant = $tmpQuant +  $localData['count'];
+            $tmpQuant = $tmpQuant + $localData['count'];
             $modeloRelatorio->setValue(80, $localData['esp_nome_comum']);
             $modeloRelatorio->setValueAlinhadoDireita(200, 40, $localData['max_quant']);
             $modeloRelatorio->setValueAlinhadoDireita(240, 40, number_format($localData['avg_quant'], 2, ',', ' '));
@@ -681,7 +722,7 @@ class ArrastoFundoController extends Zend_Controller_Action {
         $tmpQuant = 0;
         foreach ($localArrastoFundo as $key => $localData) {
             $modeloRelatorio->setValueAlinhadoDireita(30, 40, $localData['count']);
-            $tmpQuant = $tmpQuant +  $localData['count'];
+            $tmpQuant = $tmpQuant + $localData['count'];
             $modeloRelatorio->setValue(80, $localData['paf_pesqueiro']);
             $modeloRelatorio->setValueAlinhadoDireita(250, 50, date_format(date_create($localData['max_tempo']), 'H:i'));
             $modeloRelatorio->setValueAlinhadoDireita(300, 50, date_format(date_create($localData['avg_tempo']), 'H:i'));
@@ -699,6 +740,5 @@ class ArrastoFundoController extends Zend_Controller_Action {
         header("Content-type: application/pdf");
         echo $pdf->render();
     }
-    
 
 }

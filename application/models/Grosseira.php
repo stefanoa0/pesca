@@ -239,6 +239,24 @@ private $dbTableGrosseira;
         $this->dbTableTGrosseiraHasPesqueiro->delete($whereGrosseiraHasPesqueiro);
         
     }
+    public function updatePesqueiro($idEntrevistaPesqueiro,$idEntrevista,$pesqueiro, $tempoapesqueiro)
+    {
+        $this->dbTableTGrosseiraHasPesqueiro = new Application_Model_DbTable_GrosseiraHasPesqueiro();
+
+        if(empty($tempoapesqueiro)){  $tempoapesqueiro = null;}
+        $dadosPesqueiro = array(
+            'grs_id' => $idEntrevista,
+            'paf_id' => $pesqueiro,
+            't_tempoapesqueiro' => $tempoapesqueiro
+        );
+
+        $wherePescador = $this->dbTableTGrosseiraHasPesqueiro->getAdapter()
+                ->quoteInto('"grs_paf_id" = ?', $idEntrevistaPesqueiro);
+
+
+        $this->dbTableTGrosseiraHasPesqueiro->update($dadosPesqueiro, $wherePescador);
+    }
+    
     public function selectGrosseiraHasEspCapturadas($where = null, $order = null, $limit = null){
         $this->dbTableGrosseiraHasEspCapturada = new Application_Model_DbTable_VGrosseiraHasEspecieCapturada();
         
@@ -288,6 +306,37 @@ private $dbTableGrosseira;
         
         $this->dbTableTGrosseiraHasEspCapturada->delete($whereGrosseiraHasEspCapturada);
     }
+    public function updateEspCapturada($idEntrevistaEspecie,$idEntrevista, $especie, $quantidade, $peso, $precokg)
+    {
+        $this->dbTableTGrosseiraHasEspCapturada = new Application_Model_DbTable_GrosseiraHasEspecieCapturada();
+
+        if(empty($quantidade) && empty($peso)){
+            $quantidade = 'Erro';
+        }
+        if(empty($quantidade)){
+            $quantidade = NULL;
+        }
+        if(empty($peso)){
+            $peso = NULL;
+        }
+        if(empty($precokg)){
+            $precokg = NULL;
+        }
+        $dadosEspecie = array(
+            'grs_id' => $idEntrevista,
+            'esp_id' => $especie,
+            'spc_quantidade' => $quantidade,
+            'spc_peso_kg' => $peso,
+            'spc_preco' => $precokg
+        );
+
+        $wherePescador = $this->dbTableTGrosseiraHasEspCapturada->getAdapter()
+                ->quoteInto('"spc_grs_id" = ?', $idEntrevistaEspecie);
+
+
+        $this->dbTableTGrosseiraHasEspCapturada->update($dadosEspecie, $wherePescador);
+    }
+    
     public function selectEntrevistaGrosseira($where = null, $order = null, $limit = null)
     {
         $this->dbTableGrosseira = new Application_Model_DbTable_VEntrevistaGrosseira();
@@ -414,7 +463,12 @@ private $dbTableGrosseira;
         $this->dbTableTGrosseiraHasBioPeixe->delete($whereGrosseiraHasBiometria);
         
     }
-    
+    public function updateBioPeixe($idEntrevistaPeixe, $idEntrevista, $idEspecie,$sexo, $comprimento, $peso) {
+	$this->dbTableGrosseiraHasBioPeixe = new Application_Model_DbTable_GrosseiraHasBioPeixe();
+	$dadosPesqueiro = array( 'tgrs_id' => $idEntrevista, 'esp_id' => $idEspecie, 'tbp_sexo' => $sexo, 'tbp_comprimento' => $comprimento, 'tbp_peso' => $peso );
+	$wherePescador = $this->dbTableGrosseiraHasBioPeixe->getAdapter() ->quoteInto('"tgrsbp_id" = ?', $idEntrevistaPeixe);
+	$this->dbTableGrosseiraHasBioPeixe->update($dadosPesqueiro, $wherePescador);
+    }
     public function selectPescadoresByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaGrosseira();
         $select = $dbTable->select()->

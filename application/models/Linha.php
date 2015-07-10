@@ -238,6 +238,23 @@ private $dbTableLinha;
         $this->dbTableTLinhaHasPesqueiro->delete($whereLinhaHasPesqueiro);
         
     }
+     public function updatePesqueiro($idEntrevistaPesqueiro,$idEntrevista,$pesqueiro, $tempoapesqueiro)
+    {
+        $this->dbTableTLinhaHasPesqueiro = new Application_Model_DbTable_LinhaHasPesqueiro();
+
+        if(empty($tempoapesqueiro)){  $tempoapesqueiro = null;}
+        $dadosPesqueiro = array(
+            'lin_id' => $idEntrevista,
+            'paf_id' => $pesqueiro,
+            't_tempoapesqueiro' => $tempoapesqueiro
+        );
+
+        $wherePescador = $this->dbTableTLinhaHasPesqueiro->getAdapter()
+                ->quoteInto('"jre_paf_id" = ?', $idEntrevistaPesqueiro);
+
+        $this->dbTableTLinhaHasPesqueiro->update($dadosPesqueiro, $wherePescador);
+    }
+    
     public function selectLinhaHasEspCapturadas($where = null, $order = null, $limit = null){
         $this->dbTableLinhaHasEspCapturada = new Application_Model_DbTable_VLinhaHasEspecieCapturada();
         
@@ -286,6 +303,38 @@ private $dbTableLinha;
         
         $this->dbTableTLinhaHasEspCapturada->delete($whereLinhaHasEspCapturada);
     }
+    
+    public function updateEspCapturada($idEntrevistaEspecie,$idEntrevista, $especie, $quantidade, $peso, $precokg)
+    {
+        $this->dbTableTLinhaHasEspCapturada = new Application_Model_DbTable_LinhaHasEspecieCapturada();
+
+        if(empty($quantidade) && empty($peso)){
+            $quantidade = 'Erro';
+        }
+        if(empty($quantidade)){
+            $quantidade = NULL;
+        }
+        if(empty($peso)){
+            $peso = NULL;
+        }
+        if(empty($precokg)){
+            $precokg = NULL;
+        }
+        $dadosEspecie = array(
+            'lin_id' => $idEntrevista,
+            'esp_id' => $especie,
+            'spc_quantidade' => $quantidade,
+            'spc_peso_kg' => $peso,
+            'spc_preco' => $precokg
+        );
+
+        $wherePescador = $this->dbTableTLinhaHasEspCapturada->getAdapter()
+                ->quoteInto('"spc_lin_id" = ?', $idEntrevistaEspecie);
+
+
+        $this->dbTableTLinhaHasEspCapturada->update($dadosEspecie, $wherePescador);
+    }
+    
     public function selectEntrevistaLinha($where = null, $order = null, $limit = null)
     {
         $this->dbTableLinha = new Application_Model_DbTable_VEntrevistaLinha();
@@ -412,7 +461,12 @@ private $dbTableLinha;
         $this->dbTableTLinhaHasBioPeixe->delete($whereLinhaHasBiometria);
         
     }
-    
+    public function updateBioPeixe($idEntrevistaPeixe, $idEntrevista, $idEspecie,$sexo, $comprimento, $peso) {
+	$this->dbTableLinhaHasBioPeixe = new Application_Model_DbTable_LinhaHasBioPeixe();
+	$dadosPesqueiro = array( 'tlin_id' => $idEntrevista, 'esp_id' => $idEspecie, 'tbp_sexo' => $sexo, 'tbp_comprimento' => $comprimento, 'tbp_peso' => $peso );
+	$wherePescador = $this->dbTableLinhaHasBioPeixe->getAdapter() ->quoteInto('"tlinbp_id" = ?', $idEntrevistaPeixe);
+	$this->dbTableLinhaHasBioPeixe->update($dadosPesqueiro, $wherePescador);
+    }
     public function selectPescadoresByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaLinha();
         $select = $dbTable->select()->
