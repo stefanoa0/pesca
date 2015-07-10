@@ -199,7 +199,7 @@ class BarcosController extends Zend_Controller_Action
         $outratividade = $this->modelTipoRenda->select(null, 'ttr_descricao');
         $this->view->assign("assignOutraAtividade", $outratividade);
               
-        $usuarios = $this->modelUsuarios->select(null, 'tu_nome');
+        $usuarios = $this->modelUsuario->select(null, 'tu_nome');
         $this->view->assign("assignUsuarios", $usuarios);
         }
         
@@ -322,8 +322,8 @@ class BarcosController extends Zend_Controller_Action
         $outratividade = $this->modelTipoRenda->select(null, 'ttr_descricao');
         $this->view->assign("assignOutraAtividade", $outratividade);
         
-        $this->modelUsuarios = new Application_Model_Usuario();
-        $usuarios = $this->modelUsuarios->select(null, 'tu_nome');
+        $this->modelUsuario = new Application_Model_Usuario();
+        $usuarios = $this->modelUsuario->select(null, 'tu_nome');
         $this->view->assign("assignUsuarios", $usuarios);
         
         $this->modelFornecedor = new Application_Model_FornecedorInsumos();
