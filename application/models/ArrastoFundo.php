@@ -206,7 +206,23 @@ class Application_Model_ArrastoFundo
         $this->dbTableTArrastoHasPesqueiro->insert($dadosPesqueiro);
         return;
     }
+    public function updatePesqueiro($idEntrevistaPesqueiro,$idEntrevista,$pesqueiro, $tempopesqueiro)
+    {
+        $this->dbTableTArrastoHasPesqueiro = new Application_Model_DbTable_ArrastoHasPesqueiro();
 
+        if(empty($tempopesqueiro)){  $tempopesqueiro = null;}
+        $dadosPesqueiro = array(
+            'af_id' => $idEntrevista,
+            'paf_id' => $pesqueiro,
+            't_tempopesqueiro' => $tempopesqueiro
+        );
+
+        $wherePescador = $this->dbTableArrastoFundo->getAdapter()
+                ->quoteInto('"af_paf_id" = ?', $idEntrevistaPesqueiro);
+
+
+        $this->dbTableArrastoFundo->update($dadosPesqueiro, $wherePescador);
+    }
     
     
     public function deletePesqueiro($idPesqueiro){
@@ -230,6 +246,8 @@ class Application_Model_ArrastoFundo
 
         return $this->dbTableArrastoHasEspCapturada->fetchAll($select)->toArray();
     }
+    
+    
     public function insertEspCapturada($idEntrevista, $especie, $quantidade, $peso, $precokg)
     {
         $this->dbTableTArrastoHasEspCapturada = new Application_Model_DbTable_ArrastoHasEspecieCapturada();

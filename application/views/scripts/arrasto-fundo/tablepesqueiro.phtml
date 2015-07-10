@@ -15,12 +15,20 @@
                             <td name="inputPesqueiro" > <?= $vArrastoFundo['paf_pesqueiro'] ?> </td>
                             <td name="inputTempoaPesqueiro"> <?= $vArrastoFundo['t_tempopesqueiro'] ?> </td>
                             <td class="td-botao">
+                                <a name="Editar" class="button-del" onclick="ajax_update_entrevista_has(<?= $vArrastoFundo['af_id'] ?>, '<?= $this->url(array("controller" => "arrasto-fundo", "action" => "updatepesqueiro"), null, true) ?>', <?= $vArrastoFundo['af_paf_id'] ?>, 'pesqueiro')">
+                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                        <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                                    </ul>
+                                </a> 
+                            </td>
+                            <td class="td-botao">
                                 <a name="Excluir" class="button-del" onclick="ajax_delete_entrevista_has(<?= $vArrastoFundo['af_id'] ?>, '<?= $this->url(array("controller" => "arrasto-fundo", "action" => "deletepesqueiro"), null, true) ?>', <?= $vArrastoFundo['af_paf_id'] ?>, 'pesqueiro')">
                                     <ul id="icons" class="ui-widget ui-helper-clearfix">
                                         <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>
                                     </ul>
                                 </a> 
                             </td>
+                            
                         </tr>
                     <?php endforeach; ?>
                 </table>

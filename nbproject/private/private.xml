@@ -3,29 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/coleta-manual/visualizar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/public/js/funcoesJquery.js</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/linha-fundo/visualizar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/models/Pescador.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/entrevista-pescador/index.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/vara-pesca/visualizar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/grosseira/visualizar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/linha/visualizar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/pescador/relatorio.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/jerere/visualizar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/relatorios/index.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/emalhe/visualizar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/siripoia/visualizar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/mergulho/visualizar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/manzua/visualizar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/arrasto-fundo/visualizar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/EntrevistaPescadorController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/calao/visualizar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/ratoeira/visualizar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/BarcosController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/PortoController.php</file>
             <file>file:/C:/wamp/www/pesca/application/controllers/PescadorController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/RelatoriosController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/tarrafa/visualizar.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/EstatisticaController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/ArrastoFundo.php</file>
         </group>
     </open-files>
 </project-private>

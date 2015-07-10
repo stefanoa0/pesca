@@ -240,6 +240,25 @@ class ArrastoFundoController extends Zend_Controller_Action {
 
         $this->redirect("/arrasto-fundo/tablepesqueiro/id/" . $idEntrevista);
     }
+    public function updatepesqueiroAction() {
+        if($this->usuario['tp_id']==5){
+            $this->_redirect('index');
+        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $pesqueiro = $this->_getParam("nomePesqueiro");
+
+        $tempopesqueiro = $this->_getParam("tempoPesqueiro");
+
+        $idEntrevista = $this->_getParam("id_entrevista");
+
+        $idEntrevistaPesqueiro = $this->_getParam("id_entrevista_pesqueiro");
+        
+        $this->modelArrastoFundo->updatePesqueiro($idEntrevistaPesqueiro,$idEntrevista, $pesqueiro, $tempopesqueiro);
+
+        $this->redirect("/arrasto-fundo/tablepesqueiro/id/" . $idEntrevista);
+    }
     public function deletepesqueiroAction() {
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');

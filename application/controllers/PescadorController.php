@@ -40,6 +40,21 @@ class PescadorController extends Zend_Controller_Action {
         $this->modelPescador = new Application_Model_Pescador();
         $this->modelPescadorEspecialista = new Application_Model_PescadorEspecialista();
         
+        //Entrevistas
+        $this->modelArrasto = new Application_Model_ArrastoFundo();
+        $this->modelCalao= new Application_Model_Calao();
+        $this->modelColetaManual= new Application_Model_ColetaManual();
+        $this->modelEmalhe= new Application_Model_Emalhe();
+        $this->modelGrosseira= new Application_Model_Grosseira();
+        $this->modelJerere= new Application_Model_Jerere();
+        $this->modelLinha= new Application_Model_Linha();
+        $this->modelLinhaFundo= new Application_Model_LinhaFundo();
+        $this->modelManzua= new Application_Model_Manzua();
+        $this->modelMergulho= new Application_Model_Mergulho();
+        $this->modelRatoeira= new Application_Model_Ratoeira();
+        $this->modelSiripoia= new Application_Model_Siripoia();
+        $this->modelTarrafa= new Application_Model_Tarrafa();
+        $this->modelVaraPesca =  new Application_Model_VaraPesca();
     }
 
     public function indexAction() {
@@ -109,9 +124,42 @@ class PescadorController extends Zend_Controller_Action {
     }
 
     public function relatorioAction() {
-
+        $this->countMonitoramentosByPescador('1808');
     }
     
+    public function countMonitoramentosByPescador($idPescador){
+        $pescadoresArrastoFundo = $this->modelArrasto->select('tp_id_entrevistado = '.$idPescador);
+        $pescadoresCalao = $this->modelCalao->select('tp_id_entrevistado = '.$idPescador);
+        $pescadoresColetaManual = $this->modelColetaManual->select('tp_id_entrevistado = '.$idPescador);
+        $pescadoresEmalhe = $this->modelEmalhe->select('tp_id_entrevistado = '.$idPescador);
+        $pescadoresGrosseira = $this->modelGrosseira->select('tp_id_entrevistado = '.$idPescador);
+        $pescadoresJerere = $this->modelJerere->select('tp_id_entrevistado = '.$idPescador);
+        $pescadoresLinha = $this->modelLinha->select('tp_id_entrevistado = '.$idPescador);
+        $pescadoresLinhaFundo = $this->modelLinhaFundo->select('tp_id_entrevistado = '.$idPescador);
+        $pescadoresManzua = $this->modelManzua->select('tp_id_entrevistado = '.$idPescador);
+        $pescadoresMergulho = $this->modelMergulho->select('tp_id_entrevistado = '.$idPescador);
+        $pescadoresRatoeira = $this->modelRatoeira->select('tp_id_entrevistado = '.$idPescador);
+        $pescadoresSiripoia = $this->modelSiripoia->select('tp_id_entrevistado = '.$idPescador);
+        $pescadoresTarrafa = $this->modelTarrafa->select('tp_id_entrevistado = '.$idPescador);
+        $pescadoresVaraPesca = $this->modelVaraPesca->select('tp_id_entrevistado = '.$idPescador);
+        
+        
+        print_r(count($pescadoresArrastoFundo));
+        print_r(count($pescadoresCalao));
+        print_r(count($pescadoresColetaManual));
+        print_r(count($pescadoresEmalhe));
+        print_r(count($pescadoresGrosseira));
+        print_r(count($pescadoresJerere));
+        print_r(count($pescadoresLinha));
+        print_r(count($pescadoresLinhaFundo));
+        print_r(count($pescadoresLinhaFundo));
+        print_r(count($pescadoresManzua));
+        print_r(count($pescadoresMergulho));
+        print_r(count($pescadoresRatoeira));
+        print_r(count($pescadoresSiripoia));
+        print_r(count($pescadoresTarrafa));
+        print_r(count($pescadoresVaraPesca));
+    }
     public function toerror($var){
         if(empty($var)){
             $this->redirect('exception/error');
