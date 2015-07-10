@@ -1578,38 +1578,38 @@ function ajax_select_quantidade_permitido(form,url, id_entrevista, tipo_entrevis
                 }
 }
 function ajax_select_peso_permitido(form,url, id_entrevista, tipo_entrevista, url_media){
-                //var peso = form.peso.value;
-                var especie = form.selectEspecie.value;
-                var peso = form.peso.value;
-                var quant = form.quantidade.value;
-                
-                var hr = new XMLHttpRequest();
-                hr.open("POST", url_media, true);
-                if(especie === ""){
-                    alert("Selecione uma espécie!");
-                }
-                else if(quant === "" && peso === ""){
-                    alert("A Quantidade e o Peso não podem ser vazios, por favor insira um deles!");
-                }
-                else{
-                    var vars = "selectEspecie="+especie;
-                    // Set content type header information for sending url encoded variables in the request
-                    hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                    // Access the onreadystatechange event for the XMLHttpRequest object
+    //var peso = form.peso.value;
+    var especie = form.selectEspecie.value;
+    var peso = form.peso.value;
+    var quant = form.quantidade.value;
 
-                    hr.onreadystatechange = function() {
-                            if(hr.readyState === 4 && hr.status === 200) {
-                                var return_data = hr.responseText;
-                                document.getElementById("mediaespecie").innerHTML = return_data;
-                            }
-                    };
-                    //alert(vars);
-                    hr.send(vars);
-                        // Send the data to PHP now... and wait for response to update the status div
-                     // Actually execute the request
-                    //document.getElementById("especie").innerHTML = "processando...";
-                    compara_pesos(form, url, id_entrevista,tipo_entrevista);
+    var hr = new XMLHttpRequest();
+    hr.open("POST", url_media, true);
+    if(especie === ""){
+        alert("Selecione uma espécie!");
+    }
+    else if(quant === "" && peso === ""){
+        alert("A Quantidade e o Peso não podem ser vazios, por favor insira um deles!");
+    }
+    else{
+        var vars = "selectEspecie="+especie;
+        // Set content type header information for sending url encoded variables in the request
+        hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        // Access the onreadystatechange event for the XMLHttpRequest object
+
+        hr.onreadystatechange = function() {
+                if(hr.readyState === 4 && hr.status === 200) {
+                    var return_data = hr.responseText;
+                    document.getElementById("mediaespecie").innerHTML = return_data;
                 }
+        };
+        //alert(vars);
+        hr.send(vars);
+            // Send the data to PHP now... and wait for response to update the status div
+         // Actually execute the request
+        //document.getElementById("especie").innerHTML = "processando...";
+        compara_pesos(form, url, id_entrevista,tipo_entrevista);
+    }
 }
 function compara_quantidades(form, url, id_entrevista,tipo_entrevista){
         var quantidadePermitido = document.getElementById("inputMedia").value;
@@ -1673,6 +1673,13 @@ function ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista){ //url é
             var peso = form.peso.value;
             var preco = form.precokg.value;
             var id_entrevista = id_entrevista;
+            var vars = "";
+
+            if (form.idEspecie.value !== "") {
+                url = url.replace("insert", "update");
+                vars = "idEspecie"+form.idEspecie.value+"&";
+                alert(url);
+            }
             
             if(peso.search(",")){
                 peso = peso.replace(",",".");
@@ -1681,15 +1688,14 @@ function ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista){ //url é
                 preco = preco.replace(",",".");
             }
             
-            var vars;
             //var ln = document.getElementById("last_name").value;
             if(tipo_entrevista === 'venda'){
                 var tipo_venda = form.tipoVenda.value;
-                vars = "selectEspecie="+especie+"&quantidade="+quant+"&id_tipovenda="+tipo_venda+
+                vars += "selectEspecie="+especie+"&quantidade="+quant+"&id_tipovenda="+tipo_venda+
                     "&peso="+peso+"&precokg="+preco+"&id_entrevista="+id_entrevista;
             }   
             else{
-                vars = "selectEspecie="+especie+"&quantidade="+quant+
+                vars += "selectEspecie="+especie+"&quantidade="+quant+
                     "&peso="+peso+"&precokg="+preco+"&id_entrevista="+id_entrevista;
             }
             hr.open("POST", url, true);
@@ -1705,6 +1711,7 @@ function ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista){ //url é
                 // Send the data to PHP now... and wait for response to update the status div
             hr.send(vars); // Actually execute the request
             document.getElementById("especie").innerHTML = "processando...";
+            form.Add.value = "Adicionar";
             resetFormValues("formEntrevistas");
             
      }  
@@ -1716,6 +1723,13 @@ function ajax_pesqueiro(form, url, id_entrevista, tipo_entrevista){
             
             // Create some variables we need to send to our PHP file
             var url = url;
+            var vars = "";
+            
+            if (form.idPesqueiro.value != "") {
+                url = url.replace("insert", "update");
+                vars = "idPesqueiro"+form.idPesqueiro.value+"&";
+            }
+            
             var pesqueiro = form.nomePesqueiro.value;
             
             var id_entrevista = id_entrevista;
@@ -1724,7 +1738,6 @@ function ajax_pesqueiro(form, url, id_entrevista, tipo_entrevista){
                 alert("Escolha um pesqueiro");
             }
             else{
-                var vars;
                 if(tipo_entrevista === 'tempo'){
                     var tempo = form.tempoPesqueiro.value;
                     vars = "nomePesqueiro="+pesqueiro+"&tempoPesqueiro="+tempo+
@@ -1757,8 +1770,25 @@ function ajax_pesqueiro(form, url, id_entrevista, tipo_entrevista){
                 // Send the data to PHP now... and wait for response to update the status div
                 hr.send(vars); // Actually execute the request
                 document.getElementById("pesqueiro").innerHTML = "processando...";
+                form.Add.value = "Adicionar";
                 //resetFormValues("formEntrevistas");
             }
+}
+
+function ajax_update_pesqueiro(id, pesqueiro, tempopesqueiro, form){
+    form.idPesqueiro.value = id;
+    form.nomePesqueiro.value = pesqueiro;
+    form.tempoPesqueiro.value = tempopesqueiro;
+    form.Add.value = "Atualizar";
+}
+
+function ajax_update_especie(idRelacao, idEspecie, quantidade, peso, precokg, form){
+    form.idRelacao.value = idRelacao;
+    form.selectEspecie.value = idEspecie;
+    form.quantidade.value = quantidade;
+    form.peso.value = peso;
+    form.precokg.value = precokg;
+    form.Add.value = "Atualizar";
 }
 
 function ajax_avistamento(form, url, id_entrevista) {
