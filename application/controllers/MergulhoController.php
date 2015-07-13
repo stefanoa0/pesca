@@ -342,7 +342,7 @@ class MergulhoController extends Zend_Controller_Action
         $peso = $this->_getParam("peso");
         $preco = $this->_getParam("precokg");
         $idEntrevista = $this->_getParam("id_entrevista");
-        $idEntrevistaEspecie = $this->_getParam("id_entrevista_has_especie");
+        $idEntrevistaEspecie = $this->_getParam("idRelacao");
         $this->modelMergulho->updateEspCapturada($idEntrevistaEspecie,$idEntrevista, $especie, $quantidade, $peso, $preco);
         $this->redirect("/mergulho/tableespcaptura/id/" . $idEntrevista);
         }

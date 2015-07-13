@@ -166,7 +166,7 @@
         <fieldset class="noEditable"><legend>Pesqueiro e tempo no pesqueiro:</legend>
             <div id="base">
                 <input readonly="" type="hidden" name="idPesqueiro" />
-                <input class="responsivo" name="Add" onclick="ajax_pesqueiro(this.form, '<?= $this->url(array("controller" => "arrasto-fundo", "action" => "insertpesqueiro"), null, true) ?>', '<?=$this->entrevista['af_id']?>', 'tempo')" type="button" value="Adicionar" />
+                <input class="responsivo" name="Add_pesqueiro" onclick="ajax_pesqueiro(this.form, '<?= $this->url(array("controller" => "arrasto-fundo", "action" => "insertpesqueiro"), null, true) ?>', '<?=$this->entrevista['af_id']?>', 'tempo')" type="button" value="Adicionar" />
                 <select class="responsivo" style="float:left;" name="nomePesqueiro">
                     <option value="" selected></option>
                     <?php foreach ($this->pesqueiros as $key => $pesqueiro): ?>
@@ -189,6 +189,7 @@
 
             <div id="base">
                 <input readonly="" type="hidden" name="idRelacao" />
+                
                 <input class="responsivo" name="Add" onclick="ajax_select_peso_permitido(this.form, '<?= $this->url(array("controller" => "arrasto-fundo", "action" => "insertespeciecapturada"), null, true) ?>', <?= $this->entrevista['af_id'] ?>, '','<?= $this->url(array("controller" => "arrasto-fundo", "action" => "verificaespecie"), null, true) ?>')" type="button" value="Adicionar" />
                 <select class="responsivo" style="float:left;" name="selectEspecie">
                     <option value="" selected></option>
@@ -201,6 +202,7 @@
                 <input class="responsivo" style="float:left;" type="text" name="precokg" placeholder="Preço" size="10px">
 
                 <input type="hidden" name="id_entrevista"  value="<?= $this->entrevista['af_id'] ?>"/>
+<!--                <input class="responsivo" type="text" name="idRelacao"/>-->
                 <?php include('mediaespecies.phtml'); ?>
             </div>
 

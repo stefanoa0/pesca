@@ -350,7 +350,7 @@ class LinhaFundoController extends Zend_Controller_Action
         $peso = $this->_getParam("peso");
         $preco = $this->_getParam("precokg");
         $idEntrevista = $this->_getParam("id_entrevista");
-        $idEntrevistaEspecie = $this->_getParam("id_entrevista_has_especie");
+        $idEntrevistaEspecie = $this->_getParam("idRelacao");
         $this->modelLinhaFundo->updateEspCapturada($idEntrevistaEspecie,$idEntrevista, $especie, $quantidade, $peso, $preco);
         $this->redirect("/linha-fundo/tableespcaptura/id/" . $idEntrevista);
         }
