@@ -217,11 +217,11 @@ class Application_Model_ArrastoFundo
             't_tempopesqueiro' => $tempopesqueiro
         );
 
-        $wherePescador = $this->dbTableArrastoFundo->getAdapter()
+        $wherePescador = $this->dbTableTArrastoHasPesqueiro->getAdapter()
                 ->quoteInto('"af_paf_id" = ?', $idEntrevistaPesqueiro);
 
 
-        $this->dbTableArrastoFundo->update($dadosPesqueiro, $wherePescador);
+        $this->dbTableTArrastoHasPesqueiro->update($dadosPesqueiro, $wherePescador);
     }
     
     
@@ -283,7 +283,39 @@ class Application_Model_ArrastoFundo
 
         $this->dbTableTArrastoHasEspCapturada->delete($whereArrastoHasEspCapturada);
     }
+    
+    public function updateEspCapturada($idEntrevistaEspecie,$idEntrevista, $especie, $quantidade, $peso, $precokg)
+    {
+        $this->dbTableTArrastoHasEspCapturada = new Application_Model_DbTable_ArrastoHasEspecieCapturada();
 
+        if(empty($quantidade) && empty($peso)){
+            $quantidade = 'Erro';
+        }
+        if(empty($quantidade)){
+            $quantidade = NULL;
+        }
+        if(empty($peso)){
+            $peso = NULL;
+        }
+        if(empty($precokg)){
+            $precokg = NULL;
+        }
+        $dadosEspecie = array(
+            'af_id' => $idEntrevista,
+            'esp_id' => $especie,
+            'spc_quantidade' => $quantidade,
+            'spc_peso_kg' => $peso,
+            'spc_preco' => $precokg
+        );
+
+        $wherePescador = $this->dbTableTArrastoHasEspCapturada->getAdapter()
+                ->quoteInto('"spc_af_id" = ?', $idEntrevistaEspecie);
+
+
+        $this->dbTableTArrastoHasEspCapturada->update($dadosEspecie, $wherePescador);
+    }
+	
+    
     public function selectEntrevistaArrasto($where = null, $order = null, $limit = null)
     {
         $this->dbTableArrastoFundo = new Application_Model_DbTable_VEntrevistaArrasto();
@@ -373,6 +405,19 @@ class Application_Model_ArrastoFundo
         $this->dbTableTArrastoHasBioCamarao->delete($whereArrastoHasBiometria);
         
     }
+    public function updateBioCamarao($idEntrevistaCamarao,$idEntrevista, $idEspecie,$sexo, $maturidade, $compCabeca, $peso) {
+        $this->dbTableArrastoFundoHasBioCamarao = new Application_Model_DbTable_ArrastoFundoHasBioCamarao();
+        
+        $dadosPesqueiro = array( 'taf_id' => $idEntrevista, 
+            'esp_id' => $idEspecie, 
+            'tbc_sexo' => $sexo, 
+            'tmat_id' => $maturidade, 
+            'tbc_comprimento_cabeca' => $compCabeca, 
+            'tbc_peso' => $peso );
+        
+        $wherePescador = $this->dbTableArrastoFundoHasBioCamarao->getAdapter() ->quoteInto('"tafbc_id" = ?', $idEntrevistaCamarao);
+        $this->dbTableArrastoFundoHasBioCamarao->update($dadosPesqueiro, $wherePescador);
+}
 ////////////////BIOMETRIA PEIXES //////////////////////////////////////////////////////////////////////
     public function insertBioPeixe($idEntrevista, $idEspecie,$sexo, $comprimento, $peso)
     {
@@ -410,6 +455,12 @@ class Application_Model_ArrastoFundo
 
         $this->dbTableTArrastoHasBioPeixe->delete($whereArrastoHasBiometria);
         
+    }
+    public function updateBioPeixe($idEntrevistaPeixe, $idEntrevista, $idEspecie,$sexo, $comprimento, $peso) {
+	$this->dbTableArrastoFundoHasBioPeixe = new Application_Model_DbTable_ArrastoFundoHasBioPeixe();
+	$dadosPesqueiro = array( 'taf_id' => $idEntrevista, 'esp_id' => $idEspecie, 'tbp_sexo' => $sexo, 'tbp_comprimento' => $comprimento, 'tbp_peso' => $peso );
+	$wherePescador = $this->dbTableArrastoFundoHasBioPeixe->getAdapter() ->quoteInto('"tafbp_id" = ?', $idEntrevistaPeixe);
+	$this->dbTableArrastoFundoHasBioPeixe->update($dadosPesqueiro, $wherePescador);
     }
 ////////////ENTREVISTAS/////////////////////////////////////////////////////////////////
     public function select_ArrastoFundo_group_EspecieCapturada() {

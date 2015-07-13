@@ -246,6 +246,25 @@ class Application_Model_VaraPesca
         }
         $this->dbTableTVaraPescaHasPesqueiro->delete($whereVaraPescaHasPesqueiro);
     }
+     public function updatePesqueiro($idEntrevistaPesqueiro,$idEntrevista,$pesqueiro, $tempoapesqueiro, $distapesqueiro)
+    {
+        $this->dbTableTVaraPescaHasPesqueiro = new Application_Model_DbTable_VaraPescaHasPesqueiro();
+
+        if(empty($tempoapesqueiro)){  $tempoapesqueiro = null;}
+        $dadosPesqueiro = array(
+            'vp_id' => $idEntrevista,
+            'paf_id' => $pesqueiro,
+            't_tempoapesqueiro' => $tempoapesqueiro,
+            't_distapesqueiro' => $distapesqueiro
+        );
+
+        $wherePescador = $this->dbTableTVaraPescaHasPesqueiro->getAdapter()
+                ->quoteInto('"vp_paf_id" = ?', $idEntrevistaPesqueiro);
+
+
+        $this->dbTableTVaraPescaHasPesqueiro->update($dadosPesqueiro, $wherePescador);
+    }
+    
     public function selectVaraPescaHasEspCapturadas($where = null, $order = null, $limit = null){
         $this->dbTableVaraPescaHasEspCapturada = new Application_Model_DbTable_VVaraPescaHasEspecieCapturada();
         
@@ -285,6 +304,38 @@ class Application_Model_VaraPesca
         
         $this->dbTableTVaraPescaHasEspCapturada->insert($dadosEspecie);
         return;
+    }
+    
+    public function updateEspCapturada($idEntrevistaEspecie,$idEntrevista, $especie, $quantidade, $peso, $precokg, $idTipoVenda)
+    {
+        $this->dbTableTVaraPescaHasEspCapturada = new Application_Model_DbTable_VaraPescaHasEspecieCapturada();
+
+        if(empty($quantidade) && empty($peso)){
+            $quantidade = 'Erro';
+        }
+        if(empty($quantidade)){
+            $quantidade = NULL;
+        }
+        if(empty($peso)){
+            $peso = NULL;
+        }
+        if(empty($precokg)){
+            $precokg = NULL;
+        }
+        $dadosEspecie = array(
+            'vp_id' => $idEntrevista,
+            'esp_id' => $especie,
+            'spc_quantidade' => $quantidade,
+            'spc_peso_kg' => $peso,
+            'spc_preco' => $precokg,
+            'ttv_id' => $idTipoVenda
+        );
+
+        $wherePescador = $this->dbTableTVaraPescaHasEspCapturada->getAdapter()
+                ->quoteInto('"spc_vp_id" = ?', $idEntrevistaEspecie);
+
+
+        $this->dbTableTVaraPescaHasEspCapturada->update($dadosEspecie, $wherePescador);
     }
     public function deleteEspCapturada($idEspecie){
         $this->dbTableTVaraPescaHasEspCapturada = new Application_Model_DbTable_VaraPescaHasEspecieCapturada();       
@@ -421,6 +472,14 @@ class Application_Model_VaraPesca
         $this->dbTableTVaraPescaHasBioPeixe->delete($whereVaraPescaHasBiometria);
         
     }
+    
+    public function updateBioPeixe($idEntrevistaPeixe, $idEntrevista, $idEspecie,$sexo, $comprimento, $peso) {
+	$this->dbTableVaraPescaHasBioPeixe = new Application_Model_DbTable_VaraPescaHasBioPeixe();
+	$dadosPesqueiro = array( 'tvp_id' => $idEntrevista, 'esp_id' => $idEspecie, 'tbp_sexo' => $sexo, 'tbp_comprimento' => $comprimento, 'tbp_peso' => $peso );
+	$wherePescador = $this->dbTableVaraPescaHasBioPeixe->getAdapter() ->quoteInto('"tvpbp_id" = ?', $idEntrevistaPeixe);
+	$this->dbTableVaraPescaHasBioPeixe->update($dadosPesqueiro, $wherePescador);
+}
+
     
     public function selectPescadoresByPorto($where = null){
         $dbTable = new Application_Model_DbTable_VEntrevistaVaraPesca();

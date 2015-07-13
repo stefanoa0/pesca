@@ -1585,6 +1585,7 @@ function ajax_select_peso_permitido(form,url, id_entrevista, tipo_entrevista, ur
 
     var hr = new XMLHttpRequest();
     hr.open("POST", url_media, true);
+    
     if(especie === ""){
         alert("Selecione uma espécie!");
     }
@@ -1675,10 +1676,10 @@ function ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista){ //url é
             var id_entrevista = id_entrevista;
             var vars = "";
 
-            if (form.idEspecie.value !== "") {
+            if (form.idRelacao.value !== "") {
                 url = url.replace("insert", "update");
-                vars = "idEspecie"+form.idEspecie.value+"&";
-                alert(url);
+                vars += "idRelacao="+form.idRelacao.value+"&";
+                //alert(vars);
             }
             
             if(peso.search(",")){
@@ -1698,6 +1699,7 @@ function ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista){ //url é
                 vars += "selectEspecie="+especie+"&quantidade="+quant+
                     "&peso="+peso+"&precokg="+preco+"&id_entrevista="+id_entrevista;
             }
+            //alert(vars);
             hr.open("POST", url, true);
             // Set content type header information for sending url encoded variables in the request
             hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -1725,7 +1727,7 @@ function ajax_pesqueiro(form, url, id_entrevista, tipo_entrevista){
             var url = url;
             var vars = "";
             
-            if (form.idPesqueiro.value != "") {
+            if (form.idPesqueiro.value !== "") {
                 url = url.replace("insert", "update");
                 vars = "idPesqueiro"+form.idPesqueiro.value+"&";
             }
@@ -1782,9 +1784,9 @@ function ajax_update_pesqueiro(id, pesqueiro, tempopesqueiro, form){
     form.Add.value = "Atualizar";
 }
 
-function ajax_update_especie(idRelacao, idEspecie, quantidade, peso, precokg, form){
+function ajax_update_especie(idRelacao, selectEspecie, quantidade, peso, precokg, form){
     form.idRelacao.value = idRelacao;
-    form.selectEspecie.value = idEspecie;
+    form.selectEspecie.value = selectEspecie;
     form.quantidade.value = quantidade;
     form.peso.value = peso;
     form.precokg.value = precokg;
