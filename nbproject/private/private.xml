@@ -3,10 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/pesca/application/controllers/PortoController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/PescadorController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/EstatisticaController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/models/ArrastoFundo.php</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/calao/editar.phtml</file>
+            <file>file:/C:/wamp/www/pesca/public/js/funcoesJquery.js</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/arrasto-fundo/tablepesqueiro.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/arrasto-fundo/tableespcaptura.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/acompanhado/index.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/ArrastoFundoController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/arrasto-fundo/editar.phtml</file>
         </group>
     </open-files>
 </project-private>
