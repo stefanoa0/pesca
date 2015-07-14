@@ -189,7 +189,7 @@
 <fieldset class="noEditable"><legend>Pesqueiro:</legend>
         <fieldset class="noEditable"><legend>Pesqueiro e tempo até o pesqueiro:</legend>
             <div id="base">
-                <input class="responsivo" onclick="ajax_pesqueiro(this.form, '<?= $this->url(array("controller" => "grosseira", "action" => "insertpesqueiro"), null, true) ?>', '<?=$this->entrevista['grs_id']?>', 'tempo')" type="button" value="Adicionar" />
+                <input class="responsivo" name="AddPesqueiro" onclick="ajax_pesqueiro(this.form, '<?= $this->url(array("controller" => "grosseira", "action" => "insertpesqueiro"), null, true) ?>', '<?=$this->entrevista['grs_id']?>', 'tempo')" type="button" value="Adicionar" />
                 <select class="responsivo" style="float:left;" name="nomePesqueiro">
                     <option value="" selected></option>
                     <?php foreach ($this->pesqueiros as $key => $pesqueiro): ?>
@@ -209,7 +209,8 @@
         <fieldset class="noEditable"><legend>Dados das Espécies Capturadas:</legend>
 
             <div id="base">
-                <input class="responsivo" onclick="ajax_select_peso_permitido(this.form, '<?= $this->url(array("controller" => "grosseira", "action" => "insertespeciecapturada"), null, true) ?>', <?= $this->entrevista['grs_id'] ?>, '','<?= $this->url(array("controller" => "grosseira", "action" => "verificaespecie"), null, true) ?>')" type="button" value="Adicionar" />
+                <input readonly="" type="hidden" name="idRelacao" />
+                <input class="responsivo" name="Add" onclick="ajax_select_peso_permitido(this.form, '<?= $this->url(array("controller" => "grosseira", "action" => "insertespeciecapturada"), null, true) ?>', <?= $this->entrevista['grs_id'] ?>, '','<?= $this->url(array("controller" => "grosseira", "action" => "verificaespecie"), null, true) ?>')" type="button" value="Adicionar" />
                 <select class="responsivo" style="float:left;" name="selectEspecie">
                     <option value="" selected></option>
                     <?php foreach ($this->especies as $key => $especie): ?>

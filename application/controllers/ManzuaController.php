@@ -470,7 +470,7 @@ public function visualizarAction() {
         $sexo = $this->_getParam("SelectSexo");
         $comprimento = $this->_getParam("comprimento");
         $peso = $this->_getParam("peso");
-        $idEntrevistaPeixe = $this->_getParam("idEntrevistaPeixe");
+        $idEntrevistaPeixe = $this->_getParam("idRelacaoBioPeixe");
         $this->modelManzua->updateBioPeixe($idEntrevistaPeixe,$idEntrevista, $idEspecie, $sexo, $comprimento, $peso);
         //$this->redirect("/manzua/editar/id/" . $backUrl);
         $this->redirect("/manzua/tablebiopeixe/id/" . $idEntrevista);

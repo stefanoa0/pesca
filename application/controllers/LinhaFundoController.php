@@ -492,7 +492,7 @@ class LinhaFundoController extends Zend_Controller_Action
         $sexo = $this->_getParam("SelectSexo");
         $comprimento = $this->_getParam("comprimento");
         $peso = $this->_getParam("peso");
-        $idEntrevistaPeixe = $this->_getParam("idEntrevistaPeixe");
+        $idEntrevistaPeixe = $this->_getParam("idRelacaoBioPeixe");
         $this->modelLinhaFundo->updateBioPeixe($idEntrevistaPeixe,$idEntrevista, $idEspecie, $sexo, $comprimento, $peso);
         //$this->redirect("/linha-fundo/editar/id/" . $backUrl);
         $this->redirect("/linha-fundo/tablebiopeixe/id/" . $idEntrevista);

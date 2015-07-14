@@ -490,7 +490,7 @@ class ColetaManualController extends Zend_Controller_Action
         $sexo = $this->_getParam("SelectSexo");
         $comprimento = $this->_getParam("comprimento");
         $peso = $this->_getParam("peso");
-        $idEntrevistaPeixe = $this->_getParam("idEntrevistaPeixe");
+        $idEntrevistaPeixe = $this->_getParam("idRelacaoBioPeixe");
         $this->modelColetaManual->updateBioPeixe($idEntrevistaPeixe,$idEntrevista, $idEspecie, $sexo, $comprimento, $peso);
         //$this->redirect("/coleta-manual/editar/id/" . $backUrl);
         $this->redirect("/coleta-manual/tablebiopeixe/id/" . $idEntrevista);
