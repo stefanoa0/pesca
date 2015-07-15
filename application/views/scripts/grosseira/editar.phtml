@@ -254,6 +254,7 @@
         <fieldset class="noEditable"><legend>Dados das Amostras:</legend>
 
             <div id="base_peixe">
+                <input type="hidden" readonly="" name="idRelacaoBioPeixe"/>
                 <input class="responsivo" onclick="ajax_biopeixe(this.form, '<?= $this->url(array("controller" => "grosseira", "action" => "insertbiopeixe"), null, true) ?>','<?=$this->entrevista['grs_id']?>')" type="button" value="Adicionar" />
                 
                 <select class="responsivo" style="float:left;" name="SelectEspeciePeixe">

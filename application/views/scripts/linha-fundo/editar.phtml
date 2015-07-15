@@ -285,8 +285,7 @@
 
             <div id="base_peixe">
                 <input type="hidden" readonly="" name="idRelacaoBioPeixe"/>
-                <input class="responsivo" name="AddBioPeixe" onclick="ajax_biopeixe(this.form, '<?= $this->url(array("controller" => "linha-fundo", "action" => "insertbiopeixe"), null, true) ?>','<?=$this->entrevista['lf_id']?>')" type="button" value="Adicionar" />
-                
+                <input class="responsivo" name="AddBioPeixe" onclick="ajax_biopeixe(this.form, '<?= $this->url(array("controller" => "linha-fundo", "action" => "insertbiopeixe"), null, true) ?>','<?=$this->entrevista['lf_id']?>')" type="button" value="Adicionar" />        
                 <select style="float:left;" name="SelectEspeciePeixe">
                     <?php foreach ($this->especies as $key => $especie): ?>
                         <option value="<?= $especie['esp_id']; ?>"><?= $especie['esp_nome_comum']; ?></option>

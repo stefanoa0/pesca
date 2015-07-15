@@ -247,6 +247,7 @@
         <fieldset class="noEditable"><legend>Dados das Amostras:</legend>
 
             <div id="base_peixe">
+                <input type="hidden" readonly="" name="idRelacaoBioPeixe"/>
                 <input class="responsivo" onclick="ajax_biopeixe(this.form, '<?= $this->url(array("controller" => "jerere", "action" => "insertbiopeixe"), null, true) ?>','<?=$this->entrevista['jre_id']?>')" type="button" value="Adicionar" />
                 
                 <select class="responsivo" style="float:left;" name="SelectEspeciePeixe">
@@ -274,6 +275,7 @@
         <fieldset class="noEditable"><legend>Dados das Amostras:</legend>
 
             <div id="base_camarao">
+                <input type="hidden" readonly="" name="idRelacaoBioCamarao"/>
                 <input class="responsivo" onclick="ajax_biocamarao(this.form, '<?= $this->url(array("controller" => "jerere", "action" => "insertbiocamarao"), null, true) ?>','<?=$this->entrevista['jre_id']?>')" type="button" value="Adicionar" />
                 
                 <select class="responsivo" style="float:left;" name="SelectEspecieCamarao">
