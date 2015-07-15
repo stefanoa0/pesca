@@ -380,6 +380,12 @@ private $dbTableMergulho;
         return $this->dbTableMergulhoHasBioCamarao->fetchAll($select)->toArray();
         
     }
+    public function updateBioCamarao($idEntrevistaCamarao,$idEntrevista, $idEspecie,$sexo, $maturidade, $compCabeca, $peso) {
+        $this->dbTableMergulhoHasBioCamarao = new Application_Model_DbTable_MergulhoHasBioCamarao();
+        $dadosPesqueiro = array( 'tmer_id' => $idEntrevista, 'esp_id' => $idEspecie, 'tbc_sexo' => $sexo, 'tmat_id' => $maturidade, 'tbc_comprimento_cabeca' => $compCabeca, 'tbc_peso' => $peso );
+        $wherePescador = $this->dbTableMergulhoHasBioCamarao->getAdapter() ->quoteInto('"tmerbc_id" = ?', $idEntrevistaCamarao);
+        $this->dbTableMergulhoHasBioCamarao->update($dadosPesqueiro, $wherePescador);
+    }
     public function deleteBioCamarao($idBiometria){
         $this->dbTableTMergulhoHasBioCamarao = new Application_Model_DbTable_MergulhoHasBioCamarao();
 

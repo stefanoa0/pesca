@@ -414,6 +414,12 @@ private $dbTableLinha;
         return $this->dbTableLinhaHasBioCamarao->fetchAll($select)->toArray();
         
     }
+    public function updateBioCamarao($idEntrevistaCamarao,$idEntrevista, $idEspecie,$sexo, $maturidade, $compCabeca, $peso) {
+        $this->dbTableLinhaHasBioCamarao = new Application_Model_DbTable_LinhaHasBioCamarao();
+        $dadosPesqueiro = array( 'tlin_id' => $idEntrevista, 'esp_id' => $idEspecie, 'tbc_sexo' => $sexo, 'tmat_id' => $maturidade, 'tbc_comprimento_cabeca' => $compCabeca, 'tbc_peso' => $peso );
+        $wherePescador = $this->dbTableLinhaHasBioCamarao->getAdapter() ->quoteInto('"tlinbc_id" = ?', $idEntrevistaCamarao);
+        $this->dbTableLinhaHasBioCamarao->update($dadosPesqueiro, $wherePescador);
+    }
     public function deleteBioCamarao($idBiometria){
         $this->dbTableTLinhaHasBioCamarao = new Application_Model_DbTable_LinhaHasBioCamarao();
 

@@ -377,6 +377,12 @@ class Application_Model_Jerere
         return $this->dbTableJerereHasBioCamarao->fetchAll($select)->toArray();
         
     }
+    public function updateBioCamarao($idEntrevistaCamarao,$idEntrevista, $idEspecie,$sexo, $maturidade, $compCabeca, $peso) {
+        $this->dbTableJerereHasBioCamarao = new Application_Model_DbTable_JerereHasBioCamarao();
+        $dadosPesqueiro = array( 'tjre_id' => $idEntrevista, 'esp_id' => $idEspecie, 'tbc_sexo' => $sexo, 'tmat_id' => $maturidade, 'tbc_comprimento_cabeca' => $compCabeca, 'tbc_peso' => $peso );
+        $wherePescador = $this->dbTableJerereHasBioCamarao->getAdapter() ->quoteInto('"tjrebc_id" = ?', $idEntrevistaCamarao);
+        $this->dbTableJerereHasBioCamarao->update($dadosPesqueiro, $wherePescador);
+    }
     public function deleteBioCamarao($idBiometria){
         $this->dbTableTJerereHasBioCamarao = new Application_Model_DbTable_JerereHasBioCamarao();
 

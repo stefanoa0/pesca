@@ -271,7 +271,7 @@ endforeach;
 
             <div id="base_camarao">
                 <input type="hidden" readonly="" name="idRelacaoBioCamarao"/>
-                <input class="responsivo" onclick="ajax_biocamarao(this.form, '<?= $this->url(array("controller" => "calao", "action" => "insertbiocamarao"), null, true) ?>', '<?= $this->entrevista['cal_id'] ?>')" type="button" value="Adicionar" />
+                <input class="responsivo" name="AddBioCamarao" onclick="ajax_biocamarao(this.form, '<?= $this->url(array("controller" => "calao", "action" => "insertbiocamarao"), null, true) ?>', '<?= $this->entrevista['cal_id'] ?>')" type="button" value="Adicionar" />
 
                 <select class="responsivo" style="float:left;" name="SelectEspecieCamarao">
 <?php foreach ($this->especieCamarao as $key => $especieCamarao): ?>

@@ -149,6 +149,7 @@
 <fieldset class="noEditable"><legend>Pesqueiro:</legend>
     <fieldset class="noEditable"><legend>Pesqueiro e tempo no pesqueiro:</legend>
             <div id="base">
+                <input readonly="" type="hidden" name="idPesqueiro" />
                 <input class="responsivo" name="AddPesqueiro" onclick="ajax_pesqueiro(this.form, '<?= $this->url(array("controller" => "tarrafa", "action" => "insertpesqueiro"), null, true) ?>', '<?=$this->entrevista['tar_id']?>','')" type="button" value="Adicionar" />
                 <select class="responsivo" style="float:left;" name="nomePesqueiro">
                     <option value="" selected></option>
@@ -212,7 +213,7 @@
 
             <div id="base_peixe">
                 <input type="hidden" readonly="" name="idRelacaoBioPeixe"/>
-                <input class="responsivo" onclick="ajax_biopeixe(this.form, '<?= $this->url(array("controller" => "tarrafa", "action" => "insertbiopeixe"), null, true) ?>','<?=$this->entrevista['tar_id']?>')" type="button" value="Adicionar" />
+                <input class="responsivo" name="AddBioPeixe" onclick="ajax_biopeixe(this.form, '<?= $this->url(array("controller" => "tarrafa", "action" => "insertbiopeixe"), null, true) ?>','<?=$this->entrevista['tar_id']?>')" type="button" value="Adicionar" />
                 
                 <select class="responsivo" style="float:left;" name="SelectEspeciePeixe">
                     <?php foreach ($this->especies as $key => $especie): ?>
@@ -243,7 +244,7 @@
 
             <div id="base_camarao">
                 <input type="hidden" readonly="" name="idRelacaoBioCamarao"/>
-                <input class="responsivo" onclick="ajax_biocamarao(this.form, '<?= $this->url(array("controller" => "tarrafa", "action" => "insertbiocamarao"), null, true) ?>','<?=$this->entrevista['tar_id']?>')" type="button" value="Adicionar" />
+                <input class="responsivo" name="AddBioCamarao" onclick="ajax_biocamarao(this.form, '<?= $this->url(array("controller" => "tarrafa", "action" => "insertbiocamarao"), null, true) ?>','<?=$this->entrevista['tar_id']?>')" type="button" value="Adicionar" />
                 
                 <select class="responsivo" style="float:left;" name="SelectEspecieCamarao">
                     <?php foreach ($this->especieCamarao as $key => $especieCamarao): ?>

@@ -373,6 +373,12 @@ class Application_Model_Ratoeira
         return $this->dbTableRatoeiraHasBioCamarao->fetchAll($select)->toArray();
         
     }
+    public function updateBioCamarao($idEntrevistaCamarao,$idEntrevista, $idEspecie,$sexo, $maturidade, $compCabeca, $peso) {
+        $this->dbTableRatoeiraHasBioCamarao = new Application_Model_DbTable_RatoeiraHasBioCamarao();
+        $dadosPesqueiro = array( 'trat_id' => $idEntrevista, 'esp_id' => $idEspecie, 'tbc_sexo' => $sexo, 'tmat_id' => $maturidade, 'tbc_comprimento_cabeca' => $compCabeca, 'tbc_peso' => $peso );
+        $wherePescador = $this->dbTableRatoeiraHasBioCamarao->getAdapter() ->quoteInto('"tratbc_id" = ?', $idEntrevistaCamarao);
+        $this->dbTableRatoeiraHasBioCamarao->update($dadosPesqueiro, $wherePescador);
+    }
     public function deleteBioCamarao($idBiometria){
         $this->dbTableTRatoeiraHasBioCamarao = new Application_Model_DbTable_RatoeiraHasBioCamarao();
 

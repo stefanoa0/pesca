@@ -418,6 +418,12 @@ class Application_Model_LinhaFundo
         return $this->dbTableLinhaFundoHasBioCamarao->fetchAll($select)->toArray();
         
     }
+    public function updateBioCamarao($idEntrevistaCamarao,$idEntrevista, $idEspecie,$sexo, $maturidade, $compCabeca, $peso) {
+        $this->dbTableLinhaFundoHasBioCamarao = new Application_Model_DbTable_LinhaFundoHasBioCamarao();
+        $dadosPesqueiro = array( 'tlf_id' => $idEntrevista, 'esp_id' => $idEspecie, 'tbc_sexo' => $sexo, 'tmat_id' => $maturidade, 'tbc_comprimento_cabeca' => $compCabeca, 'tbc_peso' => $peso );
+        $wherePescador = $this->dbTableLinhaFundoHasBioCamarao->getAdapter() ->quoteInto('"tlfbc_id" = ?', $idEntrevistaCamarao);
+        $this->dbTableLinhaFundoHasBioCamarao->update($dadosPesqueiro, $wherePescador);
+    }
     public function deleteBioCamarao($idBiometria){
         $this->dbTableTLinhaFundoHasBioCamarao = new Application_Model_DbTable_LinhaFundoHasBioCamarao();
 

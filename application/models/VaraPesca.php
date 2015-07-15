@@ -425,6 +425,12 @@ class Application_Model_VaraPesca
         return $this->dbTableVaraPescaHasBioCamarao->fetchAll($select)->toArray();
         
     }
+    public function updateBioCamarao($idEntrevistaCamarao,$idEntrevista, $idEspecie,$sexo, $maturidade, $compCabeca, $peso) {
+        $this->dbTableVaraPescaHasBioCamarao = new Application_Model_DbTable_VaraPescaHasBioCamarao();
+        $dadosPesqueiro = array( 'tvp_id' => $idEntrevista, 'esp_id' => $idEspecie, 'tbc_sexo' => $sexo, 'tmat_id' => $maturidade, 'tbc_comprimento_cabeca' => $compCabeca, 'tbc_peso' => $peso );
+        $wherePescador = $this->dbTableVaraPescaHasBioCamarao->getAdapter() ->quoteInto('"tvpbc_id" = ?', $idEntrevistaCamarao);
+        $this->dbTableVaraPescaHasBioCamarao->update($dadosPesqueiro, $wherePescador);
+    }
     public function deleteBioCamarao($idBiometria){
         $this->dbTableTVaraPescaHasBioCamarao = new Application_Model_DbTable_VaraPescaHasBioCamarao();
 

@@ -240,6 +240,26 @@ public function visualizarAction() {
 
         $this->redirect("/manzua/tablepesqueiro/id/" . $idEntrevista);
     }
+
+    public function updatepesqueiroAction() {
+        if ($this->usuario['tp_id'] == 5) {
+            $this->_redirect('index');
+        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $pesqueiro = $this->_getParam("nomePesqueiro");
+
+        $tempopesqueiro = $this->_getParam("tempoPesqueiro");
+
+        $idEntrevista = $this->_getParam("id_entrevista");
+
+        $idEntrevistaPesqueiro = $this->_getParam("id_entrevista_pesqueiro");
+
+        $this->modelManzua->updatePesqueiro($idEntrevistaPesqueiro, $idEntrevista, $pesqueiro, $tempopesqueiro);
+
+        $this->redirect("/manzua/tablepesqueiro/id/" . $idEntrevista);
+    }
     public function deletepesqueiroAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -404,6 +424,24 @@ public function visualizarAction() {
 
         $this->modelManzua->insertBioCamarao($idEntrevista, $idEspecie, $sexo, $maturidade, $compCabeca, $peso);
 
+        $this->redirect("/manzua/tablebiocamarao/id/" . $idEntrevista);
+    }
+    public function updatebiocamaraoAction() {
+        if ($this->usuario['tp_id'] == 5) {
+            $this->_redirect('index');
+        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $idRelacao = $this->_getParam("idRelacaoBioCamarao");
+        $idEntrevista = $this->_getParam("id");
+        $idEspecie = $this->_getParam("SelectEspecie");
+        $sexo = $this->_getParam("SelectSexo");
+        $maturidade = $this->_getParam("SelectMaturidade");
+        $compCabeca = $this->_getParam("comprimentoCabeca");
+        $peso = $this->_getParam("peso");
+//$backUrl = $this->_getParam("back_url");
+        $this->modelManzua->updateBioCamarao($idRelacao, $idEntrevista, $idEspecie, $sexo, $maturidade, $compCabeca, $peso);
+//$this->redirect("/arrasto-fundo/editar/id/" . $backUrl);
         $this->redirect("/manzua/tablebiocamarao/id/" . $idEntrevista);
     }
     public function deletebiocamaraoAction() {
