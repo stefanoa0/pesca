@@ -60,9 +60,10 @@ class AutenticacaoController extends Zend_Controller_Action {
                 $this->_redirect('index/errorlogin');
             }
             else{
-                    
+                if($tentativaVal > 3){    
                     $this->modelLogin->updateTentativa($login, 0);
                     $this->modelLogin->updateAcesso($login, null);
+                }
                 if ($result->isValid() && $tentativaVal < $max_acesso) {
                     $usuario = $authAdapter->getResultRowObject();
 
@@ -73,7 +74,8 @@ class AutenticacaoController extends Zend_Controller_Action {
                     $idLogin = $this->modelUsuario->selectNomeLogin($login);
                     $idUsuario = $this->modelUsuario->selectLogin($idLogin['tl_id']);
                     $this->idHistorico = $this->modelUsuario->insertLogin($idUsuario['tu_id']);
-                    //
+                    $this->modelLogin->updateTentativa($login, 0);
+                    $this->modelLogin->updateAcesso($login, null);
                     $this->_redirect('index-admin/index');
                 } 
                     
@@ -81,7 +83,7 @@ class AutenticacaoController extends Zend_Controller_Action {
                     $tentativa = $this->modelLogin->selectTentativa($login);
                     $tentativaVal = $tentativa[0]['tl_tentativa'];
                     $valorTentativa = intval($tentativaVal);
-                    $valorTentativaVal= $valorTentativa+1;
+                    $valorTentativaVal+= $valorTentativa+1;
                     $this->modelLogin->updateTentativa($login, $valorTentativaVal);
                     if($tentativaVal >= $max_acesso){
                         $this->modelLogin->updateAcesso($login, $trintamin->format('Y-m-d H:i:s'));
