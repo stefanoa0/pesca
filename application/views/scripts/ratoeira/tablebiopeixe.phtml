@@ -18,6 +18,14 @@
                 <td name="inputComp.Cabeca"> <?= $unidadePeixe['tbp_comprimento'] ?> </td>
                 <td name="inputSexo"> <?= $unidadePeixe['tbp_sexo'] ?> </td>
                 <td name="inputPeso"> <?= $unidadePeixe['tbp_peso'] ?> </td>
+                
+                <td class="td-botao">
+                        <a name="Editar" class="button-del" onclick="ajax_update_bio_peixe(<?= $unidadePeixe['tratbp_id'] ?>, '<?= $unidadePeixe['esp_id'] ?>', '<?= $unidadePeixe['tbp_comprimento'] ?>', '<?= $unidadePeixe['tbp_sexo'] ?>','<?= $unidadePeixe['tbp_peso'] ?>', document.getElementById('formEntrevistas'))">
+                            <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                            </ul>
+                        </a> 
+                    </td>
                 <td class="td-botao">
                     <a name="Excluir" class="button-del" onclick="ajax_delete_entrevista_has('<?= $this->entrevista['rat_id'] ?>', '<?= $this->url(array("controller" => "ratoeira", "action" => "deletebiopeixe"), null, true) ?>', '<?= $unidadePeixe['tratbp_id'] ?>', 'biopeixe')">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
