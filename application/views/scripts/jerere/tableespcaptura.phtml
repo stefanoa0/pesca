@@ -21,6 +21,13 @@
                 <td name="inputPreco"> <?= 'R$ ' . $vEspecieCapturada['spc_preco'] ?> </td>
                 <td name="inputMedida"> <?= $vEspecieCapturada['ttv_tipovenda'] ?> </td>
                 <td class="td-botao">
+                    <a name="Editar" class="button-del" onclick="ajax_update_especie(<?= $vEspecieCapturada['spc_jre_id'] ?>, '<?= $vEspecieCapturada['esp_id'] ?>', '<?= $vEspecieCapturada['spc_quantidade'] ?>', '<?= $vEspecieCapturada['spc_peso_kg'] ?>', '<?= $vEspecieCapturada['spc_preco'] ?>', document.getElementById('formEntrevistas'),'<?= $vEspecieCapturada['ttv_id'] ?>')">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                        </ul>
+                    </a> 
+                </td>	<br/>
+                <td class="td-botao">
                     <a name="Excluir" class="button-del" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['jre_id'] ?>, '<?= $this->url(array("controller" => "jerere", "action" => "deletespecie"), null, true) ?>', <?= $vEspecieCapturada['spc_jre_id'] ?>, 'especie')">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
                             <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>

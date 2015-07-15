@@ -506,7 +506,7 @@ class VaraPescaController extends Zend_Controller_Action
         $sexo = $this->_getParam("SelectSexo");
         $comprimento = $this->_getParam("comprimento");
         $peso = $this->_getParam("peso");
-        $idEntrevistaPeixe = $this->_getParam("idEntrevistaPeixe");
+        $idEntrevistaPeixe = $this->_getParam("idRelacaoBioPeixe");
         $this->modelVaraPesca->updateBioPeixe($idEntrevistaPeixe,$idEntrevista, $idEspecie, $sexo, $comprimento, $peso);
         //$this->redirect("/vara-pesca/editar/id/" . $backUrl);
         $this->redirect("/vara-pesca/tablebiopeixe/id/" . $idEntrevista);

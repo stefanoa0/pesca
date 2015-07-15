@@ -458,7 +458,11 @@ class Application_Model_ArrastoFundo
     }
     public function updateBioPeixe($idEntrevistaPeixe, $idEntrevista, $idEspecie,$sexo, $comprimento, $peso) {
 	$this->dbTableArrastoFundoHasBioPeixe = new Application_Model_DbTable_ArrastoFundoHasBioPeixe();
-	$dadosPesqueiro = array( 'taf_id' => $idEntrevista, 'esp_id' => $idEspecie, 'tbp_sexo' => $sexo, 'tbp_comprimento' => $comprimento, 'tbp_peso' => $peso );
+	$dadosPesqueiro = array( 'taf_id' => $idEntrevista, 
+            'esp_id' => $idEspecie, 
+            'tbp_sexo' => $sexo, 
+            'tbp_comprimento' => $comprimento, 
+            'tbp_peso' => $peso );
 	$wherePescador = $this->dbTableArrastoFundoHasBioPeixe->getAdapter() ->quoteInto('"tafbp_id" = ?', $idEntrevistaPeixe);
 	$this->dbTableArrastoFundoHasBioPeixe->update($dadosPesqueiro, $wherePescador);
     }

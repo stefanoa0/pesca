@@ -468,22 +468,23 @@ public function visualizarAction() {
     }
     
     public function updatebiopeixeAction() {
-if($this->usuario['tp_id']==5){
-$this->_redirect('index');
-}
-$this->_helper->layout->disableLayout();
-$this->_helper->viewRenderer->setNoRender(true);
-$idEntrevista = $this->_getParam("id");
-$idEspecie = $this->_getParam("SelectEspecie");
-$sexo = $this->_getParam("SelectSexo");
-$comprimento = $this->_getParam("comprimento");
-$peso = $this->_getParam("peso");
-$idEntrevistaPeixe = $this->_getParam("idEntrevistaPeixe");
-$this->modelLinha->updateBioPeixe($idEntrevistaPeixe,$idEntrevista, $idEspecie, $sexo, $comprimento, $peso);
+        if ($this->usuario['tp_id'] == 5) {
+            $this->_redirect('index');
+        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $idEntrevista = $this->_getParam("id");
+        $idEspecie = $this->_getParam("SelectEspecie");
+        $sexo = $this->_getParam("SelectSexo");
+        $comprimento = $this->_getParam("comprimento");
+        $peso = $this->_getParam("peso");
+        $idEntrevistaPeixe = $this->_getParam("idRelacaoBioPeixe");
+        $this->modelLinha->updateBioPeixe($idEntrevistaPeixe, $idEntrevista, $idEspecie, $sexo, $comprimento, $peso);
 //$this->redirect("/linha/editar/id/" . $backUrl);
-$this->redirect("/linha/tablebiopeixe/id/" . $idEntrevista);
-}
-     public function relatoriolistaAction(){
+        $this->redirect("/linha/tablebiopeixe/id/" . $idEntrevista);
+    }
+
+    public function relatoriolistaAction(){
 //        if($this->usuario['tp_id']==5){
 //            $this->_redirect('index');
 //        }

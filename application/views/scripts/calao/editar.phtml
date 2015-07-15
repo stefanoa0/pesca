@@ -1,7 +1,7 @@
 <div id="titulos">
     <h2>Desembarque->Pesca de Calão</h2>
     <h3>Entrevista</h3>
-    <h2><?=$this->porto['pto_nome'] ?></h2>
+    <h2><?= $this->porto['pto_nome'] ?></h2>
 </div>
 
 <div class="esquerda-entrevista">
@@ -26,20 +26,28 @@
                 <legend><h4>Embarcação:</h4></legend>
                 <div class="form-esq">
                     <label>Utilizou Barco?</label>
-                    <input type="checkbox" id="nome" name="embarcada" <?php if($this->entrevista['cal_embarcada'] === true){ echo 'checked';} else{ echo '';}?>/><br />
+                    <input type="checkbox" id="nome" name="embarcada" <?php if ($this->entrevista['cal_embarcada'] === true) {
+    echo 'checked';
+} else {
+    echo '';
+} ?>/><br />
                 </div>
                 <div class="form-esq">
                     <label>Motor?</label>
-                    <input type="checkbox"  name="motor" <?php if($this->entrevista['cal_motor'] === true){ echo 'checked';} else{ echo '';} ?>/><br />
+                    <input type="checkbox"  name="motor" <?php if ($this->entrevista['cal_motor'] === true) {
+    echo 'checked';
+} else {
+    echo '';
+} ?>/><br />
                 </div>
                 <div class="form-esq">
                     <label>Barco:</label>
                     <select name="nomeBarco" placeholder="Nome do Barco" />
                     <option value=" " selected></option>
-                    <?php
-                    foreach ($this->barcos as $key => $barco):
-                        ?>
-                        <option value="<?= $barco['bar_id'] ?>" <?=( $barco['bar_id'] == $this->entrevista['bar_id'])? 'selected="selected"': '';?>><?= $barco['bar_nome'] ?></option>
+<?php
+foreach ($this->barcos as $key => $barco):
+    ?>
+                        <option value="<?= $barco['bar_id'] ?>" <?= ( $barco['bar_id'] == $this->entrevista['bar_id']) ? 'selected="selected"' : ''; ?>><?= $barco['bar_nome'] ?></option>
                         <?php
                     endforeach;
                     ?>
@@ -49,13 +57,13 @@
                 <div class="form-esq">
                     <label>Tipo de Barco:</label>
                     <select name="tipoBarco" />
-                    <?php
-                    foreach ($this->tipoEmbarcacoes as $key => $tipoEmbarcacao):
-                        ?>
-                        <option value="<?= $tipoEmbarcacao['tte_id'] ?>" <?=( $tipoEmbarcacao['tte_id'] == $this->entrevista['tte_id'])? 'selected="selected"': '';?>><?= $tipoEmbarcacao['tte_tipoembarcacao'] ?></option>
-                        <?php
-                    endforeach;
-                    ?>
+<?php
+foreach ($this->tipoEmbarcacoes as $key => $tipoEmbarcacao):
+    ?>
+                        <option value="<?= $tipoEmbarcacao['tte_id'] ?>" <?= ( $tipoEmbarcacao['tte_id'] == $this->entrevista['tte_id']) ? 'selected="selected"' : ''; ?>><?= $tipoEmbarcacao['tte_tipoembarcacao'] ?></option>
+    <?php
+endforeach;
+?>
                     </select>
 
                 </div>
@@ -65,29 +73,29 @@
                 <div class="form-esq">    
                     <label>Pescador Entrevistado:</label>
                     <select name="PescadorEntrevistado" />
-                    <?php
-                    foreach ($this->pescadores as $key => $pescador):
-                        ?>
-                        <option value="<?= $pescador['tp_id'] ?>" <?=( $pescador['tp_id'] == $this->entrevista['tp_id_entrevistado'])? 'selected="selected"': '';?>><?= $pescador['tp_nome'] .' ( '. $pescador['tp_apelido']. ' )' ?></option>
-                        <?php
-                    endforeach;
-                    ?>
+<?php
+foreach ($this->pescadores as $key => $pescador):
+    ?>
+                        <option value="<?= $pescador['tp_id'] ?>" <?= ( $pescador['tp_id'] == $this->entrevista['tp_id_entrevistado']) ? 'selected="selected"' : ''; ?>><?= $pescador['tp_nome'] . ' ( ' . $pescador['tp_apelido'] . ' )' ?></option>
+    <?php
+endforeach;
+?>
                     </select><br />
                 </div>
                 <div class="form-esq">
                     <label>Quant. de Pescadores:</label>
-                    <input type="text"  name="NumPescadores" min="1" placeholder="Quantidade de Pescadores "value="<?=$this->entrevista['cal_quantpescadores']?>"/><br />
+                    <input type="text"  name="NumPescadores" min="1" placeholder="Quantidade de Pescadores "value="<?= $this->entrevista['cal_quantpescadores'] ?>"/><br />
                 </div>
             </div>
             <div class="esquerda">
                 <legend><h4>Tempo:</h4></legend>
                 <div class="form-esq">
                     <label>Data:</label>
-                    <input type="date" name="data" min="2013-11-01"  max = "<?= date("Y-m-d"); ?>" value="<?=$this->entrevista['cal_data']?>"/>
+                    <input type="date" name="data" min="2013-11-01"  max = "<?= date("Y-m-d"); ?>" value="<?= $this->entrevista['cal_data'] ?>"/>
                 </div>
                 <div class="form-esq">
                     <label>Tempo Gasto:</label>
-                    <input type="time" name="tempoGasto"value="<?=$this->entrevista['cal_tempogasto']?>"/>
+                    <input type="time" name="tempoGasto"value="<?= $this->entrevista['cal_tempogasto'] ?>"/>
                 </div>
             </div>
             <br/>
@@ -95,25 +103,25 @@
                 <div class="form-esq">
                     <legend><h4>Esforço:</h4></legend>
                     <label>Tamanho(m):</label>
-                    <input type="text" name="tamanho" placeholder="Tamanho" value="<?=$this->entrevista['cal_tamanho']?>"/>
-                                    </div>
+                    <input type="text" name="tamanho" placeholder="Tamanho" value="<?= $this->entrevista['cal_tamanho'] ?>"/>
+                </div>
                 <div class="form-dir">    
                     <label>Altura(m):</label>
-                    <input type="text"  name="altura" placeholder="Altura"value="<?=$this->entrevista['cal_altura']?>"/><br />
+                    <input type="text"  name="altura" placeholder="Altura"value="<?= $this->entrevista['cal_altura'] ?>"/><br />
                 </div>
-                
+
             </div>
             <div class="direita-entrevista">
                 <div class="form-dir">    
                     <label>Número de Lances:</label>
-                    <input type="text" class="numlances" name="numLances" placeholder="Lances" value="<?=$this->entrevista['cal_numlances']?>"/><br />
+                    <input type="text" class="numlances" name="numLances" placeholder="Lances" value="<?= $this->entrevista['cal_numlances'] ?>"/><br />
                 </div>
                 <div class="form-dir">    
                     <label>Malha:</label>
-                    <input type="text" class="tamanhoMalha" name="malha2" placeholder="malha" value="<?=$this->entrevista['cal_malha2']?>"/>
-                    <input type="text" class="tamanhoMalha" name="malha1" placeholder="malha" value="<?=$this->entrevista['cal_malha1']?>"/>
-                    <input type="text" class="tamanhoMalha" name="malha" placeholder="malha" value="<?=$this->entrevista['cal_malha']?>"/>
-                    
+                    <input type="text" class="tamanhoMalha" name="malha2" placeholder="malha" value="<?= $this->entrevista['cal_malha2'] ?>"/>
+                    <input type="text" class="tamanhoMalha" name="malha1" placeholder="malha" value="<?= $this->entrevista['cal_malha1'] ?>"/>
+                    <input type="text" class="tamanhoMalha" name="malha" placeholder="malha" value="<?= $this->entrevista['cal_malha'] ?>"/>
+
                 </div>
             </div><br/>
             <div class="esquerda">
@@ -121,108 +129,109 @@
                 <div class="form-esq">    
                     <label>Destino do Pescado:</label>
                     <select name="destinoPescado" />
-                    <?php
-                    foreach ($this->destinos as $key => $destino):
-                        ?>
-                        <option value="<?= $destino['dp_id'] ?>" <?=( $destino['dp_id'] == $this->entrevista['dp_id'])? 'selected="selected"': '';?>><?= $destino['dp_destino'] ?></option>
-                        <?php
-                    endforeach;
-                    ?>
+<?php
+foreach ($this->destinos as $key => $destino):
+    ?>
+                        <option value="<?= $destino['dp_id'] ?>" <?= ( $destino['dp_id'] == $this->entrevista['dp_id']) ? 'selected="selected"' : ''; ?>><?= $destino['dp_destino'] ?></option>
+    <?php
+endforeach;
+?>
                     </select>
                 </div>
-               
+
                 <div class="form-esq">
                     <label for="tipo">Observacao:</label>
-                    <input type="text" name="observacao" placeholder="Observação" value="<?=$this->entrevista['cal_obs']?>"/><br />
+                    <input type="text" name="observacao" placeholder="Observação" value="<?= $this->entrevista['cal_obs'] ?>"/><br />
                 </div>
                 <br/>
                 <div class="form-esq">    
                     <label>Tipo de Pesca:</label>
                     <select name="tipocalao" required/>
-                    <?php
-                    foreach ($this->tipoCalao as $key => $tipocalao):
-                        ?>
-                        <option value="<?= $tipocalao['tcat_id'] ?>" <?=( $tipocalao['tcat_id'] == $this->entrevista['cal_tipo'])? 'selected="selected"': '';?>><?= $tipocalao['tcat_tipo'] ?></option>
-                        <?php
-                    endforeach;
-                    ?>
+<?php
+foreach ($this->tipoCalao as $key => $tipocalao):
+    ?>
+                        <option value="<?= $tipocalao['tcat_id'] ?>" <?= ( $tipocalao['tcat_id'] == $this->entrevista['cal_tipo']) ? 'selected="selected"' : ''; ?>><?= $tipocalao['tcat_tipo'] ?></option>
+    <?php
+endforeach;
+?>
                     </select>
                 </div>
             </div>
         </fieldset>
-            <br/>
-            <br/>
-            <input type="hidden" placeholder = "ID" name="id_entrevista"  value="<?= $this->entrevista['cal_id'] ?>"/><br />
-            <input type="hidden" name="id_fichaDiaria" value="<?= $this->monitoramento['fd_id'] ?>" /><br />
-            <div class="esquerda">
-                 <input type="submit" size="50" value="Salvar Alterações" />
-            </div>
+        <br/>
+        <br/>
+        <input type="hidden" placeholder = "ID" name="id_entrevista"  value="<?= $this->entrevista['cal_id'] ?>"/><br />
+        <input type="hidden" name="id_fichaDiaria" value="<?= $this->monitoramento['fd_id'] ?>" /><br />
+        <div class="esquerda">
+            <input type="submit" size="50" value="Salvar Alterações" />
+        </div>
     </form>
 </div>  
-    <form id="formEntrevistas">
-        <input type="hidden" placeholder = "ID" name="id_entrevista"  value="<?= $this->entrevista['cal_id'] ?>"/><br />
-        <input type="hidden" name="id_monitoramento" placeholder="ID"  value="<?= $this->entrevista['mnt_id'] ?>" /><br />
-        <input type="hidden" name="id_fichaDiaria" placeholder="ID"  value="<?= $this->monitoramento['fd_id'] ?>" /><br />
-                
-<fieldset class="noEditable"><legend>Pesqueiro:</legend>
-    <fieldset class="noEditable"><legend>Pesqueiro e tempo no pesqueiro:</legend>
+<form id="formEntrevistas">
+    <input type="hidden" placeholder = "ID" name="id_entrevista"  value="<?= $this->entrevista['cal_id'] ?>"/><br />
+    <input type="hidden" name="id_monitoramento" placeholder="ID"  value="<?= $this->entrevista['mnt_id'] ?>" /><br />
+    <input type="hidden" name="id_fichaDiaria" placeholder="ID"  value="<?= $this->monitoramento['fd_id'] ?>" /><br />
+
+    <fieldset class="noEditable"><legend>Pesqueiro:</legend>
+        <fieldset class="noEditable"><legend>Pesqueiro e tempo no pesqueiro:</legend>
             <div id="base">
                 <input readonly="" type="text" name="idPesqueiro" />
-                <input class="responsivo" name="Add" onclick="ajax_pesqueiro(this.form, '<?= $this->url(array("controller" => "calao", "action" => "insertpesqueiro"), null, true) ?>', '<?=$this->entrevista['cal_id']?>', '')" type="button" value="Adicionar" />
+                <input class="responsivo" name="AddPesqueiro" onclick="ajax_pesqueiro(this.form, '<?= $this->url(array("controller" => "calao", "action" => "insertpesqueiro"), null, true) ?>', '<?= $this->entrevista['cal_id'] ?>', '')" type="button" value="Adicionar" />
                 <select class="responsivo" style="float:left;" name="nomePesqueiro">
                     <option value="" selected></option>
-                    <?php foreach ($this->pesqueiros as $key => $pesqueiro): ?>
+        <?php foreach ($this->pesqueiros as $key => $pesqueiro): ?>
                         <option value="<?= $pesqueiro['paf_id']; ?>"><?= $pesqueiro['paf_pesqueiro']; ?></option>
-                    <?php endforeach; ?>
+<?php endforeach; ?>
                 </select>
             </div>
 
         </fieldset>
         <br>
-        <?php include('tablepesqueiro.phtml'); ?>
+<?php include('tablepesqueiro.phtml'); ?>
     </fieldset> 
     <br /><br />
-<fieldset class="noEditable"><legend>Espécies Capturadas:</legend>
+    <fieldset class="noEditable"><legend>Espécies Capturadas:</legend>
         <fieldset class="noEditable"><legend>Dados das Espécies Capturadas:</legend>
 
             <div id="base">
-                <input class="responsivo" onclick="ajax_select_peso_permitido(this.form, '<?= $this->url(array("controller" => "calao", "action" => "insertespeciecapturada"), null, true) ?>', <?= $this->entrevista['cal_id'] ?>, '','<?= $this->url(array("controller" => "calao", "action" => "verificaespecie"), null, true) ?>')" type="button" value="Adicionar" />
+                <input readonly="" type="hidden" name="idRelacao" />
+                <input class="responsivo" name="Add" onclick="ajax_select_peso_permitido(this.form, '<?= $this->url(array("controller" => "calao", "action" => "insertespeciecapturada"), null, true) ?>', <?= $this->entrevista['cal_id'] ?>, '', '<?= $this->url(array("controller" => "calao", "action" => "verificaespecie"), null, true) ?>')" type="button" value="Adicionar" />
                 <select class="responsivo" style="float:left;" name="selectEspecie">
                     <option value="" selected></option>
-                    <?php foreach ($this->especies as $key => $especie): ?>
+                <?php foreach ($this->especies as $key => $especie): ?>
                         <option value="<?= $especie['esp_id']; ?>"><?= $especie['esp_nome_comum']; ?></option>
-                    <?php endforeach; ?>
+<?php endforeach; ?>
                 </select>
                 <input class="responsivo" style="float:left;" type="text" name="quantidade" placeholder="Quantidade" size="10px">
                 <input class="responsivo" style="float:left;" type="text" name="peso" placeholder="Peso" size="10px">
                 <input class="responsivo" style="float:left;" type="text" name="precokg" placeholder="Preço" size="10px">
 
                 <input  type="hidden" name="id_entrevista"  value="<?= $this->entrevista['cal_id'] ?>"/>
-                <?php include('mediaespecies.phtml'); ?>
+<?php include('mediaespecies.phtml'); ?>
             </div>
 
         </fieldset>
         <br>
-         <?php include('tableespcaptura.phtml'); ?>
+<?php include('tableespcaptura.phtml'); ?>
     </fieldset>
     <br /><br />
     <fieldset class="noEditable"><legend>Avistamento:</legend>
         <fieldset class="noEditable"><legend>O Que foi avistado:</legend>
             <div id="base">
-                <input class="responsivo" onclick="ajax_avistamento(this.form, '<?= $this->url(array("controller" => "calao", "action" => "insertavistamento"), null, true) ?>', '<?=$this->entrevista['cal_id']?>')" type="button" value="Adicionar" />
-                
+                <input class="responsivo" onclick="ajax_avistamento(this.form, '<?= $this->url(array("controller" => "calao", "action" => "insertavistamento"), null, true) ?>', '<?= $this->entrevista['cal_id'] ?>')" type="button" value="Adicionar" />
+
                 <select class="responsivo" style="float:left;" name="SelectAvistamento">
                     <option value="" selected></option>
-                    <?php foreach ($this->avistamentos as $key => $avistamento): ?>
+        <?php foreach ($this->avistamentos as $key => $avistamento): ?>
                         <option value="<?= $avistamento['avs_id']; ?>"><?= $avistamento['avs_descricao']; ?></option>
-                    <?php endforeach; ?>
+<?php endforeach; ?>
                 </select>
-                
+
             </div>
 
         </fieldset>
         <br>
-        <?php include('tableavistamento.phtml'); ?>
+<?php include('tableavistamento.phtml'); ?>
     </fieldset>
     <br /><br />
     <!--////////////////////////////////////////////////////////AMOSTRAGEM PEIXES///////////////////////////////////////////////////////////-->
@@ -230,12 +239,12 @@
         <fieldset class="noEditable"><legend>Dados das Amostras:</legend>
 
             <div id="base_peixe">
-                <input class="responsivo" onclick="ajax_biopeixe(this.form, '<?= $this->url(array("controller" => "calao", "action" => "insertbiopeixe"), null, true) ?>','<?=$this->entrevista['cal_id']?>')" type="button" value="Adicionar" />
-                
+                <input class="responsivo" onclick="ajax_biopeixe(this.form, '<?= $this->url(array("controller" => "calao", "action" => "insertbiopeixe"), null, true) ?>', '<?= $this->entrevista['cal_id'] ?>')" type="button" value="Adicionar" />
+
                 <select class="responsivo" style="float:left;" name="SelectEspeciePeixe">
-                    <?php foreach ($this->especies as $key => $especie): ?>
+<?php foreach ($this->especies as $key => $especie): ?>
                         <option value="<?= $especie['esp_id']; ?>"><?= $especie['esp_nome_comum']; ?></option>
-                    <?php endforeach; ?>
+<?php endforeach; ?>
                 </select>
                 <input class="responsivo" style="float:left;" type="text" name="comprimentoPeixe" placeholder="Comprimento (cm)" size="10px">
 
@@ -244,26 +253,26 @@
                     <option value="F">Fêmea</option>
                     <option value="I">Indefinido</option>
                 </select>
-                
+
                 <input class="responsivo" style="float:left;" type="text" name="pesoPeixe" placeholder="Peso (kg)" size="10px">
 
-                
+
             </div>
 
         </fieldset>
         <br>
-         <?php include('tablebiopeixe.phtml'); ?>
-        </fieldset>
+<?php include('tablebiopeixe.phtml'); ?>
+    </fieldset>
     <br /><br />
-<!--////////////////////////////////////////////////////////AMOSTRAGEM PEIXES///////////////////////////////////////////////////////////-->
-        <fieldset class="noEditable"><legend>Amostras de Camarão:</legend>
+    <!--////////////////////////////////////////////////////////AMOSTRAGEM PEIXES///////////////////////////////////////////////////////////-->
+    <fieldset class="noEditable"><legend>Amostras de Camarão:</legend>
         <fieldset class="noEditable"><legend>Dados das Amostras:</legend>
 
             <div id="base_camarao">
-                <input class="responsivo" onclick="ajax_biocamarao(this.form, '<?= $this->url(array("controller" => "calao", "action" => "insertbiocamarao"), null, true) ?>','<?=$this->entrevista['cal_id']?>')" type="button" value="Adicionar" />
-                
+                <input class="responsivo" onclick="ajax_biocamarao(this.form, '<?= $this->url(array("controller" => "calao", "action" => "insertbiocamarao"), null, true) ?>', '<?= $this->entrevista['cal_id'] ?>')" type="button" value="Adicionar" />
+
                 <select class="responsivo" style="float:left;" name="SelectEspecieCamarao">
-                    <?php foreach ($this->especieCamarao as $key => $especieCamarao): ?>
+<?php foreach ($this->especieCamarao as $key => $especieCamarao): ?>
                         <option value="<?= $especieCamarao['esp_id']; ?>"><?= $especieCamarao['esp_nome_comum']; ?></option>
                     <?php endforeach; ?>
                 </select>
@@ -273,11 +282,11 @@
                     <option value="I">Indefinido</option>
                 </select>
                 <select class="responsivo" style="float:left;" class="amostragem" name="SelectMaturidade">
-                    <?php foreach ($this->maturidade as $key => $maturidade): ?>
+<?php foreach ($this->maturidade as $key => $maturidade): ?>
                         <option value="<?= $maturidade['tmat_id']; ?>"><?= $maturidade['tmat_tipo']; ?></option>
-                    <?php endforeach; ?>
+<?php endforeach; ?>
                 </select>
-                
+
                 <input class="responsivo" style="float:left;" type="text" name="comprimentoCabeca" placeholder="Comp. Carapaça (mm)" size="10px">
 
                 <input class="responsivo" style="float:left;" type="text" name="pesoCamarao" placeholder="Peso (g)" size="10px">
@@ -287,8 +296,8 @@
 
         </fieldset>
         <br>
-         <?php include('tablebiocamarao.phtml'); ?>
-</fieldset>
- </form>
+<?php include('tablebiocamarao.phtml'); ?>
+    </fieldset>
+</form>
 <br/> <br/>
-<a href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "editar","id" => $this->monitoramento['fd_id']), null, true) ?>" id="botao-ancora">Voltar à Ficha-Diária</a>
+<a href="<?= $this->url(array("controller" => "ficha-diaria", "action" => "editar", "id" => $this->monitoramento['fd_id']), null, true) ?>" id="botao-ancora">Voltar à Ficha-Diária</a>

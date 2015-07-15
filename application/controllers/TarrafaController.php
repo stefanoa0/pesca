@@ -451,7 +451,7 @@ private $usuario;
         $sexo = $this->_getParam("SelectSexo");
         $comprimento = $this->_getParam("comprimento");
         $peso = $this->_getParam("peso");
-        $idEntrevistaPeixe = $this->_getParam("idEntrevistaPeixe");
+        $idEntrevistaPeixe = $this->_getParam("idRelacaoBioPeixe");
         $this->modelTarrafa->updateBioPeixe($idEntrevistaPeixe,$idEntrevista, $idEspecie, $sexo, $comprimento, $peso);
         //$this->redirect("/tarrafa/editar/id/" . $backUrl);
         $this->redirect("/tarrafa/tablebiopeixe/id/" . $idEntrevista);

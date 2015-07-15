@@ -1717,7 +1717,17 @@ function ajax_esp_capturada(form, url, id_entrevista, tipo_entrevista){ //url é
             resetFormValues("formEntrevistas");
             
      }  
-
+function ajax_update_especie(idRelacao, selectEspecie, quantidade, peso, precokg, form, tipoVenda){
+    if(tipoVenda !== ''){
+        form.tipoVenda.value = tipoVenda;
+    }
+    form.idRelacao.value = idRelacao;
+    form.selectEspecie.value = selectEspecie;
+    form.quantidade.value = quantidade;
+    form.peso.value = peso;
+    form.precokg.value = precokg;
+    form.Add.value = "Atualizar";
+}
 
 function ajax_pesqueiro(form, url, id_entrevista, tipo_entrevista){
      // Create our XMLHttpRequest object
@@ -1729,7 +1739,7 @@ function ajax_pesqueiro(form, url, id_entrevista, tipo_entrevista){
             
             if (form.idPesqueiro.value !== "") {
                 url = url.replace("insert", "update");
-                vars = "idPesqueiro"+form.idPesqueiro.value+"&";
+                vars = "idPesqueiro="+form.idPesqueiro.value+"&";
             }
             
             var pesqueiro = form.nomePesqueiro.value;
@@ -1784,14 +1794,8 @@ function ajax_update_pesqueiro(id, pesqueiro, tempopesqueiro, form){
     form.Add.value = "Atualizar";
 }
 
-function ajax_update_especie(idRelacao, selectEspecie, quantidade, peso, precokg, form){
-    form.idRelacao.value = idRelacao;
-    form.selectEspecie.value = selectEspecie;
-    form.quantidade.value = quantidade;
-    form.peso.value = peso;
-    form.precokg.value = precokg;
-    form.Add.value = "Atualizar";
-}
+
+
 
 function ajax_avistamento(form, url, id_entrevista) {
     // Create our XMLHttpRequest object
@@ -1832,7 +1836,9 @@ function ajax_biopeixe(form, url, id_entrevista) {
     // Create some variables we need to send to our PHP file
     var url = url;
     var id_entrevista = id_entrevista;
-
+    var vars = "";
+    
+    
     if(form.comprimentoPeixe.value===""){
         alert("Digite o Comprimento do Peixe");
     }
@@ -1849,13 +1855,19 @@ function ajax_biopeixe(form, url, id_entrevista) {
         if(comprimento.search(",")){
            comprimento = comprimento.replace(",",".");
         }
+        if (form.idRelacaoBioPeixe.value !== "") {
+            url = url.replace("insert", "update");
+            vars += "idRelacaoBioPeixe=" + form.idRelacaoBioPeixe.value + "&";
+            //alert(vars);
+            //alert(url);
+        }
             
-        var vars = "id="+id_entrevista+
+        vars += "id="+id_entrevista+
                 "&SelectEspecie="+form.SelectEspeciePeixe.value+
                 "&SelectSexo="+form.SelectSexoPeixe.value+
                 "&comprimento="+comprimento+
                 "&peso="+peso;
-        
+        //alert(vars);
         hr.open("POST", url, true);
         // Set content type header information for sending url encoded variables in the request
         hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -1872,6 +1884,16 @@ function ajax_biopeixe(form, url, id_entrevista) {
         resetFormValues("formEntrevistas");
     }
 }
+function ajax_update_bio_peixe(idRelacao,selectEspecie, comprimento, sexo, peso,form){
+
+    form.idRelacaoBioPeixe.value = idRelacao;
+    form.SelectEspeciePeixe.value = selectEspecie;
+    form.comprimentoPeixe.value = comprimento;
+    form.SelectSexoPeixe.value = sexo;
+    form.pesoPeixe.value = peso;
+    form.AddBioPeixe.value = "Atualizar";
+}
+
 
 function ajax_biocamarao(form, url, id_entrevista) {
     // Create our XMLHttpRequest object
@@ -1880,7 +1902,8 @@ function ajax_biocamarao(form, url, id_entrevista) {
     // Create some variables we need to send to our PHP file
     var url = url;
     var id_entrevista = id_entrevista;
-
+    var vars = "";
+    
     if(form.comprimentoCabeca.value===""){
         alert("Digite o Comprimento da Cabeça");
     }
@@ -1897,8 +1920,13 @@ function ajax_biocamarao(form, url, id_entrevista) {
         if(comprimento.search(",")){
            comprimento = comprimento.replace(",",".");
         }
-        
-        var vars = "id="+id_entrevista+
+        if (form.idRelacaoBioCamarao.value !== "") {
+            url = url.replace("insert", "update");
+            vars += "idRelacaoBioCamarao=" + form.idRelacaoBioCamarao.value + "&";
+            //alert(vars);
+            //alert(url);
+        }
+            vars += "id="+id_entrevista+
                 "&SelectEspecie="+form.SelectEspecieCamarao.value+
                 "&SelectSexo="+form.SelectSexoCamarao.value+
                 "&SelectMaturidade="+form.SelectMaturidade.value+
@@ -1921,7 +1949,16 @@ function ajax_biocamarao(form, url, id_entrevista) {
         resetFormValues("formEntrevistas");
     }
 }
+function ajax_update_bio_camarao(idRelacao,selectEspecie, comprimento, sexo,peso,maturidade,form){
 
+    form.idRelacaoBioCamarao.value = idRelacao;
+    form.SelectEspecieCamarao.value = selectEspecie;
+    form.comprimentoCabeca.value = comprimento;
+    form.SelectSexoCamarao.value = sexo;
+    form.SelectMaturidade.value = maturidade;
+    form.pesoCamarao.value = peso;
+    form.AddBioCamarao.value = "Atualizar";
+}
 function ajax_delete_entrevista_has(id_entrevista, url, id_entrevista_has, model){
     if (confirm("Realmente deseja excluir este item?")) {
         // Create our XMLHttpRequest object
