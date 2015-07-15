@@ -252,6 +252,25 @@ class VaraPescaController extends Zend_Controller_Action
 
         $this->redirect("/vara-pesca/tablepesqueiro/id/" . $idEntrevista);
     }
+    public function updatepesqueiroAction() {
+        if ($this->usuario['tp_id'] == 5) {
+            $this->_redirect('index');
+        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $pesqueiro = $this->_getParam("nomePesqueiro");
+
+        $tempopesqueiro = $this->_getParam("tempoPesqueiro");
+
+        $idEntrevista = $this->_getParam("id_entrevista");
+
+        $idEntrevistaPesqueiro = $this->_getParam("id_entrevista_pesqueiro");
+
+        $this->modelVaraPesca->updatePesqueiro($idEntrevistaPesqueiro, $idEntrevista, $pesqueiro, $tempopesqueiro);
+
+        $this->redirect("/vara-pesca/tablepesqueiro/id/" . $idEntrevista);
+    }
     public function deletepesqueiroAction(){
         if($this->usuario['tp_id']==5){
             $this->_redirect('index');
@@ -437,6 +456,24 @@ class VaraPescaController extends Zend_Controller_Action
 
         $this->modelVaraPesca->insertBioCamarao($idEntrevista, $idEspecie, $sexo, $maturidade, $compCabeca, $peso);
 
+        $this->redirect("/vara-pesca/tablebiocamarao/id/" . $idEntrevista);
+    }
+    public function updatebiocamaraoAction() {
+        if ($this->usuario['tp_id'] == 5) {
+            $this->_redirect('index');
+        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $idRelacao = $this->_getParam("idRelacaoBioCamarao");
+        $idEntrevista = $this->_getParam("id");
+        $idEspecie = $this->_getParam("SelectEspecie");
+        $sexo = $this->_getParam("SelectSexo");
+        $maturidade = $this->_getParam("SelectMaturidade");
+        $compCabeca = $this->_getParam("comprimentoCabeca");
+        $peso = $this->_getParam("peso");
+//$backUrl = $this->_getParam("back_url");
+        $this->modelVaraPesca->updateBioCamarao($idRelacao, $idEntrevista, $idEspecie, $sexo, $maturidade, $compCabeca, $peso);
+//$this->redirect("/arrasto-fundo/editar/id/" . $backUrl);
         $this->redirect("/vara-pesca/tablebiocamarao/id/" . $idEntrevista);
     }
     public function deletebiocamaraoAction() {

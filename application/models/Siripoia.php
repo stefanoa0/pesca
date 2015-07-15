@@ -372,6 +372,12 @@ class Application_Model_Siripoia
         return $this->dbTableSiripoiaHasBioCamarao->fetchAll($select)->toArray();
         
     }
+    public function updateBioCamarao($idEntrevistaCamarao,$idEntrevista, $idEspecie,$sexo, $maturidade, $compCabeca, $peso) {
+        $this->dbTableSiripoiaHasBioCamarao = new Application_Model_DbTable_SiripoiaHasBioCamarao();
+        $dadosPesqueiro = array( 'tsir_id' => $idEntrevista, 'esp_id' => $idEspecie, 'tbc_sexo' => $sexo, 'tmat_id' => $maturidade, 'tbc_comprimento_cabeca' => $compCabeca, 'tbc_peso' => $peso );
+        $wherePescador = $this->dbTableSiripoiaHasBioCamarao->getAdapter() ->quoteInto('"tsirbc_id" = ?', $idEntrevistaCamarao);
+        $this->dbTableSiripoiaHasBioCamarao->update($dadosPesqueiro, $wherePescador);
+    }
     public function deleteBioCamarao($idBiometria){
         $this->dbTableTSiripoiaHasBioCamarao = new Application_Model_DbTable_SiripoiaHasBioCamarao();
 

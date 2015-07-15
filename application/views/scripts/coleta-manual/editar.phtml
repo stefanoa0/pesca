@@ -240,7 +240,7 @@
 
             <div id="base_peixe">
                 <input type="hidden" readonly="" name="idRelacaoBioPeixe"/>
-                <input class="responsivo" onclick="ajax_biopeixe(this.form, '<?= $this->url(array("controller" => "coleta-manual", "action" => "insertbiopeixe"), null, true) ?>','<?=$this->entrevista['cml_id']?>')" type="button" value="Adicionar" />
+                <input class="responsivo" name="AddBioPeixe" onclick="ajax_biopeixe(this.form, '<?= $this->url(array("controller" => "coleta-manual", "action" => "insertbiopeixe"), null, true) ?>','<?=$this->entrevista['cml_id']?>')" type="button" value="Adicionar" />
                 
                 <select class="responsivo" style="float:left;" name="SelectEspeciePeixe">
                     <?php foreach ($this->especies as $key => $especie): ?>

@@ -373,6 +373,12 @@ class Application_Model_Manzua
         return $this->dbTableManzuaHasBioCamarao->fetchAll($select)->toArray();
         
     }
+    public function updateBioCamarao($idEntrevistaCamarao,$idEntrevista, $idEspecie,$sexo, $maturidade, $compCabeca, $peso) {
+        $this->dbTableManzuaHasBioCamarao = new Application_Model_DbTable_ManzuaHasBioCamarao();
+        $dadosPesqueiro = array( 'tman_id' => $idEntrevista, 'esp_id' => $idEspecie, 'tbc_sexo' => $sexo, 'tmat_id' => $maturidade, 'tbc_comprimento_cabeca' => $compCabeca, 'tbc_peso' => $peso );
+        $wherePescador = $this->dbTableManzuaHasBioCamarao->getAdapter() ->quoteInto('"tmanbc_id" = ?', $idEntrevistaCamarao);
+        $this->dbTableManzuaHasBioCamarao->update($dadosPesqueiro, $wherePescador);
+    }
     public function deleteBioCamarao($idBiometria){
         $this->dbTableTManzuaHasBioCamarao = new Application_Model_DbTable_ManzuaHasBioCamarao();
 

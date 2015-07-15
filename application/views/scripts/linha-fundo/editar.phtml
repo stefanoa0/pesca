@@ -216,6 +216,7 @@
         <fieldset class="noEditable"><legend>Pesqueiro:</legend>
                 <fieldset class="noEditable"><legend>Pesqueiro e tempo até o pesqueiro:</legend>
                     <div id="base">
+                        <input readonly="" type="hidden" name="idPesqueiro" />
                         <input name="AddPesqueiro" onclick="ajax_pesqueiro(this.form, '<?= $this->url(array("controller" => "linha-fundo", "action" => "insertpesqueiro"), null, true) ?>', '<?= $this->entrevista['lf_id'] ?>', 'distancia')" type="button" value="Adicionar" />
                         <select style="float:left;" name="nomePesqueiro">
                             <?php foreach ($this->pesqueiros as $key => $pesqueiro): ?>

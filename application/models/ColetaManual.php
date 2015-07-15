@@ -359,6 +359,12 @@ private $dbTableColetaManual;
         return $this->dbTableColetaManualHasBioCamarao->fetchAll($select)->toArray();
         
     }
+    public function updateBioCamarao($idEntrevistaCamarao,$idEntrevista, $idEspecie,$sexo, $maturidade, $compCabeca, $peso) {
+        $this->dbTableColetaManualHasBioCamarao = new Application_Model_DbTable_ColetaManualHasBioCamarao();
+        $dadosPesqueiro = array( 'tcml_id' => $idEntrevista, 'esp_id' => $idEspecie, 'tbc_sexo' => $sexo, 'tmat_id' => $maturidade, 'tbc_comprimento_cabeca' => $compCabeca, 'tbc_peso' => $peso );
+        $wherePescador = $this->dbTableColetaManualHasBioCamarao->getAdapter() ->quoteInto('"tcmlbc_id" = ?', $idEntrevistaCamarao);
+        $this->dbTableColetaManualHasBioCamarao->update($dadosPesqueiro, $wherePescador);
+    }
     public function deleteBioCamarao($idBiometria){
         $this->dbTableTColetaManualHasBioCamarao = new Application_Model_DbTable_ColetaManualHasBioCamarao();
 
