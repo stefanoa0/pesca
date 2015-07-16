@@ -16,6 +16,13 @@
                 <td name="inputTempoaPesqueiro"> <?= $vMergulho['t_tempoapesqueiro'] ?> </td>
                 <td name="inputTempoaPesqueiro"> <?= $vMergulho['t_distapesqueiro'] ?> </td>
                 <td class="td-botao">
+                    <a name="Editar" class="button-del" onclick="ajax_update_pesqueiro('<?= $vMergulho['mer_paf_id'] ?>', '<?= $vMergulho['t_tempopesqueiro'] ?>', '<?= $vMergulho['t_distapesqueiro'] ?>', document.getElementById('formEntrevistas'))">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                        </ul>
+                    </a> 
+                </td>
+                <td class="td-botao">
                     <a name="Excluir" class="button-del" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['mer_id'] ?>, '<?= $this->url(array("controller" => "mergulho", "action" => "deletepesqueiro"), null, true) ?>', <?= $vMergulho['mer_paf_id'] ?>, 'pesqueiro')">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
                             <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>

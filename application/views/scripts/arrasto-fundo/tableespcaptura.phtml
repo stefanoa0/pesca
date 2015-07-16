@@ -18,12 +18,12 @@
                             <td name="inputPeso"> <?= $vEspecieCapturada['spc_peso_kg'].' kg' ?> </td>
                             <td name="inputPreco"> <?= 'R$ '.$vEspecieCapturada['spc_preco'] ?> </td>
                             <td class="td-botao">
-                                    <a name="Editar" class="button-del" onclick="ajax_update_especie(<?= $vEspecieCapturada['spc_af_id'] ?>, '<?= $vEspecieCapturada['esp_id'] ?>', '<?= $vEspecieCapturada['spc_quantidade'] ?>', '<?= $vEspecieCapturada['spc_peso_kg'] ?>', '<?= $vEspecieCapturada['spc_preco'] ?>', document.getElementById('formEntrevistas'),'')">
-                                        <ul id="icons" class="ui-widget ui-helper-clearfix">
-                                            <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
-                                        </ul>
-                                    </a> 
-                                </td>
+                                <a name="Editar" class="button-del" onclick="ajax_update_especie(<?= $vEspecieCapturada['spc_af_id'] ?>, '<?= $vEspecieCapturada['esp_id'] ?>', '<?= $vEspecieCapturada['spc_quantidade'] ?>', '<?= $vEspecieCapturada['spc_peso_kg'] ?>', '<?= $vEspecieCapturada['spc_preco'] ?>', document.getElementById('formEntrevistas'),'')">
+                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                        <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                                    </ul>
+                                </a> 
+                            </td>
                             <td class="td-botao">
                                 <a name="Excluir" class="button-del" onclick="ajax_delete_entrevista_has(<?= $vEspecieCapturada['af_id'] ?>, '<?= $this->url(array("controller" => "arrasto-fundo", "action" => "deletespecie"), null, true) ?>', <?= $vEspecieCapturada['spc_af_id'] ?>, 'especie')">
                                     <ul id="icons" class="ui-widget ui-helper-clearfix">

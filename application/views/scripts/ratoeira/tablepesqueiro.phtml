@@ -16,6 +16,13 @@
                 <td name="inputTempoaPesqueiro"> <?= $vRatoeira['t_tempoapesqueiro'] ?> </td>
                 <td name="inputTempoaPesqueiro"> <?= $vRatoeira['t_distapesqueiro'] ?> </td>
                 <td class="td-botao">
+                    <a name="Editar" class="button-del" onclick="ajax_update_pesqueiro('<?= $vRatoeira['rat_paf_id'] ?>', '<?= $vRatoeira['t_tempopesqueiro'] ?>', '<?= $vRatoeira['t_distapesqueiro'] ?>', document.getElementById('formEntrevistas'))">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                        </ul>
+                    </a> 
+                </td>
+                <td class="td-botao">
                     <a name="Excluir" class="button-del" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['rat_id'] ?>, '<?= $this->url(array("controller" => "ratoeira", "action" => "deletepesqueiro"), null, true) ?>', <?= $vRatoeira['rat_paf_id'] ?>, 'pesqueiro')">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
                             <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>

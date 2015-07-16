@@ -12,6 +12,13 @@
                             <td name="inputIdEntrevista"> <?= $vCalao['cal_id'] ?> </td>
                             <td name="inputPesqueiro"> <?= $vCalao['paf_pesqueiro'] ?> </td>
                             <td class="td-botao">
+                                <a name="Editar" class="button-del" onclick="ajax_update_pesqueiro('<?= $vCalao['cal_paf_id'] ?>', '', '', document.getElementById('formEntrevistas'))">
+                                    <ul id="icons" class="ui-widget ui-helper-clearfix">
+                                        <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                                    </ul>
+                                </a> 
+                            </td>
+                            <td class="td-botao">
                                 <a name="Excluir" class="button-del" onclick="ajax_delete_entrevista_has(<?= $this->entrevista['cal_id'] ?>, '<?= $this->url(array("controller" => "calao", "action" => "deletepesqueiro"), null, true) ?>', <?= $vCalao['cal_paf_id'] ?>, 'pesqueiro')">
                                     <ul id="icons" class="ui-widget ui-helper-clearfix">
                                         <li class="ui-state-default ui-corner-all" title="Excluir"><span class="ui-icon ui-icon-close"></span></li>

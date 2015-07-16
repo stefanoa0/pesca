@@ -21,12 +21,12 @@
                 <td name="inputComp.Cabeca"> <?= $unidadeCamarao['tbc_comprimento_cabeca'] ?> </td>
                 <td name="inputPeso"> <?= $unidadeCamarao['tbc_peso'] ?> </td>
                 <td class="td-botao">
-                        <a name="Editar" class="button-del" onclick="ajax_update_bio_camarao(<?= $unidadeCamarao['tratbc_id'] ?>, '<?= $unidadeCamarao['esp_id'] ?>', '<?= $unidadeCamarao['tbc_comprimento_cabeca'] ?>', '<?= $unidadeCamarao['tbc_sexo'] ?>','<?= $unidadeCamarao['tbc_peso'] ?>','<?= $unidadeCamarao['tmat_id'] ?>', document.getElementById('formEntrevistas'))">
-                            <ul id="icons" class="ui-widget ui-helper-clearfix">
-                                <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
-                            </ul>
-                        </a> 
-                    </td>
+                    <a name="Editar" class="button-del" onclick="ajax_update_bio_camarao(<?= $unidadeCamarao['tratbc_id'] ?>, '<?= $unidadeCamarao['esp_id'] ?>', '<?= $unidadeCamarao['tbc_comprimento_cabeca'] ?>', '<?= $unidadeCamarao['tbc_sexo'] ?>','<?= $unidadeCamarao['tbc_peso'] ?>','<?= $unidadeCamarao['tmat_id'] ?>', document.getElementById('formEntrevistas'))">
+                        <ul id="icons" class="ui-widget ui-helper-clearfix">
+                            <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
+                        </ul>
+                    </a> 
+                </td>
                 <td class="td-botao">
                     <a name="Excluir" class="button-del" onclick="ajax_delete_entrevista_has('<?= $this->entrevista['rat_id'] ?>', '<?= $this->url(array("controller" => "ratoeira", "action" => "deletebiocamarao"), null, true) ?>', '<?= $unidadeCamarao['tratbc_id'] ?>', 'biocamarao')">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">

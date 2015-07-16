@@ -1787,10 +1787,11 @@ function ajax_pesqueiro(form, url, id_entrevista, tipo_entrevista){
             }
 }
 
-function ajax_update_pesqueiro(id, pesqueiro, tempopesqueiro, form){
+function ajax_update_pesqueiro(id, pesqueiro, tempopesqueiro, distanciapesqueiro, form){
     form.idPesqueiro.value = id;
     form.nomePesqueiro.value = pesqueiro;
-    form.tempoPesqueiro.value = tempopesqueiro;
+    form.tempoaPesqueiro.value = tempopesqueiro;
+    form.distanciaaPesqueiro.value = distanciapesqueiro;
     form.Add.value = "Atualizar";
 }
 
