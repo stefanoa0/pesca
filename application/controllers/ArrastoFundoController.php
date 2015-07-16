@@ -116,11 +116,11 @@ class ArrastoFundoController extends Zend_Controller_Action {
 
         $datahoraSaida[] = explode(" ", $entrevista['af_dhsaida']);
         $datahoraVolta[] = explode(" ", $entrevista['af_dhvolta']);
-        $vArrastoFundo = $this->modelArrastoFundo->selectArrastoHasPesqueiro('af_id=' . $idEntrevista);
-        $vEspecieCapturadas = $this->modelArrastoFundo->selectArrastoHasEspCapturadas('af_id=' . $idEntrevista);
+        $vArrastoFundo = $this->modelArrastoFundo->selectArrastoHasPesqueiro('af_id=' . $idEntrevista, 'af_paf_id');
+        $vEspecieCapturadas = $this->modelArrastoFundo->selectArrastoHasEspCapturadas('af_id=' . $idEntrevista, 'spc_af_id');
         $vArrastoAvistamento = $this->modelArrastoFundo->selectArrastoHasAvistamento('af_id=' . $idEntrevista);
-        $vBioCamarao = $this->modelArrastoFundo->selectVBioCamarao('taf_id=' . $idEntrevista);
-        $vBioPeixe = $this->modelArrastoFundo->selectVBioPeixe('taf_id=' . $idEntrevista);
+        $vBioCamarao = $this->modelArrastoFundo->selectVBioCamarao('taf_id=' . $idEntrevista, 'tafbc_id');
+        $vBioPeixe = $this->modelArrastoFundo->selectVBioPeixe('taf_id=' . $idEntrevista, 'tafbp_id');
         $maturidade = $this->modelMaturidade->select(null, 'tmat_tipo');
 
         //print_r($arrayMedias);
@@ -285,7 +285,7 @@ class ArrastoFundoController extends Zend_Controller_Action {
         $idEntrevista = $this->_getParam('id');
         $entrevista = $this->modelArrastoFundo->find($idEntrevista);
         $this->view->assign("entrevista", $entrevista);
-        $vBioCamarao = $this->modelArrastoFundo->selectVBioCamarao('taf_id=' . $idEntrevista);
+        $vBioCamarao = $this->modelArrastoFundo->selectVBioCamarao('taf_id=' . $idEntrevista,'tafbc_id');
         $this->view->assign('vBioCamarao', $vBioCamarao);
     }
 
@@ -361,7 +361,7 @@ class ArrastoFundoController extends Zend_Controller_Action {
         $idEntrevista = $this->_getParam('id');
         $entrevista = $this->modelArrastoFundo->find($idEntrevista);
         $this->view->assign("entrevista", $entrevista);
-        $vBioPeixe = $this->modelArrastoFundo->selectVBioPeixe('taf_id=' . $idEntrevista);
+        $vBioPeixe = $this->modelArrastoFundo->selectVBioPeixe('taf_id=' . $idEntrevista, 'tafbp_id');
 
         $this->view->assign('vBioPeixe', $vBioPeixe);
     }
