@@ -4,43 +4,15 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/wamp/www/pesca/application/views/scripts/calao/editar.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/coleta-manual/editar.phtml</file>
             <file>file:/C:/wamp/www/pesca/public/js/funcoesJquery.js</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/arrasto-fundo/tablepesqueiro.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/arrasto-fundo/tableespcaptura.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/acompanhado/index.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/ArrastoFundoController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/arrasto-fundo/editar.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/vara-pesca/tablebiocamarao.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/emalhe/tablebiopeixe.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/ratoeira/tablebiocamarao.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/linha/tablebiocamarao.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/grosseira/tablebiopeixe.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/calao/tablebiopeixe.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/EmalheController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/emalhe/tablebiocamarao.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/mergulho/tablebiocamarao.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/siripoia/tablebiopeixe.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/ratoeira/tablebiopeixe.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/coleta-manual/tablebiopeixe.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/grosseira/tablebiocamarao.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/tarrafa/tablebiocamarao.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/ColetaManualController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/mergulho/tablebiopeixe.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/CalaoController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/jerere/tablebiopeixe.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/linha/tablebiopeixe.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/manzua/tablebiopeixe.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/siripoia/tablebiocamarao.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/tarrafa/tablebiopeixe.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/calao/tablebiocamarao.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/arrasto-fundo/tablebiocamarao.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/linha-fundo/tablebiopeixe.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/vara-pesca/tablebiopeixe.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/jerere/tablebiocamarao.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/manzua/tablebiocamarao.phtml</file>
-            <file>file:/C:/wamp/www/pesca/application/controllers/RelatoriosController.php</file>
-            <file>file:/C:/wamp/www/pesca/application/views/scripts/linha-fundo/tablebiocamarao.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Mergulho.php</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/AutenticacaoController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/views/scripts/grosseira/editar.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/PortoController.php</file>
+            <file>file:/C:/wamp/www/pesca/application/models/Login.php</file>
             <file>file:/C:/wamp/www/pesca/application/views/scripts/coleta-manual/tablebiocamarao.phtml</file>
+            <file>file:/C:/wamp/www/pesca/application/controllers/MergulhoController.php</file>
         </group>
     </open-files>
 </project-private>
