@@ -16,7 +16,7 @@
                 <td name="inputTempoaPesqueiro"> <?= $vColetaManual['t_tempoapesqueiro'] ?> </td>
                 <td name="inputDistanciaaPesqueiro"> <?= $vColetaManual['t_distapesqueiro'] ?> </td>
                 <td class="td-botao">
-                    <a name="Editar" class="button-del" onclick="ajax_update_pesqueiro('<?= $vColetaManual['cml_paf_id'] ?>', '<?= $vColetaManual['t_tempopesqueiro'] ?>', '<?= $vColetaManual['t_distapesqueiro'] ?>', document.getElementById('formEntrevistas'))">
+                    <a name="Editar" class="button-del" onclick="ajax_update_pesqueiro('<?= $vColetaManual['cml_paf_id'] ?>','<?= $vColetaManual['paf_id'] ?>' ,'<?= $vColetaManual['t_tempopesqueiro'] ?>', '<?= $vColetaManual['t_distapesqueiro'] ?>', document.getElementById('formEntrevistas'))">
                         <ul id="icons" class="ui-widget ui-helper-clearfix">
                             <li class="ui-state-default ui-corner-all" title="Editar"><span class="ui-icon ui-icon-pencil"></span></li>
                         </ul>

@@ -181,6 +181,7 @@
 <fieldset class="noEditable"><legend>Pesqueiro:</legend>
     <fieldset class="noEditable"><legend>Pesqueiro:</legend>
             <div id="base">
+                <input name="idPesqueiro" type="hidden" readonly=""/>
                 <input class="responsivo" name="AddPesqueiro" onclick="ajax_pesqueiro(this.form, '<?= $this->url(array("controller" => "emalhe", "action" => "insertpesqueiro"), null, true) ?>', '<?=$this->entrevista['em_id']?>', '')" type="button" value="Adicionar" />
                 <select class="responsivo" style="float:left;" name="nomePesqueiro">
                     <option value="" selected></option>

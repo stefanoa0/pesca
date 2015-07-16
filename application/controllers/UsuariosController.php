@@ -172,7 +172,7 @@ class UsuariosController extends Zend_Controller_Action {
         $senhaNova = $usuarioForm['novaSenha'];
 
         $login = $this->modelUsuario->selectSenha($idlogin);
-        print_r($login);
+        //print_r($login);
 
         $senhasha1 = sha1($senhaAntiga);
 
