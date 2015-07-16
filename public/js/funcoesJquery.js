@@ -1988,12 +1988,13 @@ function ajax_delete_entrevista_has(id_entrevista, url, id_entrevista_has, model
 }
 
 function resetFormValues(formid) {
-    $(":text,select", $("#"+formid)).each(function () {
+    $("input,select", $("#"+formid)).each(function () {
         $(this).val("");
     });
     $(":button", $("#"+formid)).each(function () {
         $(this).val("Adicionar");
     });
+
 }
 
 function ajax_busca_esp_capturada(form, url){
