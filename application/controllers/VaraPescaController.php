@@ -379,7 +379,8 @@ class VaraPescaController extends Zend_Controller_Action
         $preco = $this->_getParam("precokg");
         $idEntrevista = $this->_getParam("id_entrevista");
         $idEntrevistaEspecie = $this->_getParam("idRelacao");
-        $this->modelVaraPesca->updateEspCapturada($idEntrevistaEspecie,$idEntrevista, $especie, $quantidade, $peso, $preco);
+        $idTipoVenda =  $this->_getParam("id_tipovenda");
+        $this->modelVaraPesca->updateEspCapturada($idEntrevistaEspecie,$idEntrevista, $especie, $quantidade, $peso, $preco, $idTipoVenda);
         $this->redirect("/vara-pesca/tableespcaptura/id/" . $idEntrevista);
         }
     
