@@ -390,12 +390,18 @@ class LinhaFundoController extends Zend_Controller_Action
         $pesqueiro = $this->_getParam("nomePesqueiro");
 
         $tempopesqueiro = $this->_getParam("tempoPesqueiro");
-
+        if(empty($tempopesqueiro)){
+            $tempopesqueiro = null;
+        }
+        $distanciapesqueiro = $this->_getParam("distAPesqueiro");
+        if(empty($distanciapesqueiro)){
+        $distanciapesqueiro=null;
+        }
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $idEntrevistaPesqueiro = $this->_getParam("id_entrevista_pesqueiro");
+        $idEntrevistaPesqueiro = $this->_getParam("idPesqueiro");
 
-        $this->modelLinhaFundo->updatePesqueiro($idEntrevistaPesqueiro, $idEntrevista, $pesqueiro, $tempopesqueiro);
+        $this->modelLinhaFundo->updatePesqueiro($idEntrevistaPesqueiro, $idEntrevista, $pesqueiro, $tempopesqueiro, $distanciapesqueiro);
 
         $this->redirect("/linha-fundo/tablepesqueiro/id/" . $idEntrevista);
     }

@@ -247,23 +247,24 @@ class MergulhoController extends Zend_Controller_Action
     }
     public function updatepesqueiroAction() {
         if ($this->usuario['tp_id'] == 5) {
-            $this->_redirect('index');
+        $this->_redirect('index');
         }
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
-
         $pesqueiro = $this->_getParam("nomePesqueiro");
-
-        $tempopesqueiro = $this->_getParam("tempoPesqueiro");
-
+        $tempoapesqueiro = $this->_getParam("tempoAPesqueiro");
+        if(empty($tempoapesqueiro)){
+        $tempoapesqueiro=null;
+        }
+        $distanciapesqueiro = $this->_getParam("distAPesqueiro");
+        if(empty($distanciapesqueiro)){
+        $distanciapesqueiro=null;
+        }
         $idEntrevista = $this->_getParam("id_entrevista");
-
-        $idEntrevistaPesqueiro = $this->_getParam("id_entrevista_pesqueiro");
-
-        $this->modelMergulho->updatePesqueiro($idEntrevistaPesqueiro, $idEntrevista, $pesqueiro, $tempopesqueiro);
-
+        $idEntrevistaPesqueiro = $this->_getParam("idPesqueiro");
+        $this->modelMergulho->updatePesqueiro($idEntrevistaPesqueiro, $idEntrevista, $pesqueiro, $tempoapesqueiro, $distanciapesqueiro);
         $this->redirect("/mergulho/tablepesqueiro/id/" . $idEntrevista);
-    }
+        }
     public function deletepesqueiroAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);

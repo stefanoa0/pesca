@@ -250,6 +250,19 @@ class EmalheController extends Zend_Controller_Action
         $this->redirect("/emalhe/tablepesqueiro/id/" . $idEntrevista);
         //$this->redirect("/emalhe/editar/id/" . $backUrl);
     }
+    public function updatepesqueiroAction() {
+        if ($this->usuario['tp_id'] == 5) {
+        $this->_redirect('index');
+        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $pesqueiro = $this->_getParam("nomePesqueiro");
+
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaPesqueiro = $this->_getParam("idPesqueiro");
+        $this->modelEmalhe->updatePesqueiro($idEntrevistaPesqueiro, $idEntrevista, $pesqueiro);
+        $this->redirect("/emalhe/tablepesqueiro/id/" . $idEntrevista);
+        }
     
     public function mediaespeciesAction(){
         $this->_helper->layout->disableLayout();

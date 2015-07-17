@@ -166,7 +166,7 @@
         <fieldset class="noEditable"><legend>Pesqueiro e tempo no pesqueiro:</legend>
             <div id="base">
                 <input readonly="" type="hidden" name="idPesqueiro" />
-                <input class="responsivo" name="Add_pesqueiro" onclick="ajax_pesqueiro(this.form, '<?= $this->url(array("controller" => "arrasto-fundo", "action" => "insertpesqueiro"), null, true) ?>', '<?=$this->entrevista['af_id']?>', 'tempo')" type="button" value="Adicionar" />
+                <input class="responsivo" name="AddPesqueiro" onclick="ajax_pesqueiro(this.form, '<?= $this->url(array("controller" => "arrasto-fundo", "action" => "insertpesqueiro"), null, true) ?>', '<?=$this->entrevista['af_id']?>', 'tempo')" type="button" value="Adicionar" />
                 <select class="responsivo" style="float:left;" name="nomePesqueiro">
                     <option value="" selected></option>
                     <?php foreach ($this->pesqueiros as $key => $pesqueiro): ?>

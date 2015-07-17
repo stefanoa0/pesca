@@ -265,12 +265,12 @@ class Application_Model_Emalhe
         $this->dbTableTEmalheHasPesqueiro = new Application_Model_DbTable_EmalheHasPesqueiro();
 
         $dadosPesqueiro = array(
-            'cml_id' => $idEntrevista,
+            'em_id' => $idEntrevista,
             'paf_id' => $pesqueiro,
         );
 
         $wherePescador = $this->dbTableTEmalheHasPesqueiro->getAdapter()
-                ->quoteInto('"cml_paf_id" = ?', $idEntrevistaPesqueiro);
+                ->quoteInto('"em_paf_id" = ?', $idEntrevistaPesqueiro);
 
 
         $this->dbTableTEmalheHasPesqueiro->update($dadosPesqueiro, $wherePescador);

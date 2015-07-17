@@ -255,6 +255,22 @@ public function visualizarAction() {
         $this->redirect("/linha/tablepesqueiro/id/" . $idEntrevista);
         //$this->redirect("/linha/editar/id/" . $backUrl);
     }
+    public function updatepesqueiroAction() {
+    if ($this->usuario['tp_id'] == 5) {
+    $this->_redirect('index');
+    }
+    $this->_helper->layout->disableLayout();
+    $this->_helper->viewRenderer->setNoRender(true);
+    $pesqueiro = $this->_getParam("nomePesqueiro");
+    $tempoapesqueiro = $this->_getParam("tempoAPesqueiro");
+    if(empty($tempoapesqueiro)){
+    $tempoapesqueiro=null;
+    }
+    $idEntrevista = $this->_getParam("id_entrevista");
+    $idEntrevistaPesqueiro = $this->_getParam("idPesqueiro");
+    $this->modelJerere->updatePesqueiro($idEntrevistaPesqueiro, $idEntrevista, $pesqueiro, $tempoapesqueiro);
+    $this->redirect("/jerere/tablepesqueiro/id/" . $idEntrevista);
+    }
     public function mediaespeciesAction(){
         $this->_helper->layout->disableLayout();
         $especie = $this->_getParam("esp_id");

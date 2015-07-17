@@ -222,23 +222,17 @@ private $usuario;
     }
     public function updatepesqueiroAction() {
         if ($this->usuario['tp_id'] == 5) {
-            $this->_redirect('index');
+        $this->_redirect('index');
         }
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
-
         $pesqueiro = $this->_getParam("nomePesqueiro");
 
-        $tempopesqueiro = $this->_getParam("tempoPesqueiro");
-
         $idEntrevista = $this->_getParam("id_entrevista");
-
-        $idEntrevistaPesqueiro = $this->_getParam("id_entrevista_pesqueiro");
-
-        $this->modelTarrafa->updatePesqueiro($idEntrevistaPesqueiro, $idEntrevista, $pesqueiro, $tempopesqueiro);
-
+        $idEntrevistaPesqueiro = $this->_getParam("idPesqueiro");
+        $this->modelTarrafa->updatePesqueiro($idEntrevistaPesqueiro, $idEntrevista, $pesqueiro);
         $this->redirect("/tarrafa/tablepesqueiro/id/" . $idEntrevista);
-    }
+        }
     public function deletepesqueiroAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);

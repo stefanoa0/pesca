@@ -1739,7 +1739,8 @@ function ajax_pesqueiro(form, url, id_entrevista, tipo_entrevista){
             
             if (form.idPesqueiro.value !== "") {
                 url = url.replace("insert", "update");
-                vars = "idPesqueiro="+form.idPesqueiro.value+"&";
+                vars += "idPesqueiro="+form.idPesqueiro.value+"&";
+                //alert(vars);
             }
             
             var pesqueiro = form.nomePesqueiro.value;
@@ -1752,7 +1753,7 @@ function ajax_pesqueiro(form, url, id_entrevista, tipo_entrevista){
             else{
                 if(tipo_entrevista === 'tempo'){
                     var tempo = form.tempoPesqueiro.value;
-                    vars = "nomePesqueiro="+pesqueiro+"&tempoPesqueiro="+tempo+
+                    vars += "nomePesqueiro="+pesqueiro+"&tempoPesqueiro="+tempo+
                         "&id_entrevista="+id_entrevista;
                 }
                 else if(tipo_entrevista === 'distancia'){
@@ -1760,13 +1761,13 @@ function ajax_pesqueiro(form, url, id_entrevista, tipo_entrevista){
                     
                     var distancia = form.distAPesqueiro.value;
 
-                    vars = "nomePesqueiro="+pesqueiro+"&tempoAPesqueiro="+tempo+"&distAPesqueiro="+distancia+
+                    vars += "nomePesqueiro="+pesqueiro+"&tempoAPesqueiro="+tempo+"&distAPesqueiro="+distancia+
                         "&id_entrevista="+id_entrevista;
                         //alert(vars);
                 }
                 else{
                 //var ln = document.getElementById("last_name").value;
-                        vars = "nomePesqueiro="+pesqueiro+
+                        vars += "nomePesqueiro="+pesqueiro+
                         "&id_entrevista="+id_entrevista;
                 }
                 hr.open("POST", url, true);
@@ -1782,20 +1783,23 @@ function ajax_pesqueiro(form, url, id_entrevista, tipo_entrevista){
                 // Send the data to PHP now... and wait for response to update the status div
                 hr.send(vars); // Actually execute the request
                 document.getElementById("pesqueiro").innerHTML = "processando...";
-                form.Add.value = "Adicionar";
+                resetFormValues("formEntrevistas");
                 //resetFormValues("formEntrevistas");
             }
 }
 
-function ajax_update_pesqueiro(id, pesqueiro, tempopesqueiro, distanciapesqueiro, form){
+function ajax_update_pesqueiro(id, pesqueiro,tempopesqueiro, tempoapesqueiro, distanciapesqueiro, form){
     
     form.idPesqueiro.value = id;
     form.nomePesqueiro.value = pesqueiro;
     if(tempopesqueiro){
-        form.tempoaPesqueiro.value = tempopesqueiro;
+        form.tempoPesqueiro.value= tempopesqueiro;
+    }
+    if(tempoapesqueiro){
+        form.tempoAPesqueiro.value = tempoapesqueiro;
     }
     if(distanciapesqueiro){
-        form.distanciaaPesqueiro.value = distanciapesqueiro;
+        form.distAPesqueiro.value = distanciapesqueiro;
     }
     
     form.AddPesqueiro.value = "Atualizar";

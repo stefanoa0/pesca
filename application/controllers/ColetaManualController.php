@@ -269,6 +269,26 @@ class ColetaManualController extends Zend_Controller_Action
         $this->redirect("/coleta-manual/tablepesqueiro/id/" . $idEntrevista);
         //$this->redirect("/coleta-manual/editar/id/" . $backUrl);
     }
+    public function updatepesqueiroAction() {
+        if ($this->usuario['tp_id'] == 5) {
+        $this->_redirect('index');
+        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $pesqueiro = $this->_getParam("nomePesqueiro");
+        $tempoapesqueiro = $this->_getParam("tempoAPesqueiro");
+        if(empty($tempoapesqueiro)){
+        $tempoapesqueiro=null;
+        }
+        $distanciapesqueiro = $this->_getParam("distAPesqueiro");
+        if(empty($distanciapesqueiro)){
+        $distanciapesqueiro=null;
+        }
+        $idEntrevista = $this->_getParam("id_entrevista");
+        $idEntrevistaPesqueiro = $this->_getParam("idPesqueiro");
+        $this->modelColetaManual->updatePesqueiro($idEntrevistaPesqueiro, $idEntrevista, $pesqueiro, $tempoapesqueiro, $distanciapesqueiro);
+        $this->redirect("/coleta-manual/tablepesqueiro/id/" . $idEntrevista);
+        }
     public function mediaespeciesAction(){
         $this->_helper->layout->disableLayout();
         $especie = $this->_getParam("esp_id");

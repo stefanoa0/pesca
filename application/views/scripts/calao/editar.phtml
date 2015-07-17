@@ -175,7 +175,7 @@ endforeach;
     <fieldset class="noEditable"><legend>Pesqueiro:</legend>
         <fieldset class="noEditable"><legend>Pesqueiro e tempo no pesqueiro:</legend>
             <div id="base">
-                <input readonly="" type="text" name="idPesqueiro" />
+                <input readonly="" type="hidden" name="idPesqueiro" />
                 <input class="responsivo" name="AddPesqueiro" onclick="ajax_pesqueiro(this.form, '<?= $this->url(array("controller" => "calao", "action" => "insertpesqueiro"), null, true) ?>', '<?= $this->entrevista['cal_id'] ?>', '')" type="button" value="Adicionar" />
                 <select class="responsivo" style="float:left;" name="nomePesqueiro">
                     <option value="" selected></option>
