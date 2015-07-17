@@ -172,14 +172,18 @@ class UsuariosController extends Zend_Controller_Action {
         $senhaNova = $usuarioForm['novaSenha'];
 
         $login = $this->modelUsuario->selectSenha($idlogin);
-        //print_r($login);
+        print_r($login);
 
         $senhasha1 = sha1($senhaAntiga);
-
+        print_r($senhasha1);
         if($senhasha1 == $login['tl_hashsenha']){
             $senhaNova = sha1($senhaNova);
-            $dadosLogin->update($senhaNova, $idlogin);
-            $this->_redirect('usuarios/index');
+            if($dadosLogin->update($senhaNova, $idlogin)){
+                $this->_redirect('usuarios/index');
+            }
+            else{
+                print_r("Senha Não Foi Alterada com Sucesso!");
+            }
         }
         else {
             print_r("Senha inválida, tente novamente!");

@@ -252,7 +252,7 @@ class ArrastoFundoController extends Zend_Controller_Action {
 
         $idEntrevista = $this->_getParam("id_entrevista");
 
-        $idEntrevistaPesqueiro = $this->_getParam("id_entrevista_pesqueiro");
+        $idEntrevistaPesqueiro = $this->_getParam("iidPesqueiro");
 
         $this->modelArrastoFundo->updatePesqueiro($idEntrevistaPesqueiro, $idEntrevista, $pesqueiro, $tempopesqueiro);
 
