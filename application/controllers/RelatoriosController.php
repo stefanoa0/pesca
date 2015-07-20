@@ -235,19 +235,22 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
         
         
-        $relatorioEspecies = $this->modelRelatorios->selectNomeEspecies();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosArrasto();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
+        
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
             $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        
+            $relatorioEspecies = $this->modelRelatorios->selectNomeEspecies("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
             $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."'");
+            $relatorioEspecies = $this->modelRelatorios->selectNomeEspecies("fd_data between '". $data."'"." and '".$datafim."'");
         }
+        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         $Pesqueiros = $this->modelRelatorios->selectArrastoHasPesqueiro();
         $Relesp = $this->modelRelatorios->selectArrastoHasEspCapturadas(null, 'esp_nome_comum');
         $linha = 2;
@@ -288,8 +291,6 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempopesqueiro']);
                     endif;
                 endforeach;
-                
-                
                 
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
@@ -372,20 +373,25 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
 
-        $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesColetamanual();
+        
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosColetaManual();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        
-        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
             $relatorioColetaManual = $this->modelRelatorios->selectColetaManual("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        
+            $relatorioEspeciesColetaManual = $this->modelRelatorios->selectNomeEspeciesColetaManual("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+
         }
         else{
             $relatorioColetaManual = $this->modelRelatorios->selectColetaManual("fd_data between '". $data."'"." and '".$datafim."'");
+        
+            $relatorioEspeciesColetaManual = $this->modelRelatorios->selectNomeEspeciesColetaManual("fd_data between '". $data."'"." and '".$datafim."'");
+
         }
+        $lastcolumn = $this->listaEspecies($relatorioEspeciesColetaManual, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
 
@@ -466,9 +472,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         
         $this->modelRelatorios = new Application_Model_Relatorios();
-        
-        
-        
+
         $var =  $this->_getParam('id');
         $tipoRel = $this->verificaRelatorio($var);
         
@@ -508,24 +512,32 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Calão');
 
         
-        $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesCalao();
+        //$relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesCalao();
+        
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosCalao();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        
-        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-        $linha = 2;
-        $coluna= 0;
-        
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
             $relatorioCalao = $this->modelRelatorios->selectCalao("cal_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        
+            $relatorioEspeciesCalao = $this->modelRelatorios->selectNomeEspeciesCalao("cal_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+           
         }
         else{
             $relatorioCalao = $this->modelRelatorios->selectCalao("cal_data between '". $data."'"." and '".$datafim."'");
+        
+            $relatorioEspeciesCalao = $this->modelRelatorios->selectNomeEspeciesCalao("cal_data between '". $data."'"." and '".$datafim."'");
+           
         }
-
+        $lastcolumn = $this->listaEspecies($relatorioEspeciesCalao, $coluna, $linha, $objPHPExcel);
+        
+        
+        
+        //$lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
+        $linha = 2;
+        $coluna= 0;
         foreach ( $relatorioCalao as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -644,20 +656,21 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
 
-        $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesEmalhe();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosEmalhe();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
         
-        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-
+       
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto2 = $this->verifporto($porto);
-            $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("drecolhimento between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $porto2 = $this->verifporto($porto);
+        $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("drecolhimento between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $relatorioEspeciesEmalhe = $this->modelRelatorios->selectNomeEspeciesEmalhe("drecolhimento between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("drecolhimento between '". $data."'"." and '".$datafim."'");
+        $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("drecolhimento between '". $data."'"." and '".$datafim."'");
+        $relatorioEspeciesEmalhe = $this->modelRelatorios->selectNomeEspeciesEmalhe("drecolhimento between '". $data."'"." and '".$datafim."'");
         }
+        $lastcolumn = $this->listaEspecies($relatorioEspeciesEmalhe, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
 
@@ -780,20 +793,21 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
         
-        $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesGrosseira();
+        
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosGrosseira();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        
-        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
 
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto2 = $this->verifporto($porto);
-            $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $porto2 = $this->verifporto($porto);
+        $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $relatorioEspeciesGrosseira = $this->modelRelatorios->selectNomeEspeciesGrosseira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioEspeciesGrosseira = $this->modelRelatorios->selectNomeEspeciesGrosseira("fd_data between '". $data."'"." and '".$datafim."'");
         }
+        $lastcolumn = $this->listaEspecies($relatorioEspeciesGrosseira, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
 
@@ -918,21 +932,21 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
         
-        $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesJerere();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosJerere();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        
-        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto2 = $this->verifporto($porto);
-            $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $porto2 = $this->verifporto($porto);
+        $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $relatorioEspeciesJerere = $this->modelRelatorios->selectNomeEspeciesJerere("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioEspeciesJerere = $this->modelRelatorios->selectNomeEspeciesJerere("fd_data between '". $data."'"." and '".$datafim."'");
         }
+        $lastcolumn = $this->listaEspecies($relatorioEspeciesJerere, $coluna, $linha, $objPHPExcel);
         
         $linha = 2;
         $coluna= 0;
@@ -1057,21 +1071,21 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
 
-        $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesLinha();
+        
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosLinha();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
         
-        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-        
-        
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto2 = $this->verifporto($porto);
-            $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $porto2 = $this->verifporto($porto);
+        $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $relatorioEspeciesLinha = $this->modelRelatorios->selectNomeEspeciesLinha("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioEspeciesLinha = $this->modelRelatorios->selectNomeEspeciesLinha("fd_data between '". $data."'"." and '".$datafim."'");
         }
+        $lastcolumn = $this->listaEspecies($relatorioEspeciesLinha, $coluna, $linha, $objPHPExcel);
         
         $linha = 2;
         $coluna= 0;
@@ -1198,21 +1212,21 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
         
-        $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesLinhaFundo();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosLinhaFundo();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        
-        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-       
+              
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto2 = $this->verifporto($porto);
-            $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $porto2 = $this->verifporto($porto);
+        $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $relatorioEspeciesLinhaFundo = $this->modelRelatorios->selectNomeEspeciesLinhaFundo("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioEspeciesLinhaFundo = $this->modelRelatorios->selectNomeEspeciesLinhaFundo("fd_data between '". $data."'"." and '".$datafim."'");
         }
+        $lastcolumn = $this->listaEspecies($relatorioEspeciesLinhaFundo, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
 
@@ -1336,20 +1350,20 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
 
-        $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesManzua();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosManzua();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
         
-        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-        
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto2 = $this->verifporto($porto);
-            $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $porto2 = $this->verifporto($porto);
+        $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $relatorioEspeciesManzua = $this->modelRelatorios->selectNomeEspeciesManzua("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioEspeciesManzua = $this->modelRelatorios->selectNomeEspeciesManzua("fd_data between '". $data."'"." and '".$datafim."'");
         }
+        $lastcolumn = $this->listaEspecies($relatorioEspeciesManzua, $coluna, $linha, $objPHPExcel);
         
         $linha = 2;
         $coluna= 0;
@@ -1473,21 +1487,21 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
 
-        $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesMergulho();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosMergulho();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        
-        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto2 = $this->verifporto($porto);
-            $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $porto2 = $this->verifporto($porto);
+        $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $relatorioEspeciesMergulho = $this->modelRelatorios->selectNomeEspeciesMergulho("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioEspeciesMergulho = $this->modelRelatorios->selectNomeEspeciesMergulho("fd_data between '". $data."'"." and '".$datafim."'");
         }
+        $lastcolumn = $this->listaEspecies($relatorioEspeciesMergulho, $coluna, $linha, $objPHPExcel);
         
         $linha = 2;
         $coluna= 0;
@@ -1612,21 +1626,21 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
 
         
-        $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesRatoeira();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosRatoeira();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        
-        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto2 = $this->verifporto($porto);
-            $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $porto2 = $this->verifporto($porto);
+        $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $relatorioEspeciesRatoeira = $this->modelRelatorios->selectNomeEspeciesRatoeira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioEspeciesRatoeira = $this->modelRelatorios->selectNomeEspeciesRatoeira("fd_data between '". $data."'"." and '".$datafim."'");
         }
+        $lastcolumn = $this->listaEspecies($relatorioEspeciesRatoeira, $coluna, $linha, $objPHPExcel);
         
         $linha = 2;
         $coluna= 0;
@@ -1750,21 +1764,21 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
         
-        $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesSiripoia();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosSiripoia();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        
-        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto2 = $this->verifporto($porto);
-            $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $porto2 = $this->verifporto($porto);
+        $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $relatorioEspeciesSiripoia = $this->modelRelatorios->selectNomeEspeciesSiripoia("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioEspeciesSiripoia = $this->modelRelatorios->selectNomeEspeciesSiripoia("fd_data between '". $data."'"." and '".$datafim."'");
         }
+        $lastcolumn = $this->listaEspecies($relatorioEspeciesSiripoia, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
 
@@ -1883,20 +1897,21 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
         
-        $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesTarrafa();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosTarrafa();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
         
-        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
-            $porto2 = $this->verifporto($porto);
-            $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $porto2 = $this->verifporto($porto);
+        $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $relatorioEspeciesTarrafa = $this->modelRelatorios->selectNomeEspeciesTarrafa("tar_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."'");
+        $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."'");
+        $relatorioEspeciesTarrafa = $this->modelRelatorios->selectNomeEspeciesTarrafa("tar_data between '". $data."'"." and '".$datafim."'");
         }
+        $lastcolumn = $this->listaEspecies($relatorioEspeciesTarrafa, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
 
@@ -2020,21 +2035,21 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
 
-        
-        $relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesVaraPesca();
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosVaraPesca();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
         
-        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
             $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
-        }
-        else{
+            $relatorioEspeciesVaraPesca = $this->modelRelatorios->selectNomeEspeciesVaraPesca("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            }
+            else{
             $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."'");
-        }
+            $relatorioEspeciesVaraPesca = $this->modelRelatorios->selectNomeEspeciesVaraPesca("fd_data between '". $data."'"." and '".$datafim."'");
+            }
+            $lastcolumn = $this->listaEspecies($relatorioEspeciesVaraPesca, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
 
@@ -2874,10 +2889,9 @@ class RelatoriosController extends Zend_Controller_Action
         
         
         $relatorioEspecies = $this->modelRelatorios->selectEspecies();
-        
+        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         $coluna = 2+$quant;
         
-        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
@@ -2887,6 +2901,7 @@ class RelatoriosController extends Zend_Controller_Action
         else{
             $relatorioCalao = $this->modelRelatorios->selectCalao("cal_data between '". $data."'"." and '".$datafim."'");
         }
+        
         $linha = 2;
         $coluna= 0;
 
