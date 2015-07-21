@@ -772,7 +772,10 @@ class BarcosController extends Zend_Controller_Action
         foreach ( $relatorioBarcos as $key => $consulta ):
                 $sheet->setCellValueByColumnAndRow($coluna, $linha,  $consulta['bar_id']);
                 $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
-                
+                $embDetalhada = $this->modelEmbarcacaoDetalhada->select('bar_id = '.$consulta['bar_id']);
+                if(!empty($embDetalhada)){
+                    $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Caracterizada');
+                }
             $coluna = 0;
             $linha++;
         endforeach;
