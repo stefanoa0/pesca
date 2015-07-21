@@ -748,10 +748,45 @@ class BarcosController extends Zend_Controller_Action
         $modeloRelatorio->setNewLine();
 	$pdf = $modeloRelatorio->getRelatorio();
 
-		ob_end_clean();
+        ob_end_clean();
         header('Content-Disposition: attachment;filename="rel_lista_embarcacoes.pdf"');
         header("Content-type: application/x-pdf");
         echo $pdf->render();
+   }
+   
+   public function relatoriobarcosAction(){
+     
+        $this->modelBarcos = new Application_Model_Barcos();
+
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->setActiveSheetIndex(0);
+        $coluna = 0;
+        $linha = 1;
+        
+        $sheet = $objPHPExcel->getActiveSheet();
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'ID');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Nome');
+        $linha++;
+        $coluna=0;
+        $relatorioBarcos = $this->modelBarcos->select(null,'bar_nome');
+        foreach ( $relatorioBarcos as $key => $consulta ):
+                $sheet->setCellValueByColumnAndRow($coluna, $linha,  $consulta['bar_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['bar_nome']);
+                
+            $coluna = 0;
+            $linha++;
+        endforeach;
+        //$sheet->setCellValueByColumnAndRow(1, $linha, $fim1-$inicio1);
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        ob_end_clean();
+
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="Barcos.xls"');
+        header('Cache-Control: max-age=0');
+        
+        ob_end_clean();
+        $objWriter->save('php://output');
+    
    }
 }
 

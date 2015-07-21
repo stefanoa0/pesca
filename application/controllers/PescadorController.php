@@ -2542,4 +2542,40 @@ class PescadorController extends Zend_Controller_Action {
         $objWriter->save('php://output');
     
     } 
+    
+    public function relatoriopescadorAction(){
+     
+        $this->modelPescador = new Application_Model_Pescador();
+
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->setActiveSheetIndex(0);
+        $coluna = 0;
+        $linha = 1;
+        
+        $sheet = $objPHPExcel->getActiveSheet();
+        $sheet->setCellValueByColumnAndRow($coluna,   $linha, 'ID');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Nome');
+        $linha++;
+        $coluna=0;
+        $relatorioPescador = $this->modelPescador->select(null,'tp_nome');
+        foreach ( $relatorioPescador as $key => $consulta ):
+                $sheet->setCellValueByColumnAndRow($coluna, $linha,  $consulta['tp_id']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tp_apelido']);
+                
+            $coluna = 0;
+            $linha++;
+        endforeach;
+        //$sheet->setCellValueByColumnAndRow(1, $linha, $fim1-$inicio1);
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        ob_end_clean();
+
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="Pescador.xls"');
+        header('Cache-Control: max-age=0');
+        
+        ob_end_clean();
+        $objWriter->save('php://output');
+    
+   }
 }
