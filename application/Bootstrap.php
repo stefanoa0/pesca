@@ -6,7 +6,6 @@ protected function _initViewHelpers()
     {
         header( 'Content-Type: text/html; charset=utf-8' );
         
-        
          
     }
 
