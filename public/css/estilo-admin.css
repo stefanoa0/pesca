@@ -318,6 +318,11 @@ tbody tr:nth-child(odd) {
     margin-top: -176px;
 }
 
+
+#relatorios-dir{
+    margin-top: -150px;
+}
+
 .direita-pescador-social{
     float: right;
     padding: 0;

@@ -101,6 +101,38 @@ class RelatoriosController extends Zend_Controller_Action
         }
         
     }
+    public function gerarnovoAction(){
+        
+        $valueRelatorio = $this->_getAllParams();
+
+        $rel = 'id/'.$rel;
+        
+        $dia = $valueRelatorio['dia_ini'];
+        $mes = $valueRelatorio['mes_ini'];
+        $ano = $valueRelatorio['ano_ini'];
+        $data = $ano.'-'.$mes.'-'.$dia;
+        $data = '/data/'.$data;
+        
+        $diafim = $valueRelatorio['dia_fim'];
+        $mesfim = $valueRelatorio['mes_fim'];
+        $anofim = $valueRelatorio['ano_fim'];
+        $datafim = $anofim.'-'.$mesfim.'-'.$diafim;
+        
+        $datafim = '/datafim/'.$datafim;
+        
+        
+        $porto = $valueRelatorio['porto'];
+        
+        $porto = '/porto/'.$porto;
+        
+        switch($valueRelatorio['artePesca']){
+            
+            case 18:$this->_redirect("/relatorios/cpue".$data.$datafim.$porto);break;
+            case 19:$this->_redirect("/relatorios/relartesbyporto".$data.$datafim.$porto);break;
+            case 20:$this->_redirect("/relatorios/relatorioestimativas".$data.$datafim.$porto);break;
+        }
+        
+    }
     public function listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel){
         $sheet =$objPHPExcel->getActiveSheet();
         foreach($relatorioEspecies as $key => $especie):
