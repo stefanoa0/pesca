@@ -522,11 +522,11 @@ class Application_Model_LinhaFundo
         return $dbTable->fetchAll($select)->toArray();
     }
     
-    public function selectEstimativaByPorto($where = null){
+    public function selectEstimativaByPorto($where = null,$order=null,$limit=null){
         $dbTable = new Application_Model_DbTable_VEstimativaLinhaFundo();
         $select = $dbTable->select()->setIntegrityCheck(false)->
                 from('v_estimativa_linhafundo', array('pto_nome', 'tap_artepesca', 'sum(naomonitorados) as naomonitorados', 'sum(monitorados) as monitorados', 'sum(peso) as peso', 'mes', 'ano'))->
-                group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'));
+                group(array('pto_nome', 'tap_artepesca', 'mes', 'ano'))->order($order)->limit($limit);
         
         if(!is_null($where)){
             $select->where($where);

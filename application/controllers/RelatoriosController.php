@@ -2887,10 +2887,10 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Calão');
 
         
-        
+        $coluna = 2+$quant;
         $relatorioEspecies = $this->modelRelatorios->selectEspecies();
         $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-        $coluna = 2+$quant;
+        
         
         
         $porto = $this->_getParam('porto');
@@ -3322,7 +3322,7 @@ class RelatoriosController extends Zend_Controller_Action
                 foreach($Pesqueiros as $key => $nome):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
-                $coluna= $quant;
+                $coluna= 2+$quant;
                 foreach($Pesqueiros as $key => $tempo):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
@@ -3399,7 +3399,7 @@ class RelatoriosController extends Zend_Controller_Action
                 foreach($Pesqueiros as $key => $nome):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
-                $coluna= $quant;
+                $coluna= 2+$quant;
                 foreach($Pesqueiros as $key => $tempo):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
@@ -3475,7 +3475,7 @@ class RelatoriosController extends Zend_Controller_Action
                 foreach($Pesqueiros as $key => $nome):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
-                $coluna= +$quant;
+                $coluna= 2+$quant;
                 foreach($Pesqueiros as $key => $tempo):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
@@ -3552,7 +3552,7 @@ class RelatoriosController extends Zend_Controller_Action
                 foreach($Pesqueiros as $key => $nome):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
-                $coluna= $quant;
+                $coluna= 2+$quant;
                 foreach($Pesqueiros as $key => $tempo):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
@@ -3628,7 +3628,7 @@ class RelatoriosController extends Zend_Controller_Action
                 foreach($Pesqueiros as $key => $nome):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
-                $coluna= $quant;
+                $coluna= 2+$quant;
                 foreach($Pesqueiros as $key => $tempo):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
@@ -3705,7 +3705,7 @@ class RelatoriosController extends Zend_Controller_Action
                 foreach($Pesqueiros as $key => $nome):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
-                $coluna= $quant;
+                $coluna= 2+$quant;
                 foreach($Pesqueiros as $key => $tempo):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
@@ -3780,7 +3780,7 @@ class RelatoriosController extends Zend_Controller_Action
                 foreach($Pesqueiros as $key => $nome):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
-                $coluna= $quant;
+                
                 
                 $Relesp = $this->modelRelatorios->selectTarrafaHasEspCapturadas('tar_id = '.$consulta['tar_id']);
                 
@@ -3856,7 +3856,7 @@ class RelatoriosController extends Zend_Controller_Action
                 foreach($Pesqueiros as $key => $nome):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
-                $coluna= $quant;
+                $coluna= 2+$quant;
                 foreach($Pesqueiros as $key => $tempo):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
@@ -6033,9 +6033,6 @@ class RelatoriosController extends Zend_Controller_Action
         
         $porto = $this->_getParam('porto');
            
-                
-        
-        
         $objPHPExcel = new PHPExcel();
         $myWorkSheet = new PHPExcel_Worksheet($objPHPExcel, 'Estimativa por Peso');
 
@@ -6048,36 +6045,36 @@ class RelatoriosController extends Zend_Controller_Action
 
         if($porto != '999'){
             $nomePorto = $this->verifporto($porto);
-            $arrasto = $modelArrasto->selectEstimativaByPorto( "pto_nome ='".$nomePorto."'");
-            $calao =   $modelCalao->selectEstimativaByPorto("pto_nome ='".$nomePorto."' ");
-            $coletamanual =$modelColetaManual->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
-            $emalhe =$modelEmalhe->selectEstimativaByPorto("pto_nome ='".$nomePorto."' ");
-            $grosseira =$modelGrosseira->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
-            $jerere =$modelJerere->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
-            $pescalinha =$modelLinha->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
-            $linhafundo =$modelLinhaFundo->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
-            $manzua =$modelManzua->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
-            $mergulho =$modelMergulho->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
-            $ratoeira =$modelRatoeira->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
-            $siripoia =$modelSiripoia->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
-            $tarrafa =$modelTarrafa->selectEstimativaByPorto("pto_nome ='".$nomePorto."' ");
-            $varapesca =$modelVaraPesca->selectEstimativaByPorto( "pto_nome ='".$nomePorto."' ");
+            $arrasto = $modelArrasto->selectEstimativaByPorto( "pto_nome = '$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $calao =   $modelCalao->selectEstimativaByPorto("pto_nome = '$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $coletamanual =$modelColetaManual->selectEstimativaByPorto( "pto_nome ='$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $emalhe =$modelEmalhe->selectEstimativaByPorto("pto_nome ='$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $grosseira =$modelGrosseira->selectEstimativaByPorto("pto_nome ='$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $jerere =$modelJerere->selectEstimativaByPorto("pto_nome ='$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $pescalinha =$modelLinha->selectEstimativaByPorto("pto_nome ='$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $linhafundo =$modelLinhaFundo->selectEstimativaByPorto("pto_nome ='$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $manzua =$modelManzua->selectEstimativaByPorto("pto_nome ='$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $mergulho =$modelMergulho->selectEstimativaByPorto("pto_nome ='$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $ratoeira =$modelRatoeira->selectEstimativaByPorto("pto_nome ='$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $siripoia =$modelSiripoia->selectEstimativaByPorto("pto_nome ='$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $tarrafa =$modelTarrafa->selectEstimativaByPorto("pto_nome ='$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $varapesca =$modelVaraPesca->selectEstimativaByPorto("pto_nome ='$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
         }
          else{
-             $arrasto = $modelArrasto->selectEstimativaByPorto();
-             $calao =$modelCalao->selectEstimativaByPorto();
-            $coletamanual =$modelColetaManual->selectEstimativaByPorto();
-            $emalhe =$modelEmalhe->selectEstimativaByPorto();
-            $grosseira =$modelGrosseira->selectEstimativaByPorto();
-            $jerere =$modelJerere->selectEstimativaByPorto();
-            $pescalinha =$modelLinha->selectEstimativaByPorto();
-            $linhafundo =$modelLinhaFundo->selectEstimativaByPorto();
-            $manzua =$modelManzua->selectEstimativaByPorto();
-            $mergulho =$modelMergulho->selectEstimativaByPorto();
-            $ratoeira =$modelRatoeira->selectEstimativaByPorto();
-            $siripoia =$modelSiripoia->selectEstimativaByPorto();
-            $tarrafa =$modelTarrafa->selectEstimativaByPorto();
-            $varapesca =$modelVaraPesca->selectEstimativaByPorto();
+             $arrasto = $modelArrasto->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+             $calao =$modelCalao->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $coletamanual =$modelColetaManual->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $emalhe =$modelEmalhe->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $grosseira =$modelGrosseira->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $jerere =$modelJerere->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $pescalinha =$modelLinha->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $linhafundo =$modelLinhaFundo->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $manzua =$modelManzua->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $mergulho =$modelMergulho->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $ratoeira =$modelRatoeira->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $siripoia =$modelSiripoia->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $tarrafa =$modelTarrafa->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $varapesca =$modelVaraPesca->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
          }  
 
          $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Local');
@@ -6340,12 +6337,14 @@ class RelatoriosController extends Zend_Controller_Action
         endforeach;
         
         // Create a new worksheet called "My Data"
-        $myWorkSheet = new PHPExcel_Worksheet($objPHPExcel, 'Estimativa por Quantidades');
+        $myWorkSheet2 = new PHPExcel_Worksheet($objPHPExcel, 'Estimativa por Quantidades');
 
         // Attach the "My Data" worksheet as the first worksheet in the PHPExcel object
-        $objPHPExcel->addSheet($myWorkSheet, 1);
+        $objPHPExcel->addSheet($myWorkSheet2, 1);
         $objPHPExcel->setActiveSheetIndex(1);
+        $sheet = $objPHPExcel->getActiveSheet();
         $linha = 1;
+        $coluna= 0;
         
         $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Local');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
