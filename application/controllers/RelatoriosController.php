@@ -1509,7 +1509,7 @@ class RelatoriosController extends Zend_Controller_Action
                         $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
-                if($coluna < $lastcolumn-1){
+                if($coluna < $lastcolumn-1 && $esp['esp_nome_comum'] != $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
