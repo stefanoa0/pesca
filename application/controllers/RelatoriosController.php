@@ -1,3 +1,4 @@
+
 <?php
 ini_set('memory_limit', '-1');
 class RelatoriosController extends Zend_Controller_Action
@@ -10,14 +11,11 @@ class RelatoriosController extends Zend_Controller_Action
         }
         
         $this->_helper->layout->setLayout('admin');
-
-
         $auth = Zend_Auth::getInstance();
          if ( $auth->hasIdentity() ){
           $identity = $auth->getIdentity();
           $identity2 = get_object_vars($identity);
         }
-
         $this->modelUsuario = new Application_Model_Usuario();
         $this->usuario = $this->modelUsuario->selectLogin($identity2['tl_id']);
         $this->view->assign("usuario",$this->usuario);
@@ -29,7 +27,6 @@ class RelatoriosController extends Zend_Controller_Action
         }
         $this->modelRelatorios = new Application_Model_Relatorios();
     }
-
     public function indexAction(){
         
         $modelPorto = new Application_Model_Porto();
@@ -53,7 +50,6 @@ class RelatoriosController extends Zend_Controller_Action
     public function gerarAction(){
         
         $valueRelatorio = $this->_getAllParams();
-
         $rel = $valueRelatorio['tipoRelatorio'];
         $rel = 'id/'.$rel;
         
@@ -98,6 +94,37 @@ class RelatoriosController extends Zend_Controller_Action
             case 19:$this->_redirect("/relatorios/relartesbyporto".$data.$datafim.$porto);break;
             case 20:$this->_redirect("/relatorios/relatorioestimativas".$data.$datafim.$porto);break;
             case 21:$this->_redirect("/relatorios/relatoriocompletoresumido/".$rel.$data.$datafim.$porto);break;
+        }
+        
+    }
+    public function gerarnovoAction(){
+        
+        $valueRelatorio = $this->_getAllParams();
+        $rel = 'id/'.$rel;
+        
+        $dia = $valueRelatorio['dia_ini'];
+        $mes = $valueRelatorio['mes_ini'];
+        $ano = $valueRelatorio['ano_ini'];
+        $data = $ano.'-'.$mes.'-'.$dia;
+        $data = '/data/'.$data;
+        
+        $diafim = $valueRelatorio['dia_fim'];
+        $mesfim = $valueRelatorio['mes_fim'];
+        $anofim = $valueRelatorio['ano_fim'];
+        $datafim = $anofim.'-'.$mesfim.'-'.$diafim;
+        
+        $datafim = '/datafim/'.$datafim;
+        
+        
+        $porto = $valueRelatorio['porto'];
+        
+        $porto = '/porto/'.$porto;
+        
+        switch($valueRelatorio['artePesca']){
+            
+            case 18:$this->_redirect("/relatorios/cpue".$data.$datafim.$porto);break;
+            case 19:$this->_redirect("/relatorios/relartesbyporto".$data.$datafim.$porto);break;
+            case 20:$this->_redirect("/relatorios/relatorioestimativas".$data.$datafim.$porto);break;
         }
         
     }
@@ -164,7 +191,6 @@ class RelatoriosController extends Zend_Controller_Action
         if($data=='--'){
             $data = date('Y-m-j');
         }
-
         return $data;
     }
     public function dataInicial($data){
@@ -203,8 +229,6 @@ class RelatoriosController extends Zend_Controller_Action
         
      
         $this->modelRelatorios = new Application_Model_Relatorios();
-
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $coluna = 0;
@@ -243,13 +267,12 @@ class RelatoriosController extends Zend_Controller_Action
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
             $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
-        
-            $relatorioEspecies = $this->modelRelatorios->selectNomeEspecies("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+
         }
         else{
             $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."'");
-            $relatorioEspecies = $this->modelRelatorios->selectNomeEspecies("fd_data between '". $data."'"." and '".$datafim."'");
         }
+        $relatorioEspecies = $this->modelRelatorios->selectNomeEspecies();
         $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         $Pesqueiros = $this->modelRelatorios->selectArrastoHasPesqueiro();
         $Relesp = $this->modelRelatorios->selectArrastoHasEspCapturadas(null, 'esp_nome_comum');
@@ -313,7 +336,6 @@ class RelatoriosController extends Zend_Controller_Action
         //$sheet->setCellValueByColumnAndRow(1, $linha, $fim1-$inicio1);
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="relatorioArrasto_'.$tipoRel.'.xls"');
         header('Cache-Control: max-age=0');
@@ -346,7 +368,6 @@ class RelatoriosController extends Zend_Controller_Action
         
         $data = $this->dataInicial($date);
         $datafim = $this->dataFinal($datend);
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -372,7 +393,6 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
-
         
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosColetaManual();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
@@ -380,21 +400,16 @@ class RelatoriosController extends Zend_Controller_Action
         $porto = $this->_getParam('porto');
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
-            $relatorioColetaManual = $this->modelRelatorios->selectColetaManual("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
-        
-            $relatorioEspeciesColetaManual = $this->modelRelatorios->selectNomeEspeciesColetaManual("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
-
+            $relatorioColetaManual = $this->modelRelatorios->selectColetaManual("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");    
         }
         else{
             $relatorioColetaManual = $this->modelRelatorios->selectColetaManual("fd_data between '". $data."'"." and '".$datafim."'");
         
-            $relatorioEspeciesColetaManual = $this->modelRelatorios->selectNomeEspeciesColetaManual("fd_data between '". $data."'"." and '".$datafim."'");
-
         }
+        $relatorioEspeciesColetaManual = $this->modelRelatorios->selectNomeEspeciesColetaManual();
         $lastcolumn = $this->listaEspecies($relatorioEspeciesColetaManual, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
-
         foreach ( $relatorioColetaManual as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -413,10 +428,8 @@ class RelatoriosController extends Zend_Controller_Action
             
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
             $consulta['cml_mreviva'] = $this->mare($consulta['cml_mreviva']);
-
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_mreviva']);
             $consulta['cml_motor'] = $this->motor($consulta['cml_motor']);
-
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_motor']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_obs']);
@@ -448,14 +461,11 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna = 0;
             $linha++;
         endforeach;
-
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="relatorioColetaManual_'.$tipoRel.'.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $objWriter->save('php://output');
         $objWriter->save('files/relatorioColetaManual_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
@@ -472,7 +482,6 @@ class RelatoriosController extends Zend_Controller_Action
         
         
         $this->modelRelatorios = new Application_Model_Relatorios();
-
         $var =  $this->_getParam('id');
         $tipoRel = $this->verificaRelatorio($var);
         
@@ -482,7 +491,6 @@ class RelatoriosController extends Zend_Controller_Action
         $data = $this->dataInicial($date);
         $datafim = $this->dataFinal($datend);
         
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -510,9 +518,8 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Calão');
-
         
-        //$relatorioEspecies = $this->modelRelatorios->selectNomeEspeciesCalao();
+        $relatorioEspeciesCalao = $this->modelRelatorios->selectNomeEspeciesCalao();
         
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosCalao();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
@@ -522,14 +529,12 @@ class RelatoriosController extends Zend_Controller_Action
             $porto2 = $this->verifporto($porto);
             $relatorioCalao = $this->modelRelatorios->selectCalao("cal_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         
-            $relatorioEspeciesCalao = $this->modelRelatorios->selectNomeEspeciesCalao("cal_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
            
         }
         else{
             $relatorioCalao = $this->modelRelatorios->selectCalao("cal_data between '". $data."'"." and '".$datafim."'");
         
-            $relatorioEspeciesCalao = $this->modelRelatorios->selectNomeEspeciesCalao("cal_data between '". $data."'"." and '".$datafim."'");
-           
+         
         }
         $lastcolumn = $this->listaEspecies($relatorioEspeciesCalao, $coluna, $linha, $objPHPExcel);
         
@@ -557,7 +562,6 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_malha1']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_malha2']);
             $consulta['cal_motor'] = $this->motor($consulta['cal_motor']);
-
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_motor']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_obs']);
@@ -590,16 +594,13 @@ class RelatoriosController extends Zend_Controller_Action
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="relatorioCalao_'.$tipoRel.'.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
         $objWriter->save('files/relatorioCalao_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
-
     }
     
     public function relatoriocompletoemalheAction() {
@@ -623,7 +624,6 @@ class RelatoriosController extends Zend_Controller_Action
         
         $data = $this->dataInicial($date);
         $datafim = $this->dataFinal($datend);
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -655,7 +655,6 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
-
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosEmalhe();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
         
@@ -664,16 +663,15 @@ class RelatoriosController extends Zend_Controller_Action
         if($porto != '999'){
         $porto2 = $this->verifporto($porto);
         $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("drecolhimento between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
-        $relatorioEspeciesEmalhe = $this->modelRelatorios->selectNomeEspeciesEmalhe("drecolhimento between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        
         }
         else{
         $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("drecolhimento between '". $data."'"." and '".$datafim."'");
-        $relatorioEspeciesEmalhe = $this->modelRelatorios->selectNomeEspeciesEmalhe("drecolhimento between '". $data."'"." and '".$datafim."'");
         }
+        $relatorioEspeciesEmalhe = $this->modelRelatorios->selectNomeEspeciesEmalhe();
         $lastcolumn = $this->listaEspecies($relatorioEspeciesEmalhe, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
-
         foreach ( $relatorioEmalhe as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -699,11 +697,9 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_malha']);
             
             $consulta['em_motor'] = $this->motor($consulta['em_motor']);
-
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_motor']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_obs']);
-
             $Pesqueiros = $this->modelRelatorios->selectEmalheHasPesqueiro('em_id = '.$consulta['em_id']);
              $coluna++;
             foreach($Pesqueiros as $key => $nome):
@@ -726,19 +722,15 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna = 0;
             $linha++;
         endforeach;
-
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="relatorioEmalhe_'.$tipoRel.'.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
         $objWriter->save('files/relatorioEmalhe_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
-
     }
     
     public function relatoriocompletogroseiraAction() {
@@ -761,7 +753,6 @@ class RelatoriosController extends Zend_Controller_Action
         
         $data = $this->dataInicial($date);
         $datafim = $this->dataFinal($datend);
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -796,21 +787,19 @@ class RelatoriosController extends Zend_Controller_Action
         
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosGrosseira();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
-
         $porto = $this->_getParam('porto');
         if($porto != '999'){
         $porto2 = $this->verifporto($porto);
         $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
-        $relatorioEspeciesGrosseira = $this->modelRelatorios->selectNomeEspeciesGrosseira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
         $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."'");
-        $relatorioEspeciesGrosseira = $this->modelRelatorios->selectNomeEspeciesGrosseira("fd_data between '". $data."'"." and '".$datafim."'");
         }
+        $relatorioEspeciesGrosseira = $this->modelRelatorios->selectNomeEspeciesGrosseira();
+        
         $lastcolumn = $this->listaEspecies($relatorioEspeciesGrosseira, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
-
         foreach ( $relatorioGrosseira as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -835,11 +824,9 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['isc_tipo']);
             
             $consulta['grs_motor'] = $this->motor($consulta['grs_motor']);
-
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_motor']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['grs_obs']);
-
             $Pesqueiros = $this->modelRelatorios->selectGrosseiraHasPesqueiro('grs_id = '.$consulta['grs_id']);
                 
                 $coluna++;
@@ -870,11 +857,9 @@ class RelatoriosController extends Zend_Controller_Action
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="relatorioGrosseira_'.$tipoRel.'.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
@@ -902,7 +887,6 @@ class RelatoriosController extends Zend_Controller_Action
         $data = $this->dataInicial($date);
         $datafim = $this->dataFinal($datend);
         
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -940,17 +924,16 @@ class RelatoriosController extends Zend_Controller_Action
         if($porto != '999'){
         $porto2 = $this->verifporto($porto);
         $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
-        $relatorioEspeciesJerere = $this->modelRelatorios->selectNomeEspeciesJerere("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
         $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."'");
-        $relatorioEspeciesJerere = $this->modelRelatorios->selectNomeEspeciesJerere("fd_data between '". $data."'"." and '".$datafim."'");
         }
+        $relatorioEspeciesJerere = $this->modelRelatorios->selectNomeEspeciesJerere();
+        
         $lastcolumn = $this->listaEspecies($relatorioEspeciesJerere, $coluna, $linha, $objPHPExcel);
         
         $linha = 2;
         $coluna= 0;
-
         foreach ( $relatorioJerere as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -1005,19 +988,15 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna = 0;
             $linha++;
         endforeach;
-
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="relatorioJereré_'.$tipoRel.'.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
         $objWriter->save('files/relatorioJerere_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
-
     }
     
    public function relatoriocompletolinhaAction() {
@@ -1039,7 +1018,6 @@ class RelatoriosController extends Zend_Controller_Action
         
         $data = $this->dataInicial($date);
         $datafim = $this->dataFinal($datend);
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -1070,7 +1048,6 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
-
         
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosLinha();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
@@ -1079,17 +1056,17 @@ class RelatoriosController extends Zend_Controller_Action
         if($porto != '999'){
         $porto2 = $this->verifporto($porto);
         $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
-        $relatorioEspeciesLinha = $this->modelRelatorios->selectNomeEspeciesLinha("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
         $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."'");
-        $relatorioEspeciesLinha = $this->modelRelatorios->selectNomeEspeciesLinha("fd_data between '". $data."'"." and '".$datafim."'");
         }
+        
+        $relatorioEspeciesLinha = $this->modelRelatorios->selectNomeEspeciesLinha();
+        
         $lastcolumn = $this->listaEspecies($relatorioEspeciesLinha, $coluna, $linha, $objPHPExcel);
         
         $linha = 2;
         $coluna= 0;
-
         foreach ( $relatorioLinha as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -1116,7 +1093,6 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_motor']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_obs']);
-
             $Pesqueiros = $this->modelRelatorios->selectLinhaHasPesqueiro('lin_id = '.$consulta['lin_id']);
                 
                 $coluna++;
@@ -1147,16 +1123,13 @@ class RelatoriosController extends Zend_Controller_Action
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="relatorioLinha'.$tipoRel.'.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
         $objWriter->save('files/relatorioLinha_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
-
     }
     
     public function relatoriocompletolinhafundoAction() {
@@ -1179,7 +1152,6 @@ class RelatoriosController extends Zend_Controller_Action
         $data = $this->dataInicial($date);
         $datafim = $this->dataFinal($datend);
         
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -1220,16 +1192,15 @@ class RelatoriosController extends Zend_Controller_Action
         if($porto != '999'){
         $porto2 = $this->verifporto($porto);
         $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
-        $relatorioEspeciesLinhaFundo = $this->modelRelatorios->selectNomeEspeciesLinhaFundo("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
         $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."'");
-        $relatorioEspeciesLinhaFundo = $this->modelRelatorios->selectNomeEspeciesLinhaFundo("fd_data between '". $data."'"." and '".$datafim."'");
         }
+        $relatorioEspeciesLinhaFundo = $this->modelRelatorios->selectNomeEspeciesLinhaFundo();
+        
         $lastcolumn = $this->listaEspecies($relatorioEspeciesLinhaFundo, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
-
         foreach ( $relatorioLinhaFundo as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -1288,16 +1259,13 @@ class RelatoriosController extends Zend_Controller_Action
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="relatorioLinhaFundo_'.$tipoRel.'.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
         $objWriter->save('files/relatorioLinhaFundo_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
-
     }
     
      public function relatoriocompletomanzuaAction() {
@@ -1320,7 +1288,6 @@ class RelatoriosController extends Zend_Controller_Action
         $data = $this->dataInicial($date);
         $datafim = $this->dataFinal($datend);
         
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -1349,7 +1316,6 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
-
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosManzua();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
         
@@ -1357,17 +1323,16 @@ class RelatoriosController extends Zend_Controller_Action
         if($porto != '999'){
         $porto2 = $this->verifporto($porto);
         $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
-        $relatorioEspeciesManzua = $this->modelRelatorios->selectNomeEspeciesManzua("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
         $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."'");
-        $relatorioEspeciesManzua = $this->modelRelatorios->selectNomeEspeciesManzua("fd_data between '". $data."'"." and '".$datafim."'");
         }
+        
+        $relatorioEspeciesManzua = $this->modelRelatorios->selectNomeEspeciesManzua();
         $lastcolumn = $this->listaEspecies($relatorioEspeciesManzua, $coluna, $linha, $objPHPExcel);
         
         $linha = 2;
         $coluna= 0;
-
         foreach ( $relatorioManzua as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -1388,11 +1353,9 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_numarmadilhas']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mre_tipo']);
             $consulta['man_mreviva'] = $this->mare($consulta['man_mreviva']);
-
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_mreviva']);
             
             $consulta['man_motor'] = $this->motor($consulta['man_motor']);
-
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_motor']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['man_obs']);
@@ -1427,16 +1390,13 @@ class RelatoriosController extends Zend_Controller_Action
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="relatorioManzua'.$tipoRel.'.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
         $objWriter->save('files/relatorioManzua_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
-
     }
     
     public function relatoriocompletomergulhoAction() {
@@ -1459,7 +1419,6 @@ class RelatoriosController extends Zend_Controller_Action
         $data = $this->dataInicial($date);
         $datafim = $this->dataFinal($datend);
         
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -1486,7 +1445,6 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
-
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosMergulho();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
         
@@ -1495,17 +1453,17 @@ class RelatoriosController extends Zend_Controller_Action
         if($porto != '999'){
         $porto2 = $this->verifporto($porto);
         $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
-        $relatorioEspeciesMergulho = $this->modelRelatorios->selectNomeEspeciesMergulho("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
         $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."'");
-        $relatorioEspeciesMergulho = $this->modelRelatorios->selectNomeEspeciesMergulho("fd_data between '". $data."'"." and '".$datafim."'");
         }
+        
+        $relatorioEspeciesMergulho = $this->modelRelatorios->selectNomeEspeciesMergulho();
+        
         $lastcolumn = $this->listaEspecies($relatorioEspeciesMergulho, $coluna, $linha, $objPHPExcel);
         
         $linha = 2;
         $coluna= 0;
-
         foreach ( $relatorioMergulho as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -1562,16 +1520,13 @@ class RelatoriosController extends Zend_Controller_Action
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="relatorioMergulho_'.$tipoRel.'.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
         $objWriter->save('files/relatorioMergulho_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
-
     }
     
     
@@ -1595,7 +1550,6 @@ class RelatoriosController extends Zend_Controller_Action
         $data = $this->dataInicial($date);
         $datafim = $this->dataFinal($datend);
         
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -1624,7 +1578,6 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
-
         
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosRatoeira();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
@@ -1634,17 +1587,17 @@ class RelatoriosController extends Zend_Controller_Action
         if($porto != '999'){
         $porto2 = $this->verifporto($porto);
         $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
-        $relatorioEspeciesRatoeira = $this->modelRelatorios->selectNomeEspeciesRatoeira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
         $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."'");
-        $relatorioEspeciesRatoeira = $this->modelRelatorios->selectNomeEspeciesRatoeira("fd_data between '". $data."'"." and '".$datafim."'");
         }
+        
+        $relatorioEspeciesRatoeira = $this->modelRelatorios->selectNomeEspeciesRatoeira();
+        
         $lastcolumn = $this->listaEspecies($relatorioEspeciesRatoeira, $coluna, $linha, $objPHPExcel);
         
         $linha = 2;
         $coluna= 0;
-
         foreach ( $relatorioRatoeira as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -1702,16 +1655,13 @@ class RelatoriosController extends Zend_Controller_Action
             
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="relatorioRatoeira_'.$tipoRel.'.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
         $objWriter->save('files/relatorioRatoeira_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
-
     }
     
     public function relatoriocompletosiripoiaAction() {
@@ -1734,7 +1684,6 @@ class RelatoriosController extends Zend_Controller_Action
         $data = $this->dataInicial($date);
         $datafim = $this->dataFinal($datend);
         
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -1772,16 +1721,16 @@ class RelatoriosController extends Zend_Controller_Action
         if($porto != '999'){
         $porto2 = $this->verifporto($porto);
         $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
-        $relatorioEspeciesSiripoia = $this->modelRelatorios->selectNomeEspeciesSiripoia("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
         $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."'");
-        $relatorioEspeciesSiripoia = $this->modelRelatorios->selectNomeEspeciesSiripoia("fd_data between '". $data."'"." and '".$datafim."'");
         }
+        
+        $relatorioEspeciesSiripoia = $this->modelRelatorios->selectNomeEspeciesSiripoia();
+        
         $lastcolumn = $this->listaEspecies($relatorioEspeciesSiripoia, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
-
         foreach ( $relatorioSiripoia as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -1838,16 +1787,13 @@ class RelatoriosController extends Zend_Controller_Action
             
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="relatorioSiripoia_'.$tipoRel.'.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
         $objWriter->save('files/relatorioSiripoia_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
-
     }
     
     public function relatoriocompletotarrafaAction() {
@@ -1905,16 +1851,16 @@ class RelatoriosController extends Zend_Controller_Action
         if($porto != '999'){
         $porto2 = $this->verifporto($porto);
         $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
-        $relatorioEspeciesTarrafa = $this->modelRelatorios->selectNomeEspeciesTarrafa("tar_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
         $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."'");
-        $relatorioEspeciesTarrafa = $this->modelRelatorios->selectNomeEspeciesTarrafa("tar_data between '". $data."'"." and '".$datafim."'");
         }
+        
+        $relatorioEspeciesTarrafa = $this->modelRelatorios->selectNomeEspeciesTarrafa();
+        
         $lastcolumn = $this->listaEspecies($relatorioEspeciesTarrafa, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
-
         foreach ( $relatorioTarrafa as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -1968,16 +1914,13 @@ class RelatoriosController extends Zend_Controller_Action
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="relatorioTarrafa_'.$tipoRel.'.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
         $objWriter->save('files/relatorioTarrafa_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
-
     }
     
     public function relatoriocompletovarapescaAction() {
@@ -2000,7 +1943,6 @@ class RelatoriosController extends Zend_Controller_Action
         $data = $this->dataInicial($date);
         $datafim = $this->dataFinal($datend);
         
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -2034,7 +1976,6 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Motor?');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
-
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosVaraPesca();
         $coluna = $maxPesqueiros[0]['count']*2+$quant;
         
@@ -2043,16 +1984,16 @@ class RelatoriosController extends Zend_Controller_Action
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
             $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
-            $relatorioEspeciesVaraPesca = $this->modelRelatorios->selectNomeEspeciesVaraPesca("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
             }
             else{
             $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."'");
-            $relatorioEspeciesVaraPesca = $this->modelRelatorios->selectNomeEspeciesVaraPesca("fd_data between '". $data."'"." and '".$datafim."'");
             }
+            
+            $relatorioEspeciesVaraPesca = $this->modelRelatorios->selectNomeEspeciesVaraPesca();
+            
             $lastcolumn = $this->listaEspecies($relatorioEspeciesVaraPesca, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
-
         foreach ( $relatorioVaraPesca as $key => $consulta ):
             
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
@@ -2119,16 +2060,13 @@ class RelatoriosController extends Zend_Controller_Action
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="relatorioVaraPesca_'.$tipoRel.'.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
         $objWriter->save('files/relatorioVaraPesca_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
-
     }
     
     
@@ -2140,19 +2078,13 @@ class RelatoriosController extends Zend_Controller_Action
         }
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
-
         $var = $this->_getParam('id');
         $tipoRel = $this->verificaRelatorio($var);
-
         $date = $this->_getParam('data');
         $datend = $this->_getParam('datafim');
-
         $data =  $this->dataInicial($date);
         $datafim = $this->dataFinal($datend);
-
         $this->modelRelatorios = new Application_Model_Relatorios();
-
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -2170,13 +2102,9 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Barco');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Mestre');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Tipo de Calão');
-
         $relatorioEspecies = $this->modelRelatorios->selectEspecies();
-
         $coluna++;
-
         $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
-
         $porto = $this->_getParam('porto');
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
@@ -2186,7 +2114,6 @@ class RelatoriosController extends Zend_Controller_Action
         }
         $linha=2;
         $coluna = 0;
-
         foreach ($relatorioArrasto as $key => $consulta):
             $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
@@ -2201,7 +2128,6 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
             $coluna++;
-
             $coluna++;
             $Relesp = $this->modelRelatorios->selectArrastoHasEspCapturadas('af_id = ' . $consulta['af_id']);
             for($i=$coluna; $i<$lastcolumn; $i++):
@@ -2229,7 +2155,6 @@ class RelatoriosController extends Zend_Controller_Action
         } else {
             $relatorioCalao = $this->modelRelatorios->selectCalao("cal_data between '" . $data . "'" . " and '" . $datafim . "'");
         }
-
         foreach ($relatorioCalao as $key => $consulta):
             $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
@@ -2244,7 +2169,6 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tcat_tipo']);
-
             $coluna++;
             $Relesp = $this->modelRelatorios->selectCalaoHasEspCapturadas('cal_id = ' . $consulta['cal_id']);
             for($i=$coluna; $i<$lastcolumn; $i++):
@@ -2285,7 +2209,6 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
-
             $coluna++;
             $Relesp = $this->modelRelatorios->selectColetaManualHasEspCapturadas('cml_id = ' . $consulta['cml_id']);
             for($i=$coluna; $i<$lastcolumn; $i++):
@@ -2303,7 +2226,6 @@ class RelatoriosController extends Zend_Controller_Action
             unset($consulta);
         endforeach;
         
-
         unset($relatorioColeta);
         unset($Relesp);
         if ($porto != '999') {
@@ -2326,7 +2248,6 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
-
             $coluna++;
             $Relesp = $this->modelRelatorios->selectEmalheHasEspCapturadas('em_id = ' . $consulta['em_id']);
             for($i=$coluna; $i<$lastcolumn; $i++):
@@ -2339,14 +2260,11 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
-
-
             $coluna = 0;
             $linha++;
             unset($consulta);
         endforeach;
         
-
         unset($relatorioEmalhe);
         unset($Relesp);
         if ($porto != '999') {
@@ -2369,7 +2287,6 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
-
             $coluna++;
             $Relesp = $this->modelRelatorios->selectGrosseiraHasEspCapturadas('grs_id = ' . $consulta['grs_id']);
             for($i=$coluna; $i<$lastcolumn; $i++):
@@ -2382,13 +2299,11 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
-
             $coluna = 0;
             $linha++;
             unset($consulta);
         endforeach;
         
-
         unset($relatorioGrosseira);
         unset($Relesp);
         if ($porto != '999') {
@@ -2411,10 +2326,7 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
-
-
             $Relesp = $this->modelRelatorios->selectJerereHasEspCapturadas('jre_id = ' . $consulta['jre_id']);
-
             $coluna++;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
@@ -2426,14 +2338,12 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
-
             $coluna = 0;
             $linha++;
             unset($consulta);
             
         endforeach;
         
-
         unset($relatorioJerere);
         unset($Relesp);
         if ($porto != '999') {
@@ -2456,10 +2366,7 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
-
-
             $Relesp = $this->modelRelatorios->selectLinhaHasEspCapturadas('lin_id = ' . $consulta['lin_id']);
-
             $coluna++;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
@@ -2471,13 +2378,11 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
-
             $coluna = 0;
             $linha++;
             unset($consulta);
         endforeach;
         
-
         unset($relatorioLinha);
         unset($Relesp);
         
@@ -2500,12 +2405,8 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['lf_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
-
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
-
-
             $Relesp = $this->modelRelatorios->selectLinhaFundoHasEspCapturadas('lf_id = ' . $consulta['lf_id']);
-
             $coluna++;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
@@ -2517,14 +2418,11 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
-
             $coluna = 0;
             $linha++;
             unset($consulta);
-
         endforeach;
         
-
         unset($relatorioLinhaFundo);
         unset($Relesp);
         
@@ -2547,12 +2445,8 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['man_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
-
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
-
-
             $Relesp = $this->modelRelatorios->selectManzuaHasEspCapturadas('man_id = ' . $consulta['man_id']);
-
             $coluna++;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
@@ -2564,14 +2458,11 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
-
             $coluna = 0;
             $linha++;
             unset($consulta);
-
         endforeach;
         
-
         unset($relatorioManzua);
         unset($Relesp);
         
@@ -2595,10 +2486,7 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
-
-
             $Relesp = $this->modelRelatorios->selectMergulhoHasEspCapturadas('mer_id = ' . $consulta['mer_id']);
-
             $coluna++;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
@@ -2610,13 +2498,10 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
-
             $coluna = 0;
             $linha++;
             unset($consulta);
         endforeach;
-
-
         unset($relatorioMergulho);
         unset($Relesp);
         
@@ -2640,9 +2525,7 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
-
             $Relesp = $this->modelRelatorios->selectRatoeiraHasEspCapturadas('rat_id = ' . $consulta['rat_id']);
-
             $coluna++;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
@@ -2654,14 +2537,10 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
-
             $coluna = 0;
             $linha++;
             unset($consulta);
-
         endforeach;
-
-
         unset($relatorioRatoeira);
         unset($Relesp);
         
@@ -2685,9 +2564,7 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
-
             $Relesp = $this->modelRelatorios->selectSiripoiaHasEspCapturadas('sir_id = ' . $consulta['sir_id']);
-
             $coluna++;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
@@ -2699,14 +2576,11 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
-
             $coluna = 0;
             $linha++;
             unset($consulta);
-
         endforeach;
         
-
         unset($relatorioSiripoia);
         unset($Relesp);
         
@@ -2729,11 +2603,8 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tar_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
-
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
-
             $Relesp = $this->modelRelatorios->selectTarrafaHasEspCapturadas('tar_id = ' . $consulta['tar_id']);
-
             $coluna++;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
@@ -2748,10 +2619,8 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna = 0;
             $linha++;
             unset($consulta);
-
         endforeach;
         
-
         unset($relatorioTarrafa);
         unset($Relesp);
         
@@ -2762,7 +2631,6 @@ class RelatoriosController extends Zend_Controller_Action
             $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioVaraPesca as $key => $consulta):
-
             $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['artepesca']);
@@ -2775,12 +2643,8 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['vp_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
-
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
-
-
             $Relesp = $this->modelRelatorios->selectVaraPescaHasEspCapturadas('vp_id = ' . $consulta['vp_id']);
-
             $coluna++;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
@@ -2792,35 +2656,27 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
-
             $coluna = 0;
             $linha++;
             unset($consulta);
-
         endforeach;
         
-
         unset($relatorioVaraPesca);
         unset($Relesp);
         unset($relatorioEspecies);
         
         $fim1 = microtime(true);
-
         $sheet->setCellValueByColumnAndRow(1, $linha, $fim1 - $inicio1);
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="relatorioCompletoResumido_' . $tipoRel . '.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
         $objWriter->save('files/relatorioCompletoResumido_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
-
     }
-
     public function relatoriocompletoAction() {
         $inicio1 = microtime(true);
         set_time_limit(0);
@@ -2840,8 +2696,6 @@ class RelatoriosController extends Zend_Controller_Action
         $datafim = $this->dataFinal($datend);
         
         $this->modelRelatorios = new Application_Model_Relatorios();
-
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -2885,7 +2739,6 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Tipo de Calão');
-
         
         $coluna = 2+$quant;
         $relatorioEspecies = $this->modelRelatorios->selectEspecies();
@@ -2904,7 +2757,6 @@ class RelatoriosController extends Zend_Controller_Action
         
         $linha = 2;
         $coluna= 0;
-
         foreach ( $relatorioCalao as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -2967,7 +2819,6 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna=0;
             $linha++;
         endforeach;
-
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
             $relatorioColeta = $this->modelRelatorios->selectColetaManual("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
@@ -3043,9 +2894,7 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna = 0;
             $linha++;
             endforeach; 
-
         
-
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
             $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
@@ -3092,7 +2941,6 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['em_obs']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
-
             $Pesqueiros = $this->modelRelatorios->selectEmalheHasPesqueiro('em_id = '.$consulta['em_id']);
              $coluna++;
             foreach($Pesqueiros as $key => $nome):
@@ -3115,7 +2963,6 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna = 0;
             $linha++;
         endforeach;
-
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
             $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
@@ -3190,7 +3037,6 @@ class RelatoriosController extends Zend_Controller_Action
             $linha++;
         endforeach;
         
-
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
             $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
@@ -3266,7 +3112,6 @@ class RelatoriosController extends Zend_Controller_Action
             $linha++;
         endforeach;
       
-
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
             $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
@@ -3315,7 +3160,6 @@ class RelatoriosController extends Zend_Controller_Action
 	
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['lin_obs']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '');
-
             $Pesqueiros = $this->modelRelatorios->selectLinhaHasPesqueiro('lin_id = '.$consulta['lin_id']);
                 
                 $coluna++;
@@ -3344,7 +3188,6 @@ class RelatoriosController extends Zend_Controller_Action
             $linha++;
         endforeach;
       
-
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
             $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
@@ -3421,7 +3264,6 @@ class RelatoriosController extends Zend_Controller_Action
             $linha++;
         endforeach;
         
-
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
             $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
@@ -3497,7 +3339,6 @@ class RelatoriosController extends Zend_Controller_Action
             $linha++;
         endforeach;
         
-
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
             $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
@@ -3883,11 +3724,9 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(1, $linha, $fim1-$inicio1);
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="relatorioCompleto_'.$tipoRel.'.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $objWriter->save('php://output');
     }
@@ -3907,7 +3746,6 @@ class RelatoriosController extends Zend_Controller_Action
         $monitoramentos = $this->modelRelatorios->selectMonitoramentos();
         
         
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -3938,11 +3776,9 @@ class RelatoriosController extends Zend_Controller_Action
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="monitoramentos.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $objWriter->save('php://output');
     }
@@ -3961,7 +3797,6 @@ class RelatoriosController extends Zend_Controller_Action
         $monitoramentos = $this->modelRelatorios->selectEspeciesCapturadas();
         
         
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -3989,11 +3824,9 @@ class RelatoriosController extends Zend_Controller_Action
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="Espécies Capturadas.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $objWriter->save('php://output');
     }
@@ -4011,7 +3844,6 @@ class RelatoriosController extends Zend_Controller_Action
         $monitoramentos = $this->modelRelatorios->selectEspeciesCapturadasMes();
         
         
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -4039,11 +3871,9 @@ class RelatoriosController extends Zend_Controller_Action
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="Espécies Capturadas Por Mês.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $objWriter->save('php://output');
     }
@@ -4144,11 +3974,9 @@ class RelatoriosController extends Zend_Controller_Action
         
          $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="Pescadores.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $objWriter->save('php://output');
      }
@@ -4166,7 +3994,6 @@ class RelatoriosController extends Zend_Controller_Action
         $pescadores = $this->modelRelatorios->selectPescadorByProjeto();
         
         
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -4329,11 +4156,9 @@ class RelatoriosController extends Zend_Controller_Action
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="Pescadores Monitorados.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $objWriter->save('php://output');
     }
@@ -4352,7 +4177,6 @@ class RelatoriosController extends Zend_Controller_Action
         $monitoramentos = $this->modelRelatorios->selectValorEspecies();
         
         
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -4378,11 +4202,9 @@ class RelatoriosController extends Zend_Controller_Action
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="Valor das Espécies.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $objWriter->save('php://output');
     }
@@ -4425,7 +4247,6 @@ class RelatoriosController extends Zend_Controller_Action
          else{
              $arrasto = $modelArrasto->selectVBioCamarao("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
          }       
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $coluna = 0;
@@ -4444,7 +4265,6 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Comprimento da Carapaça');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Peso');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data da Entrevista');
-
         
         $coluna= 0;
         $linha++;
@@ -4478,11 +4298,9 @@ class RelatoriosController extends Zend_Controller_Action
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="Biometria de Camarao.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
@@ -4556,7 +4374,6 @@ class RelatoriosController extends Zend_Controller_Action
          }  
         
                 
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $coluna = 0;
@@ -4573,7 +4390,6 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Sexo');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Comprimento');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Peso');
-
         
         $coluna= 0;
         $linha++;
@@ -4948,16 +4764,13 @@ class RelatoriosController extends Zend_Controller_Action
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header("Content-Disposition: attachment;filename='Biometria de Peixes.xls'");
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
         $objWriter->save('files/relatorioBiometriasPeixe_'.$dataGerado.'_De_'.$data.'_Ate_'.$datafim.'.xls');
-
     }
     
     public function embarcacaodetalhadaAction(){
@@ -4986,7 +4799,6 @@ class RelatoriosController extends Zend_Controller_Action
 //         else{
 //             $arrasto = $modelArrasto->selectVBioCamarao("dvolta between '". $data."'"." and '".$datafim."'", 'esp_nome_comum');
 //         }       
-
         $embarcacao = $modelRelatorios->selectEmbarcacaoDetalhada(null, 'bar_nome');
         
         
@@ -5199,19 +5011,15 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['entrevistador']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['digitador']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $atuacao[0]['dp_id_venda']);
-
-
             $coluna=0;
             $linha++;
         endforeach; 
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="Embarcaçoes Detalhadas.xls"');
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
@@ -5220,7 +5028,6 @@ class RelatoriosController extends Zend_Controller_Action
     
     public function formataData($data){
         $arrayData = explode('-', $data);
-
         $mes = $arrayData[1];
         $ano = $arrayData[0];
         
@@ -5308,7 +5115,6 @@ class RelatoriosController extends Zend_Controller_Action
             $tarrafa =     $this->modelRel->selectTarrafa     ("tar_data between '". $data."'"." and '".$datafim."'");
             $varapesca =   $this->modelRel->selectVaraPesca   ("dvolta between '". $data."'"." and '".$datafim."'");
          }  
-
         $objPHPExcel = new PHPExcel();
         $myWorkSheet = new PHPExcel_Worksheet($objPHPExcel, 'Artes com Peso');
         
@@ -5330,7 +5136,6 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Captura Total em T');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'CPUE (kg)');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Completa');
-
         $coluna= 0;
         $linha++;
         
@@ -5379,9 +5184,6 @@ class RelatoriosController extends Zend_Controller_Action
         endforeach; 
       
     $coluna= 0;
-
-
-
     foreach ( $emalhe as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Emalhe');
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
@@ -5403,7 +5205,6 @@ class RelatoriosController extends Zend_Controller_Action
     endforeach;
     
     $coluna= 0;
-
     foreach ( $grosseira as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Groseira');
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
@@ -5424,7 +5225,6 @@ class RelatoriosController extends Zend_Controller_Action
             $linha++;
     endforeach;
     $coluna= 0;
-
     foreach ( $jerere as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Jereré');
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
@@ -5446,7 +5246,6 @@ class RelatoriosController extends Zend_Controller_Action
     endforeach;
     
     $coluna= 0;
-
     foreach ( $pescalinha as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Linha');
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
@@ -5468,7 +5267,6 @@ class RelatoriosController extends Zend_Controller_Action
     endforeach;
     
     $coluna= 0;
-
     foreach ( $linhafundo as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Linha de Fundo');
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
@@ -5490,7 +5288,6 @@ class RelatoriosController extends Zend_Controller_Action
     endforeach;
         
     $coluna= 0;
-
     foreach ( $manzua as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Manzuá');
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
@@ -5513,7 +5310,6 @@ class RelatoriosController extends Zend_Controller_Action
     
     
     $coluna= 0;
-
     foreach ( $mergulho as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Mergulho');
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
@@ -5535,7 +5331,6 @@ class RelatoriosController extends Zend_Controller_Action
     endforeach;
     
     $coluna= 0;
-
     foreach ( $tarrafa as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Tarrafa');
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
@@ -5557,7 +5352,6 @@ class RelatoriosController extends Zend_Controller_Action
     endforeach;
     
     $coluna= 0;
-
     foreach ( $varapesca as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,  'VaraPesca');
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
@@ -5580,7 +5374,6 @@ class RelatoriosController extends Zend_Controller_Action
     
     // Create a new worksheet called "My Data"
         $myWorkSheet = new PHPExcel_Worksheet($objPHPExcel, 'Artes com Quantidade');
-
     // Attach the "My Data" worksheet as the first worksheet in the PHPExcel object
         $objPHPExcel->addSheet($myWorkSheet, 1);
         $objPHPExcel->setActiveSheetIndex(1);
@@ -5639,7 +5432,6 @@ class RelatoriosController extends Zend_Controller_Action
     endforeach;
     
     $coluna= 0;
-
     foreach ( $siripoia as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,  'Siripoia');
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tl_local']);
@@ -5664,11 +5456,9 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $fim1-$inicio1);
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header("Content-Disposition: attachment;filename='CPUE.xls'");
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
@@ -5710,7 +5500,6 @@ class RelatoriosController extends Zend_Controller_Action
            
                 
         $arrayPortos = array('Amendoeira','Pontal','Prainha','Terminal Pesqueiro','Porto da Barra','São Miguel','Mamoã','Ponta da Tulha','Ponta do Ramo','Aritaguá','Juerana','Sambaituba','Urucutuca','Pé de Serra','Sobradinho','Vila Badu','Porto da Concha','Porto do Forte');
-
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
@@ -5753,7 +5542,6 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Vila Badu');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto da Concha');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto do Forte');
-
         $coluna=1;
         $linha++;
         foreach ( $arrayPortos as $porto ):
@@ -5961,7 +5749,6 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto da Concha');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto do Forte');
         $linha++;
-
         
         for($linhaAux=2; $linhaAux<19; $linhaAux++){
             for($coluna=1; $coluna<19; $coluna++){
@@ -5974,11 +5761,9 @@ class RelatoriosController extends Zend_Controller_Action
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header("Content-Disposition: attachment;filename='Artes por Portos.xls'");
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $objWriter->save('php://output');
     }
@@ -6035,14 +5820,12 @@ class RelatoriosController extends Zend_Controller_Action
            
         $objPHPExcel = new PHPExcel();
         $myWorkSheet = new PHPExcel_Worksheet($objPHPExcel, 'Estimativa por Peso');
-
         // Attach the "My Data" worksheet as the first worksheet in the PHPExcel object
         $objPHPExcel->addSheet($myWorkSheet, 0);
         $objPHPExcel->setActiveSheetIndex(0);
         $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
-
         if($porto != '999'){
             $nomePorto = $this->verifporto($porto);
             $arrasto = $modelArrasto->selectEstimativaByPorto( "pto_nome = '$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
@@ -6076,7 +5859,6 @@ class RelatoriosController extends Zend_Controller_Action
             $tarrafa =$modelTarrafa->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
             $varapesca =$modelVaraPesca->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
          }  
-
          $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Local');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Artes de Pesca');
@@ -6338,7 +6120,6 @@ class RelatoriosController extends Zend_Controller_Action
         
         // Create a new worksheet called "My Data"
         $myWorkSheet2 = new PHPExcel_Worksheet($objPHPExcel, 'Estimativa por Quantidades');
-
         // Attach the "My Data" worksheet as the first worksheet in the PHPExcel object
         $objPHPExcel->addSheet($myWorkSheet2, 1);
         $objPHPExcel->setActiveSheetIndex(1);
@@ -6425,16 +6206,13 @@ class RelatoriosController extends Zend_Controller_Action
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header("Content-Disposition: attachment;filename='Estimativas de Captura.xls'");
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $dataGerado = date('d-m-Y');
         $objWriter->save('php://output');
         $objWriter->save('files/relatorioEstimativasCapturas_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
-
     }
     
     public function monitoramentosartepescaAction(){
@@ -6530,7 +6308,6 @@ class RelatoriosController extends Zend_Controller_Action
                 $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_id']);
                 $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
                 $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
-
                 $coluna=0;
                 $linha++;
         endforeach; 
@@ -6641,8 +6418,6 @@ class RelatoriosController extends Zend_Controller_Action
                 $linha++;
         endforeach;
        
-
-
         foreach ( $coletamanual as $key => $consulta ):
                 //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
                 $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Coleta Manual');
@@ -6650,7 +6425,6 @@ class RelatoriosController extends Zend_Controller_Action
                 $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_id']);
                 $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mnt_id']);
                 $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
-
                 
                 $coluna=0;
                 $linha++;
@@ -6681,13 +6455,10 @@ class RelatoriosController extends Zend_Controller_Action
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
-
         header('Content-Type: application/vnd.ms-excel');
         header("Content-Disposition: attachment;filename='Artes Por Monitoramentos.xls'");
         header('Cache-Control: max-age=0');
-
         ob_end_clean();
         $objWriter->save('php://output');
     }
 }
-

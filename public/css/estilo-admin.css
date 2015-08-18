@@ -30,7 +30,7 @@ body{
 #menu{
     float: left;
     width: 100%;
-    background: #5F302B;//#8B8386;
+    background: #5F302B;/*#8B8386*/;
     min-height: 45px;
 }
 
@@ -58,11 +58,9 @@ body{
     border-right: 1px solid #fff;
 }
 
-#menu li a:hover { background: #462420;}//#4F4F4F; }
+#menu li a:hover { background: #462420;}/*#4F4F4F; }*/
 
-#login
-{
-	float: right;
+#login{
 	margin-top: 5px;
         margin-left: 500px;
 	color: #fff;
@@ -156,7 +154,7 @@ body{
 
 }
 #Social li, #Dsbq li, #Relatorio li{
-    background: #90544D;//#9C9698;
+    background: #90544D;/*#9C9698;*/
 }
 
 #menu-lateral a{
@@ -168,7 +166,7 @@ body{
 }
 
 #menu-lateral a:hover { 
-    background: #462420;}//#4F4F4F; }
+    background: #462420;}/*#4F4F4F; }*/
 
 
 
@@ -217,7 +215,7 @@ body{
 
 #botao-ancora, input[type=submit]{
     font-size: 11px;
-    //margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 
 table {
@@ -257,7 +255,7 @@ tbody tr:nth-child(odd) {
 }
 
 .esquerda{
-    //float: left;
+    /*float: left;*/
 
     width: 48%;
     height: auto;
@@ -296,7 +294,7 @@ tbody tr:nth-child(odd) {
 }
 
 .esquerda-usuario{
-    //float: left;
+    /*float: left;*/
 
     width: 48%;
     height: auto;
@@ -485,7 +483,7 @@ fieldset.noEditable base{
     float:right;
 }
 input.button-edit {
-    background-image: url('../img/trash.png');  //16px x 16px
+    background-image: url('../img/trash.png');  /*16px x 16px*/
     background-color: transparent; /* make the button transparent */
     background-repeat: no-repeat;  /* make the background image appear only once */
     background-position: 0px 0px;  /* equivalent to 'top left' */

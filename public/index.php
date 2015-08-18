@@ -14,6 +14,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
     get_include_path(),
 )));
 
+date_default_timezone_set('America/Bahia');
 /** Zend_Application */
 require_once 'Zend/Application.php';
 require_once '../application/library/Classes/PHPExcel.php';

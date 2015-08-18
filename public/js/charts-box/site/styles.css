@@ -146,7 +146,7 @@ section:after {
   display: table;
   clear: both;
 }
-*section {
+section {
   zoom: 1;
 }
 #features article {
