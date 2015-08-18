@@ -1500,7 +1500,7 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
-                $Relesp = $this->modelRelatorios->selectMergulhoHasEspCapturadas('mer_id = '.$consulta['mer_id']);
+                $Relesp = $this->modelRelatorios->selectMergulhoHasEspCapturadas('mer_id = '.$consulta['mer_id'], 'esp_id ASC');
                 
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):

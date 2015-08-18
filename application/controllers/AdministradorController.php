@@ -25,6 +25,7 @@ class AdministradorController extends Zend_Controller_Action
         $this->view->assign("usuario",$this->usuario);
         
         $this->modelPescador = new Application_Model_Pescador();
+        $this->modelRelatorios = new Application_Model_Relatorios();
     }
 
     public function indexAction()
@@ -38,6 +39,8 @@ class AdministradorController extends Zend_Controller_Action
             
             $this->view->assign("pescadorDeletado", $pescadorDeletado);
         }
+        
+        print_r($this->modelRelatorios->selectMergulhoHasEspCapturadas('mer_id = 11606', 'esp_id ASC'));
     }
     
     public function deleteAction(){
