@@ -49,3 +49,4 @@ Temporary Items
 *.swp
 /application/configs/
 /library/
+nbproject/private/private.xml
