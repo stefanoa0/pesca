@@ -89,6 +89,57 @@
             </div>
     </fieldset>
     </div>
+</form>
+<form action="<?= $this->url(array("controller" => "relatorios", "action" => "gerarnovo"), null, true) ?>" target="_blank" method="post">
+    <div class="direita-relatorios" id="relatorios-dir">
+    <fieldset>
+            <div class="form-esq">
+                <img src="img/xls-icon.png" class="icon-relatorios"/><label>Relatório:</label>
+                <select name="artePesca" required>
+                    <option value="" selected></option>
+                    <option value="18">CPUE (todas as artes) - XLS</option>
+                    <option value="19">Artes de Pesca Por Porto</option>
+                    <option value="20">Estimativas de Captura</option>
+                </select>
+            </div>
+            <div class="form-esq">
+                <label>Data inicial:</label>
+                <div class="forDate">
+                    <input type="number" placeholder="dia" max="31" min="1" name="dia_ini" class="data"/>
+                    <input type="number" placeholder="mes" max="12" min="1" name="mes_ini" class="data"/>
+                    <input type="number" placeholder="ano" max="<?= date('Y')?>" min="2013" name="ano_ini" class="data"/>
+                </div>
+            </div>
+            <div class="form-esq">
+                <label>Data final:</label>
+                <div class="forDate">
+                    <input type="number" placeholder="dia" max="31" min="1" name="dia_fim" class="data" />
+                    <input type="number" placeholder="mes" max="12" min="1" name="mes_fim" class="data"/>
+                    <input type="number" placeholder="ano" max="<?= date('Y')?>" min="2013" name="ano_fim" class="data"/>
+                </div>
+            </div>
+            <div class="form-esq">
+                <label for="tipo">Porto:</label>
+                <select name="porto" >
+                    
+                    <option value="999" selected>Todos</option>
+                    <?php
+                    foreach ($this->portos as $key => $porto):
+                        ?>
+
+                        <option nome="nome_porto" value="<?= $porto['pto_id'] ?>"><?= $porto['pto_nome'] ?></option>
+
+                        <?php
+                    endforeach;
+                    ?>
+                </select>
+            </div>
+        
+            <div class="form-esq">     
+                <input type="submit" value="Relatório" id="openDialog"/>
+            </div>
+    </fieldset>
+    </div>
 </form> 
 
 <fieldset>
@@ -99,8 +150,7 @@
                 if($file !== '.' && $file !== '..'){
                     echo '<img src="img/xls-icon.png" class="icon-relatorios"/><a class="relatorio" href="files/'.$file.'" download>'.$file.'</a>'; 
                     echo '  <a href="relatorios/deleterelatorio/nome/'.$file.'/diretorio/files">Deletar</a><br/>';
-                }
-                
+                }                
             }
             closedir($dh);
             

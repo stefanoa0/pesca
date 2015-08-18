@@ -100,6 +100,7 @@ class RelatoriosController extends Zend_Controller_Action
     public function gerarnovoAction(){
         
         $valueRelatorio = $this->_getAllParams();
+
         $rel = 'id/'.$rel;
         
         $dia = $valueRelatorio['dia_ini'];
