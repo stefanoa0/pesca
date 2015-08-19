@@ -1505,11 +1505,11 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna= $maxPesqueiros[0]['count']*2+$quant;
             for($i=$coluna; $i<$lastcolumn; $i++):
                 foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                   if(!strcasecmp($esp['esp_nome_comum'], $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue())){
                         $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
                     }
                 endforeach;
-                if($coluna < $lastcolumn-1 && $esp['esp_nome_comum'] != $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
+                if($coluna < $lastcolumn-1){
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
                 }
             endfor;
