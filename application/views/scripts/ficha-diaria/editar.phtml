@@ -2,6 +2,8 @@
 //$this->headScript()->appendFile('/js/jquery.maskedinput.min.js');
 //$this->headScript()->appendFile('/js/mascaras.js');
 ?>
+<div id="campos_obrigatorios">Campos com * são obrigatórios</div>
+
 
 <div id="titulos">
     <h2>Desembarque->Ficha Diária</h2>
@@ -12,12 +14,12 @@
 <fieldset id="Desembarque">
     <div class="esquerda">
         <div class="form-esq">
-            <label for="id">ID:</label>
+            <label for="id">ID*:</label>
             <input type="text" name="id_fichaDiaria"  value="<?= $this->fichadiaria['fd_id'] ?>" disabled="true"/><br />
         </div>
 
         <div class="form-esq">
-            <label for="tipo">Estagiário:</label>
+            <label for="tipo">Estagiário*:</label>
             <select name="select_nome_estagiario" >
                 <?php
                 foreach ($this->users as $key => $estagiario):
@@ -33,7 +35,7 @@
         </div>
 
         <div class="form-esq">
-            <label for="tipo">Monitor:</label>
+            <label for="tipo">Monitor*:</label>
             <select name="select_nome_monitor" >
                 <?php
                 foreach ($this->users as $key => $monitor):
@@ -48,12 +50,12 @@
         </div>
 
         <div class="form-esq">
-            <label for="tipo">Data:</label>
+            <label for="tipo">Data*:</label>
             <input type="date" id="data_Viagem" placeholder="Data" name="data_ficha" value="<?= $this->fichadiaria['fd_data'] ?>"/><br />
         </div>
 
         <div class="form-esq">
-            <label for="tipo">Turno:</label>
+            <label for="tipo">Turno*:</label>
             <select name="select_turno" value="<?= $this->fichadiaria['fd_turno']?>">
                 <?php
                     if($this->fichadiaria['fd_turno'] == "Matutino"){
@@ -77,7 +79,7 @@
 
 
         <div class="form-esq">
-            <label for="tipo">Porto:</label>
+            <label for="tipo">Porto*:</label>
             <select name="select_nome_porto" >
                 <?php
                 foreach ($this->dados_porto as $key => $porto):
@@ -92,7 +94,7 @@
         </div>
 
         <div class="form-esq">
-            <label for="tipo">Tempo: </label>
+            <label for="tipo">Tempo*: </label>
             <select name="select_tempo" >
                 <?php
                 foreach ($this->dados_tempo as $key => $tempo):
@@ -107,7 +109,7 @@
         </div>
 
         <div class="form-esq">
-            <label>Vento:</label>
+            <label>Vento*:</label>
             <select name="select_vento" >
                 <?php
                 foreach ($this->dados_vento as $key => $vento):
@@ -152,7 +154,7 @@
                     <option   value="FALSE">Não Monitorada</option>
                 </select>
 
-                <input type="number" name="QuantidadeEmbarcacoes" placeholder="Quantidade" size="10px">
+                <input type="number" name="QuantidadeEmbarcacoes" placeholder="Quantidade*" size="10px">
 
                 <input type="hidden" name="id_fichaDiaria"  value="<?= $this->fichadiaria['fd_id'] ?>"/>
                 <select name="SelectArtePesca" id="artePesca">

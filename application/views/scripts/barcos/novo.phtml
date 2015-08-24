@@ -1,3 +1,5 @@
+<div id="campos_obrigatorios">Campos com * são obrigatórios</div>
+
 <div id="titulos">
     <h2>Desembarque->Embarcações Detalhadas</h2>
     <h3>Novo</h3>
@@ -18,7 +20,7 @@
     <fieldset id="Desembarque"><h2>Embarcação</h2>
 <!--1. -------------------------------------------------------------->        
         <div class="form-dir">
-            <label>Embarcação:</label> 
+            <label>Embarcação*:</label> 
             <select name="embarcacao" required/>
                 <?php foreach ($this->assignBarco as $key => $barco):?>
                         <option value="<?= $barco['bar_id'] ?>" selected><?= $barco['bar_nome'] ?></option>
@@ -27,7 +29,7 @@
         </div>
 <!--2. -------------------------------------------------------------->               
         <div class="form-dir">
-            <label>Porto de Desembarque:</label>
+            <label>Porto de Desembarque:*</label>
             <select name="portoDesembarque" required/>
                 <option value="" selected></option>
                 <?php
@@ -40,7 +42,7 @@
         </div>
 <!--3. -------------------------------------------------------------->       
         <div class="form-dir">
-            <label>Proprietário:</label>
+            <label>Proprietário*:</label>
             <select name="proprietario" required id="propri"/>
                 <option value="" selected></option>
                 <?php
@@ -53,7 +55,7 @@
         </div>
 <!--4. -------------------------------------------------------------->       
         <div class="form-dir">
-            <label>O proprietário é mestre do barco?:</label>
+            <label>O proprietário é mestre do barco?*:</label>
             <select name="proprietarioMestre" id ="propMestre" onchange="buscar_cidades()"/>
                 <option value="" selected></option>
                 <option value="2">Sim</option>
@@ -63,7 +65,7 @@
 <!--5. -------------------------------------------------------------->
         
         <div class="form-dir">
-            <label>Mestre:</label>
+            <label>Mestre*:</label>
             <select name="mestre" required id="mestre" onchange="buscar_cidades()"/>
                 <option value="" selected></option>
                 <?php
@@ -87,7 +89,7 @@
         </div>
 <!--8. -------------------------------------------------------------->       
         <div class="form-dir">
-            <label>Tripulação:</label>
+            <label>Tripulação*:</label>
             <select name="tripulacao" required/>
                 <option value="" selected></option>
                 <option value="1">Variável</option>
@@ -97,7 +99,7 @@
         </div>
 <!--9. -------------------------------------------------------------->       
         <div class="form-dir">
-            <label>Há cozinheiro?</label>
+            <label>Há cozinheiro?*</label>
             <select name="cozinheiro" required/>
                 <option value="" selected></option>
                 <option value="2">Sim</option>
@@ -107,7 +109,7 @@
         </div>   
 <!--10. -------------------------------------------------------------->               
         <div class="form-dir">
-            <label>Estado de conservação:</label>
+            <label>Estado de conservação*:</label>
             <select name="estadoConservacao" required/>
                 <option value="" selected></option>
                 <option value="1">Bom</option>
@@ -118,7 +120,7 @@
         </div>
 <!--11. -------------------------------------------------------------->               
         <div class="form-dir">
-            <label>Tipo de Barco:</label>
+            <label>Tipo de Barco*:</label>
             <select name="tipoBarco" required/>
                 <option value="" selected></option>
                 <?php
@@ -161,7 +163,7 @@
         </div>
 <!--18. -------------------------------------------------------------->               
         <div class="form-dir">
-            <label>Tipo de Casco:</label>
+            <label>Tipo de Casco*:</label>
             <select name="tipoCasco" required/>
                 <option value="" selected></option>
                 <?php
@@ -179,7 +181,7 @@
         </div>
 <!--20. -------------------------------------------------------------->               
         <div class="form-dir">
-            <label>Estado da embarcação?</label>
+            <label>Estado da embarcação?*</label>
             <select name="estadoEmbarcacao" required/>
                 <option value="" selected></option>
                 <option value="2">Nova</option>
@@ -189,7 +191,7 @@
         </div>
 <!--21. -------------------------------------------------------------->       
         <div class="form-dir">
-            <label>Já está paga?</label>
+            <label>Já está paga?*</label>
             <select name="jaPaga" required/>
                 <option value="" selected></option>
                 <option value="2">Sim</option>
@@ -199,7 +201,7 @@
         </div> 
 <!--22. -------------------------------------------------------------->       
         <div class="form-dir">
-            <label>Como foi o Pagamento:</label>
+            <label>Como foi o Pagamento*:</label>
             <select name="tipoPagamentoBarco" required/>
                 <option value="" selected></option>
                 <?php
@@ -212,7 +214,7 @@
         </div>
 <!--23. -------------------------------------------------------------->       
         <div class="form-dir">
-            <label>Se financiado, por onde?</label>
+            <label>Se financiado, por onde?*</label>
             <select name="financiadorBarco" required/>
                 <option value="" selected></option>
                 <?php
@@ -236,7 +238,7 @@
 		
 <!--25. -------------------------------------------------------------->       
         <div class="form-dir">
-            <label>Tipo de Propulsão:</label>
+            <label>Tipo de Propulsão*:</label>
             <select name="tipoPropulsao" required/>
                 <option value="" selected></option>
                 <option value="1">Sem Propulsão</option>
@@ -247,7 +249,7 @@
         </div>
 <!--26. -------------------------------------------------------------->               
         <div class="form-dir">
-            <label>Tipo de Motor:</label>
+            <label>Tipo de Motor*:</label>
             <select name="tipoMotor" required/>
                 <option value="" selected></option>
                 <?php
@@ -260,7 +262,7 @@
         </div>
 <!--27. -------------------------------------------------------------->               
         <div class="form-dir">
-            <label>Modelo:</label>
+            <label>Modelo*:</label>
             <select name="modelo" required/>
                 <option value="" selected></option>
                 <?php
@@ -273,7 +275,7 @@
         </div>
 <!--28. -------------------------------------------------------------->               
         <div class="form-dir">
-            <label>Marca:</label>
+            <label>Marca*:</label>
             <select name="marca" required/>
                 <option value="" selected></option>
                 <?php
@@ -291,7 +293,7 @@
         </div>
 <!--30. -------------------------------------------------------------->               
         <div class="form-dir">
-            <label>Tipo de Combustível:</label>
+            <label>Tipo de Combustível*:</label>
             <select name="tipoCombustivel" required/>
                 <option value="" selected></option>
                 <option value="1">Gasolina</option>
@@ -307,7 +309,7 @@
         </div>
 <!--32. -------------------------------------------------------------->               
         <div class="form-dir">
-            <label>Onde Compra o combustível:</label>
+            <label>Onde Compra o combustível*:</label>
             <select name="postoCombustivel" required/>
                 <option value="" selected></option>
                 <?php
@@ -325,7 +327,7 @@
         </div>
 <!--33.1. -------------------------------------------------------------->               
         <div class="form-dir">
-            <label>Estado do Motor:</label>
+            <label>Estado do Motor*:</label>
             <select name="estadoMotor" required/>
                 <option value="" selected></option>
                 <option value="2">Novo</option>
@@ -336,7 +338,7 @@
         </div> 
 <!--34. -------------------------------------------------------------->               
         <div class="form-dir">
-            <label>Já está paga?</label>
+            <label>Já está paga?*</label>
             <select name="jaPagoMotor" required/>
                 <option value="" selected></option>
                 <option value="2">Sim</option>
@@ -347,7 +349,7 @@
         </div> 
  <!--35. -------------------------------------------------------------->              
         <div class="form-dir">
-            <label>Tipo de Pagamento:</label>
+            <label>Tipo de Pagamento*:</label>
             <select name="tipoPagamentoMotor" required/>
                 <option value="" selected></option>
                 <?php
@@ -360,7 +362,7 @@
         </div>
  <!--36. -------------------------------------------------------------->              
         <div class="form-dir">
-            <label>Se financiado, por onde?</label>
+            <label>Se financiado, por onde?*</label>
             <select name="financiadorMotor" required/>
                 <option value="" selected></option>
                 <?php
@@ -402,7 +404,7 @@
         </div>
  <!--42. -------------------------------------------------------------->              
         <div class="form-dir">
-            <label>Frequencia da Pesca:</label>
+            <label>Frequencia da Pesca*:</label>
             <select name="frequenciaPesca" required/>
                 <option value="" selected></option>
                 <?php
@@ -415,7 +417,7 @@
         </div>
  <!--43. -------------------------------------------------------------->              
         <div class="form-dir">
-            <label>Horário da Pesca:</label>
+            <label>Horário da Pesca*:</label>
             <select name="horarioPesca" required/>
                 <option value="" selected></option>
                 <?php
@@ -433,7 +435,7 @@
         </div>
  <!--45. -------------------------------------------------------------->              
         <div class="form-dir">
-            <label>Conservação da Pesca:</label>
+            <label>Conservação da Pesca*:</label>
             <select name="conservacaoPescado" required/>
                 <option value="" selected></option>
                 <?php
@@ -456,7 +458,7 @@
         </div>-->
  <!--48. -------------------------------------------------------------->              
         <div class="form-dir">
-            <label>Destino do pescado:</label>
+            <label>Destino do pescado*:</label>
             <select name="destinoPescado" required/>
                 <option value="" selected></option>
                 <?php
@@ -476,7 +478,7 @@
         
  <!--50. -------------------------------------------------------------->              
         <div class="form-dir">
-            <label><b>Maior</b> quantidade de pescado:</label>
+            <label><b>Maior</b> quantidade de pescado*:</label>
             <select name="maiorQuantidade" required/>
                 <option value="" selected></option>
                 <?php
@@ -489,7 +491,7 @@
         </div>
  <!--51. -------------------------------------------------------------->              
         <div class="form-dir">
-            <label><b>Menor</b> quantidade de pescado:</label>
+            <label><b>Menor</b> quantidade de pescado*:</label>
             <select name="menorQuantidade" required/>
              <option value="" selected></option>
                 <?php
@@ -502,7 +504,7 @@
         </div>
  <!--52. -------------------------------------------------------------->              
         <div class="form-dir">
-            <label>Outra atividade além da pesca:</label>
+            <label>Outra atividade além da pesca*:</label>
             <select name="outraAtividade" required/>
                 <option value="" selected></option>
                 <?php
@@ -528,7 +530,7 @@
         </div>
  <!--55. -------------------------------------------------------------->              
         <div class="form-dir">
-            <label>Data da entrevista:</label> 
+            <label>Data da entrevista*:</label> 
             <input type="date" name="dataEntrevista" placeholder="Data"/> <br />
         </div>
  <!--56. -------------------------------------------------------------->              
@@ -540,7 +542,7 @@
         </div>
  <!--57. -------------------------------------------------------------->              
         <div class="form-dir">
-            <label>Responsável pela Entrevista:</label>
+            <label>Responsável pela Entrevista*:</label>
             <select name="entrevistador" required/>
                 <option value="" selected></option>
                 <?php

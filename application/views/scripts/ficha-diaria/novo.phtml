@@ -4,6 +4,8 @@ $this->headScript()->appendFile('/js/mascaras.js');
 ?>
 
     
+<div id="campos_obrigatorios">Campos com * são obrigatórios</div>
+
 <div id="titulos">
     <h2>Desembarque->Ficha Diária</h2>
     <h3>Novo</h3>
@@ -14,12 +16,12 @@ $this->headScript()->appendFile('/js/mascaras.js');
    <fieldset id="Desembarque">
       <div class="esquerda">
        <div class="form-esq">
-         <label for="id">ID:</label>
+         <label for="id">ID*:</label>
          <input type="text" name="id_fichaDiaria" placeholder="Id" id="id_ficha" /><br />
        </div>
        
        <div class="form-esq">
-         <label for="tipo">Estagiário:</label>
+         <label for="tipo">Estagiário*:</label>
          <select name="select_nome_estagiario" >
               
 		<option nome="nome_estagiario" value="<?=$this->usuario['tu_id']?>"><?= $this->usuario['tu_nome']?></option>
@@ -29,7 +31,7 @@ $this->headScript()->appendFile('/js/mascaras.js');
         </div>
        
          <div class="form-esq">
-            <label for="tipo">Monitor:</label>
+            <label for="tipo">Monitor*:</label>
             <select name="select_nome_monitor" required>
                 <option value=""></option>
                  <?php
@@ -45,12 +47,12 @@ $this->headScript()->appendFile('/js/mascaras.js');
          </div>
        
        <div class="form-esq">
-         <label for="tipo">Data:</label>
+         <label for="tipo">Data*:</label>
          <input type="date"  placeholder="Data" name="data_ficha" required min="2013-01-01" max = "<?= date("Y-m-d"); ?>"/><br />
        </div>
        
        <div class="form-esq">
-         <label for="tipo">Turno:</label>
+         <label for="tipo">Turno*:</label>
          <select name="select_turno" required>
                 <option value=""></option>
 		<option name="turno" value="Matutino">Matutino</option>
@@ -61,7 +63,7 @@ $this->headScript()->appendFile('/js/mascaras.js');
        
        
        <div class="form-esq">  
-         <label for="tipo">Porto:</label>
+         <label for="tipo">Porto*:</label>
          <select name="select_nome_porto" required>
              <option value=""></option>
               <?php
@@ -77,7 +79,7 @@ $this->headScript()->appendFile('/js/mascaras.js');
        </div>   
       
       <div class="form-esq">        
-          <label for="tipo">Tempo: </label>
+          <label for="tipo">Tempo*: </label>
          <select name="select_tempo" required>
              <option value=""></option>
              <?php
@@ -93,7 +95,7 @@ $this->headScript()->appendFile('/js/mascaras.js');
       </div>   
          
        <div class="form-esq"> 
-         <label>Vento:</label> 
+         <label>Vento*:</label> 
          <select name="select_vento" id="ficha_diaria_vento" required>
              <option value=""></option>
              <?php
