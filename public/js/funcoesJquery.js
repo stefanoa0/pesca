@@ -297,7 +297,7 @@ function jsEditarEntrevistas(nomeArtePesca,idEntrevista) {
             else if (nomeArtePesca.toLowerCase() === "Vara de Pesca".toLowerCase()) {
                 Entrevista = 'vara-pesca';
             }
-            else if (nomeArtePesca.toLowerCase() === "Jereré".toLowerCase()) {
+            else if (nomeArtePesca.toLowerCase() === "Jerere".toLowerCase()) {
                 Entrevista = 'jerere';
             }
             else if (nomeArtePesca.toLowerCase() === "Manzuá".toLowerCase()) {
@@ -818,7 +818,7 @@ function jsEntrevista(nomeArtePesca, idMonitoramento, idFichaDiaria) {
             else if (nomeArtePesca.toLowerCase() === "Vara de Pesca".toLowerCase()) {
                 Entrevista = 'vara-pesca';
             }
-            else if (nomeArtePesca.toLowerCase() === "Jereré".toLowerCase()) {
+            else if (nomeArtePesca.toLowerCase() === "Jerere".toLowerCase()) {
                 Entrevista = 'jerere';
             }
             else if (nomeArtePesca.toLowerCase() === "Manzuá".toLowerCase()) {

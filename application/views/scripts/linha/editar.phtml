@@ -1,3 +1,5 @@
+<div id="campos_obrigatorios">Campos com * são obrigatórios</div>
+
 <div id="titulos">
     <h2>Desembarque->Pesca de Linha</h2>
     <h3>Entrevista</h3>
@@ -13,7 +15,7 @@
                     <input type="text" name="id_fichaDiaria" placeholder="ID" disabled="true" value="<?= $this->monitoramento['fd_id'] ?>" /><br />
                 </div>
                 <div class="form-esq">
-                    <label>ID monitoramento:</label>
+                    <label>ID monitoramento*:</label>
                     <input type="text" name="id_monitoramento" placeholder="ID" value="<?= $this->monitoramento['mnt_id'] ?>" /><br />
                 </div>
                 <div class="form-esq">
@@ -33,7 +35,7 @@
                     <input type="checkbox"  name="motor"  <?php if($this->entrevista['lin_motor'] === true){ echo 'checked';} else{ echo '';}?>/><br />
                 </div>
                 <div class="form-esq">
-                    <label>Barco:</label>
+                    <label>Barco*:</label>
                     <select name="nomeBarco" placeholder="Nome do Barco" />
                     <option value=" " selected></option>
                     <?php
@@ -47,7 +49,7 @@
                     <br />
                 </div>
                 <div class="form-esq">
-                    <label>Tipo de Barco:</label>
+                    <label>Tipo de Barco*:</label>
                     <select name="tipoBarco" />
                     <?php
                     foreach ($this->tipoEmbarcacoes as $key => $tipoEmbarcacao):
@@ -63,7 +65,7 @@
             </div>
             <div class="direita-entrevista">
                 <div class="form-esq">    
-                    <label>Pescador Entrevistado:</label>
+                    <label>Pescador Entrevistado*:</label>
                     <select name="pescadorEntrevistado" />
                     <?php
                     foreach ($this->pescadores as $key => $pescador):
@@ -76,7 +78,7 @@
                     <br />
                 </div>
                 <div class="form-esq">
-                    <label>Quant. de Pescadores:</label>
+                    <label>Quant. de Pescadores*:</label>
                     <input type="number" name="numPescadores" min="1" placeholder="QuantidadePescadores" value="<?=$this->entrevista['lin_numpescadores']?>"/><br />
                 </div>
             </div>
@@ -84,21 +86,21 @@
                 <legend><h4>Saída e Volta:</h4></legend>
                 <div class="form-esq">
 
-                    <label>Data:</label>
+                    <label>Data*:</label>
                     <input type="date" name="dataSaida" min="2013-11-01"  max = "<?= date("Y-m-d"); ?>" placeholder="Data da Saída" value="<?=$this->dataSaida?>"/>
                 </div>
                 <div class="form-esq">
-                    <label>Horas:</label>
+                    <label>Horas*:</label>
                     <input type="time" name="horaSaida" placeholder="Hora da Saída" value="<?=$this->horaSaida?>"/>
                 </div>
             </div>
             <div class="direita-entrevista">
                 <div class="form-esq">
-                    <label>Data:</label>
+                    <label>Data*:</label>
                     <input type="date" name="dataVolta" min="2013-11-01"  max = "<?= date("Y-m-d"); ?>" placeholder="Data da Volta" value="<?=$this->dataVolta?>"/>
                 </div>
                 <div class="form-esq">
-                    <label>Horas:</label>
+                    <label>Horas*:</label>
                     <input type="time" name="horaVolta" placeholder="Hora da Volta" value="<?=$this->horaVolta?>"/>
                 </div>
             </div>

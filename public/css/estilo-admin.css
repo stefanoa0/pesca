@@ -781,3 +781,10 @@ legend{
     width: 10px;
     background-color: #5F302B;
 }
+
+#campos_obrigatorios {
+    color: red;
+    font-style: italic;
+    font-size: small;
+    padding-top: 10px; 
+}

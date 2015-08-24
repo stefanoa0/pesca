@@ -50,3 +50,5 @@ Temporary Items
 /application/configs/
 /library/
 nbproject/private/private.xml
+
+sh.exe.stackdump
