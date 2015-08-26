@@ -406,10 +406,10 @@ class RelatoriosController extends Zend_Controller_Action
         $porto = $this->_getParam('porto');
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
-            $relatorioColetaManual = $this->modelRelatorios->selectColetaManual("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");    
+            $relatorioColetaManual = $this->modelRelatorios->selectColetaManual("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");    
         }
         else{
-            $relatorioColetaManual = $this->modelRelatorios->selectColetaManual("fd_data between '". $data."'"." and '".$datafim."'");
+            $relatorioColetaManual = $this->modelRelatorios->selectColetaManual("dvolta between '". $data."'"." and '".$datafim."'");
         
         }
         $relatorioEspeciesColetaManual = $this->modelRelatorios->selectNomeEspeciesColetaManual();
@@ -564,9 +564,7 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_obs']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tcat_tipo']);
-            
 
-                
             $coluna++;
             foreach($Pesqueiros as $key => $nome):
                 if($nome['cal_id'] == $consulta['cal_id']):
@@ -768,10 +766,10 @@ class RelatoriosController extends Zend_Controller_Action
         $porto = $this->_getParam('porto');
         if($porto != '999'){
         $porto2 = $this->verifporto($porto);
-        $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-        $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("dvolta between '". $data."'"." and '".$datafim."'");
         }
         $relatorioEspeciesGrosseira = $this->modelRelatorios->selectNomeEspeciesGrosseira();
         $Relesp = $this->modelRelatorios->selectGrosseiraHasEspCapturadas(null, 'esp_nome_comum');
@@ -892,10 +890,10 @@ class RelatoriosController extends Zend_Controller_Action
         $porto = $this->_getParam('porto');
         if($porto != '999'){
         $porto2 = $this->verifporto($porto);
-        $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $relatorioJerere = $this->modelRelatorios->selectJerere("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-        $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioJerere = $this->modelRelatorios->selectJerere("dvolta between '". $data."'"." and '".$datafim."'");
         }
         $relatorioEspeciesJerere = $this->modelRelatorios->selectNomeEspeciesJerere();
         
@@ -1014,10 +1012,10 @@ class RelatoriosController extends Zend_Controller_Action
         $porto = $this->_getParam('porto');
         if($porto != '999'){
         $porto2 = $this->verifporto($porto);
-        $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $relatorioLinha = $this->modelRelatorios->selectLinha("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-        $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioLinha = $this->modelRelatorios->selectLinha("dvolta between '". $data."'"." and '".$datafim."'");
         }
         
         $relatorioEspeciesLinha = $this->modelRelatorios->selectNomeEspeciesLinha();
@@ -1140,10 +1138,10 @@ class RelatoriosController extends Zend_Controller_Action
         $porto = $this->_getParam('porto');
         if($porto != '999'){
         $porto2 = $this->verifporto($porto);
-        $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-        $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("dvolta between '". $data."'"." and '".$datafim."'");
         }
         $relatorioEspeciesLinhaFundo = $this->modelRelatorios->selectNomeEspeciesLinhaFundo();
         $Relesp = $this->modelRelatorios->selectLinhaFundoHasEspCapturadas();
@@ -1261,10 +1259,10 @@ class RelatoriosController extends Zend_Controller_Action
         $porto = $this->_getParam('porto');
         if($porto != '999'){
         $porto2 = $this->verifporto($porto);
-        $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $relatorioManzua = $this->modelRelatorios->selectManzua("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-        $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioManzua = $this->modelRelatorios->selectManzua("dvolta between '". $data."'"." and '".$datafim."'");
         }
         
         $relatorioEspeciesManzua = $this->modelRelatorios->selectNomeEspeciesManzua();
@@ -1382,10 +1380,10 @@ class RelatoriosController extends Zend_Controller_Action
         $porto = $this->_getParam('porto');
         if($porto != '999'){
         $porto2 = $this->verifporto($porto);
-        $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $relatorioMergulho = $this->modelRelatorios->selectMergulho("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-        $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioMergulho = $this->modelRelatorios->selectMergulho("dvolta between '". $data."'"." and '".$datafim."'");
         }
         
         $relatorioEspeciesMergulho = $this->modelRelatorios->selectNomeEspeciesMergulho();
@@ -1506,10 +1504,10 @@ class RelatoriosController extends Zend_Controller_Action
         $porto = $this->_getParam('porto');
         if($porto != '999'){
         $porto2 = $this->verifporto($porto);
-        $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-        $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("dvolta between '". $data."'"." and '".$datafim."'");
         }
         
         $relatorioEspeciesRatoeira = $this->modelRelatorios->selectNomeEspeciesRatoeira();
@@ -1630,10 +1628,10 @@ class RelatoriosController extends Zend_Controller_Action
         $porto = $this->_getParam('porto');
         if($porto != '999'){
         $porto2 = $this->verifporto($porto);
-        $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+        $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-        $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."'");
+        $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("dvolta between '". $data."'"." and '".$datafim."'");
         }
         
         $relatorioEspeciesSiripoia = $this->modelRelatorios->selectNomeEspeciesSiripoia();
@@ -1876,10 +1874,10 @@ class RelatoriosController extends Zend_Controller_Action
         $porto = $this->_getParam('porto');
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
-            $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
             }
             else{
-            $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."'");
+            $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("dvolta between '". $data."'"." and '".$datafim."'");
             }
             
             $relatorioEspeciesVaraPesca = $this->modelRelatorios->selectNomeEspeciesVaraPesca();
@@ -1991,9 +1989,9 @@ class RelatoriosController extends Zend_Controller_Action
         $porto = $this->_getParam('porto');
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
-            $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
+            $relatorioArrasto = $this->modelRelatorios->selectArrasto("dvolta between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
         } else {
-            $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
+            $relatorioArrasto = $this->modelRelatorios->selectArrasto("dvolta between '" . $data . "'" . " and '" . $datafim . "'");
         }
         $linha=2;
         $coluna = 0;
@@ -2074,9 +2072,9 @@ class RelatoriosController extends Zend_Controller_Action
         
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
-            $relatorioColeta = $this->modelRelatorios->selectColetaManual("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
+            $relatorioColeta = $this->modelRelatorios->selectColetaManual("dvolta between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
         } else {
-            $relatorioColeta = $this->modelRelatorios->selectColetaManual("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
+            $relatorioColeta = $this->modelRelatorios->selectColetaManual("dvolta between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioColeta as $key => $consulta):
             $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
@@ -2113,9 +2111,9 @@ class RelatoriosController extends Zend_Controller_Action
         unset($Relesp);
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
-            $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
+            $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("dvolta between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
         } else {
-            $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
+            $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("dvolta between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioEmalhe as $key => $consulta):
             $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
@@ -2152,9 +2150,9 @@ class RelatoriosController extends Zend_Controller_Action
         unset($Relesp);
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
-            $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
+            $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("dvolta between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
         } else {
-            $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
+            $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("dvolta between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioGrosseira as $key => $consulta):
             $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
@@ -2191,9 +2189,9 @@ class RelatoriosController extends Zend_Controller_Action
         unset($Relesp);
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
-            $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
+            $relatorioJerere = $this->modelRelatorios->selectJerere("dvolta between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
         } else {
-            $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
+            $relatorioJerere = $this->modelRelatorios->selectJerere("dvolta between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioJerere as $key => $consulta):
             $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
@@ -2231,9 +2229,9 @@ class RelatoriosController extends Zend_Controller_Action
         unset($Relesp);
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
-            $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
+            $relatorioLinha = $this->modelRelatorios->selectLinha("dvolta between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
         } else {
-            $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
+            $relatorioLinha = $this->modelRelatorios->selectLinha("dvolta between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioLinha as $key => $consulta):
             $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
@@ -2271,9 +2269,9 @@ class RelatoriosController extends Zend_Controller_Action
         
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
-            $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
+            $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("dvolta between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
         } else {
-            $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
+            $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("dvolta between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioLinhaFundo as $key => $consulta):
             $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
@@ -2311,9 +2309,9 @@ class RelatoriosController extends Zend_Controller_Action
         
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
-            $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
+            $relatorioManzua = $this->modelRelatorios->selectManzua("dvolta between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
         } else {
-            $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
+            $relatorioManzua = $this->modelRelatorios->selectManzua("dvolta between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioManzua as $key => $consulta):
             $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
@@ -2351,9 +2349,9 @@ class RelatoriosController extends Zend_Controller_Action
         
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
-            $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
+            $relatorioMergulho = $this->modelRelatorios->selectMergulho("dvolta between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
         } else {
-            $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
+            $relatorioMergulho = $this->modelRelatorios->selectMergulho("dvolta between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioMergulho as $key => $consulta):
             $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
@@ -2390,9 +2388,9 @@ class RelatoriosController extends Zend_Controller_Action
         
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
-            $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto . "'");
+            $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("dvolta between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto . "'");
         } else {
-            $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
+            $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("dvolta between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioRatoeira as $key => $consulta):
             $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
@@ -2429,9 +2427,9 @@ class RelatoriosController extends Zend_Controller_Action
         
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
-            $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto . "'");
+            $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("dvolta between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto . "'");
         } else {
-            $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
+            $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("dvolta between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioSiripoia as $key => $consulta):
             $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
@@ -2509,9 +2507,9 @@ class RelatoriosController extends Zend_Controller_Action
         
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
-            $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto . "'");
+            $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("dvolta between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto . "'");
         } else {
-            $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '" . $data . "'" . " and '" . $datafim . "'");
+            $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("dvolta between '" . $data . "'" . " and '" . $datafim . "'");
         }
         foreach ($relatorioVaraPesca as $key => $consulta):
             $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
@@ -2637,7 +2635,7 @@ class RelatoriosController extends Zend_Controller_Action
         else{
             $relatorioCalao = $this->modelRelatorios->selectCalao("cal_data between '". $data."'"." and '".$datafim."'");
         }
-        
+        $Relesp = $this->modelRelatorios->selectCalaoHasEspCapturadas();
         $linha = 2;
         $coluna= 0;
         foreach ( $relatorioCalao as $key => $consulta ):
@@ -2687,28 +2685,21 @@ class RelatoriosController extends Zend_Controller_Action
                 $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
             endforeach;
             
-            $coluna = 2+$quant;
-            $Relesp = $this->modelRelatorios->selectCalaoHasEspCapturadas('cal_id = '.$consulta['cal_id']);
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+            
+            $colunaEspecies= 2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'cal_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna=0;
             $linha++;
         endforeach;
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
-            $relatorioColeta = $this->modelRelatorios->selectColetaManual("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $relatorioColeta = $this->modelRelatorios->selectColetaManual("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioColeta = $this->modelRelatorios->selectColetaManual("fd_data between '". $data."'"." and '".$datafim."'");
+            $relatorioColeta = $this->modelRelatorios->selectColetaManual("dvolta between '". $data."'"." and '".$datafim."'");
         }
+        $Relesp = $this->modelRelatorios->selectColetaManualHasEspCapturadas('cml_id = '.$consulta['cml_id']);
         foreach ( $relatorioColeta as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -2762,29 +2753,21 @@ class RelatoriosController extends Zend_Controller_Action
                 $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
             endforeach;
             
-            $coluna = 2+$quant;
-            $Relesp = $this->modelRelatorios->selectColetaManualHasEspCapturadas('cml_id = '.$consulta['cml_id']);
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+            $colunaEspecies= 2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'cml_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
             endforeach; 
         
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
-            $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("fd_data between '". $data."'"." and '".$datafim."'");
+            $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("dvolta between '". $data."'"." and '".$datafim."'");
         }
+        $Relesp = $this->modelRelatorios->selectEmalheHasEspCapturadas();
         foreach($relatorioEmalhe as $key=> $consulta):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
@@ -2829,30 +2812,22 @@ class RelatoriosController extends Zend_Controller_Action
             foreach($Pesqueiros as $key => $nome):
                 $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
             endforeach;
+           
             
-            
-            $coluna = 2+$quant;
-            $Relesp = $this->modelRelatorios->selectEmalheHasEspCapturadas('em_id = '.$consulta['em_id']);
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+            $colunaEspecies= 2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'em_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
-            $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."'");
+            $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("dvolta between '". $data."'"." and '".$datafim."'");
         }
+        $Relesp = $this->modelRelatorios->selectGrosseiraHasEspCapturadas();
         foreach ( $relatorioGrosseira as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -2902,31 +2877,23 @@ class RelatoriosController extends Zend_Controller_Action
                 foreach($Pesqueiros as $key => $tempo):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
+               
                 
-                $Relesp = $this->modelRelatorios->selectGrosseiraHasEspCapturadas('grs_id = '.$consulta['grs_id']);
-                
-                $coluna= 2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+            $colunaEspecies= 2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'grs_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
         
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
-            $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $relatorioJerere = $this->modelRelatorios->selectJerere("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioJerere = $this->modelRelatorios->selectJerere("fd_data between '". $data."'"." and '".$datafim."'");
+            $relatorioJerere = $this->modelRelatorios->selectJerere("dvolta between '". $data."'"." and '".$datafim."'");
         }
+        $Relesp = $this->modelRelatorios->selectJerereHasEspCapturadas();
         foreach ( $relatorioJerere as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -2977,31 +2944,23 @@ class RelatoriosController extends Zend_Controller_Action
                 foreach($Pesqueiros as $key => $tempo):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
-                
-                $Relesp = $this->modelRelatorios->selectJerereHasEspCapturadas('jre_id = '.$consulta['jre_id']);
-                
-                $coluna= 2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+               
+            $colunaEspecies= 2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'jre_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
       
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
-            $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $relatorioLinha = $this->modelRelatorios->selectLinha("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioLinha = $this->modelRelatorios->selectLinha("fd_data between '". $data."'"." and '".$datafim."'");
+            $relatorioLinha = $this->modelRelatorios->selectLinha("dvolta between '". $data."'"." and '".$datafim."'");
         }
+        
+        $Relesp = $this->modelRelatorios->selectLinhaHasEspCapturadas();
         foreach ( $relatorioLinha as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -3054,30 +3013,21 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
-                $Relesp = $this->modelRelatorios->selectLinhaHasEspCapturadas('lin_id = '.$consulta['lin_id']);
-                
-                $coluna= 2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+            $colunaEspecies= 2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'lin_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
       
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
-            $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."'");
+            $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("dvolta between '". $data."'"." and '".$datafim."'");
         }
+        $Relesp = $this->modelRelatorios->selectLinhaFundoHasEspCapturadas();
         foreach ( $relatorioLinhaFundo as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -3130,30 +3080,22 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
-                $Relesp = $this->modelRelatorios->selectLinhaFundoHasEspCapturadas('lf_id = '.$consulta['lf_id']);
                 
-                $coluna= 2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+            $colunaEspecies= 2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'lf_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
         
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
-            $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $relatorioManzua = $this->modelRelatorios->selectManzua("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioManzua = $this->modelRelatorios->selectManzua("fd_data between '". $data."'"." and '".$datafim."'");
+            $relatorioManzua = $this->modelRelatorios->selectManzua("dvolta between '". $data."'"." and '".$datafim."'");
         }
+        $Relesp = $this->modelRelatorios->selectManzuaHasEspCapturadas();
         foreach ( $relatorioManzua as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -3205,30 +3147,24 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
-                $Relesp = $this->modelRelatorios->selectManzuaHasEspCapturadas('man_id = '.$consulta['man_id']);
                 
-                $coluna= 2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+                
+            $colunaEspecies= 2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'man_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
         
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
-            $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $relatorioMergulho = $this->modelRelatorios->selectMergulho("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioMergulho = $this->modelRelatorios->selectMergulho("fd_data between '". $data."'"." and '".$datafim."'");
+            $relatorioMergulho = $this->modelRelatorios->selectMergulho("dvolta between '". $data."'"." and '".$datafim."'");
         }
+        
+        $Relesp = $this->modelRelatorios->selectMergulhoHasEspCapturadas();
         foreach ( $relatorioMergulho as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -3281,19 +3217,9 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
-                $Relesp = $this->modelRelatorios->selectMergulhoHasEspCapturadas('mer_id = '.$consulta['mer_id']);
-                
-                $coluna= 2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+            $colunaEspecies= 2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'mer_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -3301,11 +3227,12 @@ class RelatoriosController extends Zend_Controller_Action
         $porto = $this->_getParam('porto');
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
-            $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("fd_data between '". $data."'"." and '".$datafim."'");
+            $relatorioRatoeira = $this->modelRelatorios->selectRatoeira("dvolta between '". $data."'"." and '".$datafim."'");
         }
+        $Relesp = $this->modelRelatorios->selectRatoeiraHasEspCapturadas();
         foreach ( $relatorioRatoeira as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -3357,19 +3284,9 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
-                $Relesp = $this->modelRelatorios->selectRatoeiraHasEspCapturadas('rat_id = '.$consulta['rat_id']);
-                
-                $coluna= 2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+            $colunaEspecies= 2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'rat_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -3377,11 +3294,12 @@ class RelatoriosController extends Zend_Controller_Action
         $porto = $this->_getParam('porto');
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
-            $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("fd_data between '". $data."'"." and '".$datafim."'");
+            $relatorioSiripoia = $this->modelRelatorios->selectSiripoia("dvolta between '". $data."'"." and '".$datafim."'");
         }
+        $Relesp = $this->modelRelatorios->selectSiripoiaHasEspCapturadas();
         foreach ( $relatorioSiripoia as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -3433,20 +3351,10 @@ class RelatoriosController extends Zend_Controller_Action
                 foreach($Pesqueiros as $key => $tempo):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
-                
-                $Relesp = $this->modelRelatorios->selectSiripoiaHasEspCapturadas('sir_id = '.$consulta['sir_id']);
-                
-                $coluna= 2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+
+            $colunaEspecies= 2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'sir_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -3459,6 +3367,8 @@ class RelatoriosController extends Zend_Controller_Action
         else{
             $relatorioTarrafa = $this->modelRelatorios->selectTarrafa("tar_data between '". $data."'"." and '".$datafim."'");
         }
+        
+        $Relesp = $this->modelRelatorios->selectTarrafaHasEspCapturadas();
         foreach ( $relatorioTarrafa as $key => $consulta ):
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha,   $consulta['pto_nome']);
@@ -3505,20 +3415,9 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
                 endforeach;
                 
-                
-                $Relesp = $this->modelRelatorios->selectTarrafaHasEspCapturadas('tar_id = '.$consulta['tar_id']);
-                
-                $coluna= 2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+            $colunaEspecies= 2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'tar_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -3526,11 +3425,12 @@ class RelatoriosController extends Zend_Controller_Action
         $porto = $this->_getParam('porto');
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
-            $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
         }
         else{
-            $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("fd_data between '". $data."'"." and '".$datafim."'");
+            $relatorioVaraPesca = $this->modelRelatorios->selectVaraPesca("dvolta between '". $data."'"." and '".$datafim."'");
         }
+        $Relesp = $this->modelRelatorios->selectVaraPescaHasEspCapturadas();
         foreach ( $relatorioVaraPesca as $key => $consulta ):
             
             $sheet->setCellValueByColumnAndRow($coluna, $linha,   $consulta['tl_local']);
@@ -3585,19 +3485,9 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
-                $Relesp = $this->modelRelatorios->selectVaraPescaHasEspCapturadas('vp_id = '.$consulta['vp_id']);
-                
-                $coluna= 2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+            $colunaEspecies= 2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'vp_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
