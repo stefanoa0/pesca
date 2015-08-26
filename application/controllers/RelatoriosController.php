@@ -261,20 +261,20 @@ class RelatoriosController extends Zend_Controller_Action
         
         
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosArrasto();
-        $coluna = $maxPesqueiros[0]['count']*2+$quant;
-        
+        $colunaEspecies = $maxPesqueiros[0]['count']*2+$quant;
+        $firstColunaEspecies = $colunaEspecies;
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
             $porto2 = $this->verifporto($porto);
-            $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+            $relatorioArrasto = $this->modelRelatorios->selectArrasto("dvolta between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
 
         }
         else{
-            $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."'");
+            $relatorioArrasto = $this->modelRelatorios->selectArrasto("dvolta between '". $data."'"." and '".$datafim."'");
         }
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspecies();
-        $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
+        $sizeEspecies = $this->listaEspecies($relatorioEspecies, $colunaEspecies, $linha, $objPHPExcel);
         $Pesqueiros = $this->modelRelatorios->selectArrastoHasPesqueiro();
         $Relesp = $this->modelRelatorios->selectArrastoHasEspCapturadas(null, 'esp_nome_comum');
         $linha = 2;
@@ -316,18 +316,9 @@ class RelatoriosController extends Zend_Controller_Action
                     endif;
                 endforeach;
                 
-                $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['af_id'] == $consulta['af_id'] && $esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
-                
+                $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'af_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -347,9 +338,23 @@ class RelatoriosController extends Zend_Controller_Action
         $objWriter->save('files/relatorioArrasto_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
     }
     
-    
-    
-    
+    public function relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, $id, $tipoRel){
+        foreach ($relatorioEspecies as $key => $nomeEspecie):
+            foreach ($Relesp as $key => $esp):
+                if ($esp[$id] == $consulta[$id] && $esp['esp_nome_comum'] === $nomeEspecie['esp_nome_comum']) {
+                    $sheet->setCellValueByColumnAndRow($colunaEspecies, $linha, $this->verificaTipoRel($esp[$tipoRel]));
+                    break;
+                }
+//                            $colunaEspecies++;
+            endforeach;
+            if (empty($sheet->getCellByColumnAndRow($colunaEspecies, $linha)->getFormattedValue())) {
+                $sheet->setCellValueByColumnAndRow($colunaEspecies, $linha, '0');
+            }
+            $colunaEspecies++;
+        endforeach;
+        return $colunaEspecies;
+    }
+
     public function relatoriocompletocoletamanualAction() {
         set_time_limit(0);
 //        if($this->usuario['tp_id']==5){
@@ -408,7 +413,9 @@ class RelatoriosController extends Zend_Controller_Action
         
         }
         $relatorioEspeciesColetaManual = $this->modelRelatorios->selectNomeEspeciesColetaManual();
+        $Relesp = $this->modelRelatorios->selectColetaManualHasEspCapturadas(null, 'esp_nome_comum');
         $lastcolumn = $this->listaEspecies($relatorioEspeciesColetaManual, $coluna, $linha, $objPHPExcel);
+        $Pesqueiros = $this->modelRelatorios->selectColetaManualHasPesqueiro();
         $linha = 2;
         $coluna= 0;
         foreach ( $relatorioColetaManual as $key => $consulta ):
@@ -434,31 +441,22 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_motor']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dp_destino']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cml_obs']);
-            
-            $Pesqueiros = $this->modelRelatorios->selectColetaManualHasPesqueiro('cml_id = '.$consulta['cml_id']);
-                
                 $coluna++;
                 foreach($Pesqueiros as $key => $nome):
+                    if($nome['cml_id'] == $consulta['cml_id']):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                    endif;
                 endforeach;
                 $coluna= $maxPesqueiros[0]['count']+$quant;
                 foreach($Pesqueiros as $key => $tempo):
+                    if($nome['cml_id'] == $consulta['cml_id']):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
+                    endif;
                 endforeach;
                 
-                $Relesp = $this->modelRelatorios->selectColetaManualHasEspCapturadas('cml_id = '.$consulta['cml_id']);
-                
-                $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn-1){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+                $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesColetaManual, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'cml_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -523,7 +521,7 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspeciesCalao = $this->modelRelatorios->selectNomeEspeciesCalao();
         
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosCalao();
-        $coluna = $maxPesqueiros[0]['count']*2+$quant;
+        $coluna = $maxPesqueiros[0]['count']+$quant;
         
         $porto = $this->_getParam('porto');
         if($porto != '999'){
@@ -535,12 +533,11 @@ class RelatoriosController extends Zend_Controller_Action
         else{
             $relatorioCalao = $this->modelRelatorios->selectCalao("cal_data between '". $data."'"." and '".$datafim."'");
         
-         
         }
         $lastcolumn = $this->listaEspecies($relatorioEspeciesCalao, $coluna, $linha, $objPHPExcel);
         
-        
-        
+        $Pesqueiros = $this->modelRelatorios->selectCalaoHasPesqueiro();
+        $Relesp = $this->modelRelatorios->selectCalaoHasEspCapturadas(null, 'esp_nome_comum');
         //$lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
@@ -568,25 +565,19 @@ class RelatoriosController extends Zend_Controller_Action
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['cal_obs']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tcat_tipo']);
             
-            $Pesqueiros = $this->modelRelatorios->selectCalaoHasPesqueiro('cal_id = '.$consulta['cal_id']);
+
                 
             $coluna++;
             foreach($Pesqueiros as $key => $nome):
+                if($nome['cal_id'] == $consulta['cal_id']):
                 $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
+                endif;
             endforeach;
             
-            $coluna = $maxPesqueiros[0]['count']*2+$quant;
-            $Relesp = $this->modelRelatorios->selectCalaoHasEspCapturadas('cal_id = '.$consulta['cal_id']);
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+           
+            $colunaEspecies= $maxPesqueiros[0]['count']+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesCalao, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'cal_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -606,16 +597,10 @@ class RelatoriosController extends Zend_Controller_Action
     
     public function relatoriocompletoemalheAction() {
         set_time_limit(0);
-//        if($this->usuario['tp_id']==5){
-//            $this->_redirect('index');
-//        }
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
-        
         $this->modelRelatorios = new Application_Model_Relatorios();
-        
-        
         
         $var =  $this->_getParam('id');
         $tipoRel = $this->verificaRelatorio($var);
@@ -657,7 +642,7 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Observacao');
         $maxPesqueiros = $this->modelRelatorios->countPesqueirosEmalhe();
-        $coluna = $maxPesqueiros[0]['count']*2+$quant;
+        $coluna = $maxPesqueiros[0]['count']+$quant;
         
        
         $porto = $this->_getParam('porto');
@@ -671,6 +656,7 @@ class RelatoriosController extends Zend_Controller_Action
         }
         $relatorioEspeciesEmalhe = $this->modelRelatorios->selectNomeEspeciesEmalhe();
         $lastcolumn = $this->listaEspecies($relatorioEspeciesEmalhe, $coluna, $linha, $objPHPExcel);
+        $Relesp = $this->modelRelatorios->selectEmalheHasEspCapturadas(null, 'esp_nome_comum');
         $linha = 2;
         $coluna= 0;
         foreach ( $relatorioEmalhe as $key => $consulta ):
@@ -706,20 +692,11 @@ class RelatoriosController extends Zend_Controller_Action
             foreach($Pesqueiros as $key => $nome):
                 $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
             endforeach;
+
             
-            
-            $coluna = $maxPesqueiros[0]['count']*2+$quant;
-            $Relesp = $this->modelRelatorios->selectEmalheHasEspCapturadas('em_id = '.$consulta['em_id']);
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+            $colunaEspecies= $maxPesqueiros[0]['count']+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesEmalhe, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'em_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -797,7 +774,7 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioGrosseira = $this->modelRelatorios->selectGrosseira("fd_data between '". $data."'"." and '".$datafim."'");
         }
         $relatorioEspeciesGrosseira = $this->modelRelatorios->selectNomeEspeciesGrosseira();
-        
+        $Relesp = $this->modelRelatorios->selectGrosseiraHasEspCapturadas(null, 'esp_nome_comum');
         $lastcolumn = $this->listaEspecies($relatorioEspeciesGrosseira, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
@@ -838,20 +815,11 @@ class RelatoriosController extends Zend_Controller_Action
                 foreach($Pesqueiros as $key => $tempo):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
-                
-                $Relesp = $this->modelRelatorios->selectGrosseiraHasEspCapturadas('grs_id = '.$consulta['grs_id']);
-                
-                $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+
+                $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesGrosseira, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'grs_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
+
             $coluna = 0;
             $linha++;
         endforeach;
@@ -932,7 +900,7 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspeciesJerere = $this->modelRelatorios->selectNomeEspeciesJerere();
         
         $lastcolumn = $this->listaEspecies($relatorioEspeciesJerere, $coluna, $linha, $objPHPExcel);
-        
+        $Relesp = $this->modelRelatorios->selectJerereHasEspCapturadas(null,'');
         $linha = 2;
         $coluna= 0;
         foreach ( $relatorioJerere as $key => $consulta ):
@@ -972,20 +940,10 @@ class RelatoriosController extends Zend_Controller_Action
                 foreach($Pesqueiros as $key => $tempo):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
-                
-                $Relesp = $this->modelRelatorios->selectJerereHasEspCapturadas('jre_id = '.$consulta['jre_id']);
-                
-                $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn-1){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+               
+                $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesJerere, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'jre_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1065,7 +1023,7 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspeciesLinha = $this->modelRelatorios->selectNomeEspeciesLinha();
         
         $lastcolumn = $this->listaEspecies($relatorioEspeciesLinha, $coluna, $linha, $objPHPExcel);
-        
+        $Relesp = $this->modelRelatorios->selectLinhaHasEspCapturadas(null, 'esp_nome_comum');
         $linha = 2;
         $coluna= 0;
         foreach ( $relatorioLinha as $key => $consulta ):
@@ -1105,19 +1063,9 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
-                $Relesp = $this->modelRelatorios->selectLinhaHasEspCapturadas('lin_id = '.$consulta['lin_id']);
-                
-                $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+                $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesLinha, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'lin_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1198,7 +1146,7 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioLinhaFundo = $this->modelRelatorios->selectLinhaFundo("fd_data between '". $data."'"." and '".$datafim."'");
         }
         $relatorioEspeciesLinhaFundo = $this->modelRelatorios->selectNomeEspeciesLinhaFundo();
-        
+        $Relesp = $this->modelRelatorios->selectLinhaFundoHasEspCapturadas();
         $lastcolumn = $this->listaEspecies($relatorioEspeciesLinhaFundo, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
@@ -1240,20 +1188,10 @@ class RelatoriosController extends Zend_Controller_Action
                 foreach($Pesqueiros as $key => $tempo):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
-                
-                $Relesp = $this->modelRelatorios->selectLinhaFundoHasEspCapturadas('lf_id = '.$consulta['lf_id']);
-                
-                $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn-1){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+
+            $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesLinhaFundo, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'lf_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1331,6 +1269,7 @@ class RelatoriosController extends Zend_Controller_Action
         
         $relatorioEspeciesManzua = $this->modelRelatorios->selectNomeEspeciesManzua();
         $lastcolumn = $this->listaEspecies($relatorioEspeciesManzua, $coluna, $linha, $objPHPExcel);
+        $Relesp = $this->modelRelatorios->selectManzuaHasEspCapturadas(null, 'esp_nome_comum');
         
         $linha = 2;
         $coluna= 0;
@@ -1371,20 +1310,10 @@ class RelatoriosController extends Zend_Controller_Action
                 foreach($Pesqueiros as $key => $tempo):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
-                
-                $Relesp = $this->modelRelatorios->selectManzuaHasEspCapturadas('man_id = '.$consulta['man_id']);
-                
-                $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn-1){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+
+            $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesManzua, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'man_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1462,7 +1391,7 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspeciesMergulho = $this->modelRelatorios->selectNomeEspeciesMergulho();
         
         $lastcolumn = $this->listaEspecies($relatorioEspeciesMergulho, $coluna, $linha, $objPHPExcel);
-        
+        $Relesp = $this->modelRelatorios->selectMergulhoHasEspCapturadas();
         $linha = 2;
         $coluna= 0;
         foreach ( $relatorioMergulho as $key => $consulta ):
@@ -1500,19 +1429,9 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
-                $Relesp = $this->modelRelatorios->selectMergulhoHasEspCapturadas('mer_id = '.$consulta['mer_id'], 'esp_id ASC');
-                
-                $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if(!strcasecmp($esp['esp_nome_comum'], $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue())){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn-1){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+            $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesMergulho, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'mer_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1596,7 +1515,7 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspeciesRatoeira = $this->modelRelatorios->selectNomeEspeciesRatoeira();
         
         $lastcolumn = $this->listaEspecies($relatorioEspeciesRatoeira, $coluna, $linha, $objPHPExcel);
-        
+        $Relesp = $this->modelRelatorios->selectRatoeiraHasEspCapturadas(null,'esp_nome_comum');
         $linha = 2;
         $coluna= 0;
         foreach ( $relatorioRatoeira as $key => $consulta ):
@@ -1636,20 +1555,10 @@ class RelatoriosController extends Zend_Controller_Action
                 foreach($Pesqueiros as $key => $tempo):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
-                
-                $Relesp = $this->modelRelatorios->selectRatoeiraHasEspCapturadas('rat_id = '.$consulta['rat_id']);
-                
-                $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn-1){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+
+            $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesRatoeira, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'rat_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1730,6 +1639,8 @@ class RelatoriosController extends Zend_Controller_Action
         $relatorioEspeciesSiripoia = $this->modelRelatorios->selectNomeEspeciesSiripoia();
         
         $lastcolumn = $this->listaEspecies($relatorioEspeciesSiripoia, $coluna, $linha, $objPHPExcel);
+        
+        $Relesp = $this->modelRelatorios->selectSiripoiaHasEspCapturadas(null, 'esp_nome_comum');
         $linha = 2;
         $coluna= 0;
         foreach ( $relatorioSiripoia as $key => $consulta ):
@@ -1769,19 +1680,9 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
-                $Relesp = $this->modelRelatorios->selectSiripoiaHasEspCapturadas('sir_id = '.$consulta['sir_id']);
-                
-                $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn-1){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+             $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesSiripoia, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'sir_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1858,7 +1759,7 @@ class RelatoriosController extends Zend_Controller_Action
         }
         
         $relatorioEspeciesTarrafa = $this->modelRelatorios->selectNomeEspeciesTarrafa();
-        
+        $Relesp = $this->modelRelatorios->selectTarrafaHasEspCapturadas(null, 'esp_nome_comum');
         $lastcolumn = $this->listaEspecies($relatorioEspeciesTarrafa, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
@@ -1893,20 +1794,11 @@ class RelatoriosController extends Zend_Controller_Action
                 foreach($Pesqueiros as $key => $tempo):
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
+               
                 
-                $Relesp = $this->modelRelatorios->selectTarrafaHasEspCapturadas('tar_id = '.$consulta['tar_id']);
-                
-                $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+            $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesTarrafa, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'tar_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1991,7 +1883,7 @@ class RelatoriosController extends Zend_Controller_Action
             }
             
             $relatorioEspeciesVaraPesca = $this->modelRelatorios->selectNomeEspeciesVaraPesca();
-            
+            $Relesp = $this->modelRelatorios->selectVaraPescaHasEspCapturadas(null, 'esp_nome_comum');
             $lastcolumn = $this->listaEspecies($relatorioEspeciesVaraPesca, $coluna, $linha, $objPHPExcel);
         $linha = 2;
         $coluna= 0;
@@ -2039,19 +1931,9 @@ class RelatoriosController extends Zend_Controller_Action
                     $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
                 endforeach;
                 
-                $Relesp = $this->modelRelatorios->selectVaraPescaHasEspCapturadas('vp_id = '.$consulta['vp_id']);
-                
-                $coluna= $maxPesqueiros[0]['count']*2+$quant;
-            for($i=$coluna; $i<$lastcolumn; $i++):
-                foreach($Relesp as $key => $esp):
-                   if($esp['esp_nome_comum'] === $sheet->getCellByColumnAndRow($coluna, 1)->getFormattedValue()){
-                        $sheet->setCellValueByColumnAndRow($coluna++, $linha, $this->verificaTipoRel($esp[$tipoRel]));
-                    }
-                endforeach;
-                if($coluna < $lastcolumn-1){
-                    $sheet->setCellValueByColumnAndRow($coluna++, $linha, '0');
-                }
-            endfor;
+            $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
+                $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesVaraPesca, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'vp_id', $tipoRel);
+                $colunaEspecies = $firstColunaEspecies;
             $coluna = 0;
             $linha++;
         endforeach;
@@ -6461,5 +6343,98 @@ class RelatoriosController extends Zend_Controller_Action
         header('Cache-Control: max-age=0');
         ob_end_clean();
         $objWriter->save('php://output');
+    }
+    
+    
+    
+    
+    public function arrastoAction() {
+        $inicio1 = microtime(true);
+        set_time_limit(0);
+//        if($this->usuario['tp_id']==5){
+//            $this->_redirect('index');
+//        }
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $var =  $this->_getParam('id');
+        $tipoRel = $this->verificaRelatorio($var);
+        
+        $date =  $this->_getParam('data');
+        $datend = $this->_getParam('datafim');
+        
+        $data = $this->dataInicial($date);
+        $datafim = $this->dataFinal($datend);
+        
+     
+        $this->modelRelatorios = new Application_Model_Relatorios();
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->setActiveSheetIndex(0);
+        $coluna = 0;
+        $linha = 1;
+        $quant= 21;
+        
+        $sheet = $objPHPExcel->getActiveSheet();
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
+
+        
+        
+        $maxPesqueiros = $this->modelRelatorios->countPesqueirosArrasto();
+        #coluna de inicio das espécies
+        $colunaEspecies = $maxPesqueiros[0]['count']*2+$quant;
+        $firstColunaEspecies = $colunaEspecies;
+        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto2 = $this->verifporto($porto);
+            $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+
+        }
+        else{
+            $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."'");
+        }
+        $relatorioEspecies = $this->modelRelatorios->selectNomeEspecies();
+        $sizeEspecies = $this->listaEspecies($relatorioEspecies, $colunaEspecies, $linha, $objPHPExcel);
+        $Pesqueiros = $this->modelRelatorios->selectArrastoHasPesqueiro();
+        $Relesp = $this->modelRelatorios->selectArrastoHasEspCapturadas(null, 'esp_nome_comum');
+        //$sizeEspecies = sizeof($Relesp);
+        $linha = 2;
+        $coluna= 0;
+        
+        foreach ( $relatorioArrasto as $key => $consulta ):
+                
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_id']);
+                foreach($relatorioEspecies as $key => $nomeEspecie):
+                    foreach($Relesp as $key => $esp):
+                           if($esp['af_id'] == $consulta['af_id'] && $esp['esp_nome_comum'] === $nomeEspecie['esp_nome_comum']){
+                                $sheet->setCellValueByColumnAndRow($colunaEspecies, $linha, $this->verificaTipoRel($esp['spc_peso_kg']));
+                                break;
+                            }
+//                            $colunaEspecies++;
+                    endforeach;
+                    if(empty($sheet->getCellByColumnAndRow($colunaEspecies, $linha)->getFormattedValue())){
+                        $sheet->setCellValueByColumnAndRow($colunaEspecies, $linha, '0');
+                    }
+                    $colunaEspecies++;
+                endforeach;
+                $colunaEspecies = $firstColunaEspecies;
+            $coluna = 0;
+            $linha++;
+        endforeach;
+        
+        $fim1 = microtime(true);
+        
+        //$sheet->setCellValueByColumnAndRow(1, $linha, $fim1-$inicio1);
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        ob_end_clean();
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="relatorioArrasto_'.$tipoRel.'.xls"');
+        header('Cache-Control: max-age=0');
+        
+        ob_end_clean();
+        $dataGerado = date('d-m-Y');
+        $objWriter->save('php://output');
+        $objWriter->save('files/relatorioArrasto_'.$dataGerado.'_'.$tipoRel.'_De_'.$data.'_Ate_'.$datafim.$porto2.'.xls');
     }
 }

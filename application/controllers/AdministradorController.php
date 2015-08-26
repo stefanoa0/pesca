@@ -40,7 +40,7 @@ class AdministradorController extends Zend_Controller_Action
             $this->view->assign("pescadorDeletado", $pescadorDeletado);
         }
         
-        print_r($this->modelRelatorios->selectMergulhoHasEspCapturadas('mer_id = 11606', 'esp_id ASC'));
+        print_r($this->modelRelatorios->selectArrastoHasEspCapturadas());
     }
     
     public function deleteAction(){

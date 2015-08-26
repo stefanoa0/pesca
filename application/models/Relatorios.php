@@ -48,11 +48,21 @@ class Application_Model_Relatorios {
 
     public function selectArrastoHasEspCapturadas($where = null, $order = null, $limit = null) {
 
-        $this->modelArrastoFundo = new Application_Model_ArrastoFundo();
+        $this->dbTableArrastoHasEspCapturada = new Application_Model_DbTable_VArrastoFundoHasEspecieCapturada();
 
-        $arrasto = $this->modelArrastoFundo->selectArrastoHasEspCapturadas($where, $order, $limit);
+        $select = $this->dbTableArrastoHasEspCapturada->select()->
+                        from($this->dbTableArrastoHasEspCapturada, array('af_id',
+                            'esp_nome_comum',
+                            'spc_quantidade' => 'sum(spc_quantidade)',
+                            'spc_peso_kg' => 'sum(spc_peso_kg)',
+                            'spc_preco' => 'sum(spc_preco)',
+                            'esp_id'))->order($order)->limit($limit)->group(array('af_id', 'esp_nome_comum', 'esp_id'));
 
-        return $arrasto;
+        if (!is_null($where)) {
+            $select->where($where);
+        }
+
+        return $this->dbTableArrastoHasEspCapturada->fetchAll($select)->toArray();
     }
 
     public function selectCapturaByArteArrasto($where = null) {
@@ -108,12 +118,12 @@ class Application_Model_Relatorios {
     }
 
     public function selectCalaoHasEspCapturadas($where = null, $order = null, $limit = null) {
-
-        $this->modelCalao = new Application_Model_Calao();
-
-        $Calao = $this->modelCalao->selectCalaoHasEspCapturadas($where, $order, $limit);
-
-        return $Calao;
+        $this->dbTableCalaoHasEspCapturada = new Application_Model_DbTable_VCalaoHasEspecieCapturada();
+        $select = $this->dbTableCalaoHasEspCapturada->select()->from($this->dbTableCalaoHasEspCapturada, array('cal_id', 'esp_nome_comum', 'spc_quantidade' => 'sum(spc_quantidade)', 'spc_peso_kg' => 'sum(spc_peso_kg)', 'spc_preco' => 'sum(spc_preco)', 'esp_id'))->order($order)->limit($limit)->group(array('cal_id', 'esp_nome_comum', 'esp_id'));
+        if (!is_null($where)) {
+            $select->where($where);
+        }
+        return $this->dbTableCalaoHasEspCapturada->fetchAll($select)->toArray();
     }
 
     public function selectCapturaByArteCalao($where = null) {
@@ -169,12 +179,12 @@ class Application_Model_Relatorios {
     }
 
     public function selectColetaManualHasEspCapturadas($where = null, $order = null, $limit = null) {
-
-        $this->modelColetaManual = new Application_Model_ColetaManual();
-
-        $ColetaManual = $this->modelColetaManual->selectColetaManualHasEspCapturadas($where, $order, $limit);
-
-        return $ColetaManual;
+        $this->dbTableColetaManualHasEspCapturada = new Application_Model_DbTable_VColetaManualHasEspecieCapturada();
+        $select = $this->dbTableColetaManualHasEspCapturada->select()->from($this->dbTableColetaManualHasEspCapturada, array('cml_id', 'esp_nome_comum', 'spc_quantidade' => 'sum(spc_quantidade)', 'spc_peso_kg' => 'sum(spc_peso_kg)', 'spc_preco' => 'sum(spc_preco)', 'esp_id'))->order($order)->limit($limit)->group(array('cml_id', 'esp_nome_comum', 'esp_id'));
+        if (!is_null($where)) {
+            $select->where($where);
+        }
+        return $this->dbTableColetaManualHasEspCapturada->fetchAll($select)->toArray();
     }
 
     public function selectCapturaByArteColeta($where = null) {
@@ -230,12 +240,14 @@ class Application_Model_Relatorios {
     }
 
     public function selectEmalheHasEspCapturadas($where = null, $order = null, $limit = null) {
-
-        $this->modelEmalhe = new Application_Model_Emalhe();
-
-        $Emalhe = $this->modelEmalhe->selectEmalheHasEspCapturadas($where, $order, $limit);
-
-        return $Emalhe;
+        $this->dbTableEmalheHasEspCapturada = new Application_Model_DbTable_VEmalheHasEspecieCapturada();
+        $select = $this->dbTableEmalheHasEspCapturada->select()->from($this->dbTableEmalheHasEspCapturada, 
+                array('em_id', 'esp_nome_comum', 'spc_quantidade' => 'sum(spc_quantidade)', 'spc_peso_kg' => 'sum(spc_peso_kg)', 'spc_preco' => 'sum(spc_preco)', 'esp_id'))->
+                order($order)->limit($limit)->group(array('em_id', 'esp_nome_comum', 'esp_id'));
+        if (!is_null($where)) {
+            $select->where($where);
+        }
+        return $this->dbTableEmalheHasEspCapturada->fetchAll($select)->toArray();
     }
 
     public function selectCapturaByArteEmalhe($where = null) {
@@ -291,12 +303,12 @@ class Application_Model_Relatorios {
     }
 
     public function selectGrosseiraHasEspCapturadas($where = null, $order = null, $limit = null) {
-
-        $this->modelGrosseira = new Application_Model_Grosseira();
-
-        $Grosseira = $this->modelGrosseira->selectGrosseiraHasEspCapturadas($where, $order, $limit);
-
-        return $Grosseira;
+        $this->dbTableGrosseiraHasEspCapturada = new Application_Model_DbTable_VGrosseiraHasEspecieCapturada();
+        $select = $this->dbTableGrosseiraHasEspCapturada->select()->from($this->dbTableGrosseiraHasEspCapturada, array('grs_id', 'esp_nome_comum', 'spc_quantidade' => 'sum(spc_quantidade)', 'spc_peso_kg' => 'sum(spc_peso_kg)', 'spc_preco' => 'sum(spc_preco)', 'esp_id'))->order($order)->limit($limit)->group(array('grs_id', 'esp_nome_comum', 'esp_id'));
+        if (!is_null($where)) {
+            $select->where($where);
+        }
+        return $this->dbTableGrosseiraHasEspCapturada->fetchAll($select)->toArray();
     }
 
     public function selectCapturaByArteGrosseira($where = null) {
@@ -351,12 +363,12 @@ class Application_Model_Relatorios {
     }
 
     public function selectJerereHasEspCapturadas($where = null, $order = null, $limit = null) {
-
-        $this->modelJerere = new Application_Model_Jerere();
-
-        $Jerere = $this->modelJerere->selectJerereHasEspCapturadas($where, $order, $limit);
-
-        return $Jerere;
+        $this->dbTableJerereHasEspCapturada = new Application_Model_DbTable_VJerereHasEspecieCapturada();
+        $select = $this->dbTableJerereHasEspCapturada->select()->from($this->dbTableJerereHasEspCapturada, array('jre_id', 'esp_nome_comum', 'spc_quantidade' => 'sum(spc_quantidade)', 'spc_peso_kg' => 'sum(spc_peso_kg)', 'spc_preco' => 'sum(spc_preco)', 'esp_id'))->order($order)->limit($limit)->group(array('jre_id', 'esp_nome_comum', 'esp_id'));
+        if (!is_null($where)) {
+            $select->where($where);
+        }
+        return $this->dbTableJerereHasEspCapturada->fetchAll($select)->toArray();
     }
 
     public function selectCapturaByArteJerere($where = null) {
@@ -413,12 +425,12 @@ class Application_Model_Relatorios {
     }
 
     public function selectLinhaHasEspCapturadas($where = null, $order = null, $limit = null) {
-
-        $this->modelLinha = new Application_Model_Linha();
-
-        $Linha = $this->modelLinha->selectLinhaHasEspCapturadas($where, $order, $limit);
-
-        return $Linha;
+        $this->dbTableLinhaHasEspCapturada = new Application_Model_DbTable_VLinhaHasEspecieCapturada();
+        $select = $this->dbTableLinhaHasEspCapturada->select()->from($this->dbTableLinhaHasEspCapturada, array('lin_id', 'esp_nome_comum', 'spc_quantidade' => 'sum(spc_quantidade)', 'spc_peso_kg' => 'sum(spc_peso_kg)', 'spc_preco' => 'sum(spc_preco)', 'esp_id'))->order($order)->limit($limit)->group(array('lin_id', 'esp_nome_comum', 'esp_id'));
+        if (!is_null($where)) {
+            $select->where($where);
+        }
+        return $this->dbTableLinhaHasEspCapturada->fetchAll($select)->toArray();
     }
 
     public function selectCapturaByArteLinha($where = null) {
@@ -473,12 +485,12 @@ class Application_Model_Relatorios {
     }
 
     public function selectLinhaFundoHasEspCapturadas($where = null, $order = null, $limit = null) {
-
-        $this->modelLinhaFundo = new Application_Model_LinhaFundo();
-
-        $LinhaFundo = $this->modelLinhaFundo->selectLinhaFundoHasEspCapturadas($where, $order, $limit);
-
-        return $LinhaFundo;
+        $this->dbTableLinhaFundoHasEspCapturada = new Application_Model_DbTable_VLinhaFundoHasEspecieCapturada();
+        $select = $this->dbTableLinhaFundoHasEspCapturada->select()->from($this->dbTableLinhaFundoHasEspCapturada, array('lf_id', 'esp_nome_comum', 'spc_quantidade' => 'sum(spc_quantidade)', 'spc_peso_kg' => 'sum(spc_peso_kg)', 'spc_preco' => 'sum(spc_preco)', 'esp_id'))->order($order)->limit($limit)->group(array('lf_id', 'esp_nome_comum', 'esp_id'));
+        if (!is_null($where)) {
+            $select->where($where);
+        }
+        return $this->dbTableLinhaFundoHasEspCapturada->fetchAll($select)->toArray();
     }
 
     public function selectCapturaByArteLinhaFundo($where = null) {
@@ -533,12 +545,12 @@ class Application_Model_Relatorios {
     }
 
     public function selectManzuaHasEspCapturadas($where = null, $order = null, $limit = null) {
-
-        $this->modelManzua = new Application_Model_Manzua();
-
-        $Manzua = $this->modelManzua->selectManzuaHasEspCapturadas($where, $order, $limit);
-
-        return $Manzua;
+        $this->dbTableManzuaHasEspCapturada = new Application_Model_DbTable_VManzuaHasEspecieCapturada();
+        $select = $this->dbTableManzuaHasEspCapturada->select()->from($this->dbTableManzuaHasEspCapturada, array('man_id', 'esp_nome_comum', 'spc_quantidade' => 'sum(spc_quantidade)', 'spc_peso_kg' => 'sum(spc_peso_kg)', 'spc_preco' => 'sum(spc_preco)', 'esp_id'))->order($order)->limit($limit)->group(array('man_id', 'esp_nome_comum', 'esp_id'));
+        if (!is_null($where)) {
+            $select->where($where);
+        }
+        return $this->dbTableManzuaHasEspCapturada->fetchAll($select)->toArray();
     }
 
     public function selectCapturaByArteManzua($where = null) {
@@ -594,12 +606,12 @@ class Application_Model_Relatorios {
     }
 
     public function selectMergulhoHasEspCapturadas($where = null, $order = null, $limit = null) {
-
-        $this->modelMergulho = new Application_Model_Mergulho();
-
-        $Mergulho = $this->modelMergulho->selectMergulhoHasEspCapturadas($where, $order, $limit);
-
-        return $Mergulho;
+        $this->dbTableMergulhoHasEspCapturada = new Application_Model_DbTable_VMergulhoHasEspecieCapturada();
+        $select = $this->dbTableMergulhoHasEspCapturada->select()->from($this->dbTableMergulhoHasEspCapturada, array('mer_id', 'esp_nome_comum', 'spc_quantidade' => 'sum(spc_quantidade)', 'spc_peso_kg' => 'sum(spc_peso_kg)', 'spc_preco' => 'sum(spc_preco)', 'esp_id'))->order($order)->limit($limit)->group(array('mer_id', 'esp_nome_comum', 'esp_id'));
+        if (!is_null($where)) {
+            $select->where($where);
+        }
+        return $this->dbTableMergulhoHasEspCapturada->fetchAll($select)->toArray();
     }
 
     public function selectCapturaByArteMergulho($where = null) {
@@ -656,12 +668,12 @@ class Application_Model_Relatorios {
     }
 
     public function selectRatoeiraHasEspCapturadas($where = null, $order = null, $limit = null) {
-
-        $this->modelRatoeira = new Application_Model_Ratoeira();
-
-        $Ratoeira = $this->modelRatoeira->selectRatoeiraHasEspCapturadas($where, $order, $limit);
-
-        return $Ratoeira;
+        $this->dbTableRatoeiraHasEspCapturada = new Application_Model_DbTable_VRatoeiraHasEspecieCapturada();
+        $select = $this->dbTableRatoeiraHasEspCapturada->select()->from($this->dbTableRatoeiraHasEspCapturada, array('rat_id', 'esp_nome_comum', 'spc_quantidade' => 'sum(spc_quantidade)', 'spc_peso_kg' => 'sum(spc_peso_kg)', 'spc_preco' => 'sum(spc_preco)', 'esp_id'))->order($order)->limit($limit)->group(array('rat_id', 'esp_nome_comum', 'esp_id'));
+        if (!is_null($where)) {
+            $select->where($where);
+        }
+        return $this->dbTableRatoeiraHasEspCapturada->fetchAll($select)->toArray();
     }
 
     public function selectCapturaByArteRatoeira($where = null) {
@@ -717,12 +729,12 @@ class Application_Model_Relatorios {
     }
 
     public function selectSiripoiaHasEspCapturadas($where = null, $order = null, $limit = null) {
-
-        $this->modelSiripoia = new Application_Model_Siripoia();
-
-        $Siripoia = $this->modelSiripoia->selectSiripoiaHasEspCapturadas($where, $order, $limit);
-
-        return $Siripoia;
+        $this->dbTableSiripoiaHasEspCapturada = new Application_Model_DbTable_VSiripoiaHasEspecieCapturada();
+        $select = $this->dbTableSiripoiaHasEspCapturada->select()->from($this->dbTableSiripoiaHasEspCapturada, array('sir_id', 'esp_nome_comum', 'spc_quantidade' => 'sum(spc_quantidade)', 'spc_peso_kg' => 'sum(spc_peso_kg)', 'spc_preco' => 'sum(spc_preco)', 'esp_id'))->order($order)->limit($limit)->group(array('sir_id', 'esp_nome_comum', 'esp_id'));
+        if (!is_null($where)) {
+            $select->where($where);
+        }
+        return $this->dbTableSiripoiaHasEspCapturada->fetchAll($select)->toArray();
     }
 
     public function selectCapturaByArteSiripoia($where = null) {
@@ -777,12 +789,12 @@ class Application_Model_Relatorios {
     }
 
     public function selectTarrafaHasEspCapturadas($where = null, $order = null, $limit = null) {
-
-        $this->modelTarrafa = new Application_Model_Tarrafa();
-
-        $Tarrafa = $this->modelTarrafa->selectTarrafaHasEspCapturadas($where, $order, $limit);
-
-        return $Tarrafa;
+        $this->dbTableTarrafaHasEspCapturada = new Application_Model_DbTable_VTarrafaHasEspecieCapturada();
+        $select = $this->dbTableTarrafaHasEspCapturada->select()->from($this->dbTableTarrafaHasEspCapturada, array('tar_id', 'esp_nome_comum', 'spc_quantidade' => 'sum(spc_quantidade)', 'spc_peso_kg' => 'sum(spc_peso_kg)', 'spc_preco' => 'sum(spc_preco)', 'esp_id'))->order($order)->limit($limit)->group(array('tar_id', 'esp_nome_comum', 'esp_id'));
+        if (!is_null($where)) {
+            $select->where($where);
+        }
+        return $this->dbTableTarrafaHasEspCapturada->fetchAll($select)->toArray();
     }
 
     public function selectCapturaByArteTarrafa($where = null) {
@@ -837,12 +849,12 @@ class Application_Model_Relatorios {
     }
 
     public function selectVaraPescaHasEspCapturadas($where = null, $order = null, $limit = null) {
-
-        $this->modelVaraPesca = new Application_Model_VaraPesca();
-
-        $VaraPesca = $this->modelVaraPesca->selectVaraPescaHasEspCapturadas($where, $order, $limit);
-
-        return $VaraPesca;
+        $this->dbTableVaraPescaHasEspCapturada = new Application_Model_DbTable_VVaraPescaHasEspecieCapturada();
+        $select = $this->dbTableVaraPescaHasEspCapturada->select()->from($this->dbTableVaraPescaHasEspCapturada, array('vp_id', 'esp_nome_comum', 'spc_quantidade' => 'sum(spc_quantidade)', 'spc_peso_kg' => 'sum(spc_peso_kg)', 'spc_preco' => 'sum(spc_preco)', 'esp_id'))->order($order)->limit($limit)->group(array('vp_id', 'esp_nome_comum', 'esp_id'));
+        if (!is_null($where)) {
+            $select->where($where);
+        }
+        return $this->dbTableVaraPescaHasEspCapturada->fetchAll($select)->toArray();
     }
 
     public function selectCapturaByArteVaraPesca($where = null) {
