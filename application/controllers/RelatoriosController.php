@@ -2092,9 +2092,9 @@ class RelatoriosController extends Zend_Controller_Action
         unset($Relesp);
         if ($porto != '999') {
             $porto2 = $this->verifporto($porto);
-            $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("dvolta between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
+            $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("drecolhimento between '" . $data . "'" . " and '" . $datafim . "' AND pto_nome = '" . $porto2 . "'");
         } else {
-            $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("dvolta between '" . $data . "'" . " and '" . $datafim . "'");
+            $relatorioEmalhe = $this->modelRelatorios->selectEmalhe("drecolhimento between '" . $data . "'" . " and '" . $datafim . "'");
         }
         $Relesp = $this->modelRelatorios->selectEmalheHasEspCapturadas();
         foreach ($relatorioEmalhe as $key => $consulta):
@@ -5475,7 +5475,7 @@ class RelatoriosController extends Zend_Controller_Action
         $this->_helper->viewRenderer->setNoRender(true);
         
         
-        $modelArrasto =    new Application_Model_ArrastoFundo;
+        $modelArrasto =    new Application_Model_ArrastoFundo();
         $modelCalao=       new Application_Model_Calao;
         $modelColetaManual=new Application_Model_ColetaManual;
         $modelEmalhe=      new Application_Model_Emalhe;
@@ -5515,9 +5515,10 @@ class RelatoriosController extends Zend_Controller_Action
         $sheet = $objPHPExcel->getActiveSheet();
         $coluna = 0;
         $linha = 1;
+        
         if($porto != '999'){
             $nomePorto = $this->verifporto($porto);
-            $arrasto = $modelArrasto->selectEstimativaByPorto( "pto_nome = '$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
+            $arrasto = $modelArrasto->selectEstimativaByPorto( "pto_nome = '".$nomePorto."' AND mes between ".$mes." and ".$mesfim." AND ano between ".$ano." And ".$anofim."",array('pto_nome','mes','ano'));
             $calao =   $modelCalao->selectEstimativaByPorto("pto_nome = '$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
             $coletamanual =$modelColetaManual->selectEstimativaByPorto( "pto_nome ='$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
             $emalhe =$modelEmalhe->selectEstimativaByPorto("pto_nome ='$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
@@ -5532,22 +5533,23 @@ class RelatoriosController extends Zend_Controller_Action
             $tarrafa =$modelTarrafa->selectEstimativaByPorto("pto_nome ='$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
             $varapesca =$modelVaraPesca->selectEstimativaByPorto("pto_nome ='$nomePorto' AND mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
         }
-         else{
-             $arrasto = $modelArrasto->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
-             $calao =$modelCalao->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
-            $coletamanual =$modelColetaManual->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
-            $emalhe =$modelEmalhe->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
-            $grosseira =$modelGrosseira->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
-            $jerere =$modelJerere->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
-            $pescalinha =$modelLinha->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
-            $linhafundo =$modelLinhaFundo->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
-            $manzua =$modelManzua->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
-            $mergulho =$modelMergulho->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
-            $ratoeira =$modelRatoeira->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
-            $siripoia =$modelSiripoia->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
-            $tarrafa =$modelTarrafa->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
-            $varapesca =$modelVaraPesca->selectEstimativaByPorto("mes between $mes and $mesfim AND ano between $ano And $anofim",array('pto_nome','mes','ano'));
-         }  
+         elseif($porto == '999'){
+             $arrasto = $modelArrasto->selectEstimativaByPorto("mes between 1 and 7 AND ano between 2015 And 2015",array('pto_nome','mes','ano'));
+             $calao =$modelCalao->selectEstimativaByPorto("mes between 1 and 7 AND ano between 2015 And 2015",array('pto_nome','mes','ano'));
+            $coletamanual =$modelColetaManual->selectEstimativaByPorto("mes between 1 and 7 AND ano between 2015 And 2015",array('pto_nome','mes','ano'));
+            $emalhe =$modelEmalhe->selectEstimativaByPorto("mes between 1 and 7 AND ano between 2015 And 2015",array('pto_nome','mes','ano'));
+            $grosseira =$modelGrosseira->selectEstimativaByPorto("mes between 1 and 7 AND ano between 2015 And 2015",array('pto_nome','mes','ano'));
+            $jerere =$modelJerere->selectEstimativaByPorto("mes between 1 and 7 AND ano between 2015 And 2015",array('pto_nome','mes','ano'));
+            $pescalinha =$modelLinha->selectEstimativaByPorto("mes between 1 and 7 AND ano between 2015 And 2015",array('pto_nome','mes','ano'));
+            $linhafundo =$modelLinhaFundo->selectEstimativaByPorto("mes between 1 and 7 AND ano between 2015 And 2015",array('pto_nome','mes','ano'));
+            $manzua =$modelManzua->selectEstimativaByPorto("mes between 1 and 7 AND ano between 2015 And 2015",array('pto_nome','mes','ano'));
+            $mergulho =$modelMergulho->selectEstimativaByPorto("mes between 1 and 7 AND ano between 2015 And 2015",array('pto_nome','mes','ano'));
+            $ratoeira =$modelRatoeira->selectEstimativaByPorto("mes between 1 and 7 AND ano between 2015 And 2015",array('pto_nome','mes','ano'));
+            $siripoia =$modelSiripoia->selectEstimativaByPorto("mes between 1 and 7 AND ano between 2015 And 2015",array('pto_nome','mes','ano'));
+            $tarrafa =$modelTarrafa->selectEstimativaByPorto("mes between 1 and 7 AND ano between 2015 And 2015",array('pto_nome','mes','ano'));
+            $varapesca =$modelVaraPesca->selectEstimativaByPorto("mes between 1 and 7 AND ano between 2015 And 2015",array('pto_nome','mes','ano'));
+            
+            }  
          $sheet->setCellValueByColumnAndRow($coluna, $linha, 'Local');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Porto');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Artes de Pesca');
@@ -5586,7 +5588,7 @@ class RelatoriosController extends Zend_Controller_Action
                 $linha++;
         endforeach; 
          
-        
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $arrasto[0]['pto_nome']);
         foreach ( $calao as $key => $consulta ):
                 //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
                 $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
@@ -5608,7 +5610,7 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna=0;
                 $linha++;
         endforeach; 
-        
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $linha);
         foreach ( $emalhe as $key => $consulta ):
                 //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
                 $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
@@ -5630,7 +5632,7 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna=0;
                 $linha++;
         endforeach; 
-        
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, "mes between ".$mes." and ".$mesfim." AND ano between ".$ano." And ".$anofim);
         foreach ( $grosseira as $key => $consulta ):
                 //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
                 $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
@@ -5652,7 +5654,7 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna=0;
                 $linha++;
         endforeach;
-        
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $linha);
         foreach ( $jerere as $key => $consulta ):
                 //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
                 $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
@@ -5674,7 +5676,7 @@ class RelatoriosController extends Zend_Controller_Action
                 $coluna=0;
                 $linha++;
         endforeach;
-        
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $linha);
         foreach ( $pescalinha as $key => $consulta ):
                 //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
                 $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
@@ -6179,56 +6181,78 @@ class RelatoriosController extends Zend_Controller_Action
         $objPHPExcel->setActiveSheetIndex(0);
         $coluna = 0;
         $linha = 1;
-        $quant= 21;
-        
+//        $quant= 21;
+//        
         $sheet = $objPHPExcel->getActiveSheet();
-        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
-
+//        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
+//
+//        
+//        
+//        $maxPesqueiros = $this->modelRelatorios->countPesqueirosArrasto();
+//        #coluna de inicio das espécies
+//        $colunaEspecies = $maxPesqueiros[0]['count']*2+$quant;
+//        $firstColunaEspecies = $colunaEspecies;
+//        
+//        $porto = $this->_getParam('porto');
+//        if($porto != '999'){
+//            $porto2 = $this->verifporto($porto);
+//            $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+//
+//        }
+//        else{
+//            $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."'");
+//        }
+//        $relatorioEspecies = $this->modelRelatorios->selectNomeEspecies();
+//        $sizeEspecies = $this->listaEspecies($relatorioEspecies, $colunaEspecies, $linha, $objPHPExcel);
+//        $Pesqueiros = $this->modelRelatorios->selectArrastoHasPesqueiro();
+//        $Relesp = $this->modelRelatorios->selectArrastoHasEspCapturadas(null, 'esp_nome_comum');
+//        //$sizeEspecies = sizeof($Relesp);
+//        $linha = 2;
+//        $coluna= 0;
         
-        
-        $maxPesqueiros = $this->modelRelatorios->countPesqueirosArrasto();
-        #coluna de inicio das espécies
-        $colunaEspecies = $maxPesqueiros[0]['count']*2+$quant;
-        $firstColunaEspecies = $colunaEspecies;
-        
-        $porto = $this->_getParam('porto');
-        if($porto != '999'){
-            $porto2 = $this->verifporto($porto);
-            $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
-
-        }
-        else{
-            $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."'");
-        }
-        $relatorioEspecies = $this->modelRelatorios->selectNomeEspecies();
-        $sizeEspecies = $this->listaEspecies($relatorioEspecies, $colunaEspecies, $linha, $objPHPExcel);
-        $Pesqueiros = $this->modelRelatorios->selectArrastoHasPesqueiro();
-        $Relesp = $this->modelRelatorios->selectArrastoHasEspCapturadas(null, 'esp_nome_comum');
-        //$sizeEspecies = sizeof($Relesp);
-        $linha = 2;
-        $coluna= 0;
-        
-        foreach ( $relatorioArrasto as $key => $consulta ):
-                
-                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_id']);
-                foreach($relatorioEspecies as $key => $nomeEspecie):
-                    foreach($Relesp as $key => $esp):
-                           if($esp['af_id'] == $consulta['af_id'] && $esp['esp_nome_comum'] === $nomeEspecie['esp_nome_comum']){
-                                $sheet->setCellValueByColumnAndRow($colunaEspecies, $linha, $this->verificaTipoRel($esp['spc_peso_kg']));
-                                break;
-                            }
-//                            $colunaEspecies++;
-                    endforeach;
-                    if(empty($sheet->getCellByColumnAndRow($colunaEspecies, $linha)->getFormattedValue())){
-                        $sheet->setCellValueByColumnAndRow($colunaEspecies, $linha, '0');
-                    }
-                    $colunaEspecies++;
-                endforeach;
-                $colunaEspecies = $firstColunaEspecies;
-            $coluna = 0;
-            $linha++;
+//        foreach ( $relatorioArrasto as $key => $consulta ):
+//                
+//                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_id']);
+//                foreach($relatorioEspecies as $key => $nomeEspecie):
+//                    foreach($Relesp as $key => $esp):
+//                           if($esp['af_id'] == $consulta['af_id'] && $esp['esp_nome_comum'] === $nomeEspecie['esp_nome_comum']){
+//                                $sheet->setCellValueByColumnAndRow($colunaEspecies, $linha, $this->verificaTipoRel($esp['spc_peso_kg']));
+//                                break;
+//                            }
+////                            $colunaEspecies++;
+//                    endforeach;
+//                    if(empty($sheet->getCellByColumnAndRow($colunaEspecies, $linha)->getFormattedValue())){
+//                        $sheet->setCellValueByColumnAndRow($colunaEspecies, $linha, '0');
+//                    }
+//                    $colunaEspecies++;
+//                endforeach;
+//                $colunaEspecies = $firstColunaEspecies;
+//            $coluna = 0;
+//            $linha++;
+//        endforeach;
+        $modelArrasto = new Application_Model_ArrastoFundo();
+        $arrasto = $modelArrasto->selectEstimativaByPorto();
+        foreach ( $arrasto as $key => $consulta ):
+                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
+                $media = $this->divisao($consulta['peso'],$consulta['monitorados']);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $media);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
+                $capturaNaoMonitorada = $media*$consulta['naomonitorados'];
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
+                $capturaTotal = $consulta['peso']+$capturaNaoMonitorada;
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
+                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '1');
+                $coluna=0;
+                $linha++;
         endforeach;
-        
         $fim1 = microtime(true);
         
         //$sheet->setCellValueByColumnAndRow(1, $linha, $fim1-$inicio1);

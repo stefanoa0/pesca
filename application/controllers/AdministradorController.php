@@ -39,8 +39,8 @@ class AdministradorController extends Zend_Controller_Action
             
             $this->view->assign("pescadorDeletado", $pescadorDeletado);
         }
-        
-        print_r($this->modelRelatorios->selectArrastoHasEspCapturadas());
+        $this->modelArrasto = new Application_Model_ArrastoFundo();
+        print_r($this->modelArrasto->selectEstimativaByPorto("mes between 1 and 10 AND ano between 2014 And 2015",array('pto_nome','mes','ano')) );
     }
     
     public function deleteAction(){
