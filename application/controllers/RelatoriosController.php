@@ -6153,7 +6153,11 @@ class RelatoriosController extends Zend_Controller_Action
         $objWriter->save('php://output');
     }
     
-    
+    public function listaEspecies1($relatorioEspecies,$position, $objPHPExcel){
+        $sheet =$objPHPExcel->getActiveSheet();
+        $sheet->fromArray($relatorioEspecies, null, $position);
+        return sizeof($relatorioEspecies);
+    }
     
     
     public function arrastoAction() {
@@ -6163,9 +6167,9 @@ class RelatoriosController extends Zend_Controller_Action
 //            $this->_redirect('index');
 //        }
         
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
-        
+//        $this->_helper->layout->disableLayout();
+//        $this->_helper->viewRenderer->setNoRender(true);
+//        
         $var =  $this->_getParam('id');
         $tipoRel = $this->verificaRelatorio($var);
         
@@ -6181,81 +6185,60 @@ class RelatoriosController extends Zend_Controller_Action
         $objPHPExcel->setActiveSheetIndex(0);
         $coluna = 0;
         $linha = 1;
-//        $quant= 21;
+        $quant= 21;
 //        
         $sheet = $objPHPExcel->getActiveSheet();
-//        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
-//
-//        
-//        
-//        $maxPesqueiros = $this->modelRelatorios->countPesqueirosArrasto();
-//        #coluna de inicio das espécies
-//        $colunaEspecies = $maxPesqueiros[0]['count']*2+$quant;
-//        $firstColunaEspecies = $colunaEspecies;
-//        
-//        $porto = $this->_getParam('porto');
-//        if($porto != '999'){
-//            $porto2 = $this->verifporto($porto);
-//            $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
-//
-//        }
-//        else{
-//            $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."'");
-//        }
-//        $relatorioEspecies = $this->modelRelatorios->selectNomeEspecies();
-//        $sizeEspecies = $this->listaEspecies($relatorioEspecies, $colunaEspecies, $linha, $objPHPExcel);
-//        $Pesqueiros = $this->modelRelatorios->selectArrastoHasPesqueiro();
-//        $Relesp = $this->modelRelatorios->selectArrastoHasEspCapturadas(null, 'esp_nome_comum');
-//        //$sizeEspecies = sizeof($Relesp);
-//        $linha = 2;
-//        $coluna= 0;
-        
-//        foreach ( $relatorioArrasto as $key => $consulta ):
-//                
-//                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['af_id']);
-//                foreach($relatorioEspecies as $key => $nomeEspecie):
-//                    foreach($Relesp as $key => $esp):
-//                           if($esp['af_id'] == $consulta['af_id'] && $esp['esp_nome_comum'] === $nomeEspecie['esp_nome_comum']){
-//                                $sheet->setCellValueByColumnAndRow($colunaEspecies, $linha, $this->verificaTipoRel($esp['spc_peso_kg']));
-//                                break;
-//                            }
-////                            $colunaEspecies++;
-//                    endforeach;
-//                    if(empty($sheet->getCellByColumnAndRow($colunaEspecies, $linha)->getFormattedValue())){
-//                        $sheet->setCellValueByColumnAndRow($colunaEspecies, $linha, '0');
-//                    }
-//                    $colunaEspecies++;
-//                endforeach;
-//                $colunaEspecies = $firstColunaEspecies;
-//            $coluna = 0;
-//            $linha++;
-//        endforeach;
-        $modelArrasto = new Application_Model_ArrastoFundo();
-        $arrasto = $modelArrasto->selectEstimativaByPorto();
-        foreach ( $arrasto as $key => $consulta ):
-                //$sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
-                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['pto_nome']);
-                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['tap_artepesca']);
-                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['mes']);
-                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['ano']);
-                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['monitorados']);
-                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['peso']);
-                $media = $this->divisao($consulta['peso'],$consulta['monitorados']);
-                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $media);
-                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']);
-                $capturaNaoMonitorada = $media*$consulta['naomonitorados'];
-                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaNaoMonitorada);
-                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['naomonitorados']+$consulta['monitorados']);
-                $capturaTotal = $consulta['peso']+$capturaNaoMonitorada;
-                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal);
-                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $capturaTotal/1000);
-                $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '1');
-                $coluna=0;
-                $linha++;
+        $cabecalho =  array('Local', 'Porto de Desembarque','Arte de pesca','Data Entrevista','Data Saída','Hora Saída','Data Chegada','Hora Chegada',
+        'Dias de Pesca','Código','Barco','Mestre','Número de Pescadores','Tipo de Barco','Diesel','Óleo','Alimento','Gelo','Motor?',
+        'Destino da Pesca','Observacao');
+        $maxPesqueiros = $this->modelRelatorios->countPesqueirosArrasto();
+        for($i=0;$i<$maxPesqueiros[0]['count']; $i++):
+            $cabecalhoPesqueiros[$i] = 'Pesqueiro'; 
+        endfor;
+        $relatorioEspecies = $this->modelRelatorios->selectNomeEspecies();
+        foreach($relatorioEspecies as $key => $especie):
+            $cabecalhoEspecie[$key] = $especie['esp_nome_comum'];
         endforeach;
-        $fim1 = microtime(true);
         
-        //$sheet->setCellValueByColumnAndRow(1, $linha, $fim1-$inicio1);
+        $cabecalhoCompleto = array_merge_recursive($cabecalho, $cabecalhoPesqueiros, $cabecalhoEspecie);
+        $startCell = 'A1';
+        //print_r($cabecalhoCompleto);
+        //$sheet->fromArray($cabecalhoCompleto, null, $startCell);
+
+        #coluna de inicio das espécies
+        $colunaEspecies = $maxPesqueiros[0]['count']*2+$quant;
+        $firstColunaEspecies = $colunaEspecies;
+        
+        $porto = $this->_getParam('porto');
+        if($porto != '999'){
+            $porto2 = $this->verifporto($porto);
+            $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."' AND pto_nome = '".$porto2."'");
+
+        }
+        else{
+            $relatorioArrasto = $this->modelRelatorios->selectArrasto("fd_data between '". $data."'"." and '".$datafim."'");
+        }
+        $Relesp = $this->modelRelatorios->selectArrastoHasEspCapturadas();
+        $startCell2 = 'A2';
+        //
+////      
+        foreach ( $relatorioArrasto as $key1 => $consulta ):
+                foreach($relatorioEspecies as $key2 => $nomeEspecie):
+                    foreach($Relesp as $key3 => $esp):
+                           if($esp['af_id'] == $consulta['af_id'] && $esp['esp_nome_comum'] === $nomeEspecie['esp_nome_comum']){
+                                $arrayEspecies[$key1][$key2] = $this->verificaTipoRel($esp['spc_peso_kg']);
+                                break;
+                           }   
+                    endforeach;
+                    if(empty($arrayEspecies[$key1][$key2])){
+                        $arrayEspecies[$key1][$key2] = '0';
+                    }
+                endforeach;
+                $arrayEntrevistas[$key1] = array_merge_recursive($relatorioArrasto, $arrayEspecies[$key1]);
+        endforeach;
+        
+        $sheet->fromArray($arrayEntrevistas, null, $startCell2);
+        $sheet->setCellValueByColumnAndRow(1, 2211, $fim1-$inicio1);
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         ob_end_clean();
         header('Content-Type: application/vnd.ms-excel');

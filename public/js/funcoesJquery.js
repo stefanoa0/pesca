@@ -818,7 +818,7 @@ function jsEntrevista(nomeArtePesca, idMonitoramento, idFichaDiaria) {
             else if (nomeArtePesca.toLowerCase() === "Vara de Pesca".toLowerCase()) {
                 Entrevista = 'vara-pesca';
             }
-            else if (nomeArtePesca.toLowerCase() === "Jerere".toLowerCase()) {
+            else if (nomeArtePesca.toLowerCase() === "Jerere".toLowerCase() | nomeArtePesca.toLowerCase() === "Jereré".toLowerCase()) {
                 Entrevista = 'jerere';
             }
             else if (nomeArtePesca.toLowerCase() === "Manzuá".toLowerCase()) {
