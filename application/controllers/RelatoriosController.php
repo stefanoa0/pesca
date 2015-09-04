@@ -318,7 +318,7 @@ class RelatoriosController extends Zend_Controller_Action
                 
                 $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'af_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -456,7 +456,7 @@ class RelatoriosController extends Zend_Controller_Action
                 
                 $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesColetaManual, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'cml_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -575,7 +575,7 @@ class RelatoriosController extends Zend_Controller_Action
            
             $colunaEspecies= $maxPesqueiros[0]['count']+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesCalao, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'cal_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -694,7 +694,7 @@ class RelatoriosController extends Zend_Controller_Action
             
             $colunaEspecies= $maxPesqueiros[0]['count']+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesEmalhe, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'em_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -816,7 +816,7 @@ class RelatoriosController extends Zend_Controller_Action
 
                 $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesGrosseira, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'grs_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
 
             $coluna = 0;
             $linha++;
@@ -941,7 +941,7 @@ class RelatoriosController extends Zend_Controller_Action
                
                 $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesJerere, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'jre_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1063,7 +1063,7 @@ class RelatoriosController extends Zend_Controller_Action
                 
                 $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesLinha, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'lin_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1189,7 +1189,7 @@ class RelatoriosController extends Zend_Controller_Action
 
             $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesLinhaFundo, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'lf_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1311,7 +1311,7 @@ class RelatoriosController extends Zend_Controller_Action
 
             $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesManzua, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'man_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1429,7 +1429,7 @@ class RelatoriosController extends Zend_Controller_Action
                 
             $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesMergulho, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'mer_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1556,7 +1556,7 @@ class RelatoriosController extends Zend_Controller_Action
 
             $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesRatoeira, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'rat_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1680,7 +1680,7 @@ class RelatoriosController extends Zend_Controller_Action
                 
              $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesSiripoia, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'sir_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1796,7 +1796,7 @@ class RelatoriosController extends Zend_Controller_Action
                 
             $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesTarrafa, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'tar_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -1931,7 +1931,7 @@ class RelatoriosController extends Zend_Controller_Action
                 
             $colunaEspecies= $maxPesqueiros[0]['count']*2+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspeciesVaraPesca, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'vp_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -2013,7 +2013,7 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             $colunaEspecies = $coluna;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'af_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
             unset($consulta);
@@ -2048,7 +2048,7 @@ class RelatoriosController extends Zend_Controller_Action
             
             $colunaEspecies = $coluna;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'cal_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
             unset($consulta);
@@ -2082,7 +2082,7 @@ class RelatoriosController extends Zend_Controller_Action
             
             $colunaEspecies = $coluna;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'cml_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
             unset($consulta);
@@ -2115,7 +2115,7 @@ class RelatoriosController extends Zend_Controller_Action
             
             $colunaEspecies = $coluna;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'em_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
             unset($consulta);
@@ -2148,7 +2148,7 @@ class RelatoriosController extends Zend_Controller_Action
             
             $colunaEspecies = $coluna;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'grs_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
             unset($consulta);
@@ -2181,7 +2181,7 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             $colunaEspecies = $coluna;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'jre_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
             unset($consulta);
@@ -2215,7 +2215,7 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             $colunaEspecies = $coluna;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'lin_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
             unset($consulta);
@@ -2249,7 +2249,7 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             $colunaEspecies = $coluna;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'lf_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
             unset($consulta);
@@ -2283,7 +2283,7 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             $colunaEspecies = $coluna;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'man_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
             unset($consulta);
@@ -2317,7 +2317,7 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             $colunaEspecies = $coluna;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'mer_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
             unset($consulta);
@@ -2350,7 +2350,7 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             $colunaEspecies = $coluna;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'bar_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
             unset($consulta);
@@ -2383,7 +2383,7 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             $colunaEspecies = $coluna;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'sir_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
             unset($consulta);
@@ -2417,7 +2417,7 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             $colunaEspecies = $coluna;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'tar_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
             unset($consulta);
@@ -2451,7 +2451,7 @@ class RelatoriosController extends Zend_Controller_Action
             $coluna++;
             $colunaEspecies = $coluna;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'vp_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
             unset($consulta);
@@ -2604,7 +2604,7 @@ class RelatoriosController extends Zend_Controller_Action
             
             $colunaEspecies= 3+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'cal_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna=0;
             $linha++;
         endforeach;
@@ -2671,7 +2671,7 @@ class RelatoriosController extends Zend_Controller_Action
             
             $colunaEspecies= 3+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'cml_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
             endforeach; 
@@ -2732,7 +2732,7 @@ class RelatoriosController extends Zend_Controller_Action
             
             $colunaEspecies= 3+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'em_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -2797,7 +2797,7 @@ class RelatoriosController extends Zend_Controller_Action
                 
             $colunaEspecies= 3+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'grs_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -2863,7 +2863,7 @@ class RelatoriosController extends Zend_Controller_Action
                
             $colunaEspecies= 3+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'jre_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -2931,7 +2931,7 @@ class RelatoriosController extends Zend_Controller_Action
                 
             $colunaEspecies= 3+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'lin_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -2999,7 +2999,7 @@ class RelatoriosController extends Zend_Controller_Action
                 
             $colunaEspecies= 3+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'lf_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -3067,7 +3067,7 @@ class RelatoriosController extends Zend_Controller_Action
                 
             $colunaEspecies= 3+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'man_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -3135,7 +3135,7 @@ class RelatoriosController extends Zend_Controller_Action
                 
             $colunaEspecies= 3+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'mer_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -3202,7 +3202,7 @@ class RelatoriosController extends Zend_Controller_Action
                 
             $colunaEspecies= 3+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'rat_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -3270,7 +3270,7 @@ class RelatoriosController extends Zend_Controller_Action
 
             $colunaEspecies= 3+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'sir_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -3333,7 +3333,7 @@ class RelatoriosController extends Zend_Controller_Action
                 
             $colunaEspecies= 3+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'tar_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
@@ -3403,7 +3403,7 @@ class RelatoriosController extends Zend_Controller_Action
                 
             $colunaEspecies= 3+$quant;
                 $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'vp_id', $tipoRel);
-                $colunaEspecies = $firstColunaEspecies;
+                
             $coluna = 0;
             $linha++;
         endforeach;
