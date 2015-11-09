@@ -27,6 +27,37 @@ class RelatoriosController extends Zend_Controller_Action {
         }
         $this->modelRelatorios = new Application_Model_Relatorios();
     }
+    
+    function s_datediff( $str_interval, $dt_menor, $dt_maior, $relative=false){
+
+       if( is_string( $dt_menor)) {$dt_menor = date_create( $dt_menor);}
+    if( is_string( $dt_maior)) {$dt_maior = date_create( $dt_maior);}
+
+       $diff = date_diff( $dt_menor, $dt_maior, ! $relative);
+       
+       switch( $str_interval){
+           case "y": 
+               $total = $diff->y + $diff->m / 12 + $diff->d / 365.25; break;
+           case "m":
+               $total= $diff->y * 12 + $diff->m + $diff->d/30 + $diff->h / 24;
+               break;
+           case "d":
+               $total = $diff->y * 365.25 + $diff->m * 30 + $diff->d + $diff->h/24 + $diff->i / 60;
+               break;
+           case "h": 
+               $total = ($diff->y * 365.25 + $diff->m * 30 + $diff->d) * 24 + $diff->h + $diff->i/60;
+               break;
+           case "i": 
+               $total = (($diff->y * 365.25 + $diff->m * 30 + $diff->d) * 24 + $diff->h) * 60 + $diff->i + $diff->s/60;
+               break;
+           case "s": 
+               $total = ((($diff->y * 365.25 + $diff->m * 30 + $diff->d) * 24 + $diff->h) * 60 + $diff->i)*60 + $diff->s;
+               break;
+          }
+       if( $diff->invert)
+               return -1 * $total;
+       else    return $total;
+   }
 
     public function indexAction() {
 
@@ -277,6 +308,7 @@ class RelatoriosController extends Zend_Controller_Action {
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Data Chegada');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Hora Chegada');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias Detalhados de Pesca');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Código');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Barco');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Mestre');
@@ -305,10 +337,10 @@ class RelatoriosController extends Zend_Controller_Action {
         $relatorioEspecies = $this->modelRelatorios->selectNomeEspecies();
         $sizeEspecies = $this->listaEspecies($relatorioEspecies, $colunaEspecies, $linha, $objPHPExcel);
         $Pesqueiros = $this->modelRelatorios->selectArrastoHasPesqueiro();
-        $Relesp = $this->modelRelatorios->selectArrastoHasEspCapturadas(null, 'esp_nome_comum');
+        
         $linha = 2;
         $coluna = 0;
-
+        
         foreach ($relatorioArrasto as $key => $consulta):
             $sheet->setCellValueByColumnAndRow($coluna, $linha, $consulta['tl_local']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['pto_nome']);
@@ -319,6 +351,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['af_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
@@ -346,6 +379,7 @@ class RelatoriosController extends Zend_Controller_Action {
             endforeach;
 
             $colunaEspecies = $maxPesqueiros[0]['count'] * 2 + $quant;
+            $Relesp = $this->modelRelatorios->selectArrastoHasEspCapturadas('af_id = '.$consulta['af_id'], 'esp_nome_comum');
             $colunaEspecies = $this->relatorioEspecies($relatorioEspecies, $Relesp, $colunaEspecies, $linha, $sheet, $consulta, 'af_id', $tipoRel);
 
             $coluna = 0;
@@ -418,6 +452,7 @@ class RelatoriosController extends Zend_Controller_Action {
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Data Chegada');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Hora Chegada');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias Detalhados de Pesca');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Código');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Barco');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Mestre');
@@ -455,6 +490,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['cml_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
@@ -645,6 +681,7 @@ class RelatoriosController extends Zend_Controller_Action {
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Data Recolhimento');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Hora Recolhimento');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias Detalhados de Pesca');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Código');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Barco');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Mestre');
@@ -687,6 +724,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['drecolhimento']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hrecolhimento']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dlancamento'].' '.$consulta['hlancamento'],$consulta['drecolhimento'].' '.$consulta['hrecolhimento'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['em_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
@@ -764,6 +802,7 @@ class RelatoriosController extends Zend_Controller_Action {
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Data Volta');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Hora Volta');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias Detalhados de Pesca');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Código');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Barco');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Mestre');
@@ -805,6 +844,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['grs_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
@@ -888,6 +928,7 @@ class RelatoriosController extends Zend_Controller_Action {
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Data Volta');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Hora Volta');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias Detalhados de Pesca');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Tempo Gasto');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Código');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Barco');
@@ -929,6 +970,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['jre_tempogasto']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['jre_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
@@ -1008,6 +1050,7 @@ class RelatoriosController extends Zend_Controller_Action {
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Data Volta');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Hora Volta');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias Detalhados de Pesca');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Código');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Barco');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Mestre');
@@ -1051,6 +1094,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['lin_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tp_nome']);
@@ -1131,6 +1175,7 @@ class RelatoriosController extends Zend_Controller_Action {
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Data Volta');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Hora Volta');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias Detalhados de Pesca');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Tempo Gasto');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Código');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Barco');
@@ -1174,6 +1219,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['lf_tempogasto']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['lf_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
@@ -1256,6 +1302,7 @@ class RelatoriosController extends Zend_Controller_Action {
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Data Volta');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Hora Volta');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias Detalhados de Pesca');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Tempo Gasto');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Código');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Barco');
@@ -1296,6 +1343,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['man_tempogasto']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['man_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
@@ -1377,6 +1425,7 @@ class RelatoriosController extends Zend_Controller_Action {
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Data Chegada');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Hora Chegada');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias Detalhados de Pesca');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Tempo Gasto');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Código');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Barco');
@@ -1416,6 +1465,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['mer_tempogasto']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['mer_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
@@ -1496,6 +1546,7 @@ class RelatoriosController extends Zend_Controller_Action {
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Data Volta');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Hora Volta');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias Detalhados de Pesca');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Tempo Gasto');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Código');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Barco');
@@ -1538,6 +1589,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['rat_tempogasto']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['rat_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
@@ -1619,6 +1671,7 @@ class RelatoriosController extends Zend_Controller_Action {
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Data Volta');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Hora Volta');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias Detalhados de Pesca');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Tempo Gasto');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Código');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Barco');
@@ -1662,6 +1715,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['sir_tempogasto']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['sir_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
@@ -1859,6 +1913,7 @@ class RelatoriosController extends Zend_Controller_Action {
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Data Volta');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Hora Volta');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias Detalhados de Pesca');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Tempo Gasto');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Código');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Barco');
@@ -1905,6 +1960,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['vp_tempogasto']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['vp_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
@@ -1989,6 +2045,7 @@ class RelatoriosController extends Zend_Controller_Action {
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Saida');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Data Volta');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Dias Detalhados de Pesca');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Mês');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Ano');
         $sheet->setCellValueByColumnAndRow(++$coluna, $linha, 'Código');
@@ -2016,6 +2073,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $explodedata = explode("-", $consulta['dvolta']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[1]);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[0]);
@@ -2060,6 +2118,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '1');
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '1');
             $explodedata = explode("-", $consulta['cal_data']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[1]);
@@ -2107,6 +2166,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $explodedata = explode("-", $consulta['dvolta']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[1]);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[0]);
@@ -2152,6 +2212,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dlancamento']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['drecolhimento']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dlancamento'].' '.$consulta['hlancamento'],$consulta['drecolhimento'].' '.$consulta['hrecolhimento'])/60)/60)/24);
             $explodedata = explode("-", $consulta['drecolhimento']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[1]);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[0]);
@@ -2197,6 +2258,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $explodedata = explode("-", $consulta['dvolta']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[1]);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[0]);
@@ -2242,6 +2304,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $explodedata = explode("-", $consulta['dvolta']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[1]);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[0]);
@@ -2288,6 +2351,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $explodedata = explode("-", $consulta['dvolta']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[1]);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[0]);
@@ -2334,6 +2398,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $explodedata = explode("-", $consulta['dvolta']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[1]);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[0]);
@@ -2380,6 +2445,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $explodedata = explode("-", $consulta['dvolta']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[1]);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[0]);
@@ -2426,6 +2492,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $explodedata = explode("-", $consulta['dvolta']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[1]);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[0]);
@@ -2471,6 +2538,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $explodedata = explode("-", $consulta['dvolta']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[1]);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[0]);
@@ -2516,6 +2584,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $explodedata = explode("-", $consulta['dvolta']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[1]);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[0]);
@@ -2561,6 +2630,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['artepesca']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['tar_data']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['tar_data']));
+            $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '1');
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, '1');
             $explodedata = explode("-", $consulta['tar_data']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[1]);
@@ -2609,6 +2679,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dsaida']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $explodedata = explode("-", $consulta['dvolta']);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[1]);
             $sheet->setCellValueByColumnAndRow(++$coluna, $linha, $explodedata[0]);
@@ -2688,6 +2759,7 @@ class RelatoriosController extends Zend_Controller_Action {
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Data Volta');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Hora Volta');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias Detalhados de Pesca');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Tempo Gasto');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Código');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Barco');
@@ -2741,6 +2813,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '1');
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '1');
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['cal_tempogasto']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['cal_id']);
@@ -2817,8 +2890,9 @@ class RelatoriosController extends Zend_Controller_Action {
             if ($consulta['dias'] == '0') {
                 $consulta['dias'] = '1';
             }
-
+            
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['cml_tempogasto']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['cml_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
@@ -2894,6 +2968,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['drecolhimento']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hrecolhimento']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dlancamento'].' '.$consulta['hlancamento'],$consulta['drecolhimento'].' '.$consulta['hrecolhimento'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['em_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
@@ -2965,6 +3040,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['grs_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
@@ -3042,6 +3118,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['jre_tempogasto']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['jre_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
@@ -3120,6 +3197,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['lin_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
@@ -3198,6 +3276,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['lf_tempogasto']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['lf_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
@@ -3277,6 +3356,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['man_tempogasto']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['man_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
@@ -3355,6 +3435,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['mer_tempogasto']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['mer_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
@@ -3434,6 +3515,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['rat_tempogasto']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['rat_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
@@ -3510,6 +3592,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['sir_tempogasto']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['sir_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
@@ -3588,6 +3671,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '');
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '1');
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '1');
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tar_tempogasto']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tar_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
@@ -3664,6 +3748,7 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['hvolta']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, (($this->s_datediff('s',$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/60)/24);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['vp_tempogasto']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['vp_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['bar_nome']);
@@ -5108,10 +5193,12 @@ class RelatoriosController extends Zend_Controller_Action {
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Mês');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Ano');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias Detalhados de Pesca');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Entrevista');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Captura Total em kg');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Captura Total em T');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'CPUE (kg)');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'CPUE Detalhada (kg)');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Data Completa');
         $coluna = 0;
         $linha++;
@@ -5124,14 +5211,18 @@ class RelatoriosController extends Zend_Controller_Action {
             $dataFormatada = $this->formataData($consulta['fd_data']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $dataFormatada);
             $explodeData = explode('-', $consulta['fd_data']);
+            $diasDetalhados = ($this->s_datediff("i",$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/24;
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[1]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[0]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['af_id']);
             $capturaTotal = $this->modelRel->selectCapturaByArteArrasto('v_entrevista_arrasto.af_id=' . $consulta['af_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / 1000);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / $diasDetalhados);
+             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['quant'] / $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna = 0;
             $linha++;
@@ -5150,10 +5241,12 @@ class RelatoriosController extends Zend_Controller_Action {
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[1]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[0]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '1');
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '1');
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['cal_id']);
             $capturaTotal = $this->modelRel->selectCapturaByArteCalao('v_entrevista_calao.cal_id=' . $consulta['cal_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / 1000);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['cal_data']));
             $coluna = 0;
@@ -5168,14 +5261,17 @@ class RelatoriosController extends Zend_Controller_Action {
             $dataFormatada = $this->formataData($consulta['fd_data']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $dataFormatada);
             $explodeData = explode('-', $consulta['fd_data']);
+            $diasDetalhados = ($this->s_datediff("i",$consulta['dlancamento'].' '.$consulta['hlancamento'],$consulta['drecolhimento'].' '.$consulta['hrecolhimento'])/60)/24;
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[1]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[0]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['em_id']);
             $capturaTotal = $this->modelRel->selectCapturaByArteEmalhe('v_entrevista_emalhe.em_id=' . $consulta['em_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / 1000);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / $consulta['dias']);
+             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['quant'] / $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna = 0;
             $linha++;
@@ -5189,14 +5285,17 @@ class RelatoriosController extends Zend_Controller_Action {
             $dataFormatada = $this->formataData($consulta['fd_data']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $dataFormatada);
             $explodeData = explode('-', $consulta['fd_data']);
+            $diasDetalhados = ($this->s_datediff("i",$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/24;
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[1]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[0]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['grs_id']);
             $capturaTotal = $this->modelRel->selectCapturaByArteGrosseira('v_entrevista_grosseira.grs_id=' . $consulta['grs_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / 1000);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / $consulta['dias']);
+             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['quant'] / $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna = 0;
             $linha++;
@@ -5209,14 +5308,17 @@ class RelatoriosController extends Zend_Controller_Action {
             $dataFormatada = $this->formataData($consulta['fd_data']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $dataFormatada);
             $explodeData = explode('-', $consulta['fd_data']);
+            $diasDetalhados = ($this->s_datediff("i",$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/24;
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[1]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[0]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['jre_id']);
             $capturaTotal = $this->modelRel->selectCapturaByArteJerere('v_entrevista_jerere.jre_id=' . $consulta['jre_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / 1000);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / $consulta['dias']);
+             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['quant'] / $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna = 0;
             $linha++;
@@ -5230,14 +5332,17 @@ class RelatoriosController extends Zend_Controller_Action {
             $dataFormatada = $this->formataData($consulta['fd_data']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $dataFormatada);
             $explodeData = explode('-', $consulta['fd_data']);
+            $diasDetalhados = ($this->s_datediff("i",$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/24;
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[1]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[0]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['lin_id']);
             $capturaTotal = $this->modelRel->selectCapturaByArteLinha('v_entrevista_linha.lin_id=' . $consulta['lin_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / 1000);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / $consulta['dias']);
+             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['quant'] / $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna = 0;
             $linha++;
@@ -5251,14 +5356,17 @@ class RelatoriosController extends Zend_Controller_Action {
             $dataFormatada = $this->formataData($consulta['fd_data']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $dataFormatada);
             $explodeData = explode('-', $consulta['fd_data']);
+            $diasDetalhados = ($this->s_datediff("i",$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/24;
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[1]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[0]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['lf_id']);
             $capturaTotal = $this->modelRel->selectCapturaByArteLinhaFundo('v_entrevista_linhafundo.lf_id=' . $consulta['lf_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / 1000);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / $consulta['dias']);
+             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['quant'] / $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna = 0;
             $linha++;
@@ -5272,14 +5380,17 @@ class RelatoriosController extends Zend_Controller_Action {
             $dataFormatada = $this->formataData($consulta['fd_data']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $dataFormatada);
             $explodeData = explode('-', $consulta['fd_data']);
+            $diasDetalhados = ($this->s_datediff("i",$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/24;
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[1]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[0]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['man_id']);
             $capturaTotal = $this->modelRel->selectCapturaByArteManzua('v_entrevista_manzua.man_id=' . $consulta['man_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / 1000);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / $consulta['dias']);
+             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['quant'] / $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna = 0;
             $linha++;
@@ -5294,14 +5405,17 @@ class RelatoriosController extends Zend_Controller_Action {
             $dataFormatada = $this->formataData($consulta['fd_data']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $dataFormatada);
             $explodeData = explode('-', $consulta['fd_data']);
+            $diasDetalhados = ($this->s_datediff("i",$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/24;
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[1]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[0]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['mer_id']);
             $capturaTotal = $this->modelRel->selectCapturaByArteMergulho('v_entrevista_mergulho.mer_id=' . $consulta['mer_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / 1000);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / $consulta['dias']);
+             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['quant'] / $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna = 0;
             $linha++;
@@ -5315,14 +5429,17 @@ class RelatoriosController extends Zend_Controller_Action {
             $dataFormatada = $this->formataData($consulta['tar_data']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $dataFormatada);
             $explodeData = explode('-', $consulta['tar_data']);
+            
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[1]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[0]);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '1');
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, '1');
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tar_id']);
             $capturaTotal = $this->modelRel->selectCapturaByArteTarrafa('v_entrevista_tarrafa.tar_id=' . $consulta['tar_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / 1000);
-            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['tar_data']);
             $coluna = 0;
             $linha++;
@@ -5336,14 +5453,17 @@ class RelatoriosController extends Zend_Controller_Action {
             $dataFormatada = $this->formataData($consulta['fd_data']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $dataFormatada);
             $explodeData = explode('-', $consulta['fd_data']);
+            $diasDetalhados = ($this->s_datediff("i",$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/24;
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[1]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[0]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['vp_id']);
             $capturaTotal = $this->modelRel->selectCapturaByArteVaraPesca('v_entrevista_varapesca.vp_id=' . $consulta['vp_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / 1000);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['peso'] / $consulta['dias']);
+             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['quant'] / $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna = 0;
             $linha++;
@@ -5364,10 +5484,13 @@ class RelatoriosController extends Zend_Controller_Action {
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Mês');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Ano');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias de Pesca');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Dias Detalhados de Pesca');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Entrevista');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Captura Total em n');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'CPUE (n)');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'CPUE Detalhada (n)');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Data Completa');
+
         $linha++;
         $coluna = 0;
         foreach ($coletamanual as $key => $consulta):
@@ -5377,13 +5500,16 @@ class RelatoriosController extends Zend_Controller_Action {
             $dataFormatada = $this->formataData($consulta['fd_data']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $dataFormatada);
             $explodeData = explode('-', $consulta['fd_data']);
+            $diasDetalhados = ($this->s_datediff("i",$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/24;
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[1]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[0]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['cml_id']);
             $capturaTotal = $this->modelRel->selectCapturaByArteColeta('v_entrevista_coletamanual.cml_id=' . $consulta['cml_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['quant']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['quant'] / $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['quant'] / $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna = 0;
             $linha++;
@@ -5396,13 +5522,16 @@ class RelatoriosController extends Zend_Controller_Action {
             $dataFormatada = $this->formataData($consulta['fd_data']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $dataFormatada);
             $explodeData = explode('-', $consulta['fd_data']);
+            $diasDetalhados = ($this->s_datediff("i",$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/24;
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[1]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[0]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['rat_id']);
             $capturaTotal = $this->modelRel->selectCapturaByArteRatoeira('v_entrevista_ratoeira.rat_id=' . $consulta['rat_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['quant']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['quant'] / $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['quant'] / $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna = 0;
             $linha++;
@@ -5416,13 +5545,16 @@ class RelatoriosController extends Zend_Controller_Action {
             $dataFormatada = $this->formataData($consulta['fd_data']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $dataFormatada);
             $explodeData = explode('-', $consulta['fd_data']);
+            $diasDetalhados = ($this->s_datediff("i",$consulta['dsaida'].' '.$consulta['hsaida'],$consulta['dvolta'].' '.$consulta['hvolta'])/60)/24;
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[1]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $explodeData[0]);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $consulta['sir_id']);
             $capturaTotal = $this->modelRel->selectCapturaByArteSiripoia('v_entrevista_siripoia.sir_id=' . $consulta['sir_id']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['quant']);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['quant'] / $consulta['dias']);
+            $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $capturaTotal[0]['quant'] / $diasDetalhados);
             $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, $this->formataDataPtbr($consulta['dvolta']));
             $coluna = 0;
             $linha++;

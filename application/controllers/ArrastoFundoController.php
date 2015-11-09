@@ -149,6 +149,9 @@ class ArrastoFundoController extends Zend_Controller_Action {
         //print_r(json_encode($arrayMedias, JSON_FORCE_OBJECT));
         //print_r(json_encode($arrayMedias));
         //print_r($this->modelArrastoFundo->selectMediaEspecies());
+        $dateTime = new DateTime();
+        $dataHoraSaida = strtotime($datahoraSaida[0][0].' '.$datahoraSaida[0][1]);
+        print_r(date('d-m-Y G:i:s',$dataHoraSaida));
     }
 
     public function pescadoresAction() {
