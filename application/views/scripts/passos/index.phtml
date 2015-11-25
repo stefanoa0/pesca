@@ -1,4 +1,14 @@
-<br /><br />
-<div id="view-content">
-	<p>Área em criação</p>
-</div>
+<fieldset>
+    <legend> Manual do usuário: </legend>
+    <ul>
+        <?php if($dh = opendir('manual')){ 
+            while(($file = readdir($dh)) !== false){ 
+                if($file !== '.' && $file !== '..'){
+                    echo '<img src="img/pdf-icon.png" class="icon-relatorios"/><a class="relatorio" href="files/'.$file.'" download>'.$file.'</a><br/>'; 
+                }                
+            }
+            closedir($dh);
+            
+           } ?>
+    </ul>    
+</fieldset>
