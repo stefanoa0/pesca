@@ -2788,6 +2788,7 @@ class RelatoriosController extends Zend_Controller_Action {
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Destino da Pesca');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Observacao');
         $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Tipo de Calão');
+        $sheet->setCellValueByColumnAndRow( ++$coluna, $linha, 'Pesqueiro');
         $coluna = 3 + $quant;
         $relatorioEspecies = $this->modelRelatorios->selectEspecies();
         $lastcolumn = $this->listaEspecies($relatorioEspecies, $coluna, $linha, $objPHPExcel);
@@ -2853,7 +2854,7 @@ class RelatoriosController extends Zend_Controller_Action {
             endforeach;
 
 
-            $colunaEspecies = 4 + $quant;
+            $colunaEspecies = 3 + $quant;
             $Relesp = $this->modelRelatorios->selectCalaoHasEspCapturadas('cal_id = ' . $consulta['cal_id']);
             foreach ($relatorioEspecies as $key => $nomeEspecie):
                 foreach ($Relesp as $key => $esp):
@@ -2932,7 +2933,7 @@ class RelatoriosController extends Zend_Controller_Action {
                 $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
             endforeach;
 
-            $colunaEspecies = 4 + $quant;
+            $colunaEspecies = 3 + $quant;
             $Relesp = $this->modelRelatorios->selectColetaManualHasEspCapturadas('cml_id = ' . $consulta['cml_id']);
             foreach ($relatorioEspecies as $key => $nomeEspecie): 
                 foreach ($Relesp as $key => $esp): 
@@ -3005,7 +3006,7 @@ class RelatoriosController extends Zend_Controller_Action {
             endforeach;
 
 
-            $colunaEspecies = 4 + $quant;
+            $colunaEspecies = 3 + $quant;
             $Relesp = $this->modelRelatorios->selectEmalheHasEspCapturadas('em_id = ' . $consulta['em_id']);
             foreach ($relatorioEspecies as $key => $nomeEspecie): 
                 foreach ($Relesp as $key => $esp): 
@@ -3082,7 +3083,7 @@ class RelatoriosController extends Zend_Controller_Action {
             endforeach;
 
 
-            $colunaEspecies = 4 + $quant;
+            $colunaEspecies = 3 + $quant;
             $Relesp = $this->modelRelatorios->selectGrosseiraHasEspCapturadas('grs_id = '.$consulta['grs_id']);
             foreach ($relatorioEspecies as $key => $nomeEspecie): 
                 foreach ($Relesp as $key => $esp): 
@@ -3160,7 +3161,7 @@ class RelatoriosController extends Zend_Controller_Action {
                 $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
             endforeach;
 
-            $colunaEspecies = 4 + $quant;
+            $colunaEspecies = 3 + $quant;
             $Relesp = $this->modelRelatorios->selectJerereHasEspCapturadas('jre_id = ' . $consulta['jre_id']);
             foreach ($relatorioEspecies as $key => $nomeEspecie):
                 foreach ($Relesp as $key => $esp):
@@ -3240,7 +3241,7 @@ class RelatoriosController extends Zend_Controller_Action {
                 $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
             endforeach;
 
-            $colunaEspecies = 4 + $quant;
+            $colunaEspecies = 3 + $quant;
             $Relesp = $this->modelRelatorios->selectLinhaHasEspCapturadas('lin_id = ' . $consulta['lin_id']);
             foreach ($relatorioEspecies as $key => $nomeEspecie):
                 foreach ($Relesp as $key => $esp):
@@ -3320,7 +3321,7 @@ class RelatoriosController extends Zend_Controller_Action {
             endforeach;
 
 
-            $colunaEspecies = 4 + $quant;
+            $colunaEspecies = 3 + $quant;
             $Relesp = $this->modelRelatorios->selectLinhaFundoHasEspCapturadas('lf_id = ' . $consulta['lf_id']);
             foreach ($relatorioEspecies as $key => $nomeEspecie): 
                 foreach ($Relesp as $key => $esp): 
@@ -3400,7 +3401,7 @@ class RelatoriosController extends Zend_Controller_Action {
 
 
 
-            $colunaEspecies = 4 + $quant;
+            $colunaEspecies = 3 + $quant;
             $Relesp = $this->modelRelatorios->selectManzuaHasEspCapturadas('man_id = '.$consulta['man_id']);
             foreach ($relatorioEspecies as $key => $nomeEspecie): foreach ($Relesp as $key => $esp): if ($esp['esp_nome_comum'] === $nomeEspecie['esp_nome_comum']) {
                         $sheet->setCellValueByColumnAndRow($colunaEspecies, $linha, $this->verificaTipoRel($esp[$tipoRel]));
@@ -3478,7 +3479,7 @@ class RelatoriosController extends Zend_Controller_Action {
                 $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
             endforeach;
 
-            $colunaEspecies = 4 + $quant;
+            $colunaEspecies = 3 + $quant;
             $Relesp = $this->modelRelatorios->selectMergulhoHasEspCapturadas('mer_id = '.$consulta['mer_id']);
             foreach ($relatorioEspecies as $key => $nomeEspecie): 
                 foreach ($Relesp as $key => $esp): 
@@ -3557,7 +3558,7 @@ class RelatoriosController extends Zend_Controller_Action {
                 $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
             endforeach;
 
-            $colunaEspecies = 4 + $quant;
+            $colunaEspecies = 3 + $quant;
             $Relesp = $this->modelRelatorios->selectRatoeiraHasEspCapturadas('rat_id = '.$consulta['rat_id']);
             foreach ($relatorioEspecies as $key => $nomeEspecie): foreach ($Relesp as $key => $esp): if ($esp['esp_nome_comum'] === $nomeEspecie['esp_nome_comum']) {
                         $sheet->setCellValueByColumnAndRow($colunaEspecies, $linha, $this->verificaTipoRel($esp[$tipoRel]));
@@ -3635,7 +3636,7 @@ class RelatoriosController extends Zend_Controller_Action {
                 $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
             endforeach;
 
-            $colunaEspecies = 4 + $quant;
+            $colunaEspecies = 3 + $quant;
             $Relesp = $this->modelRelatorios->selectSiripoiaHasEspCapturadas('sir_id = '.$consulta['sir_id']);
             foreach ($relatorioEspecies as $key => $nomeEspecie): foreach ($Relesp as $key => $esp): if ($esp['esp_nome_comum'] === $nomeEspecie['esp_nome_comum']) {
                         $sheet->setCellValueByColumnAndRow($colunaEspecies, $linha, $this->verificaTipoRel($esp[$tipoRel]));
@@ -3708,7 +3709,7 @@ class RelatoriosController extends Zend_Controller_Action {
                 $sheet->setCellValueByColumnAndRow($coluna++, $linha, $nome['paf_pesqueiro']);
             endforeach;
 
-            $colunaEspecies = 4 + $quant;
+            $colunaEspecies = 3 + $quant;
             $Relesp = $this->modelRelatorios->selectTarrafaHasEspCapturadas('tar_id = '.$consulta['tar_id']);
             foreach ($relatorioEspecies as $key => $nomeEspecie): 
                 foreach ($Relesp as $key => $esp): 
@@ -3792,7 +3793,7 @@ class RelatoriosController extends Zend_Controller_Action {
                 $sheet->setCellValueByColumnAndRow($coluna++, $linha, $tempo['t_tempoapesqueiro']);
             endforeach;
 
-            $colunaEspecies = 4 + $quant;
+            $colunaEspecies = 3 + $quant;
             $Relesp = $this->modelRelatorios->selectVaraPescaHasEspCapturadas('vp_id = '.$consulta['vp_id']);
             foreach ($relatorioEspecies as $key => $nomeEspecie): 
                 foreach ($Relesp as $key => $esp): 
